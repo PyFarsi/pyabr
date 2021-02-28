@@ -1,0 +1,4 @@
+
+det [item] ...
+
+Job: Remove item from list file

@@ -1,0 +1,6 @@
+name[en]: Bool Box
+exec: boolbox
+logo: @icon/help-about
+application: No
+hidden: Yes
+category: system

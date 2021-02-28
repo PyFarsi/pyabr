@@ -1,0 +1,25 @@
+#!etcetra
+
+style: 0
+fgcolor: 37
+bgcolor: 40
+
+prompt_style: 1
+prompt_fgcolor: 32
+prompt_bgcolor: 40
+
+path_style: 1
+path_fgcolor: 36
+path_bgcolor: 40
+
+warning_style: 0
+warning_fgcolor: 33
+warning_bgcolor: 40
+
+fail_style: 0
+fail_fgcolor: 31
+fail_bgcolor: 40
+
+ok_style: 0
+ok_fgcolor: 32
+ok_bgcolor: 40

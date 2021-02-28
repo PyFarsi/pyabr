@@ -1,0 +1,6 @@
+name[en]: Lightword
+name[fa]: ورد سبک
+logo: @icon/ms-word
+exec: lightword
+application: Yes
+category: tools

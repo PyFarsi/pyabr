@@ -1,0 +1,5 @@
+cat -l /etc/interface CLI
+cat -l /etc/gui desktop: unknown
+echo After Removing Baran Desktop Enviroment you should reboot your cloud software, Press any key to reboot ...
+read reboot
+reboot

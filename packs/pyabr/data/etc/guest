@@ -1,0 +1,4 @@
+#!etcetra
+
+enable_cli: Yes
+enable_gui: Yes

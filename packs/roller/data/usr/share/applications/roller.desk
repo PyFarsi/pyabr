@@ -1,0 +1,26 @@
+name[en]: Files
+name[fa]: فایل ها
+name[ar]: الملفات
+logo: @icon/roller
+exec: roller
+shortcut: Ctrl+F
+folder-icon: @icon/folder
+file-icon: @icon/gtk-file
+exit-icon: @icon/system-shutdown
+icon-size: 64
+bgcolor: white
+fontsize: 12
+width: 1000
+height: 600
+c: @icon/text-x-c
+c++: @icon/text-x-c++
+c#: @icon/text-csharp
+java: @icon/application-java
+py: @icon/text-x-python3
+sa: @icon/application-x-executable-script
+html: @icon/html
+php: @icon/application-x-php
+js: @icon/application-javascript
+application: Yes
+category: tools
+pin: Yes

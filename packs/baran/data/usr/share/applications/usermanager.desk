@@ -1,0 +1,7 @@
+name[en]: User manager
+name[fa]: مدیریت حساب ها
+exec: usermanager
+hidden: Yes
+logo: @icon/help-about
+application: No
+category: system

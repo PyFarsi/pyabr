@@ -1,0 +1,5 @@
+
+untar [src] [dest]
+
+ <src>          <dest>      <job>
+ a.tar          a/          Extract 'a.tar' in 'a/' directory

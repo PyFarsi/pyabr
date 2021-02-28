@@ -1,0 +1,5 @@
+name[en]: Windows 10 theme
+name[fa]: پوسته ویندوز ۱۰
+exec: /usr/share/themes/windows
+logo: @icon/winlogo
+theme-name: windows

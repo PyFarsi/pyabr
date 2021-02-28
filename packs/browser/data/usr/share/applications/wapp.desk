@@ -1,0 +1,7 @@
+name[en]: Web Application Runner
+name[fa]: ابر سرویس
+exec: wapp
+logo: @icon/web-browser
+application: No
+hidden: Yes
+category: internet

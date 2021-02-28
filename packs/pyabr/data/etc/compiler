@@ -1,0 +1,3 @@
+exec.c: gcc {src} -o {dest}
+exec.c++: g++ {src} -o {dest}
+class.java: javac {src}

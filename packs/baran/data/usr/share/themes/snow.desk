@@ -1,0 +1,5 @@
+name[en]: Snow theme
+name[fa]: تم برف
+exec: /usr/share/themes/snow
+logo: @icon/pyabr-blue-logo
+theme-name: snow

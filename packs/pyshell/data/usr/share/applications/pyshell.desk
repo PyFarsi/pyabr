@@ -1,0 +1,11 @@
+name[en]: Python shell
+name[fa]: مفسر پایتون
+name[ar]: قذيفة بايثون
+logo: @icon/python
+exec: pyshell
+shortcut: Ctrl+Alt+P
+bgcolor: white
+width: 700
+height: 500
+application: Yes
+category: system

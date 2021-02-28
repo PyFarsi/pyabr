@@ -1,0 +1,14 @@
+name[en]: Terminal
+name[fa]: پایانه
+name[ar]: محطة
+logo: @icon/commento
+exec: terminal
+shortcut: Ctrl+Alt+C
+bgcolor: white
+fgcolor: black
+fontsize: 11
+width: 720
+height: 450
+application: Yes
+category: system
+pin: Yes

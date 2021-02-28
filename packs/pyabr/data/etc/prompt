@@ -1,0 +1,8 @@
+#!etcetra
+
+show_username: Yes
+show_hostname: Yes
+show_path: Yes
+
+root: #
+user: >

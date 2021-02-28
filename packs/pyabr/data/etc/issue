@@ -1,0 +1,18 @@
+       In the name of God, the Compassionate, the Merciful
+  Pyabr (c) 2020 Mani Jamali. Free software license GNU GPL v3.0
+
+  Welcome to Pyabr!
+
+  * Official Website:             http://pyabr.rf.gd
+  * Git source:                   https://github.com/manijamali2003/pyabr
+  * Gap Channels:                 @pyabr
+  * Gap Groups:                   @pyabr_community
+
+  Working with packages:
+  
+  * Install packages:       paye in [package]
+  * Remove packages:        paye rm [package]
+
+  Root enviroment:
+
+  * Please use su root [password] or sudo [command] for run commands as root

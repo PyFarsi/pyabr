@@ -1,0 +1,5 @@
+
+tar [src] [dest]
+
+ <src>          <dest>      <job>
+ a/             a           Create 'a.tar' archive from 'a/' directory.

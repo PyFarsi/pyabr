@@ -1,0 +1,430 @@
+#!etcetra
+
+0: ۰
+1: ۱
+2: ۲
+3: ۳
+4: ۴
+5: ۵
+6: ۶
+7: ۷
+8: ۸
+9: ۹
+A: ؤ
+B: ‌
+C: ژ
+D: ي
+E: ٍ
+F: إ
+G: أ
+H: آ
+I: ّ
+J: ة
+K: »
+L: «
+M: ء
+N: ٔ
+O: ]
+P: [
+Q: ْ
+R: ً
+S: ئ
+T: ُ
+U: َ
+V: ٰ
+W: ٌ
+X: ٓ
+Y: ِ
+Z: ك
+a: ش
+b: ذ
+c: ز
+d: ی
+e: ث
+f: ب
+g: ل
+h: ا
+i: ه
+j: ت
+k: ن
+l: م
+m: پ
+n: د
+o: خ
+p: ح
+q: ض
+r: ق
+s: س
+t: ف
+u: ع
+v: ر
+w: ص
+x: ط
+y: غ
+z: ظ
+Sat: شنبه
+Sun: یکشنبه
+Mon: دوشنبه
+Tue: سه شنبه
+Wed: چهارشنبه
+Thu: پنجشنبه
+Fri: جمعه
+January: ژانویه
+February: فوریه
+March: مارس
+April: آوریل
+May: مه
+June: ژوئن
+July: ژوئیه
+August: اوت
+September: سپتامبر
+October: اکتبر
+November: نوابر
+December: دسامبر
+desktop.username_placeholder: نام حساب کاربری وارد کنید
+desktop.password_placeholder: رمز عبور را وارد کنید
+desktop.user_not_found: این حساب کاربری وجود ندارد
+desktop.wrong_password: رمز عبور نادرست می باشد؛ دوباره امتحان کنید
+desktop.next_text: بعدی
+desktop.enter_text: ورود
+desktop.unlock_text: بازکردن قفل
+desktop.appmenu: برنامه ها
+desktop.etcmenu: دیگر
+desktop.guest: حساب مهمان
+desktop.powermenu: تنظیمات روشن/خاموش کردن
+desktop.accountsettings: حساب ها
+desktop.signout: خروج از نشست
+desktop.switchuser: رفتن به نشست دیگر
+desktop.lock: قفل کردن
+desktop.escape: فرار کردن
+desktop.restart: راه اندازی مجدد
+desktop.unlock_hint: رمز عبور خود را وارد کنید
+desktop.sleep: حالت خواب
+pyshell.app_name: مفسر پایتون
+calendar.app_name: تقویم
+calculator.app_name: ماشین حساب
+runapp.app_name: بارگذار
+runapp.app_not_found: برنامه وجود ندارد
+pysys.signout: خروج از نشست
+pysys.switchuser: رفتن به نشستی دیگر
+pysys.lock: قفل کردن
+pysys.escape: فرار کردن
+pysys.restart: راه اندازی مجدد
+pysys.sleep: حالت خواب
+pysys.app_name: تنظیمات روشن/خاموش کردن
+commento.app_name: پایانه
+roller.app_name: فایل ها
+input.title: یک مقدار وارد کنید
+input.cancel: لغو
+input.ok: تایید
+bool.title: آیا می خواهید؟
+bool.cancel: خیر
+bool.ok: بله
+bool.text: آیا می خواهید همچین کاری را انجام دهید؟
+select.dir: یک مسیر انتخاب کنید
+select.file: یک فایل انتخاب کنید
+select.choose: انتخاب
+select.cancel: لغو
+select.open: بازکن
+select.save: ذخیره کن
+select.save-as: با یک عنوان دیگر ذخیرکن
+barge.app_name: ویرایشگر متنی برگه
+barge.file: فایل
+barge.open: بازکردن
+barge.new: جدید
+barge.new_page: برگه جدید
+barge.save: ذخیره
+barge.save_as: ذخیره به عنوان
+barge.exit: خروج
+barge.untitled: بدون عنوان - برگه
+barge.saveafile: ذخیره کردن فایل
+barge.chooseafile: انتخاب یک فایل
+barge.saveasfile: ذخیره کردن فایل با یک عنوان دیگر
+calculator.backspace: Backscape
+calculator.clear: پاک کردن
+calculator.clearall: پاک کردن همه
+roller.file: فایل
+roller.newfile: یک فایل جدید
+roller.newfolder: یک پوشه جدید
+persia.newfile: یک فایل جدید
+persia.newfolder: یک پوشه جدید
+roller.exit: خروج
+roller.foldername: برای پوشه خود نامی انتخاب کنید
+roller.filename: برای فایل خود نامی انتخاب کنید
+paint.app_name: نقاشی
+about.app_name: درباره سیستم
+perisa.foldername: برای پوشه خود نامی انتخاب کنید
+persia.filename: برای فایل خود نامی انتخاب کنید
+mines.app_name: مین ها
+barge.c: سی
+barge.c++: سی پلاس پلاس
+barge.python: پایتون
+barge.pythongui: پایتون گرافیکی
+barge.saye: سایه
+barge.java: جاوا
+barge.html: ابرمتن
+barge.css: استایل
+barge.javascript: جاوا اسکریپت
+barge.csharp: سی شارپ
+barge.php: پی اچ پی
+roller.newcode: کد جدید
+roller.c: یک فایل سی
+roller.c++: یک فایل سی پلاس پلاس
+roller.python: یک اسکریپت پایتونی
+roller.pythongui: یک اسکریپت پایتون گرافیکی
+roller.saye: یک اسکریپت سایه
+roller.java: یک فایل جاوا
+roller.html: یک صفحه ابرمتن
+roller.css: یک فایل استایلی
+roller.javascript: یک فایل جاوا اسکریپت
+roller.csharp: یک فایل سی شارپی
+roller.php: یک فایل پی اچ پی
+persia.c: سی
+persia.c++: سی پلاس پلاس
+persia.python: پایتون
+persia.pythongui: پایتون گرافیکی
+persia.saye: سایه
+persia.java: جاوا
+persia.html: ابرمتن
+persia.css: استایل
+persia.javascript: جاوا اسکریپت
+persia.csharp: سی شارپ
+persia.php: پی اچ پی
+persia.app_name: پای پرشیا
+persia.file: فایل
+persia.open: بازن کردن
+persia.new: یک فایل جدید
+persia.new_page: یک پروژه جدید
+persia.empty: یک پروژه معمولی
+persia.gui: یک پروژه گرافیکی
+persia.save: ذخیره
+persia.save_as: ذخیره با عنوانی دیگر
+persia.exit: خروج
+persia.untitled: بدون عنوان - پای پرشیا
+persia.saveafile: ذخیره کردن فایل
+persia.chooseafile: انتخاب فایل
+persia.saveasfile: ذخیره فایل با عنوانی دیگر
+text.title: جعبه متن
+text.text: این یک متنی آزمایشی است
+text.ok: تایید
+runapp.not_found: برنامه وجود ندارد
+runapp.not_found_msg: این برنامه وجود ندارد
+roller.isfile: یک فایل است
+roller.isdir: یک پوشه است
+roller.isfile_msg: نمی توان پوشه ای با این عنوان ایجاد کرد چون یک فایل است.
+roller.isdir_msg: نمی توان فایلی با این عنوان ایجاد کرد چون یک پوشه است.
+roller.newpyweb: یک فایل پایتون تحت وب
+persia.isfile: یک فایل است
+persia.isfile_msg: نمی توان پوشه ای با این عنوان ایجاد کرد چون یک فایل است.
+persia.isdir: یک پوشه است
+persia.isdir_msg:  نمی توان فایلی با این عنوان ایجاد کرد چون یک پوشه است.
+persia.nwebp: یک پروژه تحت وب
+persia.code: کد
+persia.run: اجرا
+persia.runp: اجرا کردن پروژه
+persia.build: ساختن
+persia.pack: بسته بندی کد منبع
+persia.pa: ساختن بسته نصبی
+persia.buildi: ساختن و نصب کردن پروژه
+persia.publish: انتشار پروژه
+persia.insert: جاگذاری کد
+persia.ce: خطا در کامپایل کردن
+persia.cem: ممکن است در روند کامپایل کردن خطاهایی رخ داده باشد.
+persia.pycon: خط فرمان پای پرشیا
+persia.spc: پشتیبانی نمی شود
+persia.spcm: پای پرشیا این زبان یا این نگارش را پشتیبانی نمی کد.
+persia.pythonwebi: برنامه پایتونی تحت وب
+paye.name: نام بسته
+paye.version: نسخه بسته
+paye.date: زمان انتشار
+paye.copy: کپی راست
+paye.license: مجوز نامه
+paye.unpack: نصب است در مسیر
+paye.app_name: مدیریت بسته
+paye.rm: حذف از نصب
+paye.rmm: آیا می خواهید این بسته را حذف کنید؟
+paye.up: بروز رسانی
+paye.upm: آیا می خواهید این بسته را بروز رسانی کنید؟
+paye.rmx: با موفقیت حذف شد
+paye.rmxm: با موفقیت این بسته مورد نظر حذف گردید.
+paye.upx: با موفقیت بروز رسانی شد
+paye.upxm: با موفقیت این بسته مورد نظر بروز رسانی شد.
+paye.mirror: پیوند
+paye.package: بسته
+paye.add: اضافه کردن یک پیوند
+paye.remove: حذف یک پیوند
+paye.install: نصب یک بسته
+paye.uninstall: حذف یک بسته
+paye.download: دانلود کردن
+paye.mname: نام پیوند مورد نظر را وارد کنید
+paye.mex: پیوند هم اکنون موجود است.
+paye.mexm: پیوندی که وارد کردید هم اکنون موجود می باشد.
+paye.ml: آدرس پیوند مورد نظر را وارد کنید
+paye.ndl: این آدرس قابل دانلود نیست
+paye.ndlm: آدرس وارد شده شما قابل دانلود نمی باشد.
+paye.mdf: پیوند وجود ندارد
+paye.mdfm: پیوندی که وارد کردید وجود ندارد.
+paye.pname: نام بسته مورد نظر را وارد کنید
+paye.mdfmx: بدون وجود پیوند مورد نظر این بسته قابل نصب نخواهد بود.
+paye.si: با موفقیت نصب شد
+paye.sim: این بسته با موفقیت نصب شد.
+paye.ci: نصب نشد
+paye.cim: به دلیل وجود یک یا چندین خطا این بسته نصب نشد.
+paye.pwi: این بسته نصب نیست
+paye.pwim: نمی توان بسته ای که نصب نیست را حذف کرد.
+paye.dname: برای دانلود بسته مورد نظر نام آن را وارد کنید
+paye.dd: با موفقیت دانلود شد
+paye.ddm: این بسته با موفقیت دانلود شد.
+paye.cdx: دانلود نشد
+paye.cdxm: به دلیل وجود یک یا چندین خطا این بسته دانلود نشد.
+paint.of: بازکردن
+paint.sf: ذخیره
+paint.file: فایل
+paint.edit: ویرایش
+paint.image: تصویر
+paint.help: راهنما
+paint.toolbar: toolBar
+paint.copy: کپی
+paint.ci: پاک کردن تصویر
+paint.oi: بازکردن تصویر...
+paint.sia: ذخیره تصویر با عنوانی دیگر...
+paint.ivc: معکوس کردن رنگ ها
+paint.fh: تلنگر افقی
+paint.fv: تلنگر عمودی
+paint.nim: یک تصویر جدید
+paint.bl: برجسته
+paint.il: ایتالیک
+paint.ul: زیرخط
+paint.fs: اشکال را پر کنید؟
+lightword.untitled: بدون عنوان - وردسبک
+lightword.file: فایل
+lightword.of: بازکردن فایل
+lightword.sv: ذخیره
+lightword.sa: ذخیره با عنوانی دیگر
+lightword.ed: ویرایش
+lightword.un: واگرد
+lightword.rd: انجام مجدد
+lightword.ct: برش
+lightword.cp: کپی
+lightword.pa: جای گذاری
+lightword.sll: انتخاب همه
+lightword.wtw: متن را به پنجره بپیچید
+lightword.ttw: متن را به پنجره تغییر دهید
+lightword.fm: قالب
+lightword.bl: برجسته
+lightword.it: ایتالیک
+lightword.un: زیرخط
+lightword.al: تراز از چپ
+lightword.ac: تراز از وسط
+lightword.ar: تراز از راست
+lightword.jf: توجیه
+lightword.od: بازکردن پرونده
+lightword.sd: ذخیره پرونده
+lightword.sad: ذخیره پرونده با عنوانی دیگر
+gap.app_name: پیام رسان گپ
+commento.uname: یک نام برای حساب کاربری جدید انتخاب کنید
+commento.ename: نام حساب کاربری را وارد کنید
+commento.vname: یک نام برای تغییر وارد کنید
+commento.ue: حساب کاربری وجود دارد
+commento.uem: حساب کاربری وارد شده موجود است و نمی توان با این نام دوباره ساخت
+commento.ga: حساب مهمان
+commento.sa: حساب سرپرست
+commento.gam: این حساب همیشگی است و نمی توان حذفش کرد.
+commento.sam: این حساب همیشگی است و نمی توان حذفش کرد.
+commento.passx: یک رمز انتخاب کنید
+commento.confx: آن را دوباره تکرار نمایید
+commento.nmat: با هم یکسان نیستند
+commento.nmatm: رمز عبور جدید شما یکسان نیست.
+commento.sc: با موفقیت ایجاد شد
+commento.scm: حساب جدید شما با موفقیت ایجاد گردید.
+commento.unf: حساب وجود ندارد
+commento.epass: رمز عبور را وارد کنید
+commento.sr: با موفقیت حذف گردید
+commento.srm: این حساب کاربری با موفقیت حذف گردید.
+commento.vl: یک مقدار وارد کنید
+browser.app_name: مرورگر
+browser.nav: جهت یابی
+browser.ba: قبلی
+browser.fw: بعدی
+browser.rl: بارگیری مجدد
+browser.hm: خانه
+browser.st: توقف
+browser.file: فایل
+browser.ntab: صفحه جدید
+browser.of: بازکردن فایل
+browser.hl: راهنما
+browser.ab: درباره مرورگر
+browser.pc: رفتن به کانال رسمی پای ابر
+browser.pg: پشتیبانی پای ابر
+browser.owp: بازکردن یک صفحه وب
+wapp.app_name: سرویس ابری
+barge.code: کد
+barge.run: اجرا
+barge.icode: جایگذاری کد
+barge.pyweb: برنامه پایتونی تحت وب
+barge.ce: خطا در کامپایل کردن
+barge.cem: ممکن است در روند کامپایل کردن خطاهایی رخ داده باشد.
+barge.con: خط فرمان برگه
+barge.cs: پشتیبانی نمی شود
+barge.csm: برگه این زبان یا این نگارش را پشتیبانی نمی کد.
+desktop.esc: فرار کردن
+desktop.rb: راه اندازی مجدد
+desktop.escm: آیا می خواهید از پای ابر فعلی خارج شوید؟
+desktop.rbm: آیا می خواهید پای ابر را راه اندازی مجدد کنید؟
+desktop.sg: خروج از نشست
+desktop.sgm: آیا می خواهید از نشست فعلی خارج شوید؟
+desktop.sau: رفتن به نشستی دیگر
+desktop.saum: آیا بدون بستن این نشست می خواهید به نشست دیگری بروید؟
+desktop.notf: برنامه وجود ندارد
+desktop.notfm: این برنامه وجود ندارد.
+about.st: نام میزبان
+about.cs: نام پوسته نرم افزاری
+about.de: میزکار
+about.krnl: هسته
+about.bd: تاریخ انتشار
+about.os: سیستم عامل
+about.su: حساب فعلی
+about.intr: رابط فعلی
+edituser.savec: ذخیره کردن تغییرات
+edituser.savecm: آیا می خواهید تغییرات فعلی را ذخیره کنید؟
+edituser.firstname: نام
+edituser.lastname: نام خانوادگی
+edituser.phone: شماره تلفن همراه
+edituser.email: آدرس پست الکترونیکی
+edituser.company: نام شرکت
+edituser.bloodtype: گروه خونی
+edituser.app_name: ویرایش حساب کاربری
+select.fn: یک نام برای فایل خود انتخاب کنید
+usermanager.fullname: نام کامل
+usermanager.phone: شماره تلفن همراه
+usermanager.email: آدرس پست الکترونیکی
+usermanager.company: نام شرکت
+usermanager.bloodtype: گروه خونی
+usermanager.gender: جنسیت
+usermanager.birthday: تاریخ تولد
+usermanager.username: نام حساب کاربری
+usermanager.nots: تنظیم نشده
+usermanager.app_name: مدیریت حساب ها
+usermanager.rm: حذف حساب
+usermanager.rmm: آیا می خواهید این حساب کاربری را حذف کنید؟
+usermanager.ed: ویرایش
+usermanager._rm: حذف
+persia.proname: نامی برای پروژه خود انتخاب کنید
+browser.search: جستجو کنید
+browser.go: جستجو کن
+browser.addb: افزودن به علاقه مندی ها
+browser.hist: تاریخچه
+browser.bookm: علاقه مندی ها
+browser.delh: حذف تاریخچه
+browser.delb: حذف علاقه مندی ها
+browser.open: بازکردن
+browser.openn: بازکردن در صفحه دیگر
+browser.bookp: صفحه علاقه مندی ها
+browser.dn: تمام
+browser.name: نام
+browser.folder: پوشه
+browser.booked: به علاقه مندی ها افزوده شد
+paye.open: بازکردن
+paye.update: بروز رسانی
+paye.unxp: حذف
+paye.back: بازگشت

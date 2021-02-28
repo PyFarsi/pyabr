@@ -1,0 +1,22 @@
+name[en]: Power Options
+name[fa]: تنظیمات خاموش/روشن
+name[ar]: خيارات الطاقة
+logo: @icon/pysys
+exec: pysys
+shortcut: Esc
+bgcolor: white
+width: 800
+height: 400
+btncolor: #ABCDEF
+btnhovercolor: #123456
+btnround: 64
+btnsize: 128
+escape-icon: @icon/pysys_escape
+lock-icon: @icon/pysys_lock
+logout-icon: @icon/pysys_logout
+restart-icon: @icon/pysys_restart
+suspend-icon: @icon/pysys_suspend
+switchuser-icon: @icon/pysys_switchuser
+application: Yes
+category: system
+pin: Yes

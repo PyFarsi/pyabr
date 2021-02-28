@@ -1,0 +1,16 @@
+name[en]: Runner
+name[fa]: بارگذار
+name[ar]: عداء
+logo: @icon/runner
+exec: runapp
+shortcut: Ctrl+Alt+R
+bgcolor: white
+fgcolor: black
+wrong-bgcolor: red
+wrong-fgcolor: white
+fontsize: 12
+height: 40
+width: 600
+application: Yes
+category: system
+pin: Yes

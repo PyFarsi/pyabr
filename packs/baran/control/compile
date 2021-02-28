@@ -1,0 +1,8 @@
+baran.py:usr/app/baran.pyc
+inputbox.py:usr/app/inputbox.pyc
+selectbox.py:usr/app/selectbox.pyc
+about.py:usr/app/page_about.pyc
+boolbox.py:usr/app/boolbox.pyc
+textbox.py:usr/app/textbox.pyc
+usermanager.py:usr/app/usermanager.pyc
+edituser.py:usr/app/edituser.pyc

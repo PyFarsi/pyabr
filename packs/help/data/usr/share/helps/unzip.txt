@@ -1,0 +1,5 @@
+
+unzip [src] [dest]
+
+ <src>          <dest>      <job>
+ a.zip          a/          Extract 'a.zip' in 'a/' directory
