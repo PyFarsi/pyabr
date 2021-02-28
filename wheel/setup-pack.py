@@ -6,7 +6,7 @@
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
-#  Git source:              github.com/manijamali2003/pyabr
+#  Git source:              github.com/PyFarsi/pyabr
 #
 #######################################################################################
 
@@ -17,13 +17,13 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyabr",
-    version="1.2.0",
+    version="1.2.1",
     author="Mani Jamali",
     author_email="pyabrsystem@gmail.com",
     description="Python Cloud & OS",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/manijamali2003/pyabr",
+    url="https://github.com/PyFarsi/pyabr",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

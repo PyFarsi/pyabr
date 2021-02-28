@@ -6,7 +6,7 @@
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
-#  Git source:              github.com/manijamali2003/pyabr
+#  Git source:              github.com/PyFarsi/pyabr
 #
 #######################################################################################
 
@@ -18,6 +18,7 @@ list.remove('.idea')
 list.remove('wheel')
 list.remove('build.py')
 list.remove('pack-sb.py')
+list.remove('venv')
 list.remove('build-packs.py')
 list.remove('LICENSE')
 list.remove('pack.py')

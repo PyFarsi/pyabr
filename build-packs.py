@@ -6,7 +6,7 @@
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
-#  Git source:              github.com/manijamali2003/pyabr
+#  Git source:              github.com/PyFarsi/pyabr
 #
 #######################################################################################
 

@@ -23,9 +23,11 @@ wheels/
 pip-wheel-metadata/
 share/python-wheels/
 *.egg-info/
+build-packs/
+app/
+*.pa
 .installed.cfg
 *.egg
-MANIFEST
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -36,7 +38,7 @@ MANIFEST
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
-
+venv/
 # Unit test / coverage reports
 htmlcov/
 .tox/

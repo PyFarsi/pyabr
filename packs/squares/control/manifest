@@ -1,0 +1,8 @@
+name: squares
+copyright: (c) 2020 Kefayati
+license: Free Software
+unpack: /
+build: 1399-12-10
+version: 0.0.5
+description: Squares Game
+compile: Yes

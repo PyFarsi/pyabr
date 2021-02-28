@@ -6,7 +6,7 @@
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
-#  Git source:              github.com/manijamali2003/pyabr
+#  Git source:              github.com/PyFarsi/pyabr
 #
 #######################################################################################
 
@@ -21,6 +21,7 @@ shutil.unpack_archive('wheel/setup.zip','wheel/setup','zip') # Unpack setup whee
 list = os.listdir('.')
 list.remove('.git')
 list.remove('.idea')
+list.remove('venv')
 list.remove('wheel')
 list.remove('setup.svg')
 list.remove('.gitignore')

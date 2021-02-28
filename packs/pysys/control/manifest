@@ -1,0 +1,8 @@
+name: pysys
+copyright: (c) 2020 Mani Jamali
+license: GNU GPL v3.0
+unpack: /
+build: 1399-12-10
+version: 1.1.1
+description: Power Options
+compile: Yes
