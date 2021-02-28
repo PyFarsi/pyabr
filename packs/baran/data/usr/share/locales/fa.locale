@@ -432,3 +432,7 @@ desktop.apps: برنامه ها
 desktop.games: بازی ها
 desktop.themes: پوسته ها
 desktop.sessions: نشست ها
+desktop.perm: عدم دسترسی
+desktop.guestperm: با حساب کاربری مهمان نمی توان دسترسی داشت
+desltop.selectedon: این پوسته از پیش تنظیم شده است
+desktop.reboott: جهت اعمال این پوسته باید راه اندازی مجدد کنید

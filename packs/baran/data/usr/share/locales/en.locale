@@ -432,3 +432,7 @@ desktop.apps: Applications
 desktop.games: Games
 desktop.themes: Themes
 desktop.sessions: Sessions
+desktop.perm: Permission denied
+desktop.guestperm: Permission denied with guest account
+desktop.selectedon: This theme has already set it
+desktop.reboott: For setting this theme you should reboot

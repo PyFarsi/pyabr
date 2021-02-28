@@ -1357,15 +1357,15 @@ class ThemeListView(QListView):
         if x == True:
             if self.Env.username=='guest':
                 files.write('/proc/info/id', 'desktop')
-                self.Env.RunApp('text', ['عدم دسترسی', 'حساب مهمان دسترسی به تغییر پوسته ندارد'])
+                self.Env.RunApp('text', [res.get('@string/perm'), res.get('@string/guestperm')])
                 files.write('/proc/info/id', 'desktop')
             elif not control.read_record ('theme-name','/etc/gui')==control.read_record('theme-name',self.item.whatsThis()):
                 self.Widget.hide()
-                self.Env.RunApp('bool', [self.item.text(), 'برای اعمال این تم باید پای ابر را راه اندازی مجدد کنید', self.reboot_act_])
+                self.Env.RunApp('bool', [self.item.text(), res.get('@string/reboott'), self.reboot_act_])
                 files.write('/proc/info/id','desktop')
             else:
                 files.write('/proc/info/id', 'desktop')
-                self.Env.RunApp('text', [self.item.text(), 'این تم از پیش تنظیم شده است'])
+                self.Env.RunApp('text', [self.item.text(), res.get('@string/selectedon')])
                 files.write('/proc/info/id', 'desktop')
 
     def reboot_act_(self,yes):
@@ -1399,42 +1399,42 @@ class SessionListView(QListView):
         # on the given model index to get a pointer to the item
 
         it = QStandardItem('escape')
-        it.setText('فرار کردن')
+        it.setText(res.get('@string/escape')) # escape_
         it.setWhatsThis('escape')
         it.setFont(f)
         it.setIcon(QIcon(res.get(res.etc('pysys',"escape-icon"))))
         self.entry.appendRow(it)
 
         it = QStandardItem('restart')
-        it.setText('راه اندازی مجدد')
+        it.setText(res.get('@string/restart'))
         it.setWhatsThis('restart')
         it.setFont(f)
         it.setIcon(QIcon(res.get(res.etc('pysys', "restart-icon"))))
         self.entry.appendRow(it)
 
         it = QStandardItem('lock')
-        it.setText('قفل کردن')
+        it.setText(res.get('@string/lock'))
         it.setWhatsThis('lock')
         it.setFont(f)
         it.setIcon(QIcon(res.get(res.etc('pysys', "lock-icon"))))
         self.entry.appendRow(it)
 
         it = QStandardItem('logout')
-        it.setText('خروج از نشست')
+        it.setText(res.get('@string/signout'))
         it.setWhatsThis('logout')
         it.setFont(f)
         it.setIcon(QIcon(res.get(res.etc('pysys', "logout-icon"))))
         self.entry.appendRow(it)
 
         it = QStandardItem('switchuser')
-        it.setText('رفتن به نشستی دیگر')
+        it.setText(res.get('@string/switchuser'))
         it.setWhatsThis('switchuser')
         it.setFont(f)
         it.setIcon(QIcon(res.get(res.etc('pysys', "switchuser-icon"))))
         self.entry.appendRow(it)
 
         it = QStandardItem('suspend')
-        it.setText('حالت خواب')
+        it.setText(res.get('@string/sleep'))
         it.setFont(f)
         it.setWhatsThis('suspend')
         it.setIcon(QIcon(res.get(res.etc('pysys', "suspend-icon"))))
@@ -1449,7 +1449,6 @@ class SessionListView(QListView):
 
         if x == True:
             self.Widget.hide()
-            self.Env.RunApp(self.item.whatsThis().replace('.desk','').replace('/usr/share/applications/',''),None)
 
             if self.item.whatsThis()=='escape':
                 self.Env.escape_act()
@@ -1640,12 +1639,15 @@ class MenuApplications (QMainWindow):
         else:
             self.setGeometry(0, 0, self.Env.width(), self.Env.height()-size-15)
 
+
         self.tabs = QTabWidget()
         self.tabs.setFont(f)
+
         self.x = AppListView([self.Env, self])
         self.x1 = GameListView([self.Env,self])
         self.x2 = ThemeListView([self.Env,self])
         self.x3 = SessionListView([self.Env,self])
+
         self.tabs.addTab(self.x, res.get('@string/apps'))
         self.tabs.addTab(self.x1, res.get('@string/games'))
         self.tabs.addTab(self.x2, res.get('@string/themes'))
@@ -2025,7 +2027,7 @@ class Desktop (QMainWindow):
             self.layout().addWidget(AppWidget([self.Backend, self, appname,external]))
         else:
             files.write('/proc/info/id','desktop')
-            self.layout().addWidget(AppWidget([self.Backend, self, 'text', [res.get('@string/notf'), res.get('@string/notfm')]]))
+            self.layout().addWidget(AppWidget([self.Backend, self, 'text', [res.get('@string/notf'), res.get('@string/notfm')+appname]]))
             files.write('/proc/info/id','desktop')
 
     def StartupApplication (self):
