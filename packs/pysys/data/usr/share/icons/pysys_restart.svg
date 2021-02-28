@@ -12,7 +12,7 @@
    viewBox="0 0 128.0 128.0"
    height="128.0px"
    width="128.0px"
-   inkscape:version="1.0 (6e3e5246a0, 2020-05-07)"
+   inkscape:version="1.0.1 (0767f8302a, 2020-10-17)"
    sodipodi:docname="pysys_restart.svg">
   <defs
      id="defs833" />
@@ -23,16 +23,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.6203867"
+     inkscape:zoom="2.56"
      inkscape:cx="71.736519"
-     inkscape:cy="62.429689"
+     inkscape:cy="50.426121"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1016"
-     inkscape:window-x="0"
+     inkscape:window-width="1832"
+     inkscape:window-height="1025"
+     inkscape:window-x="88"
      inkscape:window-y="27"
      inkscape:window-maximized="1">
     <inkscape:grid
@@ -55,17 +55,24 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <ellipse
+       style="fill:#2485da;stroke-width:0.877643"
+       id="path833"
+       cx="65.212296"
+       cy="64.655342"
+       rx="55.394817"
+       ry="54.315907" />
     <circle
        r="25"
-       cy="59.208324"
-       cx="65.571091"
+       cy="64.122879"
+       cx="65.894241"
        id="path943"
        style="opacity:1;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:5.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <circle
        style="fill:#ffffff;fill-opacity:1;stroke-width:4.59981"
        id="path836"
-       cx="65.405396"
-       cy="59.26535"
+       cx="65.728546"
+       cy="64.179901"
        r="16.726589" />
   </g>
 </svg>

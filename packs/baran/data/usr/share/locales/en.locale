@@ -428,3 +428,7 @@ paye.open: Open
 paye.update: Update
 paye.unxp: Uninstall
 paye.back: Back
+desktop.apps: Applications
+desktop.games: Games
+desktop.themes: Themes
+desktop.sessions: Sessions

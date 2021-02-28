@@ -8,7 +8,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="pysys_logout.svg"
-   inkscape:version="1.0 (6e3e5246a0, 2020-05-07)"
+   inkscape:version="1.0.1 (0767f8302a, 2020-10-17)"
    width="128.0px"
    height="128.0px"
    viewBox="0 0 128.0 128.0"
@@ -17,18 +17,18 @@
   <defs
      id="defs833" />
   <sodipodi:namedview
-     inkscape:window-maximized="1"
-     inkscape:window-y="27"
-     inkscape:window-x="0"
-     inkscape:window-height="1016"
-     inkscape:window-width="1920"
+     inkscape:window-maximized="0"
+     inkscape:window-y="71"
+     inkscape:window-x="652"
+     inkscape:window-height="1025"
+     inkscape:window-width="1638"
      showgrid="true"
      inkscape:document-rotation="0"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
      inkscape:cy="62.221666"
-     inkscape:cx="71.227011"
-     inkscape:zoom="20.48"
+     inkscape:cx="81.97026"
+     inkscape:zoom="3.6203867"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -55,15 +55,22 @@
      id="layer1"
      inkscape:groupmode="layer"
      inkscape:label="Layer 1">
+    <ellipse
+       style="fill:#2485da;stroke-width:0.877643"
+       id="path833"
+       cx="65.590462"
+       cy="64.523041"
+       rx="55.394817"
+       ry="54.315907" />
     <circle
        style="opacity:1;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:5.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path943"
-       cx="65.571091"
-       cy="59.208324"
+       cx="67.193344"
+       cy="63.18782"
        r="25" />
     <g
        id="g1435"
-       transform="translate(0.29804836,-0.61507226)">
+       transform="translate(1.9203018,3.3644232)">
       <rect
          style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.62958;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="rect1375-3"

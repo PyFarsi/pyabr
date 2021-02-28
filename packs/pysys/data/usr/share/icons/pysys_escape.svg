@@ -12,7 +12,7 @@
    viewBox="0 0 128.0 128.0"
    height="128.0px"
    width="128.0px"
-   inkscape:version="1.0 (6e3e5246a0, 2020-05-07)"
+   inkscape:version="1.0.1 (0767f8302a, 2020-10-17)"
    sodipodi:docname="pysys_escape.svg">
   <defs
      id="defs833" />
@@ -24,17 +24,17 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.6203867"
-     inkscape:cx="61.325122"
+     inkscape:cx="90.165704"
      inkscape:cy="61.601048"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="true"
-     inkscape:window-width="960"
-     inkscape:window-height="1016"
-     inkscape:window-x="447"
+     inkscape:window-width="1832"
+     inkscape:window-height="1025"
+     inkscape:window-x="88"
      inkscape:window-y="27"
-     inkscape:window-maximized="0">
+     inkscape:window-maximized="1">
     <inkscape:grid
        id="grid1403"
        type="xygrid" />
@@ -55,15 +55,22 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <ellipse
+       style="fill:#2485da;stroke-width:0.877643"
+       id="path833"
+       cx="63.638382"
+       cy="63.842857"
+       rx="55.394817"
+       ry="54.315907" />
     <circle
        r="25"
-       cy="59.208324"
+       cy="64.208321"
        cx="65.571091"
        id="path943"
        style="opacity:1;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:5.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
        ry="4.4058261"
-       y="25"
+       y="30"
        x="60"
        height="40"
        width="9.9131088"

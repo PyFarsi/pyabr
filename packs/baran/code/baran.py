@@ -1646,10 +1646,10 @@ class MenuApplications (QMainWindow):
         self.x1 = GameListView([self.Env,self])
         self.x2 = ThemeListView([self.Env,self])
         self.x3 = SessionListView([self.Env,self])
-        self.tabs.addTab(self.x,'برنامه ها')
-        self.tabs.addTab(self.x1, 'بازی ها')
-        self.tabs.addTab(self.x2,'پوسته ها')
-        self.tabs.addTab(self.x3,'نشست ها')
+        self.tabs.addTab(self.x, res.get('@string/apps'))
+        self.tabs.addTab(self.x1, res.get('@string/games'))
+        self.tabs.addTab(self.x2, res.get('@string/themes'))
+        self.tabs.addTab(self.x3, res.get('@string/sessions'))
         self.setCentralWidget(self.tabs)
 
 class AppWidget (QMainWindow):
