@@ -7,7 +7,9 @@ In the name of God, the Compassionate, the Merciful
 
 Pyabr &copy; 2021 Mani Jamali. Free Software GNU General Public License v3.0
 
-# What is Pyabr?
+## How to 
+
+## What is Pyabr?
 
 Pyabr is a small and lightweight software use as:
 
@@ -17,7 +19,7 @@ Pyabr is a small and lightweight software use as:
 - a small cloud software in client
 - a small cloud software on servers
 
-# How to install it?
+## How to install it?
 
 - Stable release:
 
