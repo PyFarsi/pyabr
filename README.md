@@ -31,7 +31,7 @@ In Windows use `python` instead of `python3`
 - Latest or unstable release:
 
 ```shell script
-git clone https://github.com/manijamali2003/pyabr.git
+git clone https://github.com/PyFarsi/pyabr.git
 cd pyabr
 python3 setup.py
 ```
