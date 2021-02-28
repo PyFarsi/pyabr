@@ -152,7 +152,7 @@ elif option=="in":
         if files.isfile(f'/app/packages/{i.lower()}.manifest'):
             old = control.read_record('version', f'/app/packages/{i}.manifest')
             new = control.read_record('version', f'/app/mirrors/{i}.manifest')
-            if not i=='latest' and old == new:
+            if not i=='latest' and old == new and not i == 'stable':
                 colors.show('paye','warning',f'{i}: package is up to date.')
             else:
                 print(f'Downloading {i} archive package ... ')
