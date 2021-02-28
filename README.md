@@ -7,7 +7,8 @@ In the name of God, the Compassionate, the Merciful
 
 Pyabr &copy; 2021 Mani Jamali. Free Software GNU General Public License v3.0
 
-## How to 
+## How to Contributing?
+for contributing in pyabr please read [CONTRIBUTING.md](/CONTRIBUTING.md)
 
 ## What is Pyabr?
 
