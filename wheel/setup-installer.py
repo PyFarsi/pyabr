@@ -13,9 +13,12 @@
 import site, shutil, os, sys
 
 #print(site.getusersitepackages()) # https://stackoverflow.com/questions/122327/how-do-i-find-the-location-of-my-python-site-packages-directory
+import sysconfig
+#print(sysconfig.get_paths()["purelib"]) #changed. works for virtual envs, too.
 
-s = site.getusersitepackages()
-shutil.copyfile(s+"/pyabr/pyabr.zip","pyabr.zip")
+#s = site.getusersitepackages()
+s = sysconfig.get_paths()["purelib"]
+shutil.copyfile(s+r"\pyabr\pyabr.zip","pyabr.zip") # changed / to \
 shutil.unpack_archive("pyabr.zip","pyabr-install","zip")
 os.system("cd pyabr-install && \""+sys.executable+"\" setup.py")
 shutil.rmtree("pyabr-install")
