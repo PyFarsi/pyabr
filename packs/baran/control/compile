@@ -6,3 +6,5 @@ boolbox.py:usr/app/boolbox.pyc
 textbox.py:usr/app/textbox.pyc
 usermanager.py:usr/app/usermanager.pyc
 edituser.py:usr/app/edituser.pyc
+screen.py:usr/app/screen.pyc
+process.py:usr/app/process.pyc

@@ -17,6 +17,12 @@ from libabr import System, App, Control, Files, Res, Commands
 res = Res();files = Files();app = App();control=Control();cmd = Commands()
 
 class MainApp(QtWidgets.QMainWindow):
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QtCore.QTimer.singleShot(1,self.onCloseProcess)
+
     def __init__(self,args):
         super(MainApp, self).__init__()
 
@@ -26,6 +32,9 @@ class MainApp(QtWidgets.QMainWindow):
         self.Widget = args[2]
         self.AppName = args[3]
         self.External = args[4]
+
+        # Connect to onCloseProcess
+        self.onCloseProcess()
 
         # resize
         self.Widget.Resize (self,700,500)
@@ -209,7 +218,6 @@ pause
                 self.Env.RunApp('text', [res.get('@string/cs'), res.get('@string/csm')])
                 app.switch('barge')
 
-
     def new_page_act (self):
         self.Env.RunApp ('barge',None)
         app.switch('barge')
@@ -225,7 +233,7 @@ pause
         if self.Widget.WindowTitle()=='': self.Widget.SetWindowTitle (res.get('@string/untitled'))
 
     def saveas_ (self,filename):
-        files.write(filename,self.teEdit.toPlainText())
+        files.write(self.teEdit.toPlainText())
         self.Widget.SetWindowTitle(files.output(filename))
 
     def save_ (self,filename):

@@ -436,3 +436,17 @@ desktop.perm: عدم دسترسی
 desktop.guestperm: با حساب کاربری مهمان نمی توان دسترسی داشت
 desltop.selectedon: این پوسته از پیش تنظیم شده است
 desktop.reboott: جهت اعمال این پوسته باید راه اندازی مجدد کنید
+screen.app_name: تنظیم رزولوشن صفحه
+screen.savec: ذخیره تغییرات
+screen.reboot: برای اعمال تغییرات صفحه لطفا راه اندازی مجدد کنید
+squares.app_name: مربع ها
+desktop.audios: صداها
+desktop.desktop: میزکار
+desktop.downloads: دانلودها
+desktop.documents: اسناد
+desktop.templates: الگوها
+desktop.pictures: تصاویر
+desktop.projects: پروژه
+desktop.public: عمومی
+desktop.videos: ویدئو
+process.app_name: مدیریت فرایندها

@@ -436,3 +436,17 @@ desktop.perm: Permission denied
 desktop.guestperm: Permission denied with guest account
 desktop.selectedon: This theme has already set it
 desktop.reboott: For setting this theme you should reboot
+screen.app_name: Screen Resolution
+screen.savec: Save changes
+screen.reboot: For saving changes you should reboot
+squares.app_name: Squares
+desktop.audios: Audios
+desktop.desktop: Desktop
+desktop.downloads: Downloads
+desktop.documents: Documents
+desktop.templates: Templates
+desktop.pictures: Pictures
+desktop.projects: Projects
+desktop.public: Public
+desktop.videos: Videos
+process.app_name: Process Manager

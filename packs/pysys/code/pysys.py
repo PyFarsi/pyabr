@@ -12,7 +12,7 @@
 
 import sys
 
-from libabr import Files, Control, Permissions, Colors, Process, Modules, Package, Res
+from libabr import Files, Control, Permissions, Colors, Process, Modules, Package, Res, App
 
 modules = Modules()
 files = Files()
@@ -22,12 +22,18 @@ process = Process()
 permissions = Permissions()
 pack = Package()
 res = Res()
+app = App()
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
 class MainApp (QWidget):
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
     def __init__(self,ports):
         super(MainApp, self).__init__()
 
@@ -36,6 +42,8 @@ class MainApp (QWidget):
         self.Widget = ports[2]
         self.AppName = ports[3]
         self.External = ports[4]
+
+        self.onCloseProcess()
 
         self.Widget.setStyleSheet(f'background-color:{res.etc(self.AppName,"bgcolor")};')
 

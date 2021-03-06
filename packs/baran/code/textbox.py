@@ -11,7 +11,7 @@
 #######################################################################################
 
 import sys, os
-from libabr import Files, Colors, Control, Res
+from libabr import Files, Colors, Control, Res, App
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -21,8 +21,14 @@ files = Files()
 colors = Colors()
 control = Control()
 res = Res()
+app = App()
 
 class MainApp (QMainWindow):
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
     def __init__(self,ports):
         super(MainApp, self).__init__()
 
@@ -31,6 +37,8 @@ class MainApp (QMainWindow):
         self.Widget = ports[2]
         self.Appname = ports[3]
         self.External = ports[4]
+
+        self.onCloseProcess()
 
         self.setStyleSheet('background-color: white;')
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc('text',"logo"))))

@@ -24,6 +24,9 @@ commands = Commands()
 permissions = Permissions()
 app = App()
 
+## Get data ##
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 
 class FileListView (QtWidgets.QListView):
     AppName = "roller"
@@ -199,6 +202,28 @@ class FileListView (QtWidgets.QListView):
 
         self.setStyleSheet(f'background:{res.etc("roller","bgcolor")};')
 
+        self.username = self.Env.username
+
+        self.setStyleSheet('background:white;')
+
+        self.setStyleSheet("""
+                QScrollBar
+                {
+                background : white;
+                }
+                QScrollBar::handle
+                {
+                background : #123456;
+                border-radius: 6% 6%;
+                }
+                QScrollBar::handle::pressed
+                {
+                background : #ABCDEF;
+                border-radius: 6% 6%;
+                }""".replace('white', self.Env.__menu_scroll_bgcolor__).replace('#123456', self.Env.__menu_scroll_color__).replace('6',
+                                                                                                         self.Env.__menu_scroll_round_size__).replace(
+            '#ABCDEF', self.Env.__menu_scroll_color_hover__))
+
         self.dir = files.readall('/proc/info/pwd')
         files.write('/proc/info/dsel', self.dir)
         self.listdir = (files.list(self.dir))
@@ -314,6 +339,11 @@ class MainApp (QtWidgets.QMainWindow):
                     it.setIcon(QtGui.QIcon(res.get(res.etc("roller","file-icon"))))
             else:
                 it.setIcon(QtGui.QIcon(res.get(res.etc("roller","file-icon"))))
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QtCore.QTimer.singleShot(1,self.onCloseProcess)
 
     def __init__(self,args):
         super().__init__()
@@ -323,7 +353,7 @@ class MainApp (QtWidgets.QMainWindow):
         self.Widget = args[2]
         self.AppName = args[3]
         self.External = args[4]
-
+        self.onCloseProcess()
 
 
         if not self.External == None:
@@ -333,8 +363,8 @@ class MainApp (QtWidgets.QMainWindow):
                         files.write('/proc/info/pwd',files.output(self.External[0]))
 
         ## Menubar ##
-
         self.x = FileListView([self.Env])
+        self.setCentralWidget(self.x)
 
         self.menubar = self.menuBar()
         self.menubar.setFont(self.Env.font())
@@ -427,8 +457,6 @@ class MainApp (QtWidgets.QMainWindow):
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
         self.Widget.SetWindowIcon (QtGui.QIcon(res.get(res.etc(self.AppName,"logo"))))
         self.Widget.Resize (self,int(res.etc(self.AppName,"width")),int(res.etc(self.AppName,"height")))
-
-        self.setCentralWidget(self.x)
 
     def New_Folder (self):
         app.switch('roller')

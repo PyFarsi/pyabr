@@ -1,8 +1,8 @@
 name: paye
-copyright: (c) 2020 Mani Jamali
+copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-build: 1399-12-10
-version: 1.1.4
+build: 1399-12-11
+version: 1.1.5
 description: Paye package manager as a default package manager that can control the system
 compile: Yes

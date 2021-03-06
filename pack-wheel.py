@@ -10,7 +10,8 @@
 #
 #######################################################################################
 
-import shutil, os, sys
+import shutil, os, sys,py_compile
+import base64
 
 if not os.path.isdir ("build-packs"): os.mkdir ("build-packs")
 if not os.path.isdir ("wheel/src"): os.mkdir("wheel/src")
@@ -19,8 +20,8 @@ shutil.unpack_archive('wheel/setup.zip','wheel/setup','zip') # Unpack setup whee
 ## Copy all files and dirs in wheel/setup/src ##
 
 list = os.listdir('.')
-list.remove('.git')
 list.remove('.idea')
+list.remove('.git')
 list.remove('venv')
 list.remove('wheel')
 list.remove('setup.svg')
@@ -61,5 +62,4 @@ os.system ("cd wheel/setup && \""+sys.executable+"\" setup.py bdist_wheel")
 
 C = input('Do you want to clean the cache? [Y/n]: ')
 if C.lower()=='y':
-    os.system('cd wheel/setup/dist && pip3 uninstall pyabr && pip3 install ./* && twine upload *')
     import clean

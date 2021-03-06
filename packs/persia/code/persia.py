@@ -13,7 +13,7 @@
 from PyQt5.QtGui import  *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-from PyQt5 import uic, QtGui, QtWidgets, QtCore
+from PyQt5 import uic, QtGui, QtWidgets, QtCore, Qsci
 import sys, importlib, random,py_compile,imp
 from libabr import System, App, Control, Files, Res, Commands
 
@@ -22,6 +22,7 @@ res = Res();files = Files();app = App();control=Control();commands = Commands()
 f = QtGui.QFont()
 f.setFamily('DejaVu Sans Mono')
 f.setPointSize(12)
+
 
 class FileListView(QListView):
     def format(self, it, text):
@@ -172,6 +173,27 @@ class FileListView(QListView):
         # on the given model index to get a pointer to the item
 
         self.setStyleSheet('background:white;')
+        self.username = self.editor.Env.username
+
+        self.setStyleSheet('background:white;')
+
+        self.setStyleSheet("""
+                QScrollBar
+                {
+                background : white;
+                }
+                QScrollBar::handle
+                {
+                background : #123456;
+                border-radius: 6% 6%;
+                }
+                QScrollBar::handle::pressed
+                {
+                background : #ABCDEF;
+                border-radius: 6% 6%;
+                }""".replace('white', self.editor.Env.__menu_scroll_bgcolor__).replace('#123456', self.editor.Env.__menu_scroll_color__).replace('6',
+                                                                                                         self.editor.Env.__menu_scroll_round_size__).replace(
+            '#ABCDEF', self.editor.Env.__menu_scroll_color_hover__))
 
         self.dir = files.readall('/proc/info/pwd')
         files.write('/proc/info/dsel', self.dir)
@@ -263,9 +285,74 @@ class FileListView(QListView):
 
             elif files.isfile(self.item.whatsThis()):
                 files.write('/proc/info/fsel', self.item.whatsThis())  # Send File selected
-                self.editor.teEdit.setPlainText(files.readall(self.item.whatsThis()))
+
+                self.lang = self.item.whatsThis().lower()
+
+                if self.lang.endswith('.py'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerPython())
+                elif self.lang.endswith('.diff'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerDiff())
+                elif self.lang.endswith('.f') or self.lang.endswith('.for') or self.lang.endswith('.f90'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerFortran())
+                elif self.lang.endswith('.d'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerD())
+                elif self.lang.endswith('.bat'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerBatch())
+                elif self.lang.endswith('.sh'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerBash())
+                elif self.lang.endswith('.js'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerJavaScript())
+                elif self.lang.endswith('.java'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerJava())
+                elif self.lang.endswith('.cs'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerCSharp())
+                elif self.lang.endswith('.xml') or self.lang.endswith('.dtd'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerXML())
+                elif self.lang.endswith('.c') or self.lang.endswith('.cpp') or self.lang.endswith('.hpp') or self.lang.endswith('.h') or self.lang.endswith('.c++') or self.lang.endswith('.cxx') or self.lang.endswith('.C') or self.lang.endswith('.hxx') or self.lang.endswith('.h++'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerCPP())
+                elif self.lang=='makefile':
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerMakefile())
+                elif self.lang.endswith('.html') or self.lang.endswith('.htm') or self.lang.endswith('.asp') or self.lang.endswith('.aspx') or self.lang.endswith('.php'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerHTML())
+                elif self.lang.endswith('.css'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerCSS())
+                elif self.lang.endswith('.rb'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerRuby())
+                elif self.lang.endswith('.json'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerJSON())
+                elif self.lang.endswith('.avs'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerAVS())
+                elif self.lang.endswith('.lua'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerLua())
+                elif self.lang.endswith('.m') or self.lang.endswith('.p') or self.lang.__contains__('.mex') or self.lang.endswith('.mat'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerMatlab())
+                elif self.lang.endswith('.pas'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerPascal())
+                elif self.lang.endswith('.perl'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerPerl())
+                elif self.lang.endswith('.sql'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerSQL())
+                elif self.lang.endswith('.properties'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerProperties())
+                elif self.lang.endswith('.ps'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerPostScript())
+                elif self.lang.endswith('.tcl'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerTCL())
+                elif self.lang.endswith('.md'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerMarkdown())
+                elif self.lang.endswith('.yaml'):
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerYAML())
+                else:
+                    self.editor.teEdit.setLexer(Qsci.QsciLexerPython())
+
+                self.editor.teEdit.setText(files.readall(self.item.whatsThis()))
 
 class MainApp(QtWidgets.QMainWindow):
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QtCore.QTimer.singleShot(1,self.onCloseProcess)
     def __init__(self,args):
         super(MainApp, self).__init__()
 
@@ -275,6 +362,10 @@ class MainApp(QtWidgets.QMainWindow):
         self.Widget = args[2]
         self.AppName = args[3]
         self.External = args[4]
+
+        self.onCloseProcess()
+
+        self.project_folder = control.read_record('desktop.projects',f'/usr/share/locales/{self.Env.__locale__}.locale')
 
         # resize
         self.Widget.Resize (self,self.Env.width(),self.Env.height())
@@ -287,9 +378,10 @@ class MainApp(QtWidgets.QMainWindow):
             self.Widget.SetWindowTitle(self.External[0])
 
         # text box
-        self.teEdit = QtWidgets.QTextEdit()
-        #self.teEdit.setText(files.readall('/proc/info/fsel'))
-        self.teEdit.setGeometry(int(self.Env.width()/5),25,self.Env.width()-int(self.Env.width()/5),self.Env.height())
+        self.teEdit = Qsci.QsciScintilla()
+        self.teEdit.setLexer(Qsci.QsciLexerPython())
+
+        self.teEdit.setGeometry(int(self.Env.width()/5),40,self.Env.width()-int(self.Env.width()/5),self.Env.height())
         self.layout().addWidget(self.teEdit)
 
         self.xfile = QMainWindow()
@@ -552,9 +644,9 @@ pause
         project = files.readall('/proc/info/psel')
         user = files.readall('/proc/info/su')
         if not user=='root':
-            path = f'/desk/{user}/Projects/{project}'
+            path = f'/desk/{user}/{self.project_folder}/{project}'
         else:
-            path = f'/root/Projects/{project}'
+            path = f'/root/{self.project_folder}/{project}'
 
         config = path+"/.pypersia"
 
@@ -617,11 +709,11 @@ pause
         su = files.readall('/proc/info/su')
 
         if not su=='root':
-            System (f"paye crt empty /desk/{su}/Projects/{projectname}")
-            commands.cd([f'/desk/{su}/Projects/{projectname}'])
+            System (f"paye crt empty /desk/{su}/{self.project_folder}/{projectname}")
+            commands.cd([f'/desk/{su}/{self.project_folder}/{projectname}'])
         else:
-            System(f"paye crt empty /root/Projects/{projectname}")
-            commands.cd([f'/root/Projects/{projectname}'])
+            System(f"paye crt empty /root/{self.project_folder}/{projectname}")
+            commands.cd([f'/root/{self.project_folder}/{projectname}'])
 
         commands.mv(['packs/app', f'packs/{projectname}'])
         commands.mv([f'packs/{projectname}/data/usr/share/docs/hello',
@@ -643,14 +735,14 @@ pause
         app.switch('persia')
 
     def project_create_gui (self,projectname):
-        su = files.readall('/proc/info/su')
+        su = self.Env.username
 
         if not su=='root':
-            System (f"paye crt empty /desk/{su}/Projects/{projectname}")
-            commands.cd([f'/desk/{su}/Projects/{projectname}'])
+            System (f"paye crt empty /desk/{su}/{self.project_folder}/{projectname}")
+            commands.cd([f'/desk/{su}/{self.project_folder}/{projectname}'])
         else:
-            System(f"paye crt gui /root/Projects/{projectname}")
-            commands.cd([f'/root/Projects/{projectname}'])
+            System(f"paye crt gui /root/{self.project_folder}/{projectname}")
+            commands.cd([f'/root/{self.project_folder}/{projectname}'])
 
         commands.mv(['packs/app',f'packs/{projectname}'])
         commands.mv([f'packs/{projectname}/data/usr/share/docs/hello',f'packs/{projectname}/data/usr/share/docs/{projectname}'])
@@ -672,14 +764,14 @@ pause
         app.switch('persia')
 
     def project_create_web (self,projectname):
-        su = files.readall('/proc/info/su')
+        su = self.Env.username
 
         if not su=='root':
-            System (f"paye crt web /desk/{su}/Projects/{projectname}")
-            commands.cd([f'/desk/{su}/Projects/{projectname}'])
+            System (f"paye crt web /desk/{su}/{self.project_folder}/{projectname}")
+            commands.cd([f'/desk/{su}/{self.project_folder}/{projectname}'])
         else:
-            System(f"paye crt web /root/Projects/{projectname}")
-            commands.cd([f'/root/Projects/{projectname}'])
+            System(f"paye crt web /root/{self.project_folder}/{projectname}")
+            commands.cd([f'/root/{self.project_folder}/{projectname}'])
 
         commands.mv(['packs/app',f'packs/{projectname}'])
         commands.mv([f'packs/{projectname}/data/usr/share/docs/hello',f'packs/{projectname}/data/usr/share/docs/{projectname}'])
@@ -704,9 +796,9 @@ pause
         self.project = files.readall('/proc/info/psel')
         self.user = files.readall('/proc/info/su')
         if not self.user == 'root':
-            self.path = f'/desk/{self.user}/Projects/{self.project}'
+            self.path = f'/desk/{self.user}/{self.project_folder}/{self.project}'
         else:
-            self.path = f'/root/Projects/{self.project}'
+            self.path = f'/root/{self.project_folder}/{self.project}'
 
         self.config = self.path + "/.pypersia"
 
@@ -729,18 +821,18 @@ pause
         self.teEdit.clear()
 
     def gettext (self,filename):
-        self.teEdit.setPlainText(files.readall(filename))
+        self.teEdit.setText(files.readall(filename))
         self.Widget.SetWindowTitle(files.output(filename).replace('//',''))
 
         if self.Widget.WindowTitle()=='': self.Widget.SetWindowTitle (res.get('@string/untitled'))
 
     def saveas_ (self,filename):
-        files.write(filename,self.teEdit.toPlainText())
+        files.write(filename,self.teEdit.text())
         files.write('/proc/info/fsel',filename)
 
     def save_ (self,filename):
         if not self.Widget.WindowTitle()==res.get('@string/untitled'):
-            files.write(files.readall('/proc/info/fsel'),self.teEdit.toPlainText())
+            files.write(files.readall('/proc/info/fsel'),self.teEdit.text())
         else:
             app.switch('persia')
             self.Env.RunApp('select', [res.get('@string/saveafile'), 'save', self.saveas_])
@@ -757,40 +849,51 @@ pause
         app.switch('persia')
 
     def langc (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.c')))
+        self.teEdit.setText(files.readall(res.get('@temp/untitled.c')))
+        self.teEdit.setLexer(Qsci.QsciLexerCPP())
 
     def langcpp (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.cpp')))
+        self.teEdit.setText(files.readall(res.get('@temp/untitled.cpp')))
+        self.teEdit.setLexer(Qsci.QsciLexerCPP())
 
     def langjava (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.java')))
+        self.teEdit.setText(files.readall(res.get('@temp/untitled.java')))
+        self.teEdit.setLexer(Qsci.QsciLexerJava())
 
     def langpython (self):
         x = files.readall(res.get('@temp/untitled.py'))
-        self.teEdit.setPlainText(x)
+        self.teEdit.setText(x)
+        self.teEdit.setLexer(Qsci.QsciLexerPython())
 
     def langpythonx (self):
         x = files.readall(res.get('@temp/untitled-gui.py'))
-        self.teEdit.setPlainText(x)
+        self.teEdit.setText(x)
+        self.teEdit.setLexer(Qsci.QsciLexerPython())
 
     def langpyweb (self):
         x = files.readall(res.get('@temp/untitled-web.py'))
-        self.teEdit.setPlainText(x)
+        self.teEdit.setText(x)
+        self.teEdit.setLexer(Qsci.QsciLexerPython())
 
     def langcs (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.cs')))
+        self.teEdit.setText(files.readall(res.get('@temp/untitled.cs')))
+        self.teEdit.setLexer(Qsci.QsciLexerCSharp())
 
     def langsaye (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.sa')))
+        self.teEdit.setText(files.readall(res.get('@temp/untitled.sa')))
+        self.teEdit.setLexer(Qsci.QsciLexerPython())
 
     def langhtml (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.html')))
+        self.teEdit.setText(files.readall(res.get('@temp/untitled.html')))
+        self.teEdit.setLexer(Qsci.QsciLexerHTML())
 
     def langphp (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.php')))
+        self.teEdit.setText(files.readall(res.get('@temp/untitled.php')))
+        self.teEdit.setLexer(Qsci.QsciLexerHTML())
 
     def langjs (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.js')))
+        self.teEdit.setText(files.readall(res.get('@temp/untitled.js')))
+        self.teEdit.setLexer(Qsci.QsciLexerJavaScript())
 
     def New_Folder (self):
         app.switch('persia')

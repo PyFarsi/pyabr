@@ -10,13 +10,17 @@
 #
 #######################################################################################
 
-from PyQt5 import QtGui, QtCore, QtWidgets, uic
+import hashlib
+import os
 import platform
-import hashlib, shutil, os, sys
-from buildlibs import pack_archives as pack, control
+import shutil
+import sys
 from pathlib import Path
 
-from pathlib import  Path
+from PyQt5 import QtWidgets, uic
+
+from buildlibs import pack_archives as pack, control
+
 
 class MainApp(QtWidgets.QWizard):
     def BrowseClick(self):
@@ -147,109 +151,50 @@ class MainApp(QtWidgets.QWizard):
             ## Setting GUI Table ##
             file = open("stor/etc/gui", "w")
             file.write(f'''
-desktop: baran
-fullscreen: Yes
-sides: Yes
-width: 1000
-height: 720
-autosize: Yes
-logo: @icon/pyabr-logo
-locale: {locale}
-font: Iran Sans
-theme-name: Glass theme
-backend.color: black
-backend.timeout: 1000
-taskbar.location: bottom
-taskbar.pins: browser,roller,barge,calculator,calendar,commento,pysys,runapp,about
-splash.timeout: 3000
-splash.logo: @icon/pyabr-logo
-splash.logo-size: 300
-splash.color: #ABCDEF
-login.bgcolor: #123456
-login.background: @background/glass
-login.fgcolor: #FFFFFF
-enter.bgcolor: #fff
-enter.background: @background/glass
-enter.fgcolor: #FFFFFF
-unlock.bgcolor: #123456
-unlock.background: @background/glass
-unlock.fgcolor: #FFFFFF
-loginw.bgcolor: white
-loginw.fgcolor: black
-loginw.round: Yes
-loginw.round-size: 20 20
-loginw.location: center
-loginw.shadow: Yes
-loginw.userlogo: @icon/account
-loginw.userlogo.shadow: Yes
-loginw.userlogo.color: white
-loginw.userlogo.round: Yes
-loginw.userlogo.round-size: 125 125
-loginw.input.shadow: Yes
-loginw.input.fgcolor: gray
-loginw.input.bgcolor: white
-loginw.input.round: Yes
-loginw.input.round-size: 20 20
-loginw.input.font-size: 12
-taskbar.bgcolor: white
-taskbar.fgcolor: black
-taskbar.locked: Yes
-taskbar.float: Yes
-taskbar.size: 70
-desktop.bgcolor: white
-desktop.fgcolor: black
-desktop.background: @background/glass
-lock.fgcolor: black
-lock.bgcolor: black
-lock.background: @background/glass
-lock.clock.shadow: No
-lock.clock.size: 100
+# lock : Lock Screen Style
+lock.clock.shadow: Yes
 lock.clock.color: white
 lock.clock.location: center
-lock.clock.format: hh:mm:ss
-loginw.login.round: Yes
-loginw.login.round-size: 20
-loginw.enter.round: Yes
-loginw.enter.round-size: 20
-loginw.unlock.round: Yes
-loginw.unlock.round-size: 20
+lock.clock.format: hh:mm
+lock.clock.size: 100
+lock.bgcolor: white
+lock.fgcolor: white
+lock.background: @background/glass
+
+# submenu : Submenu Style
 submenu.hide: No
-submenu.fgcolor: black
 submenu.bgcolor: white
-submenu.direction: ltr
-submenu.fontsize: 12
-loginw.login.bgcolor: #ABCDEF
-loginw.login.fgcolor: #FFFFFF
-loginw.login.bgcolor-hover: #123456
-loginw.login.fgcolor: #FFFFFF
-loginw.login.fontsize: 12
-loginw.login.hide: No
-loginw.login.width: 300
-loginw.enter.bgcolor: pink
-loginw.enter.fgcolor: #FFFFFF
-loginw.enter.bgcolor-hover: purple
-loginw.enter.fgcolor: #FFFFFF
-loginw.enter.fontsize: 12
-menu: @icon/menu
-loginw.enter.hide: No
-loginw.enter.width: 300
-loginw.unlock.bgcolor: green
-loginw.unlock.fgcolor: #FFFFFF
-loginw.unlock.bgcolor-hover: lime
-loginw.unlock.fgcolor: #FFFFFF
-loginw.unlock.fontsize: 12
-loginw.unlock.hide: No
-loginw.unlock.width: 300
-loginw.enter.shadow: No
-loginw.unlock.shadow: No
-loginw.login.shadow: No
-loginw.login.height: 40
-loginw.enter.height: 40
-loginw.unlock.height: 40
-appw.body.fgcolor: black
-appw.body.bgcolor: white
-appw.logo: @icon/app
-appw.shadow: Yes
+submenu.direction: rtl
+
+# taskbar : Taskbar Style
+taskbar.location: bottom
+taskbar.size: 70
+taskbar.locked: Yes
+taskbar.float: No
+taskbar.bgcolor: white
+taskbar.fgcolor: black
+
+# backend : Backend Style
+backend.color: white
+backend.timeout: 1000
+
+# splash : Splash Style
+splash.logo: @icon/pyabr-blue-logo
+splash.logo-size: 300
+splash.color: white
+splash.timeout: 3000
+
+# login : Login Style
+login.bgcolor: white
+login.fgcolor: black
+login.background: @background/glass
+
+# enter : Enter password page Style
+enter.bgcolor: white
+enter.fgcolor: black
+enter.background: @background/glass
+
+# appw : Application Window page Style
 appw.title.size: 50
 appw.title.fgcolor: white
 appw.title.bgcolor: #123456
@@ -257,6 +202,85 @@ appw.title.float: @icon/float
 appw.title.float-hover: #ABCDEF
 appw.title.close: @icon/close
 appw.title.close-hover: red
+appw.title.btn-round: Yes
+appw.shadow: Yes
+appw.logo: @icon/runner
+appw.body.bgcolor: white
+appw.body.fgcolor: gray
+
+# desktop : Desktop style
+desktop.bgcolor: white
+desktop.fgcolor: black
+desktop.background: @background/glass
+
+# loginw : Login Dialog Style
+loginw.input.bgcolor: white
+loginw.input.fgcolor: black
+loginw.input.round-size: 20
+loginw.input.shadow: Yes
+loginw.input.width: 300
+loginw.input.height: 40
+loginw.enter.bgcolor: purple
+loginw.enter.fgcolor: pink
+loginw.enter-hover.bgcolor: pink
+loginw.enter-hover.fgcolor: purple
+loginw.enter.round-size: 20
+loginw.enter.hide: No
+loginw.enter.width: 300
+loginw.enter.shadow: Yes
+loginw.enter.height: 40
+loginw.unlock.bgcolor: green
+loginw.unlock.fgcolor: lime
+loginw.unlock-hover.bgcolor: lime
+loginw.unlock-hover.fgcolor: green
+loginw.unlock.round-size: 40
+loginw.unlock.hide: No
+loginw.unlock.width: 300
+loginw.unlock.height: 40
+loginw.unlock.shadow: Yes
+loginw.login.hide: No
+loginw.login.shadow: Yes
+loginw.login.height: 40
+loginw.login-hover.bgcolor: #ABCDEF
+loginw.login-hover.fgcolor: #123456
+loginw.login.width: 300
+loginw.login.bgcolor: #123456
+loginw.login.fgcolor: #ABCDEF
+loginw.login.round-size: 20
+loginw.userlogo: @icon/account
+loginw.userlogo.shadow: Yes
+loginw.userlogo.bgcolor: white
+loginw.userlogo.round-size: 70
+loginw.bgcolor: white
+loginw.fgcolor: black
+loginw.round-size: 40
+loginw.location: center
+loginw.shadow: Yes
+loginw.width: 500
+loginw.height: 500
+
+# menu : Menu Applications Style
+menu: @icon/menu
+menu.scroll.color: #123456
+menu.scroll.color-hover: #ABCDEF
+menu.scroll.round-size: 0
+menu.scroll.bgcolor: white
+
+
+# root : Root Settings in GUI
+locale: {locale}
+logo: @icon/pyabr-logo
+autosize: Yes
+fullscreen: Yes
+width: 1920
+height: 1080
+terminal: commento
+params: gui
+sides: No
+font: Iran Sans
+fontsize: 12
+theme-name: glass-light
+desktop: baran
             ''')
             file.close()
 

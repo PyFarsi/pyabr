@@ -25,6 +25,7 @@ control = Control()
 files = Files()
 app = App()
 
+
 class AboutDialog(QDialog):
     def __init__(self, *args, **kwargs):
         super(AboutDialog, self).__init__(*args, **kwargs)
@@ -52,6 +53,12 @@ class AboutDialog(QDialog):
         self.setLayout(layout)
 
 class MainApp(QMainWindow):
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
+
     def __init__(self,ports, *args, **kwargs):
         super(MainApp, self).__init__(*args, **kwargs)
         self.Backend = ports[0]
@@ -59,6 +66,8 @@ class MainApp(QMainWindow):
         self.Widget = ports[2]
         self.AppName = ports[3]
         self.External = ports[4]
+
+        self.onCloseProcess()
 
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc(self.AppName,"logo"))))

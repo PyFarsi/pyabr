@@ -10,14 +10,19 @@ from PyQt5.QtWidgets import *
 
 from pyqterm import TerminalWidget
 from pyqterm.procinfo import ProcessInfo
-from libabr import Res, Control , Files
+from libabr import Res, Control , Files, App
 
 res = Res()
 control = Control()
+app = App()
 files = Files()
 
 class MainApp(QTabWidget):
-
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
     def __init__(self,args, parent=None):
         super(MainApp, self).__init__(parent)
 
@@ -26,6 +31,8 @@ class MainApp(QTabWidget):
         self.Widget = args[2]
         self.AppName = args[3]
         self.External = args[4]
+
+        self.onCloseProcess()
 
         self.proc_info = ProcessInfo()
         self.setTabPosition(QTabWidget.South)

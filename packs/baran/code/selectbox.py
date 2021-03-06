@@ -11,7 +11,7 @@
 #######################################################################################
 
 import sys, os
-from libabr import Files, Colors, Control, Res, Commands
+from libabr import Files, Colors, Control, Res, Commands, App
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -21,6 +21,7 @@ files = Files()
 colors = Colors()
 control = Control()
 res = Res()
+app = App()
 commands = Commands()
 
 class FileListView(QListView):
@@ -61,7 +62,29 @@ class FileListView(QListView):
         # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
         # on the given model index to get a pointer to the item
 
+        self.username = self.Env.username
+
         self.setStyleSheet('background:white;')
+
+        self.setStyleSheet("""
+        QScrollBar
+        {
+        background : white;
+        }
+        QScrollBar::handle
+        {
+        background : #123456;
+        border-radius: 6% 6%;
+        }
+        QScrollBar::handle::pressed
+        {
+        background : #ABCDEF;
+        border-radius: 6% 6%;
+        }""".replace('white', self.Env.__menu_scroll_bgcolor__).replace('#123456', self.Env.__menu_scroll_color__).replace('6',
+                                                                                                 self.Env.__menu_scroll_round_size__).replace(
+            '#ABCDEF', self.Env.__menu_scroll_color_hover__))
+
+
 
         self.dir = files.readall('/proc/info/pwd')
         files.write('/proc/info/dsel', self.dir)
@@ -187,6 +210,29 @@ class DirListView(QListView):
         # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
         # on the given model index to get a pointer to the item
 
+        self.username = self.Env.username
+
+
+        self.setStyleSheet('background:white;')
+
+        self.setStyleSheet("""
+                QScrollBar
+                {
+                background : white;
+                }
+                QScrollBar::handle
+                {
+                background : #123456;
+                border-radius: 6% 6%;
+                }
+                QScrollBar::handle::pressed
+                {
+                background : #ABCDEF;
+                border-radius: 6% 6%;
+                }""".replace('white', self.Env.__menu_scroll_bgcolor__).replace('#123456', self.Env.__menu_scroll_color__).replace('6',
+                                                                                                         self.Env.__menu_scroll_round_size__).replace(
+            '#ABCDEF', self.Env.__menu_scroll_color_hover__))
+
         self.dir = files.readall('/proc/info/pwd')
         files.write('/proc/info/dsel', self.dir)
         self.listdir = (files.list(self.dir))
@@ -259,6 +305,12 @@ class DirListView(QListView):
 
 # select box #
 class MainApp (QMainWindow):
+    def onCloseProcess (self):
+        if not app.check('select'):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
+
     def __init__(self,ports):
         super(MainApp, self).__init__()
 
@@ -267,6 +319,8 @@ class MainApp (QMainWindow):
         self.Widget = ports[2]
         self.AppName = ports[3]
         self.External = ports[4]
+
+        self.onCloseProcess()
 
         self.setStyleSheet('background-color: white;')
         ## Finds ##

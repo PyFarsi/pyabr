@@ -1,4 +1,4 @@
-cp /usr/share/themes/snow-theme /etc/gui
+cp /usr/share/themes/glass-dark-theme /etc/gui
 
 sel /usr/share/applications/roller.desk
 set folder-icon: @icon/folder
@@ -76,7 +76,6 @@ unsel
 sel /usr/share/applications/runapp.desk
 set logo: @icon/runner
 unsel
-
 
 sel /etc/ext
 set 7zip.icon: @icon/application-7zip

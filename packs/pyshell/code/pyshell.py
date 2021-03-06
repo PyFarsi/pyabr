@@ -10,14 +10,21 @@
 #
 #######################################################################################
 
-from libabr import Res
+from libabr import Res, App
 from PyQt5.QtGui import *
+from PyQt5.QtCore import *
 
 res = Res()
+app = App()
 
 from pyqtconsole.console import PythonConsole
 
 class MainApp(PythonConsole):
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
     def __init__(self,args):
         super(MainApp, self).__init__()
 
@@ -26,6 +33,8 @@ class MainApp(PythonConsole):
         self.Widget = args[2]
         self.AppName = args[3]
         self.External = args[4]
+
+        self.onCloseProcess()
 
         #self.Widget.Resize (700,500)
         self.Widget.Resize (self,int(res.etc(self.AppName,"width")),int(res.etc(self.AppName,"height")))

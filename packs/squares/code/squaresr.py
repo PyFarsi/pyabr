@@ -6,15 +6,22 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView
 import os
 import sys
 
-from libabr import Res, Control, Files, System
+from libabr import Res, Control, Files, System, App
 
 res = Res()
 control = Control()
+app = App()
 files = Files()
 
 class MainApp(QMainWindow):
     def Game (self):
         System('/usr/games/squares')  # Run CatBall Game
+
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
 
     def __init__(self,ports, *args, **kwargs):
         super(MainApp, self).__init__(*args, **kwargs)
@@ -24,15 +31,14 @@ class MainApp(QMainWindow):
         self.AppName = ports[3]
         self.External = ports[4]
 
+        self.onCloseProcess()
+
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc(self.AppName,"logo"))))
         self.Widget.Resize(self,self.Env.width(),self.Env.height())
 
         self.Widget.hide()
         self.Widget.Close()
-
-        files.write('/tmp/w',str(self.Env.width()))
-        files.write('/tmp/h', str(self.Env.height()))
 
         QTimer.singleShot(1,self.Game)
 

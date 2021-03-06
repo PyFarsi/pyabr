@@ -21,6 +21,11 @@ app = App()
 control = Control()
 
 class MainApp(QLineEdit):
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
     def correct (self):
         self.setStyleSheet(f'background-color: {res.etc(self.AppName,"bgcolor")};color: {res.etc(self.AppName,"fgcolor")};')
         app.switch('runapp')
@@ -49,6 +54,8 @@ class MainApp(QLineEdit):
         self.Widget = args[2]
         self.AppName = args[3]
         self.External = args[4]
+
+        self.onCloseProcess()
 
         ## Widget configs ##
         self.Widget.SetWindowTitle (res.get('@string/app_name'))

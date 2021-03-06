@@ -6,15 +6,15 @@ lock.clock.format: hh:mm
 lock.clock.size: 100
 lock.bgcolor: white
 lock.fgcolor: white
-lock.background: @background/glass
+lock.background: @background/default
 
 # submenu : Submenu Style
-submenu.hide: No
+submenu.hide: Yes
 submenu.bgcolor: white
 submenu.direction: rtl
 
 # taskbar : Taskbar Style
-taskbar.location: bottom
+taskbar.location: left
 taskbar.size: 70
 taskbar.locked: Yes
 taskbar.float: No
@@ -26,28 +26,28 @@ backend.color: white
 backend.timeout: 1000
 
 # splash : Splash Style
-splash.logo: @icon/pyabr-logo
+splash.logo: @icon/pyabr-blue-logo
 splash.logo-size: 300
-splash.color: #ABCDEF
+splash.color: white
 splash.timeout: 3000
 
 # login : Login Style
 login.bgcolor: white
 login.fgcolor: black
-login.background: @background/glass
+login.background: @background/default
 
 # enter : Enter password page Style
 enter.bgcolor: white
 enter.fgcolor: black
-enter.background: @background/glass
+enter.background: @background/default
 
 # appw : Application Window page Style
 appw.title.size: 50
-appw.title.fgcolor: white
-appw.title.bgcolor: #123456
-appw.title.float: @icon/float
+appw.title.fgcolor: gray
+appw.title.bgcolor: white
+appw.title.float: @icon/snow-float
 appw.title.float-hover: #ABCDEF
-appw.title.close: @icon/close
+appw.title.close: @icon/snow-close
 appw.title.close-hover: red
 appw.title.btn-round: Yes
 appw.shadow: Yes
@@ -58,7 +58,7 @@ appw.body.fgcolor: gray
 # desktop : Desktop style
 desktop.bgcolor: white
 desktop.fgcolor: black
-desktop.background: @background/glass
+desktop.background: @background/default
 
 # loginw : Login Dialog Style
 loginw.input.bgcolor: white
@@ -108,15 +108,14 @@ loginw.height: 500
 
 # menu : Menu Applications Style
 menu: @icon/menu
-menu.scroll.color: #123456
-menu.scroll.color-hover: #ABCDEF
+menu.scroll.color: #ABCDEF
+menu.scroll.color-hover: #123456
 menu.scroll.round-size: 0
 menu.scroll.bgcolor: white
 
 
 # root : Root Settings in GUI
 locale: fa
-layout: fa
 logo: @icon/pyabr-logo
 autosize: Yes
 fullscreen: Yes
@@ -127,5 +126,5 @@ params: gui
 sides: No
 font: Iran Sans
 fontsize: 12
-theme-name: glass-light
+theme-name: snow
 desktop: baran

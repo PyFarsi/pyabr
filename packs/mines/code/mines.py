@@ -13,11 +13,12 @@
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-from libabr import Files, Control, Res
+from libabr import Files, Control, Res, App
 
 files = Files()
 control = Control()
 res = Res()
+app = App()
 import random
 import time
 
@@ -145,6 +146,13 @@ class Pos(QWidget):
 
 
 class MainApp(QMainWindow):
+
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
+
     def __init__(self,ports, *args, **kwargs):
         super(MainApp, self).__init__(*args, **kwargs)
 
@@ -153,6 +161,8 @@ class MainApp(QMainWindow):
         self.Widget = ports[2]
         self.AppName = ports[3]
         self.External = ports[4]
+
+        self.onCloseProcess()
 
         self.Widget.Resize(self, int(res.etc("mines",'width')), int(res.etc("mines",'height')))
 

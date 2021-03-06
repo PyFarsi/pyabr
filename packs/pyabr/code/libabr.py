@@ -100,6 +100,16 @@ class Commands:
     def __init__(self):
         pass
 
+    # kill process #
+    def kill (self,args):
+        app = App()
+        colors = Colors()
+        for i in args:
+            if app.check(i):
+                app.end(i)
+            else:
+                colors.show ('kill','fail',f'{i}: id process not found.')
+
     # un set a variable
     def unset(self,args):
         files = Files()
@@ -2429,6 +2439,74 @@ class Res:
     def etc (self,app,name):
         control = Control()
         return control.read_record(name,f"/usr/share/applications/{app}.desk")
+
+
+    # Check lang #
+
+    def lang (self,str):
+        # en
+        if str.lower().startswith ('a')\
+                or str.startswith ('b')\
+                or str.startswith ('c')\
+                or str.startswith ('d')\
+                or str.startswith ('e')\
+                or str.startswith ('f')\
+                or str.startswith ('g')\
+                or str.startswith ('h')\
+                or str.startswith ('i')\
+                or str.startswith ('j')\
+                or str.startswith ('k')\
+                or str.startswith ('l')\
+                or str.startswith ('m')\
+                or str.startswith ('n')\
+                or str.startswith ('o')\
+                or str.startswith ('p')\
+                or str.startswith ('q')\
+                or str.startswith ('r')\
+                or str.startswith ('s')\
+                or str.startswith ('t')\
+                or str.startswith ('u')\
+                or str.startswith ('v')\
+                or str.startswith ('w')\
+                or str.startswith ('x')\
+                or str.startswith ('y')\
+                or str.startswith ('z'):
+            return 'en'
+        elif str.lower().startswith ('آ')\
+                or str.startswith ('ا')\
+                or str.startswith ('ب')\
+                or str.startswith ('پ')\
+                or str.startswith ('ت')\
+                or str.startswith ('ث')\
+                or str.startswith ('ج')\
+                or str.startswith ('چ')\
+                or str.startswith ('ح')\
+                or str.startswith ('خ')\
+                or str.startswith ('د')\
+                or str.startswith ('ذ')\
+                or str.startswith ('ر')\
+                or str.startswith ('ز')\
+                or str.startswith ('ژ')\
+                or str.startswith ('س')\
+                or str.startswith ('ش')\
+                or str.startswith ('ص')\
+                or str.startswith ('ض')\
+                or str.startswith ('ط')\
+                or str.startswith ('ظ')\
+                or str.startswith ('ع')\
+                or str.startswith ('غ')\
+                or str.startswith ('ک')\
+                or str.startswith ('گ')\
+                or str.startswith ('ل')\
+                or str.startswith ('م')\
+                or str.startswith ('ن')\
+                or str.startswith ('و')\
+                or str.startswith ('ه')\
+                or str.startswith ('ی'):
+            return 'fa'
+        else:
+            # for latest update
+            return 'en'
 
     # layout #
     def key (self,str):

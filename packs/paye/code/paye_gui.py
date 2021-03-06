@@ -33,7 +33,8 @@ class PackageListView (QListView):
     def format(self, it, text):
         if files.isfile (f'/usr/share/applications/{it.text()}.desk'):
             self.application = control.read_record('application',f'/usr/share/applications/{it.text()}.desk')
-            if self.application=='Yes':
+            self.game = control.read_record('game', f'/usr/share/applications/{it.text()}.desk')
+            if self.application=='Yes' or self.game=='Yes':
                 self.logo = control.read_record('logo',f'/usr/share/applications/{it.text()}.desk')
                 self.locale = control.read_record('locale', '/etc/gui')
                 it.setText(control.read_record(f'name[{self.locale}]', f'/usr/share/applications/{it.text()}.desk'))
@@ -46,6 +47,12 @@ class PackageListView (QListView):
 
         #it.setIcon(QIcon(res.get('@icon/application-x-pak')))
 
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
+
     def __init__(self,ports):
         super().__init__()
         self.ports = ports
@@ -55,6 +62,8 @@ class PackageListView (QListView):
         self.Widget = ports[2]
         self.AppName = ports[3]
         self.External = ports[4]
+
+        self.onCloseProcess()
 
         self.entry = QStandardItemModel()
         self.setModel(self.entry)
@@ -117,7 +126,6 @@ class ShowPackageInformation (QMainWindow):
         self.license = control.read_record('license',self.manifest)
         self.copyright = control.read_record('copyright',self.manifest)
         self.description = control.read_record('description',self.manifest)
-        self.Env.SetWindowTitle(self.External[0]+" package")
         self.resize(self.Env.width(),self.Env.height())
 
         self.btnBack = QPushButton()
@@ -137,7 +145,8 @@ class ShowPackageInformation (QMainWindow):
 
         if files.isfile (f'/usr/share/applications/{self.name}.desk'):
             self.application = control.read_record('application',f'/usr/share/applications/{self.name}.desk')
-            if self.application=='Yes':
+            self.game = control.read_record('game', f'/usr/share/applications/{self.name}.desk')
+            if self.application=='Yes' or self.game=='Yes':
                 self.logo = control.read_record('logo',f'/usr/share/applications/{self.name}.desk')
                 self.locale = control.read_record('locale','/etc/gui')
                 self.namex =  control.read_record(f'name[{self.locale}]',f'/usr/share/applications/{self.name}.desk')
@@ -148,13 +157,24 @@ class ShowPackageInformation (QMainWindow):
             self.btnImage.setIcon(QIcon(res.get('@icon/application-x-pak')))
 
 
+        self.Env.SetWindowTitle(self.namex)
+
         self.btnImage.setStyleSheet('background-color:white;border-radius: 64% 64%;')
         self.btnImage.setGeometry(30, 70, 128, 128)
         self.layout().addWidget (self.btnImage)
 
         self.lblName = QLabel()
-        self.lblName.setFont(self.Env.font())
-        self.lblName.setText(self.External[0])
+
+
+        if res.lang(self.namex)=='fa':
+            self.lblName.setAlignment(Qt.AlignRight)
+            self.lblName.setFont(QFont(self.Env.font().family(),16))
+        else:
+            f = QFont()
+            f.setPointSize(16)
+            self.lblName.setFont(f)
+
+        self.lblName.setText(self.namex)
         self.lblName.setGeometry(60 + 128, 128 - 25, self.width(), 50)
         self.layout().addWidget(self.lblName)
 
@@ -290,6 +310,7 @@ class MainApp (QMainWindow):
         self.Widget.Resize(self,720,640)
 
         self.menubar = QMenuBar()
+        self.menubar.setFont(self.Env.font())
         self.setMenuBar(self.menubar)
         app.switch('paye')
         self.mirror = self.menubar.addMenu(res.get('@string/mirror'))

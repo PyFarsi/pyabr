@@ -101,6 +101,10 @@ set appw.title.float: @icon/float
 set appw.title.float-hover: #86beff
 set appw.title.close: @icon/ubuntu-close
 set appw.title.close-hover: #323030
+set menu.scroll.color: #730c5a
+set menu.scroll.color-hover: #730c5a
+set menu.scroll.round-size: 0
+set menu.scroll.bgcolor: white
 unsel
 
 sel /etc/ext

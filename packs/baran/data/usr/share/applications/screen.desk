@@ -1,0 +1,6 @@
+name[en]: Screen
+exec: screen
+logo: @icon/help-about
+application: No
+hidden: Yes
+category: system

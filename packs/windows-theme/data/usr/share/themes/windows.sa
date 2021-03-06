@@ -225,6 +225,7 @@ set loginw.login.round-size: 20
 set loginw.enter.round: No
 set loginw.enter.round-size: 20
 set loginw.unlock.round: No
+set appw.title.btn-round: No
 set loginw.unlock.round-size: 20
 set submenu.hide: Yes
 set submenu.fgcolor: white
@@ -269,4 +270,8 @@ set appw.title.float: @icon/win-max
 set appw.title.float-hover: #86beff
 set appw.title.close: @icon/win-close
 set appw.title.close-hover: red
+set menu.scroll.color: gray
+set menu.scroll.color-hover: #ABCDEF
+set menu.scroll.round-size: 0
+set menu.scroll.bgcolor: white
 unsel

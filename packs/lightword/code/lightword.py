@@ -80,7 +80,11 @@ class TextEdit(QTextEdit):
 
 
 class MainApp(QMainWindow):
-
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
     def __init__(self,ports, *args, **kwargs):
         super(MainApp, self).__init__(*args, **kwargs)
 
@@ -89,6 +93,8 @@ class MainApp(QMainWindow):
         self.Widget = ports[2]
         self.AppName = ports[3]
         self.External = ports[4]
+
+        self.onCloseProcess()
 
         layout = QVBoxLayout()
         self.editor = TextEdit()

@@ -27,7 +27,7 @@ ip = ""
 arch = ""
 os_user = ""
 kernel_name = "vmabr"
-kernel_version = "1.0.0"
+kernel_version = "1.2.3"
 user = ""
 code = ""
 argv = sys.argv[1:] # kernel parameters
@@ -354,7 +354,6 @@ if not (argv[0]=='user' or argv[0]=='login'):
 
     files.write("/proc/info/kname", kernel_name)
     files.write("/proc/info/kver", kernel_version)
-
 ## @core/system-info ##
 
     arch = platform.architecture()[0]

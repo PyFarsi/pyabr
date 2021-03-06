@@ -1,107 +1,4 @@
-sel /etc/gui
-set theme-name: glass
-set logo: @icon/pyabr-logo
-set backend.color: black
-set backend.timeout: 1000
-set taskbar.location: left
-set taskbar.pins: browser,roller,barge,calculator,calendar,commento,pysys,runapp,about
-set splash.timeout: 3000
-set splash.logo: @icon/pyabr-logo
-set splash.logo-size: 300
-set splash.color: #ABCDEF
-set login.bgcolor: #123456
-set login.background: @background/glass
-set login.fgcolor: #FFFFFF
-set enter.bgcolor: #fff
-set enter.background: @background/glass
-set enter.fgcolor: #FFFFFF
-set unlock.bgcolor: #123456
-set unlock.background: @background/glass
-set unlock.fgcolor: #FFFFFF
-set loginw.bgcolor: white
-set loginw.fgcolor: black
-set loginw.round: Yes
-set loginw.round-size: 20 20
-set loginw.location: center
-set menu: @icon/menu
-set loginw.shadow: Yes
-set loginw.userlogo: @icon/account
-set loginw.userlogo.shadow: Yes
-set loginw.userlogo.color: white
-set loginw.userlogo.round: Yes
-set loginw.userlogo.round-size: 125 125
-set loginw.input.shadow: Yes
-set loginw.input.fgcolor: gray
-set loginw.input.bgcolor: white
-set loginw.input.round: Yes
-set loginw.input.round-size: 20 20
-set loginw.input.font-size: 12
-set taskbar.bgcolor: white
-set taskbar.fgcolor: black
-set taskbar.locked: Yes
-set taskbar.float: Yes
-set taskbar.size: 70
-set desktop.bgcolor: white
-set desktop.fgcolor: black
-set desktop.background: @background/glass
-set lock.fgcolor: black
-set lock.bgcolor: black
-set lock.background: @background/glass
-set lock.clock.shadow: No
-set lock.clock.size: 100
-set lock.clock.color: white
-set lock.clock.location: center
-set lock.clock.format: hh:mm:ss
-set loginw.login.round: Yes
-set loginw.login.round-size: 20
-set loginw.enter.round: Yes
-set loginw.enter.round-size: 20
-set loginw.unlock.round: Yes
-set loginw.unlock.round-size: 20
-set submenu.hide: No
-set submenu.fgcolor: black
-set submenu.bgcolor: white
-set submenu.direction: ltr
-set submenu.fontsize: 12
-set loginw.login.bgcolor: #ABCDEF
-set loginw.login.fgcolor: #FFFFFF
-set loginw.login.bgcolor-hover: #123456
-set loginw.login.fgcolor: #FFFFFF
-set loginw.login.fontsize: 12
-set loginw.login.hide: No
-set loginw.login.width: 300
-set loginw.enter.bgcolor: pink
-set loginw.enter.fgcolor: #FFFFFF
-set loginw.enter.bgcolor-hover: purple
-set loginw.enter.fgcolor: #FFFFFF
-set loginw.enter.fontsize: 12
-set loginw.enter.hide: No
-set loginw.enter.width: 300
-set loginw.unlock.bgcolor: green
-set loginw.unlock.fgcolor: #FFFFFF
-set loginw.unlock.bgcolor-hover: lime
-set loginw.unlock.fgcolor: #FFFFFF
-set loginw.unlock.fontsize: 12
-set loginw.unlock.hide: No
-set loginw.unlock.width: 300
-set loginw.enter.shadow: No
-set loginw.unlock.shadow: No
-set loginw.login.shadow: No
-set loginw.login.height: 40
-set loginw.enter.height: 40
-set loginw.unlock.height: 40
-set appw.body.fgcolor: black
-set appw.body.bgcolor: white
-set appw.logo: @icon/app
-set appw.shadow: Yes
-set appw.title.size: 50
-set appw.title.fgcolor: white
-set appw.title.bgcolor: #123456
-set appw.title.float: @icon/float
-set appw.title.float-hover: #ABCDEF
-set appw.title.close: @icon/close
-set appw.title.close-hover: red
-unsel
+cp /usr/share/themes/glass-theme /etc/gui
 
 sel /usr/share/applications/roller.desk
 set folder-icon: @icon/folder
@@ -174,6 +71,10 @@ unsel
 
 sel /usr/share/applications/text.desk
 set logo: @icon/help-about
+unsel
+
+sel /usr/share/applications/runapp.desk
+set logo: @icon/runner
 unsel
 
 sel /etc/ext

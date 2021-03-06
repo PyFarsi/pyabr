@@ -23,6 +23,12 @@ app = App()
 res = Res()
 
 class MainApp(QWidget):
+    def onCloseProcess (self):
+        if not app.check('about'):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
+
     def __init__(self, ports):
         super(MainApp, self).__init__()
 
@@ -32,6 +38,7 @@ class MainApp(QWidget):
         self.AppName = ports[3]
         self.External = ports[4]
 
+        self.onCloseProcess()
 
         self.Widget.Resize(self, 600, 500)
         self.Widget.SetWindowTitle(res.get('@string/app_name'))

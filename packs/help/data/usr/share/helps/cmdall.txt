@@ -19,6 +19,7 @@ Standard Cloud Commands:
     getv       Get all information in controller
     gunzip     Extract gzip with tarball archive
     help       Help commands
+    kill       Kill id process
     logout     Logout from the shell
     ls         Show list of files and directories
     mkdir      Make a directory or directories

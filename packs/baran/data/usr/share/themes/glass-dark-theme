@@ -4,13 +4,13 @@ lock.clock.color: white
 lock.clock.location: center
 lock.clock.format: hh:mm
 lock.clock.size: 100
-lock.bgcolor: white
-lock.fgcolor: white
+lock.bgcolor: #123456
+lock.fgcolor: #ABCDEF
 lock.background: @background/glass
 
 # submenu : Submenu Style
 submenu.hide: No
-submenu.bgcolor: white
+submenu.bgcolor: #123456
 submenu.direction: rtl
 
 # taskbar : Taskbar Style
@@ -18,21 +18,21 @@ taskbar.location: bottom
 taskbar.size: 70
 taskbar.locked: Yes
 taskbar.float: No
-taskbar.bgcolor: white
+taskbar.bgcolor: #123456
 taskbar.fgcolor: black
 
 # backend : Backend Style
-backend.color: white
+backend.color: black
 backend.timeout: 1000
 
 # splash : Splash Style
 splash.logo: @icon/pyabr-logo
 splash.logo-size: 300
-splash.color: #ABCDEF
+splash.color: black
 splash.timeout: 3000
 
 # login : Login Style
-login.bgcolor: white
+login.bgcolor: black
 login.fgcolor: black
 login.background: @background/glass
 
@@ -43,8 +43,8 @@ enter.background: @background/glass
 
 # appw : Application Window page Style
 appw.title.size: 50
-appw.title.fgcolor: white
-appw.title.bgcolor: #123456
+appw.title.fgcolor: #123456
+appw.title.bgcolor: #ABCDEF
 appw.title.float: @icon/float
 appw.title.float-hover: #ABCDEF
 appw.title.close: @icon/close
@@ -52,7 +52,7 @@ appw.title.close-hover: red
 appw.title.btn-round: Yes
 appw.shadow: Yes
 appw.logo: @icon/runner
-appw.body.bgcolor: white
+appw.body.bgcolor: black
 appw.body.fgcolor: gray
 
 # desktop : Desktop style
@@ -98,8 +98,8 @@ loginw.userlogo: @icon/account
 loginw.userlogo.shadow: Yes
 loginw.userlogo.bgcolor: white
 loginw.userlogo.round-size: 125
-loginw.bgcolor: white
-loginw.fgcolor: black
+loginw.bgcolor: #123456
+loginw.fgcolor: white
 loginw.round-size: 40
 loginw.location: center
 loginw.shadow: Yes
@@ -111,12 +111,10 @@ menu: @icon/menu
 menu.scroll.color: #123456
 menu.scroll.color-hover: #ABCDEF
 menu.scroll.round-size: 0
-menu.scroll.bgcolor: white
-
+menu.scroll.bgcolor: black
 
 # root : Root Settings in GUI
 locale: fa
-layout: fa
 logo: @icon/pyabr-logo
 autosize: Yes
 fullscreen: Yes
@@ -127,5 +125,5 @@ params: gui
 sides: No
 font: Iran Sans
 fontsize: 12
-theme-name: glass-light
+theme-name: glass-dark
 desktop: baran

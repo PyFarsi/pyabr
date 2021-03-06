@@ -12,12 +12,12 @@
 
 import sys
 import math
-from libabr import Res
+from libabr import Res, App
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-res = Res()
+res = Res();app = App()
 
 class Button(QToolButton):
     def __init__(self, text, parent=None):
@@ -86,13 +86,21 @@ class Calc(QWidget):
             border-radius: 15% 15%;
         }
     '''.replace('blue',res.etc('calculator','up_bgcolor')).replace('15',res.etc('calculator','up_round')).replace('#ABCDEF',res.etc('calculator','up_hover_bgcolor'))
-
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
     def __init__(self,args):
         super(Calc, self).__init__()
 
         self.Backend = args[0]
         self.Env = args[1]
         self.Widget = args[2]
+        self.AppName = args[3]
+        self.External = args[4]
+
+        self.onCloseProcess()
 
         self.pendingAdditiveOperator = ''
         self.pendingMultiplicativeOperator = ''
@@ -423,4 +431,4 @@ class MainApp (QMainWindow):
         self.calc = Calc(ports)
         self.setStyleSheet(f'background-color:{res.etc(self.AppName,"bgcolor")};')
         self.setCentralWidget(self.calc)
-        self.Widget.Resize(self,400,390)
+        self.Widget.Resize(self,410,410)

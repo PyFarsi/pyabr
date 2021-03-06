@@ -18,13 +18,20 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView
 import os
 import sys
 
-from libabr import Res, Control, Files
+from libabr import Res, Control, Files, App
 
 res = Res()
 control = Control()
+app = App()
 files = Files()
 
 class MainApp(QMainWindow):
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
+
     def RunGap (self):
         self.Widget.close()
         self.Env.RunApp('wapp', ['https://web.gap.im'])
@@ -36,6 +43,8 @@ class MainApp(QMainWindow):
         self.Widget = ports[2]
         self.AppName = ports[3]
         self.External = ports[4]
+
+        self.onCloseProcess()
 
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc(self.AppName,"logo"))))

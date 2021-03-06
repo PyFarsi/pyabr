@@ -27,6 +27,11 @@ from piecasso_frontend import Ui_MainWindow
 res = Res();files = Files();app = App();control=Control()
 
 class MainApp(QtWidgets.QMainWindow):
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QtCore.QTimer.singleShot(1,self.onCloseProcess)
     def __init__(self,args):
         super(MainApp, self).__init__()
 
@@ -36,6 +41,8 @@ class MainApp(QtWidgets.QMainWindow):
         self.Widget = args[2]
         self.AppName = args[3]
         self.External = args[4]
+
+        self.onCloseProcess()
 
         # resize
         self.Widget.Resize (self,int(res.etc(self.AppName,"width")),int(res.etc(self.AppName,"height")))

@@ -18,9 +18,14 @@ from libabr import System, Files, Script, Control, Res, App
 files = Files()
 control = Control()
 res = Res()
+app = App()
 
 class MainApp (QMainWindow):
-
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
     def __init__(self,args):
         super(MainApp, self).__init__()
 
@@ -32,6 +37,8 @@ class MainApp (QMainWindow):
         self.Widget = args[2]
         self.AppName = args[3]
         self.External = args[4]
+
+        self.onCloseProcess()
 
         self.Widget.Resize(self,int(res.etc(self.AppName,"width")),int(res.etc(self.AppName,"height")))
 

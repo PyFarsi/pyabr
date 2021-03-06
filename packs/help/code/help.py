@@ -14,7 +14,17 @@ from PyQt5.QtCore import  *
 from PyQt5.QtGui import  *
 from PyQt5.QtWidgets import  *
 
+from libabr import App
+
+app = App()
+
 class MainApp (QMainWindow):
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
+
     def RunIt (self):
         self.Env.RunApp('wapp', ['http://pyabr.rf.gd/category/tutorials/'])
 
@@ -26,7 +36,10 @@ class MainApp (QMainWindow):
         self.Widget = ports[2]
         self.AppName = ports[3]
         self.External = ports[4]
+
+        self.onCloseProcess()
+
         self.hide()
         self.close()
         self.Widget.Close()
-        QTimer.singleShot(10,self.RunIt)
+        QTimer.singleShot(1,self.RunIt)
