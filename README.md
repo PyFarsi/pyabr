@@ -1,5 +1,5 @@
-<img src="https://img.shields.io/github/license/manijamali2003/pyabr?style=flat-square" alt="License"/>
-<img src="https://img.shields.io/github/languages/code-size/manijamali2003/pyabr?style=flat-square" alt="Code Size"/>
+<img src="https://img.shields.io/github/license/PyFarsi/pyabr?style=flat-square" alt="License"/>
+<img src="https://img.shields.io/github/languages/code-size/PyFarsi/pyabr?style=flat-square" alt="Code Size"/>
 
 # Pyabr cloud computing software
 
@@ -22,6 +22,8 @@ Pyabr is a small and lightweight software use as:
 
 ## How to install it?
 
+- Persia Document for Installaction of Pyabr [Click Here](https://vrgl.ir/PJcx1)
+
 - Stable release:
 
 ```shell script
@@ -38,8 +40,3 @@ git clone https://github.com/PyFarsi/pyabr.git
 cd pyabr
 python3 setup.py
 ```
-
-# Pyabr NEWS and tutorials
-
-- See t.me/pyabr
-- See gap.im/pyabr

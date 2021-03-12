@@ -17,7 +17,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyabr",
-    version="1.2.4",
+    version="1.2.5",
     author="Mani Jamali",
     author_email="pyabrsystem@gmail.com",
     description="Python Cloud & OS",
@@ -40,6 +40,7 @@ setuptools.setup(
         'requests',
         'PyQtWebEngine',
         'QScintilla',
+        'wget',
     ],
     include_package_data=True,
 )

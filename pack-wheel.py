@@ -22,7 +22,6 @@ shutil.unpack_archive('wheel/setup.zip','wheel/setup','zip') # Unpack setup whee
 list = os.listdir('.')
 list.remove('.idea')
 list.remove('.git')
-list.remove('venv')
 list.remove('wheel')
 list.remove('setup.svg')
 list.remove('.gitignore')
