@@ -231,6 +231,7 @@ xhtml.external.persia: Yes
 xml.icon: @icon/text-x-dtd
 xml.external.barge: Yes
 xml.external.persia: Yes
+xml.external.uiv: Yes
 mp4.icon: @icon/video-mp4
 webm.icon: @icon/video-mp4
 flv.icon: @icon/application-x-shockwave-flash
