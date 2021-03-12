@@ -26,7 +26,7 @@ app = App()
 # input box #
 class MainApp (QMainWindow):
     def onCloseProcess (self):
-        if not app.check('text'):
+        if not app.check('input'):
             self.Widget.Close()
         else:
             QTimer.singleShot(1,self.onCloseProcess)

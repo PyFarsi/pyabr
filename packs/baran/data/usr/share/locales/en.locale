@@ -243,6 +243,7 @@ paye.unpack: Installed in
 paye.app_name: Package Manager
 paye.rm: Uninstall
 paye.rmm: Do you want to uninstall this package?
+paye.inmx: Do you want to install this package?
 paye.up: Update
 paye.upm: Do you want to update this package?
 paye.rmx: Successfully Uninstalled
@@ -254,6 +255,7 @@ paye.package: Package
 paye.add: Add
 paye.remove: Remove
 paye.install: Install
+paye.installing: Installing
 paye.uninstall: Uninstall
 paye.download: Dowload
 paye.mname: Enter your mirror name
@@ -450,3 +452,32 @@ desktop.projects: Projects
 desktop.public: Public
 desktop.videos: Videos
 process.app_name: Process Manager
+process.refresh: Refresh
+process.tasks: Tasks
+process.end: End
+process.kill: Kill
+process.restart: Restart
+roller.cut: Cut
+roller.copy: Copy
+roller.paste: Paste
+roller.rename: Rename
+roller.execute: Execute
+roller.open: Open
+roller.openwith: Open With
+roller.delete: Delete
+open.always: Always
+open.atonce: At once
+open.choose: Choose an application
+dmgr.app_name: Download Manager
+dmgr.download: Dowload
+dmgr.link: Paste your link here
+dmgr.saveafile: Save a file
+paye.isnotapp: Is not application
+paye.isnotappm: This package is not an application
+persia.uix: UI
+open.isexe: Executable file
+open.isexem: Do you want to execute this file?
+open.unk: Unknown file
+open.unkm: Cannot open this file, because it's an unknown file.
+barge.uix: UI
+roller.uix: New UI file

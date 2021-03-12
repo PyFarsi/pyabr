@@ -10,7 +10,7 @@
 #
 #######################################################################################
 
-import importlib, shutil, os, sys, hashlib, subprocess,time,datetime,getpass,py_compile,socket
+import importlib, shutil, os, sys, hashlib, subprocess,time,datetime,getpass,py_compile,wget
 
 def read_record (name,filename):
     file = open (filename,"r")
@@ -99,6 +99,20 @@ class Script:
 class Commands:
     def __init__(self):
         pass
+
+    # start #
+    def start (self,args):
+        files = Files()
+        colors = Colors()
+
+        if args==[]:
+            colors.show ('start','fail','no inputs.')
+            sys.exit(0)
+
+        if files.isfile (f'/usr/share/applications/{args[0]}.desk'):
+            files.write('/tmp/start.tmp',args[0])
+        else:
+            colors.show('start', 'fail', f'{args[0]}: application not found.')
 
     # kill process #
     def kill (self,args):
@@ -1996,13 +2010,10 @@ class Commands:
 
         ## Download ##
 
-        url = args[0]
-
-        import requests
-        r = requests.get(url, allow_redirects=True)
         ## Check permissions ##
         if permissions.check(files.output(args[1]), "w", files.readall("/proc/info/su")):
-            open(files.input(args[1]), 'wb').write(r.content)
+            wget.download(args[0],files.input(args[1]))
+            print()
         else:
             colors.show("wget", "perm", "")
 
@@ -2017,7 +2028,6 @@ class Package:
 
         if permissions.check_root(files.readall("/proc/info/su")):
             if files.isdir("/app/cache"):
-                print('Cleaning the cache ...',end='')
                 files.removedirs("/app/cache")
                 files.mkdir("/app/cache")
                 files.mkdir("/app/cache/gets")
@@ -2026,7 +2036,6 @@ class Package:
                 files.mkdir("/app/cache/archives/control")
                 files.mkdir("/app/cache/archives/data")
                 files.mkdir("/app/cache/archives/build")
-                print('done')
         else:
             colors.show("paye", "perm", "")
 
@@ -2048,20 +2057,15 @@ class Package:
             if not files.isdir(name + "/code"): files.mkdir(name + "/code")
 
             ## Remove cache archives ##
-            print('Precleaning the cache ...',end='')
             if files.isdir('/app/cache/archives/control'): files.removedirs('/app/cache/archives/control')
             if files.isdir('/app/cache/archives/data'): files.removedirs('/app/cache/archives/data')
             if files.isdir('/app/cache/archives/code'): files.removedirs('/app/cache/archives/code')
-            print('done')
 
             ## Copy dir ##
-            print('Copying package source code to cache ...',end='')
             files.copydir(name + '/data', '/app/cache/archives/data')
             files.copydir(name + '/control', '/app/cache/archives/control')
             files.copydir(name + '/code', '/app/cache/archives/code')
-            print('done')
 
-            print('Creating archive package ...',end='')
             ## Pack archives ##
             shutil.make_archive(files.input("/app/cache/archives/build/data"), "zip",
                                 files.input('/app/cache/archives/data'))
@@ -2072,7 +2076,6 @@ class Package:
             shutil.make_archive(files.input(name), "zip", files.input("/app/cache/archives/build"))
 
             files.cut(name + ".zip", name + ".pa")
-            print('done')
             ## Unlock the cache ##
         else:
             colors.show("paye", "perm", "")
@@ -2090,7 +2093,6 @@ class Package:
         if permissions.check_root(files.readall("/proc/info/su")):
 
             ## unpack package ##
-            print('Unpacking into cache ...',end='')
             shutil.unpack_archive(files.input(name), files.input("/app/cache/archives/build"), "zip")
 
             shutil.unpack_archive(files.input("/app/cache/archives/build/data.zip"),
@@ -2105,15 +2107,12 @@ class Package:
             unpack = control.read_record("unpack", "/app/cache/archives/control/manifest")
             depends = control.read_record("depends", "/app/cache/archives/control/manifest")
 
-            print('done')
-
             if not (depends == None):
                 depends.split(",")
 
             ## Search for tree dependency ##
 
             if not depends == None:
-                print('Checking depends ...')
                 for i in depends:
                     if not files.isfile("/app/packages/" + i + ".manifest"):
                         System ('paye -i ' + name)
@@ -2121,7 +2120,6 @@ class Package:
             ## Write dependency ##
 
             if not depends == None:
-                print ('Writing dependencies ...')
                 for i in depends:
                     files.create("/app/packages/" + i + ".depends")
                     files.write("/app/packages/" + i + ".depends", name + "\n")
@@ -2129,7 +2127,6 @@ class Package:
             ## Run preinstall script ##
 
             if files.isfile('/app/cache/archives/control/preinstall.sa'):
-                print('Runing Preinstall script ...')
                 System('/app/cache/archives/preinstall')  # Run it
 
                 ## Copy preinstall script ##
@@ -2138,13 +2135,9 @@ class Package:
 
             ## Setting up ##
 
-            print ('Setting up package ...',end='')
-
             if files.isfile("/app/cache/archives/control/list"): files.copy("/app/cache/archives/control/list","/app/packages/" + name + ".list")
             if files.isfile("/app/cache/archives/control/manifest"): files.copy("/app/cache/archives/control/manifest","/app/packages/" + name + ".manifest")
             if files.isfile("/app/cache/archives/control/compile"): files.copy("/app/cache/archives/control/compile","/app/packages/" + name + ".compile")
-
-            print('done')
 
             compilefiles = control.read_record('compile','/app/cache/archives/control/manifest')
             if compilefiles=='Yes':
@@ -2156,12 +2149,9 @@ class Package:
                     code = '/app/cache/archives/code/' + spl[0]
                     dest = "/app/cache/archives/data/" + spl[1]
 
-                    print(f'Compiling {code} code ...',end='')
                     commands.cc([code, dest])
-                    print('done')
 
             ## Create data archive ##
-            print('Unpacking archive package ...',end='')
             shutil.make_archive(files.input("/app/cache/archives/build/data"), 'zip',files.input('/app/cache/archives/data'))
 
             ## Unpack data again ##
@@ -2170,14 +2160,12 @@ class Package:
             ## Save the source
 
             shutil.unpack_archive(files.input('/app/cache/archives/build/code.zip'),files.input('/usr/src/'+name),'zip')
-            print('done')
 
             ## After install ##
 
             ## Run postinstall script ##
 
             if files.isfile('/app/cache/archives/control/postinstall.sa'):
-                print('Runing Postinstall script ...')
                 System('/app/cache/archives/control/postinstall')  # Run it
 
                 ## Copy postinstall script ##
@@ -2214,7 +2202,6 @@ class Package:
 
             ## Database control ##
 
-            print('Selecting database ...',end='')
 
             list = "/app/packages/" + name + ".list"
             compile = '/app/packages/'+name+".compile"
@@ -2224,28 +2211,23 @@ class Package:
             postremove = "/app/packages/" + name + ".postremove"
             depends = "/app/packages/" + name+ ".depends"
 
-            print('done')
 
             ## Create preremove and postremove copies ##
 
-            print('Copying scripts ...',end='')
 
             if files.isfile(preremove): files.copy(preremove, "/usr/app/preremove.sa")
             if files.isfile(postremove): files.copy(postremove, "/usr/app/postremove.sa")
 
-            print('done')
 
             ## Run pre remove script ##
 
             if files.isfile ('/usr/app/preremove.sa'):
-                print('Runing Preremove script ...')
                 System("/usr/app/preremove")
                 files.remove('/usr/app/preremove.sa')
 
             ## Remove depends ##
 
             if files.isfile(depends):
-                print('Checking depends ...')
                 depends = control.read_list(depends)
                 for i in depends:
                     self.remove(i)
@@ -2255,7 +2237,6 @@ class Package:
             unpack = control.read_record("unpack", location)
 
             ## Unpacked removal ##
-            print(f'Removing data ...',end='')
             filelist = control.read_list(list)
 
             for i in filelist:
@@ -2264,11 +2245,8 @@ class Package:
                 elif files.isfile(unpack + "/" + i):
                     files.remove(unpack + "/" + i)
 
-            print('done')
 
             ## Database removal ##
-
-            print('Removing database ...',end='')
 
             if files.isfile(location): files.remove(location)
             if files.isfile(list): files.remove(list)
@@ -2279,7 +2257,6 @@ class Package:
             if files.isfile(depends): files.remove(depends)
             if files.isfile(compile): files.remove(compile)
 
-            print('done')
 
             ## Remove the source code ##
 
@@ -2288,7 +2265,6 @@ class Package:
             ## Run postremove script ##
 
             if files.isfile ('/usr/app/postremove.sa'):
-                print ('Runing Postremove script ...')
                 System ("postremove")
                 files.remove('/usr/app/postremove.sa')
         else:
@@ -2308,13 +2284,10 @@ class Package:
             mirror = files.readall('/app/mirrors/' + packname)
 
             ## Download the file ##
-            url = mirror
 
-            import requests
-            r = requests.get(url, allow_redirects=True)
+            wget.download(mirror,files.input(f'/app/cache/gets/{packname}.pa'))
+            print()
 
-            ## Check permissions ##
-            open(files.input('/app/cache/gets/' + packname + '.pa'), 'wb').write(r.content)
         else:
             colors.show("paye", "perm", "")
 
@@ -2343,7 +2316,6 @@ class Package:
         if permissions.check_root(files.readall("/proc/info/su")):
 
             # backup #
-            print('Creating backup ...',end='')
             shutil.make_archive(files.input('/app/cache/backups/users.bak'),'zip',files.input('/etc/users'))
             files.copy('/etc/color','/app/cache/backups/color.bak')
             files.copy('/etc/compiler','/app/cache/backups/compiler.bak')
@@ -2358,15 +2330,11 @@ class Package:
 
             mode = control.read_record('mode','/etc/paye/sources')
 
-            print('done')
 
-            print(f'Downloading {mode} archive package ... ', end='')
             self.download(mode)
             self.unpack(f'/app/cache/gets/{mode}.pa')
-            print('done')
 
             for i in files.list ('/app/packages'):
-                print('Checing for updates ...')
                 if i.endswith ('.manifest') and files.isfile(f'/app/mirrors/{i.replace(".manifest","")}'):
                     i = i.replace('.manifest','')
 
@@ -2375,15 +2343,10 @@ class Package:
                     new = control.read_record('version',f'/app/mirrors/{i}.manifest')
 
                     if not old==new and not i=='latest' and not i=='stable':
-                        print(f'Downloading {i} archive package ... ', end='')
                         self.download(i)
-                        print('done')
-                        print(f'Upgrading {i} package ... ', end='')
                         self.unpack(f'/app/cache/gets/{i}.pa')
-                        print('done')
 
             # backup #
-            print('Restoring backup ...',end='')
             shutil.unpack_archive(files.input('/app/cache/backups/users.bak.zip'), files.input('/etc/users'), 'zip')
             files.remove('/app/cache/backups/users.bak.zip')
             files.cut('/app/cache/backups/color.bak', '/etc/color')
@@ -2396,7 +2359,6 @@ class Package:
             files.cut('/app/cache/backups/modules.bak', '/etc/modules')
             files.cut('/app/cache/backups/permtab.bak', '/etc/permtab')
             files.cut('/app/cache/backups/time.bak', '/etc/time')
-            print('done')
         else:
             colors.show("paye", "perm", "")
 
@@ -2439,7 +2401,6 @@ class Res:
     def etc (self,app,name):
         control = Control()
         return control.read_record(name,f"/usr/share/applications/{app}.desk")
-
 
     # Check lang #
 

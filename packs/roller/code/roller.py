@@ -56,7 +56,7 @@ class FileListView (QtWidgets.QListView):
             it.setWhatsThis(self.dir + "/" + dirname)
             it.setIcon(QtGui.QIcon(res.get(res.etc("roller",'folder-icon'))))
             self.entry.appendRow(it)
-            commands.mkdir([dirname])
+            files.mkdir(dirname)
             it.setFont(self.Env.font())
             x = self.Env.font()
             print(x.family())
@@ -73,7 +73,7 @@ class FileListView (QtWidgets.QListView):
             it.setIcon(QtGui.QIcon(res.get(res.etc('roller','file-icon'))))
             self.entry.appendRow(it)
             self.format(it, filename)
-            commands.cat (['-c',filename])
+            files.create(filename)
             it.setFont(self.Env.font())
 
     def mkc (self,filename):
@@ -115,6 +115,16 @@ class FileListView (QtWidgets.QListView):
         else:
             self.mkfile(filename+".js")
             files.write(self.dir + "/" + filename+'.js',files.readall(res.get('@temp/untitled.js')))
+
+    def mkui (self,filename):
+        if files.isdir(filename+".ui"):
+            app.switch('roller')
+            self.Env.RunApp('text', [res.get('@string/isdir'),
+                                     res.get('@string/isdir_msg').replace("{0}", filename + ".ui")])
+            app.switch('roller')
+        else:
+            self.mkfile(filename+".ui")
+            files.write(self.dir + "/" + filename+'.ui',files.readall(res.get('@temp/untitled.ui')))
 
     def mkphp (self,filename):
         if files.isdir(filename+".php"):
@@ -189,6 +199,9 @@ class FileListView (QtWidgets.QListView):
     def __init__(self,ports):
         super().__init__()
         self.Env = ports[0]
+        self.Widget = ports[1]
+        self.Dialog = ports[2]
+
         self.entry = QtGui.QStandardItemModel()
         self.parentdir = QtGui.QStandardItem()
         self.parentdir.setIcon(QtGui.QIcon(res.get(res.etc("roller",'folder-icon'))))
@@ -229,8 +242,11 @@ class FileListView (QtWidgets.QListView):
         self.listdir = (files.list(self.dir))
         self.listdir.sort()
 
+        #self.w.hide()
+
         #self.clicked[QtCore.QModelIndex].connect(self.on_clicked)
         self.doubleClicked[QtCore.QModelIndex].connect (self.on_clicked)
+        self.clicked[QModelIndex].connect (self.onSelect)
 
         for text in self.listdir:
             if files.isdir(self.dir+"/"+text):
@@ -250,9 +266,20 @@ class FileListView (QtWidgets.QListView):
 
         self.itemOld = QtGui.QStandardItem("text")
 
+    def onSelect (self,index):
+        self.item = self.entry.itemFromIndex(index)
+        x = hasattr(self.item, 'whatsThis')  # W3CSHCOOL.COM LEARN IT
+
+        if x == True:
+
+            if files.isdir(self.item.whatsThis()):
+                files.write('/proc/info/wsel', self.item.whatsThis())  # Send Directory selected
+            elif files.isfile(self.item.whatsThis()):
+                files.write('/proc/info/wsel', self.item.whatsThis())  # Send File selected
+
+
     def on_clicked(self, index):
         self.item = self.entry.itemFromIndex(index)
-
         x = hasattr(self.item,'whatsThis') # W3CSHCOOL.COM LEARN IT
 
 
@@ -324,7 +351,43 @@ class FileListView (QtWidgets.QListView):
             elif files.isfile (self.item.whatsThis()):
                 files.write ('/proc/info/fsel',self.item.whatsThis()) # Send File selected
 
+
 class MainApp (QtWidgets.QMainWindow):
+
+    def contextMenuEvent(self, event):
+        self.file.setGeometry(int(self.width()/2),int(self.height()/2),self.file.width(),self.file.height())
+        if not files.isfile (files.readall('/proc/info/wsel')) and not files.readall('/proc/info/wsel')==files.output('/'):
+            self.open.setVisible(False)
+            self.openwith.setVisible(False)
+            self.execute.setVisible(False)
+            self.delete.setVisible(True)
+            self.copy.setVisible(True)
+            self.paste.setVisible(True)
+            self.cut.setVisible(True)
+            self.rename.setVisible(True)
+        elif files.readall('/proc/info/wsel')==files.output('/'):
+            self.open.setVisible(False)
+            self.openwith.setVisible(False)
+            self.execute.setVisible(False)
+            self.delete.setVisible(False)
+            self.copy.setVisible(False)
+            self.paste.setVisible(True)
+            self.cut.setVisible(False)
+            self.rename.setVisible(False)
+        else:
+            self.open.setVisible(True)
+            self.openwith.setVisible(True)
+            self.execute.setVisible(True)
+            self.delete.setVisible(True)
+            self.copy.setVisible(True)
+            self.paste.setVisible(True)
+            self.cut.setVisible(True)
+            self.rename.setVisible(True)
+
+        self.exit.setVisible(False)
+
+        action = self.file.exec_()
+
     def format (self,it,text):
         if os.path.isdir(self.dir + '/' + text):
             it.setIcon(QtGui.QIcon(res.get(res.etc("roller","folder-icon"))))
@@ -339,11 +402,118 @@ class MainApp (QtWidgets.QMainWindow):
                     it.setIcon(QtGui.QIcon(res.get(res.etc("roller","file-icon"))))
             else:
                 it.setIcon(QtGui.QIcon(res.get(res.etc("roller","file-icon"))))
+
     def onCloseProcess (self):
         if not app.check(self.AppName):
             self.Widget.Close()
         else:
             QtCore.QTimer.singleShot(1,self.onCloseProcess)
+
+    def refresh (self):
+        self.x = FileListView([self.Env,self.Widget,self])
+        self.setCentralWidget(self.x)
+
+    def delete_act (self):
+        self.wsel = files.readall('/proc/info/wsel')
+        if files.isdir(self.wsel):
+            app.switch('roller')
+            self.Env.RunApp('bool',[res.get('@string/delete'),'Do you want to delete this directory? ',self.delete_act_])
+            app.switch('roller')
+        else:
+            app.switch('roller')
+            self.Env.RunApp('bool', [res.get('@string/delete'), 'Do you want to delete this file? ', self.delete_act_])
+            app.switch('roller')
+
+    def delete_act_ (self,yes):
+        if yes:
+            if files.isdir(self.wsel) or files.isfile(self.wsel):
+                commands.rm ([self.wsel])
+
+            self.refresh()
+
+    def rename_act (self):
+        self.wsel = files.readall('/proc/info/wsel')
+        app.switch('roller')
+        self.Env.RunApp('input',[res.get('@string/rename'),self.rename_act_])
+        app.switch('roller')
+
+    def rename_act_(self,text):
+        if files.isdir(self.wsel) or files.isfile(self.wsel):
+            commands.mv ([self.wsel,text])
+
+        self.refresh()
+
+    def copy_act (self):
+        self.wsel = files.readall('/proc/info/wsel')
+
+        if files.isdir('/tmp/roller-copy'): files.removedirs('/tmp/roller-copy')
+        elif files.isfile('/tmp/roller-copy'): files.remove('/tmp/roller-copy')
+
+        files.write('/tmp/roller-src.tmp',self.wsel)
+
+        if files.isdir(self.wsel) or files.isfile(self.wsel):
+            commands.cp([self.wsel,'/tmp/roller-copy'])
+
+    def open_act (self):
+        splitext = files.output(files.readall('/proc/info/wsel')).split('.')
+        ext = max(splitext)
+
+        always = control.read_record (f'{ext}.always','/etc/ext')
+
+        if always==None:
+            self.open_with_act()
+        elif always=='persia':
+            self.Env.RunApp('persia', [None,files.readall('/proc/info/wsel')])
+        else:
+            self.Env.RunApp(always, [files.readall('/proc/info/wsel')])
+
+    def open_with_act (self):
+        self.Env.RunApp('open',[files.readall('/proc/info/wsel')])
+
+    def cut_act(self):
+        self.wsel = files.readall('/proc/info/wsel')
+
+        if files.isdir('/tmp/roller-copy'):
+            files.removedirs('/tmp/roller-copy')
+        elif files.isfile('/tmp/roller-copy'):
+            files.remove('/tmp/roller-copy')
+
+        files.write('/tmp/roller-src.tmp', self.wsel)
+
+        if files.isdir(self.wsel) or files.isfile(self.wsel):
+            commands.mv ([self.wsel,'/tmp/roller-copy'])
+
+        self.refresh()
+
+    def execute_act (self):
+        if permissions.check(files.readall('/proc/info/wsel'),'x',self.Env.username):
+            execute_file = files.readall('/proc/info/wsel').replace ('.pyc','').replace ('.py','').replace ('.jar','').replace ('.exe','').replace ('.sa','')
+
+            files.write('/tmp/exec.sa', f'''
+{execute_file}
+rm /tmp/exec.sa
+pause
+            ''')
+            self.Env.RunApp('commento', [None])
+            app.switch('roller')
+        else:
+            app.switch('roller')
+            self.Env.RunApp('text', ['Permission denied','Cannot execute this file; Permission denied'])
+            app.switch('roller')
+
+    def paste_act (self):
+        self.src = files.readall('/tmp/roller-src.tmp')
+        self.dest = files.output(files.filename(self.src))
+
+        if files.isdir(self.dest):
+            pass
+        elif files.isfile(self.dest):
+            pass
+        else:
+            if files.isdir('/tmp/roller-copy') or files.isfile('/tmp/roller-copy'):
+                commands.mv (['/tmp/roller-copy',self.dest])
+
+        self.refresh()
 
     def __init__(self,args):
         super().__init__()
@@ -355,7 +525,6 @@ class MainApp (QtWidgets.QMainWindow):
         self.External = args[4]
         self.onCloseProcess()
 
-
         if not self.External == None:
             if not self.External[0]==None:
                 if permissions.check(files.output(self.External[0]), "r", files.readall("/proc/info/su")):
@@ -363,19 +532,24 @@ class MainApp (QtWidgets.QMainWindow):
                         files.write('/proc/info/pwd',files.output(self.External[0]))
 
         ## Menubar ##
-        self.x = FileListView([self.Env])
+        self.x = FileListView([self.Env,self.Widget,self])
         self.setCentralWidget(self.x)
+
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.contextMenuEvent)
+
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
 
         self.menubar = self.menuBar()
         self.menubar.setFont(self.Env.font())
 
         self.file = self.menubar.addMenu(res.get('@string/file'))
         self.file.setFont(self.Env.font())
-
         ## File menu
 
         self.new_file = self.file.addAction(res.get('@string/newfile'))
         self.new_file.setFont(self.Env.font())
+        self.new_file.setShortcut('Ctrl+Alt+F')
         self.new_file.triggered.connect(self.New_File)
         self.new_file.setIcon(QIcon(res.get(res.etc("roller","file-icon"))))
 
@@ -438,17 +612,82 @@ class MainApp (QtWidgets.QMainWindow):
         self.new_pyweb.triggered.connect(self.New_PyWeb)
         self.new_pyweb.setFont(self.Env.font())
         self.new_pyweb.setIcon(QIcon(res.get('@icon/web-browser')))
+
+        self.new_ui = self.new_code.addAction(res.get('@string/uix'))
+        self.new_ui.setFont(self.Env.font())
+        self.new_ui.triggered.connect(self.New_UI)
+        self.new_ui.setIcon(QIcon(res.get('@icon/application-x-designer')))
         ##
 
         self.new_folder = self.file.addAction(res.get('@string/newfolder'))
         self.new_folder.triggered.connect(self.New_Folder)
+        self.new_folder.setShortcut('Ctrl+Alt+D')
         self.new_folder.setFont(self.Env.font())
         self.new_folder.setIcon(QIcon(res.get(res.etc("roller","folder-icon"))))
+
+        self.open = self.file.addAction(res.get('@string/open'))
+        self.open.setIcon(QIcon(res.get('@icon/blue-fileopen')))
+        self.open.triggered.connect(self.open_act)
+        self.open.setShortcut('Ctrl+O')
+        self.open.setFont(self.Env.font())
+
+        self.openwith = self.file.addAction(res.get('@string/openwith'))
+        self.openwith.triggered.connect(self.open_with_act)
+        self.openwith.setShortcut('Ctrl+Alt+O')
+
+        self.openwith.setIcon(QIcon(res.get('@icon/blue-fileopen')))
+        self.openwith.setFont(self.Env.font())
+
+        self.execute = self.file.addAction(res.get('@string/execute'))
+        self.execute.triggered.connect(self.execute_act)
+        self.execute.setFont(self.Env.font())
+        self.execute.setIcon(QIcon(res.get('@icon/execute')))
+        self.execute.setShortcut('Ctrl+Alt+X')
+
+        self.cut = self.file.addAction(res.get('@string/cut'))
+        self.cut.triggered.connect(self.cut_act)
+        self.cut.setShortcut('Ctrl+X')
+        self.cut.setIcon(QIcon(res.get('@icon/cut')))
+        self.cut.setFont(self.Env.font())
+
+        self.copy = self.file.addAction(res.get('@string/copy'))
+        self.copy.triggered.connect(self.copy_act)
+        self.copy.setIcon(QIcon(res.get('@icon/copy')))
+        self.copy.setFont(self.Env.font())
+        self.copy.setShortcut('Ctrl+C')
+
+        self.paste = self.file.addAction(res.get('@string/paste'))
+        self.paste.triggered.connect(self.paste_act)
+        self.paste.setFont(self.Env.font())
+        self.paste.setIcon(QIcon(res.get('@icon/paste')))
+        self.paste.setShortcut('Ctrl+V')
+
+        self.delete = self.file.addAction(res.get('@string/delete'))
+        self.delete.setIcon(QIcon(res.get('@icon/delete')))
+        self.delete.setShortcut('Ctrl+T')
+        self.delete.triggered.connect (self.delete_act)
+        self.delete.setFont(self.Env.font())
+
+        self.rename = self.file.addAction(res.get('@string/rename'))
+        self.rename.triggered.connect(self.rename_act)
+        self.rename.setShortcut('F2')
+        self.rename.setIcon(QIcon(res.get('@icon/rename')))
+        self.rename.setFont(self.Env.font())
 
         self.exit = self.file.addAction(res.get('@string/exit'))
         self.exit.triggered.connect(self.Widget.Close)
         self.exit.setFont(self.Env.font())
+        self.exit.setShortcut('Alt+F4')
         self.exit.setIcon(QIcon(res.get(res.etc("roller","exit-icon"))))
+
+        self.open.setVisible(False)
+        self.openwith.setVisible(False)
+        self.execute.setVisible(False)
+        self.delete.setVisible(False)
+        self.copy.setVisible(False)
+        self.paste.setVisible(True)
+        self.cut.setVisible(False)
+        self.rename.setVisible(False)
 
         ## end File menu
 
@@ -521,4 +760,9 @@ class MainApp (QtWidgets.QMainWindow):
     def New_Sa (self):
         app.switch('roller')
         self.Env.RunApp('input', [res.get('@string/filename'), self.x.mksa])
+        app.switch('roller')
+
+    def New_UI (self):
+        app.switch('roller')
+        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkui])
         app.switch('roller')

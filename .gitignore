@@ -10,6 +10,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
+packs/pashmak/
 dist/
 downloads/
 eggs/
@@ -25,6 +26,7 @@ share/python-wheels/
 *.egg-info/
 build-packs/
 app/
+.git/
 *.pa
 .installed.cfg
 *.egg

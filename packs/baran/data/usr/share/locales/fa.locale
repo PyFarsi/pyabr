@@ -253,7 +253,7 @@ paye.mirror: پیوند
 paye.package: بسته
 paye.add: اضافه کردن یک پیوند
 paye.remove: حذف یک پیوند
-paye.install: نصب یک بسته
+paye.install: نصب
 paye.uninstall: حذف یک بسته
 paye.download: دانلود کردن
 paye.mname: نام پیوند مورد نظر را وارد کنید
@@ -441,12 +441,42 @@ screen.savec: ذخیره تغییرات
 screen.reboot: برای اعمال تغییرات صفحه لطفا راه اندازی مجدد کنید
 squares.app_name: مربع ها
 desktop.audios: صداها
+paye.installing: در حال نصب
 desktop.desktop: میزکار
 desktop.downloads: دانلودها
 desktop.documents: اسناد
 desktop.templates: الگوها
 desktop.pictures: تصاویر
+paye.inmx: آیا می خواهید این بسته را نصب کنید؟
 desktop.projects: پروژه
 desktop.public: عمومی
 desktop.videos: ویدئو
 process.app_name: مدیریت فرایندها
+process.refresh: بروزرسانی
+process.kill: بستن
+process.restart: بازکردن
+roller.cut: برش
+roller.copy: کپی
+roller.paste: جای گذاری
+roller.rename: تغییر نام
+roller.execute: اجرا
+roller.open: بازکردن
+roller.openwith: بازکردن با
+roller.delete: حذف کردن
+roller.deletemf: آیا
+open.always: همیشه
+open.atonce: فقط یک بار
+open.choose: یک برنامه را انتخاب کنید
+dmgr.app_name: مدیریت دانلودها
+dmgr.download: دانلود
+dmgr.link: لینک خود را اینجا جایگذاری کنید
+dmgr.saveafile: ذخیره کردن فایل
+paye.isnotapp: برنامه نیست
+paye.isnotappm: این بسته مورد نظر یک برنامه گرافیکی نیست
+persia.uix: پوسته گرافیکی
+open.isexe: فایل اجرایی
+open.isexem: آیا می خواهید این فایل را اجرا کنید؟
+open.unk: فایل ناشناخته
+open.unkm: نمی توان این فایل را اجرا کرد چون ناشناخته است
+barge.uix: پوسته گرافیکی
+roller.uix: یک فایل پوسته گرافیکی

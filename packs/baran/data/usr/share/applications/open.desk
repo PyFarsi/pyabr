@@ -1,0 +1,6 @@
+name[en]: Open Box
+exec: openbox
+hidden: Yes
+logo: @icon/help-about
+application: No
+category: system

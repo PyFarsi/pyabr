@@ -45,6 +45,33 @@ class MainApp(QtWidgets.QMainWindow):
 
         # text box
         self.teEdit = QtWidgets.QTextEdit()
+        self.teEdit.setStyleSheet("""
+                        QScrollBar
+                        {
+                        background : white;
+                        }
+                        QScrollBar::handle
+                        {
+                        background : #123456;
+                        border-radius: 6% 6%;
+                        }
+                        QScrollBar::handle::pressed
+                        {
+                        background : #ABCDEF;
+                        border-radius: 6% 6%;
+                        }""".replace('white', self.Env.__menu_scroll_bgcolor__).replace('#123456',
+                                                                                        self.Env.__menu_scroll_color__).replace(
+            '6',
+            self.Env.__menu_scroll_round_size__).replace(
+            '#ABCDEF', self.Env.__menu_scroll_color_hover__))
+
+        ## External Support Source Code ##
+        if not self.External==None:
+            if not self.External==[]:
+                if not self.External[0]==None:
+                    self.teEdit.setPlainText(files.readall(self.External[0]))
+                    self.Widget.SetWindowTitle(files.output(self.External[0]))
+
         self.setCentralWidget(self.teEdit)
 
         # menubar
@@ -134,6 +161,11 @@ class MainApp(QtWidgets.QMainWindow):
         self.lang_js.setFont(self.Env.font())
         self.lang_js.triggered.connect(self.langjs)
 
+        self.lang_ui = self.insert_c.addAction(res.get('@string/uix'))
+        self.lang_ui.setIcon(QtGui.QIcon(res.get('@icon/application-x-designer')))
+        self.lang_ui.setFont(self.Env.font())
+        self.lang_ui.triggered.connect(self.langui)
+
 
         # set font size
         f = QtGui.QFont()
@@ -212,6 +244,11 @@ pause
                                         ''')
             self.Env.RunApp('commento', [None])
             app.switch('barge')
+        elif self.Widget.WindowTitle().endswith ('.ui'):
+            filename = self.Widget.WindowTitle()
+            app.switch('barge')
+            self.Env.RunApp('uiv',[filename])
+            app.switch('barge')
         else:
             if not self.Widget.WindowTitle()==res.get('@string/untitled'):
                 app.switch('barge')
@@ -233,7 +270,7 @@ pause
         if self.Widget.WindowTitle()=='': self.Widget.SetWindowTitle (res.get('@string/untitled'))
 
     def saveas_ (self,filename):
-        files.write(self.teEdit.toPlainText())
+        files.write(filename,self.teEdit.toPlainText())
         self.Widget.SetWindowTitle(files.output(filename))
 
     def save_ (self,filename):
@@ -286,3 +323,6 @@ pause
 
     def langjs (self):
         self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.js')))
+
+    def langui (self):
+        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.ui')))

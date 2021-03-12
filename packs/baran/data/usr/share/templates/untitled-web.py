@@ -2,9 +2,14 @@ from PyQt5.QtCore import  *
 from PyQt5.QtGui import  *
 from PyQt5.QtWidgets import  *
 
-URL = "https://google.com"
+URL = "https://example.com"
 
 class MainApp (QMainWindow):
+
+    def WebPage (self):
+        self.Widget.Close()
+        self.Env.RunApp('wapp', [URL])
+
     def __init__(self,ports):
         super(MainApp, self).__init__()
 
@@ -14,7 +19,4 @@ class MainApp (QMainWindow):
         self.AppName = ports[3]
         self.External = ports[4]
 
-        self.Widget.Close()
-
-        self.Env.RunApp ('wapp',[URL])
-
+        QTimer.singleShot(1,self.WebPage)

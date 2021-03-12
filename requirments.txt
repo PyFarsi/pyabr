@@ -5,3 +5,4 @@ PyQtWebEngine
 pygame
 kivy
 QScintilla
+wget

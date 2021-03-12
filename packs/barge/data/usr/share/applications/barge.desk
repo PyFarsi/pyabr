@@ -20,3 +20,4 @@ js: @icon/application-javascript
 application: Yes
 category: tools
 pin: Yes
+external: Yes

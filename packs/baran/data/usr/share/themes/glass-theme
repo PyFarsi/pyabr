@@ -2,7 +2,7 @@
 lock.clock.shadow: Yes
 lock.clock.color: white
 lock.clock.location: center
-lock.clock.format: hh:mm
+lock.clock.format: hh:mm:ss
 lock.clock.size: 100
 lock.bgcolor: white
 lock.fgcolor: white
@@ -22,7 +22,7 @@ taskbar.bgcolor: white
 taskbar.fgcolor: black
 
 # backend : Backend Style
-backend.color: white
+backend.color: black
 backend.timeout: 1000
 
 # splash : Splash Style

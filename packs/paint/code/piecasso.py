@@ -769,6 +769,36 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.primaryButton.pressed.connect(lambda: self.choose_color(self.set_primary_color))
         self.secondaryButton.pressed.connect(lambda: self.choose_color(self.set_secondary_color))
 
+        ## External Support ##
+        if not self.External==None:
+            if not self.External==[]:
+                if not self.External[0]==None:
+                    pixmap = QPixmap()
+                    pixmap.load(files.input(self.External[0]))
+
+                    # We need to crop down to the size of our canvas. Get the size of the loaded image.
+                    iw = pixmap.width()
+                    ih = pixmap.height()
+
+                    # Get the size of the space we're filling.
+                    cw, ch = CANVAS_DIMENSIONS
+
+                    if iw / cw < ih / ch:  # The height is relatively bigger than the width.
+                        pixmap = pixmap.scaledToWidth(cw)
+                        hoff = (pixmap.height() - ch) // 2
+                        pixmap = pixmap.copy(
+                            QRect(QPoint(0, hoff), QPoint(cw, pixmap.height() - hoff))
+                        )
+
+                    elif iw / cw > ih / ch:  # The height is relatively bigger than the width.
+                        pixmap = pixmap.scaledToHeight(ch)
+                        woff = (pixmap.width() - cw) // 2
+                        pixmap = pixmap.copy(
+                            QRect(QPoint(woff, 0), QPoint(pixmap.width() - woff, ch))
+                        )
+
+                    self.canvas.setPixmap(pixmap)
+
         # Initialize button colours.
         for n, hex in enumerate(COLORS, 1):
             btn = getattr(self, 'colorButton_%d' % n)

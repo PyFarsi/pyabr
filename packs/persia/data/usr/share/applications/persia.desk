@@ -18,3 +18,4 @@ php: @icon/application-x-php
 js: @icon/application-javascript
 application: Yes
 category: develop
+external: Yes

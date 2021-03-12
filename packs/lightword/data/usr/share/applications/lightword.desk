@@ -4,3 +4,4 @@ logo: @icon/ms-word
 exec: lightword
 application: Yes
 category: tools
+external: Yes

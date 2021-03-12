@@ -1,0 +1,8 @@
+name[en]: HTML Viewer
+name[fa]: نمایش ابرمتن
+exec: htmlviewer
+logo: @icon/web-browser
+application: Yes
+hidden: Yes
+category: internet
+external: Yes

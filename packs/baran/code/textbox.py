@@ -25,7 +25,7 @@ app = App()
 
 class MainApp (QMainWindow):
     def onCloseProcess (self):
-        if not app.check(self.AppName):
+        if not app.check('text'):
             self.Widget.Close()
         else:
             QTimer.singleShot(1,self.onCloseProcess)

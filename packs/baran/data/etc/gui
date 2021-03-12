@@ -22,7 +22,7 @@ taskbar.bgcolor: white
 taskbar.fgcolor: black
 
 # backend : Backend Style
-backend.color: white
+backend.color: black
 backend.timeout: 1000
 
 # splash : Splash Style
@@ -128,4 +128,6 @@ sides: No
 font: Iran Sans
 fontsize: 12
 theme-name: glass-light
+username: guest
+password: *
 desktop: baran

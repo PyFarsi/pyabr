@@ -20,7 +20,7 @@ from libabr import System, App, Control, Files, Res, Commands
 res = Res();files = Files();app = App();control=Control();commands = Commands()
 
 f = QtGui.QFont()
-f.setFamily('DejaVu Sans Mono')
+f.setFamily('Fira Code')
 f.setPointSize(12)
 
 
@@ -134,6 +134,14 @@ class FileListView(QListView):
         else:
             self.mkfile(filename+".sa")
             files.write(self.dir + "/" + filename+".sa",files.readall(res.get('@temp/untitled.sa')))
+
+    def mkui (self,filename):
+        if files.isdir(filename + ".ui"):
+            self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".ui")])
+            app.switch('persia')
+        else:
+            self.mkfile(filename+".ui")
+            files.write(self.dir + "/" + filename+".ui",files.readall(res.get('@temp/untitled.ui')))
 
     def mkpy (self,filename):
         if files.isdir(filename + ".py"):
@@ -289,70 +297,206 @@ class FileListView(QListView):
                 self.lang = self.item.whatsThis().lower()
 
                 if self.lang.endswith('.py'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerPython())
+                    lexer = Qsci.QsciLexerPython()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.diff'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerDiff())
+                    lexer = Qsci.QsciLexerDiff()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.f') or self.lang.endswith('.for') or self.lang.endswith('.f90'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerFortran())
+                    lexer = Qsci.QsciLexerFortran()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.d'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerD())
+                    lexer = Qsci.QsciLexerD()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.bat'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerBatch())
+                    lexer = Qsci.QsciLexerBatch()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.sh'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerBash())
+                    lexer = Qsci.QsciLexerBash()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.js'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerJavaScript())
+                    lexer = Qsci.QsciLexerJavaScript()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.java'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerJava())
+                    lexer = Qsci.QsciLexerJava()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.cs'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerCSharp())
+                    lexer = Qsci.QsciLexerCSharp()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.xml') or self.lang.endswith('.dtd'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerXML())
+                    lexer = Qsci.QsciLexerXML()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.c') or self.lang.endswith('.cpp') or self.lang.endswith('.hpp') or self.lang.endswith('.h') or self.lang.endswith('.c++') or self.lang.endswith('.cxx') or self.lang.endswith('.C') or self.lang.endswith('.hxx') or self.lang.endswith('.h++'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerCPP())
+                    lexer = Qsci.QsciLexerCPP()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang=='makefile':
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerMakefile())
+                    lexer = Qsci.QsciLexerMakefile()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.html') or self.lang.endswith('.htm') or self.lang.endswith('.asp') or self.lang.endswith('.aspx') or self.lang.endswith('.php'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerHTML())
+                    lexer = Qsci.QsciLexerHTML()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.css'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerCSS())
+                    lexer = Qsci.QsciLexerCSS()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.rb'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerRuby())
+                    lexer = Qsci.QsciLexerRuby()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.json'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerJSON())
+                    lexer = Qsci.QsciLexerJSON()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.avs'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerAVS())
+                    lexer = Qsci.QsciLexerAVS()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.lua'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerLua())
+                    lexer = Qsci.QsciLexerLua()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.m') or self.lang.endswith('.p') or self.lang.__contains__('.mex') or self.lang.endswith('.mat'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerMatlab())
+                    lexer = Qsci.QsciLexerMatlab()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.pas'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerPascal())
+                    lexer = Qsci.QsciLexerPascal()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.perl'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerPerl())
+                    lexer = Qsci.QsciLexerPerl()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.sql'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerSQL())
+                    lexer = Qsci.QsciLexerSQL()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.properties'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerProperties())
+                    lexer = Qsci.QsciLexerProperties()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.ps'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerPostScript())
+                    lexer = Qsci.QsciLexerPostScript()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.tcl'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerTCL())
+                    lexer = Qsci.QsciLexerTCL()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.md'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerMarkdown())
+                    lexer = Qsci.QsciLexerMarkdown()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 elif self.lang.endswith('.yaml'):
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerYAML())
+                    lexer = Qsci.QsciLexerYAML()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
                 else:
-                    self.editor.teEdit.setLexer(Qsci.QsciLexerPython())
+                    lexer = Qsci.QsciLexerPython()
+                    lexer.setDefaultFont(font)
+                    self.editor.teEdit.setLexer(lexer)
 
                 self.editor.teEdit.setText(files.readall(self.item.whatsThis()))
 
+import sip
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.Qsci import QsciScintilla, QsciLexerPython
+
+font = QFont()
+font.setFamily('Fira Code')
+font.setFixedPitch(True)
+font.setPointSize(16)
+
+class SimplePythonEditor(QsciScintilla):
+    ARROW_MARKER_NUM = 8
+
+    def __init__(self, parent=None):
+        super(SimplePythonEditor, self).__init__(parent)
+
+        # Set the default font
+        font = QFont()
+        font.setFamily('Fira Code')
+        font.setFixedPitch(True)
+        font.setPointSize(16)
+        self.setFont(font)
+        self.setMarginsFont(font)
+
+        # Margin 0 is used for line numbers
+        fontmetrics = QFontMetrics(font)
+        self.setMarginsFont(font)
+        self.setMarginWidth(0, fontmetrics.width("00000") + 6)
+        self.setMarginLineNumbers(0, True)
+        self.setMarginsBackgroundColor(QColor("#cccccc"))
+
+        # Clickable margin 1 for showing markers
+        self.setMarginSensitivity(1, True)
+        self.marginClicked.connect(self.on_margin_clicked)
+        self.markerDefine(QsciScintilla.RightArrow,
+            self.ARROW_MARKER_NUM)
+        self.setMarkerBackgroundColor(QColor("#ee1111"),
+            self.ARROW_MARKER_NUM)
+
+        # Brace matching: enable for a brace immediately before or after
+        # the current position
+        #
+        self.setBraceMatching(QsciScintilla.SloppyBraceMatch)
+
+        # Current line visible with special background color
+        self.setCaretLineVisible(True)
+        self.setCaretLineBackgroundColor(QColor("#ffe4e4"))
+
+        # Set Python lexer
+        # Set style for Python comments (style number 1) to a fixed-width
+        # courier.
+        #
+
+        lexer = QsciLexerPython()
+
+        lexer.setDefaultFont(font)
+        self.setLexer(lexer)
+
+        text = bytearray(str.encode("Arial"))
+# 32, "Courier New"
+        self.SendScintilla(QsciScintilla.SCI_STYLESETFONT, 1, text)
+
+        # Don't want to see the horizontal scrollbar at all
+        # Use raw message to Scintilla here (all messages are documented
+        # here: http://www.scintilla.org/ScintillaDoc.html)
+        self.SendScintilla(QsciScintilla.SCI_SETHSCROLLBAR, 0)
+
+        # not too small
+        self.setMinimumSize(600, 450)
+
+    def on_margin_clicked(self, nmargin, nline, modifiers):
+        # Toggle marker for the line the margin was clicked on
+        if self.markersAtLine(nline) != 0:
+            self.markerDelete(nline, self.ARROW_MARKER_NUM)
+        else:
+            self.markerAdd(nline, self.ARROW_MARKER_NUM)
+
 class MainApp(QtWidgets.QMainWindow):
+
     def onCloseProcess (self):
         if not app.check(self.AppName):
             self.Widget.Close()
         else:
             QtCore.QTimer.singleShot(1,self.onCloseProcess)
+
     def __init__(self,args):
         super(MainApp, self).__init__()
 
@@ -372,14 +516,46 @@ class MainApp(QtWidgets.QMainWindow):
         self.Widget.SetWindowTitle(res.get('@string/app_name'))
         self.Widget.SetWindowIcon (QtGui.QIcon(res.get(res.etc(self.AppName,'logo'))))
 
-        if self.External==[] or self.External=='' or self.External==None:
-            self.Widget.SetWindowTitle(res.get('@string/untitled'))
-        else:
-            self.Widget.SetWindowTitle(self.External[0])
 
         # text box
-        self.teEdit = Qsci.QsciScintilla()
-        self.teEdit.setLexer(Qsci.QsciLexerPython())
+        self.teEdit = SimplePythonEditor()
+        # Set the default font
+
+        self.teEdit.setStyleSheet("""
+                        QScrollBar
+                        {
+                        background : white;
+                        }
+                        QScrollBar::handle
+                        {
+                        background : #123456;
+                        border-radius: 6% 6%;
+                        }
+                        QScrollBar::handle::pressed
+                        {
+                        background : #ABCDEF;
+                        border-radius: 6% 6%;
+                        }""".replace('white', self.Env.__menu_scroll_bgcolor__).replace('#123456',
+                                                                                        self.Env.__menu_scroll_color__).replace(
+            '6',
+            self.Env.__menu_scroll_round_size__).replace(
+            '#ABCDEF', self.Env.__menu_scroll_color_hover__))
+
+        #self.teEdit.setLexer(Qsci.QsciLexerPython())
+
+        ## External Support : Open with persia ##
+
+        if self.External==None:
+            self.Widget.SetWindowTitle(res.get('@string/untitled'))
+        else:
+            if self.External==[]:
+                self.Widget.SetWindowTitle(res.get('@string/untitled'))
+            else:
+                if self.External[1]==None:
+                    pass
+                else:
+                    self.Widget.SetWindowTitle(self.External[1])
+                    self.teEdit.setText(files.readall(self.External[1]))
 
         self.teEdit.setGeometry(int(self.Env.width()/5),40,self.Env.width()-int(self.Env.width()/5),self.Env.height())
         self.layout().addWidget(self.teEdit)
@@ -462,6 +638,12 @@ class MainApp(QtWidgets.QMainWindow):
         self.new_pygui.triggered.connect(self.New_PyGui)
         self.new_pygui.setFont(self.Env.font())
         self.new_pygui.setIcon(QIcon(res.get(res.etc("persia", "py"))))
+
+        self.new_ui = self.new_code.addAction(res.get('@string/uix'))
+        self.new_ui.triggered.connect(self.New_UI)
+        self.new_ui.setFont(self.Env.font())
+        self.new_ui.setIcon(QIcon(res.get('@icon/application-x-designer')))
+
         ##
 
         self.new_project = self.file.addMenu(res.get('@string/new_page'))
@@ -482,6 +664,11 @@ class MainApp(QtWidgets.QMainWindow):
         self.new_web.triggered.connect(self.new_web_act)
         self.new_web.setFont(self.Env.font())
         self.new_web.setIcon(QtGui.QIcon(res.get('@icon/web-browser')))
+
+        self.new_ui = self.new_project.addAction(res.get('@string/uix'))
+        self.new_ui.triggered.connect(self.new_web_act)
+        self.new_ui.setFont(self.Env.font())
+        self.new_ui.setIcon(QtGui.QIcon(res.get('@icon/web-browser')))
 
         self.open = self.file.addAction(res.get('@string/open'))
         self.open.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'open'))))
@@ -561,6 +748,9 @@ class MainApp(QtWidgets.QMainWindow):
         self.lang_js = self.insert_c.addAction(res.get('@string/javascript'))
         self.lang_js.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'js'))))
         self.lang_js.triggered.connect(self.langjs)
+        self.uix = self.insert_c.addAction(res.get('@string/uix'))
+        self.uix.setIcon(QIcon(res.get('@icon/application-x-designer')))
+        self.uix.triggered.connect (self.langui)
 
         # set font size
         self.teEdit.setFont(f)
@@ -582,7 +772,7 @@ echo Running {execname} ...
 echo
 {execname}
 echo
-echo Finish runing process with exit 0 ...
+echo Finish running process with exit 0 ...
 rm /tmp/exec.sa
 rm {execname}
 pause
@@ -613,7 +803,7 @@ echo Running {execname} ...
 echo
 {execname}
 echo
-echo Finish runing process with exit 0 ...
+echo Finish running process with exit 0 ...
 rm /tmp/exec.sa
 pause
                                                         ''')
@@ -627,16 +817,21 @@ echo Running {execname} ...
 echo
 {execname}
 echo
-echo Finish runing process with exit 0 ...
+echo Finish running process with exit 0 ...
 rm /tmp/exec.sa
 pause
                                         ''')
             self.Env.RunApp('commento', [None])
             app.switch('persia')
+        elif file.endswith('.ui'):
+            app.switch('persia')
+            self.Env.RunApp('uiv', [file])
+            app.switch('persia')
         else:
             app.switch('persia')
             self.Env.RunApp('text', [res.get('@string/spc'), res.get('@string/spcm')])
             app.switch('persia')
+
 
     def run_project_(self):
 
@@ -731,7 +926,7 @@ pause
         control.write_record('type', 'empty', ".pypersia")
         control.write_record('lang', 'python', '.pypersia')
         app.switch('persia')
-        self.Env.RunApp ('persia',[projectname])
+        self.Env.RunApp ('persia',[projectname,None])
         app.switch('persia')
 
     def project_create_gui (self,projectname):
@@ -760,7 +955,7 @@ pause
         control.write_record('type', 'gui', ".pypersia")
         control.write_record('lang','python','.pypersia')
         app.switch('persia')
-        self.Env.RunApp ('persia',[projectname])
+        self.Env.RunApp ('persia',[projectname,None])
         app.switch('persia')
 
     def project_create_web (self,projectname):
@@ -789,12 +984,13 @@ pause
         control.write_record('type', 'web', ".pypersia")
         control.write_record('lang','python','.pypersia')
         app.switch('persia')
-        self.Env.RunApp ('persia',[projectname])
+        self.Env.RunApp ('persia',[projectname,None])
         app.switch('persia')
 
     def generate_pa_ (self):
         self.project = files.readall('/proc/info/psel')
         self.user = files.readall('/proc/info/su')
+
         if not self.user == 'root':
             self.path = f'/desk/{self.user}/{self.project_folder}/{self.project}'
         else:
@@ -850,50 +1046,79 @@ pause
 
     def langc (self):
         self.teEdit.setText(files.readall(res.get('@temp/untitled.c')))
-        self.teEdit.setLexer(Qsci.QsciLexerCPP())
+        lexer = Qsci.QsciLexerCPP()
+        lexer.setDefaultFont(font)
+        self.teEdit.setLexer(lexer)
 
     def langcpp (self):
         self.teEdit.setText(files.readall(res.get('@temp/untitled.cpp')))
-        self.teEdit.setLexer(Qsci.QsciLexerCPP())
+        lexer = Qsci.QsciLexerCPP()
+        lexer.setDefaultFont(font)
+        self.teEdit.setLexer(lexer)
 
     def langjava (self):
         self.teEdit.setText(files.readall(res.get('@temp/untitled.java')))
-        self.teEdit.setLexer(Qsci.QsciLexerJava())
+        lexer = Qsci.QsciLexerJava()
+        lexer.setDefaultFont(font)
+        self.teEdit.setLexer(lexer)
 
     def langpython (self):
         x = files.readall(res.get('@temp/untitled.py'))
         self.teEdit.setText(x)
-        self.teEdit.setLexer(Qsci.QsciLexerPython())
+        lexer = Qsci.QsciLexerPython()
+        lexer.setDefaultFont(font)
+        self.teEdit.setLexer(lexer)
 
     def langpythonx (self):
         x = files.readall(res.get('@temp/untitled-gui.py'))
         self.teEdit.setText(x)
-        self.teEdit.setLexer(Qsci.QsciLexerPython())
+        lexer = Qsci.QsciLexerPython()
+        lexer.setDefaultFont(font)
+        self.teEdit.setLexer(lexer)
 
     def langpyweb (self):
         x = files.readall(res.get('@temp/untitled-web.py'))
         self.teEdit.setText(x)
-        self.teEdit.setLexer(Qsci.QsciLexerPython())
+        lexer = Qsci.QsciLexerPython()
+        lexer.setDefaultFont(font)
+        self.teEdit.setLexer(lexer)
+
+    def langui (self):
+        x = files.readall(res.get('@temp/untitled.ui'))
+        self.teEdit.setText(x)
+        lexer = Qsci.QsciLexerXML()
+        lexer.setDefaultFont(font)
+        self.teEdit.setLexer(lexer)
 
     def langcs (self):
         self.teEdit.setText(files.readall(res.get('@temp/untitled.cs')))
-        self.teEdit.setLexer(Qsci.QsciLexerCSharp())
+        lexer = Qsci.QsciLexerCSharp()
+        lexer.setDefaultFont(font)
+        self.teEdit.setLexer(lexer)
 
     def langsaye (self):
         self.teEdit.setText(files.readall(res.get('@temp/untitled.sa')))
-        self.teEdit.setLexer(Qsci.QsciLexerPython())
+        lexer = Qsci.QsciLexerPython()
+        lexer.setDefaultFont(font)
+        self.teEdit.setLexer(lexer)
 
     def langhtml (self):
         self.teEdit.setText(files.readall(res.get('@temp/untitled.html')))
-        self.teEdit.setLexer(Qsci.QsciLexerHTML())
+        lexer = Qsci.QsciLexerHTML()
+        lexer.setDefaultFont(font)
+        self.teEdit.setLexer(lexer)
 
     def langphp (self):
         self.teEdit.setText(files.readall(res.get('@temp/untitled.php')))
-        self.teEdit.setLexer(Qsci.QsciLexerHTML())
+        lexer = Qsci.QsciLexerHTML()
+        lexer.setDefaultFont(font)
+        self.teEdit.setLexer(lexer)
 
     def langjs (self):
         self.teEdit.setText(files.readall(res.get('@temp/untitled.js')))
-        self.teEdit.setLexer(Qsci.QsciLexerJavaScript())
+        lexer = Qsci.QsciLexerJava()
+        lexer.setDefaultFont(font)
+        self.teEdit.setLexer(lexer)
 
     def New_Folder (self):
         app.switch('persia')
@@ -960,3 +1185,7 @@ pause
         self.Env.RunApp('input', [res.get('@string/filename'), self.x.mksa])
         app.switch('persia')
 
+    def New_UI (self):
+        app.switch('persia')
+        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkui])
+        app.switch('persia')

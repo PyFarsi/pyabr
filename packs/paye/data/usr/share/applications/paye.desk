@@ -5,3 +5,4 @@ logo: @icon/paye
 exec: paye_gui
 application: Yes
 category: system
+external: Yes

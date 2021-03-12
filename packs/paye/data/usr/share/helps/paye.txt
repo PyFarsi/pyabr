@@ -14,5 +14,4 @@ paye [options] [package] ...
  git            https://github.com/example/app      Install 'app' from git
  ls                                                 List all installed packages
  up                                                 Update cloud software
- git                                                Use pip package manager
  crt            app                                 Create 'app' project

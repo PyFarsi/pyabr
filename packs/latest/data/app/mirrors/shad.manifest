@@ -1,0 +1,8 @@
+name: shad
+copyright: (c) 2020 Shad
+license: Free Software License
+unpack: /
+build: 1399-12-11
+version: 0.0.1
+description: Webview Shad for Pyabr
+compile: Yes

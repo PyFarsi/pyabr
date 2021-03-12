@@ -8,3 +8,5 @@ usermanager.py:usr/app/usermanager.pyc
 edituser.py:usr/app/edituser.pyc
 screen.py:usr/app/screen.pyc
 process.py:usr/app/process.pyc
+openbox.py:usr/app/openbox.pyc
+uiv.py:usr/app/uiv.pyc

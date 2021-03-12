@@ -14,3 +14,4 @@ width: 600
 application: Yes
 category: system
 pin: Yes
+external: Yes

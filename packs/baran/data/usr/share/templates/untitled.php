@@ -1,10 +1,10 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Hello Page</title>
+        <title>Welcome</title>
         <meta charset="utf-8"/>
     </head>
     <body>
-        <?php echo "<p>Hello World!</p>";?>
+        <?php echo "<p>Welcome to Pyabr with PHP programing language.</p>";?>
     </body>
 </html>

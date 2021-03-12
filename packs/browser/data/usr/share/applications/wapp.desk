@@ -5,3 +5,4 @@ logo: @icon/web-browser
 application: No
 hidden: Yes
 category: internet
+external: Yes

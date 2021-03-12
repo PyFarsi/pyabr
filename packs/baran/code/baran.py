@@ -80,8 +80,8 @@ class variables:
     unlock_bgcolor = getdata('unlock.bgcolor')
     unlock_fgcolor = getdata('unlock.fgcolor')
     unlock_background = getdata('unlock.background')
-    username = ''
-    password = ''
+    username = getdata('username')
+    password = getdata('password')
     desktop_bgcolor = getdata('desktop.bgcolor')
     desktop_fgcolor = getdata('desktop.fgcolor')
     desktop_background = getdata('desktop.background')
@@ -173,6 +173,18 @@ class Backend (QMainWindow):
     def runSplash (self):
         self.setCentralWidget(Splash([self]))
 
+    def runLogin (self):
+        self.setCentralWidget(Login([self]))
+
+    def runEnter (self):
+        self.setCentralWidget(Enter([self, self], variables.username))  ## Switch user
+        control.write_record('username','guest','/etc/gui')
+
+    def runDesktop (self):
+        self.setCentralWidget(Desktop([self, self], variables.username, variables.password))
+        control.write_record('username', 'guest', '/etc/gui')
+        control.write_record('password', '*', '/etc/gui')
+
     def __init__(self):
         super(Backend, self).__init__()
 
@@ -227,7 +239,18 @@ class Backend (QMainWindow):
 
         ## Run backend after showing backend ##
 
-        QTimer.singleShot(int(variables.backend_timeout), self.runSplash)  ## Run splash after 1s
+        control.write_record('params','gui','/etc/gui')
+
+        if variables.params == 'splash':
+            self.runSplash()
+        elif variables.params == 'login':
+            self.runLogin()
+        elif variables.params == 'enter':
+            self.runEnter()
+        elif variables.params == 'desktop':
+            self.runDesktop()
+        else:
+            QTimer.singleShot(int(variables.backend_timeout), self.runSplash)  ## Run splash after 1s
 
 ## Splash ##
 class Splash (QMainWindow):
@@ -313,6 +336,7 @@ class Splash (QMainWindow):
         self.logo.setGeometry(int(self.width()/2)-int(int(variables.splash_logo_size)/2),int(self.height()/2)-int(int(variables.splash_logo_size)/2),int(variables.splash_logo_size),int(variables.splash_logo_size))
 
         ## Run splash after showing backend ##
+
         QTimer.singleShot(int(variables.splash_timeout), self.runLogin) ## Run login
 
 ## LoginW ##
@@ -1134,18 +1158,13 @@ class ThemeListView(QListView):
                 files.write('/proc/info/id', 'desktop')
             elif not control.read_record ('theme-name','/etc/gui')==control.read_record('theme-name',self.item.whatsThis()):
                 self.Widget.hide()
-                self.Env.RunApp('bool', [self.item.text(), res.get('@string/reboott'), self.reboot_act_])
+                Script(control.read_record('exec', self.item.whatsThis()))
+                self.Env.signout_act()
                 files.write('/proc/info/id','desktop')
             else:
                 files.write('/proc/info/id', 'desktop')
                 self.Env.RunApp('text', [self.item.text(), res.get('@string/selectedon')])
                 files.write('/proc/info/id', 'desktop')
-
-    def reboot_act_(self,yes):
-        if yes:
-            Script(control.read_record('exec', self.item.whatsThis()))
-            app.endall()
-            self.Env.reboot_act()
 
 class SessionListView(QListView):
     def __init__(self,ports):
@@ -1834,6 +1853,7 @@ class Desktop (QMainWindow):
 
 
         self.lblClock.setFont(f)
+        self.lblClock.setAlignment(Qt.AlignCenter)
 
         # color clock #
         self.lblClock.setStyleSheet('background:none;color:'+variables.lock_clock_color)
@@ -1899,7 +1919,15 @@ class Desktop (QMainWindow):
 
     def Loop(self):
         self.update()
-        QTimer.singleShot(300,self.update)
+
+        ## Start start applications
+
+        if files.isfile ('/tmp/start.tmp'):
+            appx = files.readall ('/tmp/start.tmp')
+            files.remove('/tmp/start.tmp')
+            self.RunApp(appx,None)
+
+        QTimer.singleShot(1,self.Loop)
 
     def __init__(self,ports,username,password):
         super(Desktop, self).__init__()

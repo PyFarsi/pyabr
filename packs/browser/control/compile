@@ -1,2 +1,3 @@
 browser.py:usr/app/browser.pyc
 wapp.py:usr/app/wapp.pyc
+htmlviewer.py:usr/app/htmlviewer.pyc

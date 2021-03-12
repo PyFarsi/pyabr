@@ -11,10 +11,7 @@
 #######################################################################################
 
 from buildlibs import pack_archives as pack
-from buildlibs import control
-import shutil, os, sys, hashlib,getpass
-
-import shutil, os
+import os
 
 ## pre build ##
 

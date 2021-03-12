@@ -1,0 +1,3 @@
+default: index.xml
+engine: abr://pyabr.com
+server: http://localhost/abr.php

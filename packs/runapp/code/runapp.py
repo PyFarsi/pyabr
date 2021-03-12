@@ -35,7 +35,12 @@ class MainApp(QLineEdit):
 
     def RunApp (self):
         command = self.text().split(' ')
-        if app.exists(command[0]):
+        if command[0].startswith ('abr://'):
+            app.switch('runapp')
+            self.Env.RunApp('uiv',[command[0]])
+            app.switch('runapp')
+            QTimer.singleShot(1000, self.correct)
+        elif app.exists(command[0]):
             self.Env.RunApp(command[0],command[1:])
             app.switch('runapp')
             self.setEnabled(False)
@@ -56,6 +61,17 @@ class MainApp(QLineEdit):
         self.External = args[4]
 
         self.onCloseProcess()
+
+        if not self.External==None:
+            if not self.External==[]:
+                if not self.External[0]==None:
+                    self.Widget.Close()
+                    desk = files.filename(self.External[0]).replace('.desk', '')
+                    if files.parentdir(self.External[0]).__contains__('/usr/share/applications'):
+                        self.Env.RunApp(desk,None)
+                    else:
+                        files.copy(self.External[0],f'/usr/share/applications/{desk}.desk')
+                        self.Env.RunApp(desk,None)
 
         ## Widget configs ##
         self.Widget.SetWindowTitle (res.get('@string/app_name'))

@@ -98,6 +98,26 @@ class MainApp(QMainWindow):
 
         layout = QVBoxLayout()
         self.editor = TextEdit()
+        self.editor.setStyleSheet("""
+                        QScrollBar
+                        {
+                        background : white;
+                        }
+                        QScrollBar::handle
+                        {
+                        background : #123456;
+                        border-radius: 6% 6%;
+                        }
+                        QScrollBar::handle::pressed
+                        {
+                        background : #ABCDEF;
+                        border-radius: 6% 6%;
+                        }""".replace('white', self.Env.__menu_scroll_bgcolor__).replace('#123456',
+                                                                                        self.Env.__menu_scroll_color__).replace(
+            '6',
+            self.Env.__menu_scroll_round_size__).replace(
+            '#ABCDEF', self.Env.__menu_scroll_color_hover__))
+
         # Setup the QTextEdit editor configuration
         self.editor.setAutoFormatting(QTextEdit.AutoAll)
         self.editor.selectionChanged.connect(self.update_format)

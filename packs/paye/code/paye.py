@@ -78,7 +78,6 @@ elif option=="upak":
 
     for i in archive:
         if files.isfile(i):
-            print (f'Unpacking \'{i}\' archive package ...')
             pack.unpack(i)
         else:
             colors.show("paye", "fail", i + ": archive not found.")
@@ -107,7 +106,6 @@ elif option=="rm":
 
     for i in package:
         if not i in list:
-            print (f"Uninstalling {i} package ... ")
             pack.uninstall(i.lower())
         else:
             colors.show ('paye','fail',f"{i}: is a permanetly application that cannot be removed.")
@@ -127,7 +125,6 @@ elif option=="get":
         for i in package:
             strv += ',' + i
     for i in package:
-        print (f'Downloading {i} archive package ... ')
         pack.download (i.lower())
 
 elif option=="in":
@@ -155,10 +152,8 @@ elif option=="in":
             if not i=='latest' and old == new and not i == 'stable':
                 colors.show('paye','warning',f'{i}: package is up to date.')
             else:
-                print(f'Downloading {i} archive package ... ')
                 pack.download(i.lower())
         else:
-            print(f'Downloading {i} archive package ... ')
             pack.download(i.lower())
 
     for j in package:
@@ -168,10 +163,8 @@ elif option=="in":
             if not i=='latest' and old == new:
                 pass
             else:
-                print(f'Installing {i} archive package ... ')
                 pack.unpack("/app/cache/gets/" + j.lower() + ".pa")
         else:
-            print(f'Installing {i} archive package ... ')
             pack.unpack("/app/cache/gets/" + j.lower() + ".pa")
 
     pack.clean()
@@ -242,25 +235,16 @@ elif option=='git':
         colors.show ('paye','fail','no inputs.')
         sys.exit(0)
 
-    print(f'Cloning {sys.argv[2]} archive package ... ')
     pack.gitinstall (sys.argv[2])
 
 elif option=='up':
     pack.upcloud ()
 
-elif option=='pip':
-    argsv = [files.readall('/proc/info/py'),'-m','pip']
-    for i in sys.argv[2:]:
-        argsv.append(i)
-    subprocess.call(argsv)
-
 elif option=='latest':
-    print('Downloading the latest repo ... ')
     pack.download('latest')
     pack.unpack('/app/cache/gets/latest.pa')
 
 elif option=='stable':
-    print('Downloading the stable repo ... ')
     pack.download('stable')
     pack.unpack('/app/cache/gets/stable.pa')
 
@@ -279,13 +263,11 @@ elif option=='crt':
     if not files.isdir(crname):
         files.mkdir(crname)
 
-    print(f'Creating {crname} project ... ',end='')
     if crtype=='gui':
         cmd.unzip ([res.get('@temp/simple-gui-project.zip'),crname])
     elif crtype=='web':
         cmd.unzip([res.get('@temp/simple-web-project.zip'), crname])
     else:
         cmd.unzip([res.get('@temp/simple-project.zip'), crname])
-    print('done')
 else:
     colors.show ("paye","fail",option+": option not found.")

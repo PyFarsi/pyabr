@@ -1,0 +1,8 @@
+name[en]: UI Viewer
+name[fa]: نمایش دهنده پوسته
+exec: uiv
+logo: @icon/qtdesigner
+application: Yes
+hidden: Yes
+category: tools
+external: Yes

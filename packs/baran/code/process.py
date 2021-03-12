@@ -95,17 +95,24 @@ class IDListView(QListView):
 
 # select box #
 class MainApp (QMainWindow):
+
     def onCloseProcess (self):
         if not app.check('process'):
             self.Widget.Close()
         else:
             QTimer.singleShot(1,self.onCloseProcess)
 
-    def onContinueApp (self):
+    def refreshx (self):
         self.x = IDListView(self.Env)
         self.setCentralWidget(self.x)
 
-        QTimer.singleShot(1000,self.onContinueApp)
+    def kill (self):
+        commands.kill([files.readall('/proc/info/isel')])
+        self.refreshx()
+
+    def restart (self):
+        self.Env.RunApp (files.readall('/proc/info/isel'),None)
+        self.refreshx()
 
     def __init__(self,ports):
         super(MainApp, self).__init__()
@@ -116,10 +123,22 @@ class MainApp (QMainWindow):
         self.AppName = ports[3]
         self.External = ports[4]
 
+        self.x = IDListView(self.Env)
+        self.setCentralWidget(self.x)
+
         self.onCloseProcess()
 
         self.setStyleSheet('background-color: white;')
         self.Widget.SetWindowIcon (QIcon(res.get(res.etc('process','logo'))))
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
 
-        self.onContinueApp()
+        self.menubar = QMenuBar()
+        self.setMenuBar(self.menubar)
+
+        self.menubar.setFont(self.Env.font())
+        self.restart_act = self.menubar.addAction(res.get('@string/restart'))
+        self.kill_act = self.menubar.addAction(res.get('@string/kill'))
+        self.kill_act.triggered.connect (self.kill)
+        self.restart_act.triggered.connect (self.restart)
+        self.refresh = self.menubar.addAction(res.get('@string/refresh'))
+        self.refresh.triggered.connect (self.refreshx)

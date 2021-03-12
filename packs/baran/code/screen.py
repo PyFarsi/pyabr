@@ -26,7 +26,7 @@ app = App()
 
 class MainApp(QWidget):
     def onCloseProcess (self):
-        if not app.check(self.AppName):
+        if not app.check('screen'):
             self.Widget.Close()
         else:
             QTimer.singleShot(1,self.onCloseProcess)

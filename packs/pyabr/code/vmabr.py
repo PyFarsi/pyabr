@@ -280,7 +280,11 @@ if argv[0]=='exec':
             argsv = [files.readall('/proc/info/py'), '-m', 'pip']
             for i in sys.argv[3:]:
                 argsv.append(i)
-            print (argsv)
+            sub.call(argsv)
+        elif argv[1]=='apt':
+            argsv = ['apt']
+            for i in sys.argv[3:]:
+                argsv.append(i)
             sub.call(argsv)
         else:
             colors.show(argv[1], "fail", "command not found.")
@@ -530,7 +534,8 @@ if argv[0]=="gui-enter":
     files.write('/tmp/width', str(width))
     files.write('/tmp/height', str(height))
 
-    control.write_record('params', 'enter,{username}'.replace('{username}', argv[1]), '/etc/gui')
+    control.write_record('params', 'enter', '/etc/gui')
+    control.write_record('username',argv[1],'/etc/gui')
     if not desktop == None:
         w = importlib.import_module(desktop).Backend()
     else:
@@ -583,9 +588,11 @@ if argv[0]=="gui-desktop":
     files.write('/tmp/height', str(height))
 
     control.write_record('params',
-                         'desktop,{username},{password}'.replace('{username}', argv[1]).replace('{password}',
-                                                                                                argv[2]),
+                         'desktop',
                          '/etc/gui')
+    control.write_record('username',argv[1],'/etc/gui')
+    control.write_record('password', argv[2], '/etc/gui')
+
     if not desktop == None:
         w = importlib.import_module(desktop).Backend()
     else:
