@@ -10,7 +10,7 @@
 #
 #######################################################################################
 
-import sys, os
+import sys, os, baran
 from libabr import Files, Colors, Control, Res, Commands, App
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -23,6 +23,11 @@ control = Control()
 res = Res()
 app = App()
 commands = Commands()
+
+class LineEdit (baran.BLineEdit):
+    def __init__(self,ports):
+        super(LineEdit, self).__init__()
+        self.Env = ports[1]
 
 class FileListView(QListView):
     def format(self, it, text):
@@ -346,7 +351,7 @@ class MainApp (QMainWindow):
 
         self.layout().addWidget(self.btnSelect)
 
-        self.leSave = QLineEdit()
+        self.leSave = LineEdit(ports)
         self.leSave.setFont(self.Env.font())
         if self.Env.width() > 1000 and self.Env.height() > 720:
             self.leSave.setGeometry(0, int(self.Env.height() / 2)-90, int(self.Env.width() / 2), 40)

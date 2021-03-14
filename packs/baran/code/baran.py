@@ -14,7 +14,9 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-import sys, hashlib, os, importlib, subprocess
+from PyQt5 import QtCore, QtWidgets, QtGui, uic, Qsci
+from PyQt5.Qsci import *
+import sys, hashlib, os, importlib, subprocess,time,threading
 from libabr import Files, Control, Permissions, Colors, Process, Modules, App, System, Res, Commands, Script
 
 modules = Modules()
@@ -161,6 +163,16 @@ class variables:
     loginw_login_bgcolor = getdata('loginw.login.bgcolor')
     loginw_login_fgcolor = getdata('loginw.login.fgcolor')
     loginw_login_round_size = getdata('loginw.login.round-size')
+    key_bgcolor = getdata('key.bgcolor')
+    key_btn_round_size= getdata('key.btn.round-size')
+    key_btn_bgcolor = getdata('key.btn.bgcolor')
+    key_btn_fgcolor = getdata('key.btn.fgcolor')
+    key_btn_bgcolor_hover = getdata('key.btn.bgcolor-hover')
+    key_btn_fgcolor_hover = getdata('key.btn.fgcolor-hover')
+    key_btn_shadow = getdata('key.btn.shadow')
+    key_background = getdata('key.background')
+    key_enable = getdata('key.enable')
+    layout = getdata('layout')
 
 f.setFamily(variables.font)
 f.setPointSize(int(variables.fontsize))
@@ -1359,6 +1371,91 @@ class TaskBar (QToolBar):
         self.Env.RunApp (sender,None)
         files.write('/proc/info/id','desktop')
 
+# @Built in QLineEdit
+
+class BLineEdit (QLineEdit):
+    def __init__(self):
+        super(BLineEdit, self).__init__()
+        self.setFocusPolicy(Qt.ClickFocus)
+        self.setFont(QFont(variables.font,int(variables.fontsize)))
+        self.setObjectName('BLineEdit')
+
+    def focusInEvent(self, e):
+
+        if variables.key_enable=='Yes':
+            self.Env.keyboardWidget.currentTextBox = self
+            self.Env.keyboardWidget.show()
+            self.Env.fakewidgetkeyboard.show()
+
+            self.Env.fakewidgetkeyboard.activateWindow()
+            self.Env.fakewidgetkeyboard.raise_()
+
+            self.Env.keyboardWidget.activateWindow()
+            self.Env.keyboardWidget.raise_()
+
+        # self.setStyleSheet("border: 1px solid red;")
+        super(BLineEdit, self).focusInEvent(e)
+
+    def mousePressEvent(self, e):
+        # print(e)
+        # self.setFocusPolicy(Qt.ClickFocus)
+        super(BLineEdit, self).mousePressEvent(e)
+
+class BTextEdit (QTextEdit):
+    def __init__(self):
+        super(BTextEdit, self).__init__()
+        self.setFocusPolicy(Qt.ClickFocus)
+        self.setFont(QFont(variables.font, int(variables.fontsize)))
+        self.setObjectName('BTextEdit')
+
+    def focusInEvent(self, e):
+
+        if variables.key_enable=='Yes':
+            self.Env.keyboardWidget.currentTextBox = self
+            self.Env.keyboardWidget.show()
+            self.Env.fakewidgetkeyboard.show()
+
+            self.Env.fakewidgetkeyboard.activateWindow()
+            self.Env.fakewidgetkeyboard.raise_()
+
+            self.Env.keyboardWidget.activateWindow()
+            self.Env.keyboardWidget.raise_()
+
+        # self.setStyleSheet("border: 1px solid red;")
+        super(BTextEdit, self).focusInEvent(e)
+
+    def mousePressEvent(self, e):
+        # print(e)
+        # self.setFocusPolicy(Qt.ClickFocus)
+        super(BTextEdit, self).mousePressEvent(e)
+
+class BCodeEdit (QsciScintilla):
+    def __init__(self):
+        super(BCodeEdit, self).__init__()
+        self.setFocusPolicy(Qt.ClickFocus)
+        self.setObjectName('BCodeEdit')
+
+    def focusInEvent(self, e):
+
+        if variables.key_enable=='Yes':
+            self.Env.keyboardWidget.currentTextBox = self
+            self.Env.keyboardWidget.show()
+            self.Env.fakewidgetkeyboard.show()
+
+            self.Env.fakewidgetkeyboard.activateWindow()
+            self.Env.fakewidgetkeyboard.raise_()
+
+            self.Env.keyboardWidget.activateWindow()
+            self.Env.keyboardWidget.raise_()
+
+        # self.setStyleSheet("border: 1px solid red;")
+        super(BCodeEdit, self).focusInEvent(e)
+
+    def mousePressEvent(self, e):
+        # print(e)
+        # self.setFocusPolicy(Qt.ClickFocus)
+        super(BCodeEdit, self).mousePressEvent(e)
+
 class MenuApplications (QMainWindow):
     def __init__(self,ports):
         super(MenuApplications, self).__init__()
@@ -1432,6 +1529,8 @@ class AppWidget (QMainWindow):
         self.iconwidget.setPixmap(icon.pixmap(int(variables.app_title_size)-18,int(variables.app_title_size)-18))
 
     def Close (self):
+        if files.isfile ('/proc/info/key'):
+            files.remove('/proc/info/key')
         app.end(self.appname)
         self.close()
 
@@ -1604,6 +1703,8 @@ class AppWidget (QMainWindow):
         self.activateWindow()
         self.raise_()
 
+        if files.isfile ('/proc/info/key'): files.remove('/proc/info/key')
+
     def mouseMoveEvent(self, evt):
         """Move the toolbar with mouse iteration."""
 
@@ -1632,6 +1733,7 @@ class Shell (QWidget):
             self.shell = self.shell.MainApp ([self.Backend,self.Env,self])
             self.boxl.addWidget(self.shell)
 
+        # self.threadIsStarted = False
 ## Desktop ##
 class Desktop (QMainWindow):
 
@@ -2112,10 +2214,19 @@ class Desktop (QMainWindow):
         self.__loginw_login_bgcolor__ = variables.loginw_login_bgcolor
         self.__loginw_login_fgcolor__ = variables.loginw_login_fgcolor
         self.__loginw_login_round_size__ = variables.loginw_login_round_size
+        self.__key_bgcolor__ = variables.key_bgcolor
+        self.__key_enable__ = variables.key_enable
+        self.__key_background__ = variables.key_background
+        self.__key_btn_round_size__ = variables.key_btn_round_size
+        self.__key_btn_bgcolor__  = variables.key_btn_bgcolor
+        self.__key_btn_fgcolor__ = variables.key_btn_fgcolor
+        self.__key_btn_shadow__ = variables.key_btn_shadow
+        self.__key_btn_bgcolor_hover__ = variables.key_btn_bgcolor_hover
+        self.__key_btn_fgcolor_hover__ = variables.key_btn_fgcolor_hover
+        self.__layout__ = variables.layout
         #############################
 
         ## Menu ##
-
 
         ## menu section
 
@@ -2334,4 +2445,1328 @@ class Desktop (QMainWindow):
         else:
             self.show()
 
+        self.keyboardWidget = KeyboardWidget([self])
+        self.keyboardWidget.setFixedSize(900,356)
+
+        self.fakewidgetkeyboard = QMainWindow()
+        self.fakewidgetkeyboard.setFixedHeight(356)
+        self.fakewidgetkeyboard.setStyleSheet(f'background-color: {self.__key_bgcolor__};background-image: url({res.get(self.__key_background__)})')
+
+        if variables.taskbar_location == 'top':
+            self.keyboardWidget.setGeometry(int(self.width()/2)-int(self.keyboardWidget.width()/2),self.height()-self.keyboardWidget.height(),self.width(),self.keyboardWidget.height())
+            self.fakewidgetkeyboard.setGeometry(0,self.height() - self.fakewidgetkeyboard.height(), self.width(),self.fakewidgetkeyboard.height())
+        elif variables.taskbar_location == 'left':
+            self.fakewidgetkeyboard.setGeometry(int(self.__taskbar_size__)+15, self.height() - self.fakewidgetkeyboard.height(), self.width()-15-int(self.__taskbar_size__),self.fakewidgetkeyboard.height())
+            self.keyboardWidget.setGeometry(int(self.width()/2)-int(self.keyboardWidget.width()/2), self.height() - self.keyboardWidget.height(), self.width(), self.keyboardWidget.height())
+        elif variables.taskbar_location == 'right':
+            self.fakewidgetkeyboard.setGeometry(0, self.height() - self.fakewidgetkeyboard.height(), self.width()-15-int(self.__taskbar_size__),self.fakewidgetkeyboard.height())
+            self.keyboardWidget.setGeometry(int(self.width()/2)-int(self.keyboardWidget.width()/2), self.height() - self.keyboardWidget.height(), self.width(), self.keyboardWidget.height())
+        elif variables.taskbar_location == 'bottom':
+            self.fakewidgetkeyboard.setGeometry(0, self.height()-int(self.__taskbar_size__)-self.fakewidgetkeyboard.height()-50, self.width(),self.fakewidgetkeyboard.height())
+            self.keyboardWidget.setGeometry(int(self.width()/2)-int(self.keyboardWidget.width()/2),self.height()-int(self.__taskbar_size__)-self.keyboardWidget.height()-15,self.width(),self.keyboardWidget.height())
+
+        self.layout().addWidget(self.fakewidgetkeyboard)
+        self.layout().addWidget(self.keyboardWidget)
+
+        self.fakewidgetkeyboard.hide()
+        self.keyboardWidget.hide()
+
         self.Loop()
+
+class KeyboardWidget (QWidget):
+    def __init__(self,ports, parent=None):
+        super(KeyboardWidget, self).__init__(parent)
+        self.currentTextBox = None
+
+        self.signalMapper = QSignalMapper(self)
+        self.signalMapper.mapped[int].connect(self.buttonClicked)
+
+        self.initUI(ports)
+
+    def shiftx (self):
+
+        if self.shift:
+            self.shift = False
+            self.settingUp()
+        else:
+            self.shift = True
+            self.settingUp()
+
+    def settingUp (self):
+
+        self.tab_button.setText(control.read_record('tab', f'/usr/share/locales/{getdata("layout")}.locale'))
+        self.shift_button.setText(control.read_record('shift', f'/usr/share/locales/{getdata("layout")}.locale'))
+        self.back_button.setText(control.read_record('back', f'/usr/share/locales/{getdata("layout")}.locale'))
+        self.enter_button.setText(control.read_record('enter', f'/usr/share/locales/{getdata("layout")}.locale'))
+
+
+        if self.shift:
+            keyx = res.key('!')
+        else:
+            keyx = res.key('1')
+
+        self.button1.KEY_CHAR = ord(keyx)
+        self.button1.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('@')
+        else:
+            keyx = res.key('2')
+        self.button2.KEY_CHAR = ord(keyx)
+        self.button2.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('#')
+        else:
+            keyx = res.key('3')
+        self.button3.KEY_CHAR = ord(keyx)
+        self.button3.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('$')
+        else:
+            keyx = res.key('4')
+        self.button4.KEY_CHAR = ord(keyx)
+        self.button4.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('%')
+        else:
+            keyx = res.key('5')
+
+        self.button5.KEY_CHAR = ord(keyx)
+        self.button5.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('^')
+        else:
+            keyx = res.key('6')
+        self.button6.KEY_CHAR = ord(keyx)
+        self.button6.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('&')
+        else:
+            keyx = res.key('7')
+        self.button7.KEY_CHAR = ord(keyx)
+        self.button7.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('*')
+        else:
+            keyx = res.key('8')
+
+        self.button8.KEY_CHAR = ord(keyx)
+        self.button8.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('(')
+        else:
+            keyx = res.key('9')
+
+        self.button9.KEY_CHAR = ord(keyx)
+        self.button9.setText(keyx)
+
+        if self.shift:
+            keyx = res.key(')')
+        else:
+            keyx = res.key('0')
+        self.button0.KEY_CHAR = ord(keyx)
+        self.button0.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('A')
+        else:
+            keyx = res.key('a')
+
+        self.buttona.KEY_CHAR = ord(keyx)
+        self.buttona.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('B')
+        else:
+            keyx = res.key('b')
+        self.buttonb.KEY_CHAR = ord(keyx)
+        self.buttonb.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('C')
+        else:
+            keyx = res.key('c')
+
+        self.buttonc.KEY_CHAR = ord(keyx)
+        self.buttonc.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('D')
+        else:
+            keyx = res.key('d')
+
+        self.buttond.KEY_CHAR = ord(keyx)
+        self.buttond.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('E')
+        else:
+            keyx = res.key('e')
+        self.buttone.KEY_CHAR = ord(keyx)
+        self.buttone.setText(keyx)
+
+
+        if self.shift:
+            keyx = res.key('F')
+        else:
+            keyx = res.key('f')
+        self.buttonf.KEY_CHAR = ord(keyx)
+        self.buttonf.setText(keyx)
+
+
+        if self.shift:
+            keyx = res.key('G')
+        else:
+            keyx = res.key('g')
+        self.buttong.KEY_CHAR = ord(keyx)
+        self.buttong.setText(keyx)
+
+
+        if self.shift:
+            keyx = res.key('H')
+        else:
+            keyx = res.key('h')
+        self.buttonh.KEY_CHAR = ord(keyx)
+        self.buttonh.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('I')
+        else:
+            keyx = res.key('i')
+        self.buttoni.KEY_CHAR = ord(keyx)
+        self.buttoni.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('J')
+        else:
+            keyx = res.key('j')
+        self.buttonj.KEY_CHAR = ord(keyx)
+        self.buttonj.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('K')
+        else:
+            keyx = res.key('k')
+        self.buttonk.KEY_CHAR = ord(keyx)
+
+        self.buttonk.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('L')
+        else:
+            keyx = res.key('l')
+
+        self.buttonl.KEY_CHAR = ord(keyx)
+        self.buttonl.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('M')
+        else:
+            keyx = res.key('m')
+        self.buttonm.KEY_CHAR = ord(keyx)
+
+        self.buttonm.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('N')
+        else:
+            keyx = res.key('n')
+        self.buttonn.KEY_CHAR = ord(keyx)
+
+        self.buttonn.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('O')
+        else:
+            keyx = res.key('o')
+        self.buttono.KEY_CHAR = ord(keyx)
+
+        self.buttono.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('P')
+        else:
+            keyx = res.key('p')
+        self.buttonp.KEY_CHAR = ord(keyx)
+        self.buttonp.setText(keyx)
+
+
+        if self.shift:
+            keyx = res.key('Q')
+        else:
+            keyx = res.key('q')
+        self.buttonq.KEY_CHAR = ord(keyx)
+        self.buttonq.setText(keyx)
+
+
+        if self.shift:
+            keyx = res.key('R')
+        else:
+            keyx = res.key('r')
+        self.buttonr.KEY_CHAR = ord(keyx)
+        self.buttonr.setText(keyx)
+
+
+        if self.shift:
+            keyx = res.key('S')
+        else:
+            keyx = res.key('s')
+        self.buttons.KEY_CHAR = ord(keyx)
+        self.buttons.setText(keyx)
+
+
+        if self.shift:
+            keyx = res.key('T')
+        else:
+            keyx = res.key('t')
+        self.buttont.KEY_CHAR = ord(keyx)
+        self.buttont.setText(keyx)
+
+
+        if self.shift:
+            keyx = res.key('U')
+        else:
+            keyx = res.key('u')
+        self.buttonu.KEY_CHAR = ord(keyx)
+
+        self.buttonu.setText(keyx)
+
+
+        if self.shift:
+            keyx = res.key('V')
+        else:
+            keyx = res.key('v')
+        self.buttonv.KEY_CHAR = ord(keyx)
+        self.buttonv.setText(keyx)
+
+
+        if self.shift:
+            keyx = res.key('W')
+        else:
+            keyx = res.key('w')
+        self.buttonw.KEY_CHAR = ord(keyx)
+        self.buttonw.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('X')
+        else:
+            keyx = res.key('x')
+        self.buttonx.KEY_CHAR = ord(keyx)
+
+        self.buttonx.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('Y')
+        else:
+            keyx = res.key('y')
+        self.buttony.KEY_CHAR = ord(keyx)
+        self.buttony.setText(keyx)
+
+
+        if self.shift:
+            keyx = res.key('Z')
+        else:
+            keyx = res.key('z')
+        self.buttonz.KEY_CHAR = ord(keyx)
+        self.buttonz.setText(keyx)
+
+
+        if self.shift:
+            keyx = res.key('~')
+        else:
+            keyx = res.key('`')
+        self.buttonups.KEY_CHAR = ord(keyx)
+        self.buttonups.setText(keyx)
+
+
+        if self.shift:
+            keyx = res.key('_')
+
+        else:
+            keyx = res.key('-')
+        self.button_.KEY_CHAR = ord(keyx)
+        self.button_.setText(keyx)
+        if self.shift:
+            keyx = res.key('+')
+        else:
+            keyx = res.key('=')
+        self.buttonequal.KEY_CHAR = ord(keyx)
+        self.buttonequal.setText(keyx)
+        if self.shift:
+            keyx = res.key('{')
+        else:
+            keyx = res.key('[')
+
+        self.btnaquladbaz.KEY_CHAR = ord(keyx)
+        self.btnaquladbaz.setText(keyx)
+        if self.shift:
+            keyx = res.key('}')
+        else:
+            keyx = res.key(']')
+
+        self.btnaquladbaste.KEY_CHAR = ord(keyx)
+        self.btnaquladbaste.setText(keyx)
+        if self.shift:
+            keyx = res.key('|')
+        else:
+            keyx = res.key('\\')
+        self.btnbackslash.KEY_CHAR = ord(keyx)
+        self.btnbackslash.setText(keyx)
+
+        if self.shift:
+            keyx = ':'
+        else:
+            keyx = res.key(';')
+        self.btnsimi.KEY_CHAR = ord(keyx)
+        self.btnsimi.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('"')
+        else:
+            keyx = res.key("'")
+        self.btncotayshen.KEY_CHAR = ord(keyx)
+        self.btncotayshen.setText(keyx)
+        if self.shift:
+            keyx = res.key('?')
+
+        else:
+            keyx = res.key('/')
+        self.btnslash.KEY_CHAR = ord(keyx)
+        self.btnslash.setText(keyx)
+        if self.shift:
+            keyx = res.key('>')
+
+        else:
+            keyx = res.key('.')
+        self.btndot.KEY_CHAR = ord(keyx)
+        self.btndot.setText(keyx)
+
+        if self.shift:
+            keyx = res.key('<')
+        else:
+            keyx = res.key(',')
+
+        self.btndot1.KEY_CHAR = ord(keyx)
+        self.btndot1.setText(keyx)
+
+
+        self.lang_button.setText(control.read_record('name',f'/usr/share/locales/{getdata("layout")}.locale'))
+
+
+        self.signalMapper.setMapping(self.button1, self.button1.KEY_CHAR)
+        self.signalMapper.setMapping(self.button2, self.button2.KEY_CHAR)
+        self.signalMapper.setMapping(self.button3, self.button3.KEY_CHAR)
+        self.signalMapper.setMapping(self.button4, self.button4.KEY_CHAR)
+        self.signalMapper.setMapping(self.button5, self.button5.KEY_CHAR)
+        self.signalMapper.setMapping(self.button6, self.button6.KEY_CHAR)
+        self.signalMapper.setMapping(self.button7, self.button7.KEY_CHAR)
+        self.signalMapper.setMapping(self.button8, self.button8.KEY_CHAR)
+        self.signalMapper.setMapping(self.button9, self.button9.KEY_CHAR)
+        self.signalMapper.setMapping(self.button0, self.button0.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttona, self.buttona.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonb, self.buttonb.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonc, self.buttonc.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttond, self.buttond.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttone, self.buttone.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonf, self.buttonf.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttong, self.buttong.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonh, self.buttonh.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttoni, self.buttoni.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonj, self.buttonj.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonk, self.buttonk.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonl, self.buttonl.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonm, self.buttonm.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonn, self.buttonn.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttono, self.buttono.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonp, self.buttonp.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonq, self.buttonq.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonr, self.buttonr.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttons, self.buttons.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttont, self.buttont.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonu, self.buttonu.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonv, self.buttonv.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonw, self.buttonw.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonx, self.buttonx.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttony, self.buttony.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonz, self.buttonz.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonups, self.buttonups.KEY_CHAR)
+        self.signalMapper.setMapping(self.button_, self.button_.KEY_CHAR)
+        self.signalMapper.setMapping(self.buttonequal, self.buttonequal.KEY_CHAR)
+        self.signalMapper.setMapping(self.btnaquladbaz, self.btnaquladbaz.KEY_CHAR)
+        self.signalMapper.setMapping(self.btnaquladbaste, self.btnaquladbaste.KEY_CHAR)
+        self.signalMapper.setMapping(self.btnbackslash, self.btnbackslash.KEY_CHAR)
+        self.signalMapper.setMapping(self.btnsimi, self.btnsimi.KEY_CHAR)
+        self.signalMapper.setMapping(self.btncotayshen, self.btncotayshen.KEY_CHAR)
+        self.signalMapper.setMapping(self.btnslash, self.btnslash.KEY_CHAR)
+        self.signalMapper.setMapping(self.btndot, self.btndot.KEY_CHAR)
+        self.signalMapper.setMapping(self.btndot1, self.btndot1.KEY_CHAR)
+
+    def onCloseKeyboard (self):
+        if not files.isfile ('/proc/info/key'):
+            self.Env.fakewidgetkeyboard.close()
+            self.close()
+        else:
+            QTimer.singleShot(100,self.onCloseKeyboard)
+
+    def initUI(self,ports):
+        layout = QGridLayout()
+
+        uic.loadUi('usr/share/layouts/laptopkeyboard.ui',self)
+
+        self.shift = False
+        self.Env = ports[0]
+
+
+        # p = self.palette()
+        # p.setColor(self.backgroundRole(),Qt.white)
+        # self.setPalette(p)
+
+        self.setAutoFillBackground(True)
+        self.text_box = QTextEdit()
+        self.text_box.setFont(QFont('Arial', 12))
+        self.text_box.hide()
+        # text_box.setFixedHeight(50)
+        # self.text_box.setFixedWidth(300)
+        layout.addWidget(self.text_box, 0, 0, 1, 13)
+
+        f = QFont('Iran Sans', 16)
+        size = 50
+
+        files.create('/proc/info/key')
+
+        self.enable_style ='''
+        QPushButton {
+            background-color: {1};
+            color: {2};
+            border-radius: {3}% {3}%;
+        }
+        QPushButton::hover {
+            background-color: {4};
+            color: {5};
+            border-radius: {3}% {3}%;
+        }
+        '''.replace('{1}',self.Env.__key_btn_bgcolor__).replace('{2}',self.Env.__key_btn_fgcolor__).replace('{3}',self.Env.__key_btn_round_size__).replace('{4}',self.Env.__key_btn_bgcolor_hover__).replace('{5}',self.Env.__key_btn_fgcolor_hover__)
+        self.setStyleSheet(self.enable_style)
+
+        if variables.key_btn_shadow == 'Yes': shadowx = True
+        else: shadowx = False
+
+        self.button1 = self.findChild(QPushButton,f'btn1')
+        self.button1.setFont(f)
+        self.button1.setFixedHeight(size)
+        self.button1.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.button1.setGraphicsEffect(shadow)
+        self.button1.clicked.connect(self.signalMapper.map)
+
+        self.button2 = self.findChild(QPushButton, f'btn2')
+        self.button2.setFont(f)
+        self.button2.setFixedHeight(size)
+        self.button2.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.button2.setGraphicsEffect(shadow)
+        self.button2.clicked.connect(self.signalMapper.map)
+
+        self.button3 = self.findChild(QPushButton, f'btn3')
+        self.button3.setFont(f)
+        self.button3.setFixedHeight(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.button3.setGraphicsEffect(shadow)
+        self.button3.setFixedWidth(size)
+        self.button3.clicked.connect(self.signalMapper.map)
+
+        self.button4 = self.findChild(QPushButton, f'btn4')
+        self.button4.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.button4.setGraphicsEffect(shadow)
+        self.button4.setFixedHeight(size)
+        self.button4.setFixedWidth(size)
+        self.button4.clicked.connect(self.signalMapper.map)
+
+        self.button5 = self.findChild(QPushButton, f'btn5')
+        self.button5.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.button5.setGraphicsEffect(shadow)
+        self.button5.setFixedHeight(size)
+        self.button5.setFixedWidth(size)
+        self.button5.clicked.connect(self.signalMapper.map)
+
+        self.button6 = self.findChild(QPushButton, f'btn6')
+        self.button6.setFont(f)
+        self.button6.setFixedHeight(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.button6.setGraphicsEffect(shadow)
+        self.button6.setFixedWidth(size)
+        self.button6.clicked.connect(self.signalMapper.map)
+
+        self.button7 = self.findChild(QPushButton, f'btn7')
+        self.button7.setFont(f)
+        self.button7.setFixedHeight(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.button7.setGraphicsEffect(shadow)
+        self.button7.setFixedWidth(size)
+        self.button7.clicked.connect(self.signalMapper.map)
+
+        self.button8 = self.findChild(QPushButton, f'btn8')
+        self.button8.setFont(f)
+        self.button8.setFixedHeight(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.button8.setGraphicsEffect(shadow)
+        self.button8.setFixedWidth(size)
+        self.button8.clicked.connect(self.signalMapper.map)
+
+        self.button9 = self.findChild(QPushButton, f'btn9')
+        self.button9.setFont(f)
+        self.button9.setFixedHeight(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.button9.setGraphicsEffect(shadow)
+        self.button9.setFixedWidth(size)
+        self.button9.clicked.connect(self.signalMapper.map)
+
+        self.button0 = self.findChild(QPushButton, f'btn0')
+        self.button0.setFont(f)
+        self.button0.setFixedHeight(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.button0.setGraphicsEffect(shadow)
+        self.button0.setFixedWidth(size)
+        self.button0.clicked.connect(self.signalMapper.map)
+
+        self.buttona = self.findChild(QPushButton, f'btna')
+        self.buttona.setFont(f)
+        self.buttona.setFixedHeight(size)
+        self.buttona.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttona.setGraphicsEffect(shadow)
+        self.buttona.clicked.connect(self.signalMapper.map)
+
+        self.buttonb = self.findChild(QPushButton, f'btnb')
+        self.buttonb.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonb.setGraphicsEffect(shadow)
+        self.buttonb.setFixedHeight(size)
+        self.buttonb.setFixedWidth(size)
+        self.buttonb.clicked.connect(self.signalMapper.map)
+
+        self.buttonc = self.findChild(QPushButton, f'btnc')
+        self.buttonc.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonc.setGraphicsEffect(shadow)
+        self.buttonc.setFixedHeight(size)
+        self.buttonc.setFixedWidth(size)
+        self.buttonc.clicked.connect(self.signalMapper.map)
+
+        self.buttond = self.findChild(QPushButton, f'btnd')
+        self.buttond.setFont(f)
+        self.buttond.setFixedHeight(size)
+        self.buttond.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttond.setGraphicsEffect(shadow)
+        self.buttond.clicked.connect(self.signalMapper.map)
+
+        self.buttone = self.findChild(QPushButton, f'btne')
+        self.buttone.setFont(f)
+        self.buttone.setFixedHeight(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttone.setGraphicsEffect(shadow)
+        self.buttone.setFixedWidth(size)
+        self.buttone.clicked.connect(self.signalMapper.map)
+
+        self.buttonf = self.findChild(QPushButton, f'btnf')
+        self.buttonf.setFont(f)
+        self.buttonf.setFixedHeight(size)
+        self.buttonf.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonf.setGraphicsEffect(shadow)
+        self.buttonf.clicked.connect(self.signalMapper.map)
+
+        self.buttong = self.findChild(QPushButton, f'btng')
+        self.buttong.setFont(f)
+        self.buttong.setFixedHeight(size)
+        self.buttong.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttong.setGraphicsEffect(shadow)
+        self.buttong.clicked.connect(self.signalMapper.map)
+
+        self.buttonh = self.findChild(QPushButton, f'btnh')
+        self.buttonh.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonh.setGraphicsEffect(shadow)
+        self.buttonh.setFixedHeight(size)
+        self.buttonh.setFixedWidth(size)
+        self.buttonh.clicked.connect(self.signalMapper.map)
+
+        self.buttoni = self.findChild(QPushButton, f'btni')
+        self.buttoni.setFont(f)
+        self.buttoni.setFixedHeight(size)
+        self.buttoni.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttoni.setGraphicsEffect(shadow)
+        self.buttoni.clicked.connect(self.signalMapper.map)
+
+        self.buttonj = self.findChild(QPushButton, f'btnj')
+        self.buttonj.setFont(f)
+        self.buttonj.setFixedHeight(size)
+        self.buttonj.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonj.setGraphicsEffect(shadow)
+        self.buttonj.clicked.connect(self.signalMapper.map)
+
+        self.buttonk = self.findChild(QPushButton, f'btnk')
+        self.buttonk.setFont(f)
+        self.buttonk.setFixedHeight(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonk.setGraphicsEffect(shadow)
+        self.buttonk.setFixedWidth(size)
+        self.buttonk.clicked.connect(self.signalMapper.map)
+
+        self.buttonl = self.findChild(QPushButton, f'btnl')
+        self.buttonl.setFont(f)
+        self.buttonl.setFixedHeight(size)
+        self.buttonl.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonl.setGraphicsEffect(shadow)
+        self.buttonl.clicked.connect(self.signalMapper.map)
+
+        self.buttonm = self.findChild(QPushButton, f'btnm')
+        self.buttonm.setFont(f)
+        self.buttonm.setFixedHeight(size)
+        self.buttonm.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonm.setGraphicsEffect(shadow)
+        self.buttonm.clicked.connect(self.signalMapper.map)
+
+        self.buttonn = self.findChild(QPushButton, f'btnn')
+        self.buttonn.setFont(f)
+        self.buttonn.setFixedHeight(size)
+        self.buttonn.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonn.setGraphicsEffect(shadow)
+        self.buttonn.clicked.connect(self.signalMapper.map)
+
+        self.buttono = self.findChild(QPushButton, f'btno')
+        self.buttono.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttono.setGraphicsEffect(shadow)
+        self.buttono.setFixedHeight(size)
+        self.buttono.setFixedWidth(size)
+        self.buttono.clicked.connect(self.signalMapper.map)
+
+        self.buttonp = self.findChild(QPushButton, f'btnp')
+        self.buttonp.setFont(f)
+        self.buttonp.setFixedHeight(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonp.setGraphicsEffect(shadow)
+        self.buttonp.setFixedWidth(size)
+        self.buttonp.clicked.connect(self.signalMapper.map)
+
+        self.buttonq = self.findChild(QPushButton, f'btnq')
+        self.buttonq.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonq.setGraphicsEffect(shadow)
+        self.buttonq.setFixedHeight(size)
+        self.buttonq.setFixedWidth(size)
+        self.buttonq.clicked.connect(self.signalMapper.map)
+
+        self.buttonr = self.findChild(QPushButton, f'btnr')
+        self.buttonr.setFont(f)
+        self.buttonr.setFixedHeight(size)
+        self.buttonr.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonr.setGraphicsEffect(shadow)
+        self.buttonr.clicked.connect(self.signalMapper.map)
+
+        self.buttons = self.findChild(QPushButton, f'btns')
+        self.buttons.setFont(f)
+        self.buttons.setFixedHeight(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttons.setGraphicsEffect(shadow)
+        self.buttons.setFixedWidth(size)
+        self.buttons.clicked.connect(self.signalMapper.map)
+
+        self.buttont = self.findChild(QPushButton, f'btnt')
+        self.buttont.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttont.setGraphicsEffect(shadow)
+        self.buttont.setFixedHeight(size)
+        self.buttont.setFixedWidth(size)
+        self.buttont.clicked.connect(self.signalMapper.map)
+
+        self.buttonu = self.findChild(QPushButton, f'btnu')
+        self.buttonu.setFont(f)
+        self.buttonu.setFixedHeight(size)
+        self.buttonu.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonu.setGraphicsEffect(shadow)
+        self.buttonu.clicked.connect(self.signalMapper.map)
+
+        self.buttonv = self.findChild(QPushButton, f'btnv')
+        self.buttonv.setFont(f)
+        self.buttonv.setFixedHeight(size)
+        self.buttonv.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonv.setGraphicsEffect(shadow)
+        self.buttonv.clicked.connect(self.signalMapper.map)
+        self.buttonw = self.findChild(QPushButton, f'btnw')
+        self.buttonw.setFont(f)
+        self.buttonw.setFixedHeight(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonw.setGraphicsEffect(shadow)
+        self.buttonw.setFixedWidth(size)
+        self.buttonw.clicked.connect(self.signalMapper.map)
+
+        self.buttonx = self.findChild(QPushButton, f'btnx')
+        self.buttonx.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonx.setGraphicsEffect(shadow)
+        self.buttonx.setFixedHeight(size)
+        self.buttonx.setFixedWidth(size)
+        self.buttonx.clicked.connect(self.signalMapper.map)
+
+        self.buttony = self.findChild(QPushButton, f'btny')
+        self.buttony.setFont(f)
+        self.buttony.setFixedHeight(size)
+        self.buttony.setFixedWidth(size)
+        self.buttony.clicked.connect(self.signalMapper.map)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttony.setGraphicsEffect(shadow)
+
+        self.buttonz = self.findChild(QPushButton, f'btnz')
+        self.buttonz.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonz.setGraphicsEffect(shadow)
+        self.buttonz.setFixedHeight(size)
+        self.buttonz.setFixedWidth(size)
+        self.buttonz.clicked.connect(self.signalMapper.map)
+
+        self.buttonups = self.findChild(QPushButton, f'btnups')
+        self.buttonups.setFont(f)
+        self.buttonups.setFixedHeight(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonups.setGraphicsEffect(shadow)
+        self.buttonups.setFixedWidth(size)
+        self.buttonups.clicked.connect(self.signalMapper.map)
+
+        self.button_ = self.findChild(QPushButton, f'btn_')
+        self.button_.setFont(f)
+        self.button_.setFixedHeight(size)
+        self.button_.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.button_.setGraphicsEffect(shadow)
+        self.button_.clicked.connect(self.signalMapper.map)
+
+        self.buttonequal = self.findChild(QPushButton, f'btnequal')
+        self.buttonequal.setFont(f)
+        self.buttonequal.setFixedHeight(size)
+        self.buttonequal.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.buttonequal.setGraphicsEffect(shadow)
+        self.buttonequal.clicked.connect(self.signalMapper.map)
+
+        self.btnaquladbaz = self.findChild(QPushButton, f'btnaquladbaz')
+        self.btnaquladbaz.setFont(f)
+        self.btnaquladbaz.setFixedHeight(size)
+        self.btnaquladbaz.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.btnaquladbaz.setGraphicsEffect(shadow)
+        self.btnaquladbaz.clicked.connect(self.signalMapper.map)
+
+        self.btnaquladbaste = self.findChild(QPushButton, f'btnaquladbaste')
+        self.btnaquladbaste.setFont(f)
+        self.btnaquladbaste.setFixedHeight(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.btnaquladbaste.setGraphicsEffect(shadow)
+        self.btnaquladbaste.setFixedWidth(size)
+        self.btnaquladbaste.clicked.connect(self.signalMapper.map)
+
+        self.btnbackslash = self.findChild(QPushButton, f'btnbackslash')
+        self.btnbackslash.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.btnbackslash.setGraphicsEffect(shadow)
+        self.btnbackslash.setFixedHeight(size)
+        self.btnbackslash.setFixedWidth(size)
+        self.btnbackslash.clicked.connect(self.signalMapper.map)
+
+        self.btnsimi = self.findChild(QPushButton, f'btnsimi')
+        self.btnsimi.setFont(f)
+        self.btnsimi.setFixedHeight(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.btnsimi.setGraphicsEffect(shadow)
+        self.btnsimi.setFixedWidth(size)
+        self.btnsimi.clicked.connect(self.signalMapper.map)
+
+        self.btncotayshen = self.findChild(QPushButton, f'btncotayshen')
+        self.btncotayshen.setFont(f)
+        self.btncotayshen.setFixedHeight(size)
+        self.btncotayshen.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.btncotayshen.setGraphicsEffect(shadow)
+        self.btncotayshen.clicked.connect(self.signalMapper.map)
+
+        self.btnslash = self.findChild(QPushButton, f'btnslash')
+        self.btnslash.setFont(f)
+        self.btnslash.setFixedHeight(size)
+        self.btnslash.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.btnslash.setGraphicsEffect(shadow)
+        self.btnslash.clicked.connect(self.signalMapper.map)
+
+        self.btndot = self.findChild(QPushButton, f'btndot')
+        self.btndot.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.btndot.setGraphicsEffect(shadow)
+        self.btndot.setFixedHeight(size)
+        self.btndot.setFixedWidth(size)
+        self.btndot.clicked.connect(self.signalMapper.map)
+
+        self.btndot1 = self.findChild(QPushButton, f'btndot1')
+        self.btndot1.setFont(f)
+        self.btndot1.setFixedHeight(size)
+        self.btndot1.setFixedWidth(size)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.btndot1.setGraphicsEffect(shadow)
+        self.btndot1.clicked.connect(self.signalMapper.map)
+
+        # Cancel button
+
+        self.space_button = self.findChild(QPushButton, f'btnspace')
+        self.space_button.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.space_button.setGraphicsEffect(shadow)
+        self.space_button.KEY_CHAR = Qt.Key_Space
+        self.space_button.clicked.connect(self.signalMapper.map)
+        self.signalMapper.setMapping(self.space_button, self.space_button.KEY_CHAR)
+
+        self.tab_button = self.findChild(QPushButton, f'btntab')
+        self.tab_button.setFont(f)
+
+        self.tab_button.KEY_CHAR = Qt.Key_Tab
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.tab_button.setGraphicsEffect(shadow)
+        self.tab_button.clicked.connect(self.signalMapper.map)
+        self.signalMapper.setMapping(self.tab_button, self.tab_button.KEY_CHAR)
+
+        self.shift_button = self.findChild(QPushButton, f'btnshift')
+        self.shift_button.setFont(f)
+        self.shift_button.KEY_CHAR = Qt.Key_Shift
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.shift_button.setGraphicsEffect(shadow)
+        #shift_button.clicked.connect(self.signalMapper.map)
+        self.shift_button.clicked.connect (self.shiftx)
+        self.signalMapper.setMapping(self.shift_button, self.shift_button.KEY_CHAR)
+
+        self.back_button = self.findChild(QPushButton, f'btnback')
+        self.back_button.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.back_button.setGraphicsEffect(shadow)
+        self.back_button.KEY_CHAR = Qt.Key_Backspace
+        self.back_button.clicked.connect(self.signalMapper.map)
+        self.signalMapper.setMapping(self.back_button, self.back_button.KEY_CHAR)
+
+        self.enter_button = self.findChild(QPushButton, f'btnenter')
+        self.enter_button.setFont(f)
+        self.enter_button.KEY_CHAR = Qt.Key_Enter
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.enter_button.setGraphicsEffect(shadow)
+        self.enter_button.clicked.connect(self.signalMapper.map)
+        self.signalMapper.setMapping(self.enter_button, self.enter_button.KEY_CHAR)
+
+        self.done_button = self.findChild(QPushButton, f'btndone')
+        self.done_button.setFont(f)
+        self.done_button.setText (control.read_record('done',f'/usr/share/locales/{self.Env.__layout__}.locale'))
+        self.done_button.KEY_CHAR = Qt.Key_Home
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.done_button.setGraphicsEffect(shadow)
+        self.done_button.clicked.connect(self.signalMapper.map)
+        self.signalMapper.setMapping(self.done_button, self.done_button.KEY_CHAR)
+
+        self.lang_button = self.findChild(QPushButton, f'btnlang')
+        self.lang_button.setFont(f)
+        if shadowx:
+            ## Shadow ##
+            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+            shadow = QGraphicsDropShadowEffect()
+            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+            shadow.setOffset(0)
+            shadow.setBlurRadius(10)
+            self.lang_button.setGraphicsEffect(shadow)
+        self.lang_button.clicked.connect(self.chooseKeyLayout)
+
+        self.setGeometry(0, 0, 950, 356)
+        self.setLayout(layout)
+
+        self.settingUp()
+
+
+        self.activateWindow()
+        self.raise_()
+
+        self.onCloseKeyboard()
+
+    def chooseKeyLayout (self):
+        files.write('/proc/info/id','desktop')
+        self.Env.RunApp('key',[self.settingUp])
+        files.write('/proc/info/id', 'desktop')
+
+    def buttonClicked(self, char_ord):
+        try:
+            self.Env.fakewidgetkeyboard.activateWindow()
+            self.Env.fakewidgetkeyboard.raise_()
+            self.activateWindow()
+            self.raise_()
+
+            if not self.currentTextBox.objectName()=='BTextEdit':
+                self.text_box.setPlainText(self.currentTextBox.text())
+                txt = self.text_box.toPlainText()
+            else:
+                self.text_box.setPlainText(self.currentTextBox.toPlainText())
+                txt = self.text_box.toPlainText()
+
+            if char_ord == Qt.Key_Backspace:
+                txt = txt[:-1]
+            elif char_ord == Qt.Key_Enter:
+                txt += chr(10)
+            elif char_ord == Qt.Key_Home:
+                self.hide()
+                self.Env.fakewidgetkeyboard.hide()
+                return
+            elif char_ord == Qt.Key_Clear:
+                txt = ""
+            elif char_ord == Qt.Key_Space:
+                txt += ' '
+            elif char_ord == Qt.Key_Tab:
+                txt += '\t'
+            else:
+                txt += chr(char_ord)
+
+            if not self.currentTextBox.objectName() == 'BTextEdit':
+                self.currentTextBox.setText(txt)
+            else:
+                self.currentTextBox.setPlainText(txt)
+
+        except:
+            pass

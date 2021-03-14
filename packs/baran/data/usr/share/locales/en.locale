@@ -1,5 +1,11 @@
-#!etcetra
-
+name: English
+logo: @icon/en
+logo-selected: @icon/en-selected
+enter: Enter
+done: Done
+shift: Next
+back: Back
+tab: Tab
 0: 0
 1: 1
 2: 2
@@ -62,6 +68,37 @@ w: w
 x: x
 y: y
 z: z
+`: `
+~: ~
+!: !
+@: @
+#: #
+$: $
+%: %
+^: ^
+&: &
+*: *
+(: (
+): )
+-: -
+_: _
+=: =
++: +
+{: {
+[: [
+}: }
+]: ]
+\: \
+|: |
+<: <
+>: >
+,: ,
+.: .
+/: /
+": "
+?: ?
+': '
+;: ;
 Sat: Saturday
 Sun: Sunday
 Mon: Monday
@@ -481,3 +518,6 @@ open.unk: Unknown file
 open.unkm: Cannot open this file, because it's an unknown file.
 barge.uix: UI
 roller.uix: New UI file
+key.select: Select
+key.cancel: Cancel
+key.choose: Choose a language

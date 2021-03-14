@@ -4,7 +4,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
 import queue     #If this template is not loaded, pyinstaller may not be able to run the requests template after packaging
-import requests
+import requests, baran
 ################################################
 
 from libabr import Files, Control, Res, App
@@ -14,6 +14,10 @@ res = Res()
 control = Control()
 app = App()
 
+class LineEdit (baran.BLineEdit):
+    def __init__(self,ports):
+        super(LineEdit, self).__init__()
+        self.Env = ports[1]
 ################################################
 class MainApp(QWidget):
     def __init__(self,ports, *args, **kwargs):
@@ -38,7 +42,7 @@ class MainApp(QWidget):
 
         layout = QVBoxLayout(self)
 
-        self.leUrl = QLineEdit()
+        self.leUrl = LineEdit(ports)
         self.leUrl.setFont(self.Env.font())
         self.leUrl.setStyleSheet('border: none;')
         self.leUrl.setPlaceholderText(res.get('@string/link'))

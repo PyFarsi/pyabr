@@ -10,7 +10,7 @@
 #
 #######################################################################################
 
-import sys, os
+import sys, os, baran
 from libabr import Files, Colors, Control, Res, App
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -22,6 +22,11 @@ colors = Colors()
 control = Control()
 res = Res()
 app = App()
+
+class LineEdit (baran.BLineEdit):
+    def __init__(self,ports):
+        super(LineEdit, self).__init__()
+        self.Env = ports[1]
 
 # input box #
 class MainApp (QMainWindow):
@@ -45,7 +50,7 @@ class MainApp (QMainWindow):
         self.setStyleSheet('background-color: white;')
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc('input',"logo"))))
         ## Finds ##
-        self.leInput = QLineEdit()
+        self.leInput = LineEdit(ports)
         self.leInput.setFont(self.Env.font())
 
         if self.Env.width() > 1000 and self.Env.height() > 720:

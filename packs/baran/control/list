@@ -7,6 +7,7 @@ usr/app/baran.pyc
 usr/app/inputbox.pyc
 usr/app/selectbox.pyc
 usr/app/page_about.pyc
+usr/app/keybox.pyc
 usr/app/openbox.pyc
 usr/app/uiv.pyc
 usr/app/boolbox.pyc

@@ -17,7 +17,7 @@ from PyQt5.QtPrintSupport import *
 
 import os
 import sys
-import uuid
+import uuid, baran
 
 from libabr import Files, Control, Res, App, System
 
@@ -36,7 +36,12 @@ def hexuuid():
 def splitext(p):
     return os.path.splitext(p)[1].lower()
 
-class TextEdit(QTextEdit):
+class TextEdit(baran.BTextEdit):
+
+    def __init__(self,ports):
+        super(TextEdit, self).__init__()
+
+        self.Env = ports[1]
 
     def canInsertFromMimeData(self, source):
 
@@ -97,7 +102,7 @@ class MainApp(QMainWindow):
         self.onCloseProcess()
 
         layout = QVBoxLayout()
-        self.editor = TextEdit()
+        self.editor = TextEdit(ports)
         self.editor.setStyleSheet("""
                         QScrollBar
                         {

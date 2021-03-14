@@ -13,19 +13,21 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-import sys, importlib
+import sys, importlib, baran
 from libabr import Files, Res, App, Control
 files = Files()
 res = Res()
 app = App()
 control = Control()
 
-class MainApp(QLineEdit):
+class MainApp(baran.BLineEdit):
+
     def onCloseProcess (self):
         if not app.check(self.AppName):
             self.Widget.Close()
         else:
             QTimer.singleShot(1,self.onCloseProcess)
+
     def correct (self):
         self.setStyleSheet(f'background-color: {res.etc(self.AppName,"bgcolor")};color: {res.etc(self.AppName,"fgcolor")};')
         app.switch('runapp')

@@ -11,10 +11,16 @@
 #######################################################################################
 
 from PyQt5 import QtWidgets, uic, QtGui,QtCore
-import sys, importlib, random,py_compile
+import sys, importlib, random,py_compile, baran
 from libabr import System, App, Control, Files, Res, Commands
 
 res = Res();files = Files();app = App();control=Control();cmd = Commands()
+
+class Barge (baran.BTextEdit):
+    def __init__(self,ports):
+        super(Barge, self).__init__()
+
+        self.Env = ports[1]
 
 class MainApp(QtWidgets.QMainWindow):
     def onCloseProcess (self):
@@ -44,7 +50,7 @@ class MainApp(QtWidgets.QMainWindow):
         self.Widget.SetWindowTitle(res.get('@string/untitled'))
 
         # text box
-        self.teEdit = QtWidgets.QTextEdit()
+        self.teEdit = Barge([None,self.Env])
         self.teEdit.setStyleSheet("""
                         QScrollBar
                         {
@@ -168,10 +174,7 @@ class MainApp(QtWidgets.QMainWindow):
 
 
         # set font size
-        f = QtGui.QFont()
-        f.setFamily('DejaVu Sans Mono')
-        f.setPointSize(12)
-        self.teEdit.setFont(f)
+        self.teEdit.setFont(self.Env.font())
 
     def run_(self):
         control = Control()

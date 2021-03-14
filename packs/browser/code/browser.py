@@ -17,6 +17,7 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 import os
 import sys
+import baran
 
 from libabr import Res, Control, Files, App
 
@@ -25,6 +26,10 @@ control = Control()
 files = Files()
 app = App()
 
+class LineEdit (baran.BLineEdit):
+    def __init__(self,ports):
+        super(LineEdit, self).__init__()
+        self.Env = ports[1]
 
 class AboutDialog(QDialog):
     def __init__(self, *args, **kwargs):
@@ -119,7 +124,7 @@ class MainApp(QMainWindow):
         self.httpsicon.setPixmap(QPixmap(res.get('@icon/lock-nossl')))
         navtb.addWidget(self.httpsicon)
 
-        self.urlbar = QLineEdit()
+        self.urlbar = LineEdit(ports)
         self.urlbar.returnPressed.connect(self.navigate_to_url)
         navtb.addWidget(self.urlbar)
 

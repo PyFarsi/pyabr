@@ -2474,76 +2474,14 @@ class Res:
         control = Control()
         files = Files()
 
-        locale = control.read_record('locale', '/etc/gui')
+        layout = control.read_record('layout', '/etc/gui')
 
-        if not files.isfile('/usr/share/locales/' + locale + ".locale"):
-            locale = 'en'
+        if not files.isfile('/usr/share/locales/' + layout + ".locale"):
+            layout = 'en'
 
-        data = f'/usr/share/locales/{locale}.locale'
+        data = f'/usr/share/locales/{layout}.locale'
 
-        str = str.replace ('0',control.read_record('0',data)) \
-            .replace('1', control.read_record('1', data)) \
-            .replace('2', control.read_record('2', data)) \
-            .replace('3', control.read_record('3', data)) \
-            .replace('4', control.read_record('4', data)) \
-            .replace('5', control.read_record('5', data)) \
-            .replace('6', control.read_record('6', data)) \
-            .replace('7', control.read_record('7', data)) \
-            .replace('8', control.read_record('8', data)) \
-            .replace('9', control.read_record('9', data)) \
-            .replace('A', control.read_record('A', data)) \
-            .replace('B', control.read_record('B', data)) \
-            .replace('C', control.read_record('C', data)) \
-            .replace('D', control.read_record('D', data)) \
-            .replace('E', control.read_record('E', data)) \
-            .replace('F', control.read_record('F', data)) \
-            .replace('G', control.read_record('G', data)) \
-            .replace('H', control.read_record('H', data)) \
-            .replace('I', control.read_record('I', data)) \
-            .replace('J', control.read_record('J', data)) \
-            .replace('K', control.read_record('K', data)) \
-            .replace('L', control.read_record('L', data)) \
-            .replace('M', control.read_record('M', data)) \
-            .replace('N', control.read_record('N', data)) \
-            .replace('O', control.read_record('O', data)) \
-            .replace('P', control.read_record('P', data)) \
-            .replace('Q', control.read_record('Q', data)) \
-            .replace('R', control.read_record('R', data)) \
-            .replace('S', control.read_record('S', data)) \
-            .replace('T', control.read_record('T', data)) \
-            .replace('U', control.read_record('U', data)) \
-            .replace('V', control.read_record('V', data)) \
-            .replace('W', control.read_record('W', data)) \
-            .replace('X', control.read_record('X', data)) \
-            .replace('Y', control.read_record('Y', data)) \
-            .replace('Z', control.read_record('Z', data)) \
-            .replace('a', control.read_record('a', data)) \
-            .replace('b', control.read_record('b', data)) \
-            .replace('c', control.read_record('c', data)) \
-            .replace('d', control.read_record('d', data)) \
-            .replace('e', control.read_record('e', data)) \
-            .replace('f', control.read_record('f', data)) \
-            .replace('g', control.read_record('g', data)) \
-            .replace('h', control.read_record('h', data)) \
-            .replace('i', control.read_record('i', data)) \
-            .replace('j', control.read_record('j', data)) \
-            .replace('k', control.read_record('k', data)) \
-            .replace('l', control.read_record('l', data)) \
-            .replace('m', control.read_record('m', data)) \
-            .replace('n', control.read_record('n', data)) \
-            .replace('o', control.read_record('o', data)) \
-            .replace('p', control.read_record('p', data)) \
-            .replace('q', control.read_record('q', data)) \
-            .replace('r', control.read_record('r', data)) \
-            .replace('s', control.read_record('s', data)) \
-            .replace('t', control.read_record('t', data)) \
-            .replace('u', control.read_record('u', data)) \
-            .replace('v', control.read_record('v', data)) \
-            .replace('w', control.read_record('w', data)) \
-            .replace('x', control.read_record('x', data)) \
-            .replace('y', control.read_record('u', data)) \
-            .replace('z', control.read_record('z', data))
-
+        str = str.replace ('0',control.read_record('0',data)).replace('1', control.read_record('1', data)).replace('2', control.read_record('2', data)).replace('3', control.read_record('3', data)).replace('4', control.read_record('4', data)).replace('5', control.read_record('5', data)).replace('6', control.read_record('6', data)).replace('7', control.read_record('7', data)).replace('8', control.read_record('8', data)).replace('9', control.read_record('9', data)).replace('A', control.read_record('A', data)).replace('B', control.read_record('B', data)).replace('C', control.read_record('C', data)).replace('D', control.read_record('D', data)).replace('E', control.read_record('E', data)).replace('F', control.read_record('F', data)).replace('G', control.read_record('G', data)).replace('H', control.read_record('H', data)).replace('I', control.read_record('I', data)).replace('J', control.read_record('J', data)).replace('K', control.read_record('K', data)).replace('L', control.read_record('L', data)).replace('M', control.read_record('M', data)).replace('N', control.read_record('N', data)).replace('O', control.read_record('O', data)).replace('P', control.read_record('P', data)).replace('Q', control.read_record('Q', data)).replace('R', control.read_record('R', data)).replace('S', control.read_record('S', data)).replace('T', control.read_record('T', data)).replace('U', control.read_record('U', data)).replace('V', control.read_record('V', data)).replace('W', control.read_record('W', data)).replace('X', control.read_record('X', data)).replace('Y', control.read_record('Y', data)).replace('Z', control.read_record('Z', data)).replace('a', control.read_record('a', data)).replace('b', control.read_record('b', data)).replace('c', control.read_record('c', data)).replace('d', control.read_record('d', data)).replace('e', control.read_record('e', data)).replace('f', control.read_record('f', data)).replace('g', control.read_record('g', data)).replace('h', control.read_record('h', data)).replace('i', control.read_record('i', data)).replace('j', control.read_record('j', data)).replace('k', control.read_record('k', data)).replace('l', control.read_record('l', data)).replace('m', control.read_record('m', data)).replace('n', control.read_record('n', data)).replace('o', control.read_record('o', data)).replace('p', control.read_record('p', data)).replace('q', control.read_record('q', data)).replace('r', control.read_record('r', data)).replace('s', control.read_record('s', data)).replace('t', control.read_record('t', data)).replace('u', control.read_record('u', data)).replace('v', control.read_record('v', data)).replace('w', control.read_record('w', data)).replace('x', control.read_record('x', data)).replace('y', control.read_record('u', data)).replace('z', control.read_record('z', data)).replace('~', control.read_record('~', data)).replace('`', control.read_record('`', data)).replace('!', control.read_record('!', data)).replace('@', control.read_record('@', data)).replace('#', control.read_record('#', data)).replace('$', control.read_record('$', data)).replace('%', control.read_record('%', data)).replace('^', control.read_record('^', data)).replace('&', control.read_record('&', data)).replace('*', control.read_record('*', data)).replace('(', control.read_record('(', data)).replace(')', control.read_record(')', data)).replace('-', control.read_record('-', data)).replace('_', control.read_record('_', data)).replace('+', control.read_record('+', data)).replace('=', control.read_record('=', data)).replace('{', control.read_record('{', data)).replace('}', control.read_record('}', data)).replace('[', control.read_record('[', data)).replace(']', control.read_record(']', data)).replace('\\', control.read_record('\\', data)).replace('|', control.read_record('|', data)).replace(';', control.read_record(';', data)).replace('\'', control.read_record('\'', data)).replace('"', control.read_record('"', data)).replace('<', control.read_record('<', data)).replace('>', control.read_record('>', data)).replace(',', control.read_record(',', data)).replace('.', control.read_record('.', data)).replace('/', control.read_record('/', data)).replace('?', control.read_record('?', data))
         return str
 
     # get translated number #
@@ -2571,10 +2509,6 @@ class Res:
         files = Files()
         control = Control()
 
-        # Check android_or_32bit #
-        android_or_32bit = False
-        if files.readall('/proc/info/os')=='Android' or files.readall('/proc/info/arch')=='32bit': android_or_32bit=True
-
         if not filename == None:
             filename = filename.split("/")  # @widget:barge
 
@@ -2586,21 +2520,18 @@ class Res:
                 if files.isfile("/usr/share/" + share.replace("@layout", "layouts") + "/" + name + ".ui"):
                     return files.input("/usr/share/" + share.replace("@layout", "layouts") + "/" + name + ".ui")
                 else:
-                    return None
+                    return ''
 
             elif share.startswith("@font"):
                 if files.isfile("/usr/share/fonts/" + name + ".ttf"):
                     return files.input("/usr/share/fonts/" + name + ".ttf")
                 else:
-                    return None
+                    return ''
 
             elif share.startswith("@background"):
                 if files.isfile("/usr/share/backgrounds/" + name + ".svg"):
-                    if android_or_32bit==False:
-                        return files.input(
+                    return files.input(
                             "/usr/share/backgrounds/" + name + ".svg")
-                    elif files.isfile("/usr/share/backgrounds/" + name + ".png"):
-                        return files.input("/usr/share/backgrounds/" + name + ".png")
                 elif files.isfile(
                         "/usr/share/backgrounds/" + name + ".png"):
                     return files.input(
@@ -2618,15 +2549,12 @@ class Res:
                     return files.input(
                         "/usr/share/backgrounds/" + name + ".gif")
                 else:
-                    return None
+                    return ''
 
             elif share.startswith("@image"):
                 if files.isfile("/usr/share/images/" + name + ".svg"):
-                    if android_or_32bit==False:
-                        return files.input(
+                    return files.input(
                         "/usr/share/images/" + name + ".svg")
-                    elif files.isfile("/usr/share/images/" + name + ".png"):
-                        return files.input("/usr/share/images/" + name + ".png")
                 elif files.isfile(
                         "/usr/share/images/" + name + ".png"):
                     return files.input(
@@ -2644,44 +2572,41 @@ class Res:
                     return files.input(
                         "/usr/share/images/" + name + ".gif")
                 else:
-                    return None
+                    return ''
 
             elif share.startswith("@app"):
                 if files.isfile("/usr/share/" + share.replace("@app", "applications") + "/" + name + ".desk"):
                     return files.input("/usr/share/" + share.replace("@app", "applications") + "/" + name + ".desk")
                 else:
-                    return None
+                    return ''
 
             elif share.startswith("@widget"):
                 if files.isfile("/usr/share/" + share.replace("@widget", "widgets") + "/" + name + ".desk"):
                     return files.input("/usr/share/" + share.replace("@widget", "widgets") + "/" + name + ".desk")
                 else:
-                    return None
+                    return ''
 
             elif share.startswith("@shell"):
                 if files.isfile("/usr/share/" + share.replace("@shell", "shells") + "/" + name + ".desk"):
                     return files.input("/usr/share/" + share.replace("@shell", "shells") + "/" + name + ".desk")
                 else:
-                    return None
+                    return ''
 
             elif share.startswith("@icon"):
                 if files.isfile("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".svg"):
-                    if android_or_32bit==False:
-                        return files.input("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".svg")
-                    elif files.isfile("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".png"):
-                        return files.input("/usr/share/icons/" + name + ".png")
+                    return files.input("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".svg")
                 elif files.isfile("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".png"):
                     return files.input("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".png")
                 elif files.isfile("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".gif"):
                     return files.input("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".gif")
                 else:
-                    return None
+                    return ''
 
             elif share.startswith('@temp'):
                 if files.isfile("/usr/share/" + share.replace("@temp", "templates") + "/" + name ):
                     return "/usr/share/" + share.replace("@temp", "templates") + "/" + name
                 else:
-                    return None
+                    return ''
 
             elif share.startswith("@string"):
                 locale = control.read_record("locale", "/etc/gui")
@@ -2703,9 +2628,9 @@ class Res:
 
             ## None Resource ##
             else:
-                return None
+                return ''
         else:
-            return None
+            return ''
 # system #
 class System:
     def __init__(self,cmd):

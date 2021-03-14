@@ -14,7 +14,7 @@ from PyQt5.QtGui import  *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5 import uic, QtGui, QtWidgets, QtCore, Qsci
-import sys, importlib, random,py_compile,imp
+import sys, importlib, random,py_compile,imp, baran
 from libabr import System, App, Control, Files, Res, Commands
 
 res = Res();files = Files();app = App();control=Control();commands = Commands()
@@ -422,11 +422,13 @@ font.setFamily('Fira Code')
 font.setFixedPitch(True)
 font.setPointSize(16)
 
-class SimplePythonEditor(QsciScintilla):
+class SimplePythonEditor(baran.BCodeEdit):
     ARROW_MARKER_NUM = 8
 
-    def __init__(self, parent=None):
-        super(SimplePythonEditor, self).__init__(parent)
+    def __init__(self,ports):
+        super(SimplePythonEditor, self).__init__()
+
+        self.Env = ports[1]
 
         # Set the default font
         font = QFont()
@@ -518,7 +520,7 @@ class MainApp(QtWidgets.QMainWindow):
 
 
         # text box
-        self.teEdit = SimplePythonEditor()
+        self.teEdit = SimplePythonEditor(args)
         # Set the default font
 
         self.teEdit.setStyleSheet("""
