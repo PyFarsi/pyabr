@@ -137,6 +137,11 @@ class MainApp(QMainWindow):
         # Uncomment to disable native menubar on Mac
         # self.menuBar().setNativeMenuBar(False)
 
+        if control.read_record('submenu.direction','/etc/gui')=='ltr':
+            self.menuBar().setLayoutDirection(Qt.LeftToRight)
+        else:
+            self.menuBar().setLayoutDirection(Qt.RightToLeft)
+
         file_menu = self.menuBar().addMenu(res.get('@string/file'))
         file_menu.setFont(self.Env.font())
 

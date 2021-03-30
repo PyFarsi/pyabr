@@ -14,10 +14,11 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 import sys, importlib, baran
-from libabr import Files, Res, App, Control
+from libabr import Files, Res, App, Control, Commands
 files = Files()
 res = Res()
 app = App()
+commands = Commands()
 control = Control()
 
 class MainApp(baran.BLineEdit):
@@ -37,16 +38,35 @@ class MainApp(baran.BLineEdit):
 
     def RunApp (self):
         command = self.text().split(' ')
+
+        ## ABR Protocol ##
         if command[0].startswith ('abr://'):
             app.switch('runapp')
             self.Env.RunApp('uiv',[command[0]])
             app.switch('runapp')
             QTimer.singleShot(1000, self.correct)
+
+        ## WEB Protocol ##
+        elif command[0].startswith('http://') or command[0].startswith('https://'):
+            app.switch('runapp')
+            self.Env.RunApp('wapp', [command[0]])
+            app.switch('runapp')
+            QTimer.singleShot(1000, self.correct)
+
+        ## Desktop based applications ##
         elif app.exists(command[0]):
             self.Env.RunApp(command[0],command[1:])
             app.switch('runapp')
             self.setEnabled(False)
             QTimer.singleShot(1000, self.correct)
+
+        ## Command based application ##
+        elif hasattr(commands,command[0]):
+            app.switch('runapp')
+            getattr(commands,command[0])(command[1:])
+            app.switch('runapp')
+            QTimer.singleShot(1000, self.correct)
+
         else:
             app.switch('runapp')
             self.Env.RunApp('text', [res.get('@string/not_found'), res.get('@string/not_found_msg').replace('{0}',command[0])])

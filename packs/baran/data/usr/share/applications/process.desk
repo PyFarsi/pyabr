@@ -1,7 +1,8 @@
 name[en]: Process Manager
 name[fa]: مدیریت فرایندها
 exec: process
-logo: @icon/help-about
+logo: @icon/monitor
 application: Yes
 hidden: No
 category: system
+setting: Yes

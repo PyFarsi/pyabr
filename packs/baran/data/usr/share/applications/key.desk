@@ -1,6 +1,9 @@
 name[en]: Key Box
+name[fa]: تنظیمات زبان کیبورد
+logo: @icon/keyboard
 exec: keybox
 hidden: Yes
 logo: @icon/help-about
 application: No
 category: system
+setting: Yes

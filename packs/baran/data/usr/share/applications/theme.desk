@@ -1,0 +1,8 @@
+name[en]: Themes & Style
+name[fa]: پوسته ها
+exec: themes
+logo: @icon/theme-config
+application: No
+hidden: Yes
+category: system
+setting: Yes

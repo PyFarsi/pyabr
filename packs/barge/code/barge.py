@@ -13,8 +13,12 @@
 from PyQt5 import QtWidgets, uic, QtGui,QtCore
 import sys, importlib, random,py_compile, baran
 from libabr import System, App, Control, Files, Res, Commands
+from PyQt5.QtCore import *
 
 res = Res();files = Files();app = App();control=Control();cmd = Commands()
+
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 
 class Barge (baran.BTextEdit):
     def __init__(self,ports):
@@ -52,24 +56,26 @@ class MainApp(QtWidgets.QMainWindow):
         # text box
         self.teEdit = Barge([None,self.Env])
         self.teEdit.setStyleSheet("""
-                        QScrollBar
-                        {
-                        background : white;
-                        }
-                        QScrollBar::handle
-                        {
-                        background : #123456;
-                        border-radius: 6% 6%;
-                        }
-                        QScrollBar::handle::pressed
-                        {
-                        background : #ABCDEF;
-                        border-radius: 6% 6%;
-                        }""".replace('white', self.Env.__menu_scroll_bgcolor__).replace('#123456',
-                                                                                        self.Env.__menu_scroll_color__).replace(
+                       QScrollBar
+                       {
+                       background : white;
+                       }
+                       QScrollBar::handle
+                       {
+                       background : #123456;
+                       border-radius: 6% 6%;
+                       }
+                       QScrollBar::handle::pressed
+                       {
+                       background : #ABCDEF;
+                       border-radius: 6% 6%;
+                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                     getdata(
+                                                                                         "menu.scroll.color")).replace(
             '6',
-            self.Env.__menu_scroll_round_size__).replace(
-            '#ABCDEF', self.Env.__menu_scroll_color_hover__))
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")))
 
         ## External Support Source Code ##
         if not self.External==None:
@@ -85,6 +91,11 @@ class MainApp(QtWidgets.QMainWindow):
         self.file = self.menubar.addMenu(res.get('@string/file'))
         self.file.setFont(self.Env.font())
 
+        if getdata('submenu.direction')=='ltr':
+            self.menubar.setLayoutDirection(Qt.LeftToRight)
+        else:
+            self.menubar.setLayoutDirection(Qt.RightToLeft)
+
         # file menu #
         self.new = self.file.addAction(res.get('@string/new'))
         self.new.setFont(self.Env.font())
@@ -95,10 +106,12 @@ class MainApp(QtWidgets.QMainWindow):
         self.new_page.setFont(self.Env.font())
         self.new_page.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName, 'text'))))
         self.open = self.file.addAction(res.get('@string/open'))
+        self.open.setShortcut('Ctrl+O')
         self.open.setFont(self.Env.font())
         self.open.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'open'))))
         self.open.triggered.connect (self.open_act)
         self.save = self.file.addAction(res.get('@string/save'))
+        self.save.setShortcut('Ctrl+S')
         self.save.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'save'))))
         self.save.setFont(self.Env.font())
         self.save.triggered.connect (self.save_)
@@ -110,6 +123,7 @@ class MainApp(QtWidgets.QMainWindow):
         self.exit.setFont(self.Env.font())
         self.exit.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'exit'))))
         self.exit.triggered.connect (self.Widget.Close)
+        self.exit.setShortcut('Ctrl+X')
 
         # code menu
         self.code = self.menubar.addMenu(res.get('@string/code'))
@@ -117,6 +131,7 @@ class MainApp(QtWidgets.QMainWindow):
         self.run = self.code.addAction(res.get('@string/run'))
         self.run.setFont(self.Env.font())
         self.run.triggered.connect (self.run_)
+        self.run.setShortcut('Shift+F10')
 
         self.insert_c = self.code.addMenu(res.get('@string/icode'))
         self.insert_c.setFont(self.Env.font())
@@ -277,6 +292,7 @@ pause
         self.Widget.SetWindowTitle(files.output(filename))
 
     def save_ (self,filename):
+        app.switch('barge')
         if not self.Widget.WindowTitle()==res.get('@string/untitled'):
             files.write(files.output(self.Widget.WindowTitle()),self.teEdit.toPlainText())
         else:

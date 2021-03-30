@@ -47,135 +47,8 @@ if files.isfile('/proc/info/scn'):
 
 ## variables ##
 
-class variables:
-    lock_clock_shadow = getdata('lock.clock.shadow')
-    lock_clock_color = getdata('lock.clock.color')
-    lock_clock_location = getdata('lock.clock.location')
-    locale = getdata('locale')
-    logo = getdata('logo')
-    autosize = getdata('autosize')
-    splash_logo = getdata('splash.logo')
-    submenu_hide = getdata('submenu.hide')
-    submenu_bgcolor = getdata('submenu.bgcolor')
-    submenu_direction = getdata('submenu.direction')
-    taskbar_location = getdata('taskbar.location')
-    taskbar_size = getdata('taskbar.size')
-    taskbar_locked = getdata('taskbar.locked')
-    taskbar_float = getdata('taskbar.float')
-    backend_color = getdata('backend.color')
-    backend_timeout = getdata('backend.timeout')
-    splash_color = getdata('splash.color')
-    splash_timeout = getdata('splash.timeout')
-    fullscreen = getdata('fullscreen')
-    width = getdata('width')
-    splash_logo_size = getdata('splash.logo-size')
-    height = getdata('height')
-    terminal = getdata('terminal')
-    params = getdata('params')
-    sides = getdata('sides')
-    login_bgcolor = getdata('login.bgcolor')
-    login_fgcolor = getdata('login.fgcolor')
-    login_background = getdata('login.background')
-    enter_bgcolor = getdata('enter.bgcolor')
-    enter_fgcolor = getdata('enter.fgcolor')
-    enter_background = getdata('enter.background')
-    unlock_bgcolor = getdata('unlock.bgcolor')
-    unlock_fgcolor = getdata('unlock.fgcolor')
-    unlock_background = getdata('unlock.background')
-    username = getdata('username')
-    password = getdata('password')
-    desktop_bgcolor = getdata('desktop.bgcolor')
-    desktop_fgcolor = getdata('desktop.fgcolor')
-    desktop_background = getdata('desktop.background')
-    lock_clock_format = getdata('lock.clock.format')
-    lock_clock_size = getdata('lock.clock.size')
-    lock_bgcolor = getdata('lock.bgcolor')
-    lock_fgcolor = getdata('lock.fgcolor')
-    lock_background = getdata('lock.background')
-    taskbar_bgcolor = getdata('taskbar.bgcolor')
-    loginw_bgcolor = getdata('loginw.bgcolor')
-    input_bgcolor = getdata('loginw.input.bgcolor')
-    input_fgcolor = getdata('loginw.input.fgcolor')
-    app_title_btn_round = getdata('appw.title.btn-round')
-    loginw_fgcolor = getdata('loginw.fgcolor')
-    loginw_round_size = getdata('loginw.round-size')
-    loginw_input_round_size = getdata('loginw.input.round-size')
-    loginw_location = getdata('loginw.location')
-    loginw_login_hide = getdata('loginw.login.hide')
-    loginw_enter_bgcolor = getdata('loginw.enter.bgcolor')
-    loginw_enter_fgcolor = getdata('loginw.enter.fgcolor')
-    loginw_enter_hover_bgcolor = getdata('loginw.enter-hover.bgcolor')
-    loginw_enter_hover_fgcolor = getdata('loginw.enter-hover.fgcolor')
-    loginw_enter_round_size = getdata('loginw.enter.round-size')
-    loginw_enter_hide = getdata('loginw.enter.hide')
-    loginw_enter_width = getdata('loginw.enter.width')
-    loginw_unlock_bgcolor = getdata('loginw.unlock.bgcolor')
-    loginw_unlock_fgcolor = getdata('loginw.unlock.fgcolor')
-    menu = getdata('menu')
-    loginw_unlock_hover_bgcolor = getdata('loginw.unlock-hover.bgcolor')
-    loginw_unlock_hover_fgcolor = getdata('loginw.unlock-hover.fgcolor')
-    loginw_unlock_round_size = getdata('loginw.unlock.round-size')
-    loginw_unlock_hide = getdata('loginw.unlock.hide')
-    loginw_unlock_width = getdata('loginw.unlock.width')
-    loginw_userlogo = getdata('loginw.userlogo')
-    loginw_shadow = getdata('loginw.shadow')
-    loginw_userlogo_shadow = getdata('loginw.userlogo.shadow')
-    loginw_input_shadow = getdata('loginw.input.shadow')
-    loginw_login_shadow = getdata('loginw.login.shadow')
-    loginw_enter_shadow = getdata('loginw.enter.shadow')
-    loginw_unlock_shadow = getdata('loginw.unlock.shadow')
-    loginw_login_height = getdata('loginw.login.height')
-    loginw_enter_height = getdata('loginw.enter.height')
-    loginw_unlock_height = getdata('loginw.unlock.height')
-    app_title_size = getdata('appw.title.size')
-    app_title_fgcolor = getdata('appw.title.fgcolor')
-    app_title_bgcolor = getdata('appw.title.bgcolor')
-    app_title_float = getdata('appw.title.float')
-    app_title_float_hover = getdata('appw.title.float-hover')
-    app_title_close = getdata('appw.title.close')
-    app_title_close_hover = getdata('appw.title.close-hover')
-    app_shadow = getdata('appw.shadow')
-    app_logo = getdata('appw.logo')
-    app_menu_bgcolor = getdata('appw.menu.bgcolor')
-    app_menu_fgcolor = getdata('appw.menu.fgcolor')
-    app_menu_bgcolor_pressed = getdata('appw.menu.bgcolor-pressed')
-    loginw_input_width = getdata('loginw.input.width')
-    loginw_input_height = getdata('loginw.input.height')
-    app_menu_fgcolor_pressed = getdata('appw.menu.fgcolor-pressed')
-    app_body_bgcolor = getdata('appw.body.bgcolor')
-    app_body_fgcolor = getdata('appw.body.fgcolor')
-    menu_scroll_color = getdata('menu.scroll.color')
-    menu_scroll_color_hover = getdata('menu.scroll.color-hover')
-    loginw_userlogo_bgcolor = getdata('loginw.userlogo.bgcolor')
-    loginw_userlogo_round_size = getdata('loginw.userlogo.round-size')
-    menu_scroll_round_size = getdata('menu.scroll.round-size')
-    menu_scroll_bgcolor = getdata('menu.scroll.bgcolor')
-    font = getdata('font')
-    loginw_login_hover_bgcolor = getdata('loginw.login-hover.bgcolor')
-    loginw_login_hover_fgcolor = getdata('loginw.login-hover.fgcolor')
-    loginw_login_width = getdata('loginw.login.width')
-    taskbar_fgcolor = getdata('taskbar.fgcolor')
-    loginw_width = getdata('loginw.width')
-    loginw_height = getdata('loginw.height')
-    fontsize = getdata('fontsize')
-    loginw_input_bgcolor = getdata('loginw.input.bgcolor')
-    loginw_input_fgcolor = getdata('loginw.input.fgcolor')
-    loginw_login_bgcolor = getdata('loginw.login.bgcolor')
-    loginw_login_fgcolor = getdata('loginw.login.fgcolor')
-    loginw_login_round_size = getdata('loginw.login.round-size')
-    key_bgcolor = getdata('key.bgcolor')
-    key_btn_round_size= getdata('key.btn.round-size')
-    key_btn_bgcolor = getdata('key.btn.bgcolor')
-    key_btn_fgcolor = getdata('key.btn.fgcolor')
-    key_btn_bgcolor_hover = getdata('key.btn.bgcolor-hover')
-    key_btn_fgcolor_hover = getdata('key.btn.fgcolor-hover')
-    key_btn_shadow = getdata('key.btn.shadow')
-    key_background = getdata('key.background')
-    key_enable = getdata('key.enable')
-    layout = getdata('layout')
-
-f.setFamily(variables.font)
-f.setPointSize(int(variables.fontsize))
+f.setFamily(getdata("font"))
+f.setPointSize(int(getdata("fontsize")))
 
 ## ## ## ## ##
 
@@ -189,13 +62,17 @@ class Backend (QMainWindow):
         self.setCentralWidget(Login([self]))
 
     def runEnter (self):
-        self.setCentralWidget(Enter([self, self], variables.username))  ## Switch user
+        self.setCentralWidget(Enter([self, self], getdata("username")))  ## Switch user
         control.write_record('username','guest','/etc/gui')
 
     def runDesktop (self):
-        self.setCentralWidget(Desktop([self, self], variables.username, variables.password))
+        self.setCentralWidget(Desktop([self, self], getdata("username"), getdata("password")))
         control.write_record('username', 'guest', '/etc/gui')
         control.write_record('password', '*', '/etc/gui')
+
+    def runUnlock (self):
+        self.setCentralWidget(Unlock([self, self], getdata("username")))  ## Switch user
+        control.write_record('username', 'guest', '/etc/gui')
 
     def __init__(self):
         super(Backend, self).__init__()
@@ -212,57 +89,52 @@ class Backend (QMainWindow):
         self.setWindowTitle(cs+' '+ver+' ('+cd+")")
 
         ## Get app logo ##
-        self.setWindowIcon(QIcon(res.get(variables.logo)))
+        self.setWindowIcon(QIcon(res.get(getdata("logo"))))
 
         ## Get backend color ##
 
         self.wb = QMainWindow()
-        self.wb.setStyleSheet('background-color: ' + variables.backend_color+";color: black;")
+        self.wb.setStyleSheet('background-color: ' + getdata("backend.color")+";color: black;")
         self.setCentralWidget(self.wb)
 
         ## Set size ##
 
-        self.resize(int(variables.width), int(variables.height))
+        self.resize(int(getdata("width")), int(getdata("height")))
 
         ## Set sides ##
         ## Set sides ##
 
-        if variables.sides == 'Yes':
-            variables.sides = True
-        else:
-            variables.sides = False
-
-        if variables.sides == False:
+        if getdata("sides") == 'No':
             self.setWindowFlag(Qt.FramelessWindowHint)
 
         ## Show ##
 
             ## Get data ##
 
-        if variables.fullscreen == 'Yes':
-            variables.fullscreen = True
-        else:
-            variables.fullscreen = False
 
-        if variables.fullscreen == True:
+        if getdata("fullscreen") == 'Yes':
             self.showFullScreen()
         else:
             self.show()
 
         ## Run backend after showing backend ##
 
-        control.write_record('params','gui','/etc/gui')
+        params = getdata('params')
 
-        if variables.params == 'splash':
+        control.write_record('params', 'gui', '/etc/gui')
+
+        if params == 'splash':
             self.runSplash()
-        elif variables.params == 'login':
+        elif params == 'login':
             self.runLogin()
-        elif variables.params == 'enter':
+        elif params == 'enter':
             self.runEnter()
-        elif variables.params == 'desktop':
+        elif params == 'desktop':
             self.runDesktop()
+        elif params == 'unlock':
+            self.runUnlock()
         else:
-            QTimer.singleShot(int(variables.backend_timeout), self.runSplash)  ## Run splash after 1s
+            QTimer.singleShot(int(getdata("backend.timeout")), self.runSplash)  ## Run splash after 1s
 
 ## Splash ##
 class Splash (QMainWindow):
@@ -286,7 +158,7 @@ class Splash (QMainWindow):
         self.setWindowTitle(cs + ' ' + ver + ' (' + cd + ")")
 
         ## Get app logo ##
-        self.setWindowIcon(QIcon(res.get(variables.logo)))
+        self.setWindowIcon(QIcon(res.get(getdata("logo"))))
 
 
         # set font
@@ -300,33 +172,24 @@ class Splash (QMainWindow):
         ## Set color ##
 
         self.wb = QMainWindow()
-        self.wb.setStyleSheet(f'background-color: {variables.splash_color}')
+        self.wb.setStyleSheet(f'background-color: {getdata("splash.color")}')
         self.setCentralWidget(self.wb)
 
         ## Set size ##
 
 
-        self.resize(int(variables.width), int(variables.height))
+        self.resize(int(getdata("width")), int(getdata("height")))
 
         ## Set sides ##
 
-        if variables.sides=='Yes':
-            variables.sides = True
-        else:
-            variables.sides = False
-
-        if variables.sides == False:
+        if getdata("sides") == 'No':
             self.setWindowFlag(Qt.FramelessWindowHint)
 
         ## Show ##
         ## Get data ##
 
-        if variables.fullscreen == 'Yes':
-            variables.fullscreen = True
-        else:
-            variables.fullscreen = False
 
-        if variables.fullscreen == True:
+        if getdata("fullscreen") == 'Yes':
             self.showFullScreen()
         else:
             self.show()
@@ -338,21 +201,52 @@ class Splash (QMainWindow):
         self.wb.layout().addWidget (self.logo)
 
         ## Set logo ##
-        self.logo.setIcon(QIcon(res.get(variables.splash_logo)))
+        self.logo.setIcon(QIcon(res.get(getdata("splash.logo"))))
 
-        self.logo.setMaximumSize(int(variables.splash_logo_size),int(variables.splash_logo_size)) ## Set size
-        self.logo.setIconSize(QSize(int(variables.splash_logo_size),int(variables.splash_logo_size)))
+        self.logo.setMaximumSize(int(getdata("splash.logo-size")),int(getdata("splash.logo-size"))) ## Set size
+        self.logo.setIconSize(QSize(int(getdata("splash.logo-size")),int(getdata("splash.logo-size"))))
 
         self.logo.setStyleSheet('border:none;')
 
-        self.logo.setGeometry(int(self.width()/2)-int(int(variables.splash_logo_size)/2),int(self.height()/2)-int(int(variables.splash_logo_size)/2),int(variables.splash_logo_size),int(variables.splash_logo_size))
+        self.logo.setGeometry(int(self.width()/2)-int(int(getdata("splash.logo-size"))/2),int(self.height()/2)-int(int(getdata("splash.logo-size"))/2),int(getdata("splash.logo-size")),int(getdata("splash.logo-size")))
 
         ## Run splash after showing backend ##
 
-        QTimer.singleShot(int(variables.splash_timeout), self.runLogin) ## Run login
+        QTimer.singleShot(int(getdata("splash.timeout")), self.runLogin) ## Run login
+
+
+class LeInput (QLineEdit):
+    def __init__(self,ports):
+        super(LeInput, self).__init__()
+
+        self.Env = ports[0]
+
+        self.setFocusPolicy(Qt.ClickFocus)
+        self.setFont(QFont(getdata("font"), int(getdata("fontsize"))))
+
+    def focusInEvent(self, e):
+        if getdata("key.enable") == 'Yes':
+            self.Env.keyboardWidget.currentTextBox = self
+            self.Env.keyboardWidget.show()
+            self.Env.fakewidgetkeyboard.show()
+
+            self.Env.fakewidgetkeyboard.activateWindow()
+            self.Env.fakewidgetkeyboard.raise_()
+
+            self.Env.keyboardWidget.activateWindow()
+            self.Env.keyboardWidget.raise_()
+
+        # self.setStyleSheet("border: 1px solid red;")
+        super(LeInput, self).focusInEvent(e)
+
+    def mousePressEvent(self, e):
+        # print(e)
+        # self.setFocusPolicy(Qt.ClickFocus)
+        super(LeInput, self).mousePressEvent(e)
 
 ## LoginW ##
 class LoginWidget (QMainWindow):
+
     def __init__(self,ports):
         super(LoginWidget, self).__init__()
 
@@ -364,30 +258,30 @@ class LoginWidget (QMainWindow):
 
         ######
 
-        self.setMaximumSize(int(variables.loginw_width),int(variables.loginw_height))  ## Set size of loginw
+        self.setMaximumSize(int(getdata("loginw.width")),int(getdata("loginw.height")))  ## Set size of loginw
 
         ## Locations ##
 
-        if variables.loginw_location == 'center':
+        if getdata("loginw.location") == 'center':
             self.setGeometry(int(self.Env.width() / 2) - int(self.width() / 2),
                              int(self.Env.height() / 2) - int(self.height() / 2), self.width(),
                              self.height())  ## Geometric
-        elif variables.loginw_location == 'top':
+        elif getdata("loginw.location") == 'top':
             self.setGeometry(int(self.Env.width() / 2) - int(self.width() / 2), int(self.height() / 20), self.width(),
                              self.height())  ## Geometric
-        elif variables.loginw_location == 'left':
+        elif getdata("loginw.location") == 'left':
             self.setGeometry(int(self.width() / 20), int(self.Env.height() / 2) - int(self.height() / 2), self.width(),
                              self.height())  ## Geometric
-        elif variables.loginw_location == 'right':
+        elif getdata("loginw.location") == 'right':
             self.setGeometry(self.Env.width() - int(self.width() / 20) - self.width(),
                              int(self.Env.height() / 2) - int(self.height() / 2), self.width(),
                              self.height())  ## Geometric
-        elif variables.loginw_location == 'bottom':
+        elif getdata("loginw.location") == 'bottom':
             self.setGeometry(int(self.Env.width() / 2) - int(self.width() / 2),
                              self.Env.height() - int(self.height() / 20) - self.height(), self.width(),
                              self.height())  ## Geometric
 
-        if variables.loginw_shadow=='Yes':
+        if getdata("loginw.shadow")=='Yes':
             ## Shadow ##
             # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
             shadow = QGraphicsDropShadowEffect()
@@ -403,8 +297,8 @@ class LoginWidget (QMainWindow):
             ##
 
             ## Set colors ##
-        self.setStyleSheet(f'color:{variables.loginw_fgcolor};border-radius: {variables.loginw_round_size}% {variables.loginw_round_size};')  ## Set color white as default
-        self.btnColorButton.setStyleSheet(f'background-color:{variables.loginw_bgcolor};')
+        self.setStyleSheet(f'color:{getdata("loginw.fgcolor")};border-radius: {getdata("loginw.round-size")}% {getdata("loginw.round-size")};')  ## Set color white as default
+        self.btnColorButton.setStyleSheet(f'background-color:{getdata("loginw.bgcolor")};')
 
         ## Userlogo ##
 
@@ -413,7 +307,7 @@ class LoginWidget (QMainWindow):
             ## Set size & location ##
         self.userlogo.setMaximumSize(250,250)
         self.userlogo.setIconSize(QSize(250,250))
-        self.userlogo.setIcon(QIcon(res.get(variables.loginw_userlogo)))
+        self.userlogo.setIcon(QIcon(res.get(getdata("loginw.userlogo"))))
         self.userlogo.setGeometry(int(self.width()/2)-int(self.userlogo.width()/2),int(self.height()/4)-int(self.userlogo.height()/4),self.userlogo.width(),self.userlogo.height())
 
         #if not loginw_userlogo == None:
@@ -422,11 +316,11 @@ class LoginWidget (QMainWindow):
             if not logo == None: loginw_userlogo = logo
 
         self.userlogo.setStyleSheet(
-            f'background-color: {variables.loginw_userlogo_bgcolor};border-radius: {variables.loginw_userlogo_round_size}% {variables.loginw_userlogo_round_size};')
+            f'background-color: {getdata("loginw.userlogo.bgcolor")};border-radius: {getdata("loginw.userlogo.round-size")}% {getdata("loginw.userlogo.round-size")};')
 
             ## Shadow for userlogo ##
         ## Shadow ##
-        if variables.loginw_userlogo_shadow=='Yes':
+        if getdata("loginw.userlogo.shadow")=='Yes':
             # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
             shadow = QGraphicsDropShadowEffect()
             shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
@@ -439,15 +333,15 @@ class LoginWidget (QMainWindow):
 
             ## leInput username ##
 
-        self.leInput = QLineEdit()
+        self.leInput = LeInput([self.Env])
 
             ## Size & Location of leInput ##
-        self.leInput.setMaximumSize(int(variables.loginw_input_width),int(variables.loginw_input_height))
+        self.leInput.setMaximumSize(int(getdata("loginw.input.width")),int(getdata("loginw.input.height")))
         self.leInput.setGeometry(int(self.width()/2)-int(self.leInput.width()/2),self.height()-int(self.height()/4)-self.leInput.height(),self.leInput.width(),self.leInput.height())
 
             ## Shadow of leInput ##
         ## Shadow ##
-        if variables.loginw_input_shadow=='Yes':
+        if getdata("loginw.input.shadow")=='Yes':
             # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
             shadow = QGraphicsDropShadowEffect()
             shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
@@ -459,7 +353,7 @@ class LoginWidget (QMainWindow):
 
 
             ## Setting up all colors ##
-        self.leInput.setStyleSheet('padding-left: 10%;padding-right: 10%;background-color: '+variables.loginw_input_bgcolor+';color: '+variables.loginw_input_fgcolor+f";border-width: 3%;border-radius: {variables.loginw_input_round_size}% {variables.loginw_input_round_size}")
+        self.leInput.setStyleSheet('padding-left: 10%;padding-right: 10%;background-color: '+getdata("loginw.input.bgcolor")+';color: '+getdata("loginw.input.fgcolor")+f";border-width: 3%;border-radius: {getdata('loginw.input.round-size')}% {getdata('loginw.input.round-size')}")
 
             ## Place holder in input ##
 
@@ -486,7 +380,7 @@ class LoginWidget (QMainWindow):
             self.btnLogin = QPushButton()
 
             ## Shadow ##
-            if variables.loginw_login_shadow == 'Yes':
+            if getdata('loginw.login.shadow') == 'Yes':
                 ## Shadow ##
                 # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
                 shadow = QGraphicsDropShadowEffect()
@@ -498,23 +392,23 @@ class LoginWidget (QMainWindow):
             self.btnLogin.clicked.connect (self.actions)
             self.btnLogin.setStyleSheet('''
                     QPushButton {
-                        background-color: ''' + variables.loginw_login_bgcolor +''';
-                        color: ''' + variables.loginw_login_fgcolor + ''';
-                        border-radius: ''' + variables.loginw_login_round_size + '''% '''+variables.loginw_login_round_size+'''%;
+                        background-color: ''' + getdata('loginw.login.bgcolor') +''';
+                        color: ''' + getdata('loginw.login.fgcolor') + ''';
+                        border-radius: ''' + getdata('loginw.login.round-size') + '''% '''+getdata('loginw.login.round-size')+'''%;
                     } 
                     QPushButton:hover {
-                        background-color:''' + variables.loginw_login_hover_bgcolor + ''';
-                        color:''' + variables.loginw_login_hover_fgcolor + ''';
-                        border-radius: ''' + variables.loginw_login_round_size + '''% '''+variables.loginw_login_round_size+''';
+                        background-color:''' + getdata('loginw.login-hover.bgcolor') + ''';
+                        color:''' + getdata('loginw.login-hover.fgcolor') + ''';
+                        border-radius: ''' + getdata('loginw.login.round-size') + '''% '''+ getdata('loginw.login.round-size')+''';
                     }
                     ''')
 
             self.btnLogin.setFont(f)
-            if variables.loginw_login_hide == 'Yes':
+            if  getdata('loginw.login.hide') == 'Yes':
                 self.btnLogin.hide()
             self.btnLogin.setText(res.get('@string/next_text'))
             self.btnLogin.setFont(f)
-            self.btnLogin.setMaximumSize(int(variables.loginw_login_width), int(variables.loginw_login_height))
+            self.btnLogin.setMaximumSize(int( getdata('loginw.login.width')), int( getdata('loginw.login.height')))
             self.btnLogin.setGeometry(int(self.width() / 2) - int(self.btnLogin.width() / 2),
                                       self.height() - int(self.height() / 4) - int(self.btnLogin.height() / 4) + int(self.btnLogin.height()/2),
                                       self.btnLogin.width(), self.btnLogin.height())
@@ -523,7 +417,7 @@ class LoginWidget (QMainWindow):
         elif self.Env.objectName() == 'Enter':
             self.btnEnter = QPushButton()
             ## Shadow ##
-            if variables.loginw_enter_shadow == 'Yes':
+            if  getdata('loginw.enter.shadow') == 'Yes':
                 ## Shadow ##
                 # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
                 shadow = QGraphicsDropShadowEffect()
@@ -535,23 +429,24 @@ class LoginWidget (QMainWindow):
             self.btnEnter.clicked.connect (self.actions)
             self.btnEnter.setStyleSheet('''
                     QPushButton {
-                        background-color: ''' + variables.loginw_enter_bgcolor + """;
-                        color: """ + variables.loginw_enter_fgcolor + """;
-                        border-radius: """ + variables.loginw_enter_round_size + '''
+                        background-color: ''' +  getdata('loginw.enter.bgcolor') + """;
+                        color: """ + getdata('loginw.enter.fgcolor') + """;
+                        border-radius: """ + getdata('loginw.enter.round-size') + '''
                     } 
                     QPushButton:hover {
-                        background-color:''' + variables.loginw_enter_hover_bgcolor + ''';
-                        color:''' + variables.loginw_enter_hover_fgcolor + ''';
-                        border-radius: ''' + variables.loginw_enter_round_size + ''';
+                        background-color:''' + getdata('loginw.enter-hover.bgcolor') + ''';
+                        color:''' + getdata('loginw.enter-hover.fgcolor') + ''';
+                        border-radius: ''' + getdata('loginw.enter.round-size') + ''';
                     }
                     ''')
 
+
             self.btnEnter.setFont(f)
-            if variables.loginw_enter_hide == 'Yes':
+            if getdata('loginw.enter.hide') == 'Yes':
                 self.btnEnter.hide()
             self.btnEnter.setText(res.get('@string/enter_text'))
             self.btnEnter.setFont(f)
-            self.btnEnter.setMaximumSize(int(variables.loginw_enter_width), int(variables.loginw_enter_height))
+            self.btnEnter.setMaximumSize(int(getdata('loginw.enter.width')), int(getdata('loginw.enter.height')))
             self.btnEnter.setGeometry(int(self.width() / 2) - int(self.btnEnter.width() / 2),
                                       self.height() - int(self.height() / 4) - int(self.btnEnter.height() / 4) + int(self.btnEnter.height()/2),
                                       self.btnEnter.width(), self.btnEnter.height())
@@ -560,7 +455,7 @@ class LoginWidget (QMainWindow):
         elif self.Env.objectName()=='Unlock':
             self.btnUnlock = QPushButton()
             ## Shadow ##
-            if variables.loginw_unlock_shadow == 'Yes':
+            if getdata('loginw.unlock.shadow') == 'Yes':
                 ## Shadow ##
                 # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
                 shadow = QGraphicsDropShadowEffect()
@@ -572,23 +467,23 @@ class LoginWidget (QMainWindow):
             self.btnUnlock.clicked.connect(self.actions)
             self.btnUnlock.setStyleSheet('''
                                 QPushButton {
-                                    background-color: ''' + variables.loginw_unlock_bgcolor + """;
-                                    color: """ + variables.loginw_unlock_fgcolor + """;
-                                    border-radius: """ + variables.loginw_unlock_round_size + '''
+                                    background-color: ''' + getdata('loginw.unlock.bgcolor')+ """;
+                                    color: """ +getdata('loginw.unlock.fgcolor') + """;
+                                    border-radius: """ + getdata('loginw.unlock.round-size') + '''
                                 } 
                                 QPushButton:hover {
-                                    background-color:''' + variables.loginw_unlock_hover_bgcolor + ''';
-                                    color:''' + variables.loginw_unlock_hover_fgcolor + ''';
-                                    border-radius: ''' + variables.loginw_unlock_round_size + ''';
+                                    background-color:''' + getdata('loginw.unlock-hover.bgcolor')+ ''';
+                                    color:''' + getdata('loginw.unlock-hover.fgcolor') + ''';
+                                    border-radius: ''' + getdata('loginw.unlock.round-size') + ''';
                                 }
                                 ''')
 
             self.btnUnlock.setFont(f)
-            if variables.loginw_unlock_hide == 'Yes':
+            if getdata('loginw.unlock.hide') == 'Yes':
                 self.btnUnlock.hide()
             self.btnUnlock.setText(res.get('@string/unlock_text'))
             self.btnUnlock.setFont(f)
-            self.btnUnlock.setMaximumSize(int(variables.loginw_unlock_width), int(variables.loginw_unlock_height))
+            self.btnUnlock.setMaximumSize(int(getdata('loginw.unlock.width')), int(getdata('loginw.unlock.height')))
             self.btnUnlock.setGeometry(int(self.width() / 2) - int(self.btnUnlock.width() / 2),
                                       self.height() - int(self.height() / 4) - int(self.btnUnlock.height() / 4) + int(
                                           self.btnUnlock.height() / 2),
@@ -648,8 +543,6 @@ class LoginWidget (QMainWindow):
                 self.Env.setCentralWidget(Desktop([self.Backend,self],username,password))
 
         elif self.Env.objectName()=='Unlock':
-            print(self.Backend)
-            print(self.Env)
 
             username = self.Env.username
             password = self.leInput.text()
@@ -666,11 +559,10 @@ class LoginWidget (QMainWindow):
                 self.leInput.setFont(f)
                 QTimer.singleShot(2500, self.clean)
             else:
-                self.Backend.submenu.show()
-                self.Backend.taskbar.show()
-                self.Backend.backgroundButton.show()
-                self.Env.BtnUnlock.hide()
-                self.Env.lock.hide()
+                self.close()
+                self.Env.close()
+                files.create('/tmp/unlock')
+                sys.exit(0)
 
     def clean (self):
         self.leInput.setEnabled(True)
@@ -683,6 +575,14 @@ class LoginWidget (QMainWindow):
 
 ## Login ##
 class Login (QMainWindow):
+
+    def vkey_act(self):
+
+        if getdata('key.enable')=='Yes':
+            control.write_record('key.enable', 'No', '/etc/gui')
+        else:
+            control.write_record('key.enable', 'Yes', '/etc/gui')
+
     def reboot_act_(self):
             if not files.readall('/proc/info/os') == 'Pyabr':
                 app.endall()
@@ -718,7 +618,7 @@ class Login (QMainWindow):
         self.setWindowTitle(cs + ' ' + ver + ' (' + cd + ")")
 
         ## Get app logo ##
-        self.setWindowIcon(QIcon(res.get(variables.logo)))
+        self.setWindowIcon(QIcon(res.get(getdata("logo"))))
 
         ## Ports ##
 
@@ -727,28 +627,28 @@ class Login (QMainWindow):
 
         ## Widget for bgcolor or background ##
         self.backgroundButton = QPushButton()
-        self.backgroundButton.setGeometry(0,0,int(variables.width),int(variables.height))
+        self.backgroundButton.setGeometry(0,0,int(getdata("width")),int(getdata("height")))
         self.layout().addWidget(self.backgroundButton)
 
         ## Set bgcolor and background ##
 
-        self.setStyleSheet(f'color: {variables.login_fgcolor};')
-        self.backgroundButton.setStyleSheet(f'border:none;background-color: {variables.login_bgcolor};')
+        self.setStyleSheet(f'color: {getdata("login.fgcolor")};')
+        self.backgroundButton.setStyleSheet(f'border:none;background-color: {getdata("loginw.bgcolor")};')
 
 
-        self.setStyleSheet(f'color: {variables.login_fgcolor};')
-        self.backgroundButton.setStyleSheet(f'border:none;background-color: {variables.login_bgcolor};')
+        self.setStyleSheet(f'color: {getdata("login.fgcolor")};')
+        self.backgroundButton.setStyleSheet(f'border:none;background-color: {getdata("login.bgcolor")};')
 
-        self.setStyleSheet(f'color: {variables.login_fgcolor};')
-        self.backgroundButton.setStyleSheet(f'border:none;background-image: url({res.get(variables.login_background)});')
-        self.setStyleSheet(f'background-color:{variables.login_bgcolor};color: {variables.login_fgcolor};')
+        self.setStyleSheet(f'color: {getdata("login.fgcolor")};')
+        self.backgroundButton.setStyleSheet(f'border:none;background-image: url({res.get(getdata("login.background"))});')
+        self.setStyleSheet(f'background-color:{getdata("login.bgcolor")};color: {getdata("login.fgcolor")};')
 
-        self.resize(int(variables.width), int(variables.height))
+        self.resize(int(getdata("width")), int(getdata("height")))
 
         ## Set sides ##
         ## Set sides ##
 
-        if variables.sides == 'No':
+        if getdata("sides") == 'No':
             self.setWindowFlag(Qt.FramelessWindowHint)
 
         ## Login widget ##
@@ -762,13 +662,13 @@ class Login (QMainWindow):
 
         # self.submenu.setStyleSheet(f'background-color:none;color:{submenu_bgcolor};')
 
-        if variables.submenu_direction == 'ltr':
+        if getdata("submenu.direction") == 'ltr':
             self.submenu.setLayoutDirection(Qt.LeftToRight)
-        elif variables.submenu_direction == 'rtl':
+        elif getdata("submenu.direction") == 'rtl':
             self.submenu.setLayoutDirection(Qt.RightToLeft)
 
         # hide #
-        if variables.submenu_hide == 'Yes':
+        if getdata("submenu.hide") == 'Yes':
             self.submenu.hide()
 
         self.submenu.setFont(f)
@@ -804,13 +704,47 @@ class Login (QMainWindow):
         self.restart.setFont(f)
         self.powermenu.addAction(self.restart)
 
-        if variables.fullscreen == 'Yes':
+        if getdata("fullscreen") == 'Yes':
             self.showFullScreen()
         else:
             self.show()
 
+        self.enablekeyboard = QAction(res.get('@string/vkey'), checkable=True)
+        self.etcmenu.addAction(self.enablekeyboard)
+        if getdata('key.enable') == 'Yes':
+            self.enablekeyboard.setChecked(True)
+        else:
+            self.enablekeyboard.setChecked(False)
+
+        self.enablekeyboard.triggered.connect(self.vkey_act)
+
+        self.keyboardWidget = KeyboardWidget([self])
+        self.keyboardWidget.setFixedSize(900, 356)
+
+        self.fakewidgetkeyboard = QMainWindow()
+        self.fakewidgetkeyboard.setFixedHeight(356)
+        self.fakewidgetkeyboard.setStyleSheet(
+            f'background-color: {getdata("key.bgcolor")};background-image: url({getdata("key.background")})')
+
+        self.layout().addWidget(self.fakewidgetkeyboard)
+        self.layout().addWidget(self.keyboardWidget)
+
+        self.fakewidgetkeyboard.setGeometry(0, self.height() - 356, self.width(), 356)
+        self.keyboardWidget.setGeometry(int(self.width() / 2) - int(950 / 2), self.height() - 356, 950, 356)
+
+        self.fakewidgetkeyboard.hide()
+        self.keyboardWidget.hide()
+
 ## Enter ##
 class Enter (QMainWindow):
+
+    def vkey_act(self):
+
+        if getdata('key.enable')=='Yes':
+            control.write_record('key.enable', 'No', '/etc/gui')
+        else:
+            control.write_record('key.enable', 'Yes', '/etc/gui')
+
     def reboot_act_(self):
             if not files.readall('/proc/info/os') == 'Pyabr':
                 app.endall()
@@ -857,11 +791,11 @@ class Enter (QMainWindow):
         self.setWindowTitle(cs + ' ' + ver + ' (' + cd + ")")
 
         ## Get app logo ##
-        self.setWindowIcon(QIcon(res.get(variables.logo)))
+        self.setWindowIcon(QIcon(res.get(getdata("logo"))))
 
         ## Widget for bgcolor or background ##
         self.backgroundButton = QPushButton()
-        self.backgroundButton.setGeometry(0, 0, int(variables.width), int(variables.height))
+        self.backgroundButton.setGeometry(0, 0, int(getdata("width")), int(getdata("height")))
         self.layout().addWidget(self.backgroundButton)
 
         ## Set bgcolor and background ##
@@ -874,13 +808,13 @@ class Enter (QMainWindow):
 
         # self.submenu.setStyleSheet(f'background-color:none;color:{submenu_bgcolor};')
 
-        if variables.submenu_direction == 'ltr':
+        if getdata("submenu.direction") == 'ltr':
             self.submenu.setLayoutDirection(Qt.LeftToRight)
-        elif variables.submenu_direction == 'rtl':
+        elif getdata("submenu.direction") == 'rtl':
             self.submenu.setLayoutDirection(Qt.RightToLeft)
 
         # hide #
-        if variables.submenu_hide == 'Yes':
+        if getdata("submenu.hide") == 'Yes':
             self.submenu.hide()
 
         self.submenu.setFont(f)
@@ -908,17 +842,7 @@ class Enter (QMainWindow):
         if username == 'guest':
             fullname = res.get('@string/guest')
         else:
-            first_name = control.read_record('first_name', '/etc/users/' + username)
-            last_name = control.read_record('last_name', '/etc/users/' + username)
-
-            if first_name == None and last_name == None:
-                fullname = username
-            elif not first_name == None and last_name == None:
-                fullname = first_name
-            elif not first_name == None and not last_name == None:
-                fullname = first_name + " " + last_name
-            else:
-                fullname = last_name
+            fullname = control.read_record('fullname', '/etc/users/' + username)
 
         self.usermenu.setTitle(fullname)
         self.usermenu.setFont(f)
@@ -947,32 +871,132 @@ class Enter (QMainWindow):
         self.restart.setFont(f)
         self.powermenu.addAction(self.restart)
 
-            ## Set colors ##
-        self.setStyleSheet(f'color: {variables.enter_fgcolor};')
-        self.backgroundButton.setStyleSheet(f'border:none;background-color: {variables.enter_bgcolor};')
-        self.setStyleSheet(f'color: {variables.enter_fgcolor};')
-        self.backgroundButton.setStyleSheet(f'border:none;background-color: {variables.enter_bgcolor};')
-        self.setStyleSheet(f'color: {variables.enter_fgcolor};')
-        self.backgroundButton.setStyleSheet(f'border:none;background-image: url({res.get(variables.enter_background)});')
-        self.setStyleSheet(f'background-color:{variables.enter_bgcolor};color: {variables.enter_fgcolor};')
-        self.resize(int(variables.width), int(variables.height))
+        self.enablekeyboard = QAction(res.get('@string/vkey'), checkable=True)
+        self.etcmenu.addAction(self.enablekeyboard)
+        if getdata('key.enable') == 'Yes':
+            self.enablekeyboard.setChecked(True)
+        else:
+            self.enablekeyboard.setChecked(False)
 
-        if variables.sides == 'No':
+        self.enablekeyboard.triggered.connect(self.vkey_act)
+
+        ## Set colors ##
+        self.setStyleSheet(f'color: {getdata("enter.fgcolor")};')
+        self.backgroundButton.setStyleSheet(f'border:none;background-color: {getdata("enter.bgcolor")};')
+        self.setStyleSheet(f'color: {getdata("enter.fgcolor")};')
+        self.backgroundButton.setStyleSheet(f'border:none;background-color: {getdata("enter.bgcolor")};')
+        self.setStyleSheet(f'color: {getdata("enter.fgcolor")};')
+        self.backgroundButton.setStyleSheet(f'border:none;background-image: url({res.get(getdata("enter.background"))});')
+        self.setStyleSheet(f'background-color:{getdata("enter.bgcolor")};color: {getdata("enter.fgcolor")};')
+        self.resize(int(getdata("width")), int(getdata("height")))
+
+        if getdata("sides") == 'No':
             self.setWindowFlag(Qt.FramelessWindowHint)
 
         self.loginw = LoginWidget([self.Backend,self])
         self.layout().addWidget (self.loginw)
 
-        if variables.fullscreen == 'Yes':
+        if getdata("fullscreen") == 'Yes':
             self.showFullScreen()
         else:
             self.show()
+
+        self.keyboardWidget = KeyboardWidget([self])
+        self.keyboardWidget.setFixedSize(900, 356)
+
+        self.fakewidgetkeyboard = QMainWindow()
+        self.fakewidgetkeyboard.setFixedHeight(356)
+        self.fakewidgetkeyboard.setStyleSheet(
+            f'background-color: {getdata("key.bgcolor")};background-image: url({getdata("key.background")})')
+
+        self.layout().addWidget(self.fakewidgetkeyboard)
+        self.layout().addWidget(self.keyboardWidget)
+
+        self.fakewidgetkeyboard.setGeometry(0,self.height()-356,self.width(),356)
+        self.keyboardWidget.setGeometry(int(self.width()/2)-int(950/2),self.height()-356,950,356)
+
+        self.fakewidgetkeyboard.hide()
+        self.keyboardWidget.hide()
+
+class Unlock (QMainWindow):
+
+    def __init__(self,ports,username):
+        super(Unlock, self).__init__()
+        self.setFont(f)
+
+        ## username ##
+        self.username = username.lower()
+
+        ## Ports ##
+        self.Backend = ports[0]
+        self.Env = ports[1]
+
+        ## Set port name ##
+        self.setObjectName('Unlock')
+
+        ## Get informations ##
+        cs = files.readall('/proc/info/cs')
+        ver = files.readall('/proc/info/ver')
+        cd = files.readall('/proc/info/cd')
+
+        self.setWindowTitle(cs + ' ' + ver + ' (' + cd + ")")
+
+        ## Get app logo ##
+        self.setWindowIcon(QIcon(res.get(getdata("logo"))))
+
+        ## Widget for bgcolor or background ##
+        self.backgroundButton = QPushButton()
+        self.backgroundButton.setGeometry(0, 0, int(getdata("width")), int(getdata("height")))
+        self.layout().addWidget(self.backgroundButton)
+
+        ## Set bgcolor and background ##
+
+        ##
+        ## Menu Back
+        ## Etcetra menu ##
+            ## Set colors ##
+        self.setStyleSheet(f'color: {getdata("unlock.fgcolor")};')
+        self.backgroundButton.setStyleSheet(f'border:none;background-color: {getdata("unlock.bgcolor")};')
+        self.setStyleSheet(f'color: {getdata("unlock.fgcolor")};')
+        self.backgroundButton.setStyleSheet(f'border:none;background-color: {getdata("unlock.bgcolor")};')
+        self.setStyleSheet(f'color: {getdata("unlock.fgcolor")};')
+        self.backgroundButton.setStyleSheet(f'border:none;background-image: url({res.get(getdata("unlock.background"))});')
+        self.setStyleSheet(f'background-color:{getdata("unlock.bgcolor")};color: {getdata("unlock.fgcolor")};')
+        self.resize(int(getdata("width")), int(getdata("height")))
+
+        if getdata("sides") == 'No':
+            self.setWindowFlag(Qt.FramelessWindowHint)
+
+        self.loginw = LoginWidget([self.Backend,self])
+        self.layout().addWidget (self.loginw)
+
+        if getdata("fullscreen") == 'Yes':
+            self.showFullScreen()
+        else:
+            self.show()
+
+        self.keyboardWidget = KeyboardWidget([self])
+        self.keyboardWidget.setFixedSize(900, 356)
+
+        self.fakewidgetkeyboard = QMainWindow()
+        self.fakewidgetkeyboard.setFixedHeight(356)
+        self.fakewidgetkeyboard.setStyleSheet(
+            f'background-color: {getdata("key.bgcolor")};background-image: url({getdata("key.background")})')
+
+        self.layout().addWidget(self.fakewidgetkeyboard)
+        self.layout().addWidget(self.keyboardWidget)
+
+        self.fakewidgetkeyboard.setGeometry(0,self.height()-356,self.width(),356)
+        self.keyboardWidget.setGeometry(int(self.width()/2)-int(950/2),self.height()-356,950,356)
+
+        self.fakewidgetkeyboard.hide()
+        self.keyboardWidget.hide()
 
 class AppListView(QListView):
     def format(self, it):
         if files.isfile (it.whatsThis()):
             name = it.text().replace('.desk','')
-            subname = res.etc(name,f'name[{variables.locale}]')
+            subname = res.etc(name,f'name[{getdata("locale")}]')
             icon = res.etc(name,'logo')
             it.setText(subname)
             it.setFont(f)
@@ -1000,7 +1024,7 @@ QScrollBar::handle::pressed
 {
 background : #ABCDEF;
 border-radius: 6% 6%;
-}""".replace('white',variables.menu_scroll_bgcolor).replace('#123456',variables.menu_scroll_color).replace('6',variables.menu_scroll_round_size).replace('#ABCDEF',variables.menu_scroll_color_hover))
+}""".replace('white',getdata("menu.scroll.bgcolor")).replace('#123456',getdata("menu.scroll.color")).replace('6',getdata("menu.scroll.round-size")).replace('#ABCDEF',getdata("menu.scroll.color-hover")))
 
         # Get font #
 
@@ -1038,7 +1062,7 @@ class GameListView(QListView):
     def format(self, it):
         if files.isfile (it.whatsThis()):
             name = it.text().replace('.desk','')
-            subname = res.etc(name,f'name[{variables.locale}]')
+            subname = res.etc(name,f'name[{getdata("locale")}]')
             icon = res.etc(name,'logo')
             it.setText(subname)
             it.setFont(f)
@@ -1066,9 +1090,9 @@ class GameListView(QListView):
         {
         background : #ABCDEF;
         border-radius: 6% 6%;
-        }""".replace('white', variables.menu_scroll_bgcolor).replace('#123456', variables.menu_scroll_color).replace('6',
-                                                                                                 variables.menu_scroll_round_size).replace(
-            '#ABCDEF', variables.menu_scroll_color_hover))
+        }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456', getdata("menu.scroll.color")).replace('6',
+                                                                                                 getdata("menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")))
 
         # Get font #
 
@@ -1107,7 +1131,7 @@ class ThemeListView(QListView):
     def format(self, it):
         if files.isfile (it.whatsThis()):
             name = it.text().replace('.desk','')
-            subname = control.read_record(f'name[{variables.locale}]',f'/usr/share/themes/{name}.desk')
+            subname = control.read_record(f'name[{getdata("locale")}]',f'/usr/share/themes/{name}.desk')
             icon = control.read_record(f'logo',f'/usr/share/themes/{name}.desk')
             it.setText(subname)
             it.setFont(f)
@@ -1134,9 +1158,9 @@ class ThemeListView(QListView):
         {
         background : #ABCDEF;
         border-radius: 6% 6%;
-        }""".replace('white', variables.menu_scroll_bgcolor).replace('#123456', variables.menu_scroll_color).replace('6',
-                                                                                                 variables.menu_scroll_round_size).replace(
-            '#ABCDEF', variables.menu_scroll_color_hover))
+        }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456', getdata("menu.scroll.color")).replace('6',
+                                                                                                 getdata("menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")))
 
 
         self.entry = QStandardItemModel()
@@ -1201,9 +1225,9 @@ class SessionListView(QListView):
         {
         background : #ABCDEF;
         border-radius: 6% 6%;
-        }""".replace('white', variables.menu_scroll_bgcolor).replace('#123456', variables.menu_scroll_color).replace('6',
-                                                                                                 variables.menu_scroll_round_size).replace(
-            '#ABCDEF', variables.menu_scroll_color_hover))
+        }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456', getdata("menu.scroll.color")).replace('6',
+                                                                                                 getdata("menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")))
 
         # Get font #
         self.entry = QStandardItemModel()
@@ -1297,37 +1321,37 @@ class TaskBar (QToolBar):
 
         # styles #
 
-        self.setStyleSheet('background-color: '+variables.taskbar_bgcolor+";color: "+variables.taskbar_fgcolor+";")
+        self.setStyleSheet('background-color: '+getdata("taskbar.bgcolor")+";color: "+getdata("taskbar.fgcolor")+";")
 
         # location #
-        if variables.taskbar_location=='top':
+        if getdata("taskbar.location")=='top':
             self.Env.addToolBar (Qt.TopToolBarArea,self)
-        elif variables.taskbar_location=='left':
+        elif getdata("taskbar.location")=='left':
             self.Env.addToolBar(Qt.LeftToolBarArea, self)
-        elif variables.taskbar_location=='right':
+        elif getdata("taskbar.location")=='right':
             self.Env.addToolBar(Qt.RightToolBarArea, self)
-        elif variables.taskbar_location=='bottom':
+        elif getdata("taskbar.location")=='bottom':
             self.Env.addToolBar(Qt.BottomToolBarArea, self)
 
         # locked #
-        if variables.taskbar_locked=='Yes':
+        if getdata("taskbar.locked")=='Yes':
             self.setMovable(False)
         else:
             self.setMovable(True)
 
         # float #
-        if variables.taskbar_float=='Yes':
+        if getdata("taskbar.float")=='Yes':
             self.setFloatable(True)
         else:
             self.setFloatable(False)
 
         # size #
-        self.setMinimumSize(QSize(int(variables.taskbar_size),int(variables.taskbar_size)))
-        self.setIconSize(QSize(int(variables.taskbar_size),int(variables.taskbar_size))) # https://stackoverflow.com/questions/21133612/how-to-change-iconsize-of-qtoolbutton
+        self.setMinimumSize(QSize(int(getdata("taskbar.size")),int(getdata("taskbar.size"))))
+        self.setIconSize(QSize(int(getdata("taskbar.size")),int(getdata("taskbar.size")))) # https://stackoverflow.com/questions/21133612/how-to-change-iconsize-of-qtoolbutton
 
         self.btnMenu = QToolButton()
-        self.btnMenu.setIcon(QIcon(res.get(variables.menu)))
-        self.btnMenu.setMinimumSize(int(variables.taskbar_size), int(variables.taskbar_size))
+        self.btnMenu.setIcon(QIcon(res.get(getdata("menu"))))
+        self.btnMenu.setMinimumSize(int(getdata("taskbar.size")), int(getdata("taskbar.size")))
         self.btnMenu.setObjectName('btnMenu')
         self.btnMenu.clicked.connect (self.menuApps)
         self.addWidget(self.btnMenu)
@@ -1349,7 +1373,7 @@ class TaskBar (QToolBar):
                 self.btnApp = QToolButton()
                 if not applogo==None:
                     self.btnApp.setIcon(QIcon(res.get(applogo)))
-                self.btnApp.setMinimumSize(int(variables.taskbar_size),int(variables.taskbar_size))
+                self.btnApp.setMinimumSize(int(getdata("taskbar.size")),int(getdata("taskbar.size")))
                 self.btnApp.setObjectName(i)
                 self.btnApp.clicked.connect (self.RunApplication)
                 self.addWidget(self.btnApp)
@@ -1377,12 +1401,12 @@ class BLineEdit (QLineEdit):
     def __init__(self):
         super(BLineEdit, self).__init__()
         self.setFocusPolicy(Qt.ClickFocus)
-        self.setFont(QFont(variables.font,int(variables.fontsize)))
+        self.setFont(QFont(getdata("font"),int(getdata("fontsize"))))
         self.setObjectName('BLineEdit')
 
     def focusInEvent(self, e):
 
-        if variables.key_enable=='Yes':
+        if getdata("key.enable")=='Yes':
             self.Env.keyboardWidget.currentTextBox = self
             self.Env.keyboardWidget.show()
             self.Env.fakewidgetkeyboard.show()
@@ -1405,12 +1429,12 @@ class BTextEdit (QTextEdit):
     def __init__(self):
         super(BTextEdit, self).__init__()
         self.setFocusPolicy(Qt.ClickFocus)
-        self.setFont(QFont(variables.font, int(variables.fontsize)))
+        self.setFont(QFont(getdata("font"), int(getdata("fontsize"))))
         self.setObjectName('BTextEdit')
 
     def focusInEvent(self, e):
 
-        if variables.key_enable=='Yes':
+        if getdata("key.enable")=='Yes':
             self.Env.keyboardWidget.currentTextBox = self
             self.Env.keyboardWidget.show()
             self.Env.fakewidgetkeyboard.show()
@@ -1437,7 +1461,7 @@ class BCodeEdit (QsciScintilla):
 
     def focusInEvent(self, e):
 
-        if variables.key_enable=='Yes':
+        if getdata("key.enable")=='Yes':
             self.Env.keyboardWidget.currentTextBox = self
             self.Env.keyboardWidget.show()
             self.Env.fakewidgetkeyboard.show()
@@ -1464,7 +1488,8 @@ class MenuApplications (QMainWindow):
         self.Backend = ports[0]
         self.Env = ports[1]
         self.setFont(f)
-        app.switch('desktop')
+
+        files.write('/proc/info/id','desktop')
 
         self.username = self.Env.username
 
@@ -1472,17 +1497,17 @@ class MenuApplications (QMainWindow):
         self.setStyleSheet('background-color: white')
 
 
-        size = int(variables.taskbar_size)
+        size = int(getdata("taskbar.size"))
 
         if self.Env.width()>1000 and self.Env.height()>720:
-            if variables.taskbar_location == 'bottom':
+            if getdata("taskbar.location") == 'bottom':
                 self.setGeometry(0, int(self.Env.height() / 3), int(self.Env.width() / 3),
                                  int(self.Env.height() / 1.5) - size - 15)
-            elif  variables.taskbar_location  == 'top':
+            elif  getdata("taskbar.location")  == 'top':
                 self.setGeometry(0, size + 15, int(self.Env.width() / 3), (self.Env.height() / 1.5) - size - 15)
-            elif  variables.taskbar_location  == "left":
+            elif  getdata("taskbar.location")  == "left":
                 self.setGeometry(size + 15, 0, int(self.Env.width() / 3) - size - 15, int(self.Env.height() / 1.5))
-            elif  variables.taskbar_location  == "right":
+            elif  getdata("taskbar.location")  == "right":
                 self.setGeometry(self.Env.width() - (self.Env.width() / 3), 0, (self.Env.width() / 3) - size - 15,
                                  int(self.Env.height() / 1.5))
             else:
@@ -1494,6 +1519,16 @@ class MenuApplications (QMainWindow):
 
         self.tabs = QTabWidget()
         self.tabs.setFont(f)
+        if getdata('menu.tab.position')=='W':
+            self.tabs.setTabPosition(QTabWidget.West)
+        elif getdata('menu.tab.position')=='N':
+            self.tabs.setTabPosition(QTabWidget.North)
+        elif getdata('menu.tab.position')=='E':
+            self.tabs.setTabPosition(QTabWidget.East)
+        elif getdata('menu.tab.position')=='S':
+            self.tabs.setTabPosition(QTabWidget.South)
+        else:
+            self.tabs.setTabPosition(QTabWidget.North)
 
         self.x = AppListView([self.Env, self])
         self.x1 = GameListView([self.Env,self])
@@ -1513,10 +1548,10 @@ class AppWidget (QMainWindow):
 
         if self.w<self.Env.width() and self.h<self.Env.height():
             mainw.resize(self.w,self.h)
-            self.resize(self.w,self.h+int(variables.app_title_size))
+            self.resize(self.w,self.h+int(getdata("appw.title.size")))
         else:
             self.setGeometry(0, 0, self.Env.width(), self.Env.height())
-            mainw.resize(self.Env.width(), self.Env.height() - int(variables.app_title_size))
+            mainw.resize(self.Env.width(), self.Env.height() - int(getdata("appw.title.size")))
 
     def SetWindowTitle (self,text):
         self.titletext.setText(text)
@@ -1526,7 +1561,7 @@ class AppWidget (QMainWindow):
         return self.titletext.text()
 
     def SetWindowIcon (self,icon):
-        self.iconwidget.setPixmap(icon.pixmap(int(variables.app_title_size)-18,int(variables.app_title_size)-18))
+        self.iconwidget.setPixmap(icon.pixmap(int(getdata("appw.title.size"))-18,int(getdata("appw.title.size"))-18))
 
     def Close (self):
         if files.isfile ('/proc/info/key'):
@@ -1552,7 +1587,7 @@ class AppWidget (QMainWindow):
 
     def ShowMaximize(self):
 
-        size = int(variables.taskbar_size)
+        size = int(getdata("taskbar.size"))
 
         if self.max == False:
             self.save_w = self.width()
@@ -1562,36 +1597,36 @@ class AppWidget (QMainWindow):
 
             size = int(size)
 
-            if  variables.taskbar_location =='bottom':
+            if  getdata("taskbar.location") =='bottom':
                 self.setGeometry(0, 0, self.Env.width(), self.Env.height()-size-15)
-                self.mainWidget.resize (self.Env.width(),self.Env.height()-int(variables.app_title_size)-size-15)
-                self.titlebar.setGeometry(0,0,self.Env.width(),int(variables.app_title_size))
+                self.mainWidget.resize (self.Env.width(),self.Env.height()-int(getdata("appw.title.size"))-size-15)
+                self.titlebar.setGeometry(0,0,self.Env.width(),int(getdata("appw.title.size")))
 
-            elif  variables.taskbar_location =='top':
+            elif  getdata("taskbar.location") =='top':
                 self.setGeometry(0, size+15, self.Env.width(), self.Env.height() - size - 15)
-                self.mainWidget.resize(self.Env.width(), self.Env.height() - variables.app_title_size - size - 15)
-                self.titlebar.setGeometry(0, 0, self.Env.width(), int(variables.app_title_size))
+                self.mainWidget.resize(self.Env.width(), self.Env.height() - getdata("appw.title.size") - size - 15)
+                self.titlebar.setGeometry(0, 0, self.Env.width(), int(getdata("appw.title.size")))
 
-            elif  variables.taskbar_location =="left":
+            elif  getdata("taskbar.location") =="left":
                 self.setGeometry(size+15, 0, self.Env.width() - size - 15, self.Env.height())
-                self.mainWidget.resize(self.Env.width()-size-15, self.Env.height() - int(variables.app_title_size))
-                self.titlebar.setGeometry(0, 0, self.Env.width()-size-15, int(variables.app_title_size))
+                self.mainWidget.resize(self.Env.width()-size-15, self.Env.height() - int(getdata("appw.title.size")))
+                self.titlebar.setGeometry(0, 0, self.Env.width()-size-15, int(getdata("appw.title.size")))
 
-            elif  variables.taskbar_location =="right":
+            elif  getdata("taskbar.location") =="right":
                 self.setGeometry(0, 0, self.Env.width() - size - 15, self.Env.height())
-                self.mainWidget.resize(self.Env.width()-size-15, self.Env.height() - int(variables.app_title_size))
-                self.titlebar.setGeometry(0, 0, self.Env.width()-size-15, int(variables.app_title_size))
+                self.mainWidget.resize(self.Env.width()-size-15, self.Env.height() - int(getdata("appw.title.size")))
+                self.titlebar.setGeometry(0, 0, self.Env.width()-size-15, int(getdata("appw.title.size")))
             else:
                 self.setGeometry(0, 0, self.Env.width(), self.Env.height())
-                self.mainWidget.resize(self.Env.width(), self.Env.height() - int(variables.app_title_size))
-                self.titlebar.setGeometry(0, 0, self.Env.width(), int(variables.app_title_size))
+                self.mainWidget.resize(self.Env.width(), self.Env.height() - int(getdata("appw.title.size")))
+                self.titlebar.setGeometry(0, 0, self.Env.width(), int(getdata("appw.title.size")))
 
             self.mainWidget.update()
 
             self.max = True
         else:
             self.setGeometry(int(self.Env.width()/2)-int(self.save_w/2),int(self.Env.height()/2)-int(self.save_h/2),self.save_w,self.save_h)
-            self.titlebar.setGeometry(0, 0, self.save_w, int(variables.app_title_size))
+            self.titlebar.setGeometry(0, 0, self.save_w, int(getdata("appw.title.size")))
             self.mainWidget.resize(self.save_ww,self.save_wh)
             self.mainWidget.update()
             self.max = False
@@ -1622,25 +1657,25 @@ class AppWidget (QMainWindow):
 
         # title bar #
         self.titlebar = QWidget()
-        self.titlebar.setStyleSheet(f'background-color: {variables.app_title_bgcolor};color: {variables.app_title_fgcolor};')
+        self.titlebar.setStyleSheet(f'background-color: {getdata("appw.title.bgcolor")};color: {getdata("appw.title.fgcolor")};')
 
         self.layouts = QHBoxLayout()
         self.titlebar.setLayout(self.layouts)
 
         # icon widget #
-        self.icon = QIcon(res.get(variables.app_logo))
+        self.icon = QIcon(res.get(getdata("appw.logo")))
         self.iconwidget = QLabel()
-        self.iconwidget.setPixmap(self.icon.pixmap(int(variables.app_title_size)-18,int(variables.app_title_size)-18))
-        self.iconwidget.resize(int(variables.app_title_size),int(variables.app_title_size))
+        self.iconwidget.setPixmap(self.icon.pixmap(int(getdata("appw.title.size"))-18,int(getdata("appw.title.size"))-18))
+        self.iconwidget.resize(int(getdata("appw.title.size")),int(getdata("appw.title.size")))
         self.layouts.addWidget(self.iconwidget)
 
-        self.iconwidget.setGeometry(0,0,int(variables.app_title_size),int(variables.app_title_size))
+        self.iconwidget.setGeometry(0,0,int(getdata("appw.title.size")),int(getdata("appw.title.size")))
 
         # text title #
         self.titletext = QLabel()
-        self.titletext.setStyleSheet(f'background-color:  {variables.app_title_bgcolor};color: {variables.app_title_fgcolor};')
+        self.titletext.setStyleSheet(f'background-color:  {getdata("appw.title.bgcolor")};color: {getdata("appw.title.fgcolor")};')
         self.titletext.setMaximumWidth(self.titlebar.width())
-        self.titletext.setGeometry(int(variables.app_title_size),0,self.titlebar.width(),int(variables.app_title_size))
+        self.titletext.setGeometry(int(getdata("appw.title.size")),0,self.titlebar.width(),int(getdata("appw.title.size")))
 
         self.titletext.setFont(f)
 
@@ -1648,41 +1683,41 @@ class AppWidget (QMainWindow):
 
         round = '0'
 
-        if variables.app_title_btn_round=='Yes':
-            round = str(int((int(variables.app_title_size)) - 16) / 2)
+        if getdata("appw.title.btn-round")=='Yes':
+            round = str(int((int(getdata("appw.title.size"))) - 16) / 2)
 
         # float button #
         self.btnMax = QToolButton()
-        self.btnMax.setIcon(QIcon(res.get(variables.app_title_float)))
-        self.btnMax.setMinimumSize(int(variables.app_title_size)-15,int(variables.app_title_size)-15)
-        self.btnMax.setGeometry(self.titlebar.width()-100,0,int(variables.app_title_size),int(variables.app_title_size))
+        self.btnMax.setIcon(QIcon(res.get(getdata("appw.title.float"))))
+        self.btnMax.setMinimumSize(int(getdata("appw.title.size"))-15,int(getdata("appw.title.size"))-15)
+        self.btnMax.setGeometry(self.titlebar.width()-100,0,int(getdata("appw.title.size")),int(getdata("appw.title.size")))
         self.btnMax.clicked.connect(self.ShowMaximize)
-        self.btnMax.setStyleSheet('QToolButton {border-radius: {0}% {0}%;} QToolButton::hover {border-radius: {0}% {0}%;background-color: {1}}'.replace("{1}",variables.app_title_float_hover).replace("{0}",round))
+        self.btnMax.setStyleSheet('QToolButton {border-radius: {0}% {0}%;} QToolButton::hover {border-radius: {0}% {0}%;background-color: {1}}'.replace("{1}",getdata("appw.title.float-hover")).replace("{0}",round))
 
         self.layouts.addWidget(self.btnMax)
 
         self.btnEscape = QToolButton()
-        self.btnEscape.setIcon(QIcon(res.get(variables.app_title_close)))
-        self.btnEscape.setMinimumSize(int(variables.app_title_size)-15, int(variables.app_title_size)-15)
-        self.btnEscape.setGeometry(self.titlebar.width()-int(variables.app_title_size),0,int(variables.app_title_size),int(variables.app_title_size))
+        self.btnEscape.setIcon(QIcon(res.get(getdata("appw.title.close"))))
+        self.btnEscape.setMinimumSize(int(getdata("appw.title.size"))-15, int(getdata("appw.title.size"))-15)
+        self.btnEscape.setGeometry(self.titlebar.width()-int(getdata("appw.title.size")),0,int(getdata("appw.title.size")),int(getdata("appw.title.size")))
         self.btnEscape.clicked.connect (self.Close)
-        self.btnEscape.setStyleSheet('QToolButton {border-radius: {0}% {0}%;} QToolButton::hover {border-radius: {0}% {0}%;background-color: {1}}'.replace("{1}",variables.app_title_close_hover).replace("{0}",round))
+        self.btnEscape.setStyleSheet('QToolButton {border-radius: {0}% {0}%;} QToolButton::hover {border-radius: {0}% {0}%;background-color: {1}}'.replace("{1}",getdata("appw.title.close-hover")).replace("{0}",round))
         self.layouts.addWidget(self.btnEscape)
 
         self.whitewidget = QMainWindow()
-        self.whitewidget.setStyleSheet(f'background-color: {variables.app_body_bgcolor};color: {variables.app_body_fgcolor};')
+        self.whitewidget.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};')
         self.setCentralWidget(self.whitewidget)
 
         # center widget #
         self.mainWidget = exec.MainApp([self.Backend,self.Env,self,self.appname,self.external])
-        self.mainWidget.setGeometry(0,int(variables.app_title_size),self.width(),self.height()-int(variables.app_title_size))
-        self.titlebar.setGeometry(0, 0, self.width(), int(variables.app_title_size))
+        self.mainWidget.setGeometry(0,int(getdata("appw.title.size")),self.width(),self.height()-int(getdata("appw.title.size")))
+        self.titlebar.setGeometry(0, 0, self.width(), int(getdata("appw.title.size")))
         self.setGeometry(int(self.Env.width()/2)-int(self.width()/2),int(self.Env.height()/2)-int(self.height()/2),self.width(),self.height())
 
         self.layout().addWidget(self.mainWidget)
         self.layout().addWidget(self.titlebar)
 
-        if variables.app_shadow=="Yes":
+        if getdata("appw.shadow")=="Yes":
             shadow = QGraphicsDropShadowEffect()
             shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
             shadow.setOffset(0)
@@ -1741,9 +1776,9 @@ class Desktop (QMainWindow):
         app.switch(appname)
         files.write('/proc/info/su', self.username)
 
-        if appname==variables.terminal:
+        if appname==getdata("terminal"):
             files.write('/proc/info/pass', self.password)
-            self.layout().addWidget(AppWidget([self.Backend, self,variables.terminal , external]))
+            self.layout().addWidget(AppWidget([self.Backend, self,getdata("terminal") , external]))
         elif files.isfile(f'/usr/share/applications/{appname}.desk'):
             self.layout().addWidget(AppWidget([self.Backend, self, appname,external]))
         else:
@@ -1841,183 +1876,164 @@ class Desktop (QMainWindow):
             files.create('/tmp/switched-user')
             subprocess.call([sys.executable, files.readall('/proc/info/boot'), "gui-login"])  # just run the login
 
+
     def unlock_act (self):
-        self.submenu.show()
-        self.taskbar.show()
-        self.backgroundButton.show()
-        self.BtnUnlock.hide()
-        self.lock.hide()
-
-    def enterlock_act (self):
-        ## Set port name ##
-        self.unlock = QMainWindow()
-        self.unlock.setObjectName('Unlock')
-
-
-        ## Widget for bgcolor or background ##
-        self.backgroundButton = QPushButton()
-        self.backgroundButton.setGeometry(0, 0, int(variables.width), int(variables.height))
-        self.unlock.layout().addWidget(self.backgroundButton)
-
-        ## Set bgcolor and background ##
-
-
-            ## Set colors ##
-        self.unlock.setStyleSheet(f'color: {variables.unlock_fgcolor};')
-        self.unlock.backgroundButton.setStyleSheet(
-                f'border:none;background-color: {variables.unlock_bgcolor};')
-
-
-
-        self.unlock.setStyleSheet(f'color: {variables.unlock_fgcolor};')
-        self.unlock.backgroundButton.setStyleSheet(
-                f'border:none;background-color: {variables.unlock_bgcolor};')
-
-        self.unlock.setStyleSheet(f'color: {variables.unlock_fgcolor};')
-        self.backgroundButton.setStyleSheet(
-                f'border:none;background-image: url({res.get(variables.unlock_background)});')
-        self.unlock.setStyleSheet(f'background-color:{variables.unlock_bgcolor};color: {variables.unlock_fgcolor};')
-
-        self.loginw = LoginWidget([self.Backend, self])
-        self.unlock.layout().addWidget(self.loginw)
-
-        self.setCentralWidget(self.unlock)
+        if self.username=='guest':
+            self.submenu.show()
+            self.taskbar.show()
+            self.backgroundButton.show()
+            self.BtnUnlock.hide()
+            self.lock.hide()
+        else:
+            subprocess.call([sys.executable,files.readall('/proc/info/boot'),'gui-unlock',self.username])
 
     def showTime_lock (self):
+
+        try:
         # getting current time
-        current_time = QTime.currentTime()
+            current_time = QTime.currentTime()
 
         # converting QTime object to string
-        label_time = current_time.toString(variables.lock_clock_format)
+            label_time = current_time.toString(getdata("lock.clock.format"))
 
         # showing it to the label
-        self.lblClock.setText(res.num(label_time))
-        self.lblClock.setFont(QFont(f.family(),int(variables.lock_clock_size)))
+            self.lblClock.setText(res.num(label_time))
+            self.lblClock.setFont(QFont(f.family(),int(getdata('lock.clock.size'))))
+        except:
+            pass
 
     def lock_act (self):
         self.lock = QMainWindow()
 
-        self.submenu.hide()
-        self.taskbar.hide()
-        self.backgroundButton.hide()
-        self.BtnUnlock = QPushButton()
-        self.BtnUnlock.setText('')
-        self.lock.setCentralWidget(self.BtnUnlock)
-        ## Check background or bgcolor in users ##
+        if files.isfile ('/tmp/unlock'):
+            files.remove('/tmp/unlock')
+        else:
+            self.submenu.hide()
+            self.taskbar.hide()
+            self.backgroundButton.hide()
+            self.BtnUnlock = QPushButton()
+            self.BtnUnlock.setText('')
+            self.lock.setCentralWidget(self.BtnUnlock)
+            ## Check background or bgcolor in users ##
 
             ## Set bgcolor and background ##
 
             ## Set colors ##
 
-        self.BtnUnlock.setStyleSheet(
-                f'border:none;background-color: {variables.lock_bgcolor};color:{variables.lock_fgcolor};')
-        self.BtnUnlock.setStyleSheet(
-                f'border:none;background-image: url({res.get(variables.lock_background)});color: {variables.lock_fgcolor};')
+            self.BtnUnlock.setStyleSheet(
+                f'border:none;background-color: {getdata("lock.bgcolor")};color:{getdata("lock.fgcolor")};')
+            self.BtnUnlock.setStyleSheet(
+                f'border:none;background-image: url({res.get(getdata("lock.background"))});color: {getdata("lock.fgcolor")};')
 
-        ## Get informations ##
-        cs = files.readall('/proc/info/cs')
-        ver = files.readall('/proc/info/ver')
-        cd = files.readall('/proc/info/cd')
+            ## Get informations ##
+            cs = files.readall('/proc/info/cs')
+            ver = files.readall('/proc/info/ver')
+            cd = files.readall('/proc/info/cd')
 
-        self.lock.setWindowTitle(cs + ' ' + ver + ' (' + cd + ")")
+            self.lock.setWindowTitle(cs + ' ' + ver + ' (' + cd + ")")
 
-        ## Clock ##
-        # creating a timer object
-        timer = QTimer(self)
+            ## Clock ##
+            # creating a timer object
+            timer = QTimer(self)
 
-        # adding action to timer
-        timer.timeout.connect(self.showTime_lock)
+            # adding action to timer
+            timer.timeout.connect(self.showTime_lock)
 
-        # update the timer every second
-        timer.start(1000)
+            # update the timer every second
+            timer.start(1000)
 
+            self.lock.setWindowIcon(QIcon(res.get(getdata("logo"))))
 
-        self.lock.setWindowIcon(QIcon(res.get(variables.logo)))
+            self.lock.resize(int(getdata('width')), int(getdata("height")))
+            self.BtnUnlock.resize(int(getdata("width")), int(getdata("height")))
 
-        self.lock.resize(int(variables.width), int(variables.height))
-        self.BtnUnlock.resize(int(variables.width), int(variables.height))
+            # lbl Clock #
+            self.lblClock = QLabel()
+            self.lock.layout().addWidget(self.lblClock)
 
-        # lbl Clock #
-        self.lblClock = QLabel()
-        self.lock.layout().addWidget(self.lblClock)
+            # shadow #
+            if getdata("lock.clock.shadow") == 'Yes':
+                ## Shadow ##
+                # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
+                shadow = QGraphicsDropShadowEffect()
+                shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
+                shadow.setOffset(0)
+                shadow.setBlurRadius(10)
+                self.lblClock.setGraphicsEffect(shadow)
 
-        # shadow #
-        if variables.lock_clock_shadow=='Yes':
-            ## Shadow ##
-            # Copy right shadow box: medium.com/@rekols/qt-button-box-shadow-property-c47c7bf58721 ##
-            shadow  = QGraphicsDropShadowEffect()
-            shadow.setColor(QColor(10, 2, 34, 255 * 0.8))
-            shadow.setOffset(0)
-            shadow.setBlurRadius(10)
-            self.lblClock.setGraphicsEffect(shadow)
+            # font size clock #
 
-        # font size clock #
+            self.lblClock.setFont(f)
+            self.lblClock.setAlignment(Qt.AlignCenter)
 
+            # color clock #
+            self.lblClock.setStyleSheet('background:none;color:' + getdata("lock.clock.color"))
 
-        self.lblClock.setFont(f)
-        self.lblClock.setAlignment(Qt.AlignCenter)
-
-        # color clock #
-        self.lblClock.setStyleSheet('background:none;color:'+variables.lock_clock_color)
-
-        # set lbl Clock location #
-        if variables.lock_clock_location == 'top':
-            self.lblClock.setGeometry(int(self.BtnUnlock.width() / 2) - int(self.lblClock.width() / 2), 0,
+            # set lbl Clock location #
+            if getdata('lock.clock.location') == 'top':
+                self.lblClock.setGeometry(int(self.BtnUnlock.width() / 2) - int(self.lblClock.width() / 2), 0,
                                           self.lblClock.width(), self.lblClock.height())
-        elif variables.lock_clock_location == 'center':
-            self.lblClock.setGeometry(int(self.BtnUnlock.width() / 2) - int(self.lblClock.width() / 2),
+            elif getdata('lock.clock.location') == 'center':
+                self.lblClock.setGeometry(int(self.BtnUnlock.width() / 2) - int(self.lblClock.width() / 2),
                                           int(self.lock.height() / 2) - int(self.lblClock.height() / 2),
                                           self.lblClock.width(),
                                           self.lblClock.height())
 
-        elif  variables.lock_clock_location == 'left':
-            self.lblClock.setGeometry(0,
+            elif getdata('lock.clock.location') == 'left':
+                self.lblClock.setGeometry(0,
                                           int(self.lock.height() / 2) - int(self.lblClock.height() / 2),
                                           self.lblClock.width(),
                                           self.lblClock.height())
 
-        elif  variables.lock_clock_location == 'right':
-            self.lblClock.setGeometry(self.BtnUnlock.width()-self.lblClock.width(),
+            elif getdata('lock.clock.location') == 'right':
+                self.lblClock.setGeometry(self.BtnUnlock.width() - self.lblClock.width(),
                                           int(self.lock.height() / 2) - int(self.lblClock.height() / 2),
                                           self.lblClock.width(),
                                           self.lblClock.height())
-        elif  variables.lock_clock_location == 'bottom':
-            self.lblClock.setGeometry(int(self.BtnUnlock.width() / 2) - int(self.lblClock.width() / 2),
-                                          self.lock.height() -self.lblClock.height(),
+            elif getdata('lock.clock.location') == 'bottom':
+                self.lblClock.setGeometry(int(self.BtnUnlock.width() / 2) - int(self.lblClock.width() / 2),
+                                          self.lock.height() - self.lblClock.height(),
                                           self.lblClock.width(),
                                           self.lblClock.height())
 
-        elif  variables.lock_clock_location == 'top/left':
-            self.lblClock.setGeometry(0,
+            elif getdata('lock.clock.location') == 'top/left':
+                self.lblClock.setGeometry(0,
                                           0,
                                           self.lblClock.width(),
                                           self.lblClock.height())
 
-        elif  variables.lock_clock_location == 'top/right':
-            self.lblClock.setGeometry(self.BtnUnlock.width()-self.lblClock.width(),
+            elif getdata('lock.clock.location') == 'top/right':
+                self.lblClock.setGeometry(self.BtnUnlock.width() - self.lblClock.width(),
                                           0,
                                           self.lblClock.width(),
                                           self.lblClock.height())
 
-        elif  variables.lock_clock_location == 'bottom/left':
-            self.lblClock.setGeometry(0,
-                                      self.BtnUnlock.height()-self.lblClock.height(),
-                                      self.lblClock.width(),
-                                      self.lblClock.height())
+            elif getdata('lock.clock.location') == 'bottom/left':
+                self.lblClock.setGeometry(0,
+                                          self.BtnUnlock.height() - self.lblClock.height(),
+                                          self.lblClock.width(),
+                                          self.lblClock.height())
 
-        elif  variables.lock_clock_location == 'bottom/right':
-            self.lblClock.setGeometry(self.BtnUnlock.width() - self.lblClock.width(),
-                                      self.BtnUnlock.height()-self.lblClock.height(),
-                                      self.lblClock.width(),
-                                      self.lblClock.height())
+            elif getdata('lock.clock.location') == 'bottom/right':
+                self.lblClock.setGeometry(self.BtnUnlock.width() - self.lblClock.width(),
+                                          self.BtnUnlock.height() - self.lblClock.height(),
+                                          self.lblClock.width(),
+                                          self.lblClock.height())
 
-        self.BtnUnlock.clicked.connect(self.unlock_act)
+            self.BtnUnlock.clicked.connect(self.unlock_act)
 
-        self.setCentralWidget(self.lock)
+            self.layout().addWidget(self.lock)
+            self.refreshlock()
 
-    def accoutsetting (self):
-        self.RunApp('usermanager',None)
-        files.write('/proc/info/id','desktop')
+    def refreshlock (self):
+        if files.isfile('/tmp/unlock'):
+            files.remove('/tmp/unlock')
+            self.lock.hide()
+            self.submenu.show()
+            self.taskbar.show()
+            self.backgroundButton.show()
+        else:
+            QTimer.singleShot(1,self.refreshlock)
 
     def Loop(self):
         self.update()
@@ -2027,9 +2043,19 @@ class Desktop (QMainWindow):
         if files.isfile ('/tmp/start.tmp'):
             appx = files.readall ('/tmp/start.tmp')
             files.remove('/tmp/start.tmp')
-            self.RunApp(appx,None)
+
+            appx = appx.split(' ')
+            self.RunApp(appx[0],appx[1:])
 
         QTimer.singleShot(1,self.Loop)
+
+
+    def vkey_act (self):
+
+        if getdata('key.enable')=='Yes':
+            control.write_record('key.enable','No','/etc/gui')
+        else:
+            control.write_record('key.enable', 'Yes','/etc/gui')
 
     def __init__(self,ports,username,password):
         super(Desktop, self).__init__()
@@ -2098,132 +2124,7 @@ class Desktop (QMainWindow):
         self.setWindowTitle(cs + ' ' + ver + ' (' + cd + ")")
 
         ## Get app logo ##
-        self.setWindowIcon(QIcon(res.get(variables.logo)))
-
-        ## Get all data ##
-        self.__lock_clock_shadow__ = variables.lock_clock_shadow
-        self.__lock_clock_color__ = variables.lock_clock_color
-        self.__lock_clock_location__ = variables.lock_clock_location
-        self.__locale__ = variables.locale
-        self.__logo__ = variables.logo
-        self.__autosize__ = variables.autosize
-        self.__splash_logo__ = variables.splash_logo
-        self.__submenu_hide__ = variables.submenu_hide
-        self.__submenu_bgcolor__ = variables.submenu_bgcolor
-        self.__submenu_direction__ = variables.submenu_direction
-        self.__taskbar_location__ = variables.taskbar_location
-        self.__taskbar_size__ = variables.taskbar_size
-        self.__taskbar_locked__ = variables.taskbar_locked
-        self.__taskbar_float__ = variables.taskbar_float
-        self.__backend_color__ = variables.backend_color
-        self.__backend_timeout__ = variables.backend_timeout
-        self.__splash_color__ = variables.splash_color
-        self.__splash_timeout__ = variables.splash_timeout
-        self.__fullscreen__ = variables.fullscreen
-        self.__width__ = variables.width
-        self.__splash_logo_size__ = variables.splash_logo_size
-        self.__height__ = variables.height
-        self.__terminal__ = variables.terminal
-        self.__params__ = variables.params
-        self.__sides__ = variables.sides
-        self.__login_bgcolor__ = variables.login_bgcolor
-        self.__login_fgcolor__ = variables.login_fgcolor
-        self.__login_background__ = variables.login_background
-        self.__enter_bgcolor__ = variables.enter_bgcolor
-        self.__enter_fgcolor__ = variables.enter_fgcolor
-        self.__enter_background__ = variables.enter_background
-        self.__unlock_bgcolor__ = variables.unlock_bgcolor
-        self.__unlock_fgcolor__ = variables.unlock_fgcolor
-        self.__unlock_background__ = variables.unlock_background
-        self.__desktop_bgcolor__ = variables.desktop_bgcolor
-        self.__desktop_fgcolor__ = variables.desktop_fgcolor
-        self.__desktop_background__ = variables.desktop_background
-        self.__lock_clock_format__ = variables.lock_clock_format
-        self.__lock_clock_size__ = variables.lock_clock_size
-        self.__lock_bgcolor__ = variables.lock_bgcolor
-        self.__lock_fgcolor__ = variables.lock_fgcolor
-        self.__lock_background__ = variables.lock_background
-        self.__taskbar_bgcolor__ = variables.taskbar_bgcolor
-        self.__loginw_bgcolor__ = variables.loginw_bgcolor
-        self.__input_bgcolor__ = variables.input_bgcolor
-        self.__input_fgcolor__ = variables.input_fgcolor
-        self.__app_title_btn_round__ = variables.app_title_btn_round
-        self.__loginw_fgcolor__ = variables.loginw_fgcolor
-        self.__loginw_round_size__ = variables.loginw_round_size
-        self.__loginw_input_round_size__ = variables.loginw_input_round_size
-        self.__loginw_location__ = variables.loginw_location
-        self.__loginw_login_hide__ = variables.loginw_login_hide
-        self.__loginw_enter_bgcolor__ = variables.loginw_enter_bgcolor
-        self.__loginw_enter_fgcolor__ = variables.loginw_enter_fgcolor
-        self.__loginw_enter_hover_bgcolor__ = variables.loginw_enter_bgcolor
-        self.__loginw_enter_hover_fgcolor__ = variables.loginw_enter_hover_fgcolor
-        self.__loginw_enter_round_size__ = variables.loginw_enter_round_size
-        self.__loginw_enter_hide__ = variables.loginw_enter_hide
-        self.__loginw_enter_width__ = variables.loginw_enter_width
-        self.__loginw_unlock_bgcolor__ = variables.unlock_bgcolor
-        self.__loginw_unlock_fgcolor__ = variables.unlock_fgcolor
-        self.__menu__ = variables.menu
-        self.__loginw_unlock_hover_bgcolor__ = variables.loginw_unlock_hover_bgcolor
-        self.__loginw_unlock_hover_fgcolor__ = variables.loginw_unlock_hover_fgcolor
-        self.__loginw_unlock_round_size__ = variables.loginw_unlock_round_size
-        self.__loginw_unlock_hide__ = variables.loginw_unlock_hide
-        self.__loginw_unlock_width__ = variables.loginw_unlock_width
-        self.__loginw_userlogo__ = variables.loginw_userlogo
-        self.__loginw_shadow__ = variables.loginw_shadow
-        self.__loginw_userlogo_shadow__ = variables.loginw_userlogo_shadow
-        self.__loginw_input_shadow__ = variables.loginw_input_shadow
-        self.__loginw_login_shadow__ = variables.loginw_login_shadow
-        self.__loginw_enter_shadow__ = variables.loginw_enter_shadow
-        self.__loginw_unlock_shadow__ = variables.loginw_unlock_shadow
-        self.__loginw_login_height__ = variables.loginw_login_height
-        self.__loginw_enter_height__ = variables.loginw_enter_height
-        self.__loginw_unlock_height__ = variables.loginw_unlock_height
-        self.__app_title_size__ = variables.app_title_size
-        self.__app_title_fgcolor__ = variables.app_body_fgcolor
-        self.__app_title_bgcolor__ = variables.app_body_bgcolor
-        self.__app_title_float__ = variables.app_title_float
-        self.__app_title_float_hover__ = variables.app_title_float_hover
-        self.__app_title_close__ = variables.app_title_close
-        self.__app_title_close_hover__ = variables.app_title_close_hover
-        self.__app_shadow__ = variables.app_shadow
-        self.__app_logo__ = variables.app_logo
-        self.__app_menu_bgcolor__ = variables.app_menu_bgcolor
-        self.__app_menu_fgcolor__ = variables.app_menu_fgcolor
-        self.__app_menu_bgcolor_pressed__ = variables.app_menu_bgcolor_pressed
-        self.__loginw_input_width__ = variables.loginw_input_width
-        self.__loginw_input_height__ = variables.loginw_input_height
-        self.__app_menu_fgcolor_pressed__ = variables.app_menu_fgcolor_pressed
-        self.__app_body_bgcolor__ = variables.app_body_bgcolor
-        self.__app_body_fgcolor__ = variables.app_body_fgcolor
-        self.__menu_scroll_color__ = variables.menu_scroll_color
-        self.__menu_scroll_color_hover__ = variables.menu_scroll_color_hover
-        self.__loginw_userlogo_bgcolor__ = variables.loginw_userlogo_bgcolor
-        self.__loginw_userlogo_round_size__ = variables.loginw_userlogo_round_size
-        self.__menu_scroll_round_size__ = variables.menu_scroll_round_size
-        self.__menu_scroll_bgcolor__ = variables.menu_scroll_bgcolor
-        self.__font__ = variables.font
-        self.__loginw_login_hover_bgcolor__ = variables.loginw_login_hover_bgcolor
-        self.__loginw_login_hover_fgcolor__ = variables.loginw_login_hover_fgcolor
-        self.__loginw_login_width__ = variables.loginw_login_width
-        self.__taskbar_fgcolor__ = variables.taskbar_fgcolor
-        self.__loginw_width__ = variables.loginw_width
-        self.__loginw_height__ = variables.loginw_height
-        self.__fontsize__ = variables.fontsize
-        self.__loginw_input_bgcolor__ = variables.loginw_input_bgcolor
-        self.__loginw_input_fgcolor__ = variables.loginw_input_fgcolor
-        self.__loginw_login_bgcolor__ = variables.loginw_login_bgcolor
-        self.__loginw_login_fgcolor__ = variables.loginw_login_fgcolor
-        self.__loginw_login_round_size__ = variables.loginw_login_round_size
-        self.__key_bgcolor__ = variables.key_bgcolor
-        self.__key_enable__ = variables.key_enable
-        self.__key_background__ = variables.key_background
-        self.__key_btn_round_size__ = variables.key_btn_round_size
-        self.__key_btn_bgcolor__  = variables.key_btn_bgcolor
-        self.__key_btn_fgcolor__ = variables.key_btn_fgcolor
-        self.__key_btn_shadow__ = variables.key_btn_shadow
-        self.__key_btn_bgcolor_hover__ = variables.key_btn_bgcolor_hover
-        self.__key_btn_fgcolor_hover__ = variables.key_btn_fgcolor_hover
-        self.__layout__ = variables.layout
+        self.setWindowIcon(QIcon(res.get(getdata("logo"))))
         #############################
 
         ## Menu ##
@@ -2235,11 +2136,11 @@ class Desktop (QMainWindow):
 
         #self.submenu.setStyleSheet(f'background-color:none;color:{submenu_bgcolor};')
 
-        if variables.submenu_direction=='ltr': self.submenu.setLayoutDirection(Qt.LeftToRight)
-        elif variables.submenu_direction=='rtl': self.submenu.setLayoutDirection(Qt.RightToLeft)
+        if getdata("submenu.direction")=='ltr': self.submenu.setLayoutDirection(Qt.LeftToRight)
+        elif getdata("submenu.direction")=='rtl': self.submenu.setLayoutDirection(Qt.RightToLeft)
 
         # hide #
-        if variables.submenu_hide=='Yes':
+        if getdata("submenu.hide")=='Yes':
             self.submenu.hide()
 
 
@@ -2267,7 +2168,7 @@ class Desktop (QMainWindow):
             if i.endswith('.cat'):
                 find = '/usr/share/categories/' + i
 
-                catname = control.read_record('name[' + variables.locale + "]", find)
+                catname = control.read_record('name[' + getdata("locale") + "]", find)
                 if catname == None:
                     catname = i.replace('.cate', '')
 
@@ -2294,7 +2195,7 @@ class Desktop (QMainWindow):
 
                         # data
                         # app name
-                        appname = control.read_record('name[' + variables.locale + "]", find)
+                        appname = control.read_record('name[' + getdata("locale") + "]", find)
                         shortcut = control.read_record('shortcut', find)
                         hidden = control.read_record('hidden', find)
 
@@ -2339,17 +2240,7 @@ class Desktop (QMainWindow):
         if username=='guest':
             fullname = res.get('@string/guest')
         else:
-            first_name = control.read_record('first_name','/etc/users/'+username)
-            last_name = control.read_record('last_name','/etc/users/'+username)
-
-            if first_name==None and last_name==None:
-                fullname = username
-            elif not first_name==None and last_name==None:
-                fullname = first_name
-            elif not first_name==None and not last_name==None:
-                fullname = first_name +" "+last_name
-            else:
-                fullname = last_name
+            fullname = control.read_record('fullname','/etc/users/'+username)
 
         self.usermenu.setTitle(fullname)
         self.usermenu.setFont(f)
@@ -2362,12 +2253,6 @@ class Desktop (QMainWindow):
         self.powermenu.setFont(f)
 
         # all actions in menus #
-
-        self.accoutsettings = QAction(res.get('@string/accountsettings'))
-        self.accoutsettings.triggered.connect (self.accoutsetting)
-        self.accoutsettings.setFont(f)
-        self.accoutsettings.setVisible(False)
-        self.usermenu.addAction(self.accoutsettings)
 
         self.signout = QAction(res.get('@string/signout'))
         self.signout.triggered.connect (self.signout_act)
@@ -2399,39 +2284,49 @@ class Desktop (QMainWindow):
         self.sleep.triggered.connect (self.sleep_act)
         self.powermenu.addAction(self.sleep)
 
+        self.enablekeyboard = QAction(res.get('@string/vkey'),checkable=True)
+        self.etcmenu.addAction(self.enablekeyboard)
+
+        if getdata('key.enable')=='Yes':
+            self.enablekeyboard.setChecked(True)
+        else:
+            self.enablekeyboard.setChecked(False)
+
+        self.enablekeyboard.triggered.connect (self.vkey_act)
+
         ## Widget for bgcolor or background ##
         self.backgroundButton = QPushButton()
-        self.backgroundButton.setGeometry(0, 0, int(variables.width), int(variables.height))
+        self.backgroundButton.setGeometry(0, 0, int(getdata("width")), int(getdata("height")))
         self.layout().addWidget(self.backgroundButton)
 
             ## Set bgcolor and background ##
 
             ## Set colors ##
-        self.setStyleSheet(f'color: {variables.desktop_fgcolor};')
+        self.setStyleSheet(f'color: {getdata("desktop.fgcolor")};')
         self.backgroundButton.setStyleSheet(
-                f'border:none;background-color: {variables.desktop_bgcolor};')
+                f'border:none;background-color: {getdata("desktop.bgcolor")};')
 
 
-        self.setStyleSheet(f'color: {variables.desktop_fgcolor};')
+        self.setStyleSheet(f'color: {getdata("desktop.fgcolor")};')
 
         self.backgroundButton.setStyleSheet(
-                f'border:none;background-color: {variables.desktop_bgcolor};')
+                f'border:none;background-color: {getdata("desktop.bgcolor")};')
 
-        self.setStyleSheet(f'color: {variables.desktop_fgcolor};')
+        self.setStyleSheet(f'color: {getdata("desktop.fgcolor")};')
         self.backgroundButton.setStyleSheet(
-                f'border:none;background-image: url({res.get(variables.desktop_background)});')
+                f'border:none;background-image: url({res.get(getdata("desktop.background"))});')
         self.setStyleSheet(
-                f'background-color:{variables.desktop_bgcolor};color: {variables.desktop_fgcolor};')
+                f'background-color:{getdata("desktop.bgcolor")};color: {getdata("desktop.fgcolor")};')
 
 
-        self.resize(int(variables.width), int(variables.height))
+        self.resize(int(getdata("width")), int(getdata("height")))
 
         ## Startup Applications ##
         self.StartupApplication()
         ## Set sides ##
         ## Set sides ##
 
-        if variables.sides == 'No':
+        if getdata("sides") == 'No':
             self.setWindowFlag(Qt.FramelessWindowHint)
 
         ## Taskbar ##
@@ -2440,7 +2335,7 @@ class Desktop (QMainWindow):
         ## Show ##
         ## Get data ##
 
-        if variables.fullscreen == 'Yes':
+        if getdata("fullscreen") == 'Yes':
             self.showFullScreen()
         else:
             self.show()
@@ -2450,20 +2345,20 @@ class Desktop (QMainWindow):
 
         self.fakewidgetkeyboard = QMainWindow()
         self.fakewidgetkeyboard.setFixedHeight(356)
-        self.fakewidgetkeyboard.setStyleSheet(f'background-color: {self.__key_bgcolor__};background-image: url({res.get(self.__key_background__)})')
+        self.fakewidgetkeyboard.setStyleSheet(f'background-color: {getdata("key.bgcolor")};background-image: url({res.get(getdata("key.background"))})')
 
-        if variables.taskbar_location == 'top':
+        if getdata("taskbar.location") == 'top':
             self.keyboardWidget.setGeometry(int(self.width()/2)-int(self.keyboardWidget.width()/2),self.height()-self.keyboardWidget.height(),self.width(),self.keyboardWidget.height())
             self.fakewidgetkeyboard.setGeometry(0,self.height() - self.fakewidgetkeyboard.height(), self.width(),self.fakewidgetkeyboard.height())
-        elif variables.taskbar_location == 'left':
-            self.fakewidgetkeyboard.setGeometry(int(self.__taskbar_size__)+15, self.height() - self.fakewidgetkeyboard.height(), self.width()-15-int(self.__taskbar_size__),self.fakewidgetkeyboard.height())
+        elif getdata("taskbar.location") == 'left':
+            self.fakewidgetkeyboard.setGeometry(int(getdata("taskbar.size"))+15, self.height() - self.fakewidgetkeyboard.height(), self.width()-15-int(getdata("taskbar.size")),self.fakewidgetkeyboard.height())
             self.keyboardWidget.setGeometry(int(self.width()/2)-int(self.keyboardWidget.width()/2), self.height() - self.keyboardWidget.height(), self.width(), self.keyboardWidget.height())
-        elif variables.taskbar_location == 'right':
-            self.fakewidgetkeyboard.setGeometry(0, self.height() - self.fakewidgetkeyboard.height(), self.width()-15-int(self.__taskbar_size__),self.fakewidgetkeyboard.height())
+        elif getdata("taskbar.location") == 'right':
+            self.fakewidgetkeyboard.setGeometry(0, self.height() - self.fakewidgetkeyboard.height(), self.width()-15-int(getdata("taskbar.size")),self.fakewidgetkeyboard.height())
             self.keyboardWidget.setGeometry(int(self.width()/2)-int(self.keyboardWidget.width()/2), self.height() - self.keyboardWidget.height(), self.width(), self.keyboardWidget.height())
-        elif variables.taskbar_location == 'bottom':
-            self.fakewidgetkeyboard.setGeometry(0, self.height()-int(self.__taskbar_size__)-self.fakewidgetkeyboard.height()-50, self.width(),self.fakewidgetkeyboard.height())
-            self.keyboardWidget.setGeometry(int(self.width()/2)-int(self.keyboardWidget.width()/2),self.height()-int(self.__taskbar_size__)-self.keyboardWidget.height()-15,self.width(),self.keyboardWidget.height())
+        elif getdata("taskbar.location") == 'bottom':
+            self.fakewidgetkeyboard.setGeometry(0, self.height()-int(getdata("taskbar.size"))-self.fakewidgetkeyboard.height()-50, self.width(),self.fakewidgetkeyboard.height())
+            self.keyboardWidget.setGeometry(int(self.width()/2)-int(self.keyboardWidget.width()/2),self.height()-int(getdata("taskbar.size"))-self.keyboardWidget.height()-15,self.width(),self.keyboardWidget.height())
 
         self.layout().addWidget(self.fakewidgetkeyboard)
         self.layout().addWidget(self.keyboardWidget)
@@ -2735,7 +2630,6 @@ class KeyboardWidget (QWidget):
         else:
             keyx = res.key('u')
         self.buttonu.KEY_CHAR = ord(keyx)
-
         self.buttonu.setText(keyx)
 
 
@@ -2766,6 +2660,7 @@ class KeyboardWidget (QWidget):
             keyx = res.key('Y')
         else:
             keyx = res.key('y')
+
         self.buttony.KEY_CHAR = ord(keyx)
         self.buttony.setText(keyx)
 
@@ -2952,10 +2847,10 @@ class KeyboardWidget (QWidget):
             color: {5};
             border-radius: {3}% {3}%;
         }
-        '''.replace('{1}',self.Env.__key_btn_bgcolor__).replace('{2}',self.Env.__key_btn_fgcolor__).replace('{3}',self.Env.__key_btn_round_size__).replace('{4}',self.Env.__key_btn_bgcolor_hover__).replace('{5}',self.Env.__key_btn_fgcolor_hover__)
+        '''.replace('{1}',getdata("key.btn.bgcolor")).replace('{2}',getdata("key.btn.fgcolor")).replace('{3}',getdata("key.btn.round-size")).replace('{4}',getdata("key.btn.bgcolor-hover")).replace('{5}',getdata("key.btn.fgcolor-hover"))
         self.setStyleSheet(self.enable_style)
 
-        if variables.key_btn_shadow == 'Yes': shadowx = True
+        if getdata("key.btn.shadow") == 'Yes': shadowx = True
         else: shadowx = False
 
         self.button1 = self.findChild(QPushButton,f'btn1')
@@ -3691,7 +3586,7 @@ class KeyboardWidget (QWidget):
 
         self.done_button = self.findChild(QPushButton, f'btndone')
         self.done_button.setFont(f)
-        self.done_button.setText (control.read_record('done',f'/usr/share/locales/{self.Env.__layout__}.locale'))
+        self.done_button.setText (control.read_record('done',f'/usr/share/locales/{getdata("layout")}.locale'))
         self.done_button.KEY_CHAR = Qt.Key_Home
         if shadowx:
             ## Shadow ##
@@ -3729,7 +3624,19 @@ class KeyboardWidget (QWidget):
 
     def chooseKeyLayout (self):
         files.write('/proc/info/id','desktop')
-        self.Env.RunApp('key',[self.settingUp])
+
+        try:
+            self.Env.RunApp('key',[self.settingUp])
+        except:
+            layout = control.read_record('layout','/etc/gui')
+
+            if layout=='en':
+                control.write_record('layout','fa','/etc/gui')
+            elif layout=='fa':
+                control.write_record('layout','en','/etc/gui')
+
+            self.settingUp()
+
         files.write('/proc/info/id', 'desktop')
 
     def buttonClicked(self, char_ord):

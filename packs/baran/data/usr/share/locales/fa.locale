@@ -1,6 +1,8 @@
 name: فارسی
 logo: @icon/fa
 logo-selected: @icon/fa-selected
+font: Iran Sans
+submenu-direction: rtl
 enter: جدید
 done: تمام
 shift: بعدی
@@ -78,15 +80,15 @@ $: ﷼
 ^: ×
 &: ،
 *: *
-(: )
-): (
+(: (
+): )
 -: -
 _: ـ
 =: =
 +: +
-{: }
+{: {
 [: ج
-}: {
+}: }
 ]: چ
 \: \
 |: |
@@ -520,3 +522,51 @@ roller.uix: یک فایل پوسته گرافیکی
 key.select: انتخاب
 key.cancel: لغو
 key.choose: یک زبان انتخاب کنید
+lang.select: انتخاب
+lang.cancel: لغو
+lang.choose: یک زبان انتخاب کنید
+setup.app_name: نصاب پای ابر
+setup.hostname: یک نامی برای رایانه خود انتخاب کنید
+setup.rootcode: رمزی قوی برای حساب ادمین تنظیم کنید
+setup.username: یک نامی برای حساب کاربری خود وارد کنید
+setup.password: حالا برای آن رمزی تنظیم کنید
+setup.lang: زبان مورد نظر خود را انتخاب کنید
+setup.guest: حساب مهمان داشته باشد
+setup.fullname: نام و نام خانوادگی
+setup.email: پست الکترونیکی
+setup.phone: شماره تلفن همراه
+setup.next: بعدی
+setup.install: نصب
+setup.cancel: لغو
+setup.back: قبلی
+setting.app_name: تنظیمات
+wallpaper.app_name: تصویر پس زمینه
+wallpaper.desktop: میزکار
+wallpaper.enter: صفحه رمزعبور
+wallpaper.login: صفحه ورود
+wallpaper.unlock: صفحه بازکردن قفل
+wallpaper.lock: صفحه قفل
+theme.app_name: پوسته ها
+users.app_name: حساب ها
+users.back: بازگشت
+users.remove: حذف
+users.edit: ویرایش
+users.remove_user: حذف حساب کاربری
+users.removem: آیا می خواهید این حساب کاربری را حذف کنید؟
+users.removed: با موفقیت حذف شد
+users.removedm: این حساب با موفقیت حذف گردید
+users.root: ابر حساب
+users.rootm: نمی توان ابرحساب را حذف کرد چون یک حساب دائمی است
+uedit.app_name: ویرایشگر حساب
+uedit.fullname: نام و نام خانوادگی
+uedit.company: نام شرکت
+uedit.email: پست الکترونیکی
+uedit.phone: شماره تلفن
+uedit.male: مذکر
+uedit.female: مونث
+uedit.save: ذخیره سازی تغییرات
+desktop.vkey: کیبورد مجازی
+users.add: حساب جدید
+users.username: یک نام برای حساب کاربری انتخاب کنید
+users.password: یک رمزعبور تنظیم کنید
+users.confirm: دوباره رمزعبور جدید را وارد کنید

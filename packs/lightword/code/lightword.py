@@ -29,7 +29,8 @@ app = App()
 FONT_SIZES = [7, 8, 9, 10, 11, 12, 13, 14, 18, 24, 36, 48, 64, 72, 96, 144, 288]
 IMAGE_EXTENSIONS = ['.jpg','.png','.bmp']
 HTML_EXTENSIONS = ['.htm', '.html']
-
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 def hexuuid():
     return uuid.uuid4().hex
 
@@ -104,24 +105,26 @@ class MainApp(QMainWindow):
         layout = QVBoxLayout()
         self.editor = TextEdit(ports)
         self.editor.setStyleSheet("""
-                        QScrollBar
-                        {
-                        background : white;
-                        }
-                        QScrollBar::handle
-                        {
-                        background : #123456;
-                        border-radius: 6% 6%;
-                        }
-                        QScrollBar::handle::pressed
-                        {
-                        background : #ABCDEF;
-                        border-radius: 6% 6%;
-                        }""".replace('white', self.Env.__menu_scroll_bgcolor__).replace('#123456',
-                                                                                        self.Env.__menu_scroll_color__).replace(
+                       QScrollBar
+                       {
+                       background : white;
+                       }
+                       QScrollBar::handle
+                       {
+                       background : #123456;
+                       border-radius: 6% 6%;
+                       }
+                       QScrollBar::handle::pressed
+                       {
+                       background : #ABCDEF;
+                       border-radius: 6% 6%;
+                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                     getdata(
+                                                                                         "menu.scroll.color")).replace(
             '6',
-            self.Env.__menu_scroll_round_size__).replace(
-            '#ABCDEF', self.Env.__menu_scroll_color_hover__))
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")))
 
         # Setup the QTextEdit editor configuration
         self.editor.setAutoFormatting(QTextEdit.AutoAll)
@@ -154,6 +157,10 @@ class MainApp(QMainWindow):
         self.menuBar = QMenuBar()
         self.setMenuBar(self.menuBar)
         self.menuBar.setFont(self.Env.font())
+        if getdata('submenu.direction')=='ltr':
+            self.menubar.setLayoutDirection(Qt.LeftToRight)
+        else:
+            self.menubar.setLayoutDirection(Qt.RightToLeft)
         file_menu = self.menuBar.addMenu(res.get('@string/file'))
         file_menu.setFont(self.Env.font())
         img = res.get('@icon/blue-fileopen')

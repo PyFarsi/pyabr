@@ -1,6 +1,8 @@
-name[en]: Screen
+name[en]: Display
+name[fa]: تنظیمات رزولوشن
+logo: @icon/display
 exec: screen
-logo: @icon/help-about
 application: No
 hidden: Yes
 category: system
+setting: Yes

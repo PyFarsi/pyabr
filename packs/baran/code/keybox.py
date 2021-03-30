@@ -25,13 +25,20 @@ app = App()
 commands = Commands()
 permissions = Permissions()
 
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
+
 class KeyListView(QListView):
     def format(self, it, text):
         if files.isfile(f'/usr/share/locales/{it.whatsThis()}.locale'):
             name = control.read_record('name',f'/usr/share/locales/{it.whatsThis()}.locale')
             logo = control.read_record('logo',f'/usr/share/locales/{it.whatsThis()}.locale')
+            logo_selected = control.read_record('logo-selected', f'/usr/share/locales/{it.whatsThis()}.locale')
 
-            it.setIcon(QIcon(res.get(logo)))
+            if getdata("layout")==it.whatsThis():
+                it.setIcon(QIcon(res.get(logo_selected)))
+            else:
+                it.setIcon(QIcon(res.get(logo)))
             it.setText(name)
             it.setFont(self.Env.font())
 
@@ -54,22 +61,24 @@ class KeyListView(QListView):
         self.setStyleSheet('background:white;')
 
         self.setStyleSheet("""
-                QScrollBar
-                {
-                background : white;
-                }
-                QScrollBar::handle
-                {
-                background : #123456;
-                border-radius: 6% 6%;
-                }
-                QScrollBar::handle::pressed
-                {
-                background : #ABCDEF;
-                border-radius: 6% 6%;
-                }""".replace('white', self.Env.__menu_scroll_bgcolor__).replace('#123456', self.Env.__menu_scroll_color__).replace('6',
-                                                                                                         self.Env.__menu_scroll_round_size__).replace(
-            '#ABCDEF', self.Env.__menu_scroll_color_hover__))
+               QScrollBar
+               {
+               background : white;
+               }
+               QScrollBar::handle
+               {
+               background : #123456;
+               border-radius: 6% 6%;
+               }
+               QScrollBar::handle::pressed
+               {
+               background : #ABCDEF;
+               border-radius: 6% 6%;
+               }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                             getdata("menu.scroll.color")).replace('6',
+                                                                                                                   getdata(
+                                                                                                                       "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")))
 
         self.listdir = files.list('/usr/share/locales')
         self.listdir.sort()
@@ -97,7 +106,7 @@ class KeyListView(QListView):
 # select box #
 class MainApp (QMainWindow):
     def onCloseProcess (self):
-        if not app.check('open'):
+        if not app.check('key'):
             self.Widget.Close()
         else:
             QTimer.singleShot(1,self.onCloseProcess)
@@ -170,7 +179,10 @@ class MainApp (QMainWindow):
 
     def inp(self):
         control.write_record('layout',files.readall('/proc/info/ksel'),'/etc/gui')
-        self.External[0]()
+        try:
+            self.External[0]()
+        except:
+            pass
         self.Widget.close()
 
     def inp_once (self):

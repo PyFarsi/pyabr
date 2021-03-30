@@ -10,11 +10,15 @@ usr/app/page_about.pyc
 usr/app/keybox.pyc
 usr/app/openbox.pyc
 usr/app/uiv.pyc
+usr/app/wallpaper.pyc
+usr/app/uedit.pyc
 usr/app/boolbox.pyc
+usr/app/themes.pyc
 usr/app/textbox.pyc
-usr/app/usermanager.pyc
-usr/app/edituser.pyc
+usr/app/langbox.pyc
+usr/app/setting.pyc
 usr/share/applications/about.desk
+usr/app/users.pyc
 usr/share/applications/bool.desk
 usr/share/applications/screen.desk
 usr/share/applications/debug.desk

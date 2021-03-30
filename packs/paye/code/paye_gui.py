@@ -28,7 +28,8 @@ app = App()
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 class PackageListView (QListView):
     def format(self, it, text):
         if files.isfile (f'/usr/share/applications/{it.text()}.desk'):
@@ -66,24 +67,26 @@ class PackageListView (QListView):
         # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
 
         self.setStyleSheet("""
-                        QScrollBar
-                        {
-                        background : white;
-                        }
-                        QScrollBar::handle
-                        {
-                        background : #123456;
-                        border-radius: 6% 6%;
-                        }
-                        QScrollBar::handle::pressed
-                        {
-                        background : #ABCDEF;
-                        border-radius: 6% 6%;
-                        }""".replace('white', self.Backend.__menu_scroll_bgcolor__).replace('#123456',
-                                                                                        self.Backend.__menu_scroll_color__).replace(
+                       QScrollBar
+                       {
+                       background : white;
+                       }
+                       QScrollBar::handle
+                       {
+                       background : #123456;
+                       border-radius: 6% 6%;
+                       }
+                       QScrollBar::handle::pressed
+                       {
+                       background : #ABCDEF;
+                       border-radius: 6% 6%;
+                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                     getdata(
+                                                                                         "menu.scroll.color")).replace(
             '6',
-            self.Backend.__menu_scroll_round_size__).replace(
-            '#ABCDEF', self.Backend.__menu_scroll_color_hover__))
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")))
         # on the given model index to get a pointer to the item
 
         self.listdir = files.list('/app/mirrors')
@@ -604,6 +607,10 @@ class MainApp (QMainWindow):
         self.Widget.Resize(self,720,640)
 
         self.menubar = QMenuBar()
+        if getdata('submenu.direction')=='ltr':
+            self.menubar.setLayoutDirection(Qt.LeftToRight)
+        else:
+            self.menubar.setLayoutDirection(Qt.RightToLeft)
         self.menubar.setFont(self.Env.font())
         self.setMenuBar(self.menubar)
         app.switch('paye')

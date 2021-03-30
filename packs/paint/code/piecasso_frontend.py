@@ -20,9 +20,11 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from libabr import Res
+from PyQt5.QtCore import *
+from libabr import *
 
 res = Res()
+control = Control()
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow,ports):
@@ -638,6 +640,10 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralWidget)
         self.menuBar = QtWidgets.QMenuBar(MainWindow)
         self.menuBar.setFont(self.Env.font())
+        if control.read_record('submenu.direction','/etc/gui')=='ltr':
+            self.menuBar.setLayoutDirection(Qt.LeftToRight)
+        else:
+            self.menuBar.setLayoutDirection(Qt.RightToLeft)
         self.menuBar.setGeometry(QtCore.QRect(0, 0, 706, 26))
         self.menuBar.setObjectName("menuBar")
         self.menuFIle = QtWidgets.QMenu(self.menuBar)

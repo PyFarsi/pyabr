@@ -41,6 +41,11 @@ enter.bgcolor: white
 enter.fgcolor: black
 enter.background: @background/glass
 
+# unlock : Unlock page
+unlock.bgcolor: white
+unlock.fgcolor: black
+unlock.background: @background/glass
+
 # appw : Application Window page Style
 appw.title.size: 50
 appw.title.fgcolor: white
@@ -80,7 +85,7 @@ loginw.unlock.bgcolor: green
 loginw.unlock.fgcolor: lime
 loginw.unlock-hover.bgcolor: lime
 loginw.unlock-hover.fgcolor: green
-loginw.unlock.round-size: 40
+loginw.unlock.round-size: 20
 loginw.unlock.hide: No
 loginw.unlock.width: 300
 loginw.unlock.height: 40
@@ -112,6 +117,8 @@ menu.scroll.color: #123456
 menu.scroll.color-hover: #ABCDEF
 menu.scroll.round-size: 0
 menu.scroll.bgcolor: white
+# S, N, E, W
+menu.tab.position: S
 
 # virtual keyboard
 key.enable: Yes
@@ -129,12 +136,12 @@ locale: fa
 layout: fa
 logo: @icon/pyabr-logo
 autosize: No
-fullscreen: No
-width: 1280
-height: 720
+fullscreen: Yes
+width: 1920
+height: 1080
 terminal: commento
 params: gui
-sides: Yes
+sides: No
 font: Iran Sans
 fontsize: 12
 theme-name: glass-light

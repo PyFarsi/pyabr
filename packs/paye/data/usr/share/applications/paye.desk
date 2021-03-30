@@ -6,3 +6,4 @@ exec: paye_gui
 application: Yes
 category: system
 external: Yes
+setting: Yes

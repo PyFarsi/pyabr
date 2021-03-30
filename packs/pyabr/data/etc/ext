@@ -215,6 +215,8 @@ patch.icon: @icon/text-x-patch
 patch.external.barge: Yes
 patch.external.persia: Yes
 py.icon: @icon/text-x-python3
+py.external.barge: Yes
+py.external.persia: Yes
 qml.icon: @icon/text-x-qml
 qml.external.barge: Yes
 qml.external.persia: Yes

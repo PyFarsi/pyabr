@@ -22,7 +22,8 @@ res = Res();files = Files();app = App();control=Control();commands = Commands()
 f = QtGui.QFont()
 f.setFamily('Fira Code')
 f.setPointSize(12)
-
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 
 class FileListView(QListView):
     def format(self, it, text):
@@ -39,6 +40,8 @@ class FileListView(QListView):
                     it.setIcon(QIcon(res.get(res.etc('roller','file-icon'))))
             else:
                 it.setIcon(QIcon(res.get(res.etc('roller','file-icon'))))
+
+        self.setFont(self.editor.Env.font())
 
     def mkdir(self, dirname):
         if files.isfile(dirname):
@@ -62,14 +65,14 @@ class FileListView(QListView):
             self.entry.appendRow(it)
             self.format(it, filename)
             commands.cat (['-c',filename])
-            it.setFont(f)
+            it.setFont(self.editor.Env.font())
 
     def genpa (self,filename):
         it = QtGui.QStandardItem(filename+".pa")
         it.setWhatsThis(self.dir + "/" + filename+".pa")
         self.entry.appendRow(it)
         self.format(it, filename+".pa")
-        it.setFont(f)
+        it.setFont(self.editor.Env.font())
 
     def mkc (self,filename):
         if files.isdir(filename + ".c"):
@@ -186,22 +189,26 @@ class FileListView(QListView):
         self.setStyleSheet('background:white;')
 
         self.setStyleSheet("""
-                QScrollBar
-                {
-                background : white;
-                }
-                QScrollBar::handle
-                {
-                background : #123456;
-                border-radius: 6% 6%;
-                }
-                QScrollBar::handle::pressed
-                {
-                background : #ABCDEF;
-                border-radius: 6% 6%;
-                }""".replace('white', self.editor.Env.__menu_scroll_bgcolor__).replace('#123456', self.editor.Env.__menu_scroll_color__).replace('6',
-                                                                                                         self.editor.Env.__menu_scroll_round_size__).replace(
-            '#ABCDEF', self.editor.Env.__menu_scroll_color_hover__))
+                       QScrollBar
+                       {
+                       background : white;
+                       }
+                       QScrollBar::handle
+                       {
+                       background : #123456;
+                       border-radius: 6% 6%;
+                       }
+                       QScrollBar::handle::pressed
+                       {
+                       background : #ABCDEF;
+                       border-radius: 6% 6%;
+                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                     getdata(
+                                                                                         "menu.scroll.color")).replace(
+            '6',
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")))
 
         self.dir = files.readall('/proc/info/pwd')
         files.write('/proc/info/dsel', self.dir)
@@ -511,7 +518,7 @@ class MainApp(QtWidgets.QMainWindow):
 
         self.onCloseProcess()
 
-        self.project_folder = control.read_record('desktop.projects',f'/usr/share/locales/{self.Env.__locale__}.locale')
+        self.project_folder = control.read_record('desktop.projects',f'/usr/share/locales/{getdata("locale")}.locale')
 
         # resize
         self.Widget.Resize (self,self.Env.width(),self.Env.height())
@@ -524,24 +531,26 @@ class MainApp(QtWidgets.QMainWindow):
         # Set the default font
 
         self.teEdit.setStyleSheet("""
-                        QScrollBar
-                        {
-                        background : white;
-                        }
-                        QScrollBar::handle
-                        {
-                        background : #123456;
-                        border-radius: 6% 6%;
-                        }
-                        QScrollBar::handle::pressed
-                        {
-                        background : #ABCDEF;
-                        border-radius: 6% 6%;
-                        }""".replace('white', self.Env.__menu_scroll_bgcolor__).replace('#123456',
-                                                                                        self.Env.__menu_scroll_color__).replace(
+                       QScrollBar
+                       {
+                       background : white;
+                       }
+                       QScrollBar::handle
+                       {
+                       background : #123456;
+                       border-radius: 6% 6%;
+                       }
+                       QScrollBar::handle::pressed
+                       {
+                       background : #ABCDEF;
+                       border-radius: 6% 6%;
+                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                     getdata(
+                                                                                         "menu.scroll.color")).replace(
             '6',
-            self.Env.__menu_scroll_round_size__).replace(
-            '#ABCDEF', self.Env.__menu_scroll_color_hover__))
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")))
 
         #self.teEdit.setLexer(Qsci.QsciLexerPython())
 
@@ -570,6 +579,10 @@ class MainApp(QtWidgets.QMainWindow):
 
         # menubar
         self.menubar = self.menuBar()
+        if getdata('submenu.direction')=='ltr':
+            self.menubar.setLayoutDirection(Qt.LeftToRight)
+        else:
+            self.menubar.setLayoutDirection(Qt.RightToLeft)
         self.menubar.setFont(self.Env.font())
         self.file = self.menubar.addMenu(res.get('@string/file'))
         self.file.setFont(self.Env.font())
@@ -675,8 +688,10 @@ class MainApp(QtWidgets.QMainWindow):
         self.open = self.file.addAction(res.get('@string/open'))
         self.open.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'open'))))
         self.open.setFont(self.Env.font())
+        self.open.setShortcut('Ctrl+O')
         self.open.triggered.connect (self.open_act)
         self.save = self.file.addAction(res.get('@string/save'))
+        self.save.setShortcut('Ctrl+S')
         self.save.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'save'))))
         self.save.triggered.connect (self.save_)
         self.save.setFont(self.Env.font())
@@ -688,6 +703,7 @@ class MainApp(QtWidgets.QMainWindow):
         self.exit.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'exit'))))
         self.exit.triggered.connect (self.Widget.Close)
         self.exit.setFont(self.Env.font())
+        self.exit.setShortcut('Ctrl+X')
 
         # code menu
         self.code = self.menubar.addMenu(res.get('@string/code'))
@@ -697,6 +713,7 @@ class MainApp(QtWidgets.QMainWindow):
 
         self.run = self.code.addAction(res.get('@string/runp'))
         self.run.triggered.connect (self.run_project_)
+        self.run.setShortcut('Shift+F10')
 
         self.build = self.code.addMenu(res.get('@string/build'))
         self.build.setFont(self.Env.font())

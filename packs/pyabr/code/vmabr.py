@@ -32,17 +32,14 @@ user = ""
 code = ""
 argv = sys.argv[1:] # kernel parameters
 
-if platform.node() == 'localhost':
-    osname = 'Android'
-    kernel_file = 'vmabr.py'
+if os.path.isfile('/etc/issue.net'):
+    f = open('/etc/issue.net', 'r')
+    osname = f.read()
+    f.close()
 else:
-    if os.path.isfile ('/etc/issue.net'):
-        f = open('/etc/issue.net','r')
-        osname = f.read()
-        f.close()
-    else:
-        osname = platform.system()
-    kernel_file = 'vmabr.pyc'
+    osname = platform.system()
+
+kernel_file = 'vmabr.pyc'
 
 select = ""
 tz = ""
@@ -94,6 +91,7 @@ if not (argv[0] == "kernel" or
     argv[0] == "gui-login" or
     argv[0] == 'gui-enter' or
     argv[0] == 'gui-desktop' or
+    argv[0] == 'gui-unlock' or
     argv[0] == "exec" ):
     colors.show("params-check", "fail-start", "")
     colors.show("kernel", "stop", "")
@@ -541,6 +539,52 @@ if argv[0]=="gui-enter":
     else:
         colors.show('gui-enter', 'fail-start', '')
         colors.show('kernel', 'stop', '')
+    sys.exit(application.exec_())
+
+
+if argv[0]=="gui-unlock":
+    if argv[1:]==[] or argv[1]=='guest' or not files.isfile ('/etc/users/'+argv[1]):
+        colors.show('gui-unlock', 'fail-start', '')
+        colors.show('kernel', 'stop', '')
+        sys.exit(0)
+
+    hashname = hashlib.sha3_256(argv[1].encode()).hexdigest()
+    username = control.read_record('username','/etc/users/'+argv[1])
+
+    if not hashname==username:
+        colors.show('gui-unlock', 'fail-start', '')
+        colors.show('kernel', 'stop', '')
+        sys.exit(0)
+
+    # do the job #
+    desktop = control.read_record('desktop', '/etc/gui')
+
+    from PyQt5.QtCore import *
+    from PyQt5.QtWidgets import *
+
+    try:
+        from PyQt5.QtWebEngineWidgets import *
+    except:
+        pass
+
+    ## Main entry ##
+    application = QApplication(sys.argv)
+    app.start('desktop')
+    ## https://www.cdog.pythonlibrary.org/2015/08/18/getting-your-screen-resolution-with-python/ Get screen model ##
+    screen_resolution = application.desktop().screenGeometry()
+    width, height = screen_resolution.width(), screen_resolution.height()
+
+    files.write('/tmp/width', str(width))
+    files.write('/tmp/height', str(height))
+
+    control.write_record('params', 'unlock', '/etc/gui')
+    control.write_record('username',argv[1],'/etc/gui')
+    if not desktop == None:
+        w = importlib.import_module(desktop).Backend()
+    else:
+        colors.show('gui-unlock', 'fail-start', '')
+        colors.show('kernel', 'stop', '')
+
     sys.exit(application.exec_())
 
 ## @core/gui-desktop ##

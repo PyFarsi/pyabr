@@ -1,6 +1,8 @@
 name: English
 logo: @icon/en
 logo-selected: @icon/en-selected
+font: Comic Sans MS
+submenu-direction: ltr
 enter: Enter
 done: Done
 shift: Next
@@ -521,3 +523,51 @@ roller.uix: New UI file
 key.select: Select
 key.cancel: Cancel
 key.choose: Choose a language
+lang.select: Select
+lang.cancel: Cancel
+lang.choose: Choose a language
+setup.app_name: Pyabr installer
+setup.hostname: Enter a hostname for your computer
+setup.rootcode: Choose a strong password for root user
+setup.username: Pick a username
+setup.password: Choose a password for your user
+setup.lang: Select your current language
+setup.guest: Enable Guest user
+setup.fullname: Full name
+setup.email: Email address
+setup.phone: Phone number
+setup.next: Next
+setup.install: Install
+setup.cancel: Cancel
+setup.back: Back
+setting.app_name: Settings
+wallpaper.app_name: Wallpapers
+wallpaper.desktop: Desktop
+wallpaper.enter: Enter
+wallpaper.login: Login
+wallpaper.unlock: Unlock
+wallpaper.lock: Lock
+theme.app_name: Themes & Style
+users.app_name: Users
+users.back: Back
+users.remove: Remove
+users.edit: Edit
+users.remove_user: Remove user
+users.removem: Do you want to remove this user?
+users.removed: Successfully removed
+users.removedm: This user successfully removed
+users.root: Super user
+users.rootm: Cannot remove super user account at all
+uedit.app_name: User editor
+uedit.fullname: Full name
+uedit.company: Company
+uedit.email: Email
+uedit.phone: Phone
+uedit.male: Male
+uedit.female: Female
+uedit.save: Save changes
+desktop.vkey: Virtual Keyboard
+users.add: Add user
+users.username: Enter your new username
+users.password: Choose your new password
+users.confirm: Confirm your new password

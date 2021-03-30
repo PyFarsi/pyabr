@@ -39,6 +39,7 @@ if not os.path.isdir ("build-packs"): os.mkdir ("build-packs")
 
 pack.install()
 pack.inst('baran')
+pack.inst('setup')
 
 # run #
 if os.path.isfile ('stor/proc/0'):  os.remove ('stor/proc/0')

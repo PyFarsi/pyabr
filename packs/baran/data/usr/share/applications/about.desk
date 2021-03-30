@@ -6,3 +6,4 @@ exec: page_about
 application: Yes
 category: system
 pin: Yes
+setting: Yes

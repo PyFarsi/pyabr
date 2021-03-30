@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>pyabrw</class>
+ <class>PyabrExampleAbrPage</class>
  <widget class="QWidget" name="pyabrw">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>480</height>
+    <width>1920</width>
+    <height>1080</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Pyabr Web Application</string>
+   <string>Pyabr Abr Application</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">

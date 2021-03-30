@@ -10,15 +10,16 @@
 #
 #######################################################################################
 
-from libabr import Res, App
+from libabr import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
 res = Res()
 app = App()
-
+control = Control()
 from pyqtconsole.console import PythonConsole
-
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 class MainApp(PythonConsole):
     def onCloseProcess (self):
         if not app.check(self.AppName):
@@ -41,6 +42,28 @@ class MainApp(PythonConsole):
         self.Widget.SetWindowTitle (res.get("@string/app_name"))
         self.Widget.SetWindowIcon (QIcon(res.get(res.etc(self.AppName,'logo'))))
         self.setStyleSheet(f'background-color:{res.etc(self.AppName,"bgcolor")};')
+
+        self.setStyleSheet("""
+                       QScrollBar
+                       {
+                       background : white;
+                       }
+                       QScrollBar::handle
+                       {
+                       background : #123456;
+                       border-radius: 6% 6%;
+                       }
+                       QScrollBar::handle::pressed
+                       {
+                       background : #ABCDEF;
+                       border-radius: 6% 6%;
+                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                     getdata(
+                                                                                         "menu.scroll.color")).replace(
+            '6',
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")))
 
         f = QFont()
         f.setFamily('DejaVu Sans Mono')

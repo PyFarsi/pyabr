@@ -23,7 +23,8 @@ control = Control()
 res = Res()
 app = App()
 commands = Commands()
-
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 class LineEdit (baran.BLineEdit):
     def __init__(self,ports):
         super(LineEdit, self).__init__()
@@ -72,22 +73,24 @@ class FileListView(QListView):
         self.setStyleSheet('background:white;')
 
         self.setStyleSheet("""
-        QScrollBar
-        {
-        background : white;
-        }
-        QScrollBar::handle
-        {
-        background : #123456;
-        border-radius: 6% 6%;
-        }
-        QScrollBar::handle::pressed
-        {
-        background : #ABCDEF;
-        border-radius: 6% 6%;
-        }""".replace('white', self.Env.__menu_scroll_bgcolor__).replace('#123456', self.Env.__menu_scroll_color__).replace('6',
-                                                                                                 self.Env.__menu_scroll_round_size__).replace(
-            '#ABCDEF', self.Env.__menu_scroll_color_hover__))
+               QScrollBar
+               {
+               background : white;
+               }
+               QScrollBar::handle
+               {
+               background : #123456;
+               border-radius: 6% 6%;
+               }
+               QScrollBar::handle::pressed
+               {
+               background : #ABCDEF;
+               border-radius: 6% 6%;
+               }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                             getdata("menu.scroll.color")).replace('6',
+                                                                                                                   getdata(
+                                                                                                                       "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")))
 
 
 
@@ -221,22 +224,24 @@ class DirListView(QListView):
         self.setStyleSheet('background:white;')
 
         self.setStyleSheet("""
-                QScrollBar
-                {
-                background : white;
-                }
-                QScrollBar::handle
-                {
-                background : #123456;
-                border-radius: 6% 6%;
-                }
-                QScrollBar::handle::pressed
-                {
-                background : #ABCDEF;
-                border-radius: 6% 6%;
-                }""".replace('white', self.Env.__menu_scroll_bgcolor__).replace('#123456', self.Env.__menu_scroll_color__).replace('6',
-                                                                                                         self.Env.__menu_scroll_round_size__).replace(
-            '#ABCDEF', self.Env.__menu_scroll_color_hover__))
+               QScrollBar
+               {
+               background : white;
+               }
+               QScrollBar::handle
+               {
+               background : #123456;
+               border-radius: 6% 6%;
+               }
+               QScrollBar::handle::pressed
+               {
+               background : #ABCDEF;
+               border-radius: 6% 6%;
+               }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                             getdata("menu.scroll.color")).replace('6',
+                                                                                                                   getdata(
+                                                                                                                       "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")))
 
         self.dir = files.readall('/proc/info/pwd')
         files.write('/proc/info/dsel', self.dir)
