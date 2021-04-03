@@ -314,6 +314,7 @@ class ShowUserInformation (QMainWindow):
             app.switch('users')
             
     def edituser_act(self):
+        files.write('/tmp/user-status.tmp', 'edit')
         app.switch('users')
         self.Backend.RunApp ('uedit',[self.External[0]])
         app.switch('users')
@@ -329,6 +330,12 @@ class MainApp (QMainWindow):
     def refresh (self):
         self.x = UserListView([self.Env, self.Widget, self, self.AppName, self.External])
         self.setCentralWidget(self.x)
+
+    def adduser_act (self):
+        files.write('/tmp/user-status.tmp','add')
+        app.switch('users')
+        self.Env.RunApp('uedit', [self.External[0]])
+        app.switch('users')
 
     def __init__(self,ports):
         super(MainApp, self).__init__()
@@ -352,6 +359,7 @@ class MainApp (QMainWindow):
         self.menubar = QMenuBar()
         self.setMenuBar(self.menubar)
         self.addx = self.menubar.addAction(res.get('@string/add'))
+        self.addx.triggered.connect (self.adduser_act)
         self.menubar.setFont(self.Env.font())
 
         if getdata('submenu.direction')=='ltr':

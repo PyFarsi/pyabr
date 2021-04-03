@@ -567,6 +567,9 @@ uedit.female: مونث
 uedit.save: ذخیره سازی تغییرات
 desktop.vkey: کیبورد مجازی
 users.add: حساب جدید
-users.username: یک نام برای حساب کاربری انتخاب کنید
-users.password: یک رمزعبور تنظیم کنید
-users.confirm: دوباره رمزعبور جدید را وارد کنید
+uedit.username: شناسه کاربری
+uedit.password: رمزعبور
+uedit.confirm: تکرار رمز عبور
+uedit.add: افزودن حساب کاربری
+uedit.admin: حساب مدیر
+uedit.low: حساب معمولی

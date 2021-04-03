@@ -10,7 +10,7 @@
 #
 #######################################################################################
 
-import sys, subprocess, os, shutil, requests
+import sys, subprocess, os, shutil, requests,hashlib
 
 from libabr import Files, Control, Permissions, Colors, Process, Modules, Package, Commands, Res, System, App
 
@@ -52,6 +52,12 @@ class MainApp(QWidget):
 
     def btnSave_act (self):
         # Get text #
+        self.user = f'/etc/users/{self.leUsername.text()}'
+        if self.s=='add':
+            files.mkdir(f'/desk/{self.leUsername.text()}')
+            files.create(self.user)
+            control.write_record('username', hashlib.sha3_256(self.leUsername.text().encode()).hexdigest(), self.user)
+
         self.fullname = self.leFullname.text()
         self.company = self.leCompany.text()
         self.email = self.leEmail.text()
@@ -66,6 +72,14 @@ class MainApp(QWidget):
         control.write_record('gender', self.gender, self.user)
         control.write_record('blood_type', self.bloodtype, self.user)
         control.write_record('birthday', self.birthday, self.user)
+
+        if self.leConfirm.text()==self.lePassword.text():
+            control.write_record('code',hashlib.sha3_512(self.lePassword.text().encode()).hexdigest(),self.user)
+
+        if self.cbtype.currentText()==res.get('@string/admin'):
+            files.append('/etc/sudoers',f'{self.leUsername.text()}\n')
+        else:
+            files.write('/etc/sudoers',files.readall('/etc/sudoers').replace(self.leUsername.text()+"\n",''))
 
         self.Widget.Close()
 
@@ -82,13 +96,26 @@ class MainApp(QWidget):
 
         self.onCloseProcess()
 
+        try:
+            s = files.readall('/tmp/user-status.tmp')
+            self.s = s
+            files.remove('/tmp/user-status.tmp')
+        except:
+            self.s = 'edit'
+            s = 'edit'
 
-        app.switch('users')
+        app.switch('uedit')
 
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc('uedit', "logo"))))
-        self.Widget.SetWindowTitle(res.get('@string/app_name'))
-        self.Widget.Resize(self, 720, 640)
+        if s=='add':
+            self.Widget.SetWindowTitle(res.get('@string/add'))
+        else:
+            self.Widget.SetWindowTitle(res.get('@string/app_name'))
+        self.Widget.Resize(self, 720, 700)
 
+        self.leUsername = LineEdit(ports)
+        self.lePassword = LineEdit(ports)
+        self.leConfirm = LineEdit(ports)
         self.leFullname = LineEdit(ports)
         self.leCompany = LineEdit(ports)
         self.leEmail = LineEdit(ports)
@@ -96,10 +123,14 @@ class MainApp(QWidget):
         self.leBirthday = QDateEdit()
         self.cbGender = QComboBox()
         self.cbBloodtype = QComboBox()
+        self.cbtype = QComboBox()
 
         self.btnSave = QPushButton()
 
         self.layout = QVBoxLayout()
+        self.layout.addWidget(self.leUsername)
+        self.layout.addWidget(self.lePassword)
+        self.layout.addWidget(self.leConfirm)
         self.layout.addWidget(self.leFullname)
         self.layout.addWidget(self.leCompany)
         self.layout.addWidget(self.leEmail)
@@ -107,7 +138,48 @@ class MainApp(QWidget):
         self.layout.addWidget(self.leBirthday)
         self.layout.addWidget(self.cbGender)
         self.layout.addWidget(self.cbBloodtype)
+        self.layout.addWidget(self.cbtype)
         self.layout.addWidget(self.btnSave)
+
+        self.leUsername.setPlaceholderText(res.get('@string/username'))
+        self.lePassword.setPlaceholderText(res.get('@string/password'))
+        self.leConfirm.setPlaceholderText(res.get('@string/confirm'))
+
+        if not s=='add':
+            self.leUsername.setText(self.External[0])
+            self.leUsername.setEnabled(False)
+
+            if not control.read_record('fullname', self.user) == None:
+                self.leFullname.setText(control.read_record('fullname', self.user))
+            if not control.read_record('company', self.user) == None:
+                self.leCompany.setText(control.read_record('company', self.user))
+            if not control.read_record('email', self.user) == None:
+                self.leEmail.setText(control.read_record('email', self.user))
+            if not control.read_record('phone', self.user) == None:
+                self.lePhone.setText(control.read_record('phone', self.user))
+            if not control.read_record('gender', self.user) == None:
+                self.cbGender.setCurrentText(control.read_record('gender', self.user))
+            if not control.read_record('blood_type', self.user) == None:
+                self.cbBloodtype.setCurrentText(control.read_record('blood_type', self.user))
+            if self.leUsername.text()=='root' or self.leUsername.text() in control.read_list('/etc/sudoers'):
+                self.cbtype.setCurrentText(res.get('@string/admin'))
+                if self.leUsername.text()=='root':
+                    self.cbtype.setEnabled(False)
+            else:
+                self.cbtype.setCurrentText(res.get('@string/low'))
+            if not control.read_record('birthday', self.user) == None:
+                x = control.read_record('birthday', self.user)
+                x = x.split('-')
+                y = int(x[0])
+                m = int(x[1])
+                d = int(x[2])
+                s = QDate()
+                s.setDate(y, m, d)
+
+                self.leBirthday.setDate(s)
+
+        self.lePassword.setEchoMode(QLineEdit.Password)
+        self.leConfirm.setEchoMode(QLineEdit.Password)
 
         self.leFullname.setPlaceholderText(res.get('@string/fullname'))
         self.leCompany.setPlaceholderText(res.get('@string/company'))
@@ -131,21 +203,9 @@ class MainApp(QWidget):
         self.cbBloodtype.addItem('AB+')
         self.cbBloodtype.addItem('AB-')
 
-        self.btnSave.clicked.connect (self.btnSave_act)
+        self.cbtype.addItem(res.get('@string/admin'))
+        self.cbtype.addItem(res.get('@string/low'))
 
-        if not control.read_record('fullname',self.user)==None:
-            self.leFullname.setText (control.read_record('fullname',self.user))
-        if not control.read_record('company', self.user) == None:
-            self.leCompany.setText(control.read_record('company', self.user))
-        if not control.read_record('email', self.user) == None:
-            self.leEmail.setText(control.read_record('email', self.user))
-        if not control.read_record('phone', self.user) == None:
-            self.lePhone.setText(control.read_record('phone', self.user))
-        if not control.read_record('gender', self.user) == None:
-            self.cbGender.setItemText(control.read_record('gender', self.user))
-        if not control.read_record('blood_type', self.user) == None:
-            self.cbBloodtype.setItemText(control.read_record('blood_type', self.user))
-        if not control.read_record('birthday', self.user) == None:
-            self.leBirthday.setText(control.read_record('birthday', self.user))
+        self.btnSave.clicked.connect (self.btnSave_act)
 
         self.Widget.Resize(self,336,383)

@@ -568,6 +568,9 @@ uedit.female: Female
 uedit.save: Save changes
 desktop.vkey: Virtual Keyboard
 users.add: Add user
-users.username: Enter your new username
-users.password: Choose your new password
-users.confirm: Confirm your new password
+uedit.username: Username
+uedit.password: Password
+uedit.confirm: Confirm
+uedit.add: Add account
+uedit.admin: Administrator Account
+uedit.low: Standard Account

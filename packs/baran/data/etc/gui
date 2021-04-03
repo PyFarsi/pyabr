@@ -121,7 +121,7 @@ menu.scroll.bgcolor: white
 menu.tab.position: S
 
 # virtual keyboard
-key.enable: Yes
+key.enable: No
 key.bgcolor: silver
 key.background: @background/none
 key.btn.round-size: 15
