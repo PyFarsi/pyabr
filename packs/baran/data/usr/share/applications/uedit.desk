@@ -5,3 +5,4 @@ logo: @icon/users
 application: No
 hidden: Yes
 category: system
+sudoprocess: Yes

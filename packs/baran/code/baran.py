@@ -307,13 +307,24 @@ class LoginWidget (QMainWindow):
             ## Set size & location ##
         self.userlogo.setMaximumSize(250,250)
         self.userlogo.setIconSize(QSize(250,250))
-        self.userlogo.setIcon(QIcon(res.get(getdata("loginw.userlogo"))))
+        if getdata('loginw.userlogo').startswith ('@icon/'):
+            self.userlogo.setIcon(QIcon(res.get(getdata("loginw.userlogo"))))
+        else:
+            self.userlogo.setIcon(QIcon(files.input(getdata("loginw.userlogo"))))
         self.userlogo.setGeometry(int(self.width()/2)-int(self.userlogo.width()/2),int(self.height()/4)-int(self.userlogo.height()/4),self.userlogo.width(),self.userlogo.height())
 
         #if not loginw_userlogo == None:
         if self.Env.objectName() == 'Enter' or self.Env.objectName() == 'Unlock':
             logo = control.read_record('loginw.userlogo', '/etc/users/' + self.Env.username)
-            if not logo == None: loginw_userlogo = logo
+            if not logo == None:
+                loginw_userlogo = logo
+            else:
+                loginw_userlogo = '@icon/account'
+
+            if loginw_userlogo.startswith('@icon/'):
+                self.userlogo.setIcon(QIcon(res.get(loginw_userlogo)))
+            else:
+                self.userlogo.setIcon(QIcon(files.input(loginw_userlogo)))
 
         self.userlogo.setStyleSheet(
             f'background-color: {getdata("loginw.userlogo.bgcolor")};border-radius: {getdata("loginw.userlogo.round-size")}% {getdata("loginw.userlogo.round-size")};')
@@ -1779,8 +1790,17 @@ class Desktop (QMainWindow):
         if appname==getdata("terminal"):
             files.write('/proc/info/pass', self.password)
             self.layout().addWidget(AppWidget([self.Backend, self,getdata("terminal") , external]))
+
         elif files.isfile(f'/usr/share/applications/{appname}.desk'):
-            self.layout().addWidget(AppWidget([self.Backend, self, appname,external]))
+            sudoprocess = res.etc(appname,'sudoprocess')
+            if sudoprocess=='Yes':
+                if not files.readall('/proc/info/sudo')==appname:
+                    self.layout().addWidget(AppWidget([self.Backend, self, 'sudoprocess',[appname]]))
+                else:
+                    self.layout().addWidget(AppWidget([self.Backend, self, appname, external]))
+            else:
+                self.layout().addWidget(AppWidget([self.Backend, self, appname,external]))
+
         else:
             files.write('/proc/info/id','desktop')
             self.layout().addWidget(AppWidget([self.Backend, self, 'text', [res.get('@string/notf'), res.get('@string/notfm')]]))

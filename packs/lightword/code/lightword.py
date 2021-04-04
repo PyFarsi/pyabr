@@ -158,9 +158,9 @@ class MainApp(QMainWindow):
         self.setMenuBar(self.menuBar)
         self.menuBar.setFont(self.Env.font())
         if getdata('submenu.direction')=='ltr':
-            self.menubar.setLayoutDirection(Qt.LeftToRight)
+            self.menuBar.setLayoutDirection(Qt.LeftToRight)
         else:
-            self.menubar.setLayoutDirection(Qt.RightToLeft)
+            self.menuBar.setLayoutDirection(Qt.RightToLeft)
         file_menu = self.menuBar.addMenu(res.get('@string/file'))
         file_menu.setFont(self.Env.font())
         img = res.get('@icon/blue-fileopen')

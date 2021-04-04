@@ -15,3 +15,5 @@ wallpaper.py:usr/app/wallpaper.pyc
 themes.py:usr/app/themes.pyc
 users.py:usr/app/users.pyc
 uedit.py:usr/app/uedit.pyc
+nama.py:usr/app/nama.pyc
+sudoprocess.py:usr/app/sudoprocess.pyc

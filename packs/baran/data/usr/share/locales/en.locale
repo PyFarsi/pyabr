@@ -574,3 +574,17 @@ uedit.confirm: Confirm
 uedit.add: Add account
 uedit.admin: Administrator Account
 uedit.low: Standard Account
+uedit.cprofile: Change profile image
+nama.app_name: Image Viewer
+nama.open: Open Image
+sudoprocess.app_name: Sudo Process
+sudoprocess.pnot: Permission denied
+sudoprocess.pnotm: Cannot open this process, Permission denied
+sudoprocess.pass: Enter password
+sudoprocess.wrongp: Cannot open this process, Wrong password
+uiv.pnot: Page not found
+uiv.pnotm: Cannot find this page; page not found
+uiv.dnot: Domain not exists
+uiv.dnotm: Cannot find this domain; domain not exists
+uiv.enet: Connection failed
+uiv.enetm: Cannot load this page; connection failed

@@ -83,6 +83,9 @@ class MainApp(QWidget):
 
         self.Widget.Close()
 
+        if self.s=='add':
+            self.Env.RunApp ('users',[None])
+
     def __init__(self, ports):
         super(MainApp, self).__init__()
 
@@ -149,35 +152,6 @@ class MainApp(QWidget):
             self.leUsername.setText(self.External[0])
             self.leUsername.setEnabled(False)
 
-            if not control.read_record('fullname', self.user) == None:
-                self.leFullname.setText(control.read_record('fullname', self.user))
-            if not control.read_record('company', self.user) == None:
-                self.leCompany.setText(control.read_record('company', self.user))
-            if not control.read_record('email', self.user) == None:
-                self.leEmail.setText(control.read_record('email', self.user))
-            if not control.read_record('phone', self.user) == None:
-                self.lePhone.setText(control.read_record('phone', self.user))
-            if not control.read_record('gender', self.user) == None:
-                self.cbGender.setCurrentText(control.read_record('gender', self.user))
-            if not control.read_record('blood_type', self.user) == None:
-                self.cbBloodtype.setCurrentText(control.read_record('blood_type', self.user))
-            if self.leUsername.text()=='root' or self.leUsername.text() in control.read_list('/etc/sudoers'):
-                self.cbtype.setCurrentText(res.get('@string/admin'))
-                if self.leUsername.text()=='root':
-                    self.cbtype.setEnabled(False)
-            else:
-                self.cbtype.setCurrentText(res.get('@string/low'))
-            if not control.read_record('birthday', self.user) == None:
-                x = control.read_record('birthday', self.user)
-                x = x.split('-')
-                y = int(x[0])
-                m = int(x[1])
-                d = int(x[2])
-                s = QDate()
-                s.setDate(y, m, d)
-
-                self.leBirthday.setDate(s)
-
         self.lePassword.setEchoMode(QLineEdit.Password)
         self.leConfirm.setEchoMode(QLineEdit.Password)
 
@@ -205,6 +179,36 @@ class MainApp(QWidget):
 
         self.cbtype.addItem(res.get('@string/admin'))
         self.cbtype.addItem(res.get('@string/low'))
+
+        if s=='edit':
+            if not control.read_record('fullname', self.user) == None:
+                self.leFullname.setText(control.read_record('fullname', self.user))
+            if not control.read_record('company', self.user) == None:
+                self.leCompany.setText(control.read_record('company', self.user))
+            if not control.read_record('email', self.user) == None:
+                self.leEmail.setText(control.read_record('email', self.user))
+            if not control.read_record('phone', self.user) == None:
+                self.lePhone.setText(control.read_record('phone', self.user))
+            if not control.read_record('gender', self.user) == None:
+                self.cbGender.setCurrentText(control.read_record('gender', self.user))
+            if not control.read_record('blood_type', self.user) == None:
+                self.cbBloodtype.setCurrentText(control.read_record('blood_type', self.user))
+            if self.leUsername.text() == 'root' or self.leUsername.text() in control.read_list('/etc/sudoers'):
+                self.cbtype.setCurrentText(res.get('@string/admin'))
+                if self.leUsername.text() == 'root':
+                    self.cbtype.setEnabled(False)
+            else:
+                self.cbtype.setCurrentText(res.get('@string/low'))
+            if not control.read_record('birthday', self.user) == None:
+                x = control.read_record('birthday', self.user)
+                x = x.split('-')
+                y = int(x[0])
+                m = int(x[1])
+                d = int(x[2])
+                s = QDate()
+                s.setDate(y, m, d)
+
+                self.leBirthday.setDate(s)
 
         self.btnSave.clicked.connect (self.btnSave_act)
 

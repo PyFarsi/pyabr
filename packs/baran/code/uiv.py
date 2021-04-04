@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from libabr import *
 from PyQt5 import uic
-import requests,shutil,os
+import requests,shutil,os,importlib
 app = App()
 res = Res()
 files = Files()
@@ -30,19 +30,19 @@ class MainApp(QMainWindow):
     def PageNotFound (self):
         self.Widget.Close()
         app.switch('uiv')
-        self.Env.RunApp('text', ['Page not found', 'Cannot find this page; page not found.'])
+        self.Env.RunApp('text', [self.pnot, self.pnotm])
         app.switch('uiv')
 
     def DomainNotExists (self):
         self.Widget.Close()
         app.switch('uiv')
-        self.Env.RunApp('text', ['Domain not exists', 'Cannot find this domain; domain not exists.'])
+        self.Env.RunApp('text', [self.dnot,self.dnotm])
         app.switch('uiv')
 
     def ConnectionFailed (self):
         self.Widget.Close()
         app.switch('uiv')
-        self.Env.RunApp('text', ['Connection failed', 'Cannot load this page; connection failed.'])
+        self.Env.RunApp('text', [self.enet, self.enetm])
         app.switch('uiv')
 
     def BackendPage (self,url):
@@ -53,12 +53,10 @@ class MainApp(QMainWindow):
 
             try:
                 x = __import__('abr')
+                x = importlib.reload(x)
                 self.backend = x.MainApp (self)
             except:
                 pass
-
-            files.remove('/abr.pyc')
-            files.remove(py)
         else:
             pass
 
@@ -75,6 +73,13 @@ class MainApp(QMainWindow):
         self.onCloseProcess()
 
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc('uiv','logo'))))
+
+        self.pnot = res.get('@string/pnot')
+        self.pnotm = res.get('@string/pnotm')
+        self.dnot = res.get('@string/dnot')
+        self.dnotm = res.get('@string/dnotm')
+        self.enet = res.get('@string/enet')
+        self.enetm = res.get('@string/enetm')
 
         # External ui #
         if self.External==None:
@@ -111,9 +116,9 @@ class MainApp(QMainWindow):
 
                         try:
                             x = requests.post(control.read_record('server','/etc/abr'), data={'domain':files.input(url)})
-                            y = requests.post(control.read_record('server', '/etc/abr'),data={'domain': files.input(url.replace('.xml','.py'))})
+                            y = requests.post(control.read_record('server', '/etc/abr'),data={'domain':files.input(url.replace('.xml','.py'))})
 
-                            if x.text == '404' and self.External[0].endswith('.xml'):
+                            if x.text == '404' and (str(self.External[0]).replace('abr://','')).__contains__('/'):
                                 QTimer.singleShot(100, self.PageNotFound)
                             elif x.text == '404':
                                 QTimer.singleShot(100, self.DomainNotExists)

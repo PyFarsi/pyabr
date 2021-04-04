@@ -37,7 +37,10 @@ class UserListView (QListView):
         if self.logo==None:
             it.setIcon(QIcon(res.get('@icon/account')))
         else:
-            it.setIcon(QIcon(res.get(self.logo)))
+            if str(self.logo).startswith('@icon/'):
+                it.setIcon(QIcon(res.get(self.logo)))
+            else:
+                it.setIcon(QIcon(files.input(self.logo)))
             
         self.fullname = control.read_record('fullname',f'/etc/users/{it.whatsThis()}')
         
@@ -117,6 +120,15 @@ class UserListView (QListView):
 class ShowUserInformation (QMainWindow):
     def run_app_ (self):
         self.Backend.RunApp(self.selected,[None])
+    def change_profile(self):
+        app.switch('uedit')
+        self.Backend.RunApp('select', [res.get('@string/cprofile'), 'open', self.change_profile_])
+        app.switch('uedit')
+
+    def change_profile_(self, filename):
+        self.btnImage.setIcon(QIcon(files.input(filename)))
+        control.write_record('loginw.userlogo',filename,self.path)
+
     def __init__(self,ports):
         super(ShowUserInformation, self).__init__()
 
@@ -156,12 +168,17 @@ class ShowUserInformation (QMainWindow):
 
         self.btnImage = QToolButton()
         self.btnImage.setIconSize(QSize(128,128))
+        self.btnImage.clicked.connect (self.change_profile)
 
         self.logo = control.read_record('loginw.userlogo',self.path)
+
         if self.logo==None:
             self.btnImage.setIcon(QIcon(res.get('@icon/account')))
         else:
-            self.btnImage.setIcon(QIcon(res.get(self.logo)))
+            if str(self.logo).startswith('@icon/'):
+                self.btnImage.setIcon(QIcon(res.get(self.logo)))
+            else:
+                self.btnImage.setIcon(QIcon(files.input(self.logo)))
             
         if self.fullname==None:
             self.namex = self.External[0]
@@ -283,11 +300,8 @@ class ShowUserInformation (QMainWindow):
         self.layout().addWidget(self.w)
 
     def xhide (self):
-        self.hide()
-        self.XShowpackages.show()
-        app.switch('users')
-        self.Env.SetWindowTitle(res.get("@string/app_name"))
-        app.switch('users')
+        self.Env.Close()
+        self.Backend.RunApp('users', [None])
 
     def removeAct_(self):
         if self.External[0]=='root':
@@ -332,9 +346,10 @@ class MainApp (QMainWindow):
         self.setCentralWidget(self.x)
 
     def adduser_act (self):
+        self.Widget.Close()
         files.write('/tmp/user-status.tmp','add')
         app.switch('users')
-        self.Env.RunApp('uedit', [self.External[0]])
+        self.Env.RunApp('uedit', [None])
         app.switch('users')
 
     def __init__(self,ports):

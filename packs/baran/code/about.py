@@ -23,6 +23,7 @@ app = App()
 res = Res()
 
 class MainApp(QWidget):
+
     def onCloseProcess (self):
         if not app.check('about'):
             self.Widget.Close()

@@ -15,8 +15,10 @@ usr/app/uedit.pyc
 usr/app/boolbox.pyc
 usr/app/themes.pyc
 usr/app/textbox.pyc
+usr/app/sudoprocess.pyc
 usr/app/langbox.pyc
 usr/app/setting.pyc
+usr/app/nama.pyc
 usr/share/applications/about.desk
 usr/app/users.pyc
 usr/share/applications/bool.desk

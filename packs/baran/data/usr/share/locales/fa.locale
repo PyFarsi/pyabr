@@ -573,3 +573,17 @@ uedit.confirm: تکرار رمز عبور
 uedit.add: افزودن حساب کاربری
 uedit.admin: حساب مدیر
 uedit.low: حساب معمولی
+uedit.cprofile: تغییر تصویر پروفایل
+nama.app_name: نمایشگر تصویر
+nama.open: بازکردن تصویر
+sudoprocess.app_name: پروسه مجوز
+sudoprocess.pnot: مجوز ندارد
+sudoprocess.pnotm: نمی توان این پروسه را اجرا کرد؛ مجوز ندارد
+sudoprocess.pass: رمز عبور را وارد کنید
+sudoprocess.wrongp: نمی توان این پروسه را اجرا کرد؛ رمزعبور نادرست است
+uiv.pnot: صفحه یافت نشد
+uiv.pnotm: نمی توان بارگذاری کرد؛ صفحه مورد نظر یافت نشد
+uiv.dnot: دامنه موجود نیست
+uiv.dnotm: هیچ دامنه ای با این نام موجود نیست
+uiv.enet: خطا در اتصال
+uiv.enetm: نمی توان بارگذاری کرد؛ خطا در اتصال

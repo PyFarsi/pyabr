@@ -1,0 +1,8 @@
+name[en]: Image Viewer
+name[fa]: نمایشگر تصویر
+exec: nama
+hidden: Yes
+logo: @icon/nama
+application: Yes
+category: system
+external: Yes

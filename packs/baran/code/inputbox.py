@@ -63,6 +63,7 @@ class MainApp (QMainWindow):
         self.layout().addWidget(self.leInput)
         self.leInput.returnPressed.connect (self.inp)
         password_hint = control.read_record ('input.password_hint','/etc/configbox')
+
         if password_hint=='Yes':
             self.leInput.setEchoMode(QLineEdit.Password)
 

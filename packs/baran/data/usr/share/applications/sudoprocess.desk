@@ -1,0 +1,7 @@
+name[en]: Sudo Process
+name[fa]: پروسه برتر
+exec: sudoprocess
+hidden: Yes
+logo: @icon/process
+application: No
+category: system

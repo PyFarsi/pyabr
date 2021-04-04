@@ -42,6 +42,7 @@ class KeyListView(QListView):
             it.setText(name)
             it.setFont(self.Env.font())
 
+
     def __init__(self,ports):
         super().__init__()
         self.Env = ports[0]

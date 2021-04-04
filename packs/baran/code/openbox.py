@@ -162,7 +162,7 @@ class MainApp (QMainWindow):
             self.btnOpenOnce.setGeometry(0, int(self.Env.height() / 4) - 50, int(self.Env.width() / 8), 50)
         else:
             self.btnOpenOnce.setGeometry(0,int(self.Env.height()/3)-50,int(self.Env.width()/6),50)
-        self.btnOpenOnce.clicked.connect(self.Widget.Close)
+        self.btnOpenOnce.clicked.connect(self.inp_once)
         self.layout().addWidget(self.btnOpenOnce)
 
         self.btnOpenAlways = QPushButton()

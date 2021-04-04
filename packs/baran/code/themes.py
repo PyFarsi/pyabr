@@ -24,6 +24,7 @@ class MainApp (QMainWindow):
             self.Widget.Close()
         else:
             QTimer.singleShot(1,self.onCloseProcess)
+
     def __init__(self,ports):
         super(MainApp, self).__init__()
 

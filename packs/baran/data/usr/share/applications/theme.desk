@@ -6,3 +6,4 @@ application: No
 hidden: Yes
 category: system
 setting: Yes
+sudoprocess: Yes

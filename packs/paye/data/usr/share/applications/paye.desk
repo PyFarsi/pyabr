@@ -7,3 +7,4 @@ application: Yes
 category: system
 external: Yes
 setting: Yes
+sudoprocess: Yes
