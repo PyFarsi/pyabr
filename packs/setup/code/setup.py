@@ -64,7 +64,7 @@ class MainApp(QtWidgets.QWizard):
             ## Copying to location ##
             shutil.make_archive("/stor", "zip", "/tmp/pyabr/pyabr-master/stor")
             os.system('chmod 777 -R /stor')
-            shutil.unpack_archive("/tmp/stor.zip", '/stor', "zip")
+            shutil.unpack_archive("/stor.zip", '/stor', "zip")
             ## run pyabr ##
 
             ## Setting up hostname ##
