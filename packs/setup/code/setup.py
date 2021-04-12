@@ -107,8 +107,157 @@ class MainApp(QtWidgets.QWizard):
                 file.write("enable_cli: No\nenable_gui: No\n")
             file.close()
 
-            f = open('/stor/etc/gui','a')
-            f.write(f'\nlocale: {locale}')
+            f = open('/stor/etc/gui','w')
+            f.write('''# lock : Lock Screen Style
+lock.clock.shadow: Yes
+lock.clock.color: white
+lock.clock.location: center
+lock.clock.format: hh:mm
+lock.clock.size: 100
+lock.bgcolor: white
+lock.fgcolor: white
+lock.background: @background/glass
+
+# submenu : Submenu Style
+submenu.hide: No
+submenu.bgcolor: white
+submenu.direction: rtl
+
+# taskbar : Taskbar Style
+taskbar.location: bottom
+taskbar.size: 70
+taskbar.locked: Yes
+taskbar.float: No
+taskbar.bgcolor: white
+taskbar.fgcolor: black
+
+# backend : Backend Style
+backend.color: black
+backend.timeout: 1000
+
+# splash : Splash Style
+splash.logo: @icon/pyabr-logo
+splash.logo-size: 300
+splash.color: #ABCDEF
+splash.timeout: 3000
+
+# login : Login Style
+login.bgcolor: white
+login.fgcolor: black
+login.background: @background/glass
+
+# enter : Enter password page Style
+enter.bgcolor: white
+enter.fgcolor: black
+enter.background: @background/glass
+
+# unlock : Unlock page
+unlock.bgcolor: white
+unlock.fgcolor: black
+unlock.background: @background/glass
+
+# appw : Application Window page Style
+appw.title.size: 50
+appw.title.fgcolor: white
+appw.title.bgcolor: #123456
+appw.title.float: @icon/float
+appw.title.float-hover: #ABCDEF
+appw.title.close: @icon/close
+appw.title.close-hover: red
+appw.title.btn-round: Yes
+appw.shadow: Yes
+appw.logo: @icon/runner
+appw.body.bgcolor: white
+appw.body.fgcolor: gray
+
+# desktop : Desktop style
+desktop.bgcolor: white
+desktop.fgcolor: black
+desktop.background: @background/glass
+
+# loginw : Login Dialog Style
+loginw.input.bgcolor: white
+loginw.input.fgcolor: black
+loginw.input.round-size: 20
+loginw.input.shadow: Yes
+loginw.input.width: 300
+loginw.input.height: 40
+loginw.enter.bgcolor: purple
+loginw.enter.fgcolor: pink
+loginw.enter-hover.bgcolor: pink
+loginw.enter-hover.fgcolor: purple
+loginw.enter.round-size: 20
+loginw.enter.hide: No
+loginw.enter.width: 300
+loginw.enter.shadow: Yes
+loginw.enter.height: 40
+loginw.unlock.bgcolor: green
+loginw.unlock.fgcolor: lime
+loginw.unlock-hover.bgcolor: lime
+loginw.unlock-hover.fgcolor: green
+loginw.unlock.round-size: 20
+loginw.unlock.hide: No
+loginw.unlock.width: 300
+loginw.unlock.height: 40
+loginw.unlock.shadow: Yes
+loginw.login.hide: No
+loginw.login.shadow: Yes
+loginw.login.height: 40
+loginw.login-hover.bgcolor: #ABCDEF
+loginw.login-hover.fgcolor: #123456
+loginw.login.width: 300
+loginw.login.bgcolor: #123456
+loginw.login.fgcolor: #ABCDEF
+loginw.login.round-size: 20
+loginw.userlogo: @icon/account
+loginw.userlogo.shadow: Yes
+loginw.userlogo.bgcolor: white
+loginw.userlogo.round-size: 125
+loginw.bgcolor: white
+loginw.fgcolor: black
+loginw.round-size: 40
+loginw.location: center
+loginw.shadow: Yes
+loginw.width: 500
+loginw.height: 500
+
+# menu : Menu Applications Style
+menu: @icon/menu
+menu.scroll.color: #123456
+menu.scroll.color-hover: #ABCDEF
+menu.scroll.round-size: 0
+menu.scroll.bgcolor: white
+# S, N, E, W
+menu.tab.position: S
+
+# virtual keyboard
+key.enable: No
+key.bgcolor: silver
+key.background: @background/none
+key.btn.round-size: 15
+key.btn.shadow: Yes
+key.btn.bgcolor: white
+key.btn.fgcolor: black
+key.btn.bgcolor-hover: #123456
+key.btn.fgcolor-hover: white
+
+# root : Root Settings in GUI
+locale: fa
+layout: fa
+logo: @icon/pyabr-logo
+autosize: Yes
+fullscreen: Yes
+width: 1920
+height: 1080
+terminal: commento
+params: gui
+sides: No
+font: Iran Sans
+fontsize: 12
+theme-name: glass-light
+username: guest
+password: *
+desktop: baran''')
             f.close()
 
             os.system('mkdir -p /stor/proc/info')

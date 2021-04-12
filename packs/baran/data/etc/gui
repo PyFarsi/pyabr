@@ -132,6 +132,7 @@ key.btn.bgcolor-hover: #123456
 key.btn.fgcolor-hover: white
 
 # root : Root Settings in GUI
+locale: fa
 layout: fa
 logo: @icon/pyabr-logo
 autosize: Yes
