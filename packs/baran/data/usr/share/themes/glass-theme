@@ -2,7 +2,7 @@
 lock.clock.shadow: Yes
 lock.clock.color: white
 lock.clock.location: center
-lock.clock.format: hh:mm:ss
+lock.clock.format: hh:mm
 lock.clock.size: 100
 lock.bgcolor: white
 lock.fgcolor: white
@@ -40,6 +40,11 @@ login.background: @background/glass
 enter.bgcolor: white
 enter.fgcolor: black
 enter.background: @background/glass
+
+# unlock : Unlock page
+unlock.bgcolor: white
+unlock.fgcolor: black
+unlock.background: @background/glass
 
 # appw : Application Window page Style
 appw.title.size: 50
@@ -80,7 +85,7 @@ loginw.unlock.bgcolor: green
 loginw.unlock.fgcolor: lime
 loginw.unlock-hover.bgcolor: lime
 loginw.unlock-hover.fgcolor: green
-loginw.unlock.round-size: 40
+loginw.unlock.round-size: 20
 loginw.unlock.hide: No
 loginw.unlock.width: 300
 loginw.unlock.height: 40
@@ -112,19 +117,23 @@ menu.scroll.color: #123456
 menu.scroll.color-hover: #ABCDEF
 menu.scroll.round-size: 0
 menu.scroll.bgcolor: white
+# S, N, E, W
+menu.tab.position: S
 
+# virtual keyboard
+key.enable: No
+key.bgcolor: silver
+key.background: @background/none
+key.btn.round-size: 15
+key.btn.shadow: Yes
+key.btn.bgcolor: white
+key.btn.fgcolor: black
+key.btn.bgcolor-hover: #123456
+key.btn.fgcolor-hover: white
 
 # root : Root Settings in GUI
-locale: fa
 logo: @icon/pyabr-logo
-autosize: Yes
-fullscreen: Yes
-width: 1920
-height: 1080
 terminal: commento
-params: gui
-sides: No
-font: Iran Sans
 fontsize: 12
 theme-name: glass-light
 desktop: baran

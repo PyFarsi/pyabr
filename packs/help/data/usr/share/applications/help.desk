@@ -1,7 +1,0 @@
-name[en]: Help
-name[fa]: راهنما
-name[ar]: ناصر
-logo: @icon/help-about
-exec: help_gui
-shortcut: F1
-application: Yes

@@ -4,5 +4,5 @@ logo: @icon/display
 exec: screen
 application: No
 hidden: Yes
-category: system
+category: tools
 setting: Yes

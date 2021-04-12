@@ -66,7 +66,8 @@ class MainApp(QMainWindow):
     def Loop(self):
         self.browser.update()
 
-        self.Widget.SetWindowTitle (self.browser.page().title())
+        if not self.browser.page().title().startswith('https://') or self.browser.page().title().startswith('http://'):
+            self.Widget.SetWindowTitle (self.browser.page().title())
         self.Widget.SetWindowIcon (QIcon(self.browser.page().icon()))
 
         QTimer.singleShot(50,self.Loop)

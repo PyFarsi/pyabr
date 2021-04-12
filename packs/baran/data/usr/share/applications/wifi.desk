@@ -1,0 +1,8 @@
+name[en]: WiFi
+name[fa]: شبکه بی سیم
+logo: @icon/network
+exec: wifi_gui
+application: No
+hidden: Yes
+category: tools
+setting: Yes

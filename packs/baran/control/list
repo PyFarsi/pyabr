@@ -11,9 +11,14 @@ usr/app/keybox.pyc
 usr/app/openbox.pyc
 usr/app/uiv.pyc
 usr/app/wallpaper.pyc
+usr/app/digital_clock.pyc
+usr/share/shells/digital_clock.desk
+usr/share/shells/wifi_signal.desk
+usr/share/applications/wifi.desk
 usr/app/uedit.pyc
 usr/app/boolbox.pyc
 usr/app/themes.pyc
+usr/app/wifi_signal.pyc
 usr/app/textbox.pyc
 usr/app/sudoprocess.pyc
 usr/app/langbox.pyc

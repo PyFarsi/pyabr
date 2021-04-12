@@ -112,19 +112,23 @@ menu.scroll.color: #ABCDEF
 menu.scroll.color-hover: #123456
 menu.scroll.round-size: 0
 menu.scroll.bgcolor: white
+menu.tab.position: S
 
+# virtual keyboard
+key.enable: No
+key.bgcolor: white
+key.background: @background/none
+key.btn.round-size: 15
+key.btn.shadow: Yes
+key.btn.bgcolor: white
+key.btn.fgcolor: gray
+key.btn.bgcolor-hover: #ABCDEF
+key.btn.fgcolor-hover: #123456
 
 # root : Root Settings in GUI
-locale: fa
 logo: @icon/pyabr-logo
-autosize: Yes
-fullscreen: Yes
-width: 1920
 height: 1080
 terminal: commento
-params: gui
-sides: No
-font: Iran Sans
 fontsize: 12
 theme-name: snow
 desktop: baran

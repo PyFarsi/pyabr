@@ -4,6 +4,6 @@ exec: themes
 logo: @icon/theme-config
 application: No
 hidden: Yes
-category: system
+category: tools
 setting: Yes
 sudoprocess: Yes

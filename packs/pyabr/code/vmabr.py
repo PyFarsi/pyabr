@@ -284,6 +284,56 @@ if argv[0]=='exec':
             for i in sys.argv[3:]:
                 argsv.append(i)
             sub.call(argsv)
+        elif argv[1]=='ping':
+            argsv = ['ping']
+            for i in sys.argv[3:]:
+                argsv.append(i)
+            sub.call(argsv)
+        elif argv[1]=='ifconfig':
+            argsv = ['ifconfig']
+            for i in sys.argv[3:]:
+                argsv.append(i)
+            sub.call(argsv)
+        elif argv[1]=='iwconfig':
+            argsv = ['iwconfig']
+            for i in sys.argv[3:]:
+                argsv.append(i)
+            sub.call(argsv)
+        elif argv[1]=='nmcli':
+            argsv = ['nmcli']
+            for i in sys.argv[3:]:
+                argsv.append(i)
+            sub.call(argsv)
+        elif argv[1]=='ip':
+            argsv = ['ip']
+            for i in sys.argv[3:]:
+                argsv.append(i)
+            sub.call(argsv)
+        elif argv[1]=='traceroute':
+            argsv = ['traceroute']
+            for i in sys.argv[3:]:
+                argsv.append(i)
+            sub.call(argsv)
+        elif argv[1]=='ss':
+            argsv = ['ss']
+            for i in sys.argv[3:]:
+                argsv.append(i)
+            sub.call(argsv)
+        elif argv[1]=='route':
+            argsv = ['route']
+            for i in sys.argv[3:]:
+                argsv.append(i)
+            sub.call(argsv)
+        elif argv[1]=='host':
+            argsv = ['host']
+            for i in sys.argv[3:]:
+                argsv.append(i)
+            sub.call(argsv)
+        elif argv[1]=='arp':
+            argsv = ['arp']
+            for i in sys.argv[3:]:
+                argsv.append(i)
+            sub.call(argsv)
         else:
             colors.show(argv[1], "fail", "command not found.")
 

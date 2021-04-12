@@ -421,11 +421,11 @@ class MainApp (QtWidgets.QMainWindow):
         self.wsel = files.readall('/proc/info/wsel')
         if files.isdir(self.wsel):
             app.switch('roller')
-            self.Env.RunApp('bool',[res.get('@string/delete'),'Do you want to delete this directory? ',self.delete_act_])
+            self.Env.RunApp('bool',[res.get('@string/delete'),res.get('@string/deletem'),self.delete_act_])
             app.switch('roller')
         else:
             app.switch('roller')
-            self.Env.RunApp('bool', [res.get('@string/delete'), 'Do you want to delete this file? ', self.delete_act_])
+            self.Env.RunApp('bool', [res.get('@string/delete'), res.get('@string/deletemf'), self.delete_act_])
             app.switch('roller')
 
     def delete_act_ (self,yes):
@@ -502,7 +502,7 @@ pause
             app.switch('roller')
         else:
             app.switch('roller')
-            self.Env.RunApp('text', ['Permission denied','Cannot execute this file; Permission denied'])
+            self.Env.RunApp('text', [res.get('@string/perm'),res.get('@string/permm')])
             app.switch('roller')
 
     def paste_act (self):

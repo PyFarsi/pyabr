@@ -54,6 +54,10 @@ for i in list:
     if os.path.isdir(i):
         shutil.copytree(i,'sb/pyabr/pyabr-master/'+i)
     else:
+        if i=='debug.py':
+            i = 'osinstaller.py'
+            shutil.copyfile('debug.py','osinstaller.py')
+
         shutil.copyfile(i, 'sb/pyabr/pyabr-master/'+i)
 
 shutil.make_archive('sb/stor/master','zip','sb/pyabr/')
@@ -61,4 +65,5 @@ shutil.rmtree('sb/pyabr')
 
 subprocess.call(['mksquashfs','sb','stor.sb','-comp','xz'])
 
+os.remove('osinstaller.py')
 import clean

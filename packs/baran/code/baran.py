@@ -16,7 +16,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5 import QtCore, QtWidgets, QtGui, uic, Qsci
 from PyQt5.Qsci import *
-import sys, hashlib, os, importlib, subprocess,time,threading
+import sys, hashlib, os, importlib, subprocess,time,threading,datetime
 from libabr import Files, Control, Permissions, Colors, Process, Modules, App, System, Res, Commands, Script
 
 modules = Modules()
@@ -1574,10 +1574,10 @@ class AppWidget (QMainWindow):
     def SetWindowIcon (self,icon):
         self.iconwidget.setPixmap(icon.pixmap(int(getdata("appw.title.size"))-18,int(getdata("appw.title.size"))-18))
 
+
     def Close (self):
         if files.isfile ('/proc/info/key'):
             files.remove('/proc/info/key')
-        app.end(self.appname)
         self.close()
 
     maxbtn = True
@@ -1859,6 +1859,19 @@ class Desktop (QMainWindow):
             else:
                 subprocess.call(['reboot'])
 
+    def print_screen_act (self):
+        screen = QtWidgets.QApplication.primaryScreen()
+        screenshot = screen.grabWindow(self.winId())
+        files.write('/proc/info/id','desktop')
+        # https://stackoverflow.com/questions/51361674/is-there-a-way-to-take-screenshot-of-a-window-in-pyqt5-or-qt5
+        #
+
+        os.environ['TZ'] = files.readall( "/proc/info/tz")  # https://stackoverflow.com/questions/1301493/setting-timezone-in-python
+        time.tzset()
+
+        screenshot.save(files.input(res.get('@string/pictures'))+f'/Screenshot {datetime.datetime.now().ctime()}.png', 'png')
+        files.write('/proc/info/id', 'desktop')
+
     def wakeup_act (self):
         self.submenu.show()
         self.taskbar.show()
@@ -2064,8 +2077,7 @@ class Desktop (QMainWindow):
             appx = files.readall ('/tmp/start.tmp')
             files.remove('/tmp/start.tmp')
 
-            appx = appx.split(' ')
-            self.RunApp(appx[0],appx[1:])
+            self.RunApp(appx,[None])
 
         QTimer.singleShot(1,self.Loop)
 
@@ -2304,8 +2316,15 @@ class Desktop (QMainWindow):
         self.sleep.triggered.connect (self.sleep_act)
         self.powermenu.addAction(self.sleep)
 
+        self.screenshot = QAction(res.get('@string/screenshot'))
+        self.screenshot.setFont(f)
+        self.screenshot.triggered.connect (self.print_screen_act)
+        self.screenshot.setShortcut('Ctrl+P')
+        self.etcmenu.addAction(self.screenshot)
+
         self.enablekeyboard = QAction(res.get('@string/vkey'),checkable=True)
         self.etcmenu.addAction(self.enablekeyboard)
+
 
         if getdata('key.enable')=='Yes':
             self.enablekeyboard.setChecked(True)

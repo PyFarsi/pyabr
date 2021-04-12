@@ -4,5 +4,5 @@ exec: nama
 hidden: Yes
 logo: @icon/nama
 application: Yes
-category: system
+category: tools
 external: Yes

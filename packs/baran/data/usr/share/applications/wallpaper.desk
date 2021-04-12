@@ -4,5 +4,5 @@ logo: @icon/wallpaper
 exec: wallpaper
 application: No
 hidden: Yes
-category: system
+category: tools
 setting: Yes

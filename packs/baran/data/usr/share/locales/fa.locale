@@ -587,3 +587,17 @@ uiv.dnot: دامنه موجود نیست
 uiv.dnotm: هیچ دامنه ای با این نام موجود نیست
 uiv.enet: خطا در اتصال
 uiv.enetm: نمی توان بارگذاری کرد؛ خطا در اتصال
+desktop.screenshot: تصویر بردای از میزکار
+roller.deletem: آیا می خواهید این پوشه را پاک کنید؟
+roller.deletemf: آیا می خواهید این فایل را پاک کنید؟
+roller.perm: مجوز ندارد
+roller.permm: نمی توان این فایل را اجرا کرد؛ مجوز ندارد
+wifi.app_name: شبکه بی سیم
+wifi.scan: برسی
+wifi.connect: اتصال
+wifi.forget: فراموش کردن
+wifi.on: خاموش کردن
+wifi.off: روشن کردن
+wifi.password: رمز این شبکه بی سیم را وارد کنید
+wifi.ssid: نام این شبکه بی سیم را وارد کنید
+wifi.wrongp: رمز عبور اشتباه است

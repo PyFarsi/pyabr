@@ -46,7 +46,7 @@ class MainApp(QMainWindow):
         app.switch('uiv')
 
     def BackendPage (self,url):
-        py = url.replace ('.xml','.py')
+        py = url.replace ('.xml','.py').replace('.php','.py')
 
         if files.isfile (py):
             commands.cc ([py,'/abr.pyc'])
@@ -115,8 +115,8 @@ class MainApp(QMainWindow):
                         if not files.isdir(files.parentdir(url)): files.makedirs(files.parentdir(url))
 
                         try:
-                            x = requests.post(control.read_record('server','/etc/abr'), data={'domain':files.input(url)})
-                            y = requests.post(control.read_record('server', '/etc/abr'),data={'domain':files.input(url.replace('.xml','.py'))})
+                            x = requests.post(control.read_record('server','/etc/abr')+'/'+files.input(url),data={})
+                            y = requests.post(control.read_record('server','/etc/abr')+'/'+files.input(url.replace('.php','.py').replace('.xml','.py')),data={})
 
                             if x.text == '404' and (str(self.External[0]).replace('abr://','')).__contains__('/'):
                                 QTimer.singleShot(100, self.PageNotFound)
@@ -124,7 +124,7 @@ class MainApp(QMainWindow):
                                 QTimer.singleShot(100, self.DomainNotExists)
                             else:
                                 files.write(url, x.text)
-                                files.write(url.replace('.xml','.py'),y.text)
+                                files.write(url.replace('.xml','.py').replace('.php','.py'),y.text)
                                 self.link = files.input(url)
                                 self.url = url
                                 QTimer.singleShot(100, self.LoadUI)
