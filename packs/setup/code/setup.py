@@ -59,22 +59,28 @@ class MainApp(QtWidgets.QWizard):
             else:
                 locale = 'en'
 
-            control.write_record('locale',locale,'/tmp/pyabr/pyabr-master/stor/etc/gui')
+            ## Setting GUI Table ##
+
+            ## Copying to location ##
+            shutil.make_archive("/tmp/pyabr/pyabr-master/stor", "zip", "/tmp/stor")
+            os.system('chmod 777 -R /stor')
+            shutil.unpack_archive("/tmp/stor.zip", '/stor', "zip")
+            ## run pyabr ##
 
             ## Setting up hostname ##
-            file = open("/tmp/pyabr/pyabr-master/stor/etc/hostname", "w")
+            file = open("/stor/etc/hostname", "w")
             file.write(hostname)
             file.close()
 
             ## Setting up Root user ##
-            file = open("/tmp/pyabr/pyabr-master/stor/etc/users/root", "w")
+            file = open("/stor/etc/users/root", "w")
             file.write("username: " + hashlib.sha3_256("root".encode()).hexdigest() + "\n")
             file.write("code: " + hashlib.sha3_512(rootcode.encode()).hexdigest() + "\n")
             file.write('fullname: Super Account')
             file.close()
 
             ## Setting up Standard user ##
-            file = open("/tmp/pyabr/pyabr-master/stor/etc/users/" + username, "w")
+            file = open("/stor/etc/users/" + username, "w")
             file.write("username: " + hashlib.sha3_256(username.encode()).hexdigest() + "\n")
             file.write("code: " + hashlib.sha3_512(password.encode()).hexdigest() + "\n")
             file.write("fullname: " + first_name + "\n")
@@ -83,15 +89,16 @@ class MainApp(QtWidgets.QWizard):
             file.close()
 
             # permit #
-            control.write_record(f'/desk/{username}',f'drwxr-x---/{username}','/tmp/pyabr/pyabr-master/stor/etc/permtab')
+            control.write_record(f'/desk/{username}', f'drwxr-x---/{username}',
+                                 '/stor/etc/permtab')
 
             # sudoers #
-            f = open('/tmp/pyabr/pyabr-master/stor/etc/sudoers','w')
+            f = open('/stor/etc/sudoers', 'w')
             f.write(f'{username}\n')
             f.close()
 
             ## Setting up Guest user ##
-            file = open("/tmp/pyabr/pyabr-master/stor/etc/guest", "w")
+            file = open("/stor/etc/guest", "w")
             if guest == "No":
                 file.write("enable_cli: No\nenable_gui: No\n")
             elif guest == "Yes":
@@ -100,13 +107,10 @@ class MainApp(QtWidgets.QWizard):
                 file.write("enable_cli: No\nenable_gui: No\n")
             file.close()
 
-            ## Setting GUI Table ##
+            f = open('/stor/etc/gui','a')
+            f.write(f'\nlocale: {locale}')
+            f.close()
 
-            ## Copying to location ##
-            shutil.make_archive("/tmp/pyabr/pyabr-master/stor", "zip", "/tmp/pyabr/pyabr-master/stor")
-            os.system('chmod 777 -R /stor')
-            shutil.unpack_archive("/tmp/pyabr/pyabr-master/stor.zip", '/stor', "zip")
-            ## run pyabr ##
             os.system('mkdir -p /stor/proc/info')
             if os.path.isfile ('/stor/proc/0'):
                 os.system('rm /stor/proc/0')
