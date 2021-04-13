@@ -61,11 +61,7 @@ class MainApp(QtWidgets.QWizard):
 
             ## Setting GUI Table ##
 
-            ## Copying to location ##
-            shutil.make_archive("/stor", "zip", "/tmp/pyabr/pyabr-master/stor")
-            os.system('chmod 777 -R /stor')
-            shutil.unpack_archive("/stor.zip", '/stor', "zip")
-            ## run pyabr ##
+            open('/stor/etc/suapp', 'w')
 
             ## Setting up hostname ##
             file = open("/stor/etc/hostname", "w")
@@ -264,7 +260,8 @@ desktop: baran''')
             if os.path.isfile ('/stor/proc/0'):
                 os.system('rm /stor/proc/0')
 
-            self.Env.reboot_act()
+            System ('paye rm setup')
+            os.system('reboot')
 
     def __init__(self,ports):
         super(MainApp, self).__init__()

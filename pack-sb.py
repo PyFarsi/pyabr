@@ -32,17 +32,10 @@ if '__pycache__' in list:
 list.remove('AUTHERS')
 
 if not os.path.isdir('sb'):
-
     os.mkdir('sb')
-    os.mkdir('sb/pyabr')
-    os.mkdir('sb/pyabr/pyabr-master')
     os.mkdir('sb/stor')
     os.mkdir('sb/root')
     os.mkdir('sb/etc')
-
-    f = open('sb/root/.xinitrc','w')
-    f.write('pyabr')
-    f.close()
 
     f = open('sb/etc/issue.net', 'w')
     f.write('Pyabr')
@@ -52,18 +45,9 @@ else:
 
 for i in list:
     if os.path.isdir(i):
-        shutil.copytree(i,'sb/pyabr/pyabr-master/'+i)
+        shutil.copytree(i,'sb/'+i)
     else:
-        if i=='debug.py':
-            i = 'osinstaller.py'
-            shutil.copyfile('debug.py','osinstaller.py')
-
-        shutil.copyfile(i, 'sb/pyabr/pyabr-master/'+i)
-
-shutil.make_archive('sb/stor/master','zip','sb/pyabr/')
-shutil.rmtree('sb/pyabr')
+        shutil.copyfile(i, 'sb/'+i)
 
 subprocess.call(['mksquashfs','sb','stor.sb','-comp','xz'])
-
-os.remove('osinstaller.py')
 import clean

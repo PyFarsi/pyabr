@@ -777,7 +777,7 @@ class Enter (QMainWindow):
     def signout_act_(self):
             app.endall()
             commands.shutdown([])
-            subprocess.call([sys.executable, files.readall('/proc/info/boot'), "gui-login"])
+            subprocess.call([sys.executable, 'vmabr.pyc', "gui-login"])
             sys.exit(0)
 
     def __init__(self,ports,username):
@@ -1896,7 +1896,7 @@ class Desktop (QMainWindow):
         if yes:
             app.endall()
             commands.shutdown([])
-            subprocess.call([sys.executable, files.readall('/proc/info/boot'), "gui-login"])
+            subprocess.call([sys.executable, 'vmabr.pyc', "gui-login"])
             sys.exit(0)
 
     def switchuser_act (self):
@@ -1907,8 +1907,7 @@ class Desktop (QMainWindow):
     def switchuser_act_(self,yes):
         if yes:
             files.create('/tmp/switched-user')
-            subprocess.call([sys.executable, files.readall('/proc/info/boot'), "gui-login"])  # just run the login
-
+            subprocess.call([sys.executable, 'vmabr.pyc', "gui-login"])  # just run the login
 
     def unlock_act (self):
         if self.username=='guest':
@@ -1918,7 +1917,7 @@ class Desktop (QMainWindow):
             self.BtnUnlock.hide()
             self.lock.hide()
         else:
-            subprocess.call([sys.executable,files.readall('/proc/info/boot'),'gui-unlock',self.username])
+            subprocess.call([sys.executable,'vmabr.pyc','gui-unlock',self.username])
 
     def showTime_lock (self):
 

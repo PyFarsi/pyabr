@@ -1,4 +1,6 @@
-cp /usr/share/themes/glass-dark-theme /etc/gui
+sel /etc/gui
+add /usr/share/themes/glass-dark-theme
+unsel
 
 sel /usr/share/applications/roller.desk
 set folder-icon: @icon/folder
