@@ -601,3 +601,5 @@ wifi.off: روشن کردن
 wifi.password: رمز این شبکه بی سیم را وارد کنید
 wifi.ssid: نام این شبکه بی سیم را وارد کنید
 wifi.wrongp: رمز عبور اشتباه است
+sms.app_name: پیامک
+sms.enter: پیام خود را بنویسید

@@ -798,7 +798,7 @@ pause
                         ''')
             self.Env.RunApp('commento', [None])
             app.switch('persia')
-            files.remove(execname)
+            files.remove(execname+".out")
 
         elif file.endswith ('.py'):
             # check graphical PyQt5 #

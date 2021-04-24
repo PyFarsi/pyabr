@@ -17,6 +17,7 @@ usr/share/shells/wifi_signal.desk
 usr/share/applications/wifi.desk
 usr/app/uedit.pyc
 usr/app/boolbox.pyc
+usr/app/sms.pyc
 usr/app/themes.pyc
 usr/app/wifi_signal.pyc
 usr/app/textbox.pyc

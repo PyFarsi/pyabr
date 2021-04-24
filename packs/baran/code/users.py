@@ -28,6 +28,7 @@ app = App()
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+
 def getdata (name):
     return control.read_record (name,'/etc/gui')
 

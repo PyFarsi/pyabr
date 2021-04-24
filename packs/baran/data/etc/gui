@@ -20,6 +20,11 @@ taskbar.locked: Yes
 taskbar.float: No
 taskbar.bgcolor: white
 taskbar.fgcolor: black
+taskbar.icon.bgcolor: white
+taskbar.icon.border-color: silver
+taskbar.icon.bgcolor-hover: #ABCDEF
+taskbar.icon.border-color-hover: #ABCDEF
+taskbar.icon.style: Yes
 
 # backend : Backend Style
 backend.color: black

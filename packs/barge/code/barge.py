@@ -217,7 +217,7 @@ pause
             ''')
             self.Env.RunApp('commento',[None])
             app.switch('barge')
-            files.remove(execname)
+            files.remove(execname+'.out')
 
         elif self.Widget.WindowTitle().endswith ('.py'):
             # check graphical PyQt5 #

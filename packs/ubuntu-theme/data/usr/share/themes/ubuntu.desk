@@ -1,5 +1,5 @@
-name[en]: Ubuntu 20.10 theme
-name[fa]: پوسته اوبونتو ۲۰.۱۰
+name[en]: Ubuntu 21.04 theme
+name[fa]: پوسته اوبونتو ۲۱.۰۴
 exec: /usr/share/themes/ubuntu
 logo: @icon/ubuntu
 theme-name: ubuntu

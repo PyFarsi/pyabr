@@ -66,6 +66,27 @@ else:
 	f.write('setup')
 	f.close()
 
+	from PyQt5.QtCore import *
+	from PyQt5.QtWidgets import *
+
+	try:
+		from PyQt5.QtWebEngineWidgets import *
+	except:
+		pass
+
+	## Main entry ##
+	application = QApplication(sys.argv)
+	## https://www.cdog.pythonlibrary.org/2015/08/18/getting-your-screen-resolution-with-python/ Get screen model ##
+	screen_resolution = application.desktop().screenGeometry()
+	width, height = screen_resolution.width(), screen_resolution.height()
+
+	f = open('/stor/proc/info/scn','w')
+	f.write(str(width)+'x'+str(height))
+	f.close()
+
+	control.write_record('width',str(width),'/stor/etc/gui')
+	control.write_record('height', str(height), '/stor/etc/gui')
+
 	os.system(f'cd /stor && "{sys.executable}" vmabr.pyc gui-desktop root toor')
 
 if not os.path.isfile('/stor/testing'):

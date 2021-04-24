@@ -12,6 +12,9 @@
 
 
 from PyQt5 import QtGui, QtCore, QtWidgets, uic
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import  *
+from PyQt5.QtGui import *
 import platform
 import hashlib, shutil, os, sys
 
@@ -23,7 +26,6 @@ files = Files()
 control = Control()
 
 class MainApp(QtWidgets.QWizard):
-
     def Finish(self):
         ## Get all configure information ##
         if not (
@@ -260,7 +262,6 @@ desktop: baran''')
             if os.path.isfile ('/stor/proc/0'):
                 os.system('rm /stor/proc/0')
 
-            System ('paye rm setup')
             os.system('reboot')
 
     def __init__(self,ports):

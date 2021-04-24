@@ -2,7 +2,7 @@ name: baran
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-build: 1399-12-22
-version: 1.2.3
+build: 1400-01-23
+version: 1.2.7
 description: Baran Desktop Enviroment is the default desktop enviroment.
 compile: Yes

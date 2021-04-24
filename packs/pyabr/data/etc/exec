@@ -5,3 +5,61 @@ outside: Yes
 script: Yes
 portable: Yes
 mirror: Yes
+
+# linux commands #
+
+command.arp: arp
+command.arp.args: Yes
+command.arp.perm: 3
+
+command.host: host
+command.host.args: Yes
+command.host.perm: 3
+
+command.route: route
+command.route.args: Yes
+command.route.perm: 3
+
+command.ss: ss
+command.ss.args: Yes
+command.ss.perm: 3
+
+command.traceroute: traceroute
+command.traceroute.args: Yes
+command.traceroute.perm: 3
+
+command.ip: ip
+command.ip.args: Yes
+command.ip.perm: 3
+
+command.nmcli: nmcli
+command.nmcli.args: Yes
+command.nmcli.perm: 2
+
+command.iwconfig: iwconfig
+command.iwconfig.args: Yes
+command.iwconfig.perm: 2
+
+command.ifconfig: ifconfig
+command.ifconfig.args: Yes
+command.ifconfig.perm: 3
+
+command.ping: ping
+command.ping.args: Yes
+command.ping.perm: 3
+
+command.apt: apt
+command.apt.args: Yes
+command.apt.perm: 1
+
+command.pip: python3 -m pip
+command.pip.args: Yes
+command.pip.perm: 1
+
+command.python: python3
+command.python.args: No
+command.python.perm: 3
+
+command.bash: bash
+command.bash.args: No
+command.bash.perm: 1

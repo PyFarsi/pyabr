@@ -37,7 +37,7 @@ class MainApp (QMainWindow):
         commands.cd(['/usr/share/backgrounds'])
 
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
-        self.Widget.SetWindowIcon (QIcon(res.get('@icon/wallpaper')))
+        self.Widget.SetWindowIcon (QIcon(res.etc('wallpaper','logo')))
 
         self.btnDesktopWallpaper = QPushButton()
         self.btnDesktopWallpaper.setFont(self.Env.font())

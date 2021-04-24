@@ -836,9 +836,9 @@ class Commands:
 
         elif type=='c':
             if args[1:] == []:
-                output = filename.replace('.c','')
+                output = filename.replace('.c','.out')
             else:
-                output = args[1]
+                output = args[1]+'.out'
 
             if not permissions.check(files.output(output), "w", files.readall("/proc/info/su")):
                 colors.show('cc', 'perm', '')
@@ -853,9 +853,9 @@ class Commands:
 
         elif type=='c++':
             if args[1:] == []:
-                output = filename.replace('.cpp','').replace('.cxx','').replace('.c++','')
+                output = filename.replace('.cpp','.out').replace('.cxx','.out').replace('.c++','.out')
             else:
-                output = args[1]
+                output = args[1]+'.out'
 
             if not permissions.check(files.output(output), "w", files.readall("/proc/info/su")):
                 colors.show('cc', 'perm', '')
@@ -865,12 +865,14 @@ class Commands:
                 "{dest}", files.input(output)).split (" ")
 
             subprocess.call(strv)
+
         elif type=='java':
             if not permissions.check(files.output(filename.replace('.java','.class')), "w", files.readall("/proc/info/su")):
                 colors.show('cc', 'perm', '')
                 sys.exit(0)
             strv = (control.read_record('class.java', '/etc/compiler').replace("{src}", files.input(filename).replace('.//',''))).split (' ')
             subprocess.call(strv)
+
         else:
             colors.show('cc','fail','not supported programing language.')
 

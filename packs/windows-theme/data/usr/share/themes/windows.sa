@@ -257,6 +257,7 @@ set loginw.enter.shadow: No
 set loginw.unlock.shadow: No
 set loginw.login.shadow: No
 set loginw.login.height: 40
+set taskbar.icon.style: No
 set loginw.enter.height: 40
 set loginw.unlock.height: 40
 set appw.body.fgcolor: black

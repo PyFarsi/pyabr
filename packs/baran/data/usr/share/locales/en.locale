@@ -602,3 +602,5 @@ wifi.off: off
 wifi.password: Enter wifi password
 wifi.ssid: Enter SSID name
 wifi.wrongp: Wrong password
+sms.app_name: SMS
+sms.enter: Enter your message

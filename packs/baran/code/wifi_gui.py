@@ -41,13 +41,13 @@ class WifiListView (QListView):
         if not signal=='':
             signal = int(signal)
             if signal <= 20:
-                it.setIcon(QIcon(res.get('@icon/wifi-020')))
+                it.setIcon(QIcon(res.get(res.etc('wifi','wifi-020'))))
             elif signal <= 40:
-                it.setIcon(QIcon(res.get('@icon/wifi-040')))
+                it.setIcon(QIcon(res.get(res.etc('wifi','wifi-040'))))
             elif signal <= 80:
-                it.setIcon(QIcon(res.get('@icon/wifi-080')))
+                it.setIcon(QIcon(res.get(res.etc('wifi','wifi-080'))))
             else:
-                it.setIcon(QIcon(res.get('@icon/wifi-100')))
+                it.setIcon(QIcon(res.get(res.etc('wifi','wifi-100'))))
 
     def __init__(self, ports):
         super().__init__()

@@ -11,6 +11,7 @@ set splash.logo-size: 300
 set menu: @icon/ubuntu
 set splash.color: #730c5a
 set login.bgcolor: #730c5a
+set taskbar.icon.style: No
 set login.background: @background/ubuntu
 set login.fgcolor: #FFFFFF
 set enter.bgcolor: #fff
@@ -92,7 +93,7 @@ set loginw.enter.height: 40
 set loginw.unlock.height: 40
 set appw.body.fgcolor: black
 set appw.body.bgcolor: white
-set appw.logo: @icon/app
+set appw.logo: @icon/ubuntu-app
 set appw.shadow: Yes
 set appw.title.size: 50
 set appw.title.fgcolor: white
@@ -306,6 +307,66 @@ sel /usr/share/applications/browser.desk
 set logo: @icon/ubuntu-browser
 unsel
 
+sel /usr/share/applications/html.desk
+set logo: @icon/ubuntu-browser
+unsel
+
+sel /usr/share/applications/wapp.desk
+set logo: @icon/ubuntu-browser
+unsel
+
+sel /usr/share/applications/dmgr.desk
+set logo: @icon/ubuntu-download
+unsel
+
+sel /usr/share/applications/nama.desk
+set logo: @icon/ubuntu-shotwell
+unsel
+
+sel /usr/share/applications/setting.desk
+set logo: @icon/ubuntu-setting
+unsel
+
+sel /usr/share/applications/process.desk
+set logo: @icon/ubuntu-process
+unsel
+
+sel /usr/share/applications/wifi.desk
+set logo: @icon/ubuntu-wifi
+set wifi-020: @icon/ubuntu-wifi-020
+set wifi-040: @icon/ubuntu-wifi-040
+set wifi-080: @icon/ubuntu-wifi-080
+set wifi-100: @icon/ubuntu-wifi-100
+unsel
+
+sel /usr/share/applications/setup.desk
+set logo: @icon/ubuntu-usb
+unsel
+
+sel /usr/share/applications/lang.desk
+set logo: @icon/ubuntu-locale
+unsel
+
+sel /usr/share/applications/key.desk
+set logo: @icon/ubuntu-locale
+unsel
+
+sel /usr/share/applications/wallpaper.desk
+set logo: @icon/ubuntu-wallpaper
+unsel
+
+sel /usr/share/applications/theme.desk
+set logo: @icon/ubuntu-theme
+unsel
+
+sel /usr/share/applications/users.desk
+set logo: @icon/ubuntu-users
+unsel
+
+sel /usr/share/applications/uedit.desk
+set logo: @icon/ubuntu-users
+unsel
+
 sel /usr/share/applications/barge.desk
 set logo: @icon/ubuntu-barge
 unsel
@@ -322,8 +383,16 @@ sel /usr/share/applications/input.desk
 set logo: @icon/ubuntu-help
 unsel
 
+sel /usr/share/applications/runapp.desk
+set logo: @icon/ubuntu-app
+unsel
+
 sel /usr/share/applications/select.desk
 set logo: @icon/ubuntu-help
+unsel
+
+sel /usr/share/applications/screen.desk
+set logo: @icon/ubuntu-desktop
 unsel
 
 sel /usr/share/applications/text.desk

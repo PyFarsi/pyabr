@@ -35,7 +35,7 @@ class MainApp (QMainWindow):
 
         self.onCloseProcess()
 
-        self.Widget.SetWindowIcon (QIcon(res.get('@icon/theme-config')))
+        self.Widget.SetWindowIcon (QIcon(res.etc('theme','logo')))
 
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
 

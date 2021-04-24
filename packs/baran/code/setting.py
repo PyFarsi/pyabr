@@ -102,7 +102,7 @@ class MainApp (QMainWindow):
         self.onCloseProcess()
 
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
-        self.Widget.SetWindowIcon (QIcon(res.get('@icon/setting')))
+        self.Widget.SetWindowIcon (QIcon(res.get(res.etc('setting','logo'))))
 
         self.x = AppListView(ports)
         self.setCentralWidget(self.x)

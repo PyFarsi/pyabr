@@ -27,7 +27,7 @@ ip = ""
 arch = ""
 os_user = ""
 kernel_name = "vmabr"
-kernel_version = "1.2.3"
+kernel_version = "1.3.0"
 user = ""
 code = ""
 argv = sys.argv[1:] # kernel parameters
@@ -124,6 +124,7 @@ if argv[0]=='exec':
         print(end='')
 
     elif argv[1].__contains__("/"):
+
         if files.isfile(argv[1]+".pyc") and outside=='Yes':
             if permissions.check(files.output(argv[1])+".pyc", "x", user):
                 ## Set args ##
@@ -182,10 +183,10 @@ if argv[0]=='exec':
             else:
                 colors.show(argv[1], "perm", "")
 
-        elif files.isfile(argv[1]) and portable=='Yes':
-            if permissions.check(files.output(argv[1]), "x", user):
+        elif files.isfile(argv[1]+".out") and portable=='Yes':
+            if permissions.check(files.output(argv[1]+".out"), "x", user):
                 ## command ##
-                command = [files.input(argv[1])]
+                command = [files.input(argv[1]+".out")]
 
                 for i in argv[2:]:
                     command.append(i)
@@ -250,10 +251,10 @@ if argv[0]=='exec':
             else:
                 colors.show(argv[1], "perm", "")
 
-        elif files.isfile ('/usr/app/'+argv[1]) and portable=='Yes':
-            if permissions.check("/usr/app/" + files.output(argv[1]), "x", user):
+        elif files.isfile ('/usr/app/'+argv[1]+".out") and portable=='Yes':
+            if permissions.check("/usr/app/" + files.output(argv[1]+".out"), "x", user):
                 ## command ##
-                command = [files.input ('/usr/app/'+argv[1])]
+                command = [files.input ('/usr/app/'+argv[1]+".out")]
 
                 for i in argv[2:]:
                     command.append(i)
@@ -267,73 +268,47 @@ if argv[0]=='exec':
                 Script ('/usr/app/'+argv[1])
             else:
                 colors.show(argv[1], "perm", "")
+
         elif files.isfile ('/app/mirrors/'+argv[1]) and mirror=='Yes':
             if files.isfile ('/app/mirrors/'+argv[1]+".try"):
                 print (files.readall('/app/mirrors/'+argv[1]+".try"))
             else:
                 print ("Run `sudo paye in "+argv[1]+'`')
-        elif argv[1]=='python' or argv[1]=='py':
-            sub.call([files.readall('/proc/info/py')])
-        elif argv[1]=='pip':
-            argsv = [files.readall('/proc/info/py'), '-m', 'pip']
-            for i in sys.argv[3:]:
-                argsv.append(i)
-            sub.call(argsv)
-        elif argv[1]=='apt':
-            argsv = ['apt']
-            for i in sys.argv[3:]:
-                argsv.append(i)
-            sub.call(argsv)
-        elif argv[1]=='ping':
-            argsv = ['ping']
-            for i in sys.argv[3:]:
-                argsv.append(i)
-            sub.call(argsv)
-        elif argv[1]=='ifconfig':
-            argsv = ['ifconfig']
-            for i in sys.argv[3:]:
-                argsv.append(i)
-            sub.call(argsv)
-        elif argv[1]=='iwconfig':
-            argsv = ['iwconfig']
-            for i in sys.argv[3:]:
-                argsv.append(i)
-            sub.call(argsv)
-        elif argv[1]=='nmcli':
-            argsv = ['nmcli']
-            for i in sys.argv[3:]:
-                argsv.append(i)
-            sub.call(argsv)
-        elif argv[1]=='ip':
-            argsv = ['ip']
-            for i in sys.argv[3:]:
-                argsv.append(i)
-            sub.call(argsv)
-        elif argv[1]=='traceroute':
-            argsv = ['traceroute']
-            for i in sys.argv[3:]:
-                argsv.append(i)
-            sub.call(argsv)
-        elif argv[1]=='ss':
-            argsv = ['ss']
-            for i in sys.argv[3:]:
-                argsv.append(i)
-            sub.call(argsv)
-        elif argv[1]=='route':
-            argsv = ['route']
-            for i in sys.argv[3:]:
-                argsv.append(i)
-            sub.call(argsv)
-        elif argv[1]=='host':
-            argsv = ['host']
-            for i in sys.argv[3:]:
-                argsv.append(i)
-            sub.call(argsv)
-        elif argv[1]=='arp':
-            argsv = ['arp']
-            for i in sys.argv[3:]:
-                argsv.append(i)
-            sub.call(argsv)
+
+        elif not control.read_record('command.'+argv[1],'/etc/exec')==None:
+
+            command = [argv[1]]
+
+            args = control.read_record(f'command.{argv[1]}.args','/etc/exec')
+            perm = control.read_record(f'command.{argv[1]}.perm','/etc/exec')
+
+            # args check #
+            if not args==None:
+                if args=='Yes':
+                    args = True
+                else:
+                    args = False
+            else:
+                args = True
+
+            # perm check #
+            if perm==None:
+                perm = 3
+
+            user = files.readall('/proc/info/su')
+
+            if user=='guest' and int(perm)<3:
+                colors.show(argv[1],'perm','')
+                sys.exit(0)
+            elif not user=='root' and int(perm)<2:
+                colors.show(argv[1], 'perm', '')
+                sys.exit(0)
+
+            if args:
+                for i in argv[2:]:
+                    command.append(i)
+
+            sub.call(command)
         else:
             colors.show(argv[1], "fail", "command not found.")
 

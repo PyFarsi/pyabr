@@ -2,7 +2,7 @@ name: browser
 copyright: (c) 2021 Martin Fitzpatrick
 license: MIT
 unpack: /
-build: 1399-12-10
-version: 1.1.4
+build: 1400-01-23
+version: 1.1.7
 description: Web Browser for Pyabr
 compile: Yes

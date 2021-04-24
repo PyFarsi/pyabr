@@ -2,7 +2,7 @@ name: squares
 copyright: (c) 2021 Alireza Kefayati
 license: Free Software
 unpack: /
-build: 1399-12-15
-version: 0.0.6
+build: 1400-01-23
+version: 0.0.8
 description: Squares Game
 compile: Yes
