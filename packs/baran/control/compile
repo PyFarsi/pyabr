@@ -18,5 +18,6 @@ uedit.py:usr/app/uedit.pyc
 nama.py:usr/app/nama.pyc
 digital_clock.py:usr/app/digital_clock.pyc
 sudoprocess.py:usr/app/sudoprocess.pyc
+notbox.py:usr/app/notbox.pyc
 wifi_gui.py:usr/app/wifi_gui.pyc
 sms.py:usr/app/sms.pyc

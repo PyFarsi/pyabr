@@ -1366,7 +1366,7 @@ class TaskBar (QToolBar):
         self.btnMenu.setObjectName('btnMenu')
         self.btnMenu.clicked.connect (self.menuApps)
 
-        if getdata('taskbar.icon.style')=='Yes':
+        if getdata('taskbar.icon.style')=='Normal':
             self.btnMenu.setStyleSheet("""
                                    QToolButton {
                                        background-color: {2};
@@ -1385,6 +1385,7 @@ class TaskBar (QToolBar):
                                    """.replace('{1}', str(int(getdata('taskbar.size')) / 2)).replace('{2}', getdata(
                 'taskbar.icon.bgcolor')).replace('{3}', getdata('taskbar.icon.bgcolor-hover')).replace('{4}', getdata(
                 'taskbar.icon.border-color')).replace('{5}', getdata('taskbar.icon.border-color-hover')))
+
         self.addWidget(self.btnMenu)
 
         # pins #
@@ -1407,27 +1408,46 @@ class TaskBar (QToolBar):
                 self.btnApp.setMinimumSize(int(getdata("taskbar.size")),int(getdata("taskbar.size")))
                 self.btnApp.setObjectName(i)
 
-                if getdata('taskbar.icon.style') == 'Yes':
+                if getdata('taskbar.icon.style') == 'Normal':
                     self.btnApp.setStyleSheet("""
-                                    QToolButton {
-                                        background-color: {2};
-                                        border-radius: {1}% {1}%;
-                                        border-style: solid;
-                                        border-color: {4};
-                                        border-width: 1%;
-                                    }
-                                    QToolButton::hover {
-                                        background-color: {3};
-                                        border-radius: {1}% {1}%;
-                                        border-style: solid;
-                                        border-color: {5};
-                                        border-width: 1%;
-                                    }
-                                    """.replace('{1}', str(int(getdata('taskbar.size')) / 2)).replace('{2}', getdata(
-                        'taskbar.icon.bgcolor')).replace('{3}', getdata('taskbar.icon.bgcolor-hover')).replace('{4}',
-                                                                                                               getdata(
-                                                                                                                   'taskbar.icon.border-color')).replace(
-                        '{5}', getdata('taskbar.icon.border-color-hover')))
+                                           QToolButton {
+                                               background-color: {2};
+                                               border-radius: {1}% {1}%;
+                                               border-style: solid;
+                                               border-color: {4};
+                                               border-width: 1%;
+                                           }
+                                           QToolButton::hover {
+                                               background-color: {3};
+                                               border-radius: {1}% {1}%;
+                                               border-style: solid;
+                                               border-color: {5};
+                                               border-width: 1%;
+                                           }
+                                           """.replace('{1}', str(int(getdata('taskbar.size')) / 2)).replace('{2}',
+                                                                                                             getdata(
+                                                                                                                 'taskbar.icon.bgcolor')).replace(
+                        '{3}', getdata('taskbar.icon.bgcolor-hover')).replace('{4}', getdata(
+                        'taskbar.icon.border-color')).replace('{5}', getdata('taskbar.icon.border-color-hover')))
+
+                elif getdata('taskbar.icon.style') == 'Windows':
+                    self.btnApp.setStyleSheet("""
+                    QToolButton {
+                    background: none;
+                    border-left: none;border-right: none;border-top: none;
+                    border-bottom-style: solid;
+                    border-bottom-color: {1};
+                    border-bottom-width: 5%;
+                    }
+                    QToolButton::hover {
+                    background: none;
+                    border-left: none;border-right: none;border-top: none;
+                    border-bottom-style: solid;
+                    border-bottom-color: {2};
+                    border-bottom-width: 5%;
+                    }
+                    """.replace("{1}", getdata("taskbar.icon.border-color")).replace("{2}", getdata(
+                        "taskbar.icon.border-color-hover")))
 
                 self.btnApp.clicked.connect (self.RunApplication)
                 self.addWidget(self.btnApp)
@@ -1627,10 +1647,10 @@ class AppWidget (QMainWindow):
 
     def DisableFloat (self):
         if self.maxbtn:
-            self.btnMax.setEnabled(False)
+            self.btnMax.setVisible(False)
             self.maxbtn = False
         else:
-            self.btnMax.setEnabled(True)
+            self.btnMax.setVisible(True)
             self.maxbtn = True
 
     max = False

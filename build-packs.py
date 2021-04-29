@@ -10,7 +10,7 @@
 #
 #######################################################################################
 
-from buildlibs import pack_archives as pack
+from buildlibs import pack_archives as pack, control
 import os
 
 ## pre build ##
@@ -32,6 +32,6 @@ if not os.path.isdir ("stor"):
 
 if not os.path.isdir ("build-packs"): os.mkdir ("build-packs")
 
-for i in os.listdir('packs'):
+for i in control.read_list('mark_updates'):
     pack.manifest(i)
     pack.build(i)

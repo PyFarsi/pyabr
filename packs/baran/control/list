@@ -3,6 +3,7 @@ etc/deskdirs
 etc/gui
 etc/interface
 etc/suapp
+usr/app/notbox.pyc
 usr/app/baran.pyc
 usr/app/inputbox.pyc
 usr/app/selectbox.pyc

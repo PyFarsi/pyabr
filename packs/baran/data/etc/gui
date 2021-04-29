@@ -24,7 +24,8 @@ taskbar.icon.bgcolor: white
 taskbar.icon.border-color: silver
 taskbar.icon.bgcolor-hover: #ABCDEF
 taskbar.icon.border-color-hover: #ABCDEF
-taskbar.icon.style: Yes
+# Normal, Windows, Unity
+taskbar.icon.style: Normal
 
 # backend : Backend Style
 backend.color: black
@@ -135,6 +136,12 @@ key.btn.bgcolor: white
 key.btn.fgcolor: black
 key.btn.bgcolor-hover: #123456
 key.btn.fgcolor-hover: white
+
+# alert
+
+alert.enable: Yes
+alert.telegram: Yes
+alert.insta: Yes
 
 # root : Root Settings in GUI
 locale: fa

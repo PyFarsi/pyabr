@@ -246,6 +246,8 @@ set loginw.enter.fgcolor: #FFFFFF
 set loginw.enter.fontsize: 12
 set loginw.enter.hide: Yes
 set loginw.enter.width: 300
+set taskbar.icon.style: Windows
+set taskbar.icon.border-color-hover: #123456
 set loginw.unlock.bgcolor: green
 set loginw.unlock.fgcolor: #FFFFFF
 set loginw.unlock.bgcolor-hover: lime
@@ -257,7 +259,6 @@ set loginw.enter.shadow: No
 set loginw.unlock.shadow: No
 set loginw.login.shadow: No
 set loginw.login.height: 40
-set taskbar.icon.style: No
 set loginw.enter.height: 40
 set loginw.unlock.height: 40
 set appw.body.fgcolor: black
