@@ -117,7 +117,7 @@ class MainApp (QMainWindow):
         self.Env.RunApp (files.readall('/proc/info/isel'),None)
         self.refreshx()
 
-    def __init__(self,ports):
+    def __init__(self, ports):
         super(MainApp, self).__init__()
 
         self.Backend = ports[0]

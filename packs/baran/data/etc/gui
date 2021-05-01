@@ -139,9 +139,10 @@ key.btn.fgcolor-hover: white
 
 # alert
 
-alert.enable: Yes
-alert.telegram: Yes
-alert.insta: Yes
+alert.width: 500
+alert.height: 40
+# N, NE, SE, NW, SW
+alert.location: SE
 
 # root : Root Settings in GUI
 locale: fa

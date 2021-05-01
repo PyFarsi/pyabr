@@ -13,6 +13,7 @@ uiv.py:usr/app/uiv.pyc
 setting.py:usr/app/setting.pyc
 wallpaper.py:usr/app/wallpaper.pyc
 themes.py:usr/app/themes.pyc
+samplenot.py:usr/app/samplenot.pyc
 users.py:usr/app/users.pyc
 uedit.py:usr/app/uedit.pyc
 nama.py:usr/app/nama.pyc

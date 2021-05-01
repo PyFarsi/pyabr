@@ -22,6 +22,7 @@ usr/app/sms.pyc
 usr/app/themes.pyc
 usr/app/wifi_signal.pyc
 usr/app/textbox.pyc
+usr/app/samplenot.pyc
 usr/app/sudoprocess.pyc
 usr/app/langbox.pyc
 usr/app/setting.pyc

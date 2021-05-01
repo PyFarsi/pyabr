@@ -53,11 +53,8 @@ class MainApp (QMainWindow):
         self.External = ports[4]
 
         self.onCloseProcess()
-
-        self.Widget.Resize (self,int(self.Env.width()/3),40)
+        self.Widget.Resize (self,int(getdata('alert.width')),int(getdata('alert.height')))
         self.Widget.DisableFloat()
-
-        print(self.External)
 
         self.btnView = QToolButton()
         self.btnView.setText (self.External[2]) # External[0]

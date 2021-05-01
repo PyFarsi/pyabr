@@ -1786,7 +1786,26 @@ class AppWidget (QMainWindow):
         self.mainWidget = exec.MainApp([self.Backend,self.Env,self,self.appname,self.external])
         self.mainWidget.setGeometry(0,int(getdata("appw.title.size")),self.width(),self.height()-int(getdata("appw.title.size")))
         self.titlebar.setGeometry(0, 0, self.width(), int(getdata("appw.title.size")))
-        self.setGeometry(int(self.Env.width()/2)-int(self.width()/2),int(self.Env.height()/2)-int(self.height()/2),self.width(),self.height())
+
+        if files.isfile ('/tmp/pushnot'):
+            if getdata('alert.location')=='N':
+                self.setGeometry(int(self.Env.width() / 2) - int(self.width() / 2),int(getdata('appw.title.size'))+15, self.width(), self.height())
+            elif getdata('alert.location')=='NW':
+                self.setGeometry(0,int(getdata('appw.title.size'))+15, self.width(), self.height())
+            elif getdata('alert.location')=='NE':
+                self.setGeometry(self.Env.width()-self.width(),int(getdata('appw.title.size'))+15, self.width(), self.height())
+            elif getdata('alert.location')=='S':
+                self.setGeometry(int(self.Env.width() / 2) - int(self.width() / 2),self.Env.height()-(int(getdata('taskbar.size'))+15)*2-15, self.width(), self.height())
+            elif getdata('alert.location')=='SW':
+                self.setGeometry(0,self.Env.height()-(int(getdata('taskbar.size'))+15)*2-15, self.width(), self.height())
+            elif getdata('alert.location')=='SE':
+                self.setGeometry(self.Env.width()-self.width(),self.Env.height()-(int(getdata('taskbar.size'))+15)*2-15, self.width(), self.height())
+            else:
+                self.setGeometry(int(self.Env.width() / 2) - int(self.width() / 2),
+                                 int(getdata('appw.title.size')) + 15, self.width(), self.height())
+            files.remove ('/tmp/pushnot')
+        else:
+            self.setGeometry(int(self.Env.width()/2)-int(self.width()/2),int(self.Env.height()/2)-int(self.height()/2),self.width(),self.height())
 
         self.layout().addWidget(self.mainWidget)
         self.layout().addWidget(self.titlebar)
