@@ -12,6 +12,9 @@
 
 import importlib, shutil, os, sys, hashlib, subprocess,time,datetime,getpass,py_compile,wget
 
+import requests
+
+
 def read_record (name,filename):
     file = open (filename,"r")
     strv = file.read()
@@ -931,6 +934,87 @@ class Commands:
         else:
             colors.show("chmod", "perm", "")
 
+    def mount (self,args):
+        permissions = Permissions()
+        files = Files()
+        colors = Colors()
+        control = Control()
+
+        if not permissions.check_root(files.readall('/proc/info/su')):
+            colors.show("mount", "perm", "")
+            sys.exit(0)
+
+        if args==[]:
+            colors.show("mount", "fail", "no inputs.")
+            sys.exit(0)
+
+        clouddrive = args[0]
+
+        if not files.isfile(f'/dev/{clouddrive}'):
+            colors.show("mount", "fail", f"{clouddrive}: cloud drive not exists.")
+            sys.exit(0)
+
+        clouddrivez = f'/dev/{clouddrive}'
+
+
+        host = control.read_record('host',clouddrivez)
+        password = control.read_record('password', clouddrivez)
+
+        x =requests.get(f"{host}/?password={password}")
+
+        if x.text=='s: connected':
+            if files.isdir (f'/stor/{clouddrive}'):
+                files.removedirs(f'/stor/{clouddrive}')
+
+            files.mkdir(f'/stor/{clouddrive}')
+
+            x = requests.get(f"{host}/list.php?password={password}&dirname=/")
+
+            split_list_items = str(x.text).split('\n')
+            if '' in split_list_items:
+                split_list_items.remove('')
+
+            split_list_items.reverse()
+
+            for item in split_list_items:
+                split_remove_host = item.split("/stor/")
+                myitem = split_remove_host[1]
+
+                if myitem.endswith ('/') and not files.isdir (f'/stor/{clouddrive}/{myitem}'):
+                    files.mkdir(f'/stor/{clouddrive}/{myitem}')
+                else:
+                    files.create(f'/stor/{clouddrive}/{myitem}')
+
+        elif x.text=='e: wrong password':
+            colors.show("mount", "fail", f"{clouddrive}: wrong password in device database.")
+        elif x.text=='e: empty password':
+            colors.show("mount", "fail", f"{clouddrive}: empty password in device database.")
+        else:
+            colors.show("mount", "fail", f"{clouddrive}: connot connect to this cloud drive.")
+
+
+    def umount (self,args):
+        permissions = Permissions()
+        files = Files()
+        colors = Colors()
+        control = Control()
+
+        if not permissions.check_root(files.readall('/proc/info/su')):
+            colors.show("mount", "perm", "")
+            sys.exit(0)
+
+        if args == []:
+            colors.show("mount", "fail", "no inputs.")
+            sys.exit(0)
+
+        clouddrive = args[0]
+
+        if not files.isfile(f'/dev/{clouddrive}'):
+            colors.show("mount", "fail", f"{clouddrive}: cloud drive not exists.")
+            sys.exit(0)
+
+        files.removedirs(f'/stor/{clouddrive}')
+
     # chown #
     def chown (self,args):
         new_owner = args[0]
@@ -1473,7 +1557,6 @@ class Commands:
                     colors.show("ls", "perm", "")
             else:
                 colors.show("ls", "fail", path + ": directory not found.")
-
     # mkdir command #
     def mkdir (self,args):
         modules = Modules()
