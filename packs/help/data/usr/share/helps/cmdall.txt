@@ -14,7 +14,7 @@ Standard Cloud Commands:
     cc         Compiler Collection
     cp         Copy files or directories
     date       Show time and date
-    det        Remove item from list file
+    down       Download from Cloud drive
     echo       Output a message
     getv       Get all information in controller
     gunzip     Extract gzip with tarball archive
@@ -24,10 +24,12 @@ Standard Cloud Commands:
     ls         Show list of files and directories
     mkdir      Make a directory or directories
     mv         Move or rename directories or files
+    mount      Mount a Cloud drive
     new        Create a new switch process
     passwd     Change users password
     pause      Pause the console
     reboot     Reboot the clouding system
+    rem        Remove files from Cloud drive
     rm         Remove files or directories
     say        Output a nonline message
     sel        Select a controller
@@ -42,10 +44,12 @@ Standard Cloud Commands:
     uadd       Create an user account
     udel       Delete an user account
     uinfo      Show informations about an user account
+    umount     Unmount a Cloud drive
     unsel      Unselect a controller
     unset      Unset a variable in controller
     untar      Extract tarball archive
     unzip      Extract zip archive
+    up         Upload into Cloud drive
     ver        Show important informations about system
     wget       Download files from the Internet
     xunzip     Extract xzip with tarball archive

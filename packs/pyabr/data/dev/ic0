@@ -1,0 +1,7 @@
+host: http://localhost/ic0
+password: 1400
+index: index.php
+list: list.php
+download: download.php
+upload: upload.php
+remove: remove.php

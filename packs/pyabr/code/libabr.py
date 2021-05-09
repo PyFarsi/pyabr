@@ -939,6 +939,7 @@ class Commands:
         files = Files()
         colors = Colors()
         control = Control()
+        commands = Commands()
 
         if not permissions.check_root(files.readall('/proc/info/su')):
             colors.show("mount", "perm", "")
@@ -960,15 +961,17 @@ class Commands:
         host = control.read_record('host',clouddrivez)
         password = control.read_record('password', clouddrivez)
 
-        x =requests.get(f"{host}/?password={password}")
+        x = requests.post(f"{host}/{control.read_record('index',clouddrivez)}",data={"password":password})
 
         if x.text=='s: connected':
             if files.isdir (f'/stor/{clouddrive}'):
                 files.removedirs(f'/stor/{clouddrive}')
 
             files.mkdir(f'/stor/{clouddrive}')
+            commands.cd([f'/stor/{clouddrive}'])
+            files.write('/proc/info/csel',clouddrive)
 
-            x = requests.get(f"{host}/list.php?password={password}&dirname=/")
+            x = requests.post(f"{host}/{control.read_record('list',clouddrivez)}",data={"password":password})
 
             split_list_items = str(x.text).split('\n')
             if '' in split_list_items:
@@ -990,30 +993,135 @@ class Commands:
         elif x.text=='e: empty password':
             colors.show("mount", "fail", f"{clouddrive}: empty password in device database.")
         else:
-            colors.show("mount", "fail", f"{clouddrive}: connot connect to this cloud drive.")
-
+            colors.show("mount", "fail", f"{clouddrive}: cannot connect to this cloud drive.")
 
     def umount (self,args):
         permissions = Permissions()
         files = Files()
         colors = Colors()
         control = Control()
+        commands = Commands()
 
         if not permissions.check_root(files.readall('/proc/info/su')):
-            colors.show("mount", "perm", "")
+            colors.show("umount", "perm", "")
             sys.exit(0)
 
         if args == []:
-            colors.show("mount", "fail", "no inputs.")
+            colors.show("umount", "fail", "no inputs.")
             sys.exit(0)
 
         clouddrive = args[0]
 
         if not files.isfile(f'/dev/{clouddrive}'):
-            colors.show("mount", "fail", f"{clouddrive}: cloud drive not exists.")
+            colors.show("umount", "fail", f"{clouddrive}: cloud drive not exists.")
             sys.exit(0)
 
+        commands.cd (['/'])
         files.removedirs(f'/stor/{clouddrive}')
+
+    # down mani:/Files/mani
+
+    def down (self,args):
+        permissions = Permissions()
+        files = Files()
+        colors = Colors()
+        control = Control()
+
+        if not permissions.check_root(files.readall('/proc/info/su')):
+            colors.show("down", "perm", "")
+            sys.exit(0)
+
+        if args == []:
+            colors.show("down", "fail", "no inputs.")
+            sys.exit(0)
+
+        filename = args[0]
+
+        clouddrive = files.readall('/proc/info/csel')
+        clouddrivez = f'/dev/{clouddrive}'
+
+        host = control.read_record('host', clouddrivez)
+        password = control.read_record('password', clouddrivez)
+
+        x = requests.post(f"{host}/{control.read_record('download',clouddrivez)}",data={"password":password,"filename":filename})
+
+        if x.text == 'e: wrong password':
+            colors.show("down", "fail", f"{clouddrive}: wrong password in device database.")
+        elif x.text == 'e: empty password':
+            colors.show("down", "fail", f"{clouddrive}: empty password in device database.")
+        elif x.text == 'e: file not found':
+            colors.show("down", "fail", f"{clouddrive}: {filename}: file not file in cloud drive.")
+        else:
+            files.write(f'/stor/{clouddrive}/{filename}',x.text)
+
+    def rem (self,args):
+        permissions = Permissions()
+        files = Files()
+        colors = Colors()
+        control = Control()
+
+        if not permissions.check_root(files.readall('/proc/info/su')):
+            colors.show("rem", "perm", "")
+            sys.exit(0)
+
+        if args == []:
+            colors.show("rem", "fail", "no inputs.")
+            sys.exit(0)
+
+        filename = args[0]
+
+        clouddrive = files.readall('/proc/info/csel')
+        clouddrivez = f'/dev/{clouddrive}'
+
+        host = control.read_record('host', clouddrivez)
+        password = control.read_record('password', clouddrivez)
+
+        x = requests.post(f"{host}/{control.read_record('remove',clouddrivez)}",data={"password":password,"filename":filename})
+
+        if x.text == 'e: wrong password':
+            colors.show("down", "fail", f"{clouddrive}: wrong password in device database.")
+        elif x.text == 'e: empty password':
+            colors.show("down", "fail", f"{clouddrive}: empty password in device database.")
+        elif x.text == 'e: file not found':
+            colors.show("down", "fail", f"{clouddrive}: {filename}: file not file in cloud drive.")
+        else:
+            if files.isfile (f'/stor/{clouddrive}/{filename}'):
+                files.remove(f'/stor/{clouddrive}/{filename}')
+            elif files.isdir(f'/stor/{clouddrive}/{filename}'):
+                files.removedirs(f'/stor/{clouddrive}/{filename}')
+
+    def up (self,args):
+        permissions = Permissions()
+        files = Files()
+        colors = Colors()
+        control = Control()
+
+        if not permissions.check_root(files.readall('/proc/info/su')):
+            colors.show("up", "perm", "")
+            sys.exit(0)
+
+        if args == []:
+            colors.show("up", "fail", "no inputs.")
+            sys.exit(0)
+
+        clouddrive = files.readall('/proc/info/csel')
+        filename = args[0]
+
+        clouddrivez = f'/dev/{clouddrive}'
+
+        host = control.read_record('host', clouddrivez)
+        password = control.read_record('password', clouddrivez)
+
+        data = files.readall(f'/stor/{clouddrive}/{filename}')
+
+        x = requests.post(f"{host}/{control.read_record('upload',clouddrivez)}",data={"password":password,"filename":filename,"data":data})
+
+        if x.text == 'e: wrong password':
+            colors.show("up", "fail", f"{clouddrive}: wrong password in device database.")
+        elif x.text == 'e: empty password':
+            colors.show("up", "fail", f"{clouddrive}: empty password in device database.")
+        elif x.text == 'e: is a directory':
+            colors.show("up", "fail", f"{clouddrive}: {filename}: cannot create file; is a directory in cloud drive.")
 
     # chown #
     def chown (self,args):
