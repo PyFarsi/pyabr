@@ -56,10 +56,14 @@ class FileListView (QtWidgets.QListView):
             it.setWhatsThis(self.dir + "/" + dirname)
             it.setIcon(QtGui.QIcon(res.get(res.etc("roller",'folder-icon'))))
             self.entry.appendRow(it)
-            files.mkdir(dirname)
+
+            try:
+                commands.mkc([it.whatsThis().replace(f'/stor/{files.readall("/proc/info/mnt")}/','')])
+            except:
+                files.mkdir(dirname)
+
             it.setFont(self.Env.font())
             x = self.Env.font()
-            print(x.family())
 
     def mkfile (self,filename):
         if files.isdir(filename ):
@@ -74,6 +78,12 @@ class FileListView (QtWidgets.QListView):
             self.entry.appendRow(it)
             self.format(it, filename)
             files.create(filename)
+
+            try:
+                commands.up([it.whatsThis().replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
+
             it.setFont(self.Env.font())
 
     def mkc (self,filename):
@@ -84,7 +94,13 @@ class FileListView (QtWidgets.QListView):
             app.switch('roller')
         else:
             self.mkfile(filename+".c")
+
             files.write(self.dir + "/" + filename+'.c',files.readall(res.get('@temp/untitled.c')))
+
+            try:
+                commands.up([str(self.dir + "/" + filename+".c").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
 
     def mkcpp (self,filename):
         if files.isdir(filename+".cpp"):
@@ -96,6 +112,11 @@ class FileListView (QtWidgets.QListView):
             self.mkfile(filename+".cpp")
             files.write(self.dir + "/" + filename+'.cpp',files.readall(res.get('@temp/untitled.cpp')))
 
+            try:
+                commands.up([str(self.dir + "/" + filename+".cpp").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
+
     def mkjava (self,filename):
         if files.isdir(filename+".java"):
             app.switch('roller')
@@ -105,6 +126,11 @@ class FileListView (QtWidgets.QListView):
         else:
             self.mkfile(filename+".java")
             files.write(self.dir + "/" + filename+'.java',files.readall(res.get('@temp/untitled.java')).replace("MainApp",filename))
+
+            try:
+                commands.up([str(self.dir + "/" + filename+".java").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
 
     def mkjs (self,filename):
         if files.isdir(filename+".js"):
@@ -116,6 +142,11 @@ class FileListView (QtWidgets.QListView):
             self.mkfile(filename+".js")
             files.write(self.dir + "/" + filename+'.js',files.readall(res.get('@temp/untitled.js')))
 
+            try:
+                commands.up([str(self.dir + "/" + filename+".js").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
+
     def mkui (self,filename):
         if files.isdir(filename+".ui"):
             app.switch('roller')
@@ -125,6 +156,11 @@ class FileListView (QtWidgets.QListView):
         else:
             self.mkfile(filename+".ui")
             files.write(self.dir + "/" + filename+'.ui',files.readall(res.get('@temp/untitled.ui')))
+
+            try:
+                commands.up([str(self.dir + "/" + filename+".ui").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
 
     def mkphp (self,filename):
         if files.isdir(filename+".php"):
@@ -136,6 +172,11 @@ class FileListView (QtWidgets.QListView):
             self.mkfile(filename+".php")
             files.write(self.dir + "/" + filename+".php",files.readall(res.get('@temp/untitled.php')))
 
+            try:
+                commands.up([str(self.dir + "/" + filename+".php").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
+
     def mkhtml (self,filename):
         if files.isdir(filename+".html"):
             app.switch('roller')
@@ -145,6 +186,11 @@ class FileListView (QtWidgets.QListView):
         else:
             self.mkfile(filename+".html")
             files.write(self.dir + "/" + filename+".html",files.readall(res.get('@temp/untitled.html')))
+
+            try:
+                commands.up([str(self.dir + "/" + filename+".html").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
 
     def mkcs (self,filename):
         if files.isdir(filename+".cs"):
@@ -156,6 +202,11 @@ class FileListView (QtWidgets.QListView):
             self.mkfile(filename+".cs")
             files.write(self.dir + "/" + filename+".cs",files.readall(res.get('@temp/untitled.cs')))
 
+            try:
+                commands.up([str(self.dir + "/" + filename+".cs").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
+
     def mksa (self,filename):
         if files.isdir(filename+".sa"):
             app.switch('roller')
@@ -165,6 +216,11 @@ class FileListView (QtWidgets.QListView):
         else:
             self.mkfile(filename+".sa")
             files.write(self.dir + "/" + filename+".sa",files.readall(res.get('@temp/untitled.sa')))
+
+            try:
+                commands.up([str(self.dir + "/" + filename+".sa").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
 
     def mkpy (self,filename):
         if files.isdir(filename+".py"):
@@ -176,6 +232,11 @@ class FileListView (QtWidgets.QListView):
             self.mkfile(filename+".py")
             files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled.py')))
 
+            try:
+                commands.up([str(self.dir + "/" + filename+".py").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
+
     def mkpygui (self,filename):
         if files.isdir(filename+".py"):
             app.switch('roller')
@@ -186,6 +247,11 @@ class FileListView (QtWidgets.QListView):
             self.mkfile(filename+".py")
             files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled-gui.py')))
 
+            try:
+                commands.up([str(self.dir + "/" + filename+".py").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
+
     def mkpyweb (self,filename):
         if files.isdir(filename+".py"):
             app.switch('roller')
@@ -195,6 +261,11 @@ class FileListView (QtWidgets.QListView):
         else:
             self.mkfile(filename+".py")
             files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled-web.py')))
+
+            try:
+                commands.up([str(self.dir + "/" + filename+".py").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
 
     def __init__(self,ports):
         super().__init__()
@@ -286,13 +357,11 @@ class FileListView (QtWidgets.QListView):
         self.item = self.entry.itemFromIndex(index)
         x = hasattr(self.item,'whatsThis') # W3CSHCOOL.COM LEARN IT
 
-
         if x == True:
             if self.item.whatsThis() == "<parent>":
                 commands.cd (['..'])
                 self.dir = files.readall('/proc/info/pwd')
                 files.write('/proc/info/dsel',self.dir)
-
                 self.listdir = files.list(self.dir)
                 self.listdir.sort() # Credit: https://www.geeksforgeeks.org/sort-in-python/
 
@@ -528,6 +597,7 @@ pause
         self.AppName = args[3]
         self.External = args[4]
         self.onCloseProcess()
+
 
         if not self.External == None:
             if not self.External[0]==None:

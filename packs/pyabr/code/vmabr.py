@@ -363,12 +363,6 @@ else:
 
 ## @core/mount ##
 if platform.system()=='Linux' and argv[0]=='gui':
-    if not (files.isdir('/stor') and files.isfile('/stor')):
-        os.system('ln -s /media stor')
-
-    if not (files.isdir('/usr/share/fonts') and files.isfile('/usr/share/fonts')):
-        os.system('ln -s /usr/share/fonts usr/share/fonts')
-
 ## @core/kernel-info ##
 
     files.write("/proc/info/kname", kernel_name)

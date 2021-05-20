@@ -604,3 +604,7 @@ wifi.ssid: Enter SSID name
 wifi.wrongp: Wrong password
 sms.app_name: SMS
 sms.enter: Enter your message
+cloudroller.app_name: Drives
+cloudroller.add: Add Drives
+cloudroller.e: Connection error
+cloudroller.em: Cannot connect to this cloud drive; connection failed

@@ -20,13 +20,13 @@ if (isset ($_POST['password'])&&!empty($_POST['password']))
         	}
         	else
         	{
-			if (isset ($_POST['data']))
-			{	
-				$data = $_POST['data'];
-				$file = fopen($filename,"w");
-				fwrite($file,$data);
-				fclose($file);
-			}
+			    if (isset ($_POST['data']))
+			    {
+				    $data = $_POST['data'];
+				    $file = fopen($filename,"w");
+				    fwrite($file,$data);
+				    fclose($file);
+			    }
         	}
         }
     }

@@ -5,3 +5,5 @@ list: list.php
 download: download.php
 upload: upload.php
 remove: remove.php
+directory: directory.php
+value: New Valume

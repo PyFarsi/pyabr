@@ -1090,6 +1090,43 @@ class Commands:
             elif files.isdir(f'/stor/{clouddrive}/{filename}'):
                 files.removedirs(f'/stor/{clouddrive}/{filename}')
 
+    def mkc (self,args):
+        permissions = Permissions()
+        files = Files()
+        colors = Colors()
+        control = Control()
+
+        if not permissions.check_root(files.readall('/proc/info/su')):
+            colors.show("mkc", "perm", "")
+            sys.exit(0)
+
+        if args == []:
+            colors.show("mkc", "fail", "no inputs.")
+            sys.exit(0)
+
+        dirname = args[0]
+
+        clouddrive = files.readall('/proc/info/csel')
+        clouddrivez = f'/dev/{clouddrive}'
+
+        host = control.read_record('host', clouddrivez)
+        password = control.read_record('password', clouddrivez)
+
+        x = requests.post(f"{host}/{control.read_record('directory',clouddrivez)}",data={"password":password,"dirname":dirname})
+
+        if x.text == 'e: wrong password':
+            colors.show("mkc", "fail", f"{clouddrive}: wrong password in device database.")
+        elif x.text == 'e: empty password':
+            colors.show("mkc", "fail", f"{clouddrive}: empty password in device database.")
+        elif x.text == 'e: is a file':
+            colors.show("mkc", "fail", f"{clouddrive}: {dirname}: cannot create directory; is a file.")
+        else:
+            x = f'/stor/{clouddrive}/{dirname}'
+            if files.isfile (x):
+                colors.show("mkc", "fail", f"{clouddrive}: {dirname}: cannot create directory; is a file.")
+            elif not files.isdir (x):
+                files.mkdir(x)
+
     def up (self,args):
         permissions = Permissions()
         files = Files()

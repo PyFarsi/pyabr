@@ -603,3 +603,7 @@ wifi.ssid: نام این شبکه بی سیم را وارد کنید
 wifi.wrongp: رمز عبور اشتباه است
 sms.app_name: پیامک
 sms.enter: پیام خود را بنویسید
+cloudroller.app_name: درایوها
+cloudroller.add: افزودن درایو
+cloudroller.e: خطا در اتصال
+cloudroller.em: در حال حاضر امکان اتصال به این دیسک ابری ممکن نیست
