@@ -500,7 +500,14 @@ class MainApp (QtWidgets.QMainWindow):
     def delete_act_ (self,yes):
         if yes:
             if files.isdir(self.wsel) or files.isfile(self.wsel):
-                commands.rm ([self.wsel])
+                if files.isfile(self.wsel):
+                    try:
+                        commands.rem([str(self.wsel).replace(
+                            f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                    except:
+                        commands.rm([self.wsel])
+                else:
+                    commands.rm([self.wsel])
 
             self.refresh()
 
@@ -512,7 +519,17 @@ class MainApp (QtWidgets.QMainWindow):
 
     def rename_act_(self,text):
         if files.isdir(self.wsel) or files.isfile(self.wsel):
-            commands.mv ([self.wsel,text])
+            if files.isfile(self.wsel):
+                try:
+                    commands.cp([self.wsel, text])
+                    commands.up([str(files.output(text)).replace(
+                        f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                    commands.rem([str(self.wsel).replace(
+                        f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                except:
+                    commands.mv([self.wsel, text])
+            else:
+                commands.mv([self.wsel, text])
 
         self.refresh()
 
@@ -528,6 +545,11 @@ class MainApp (QtWidgets.QMainWindow):
             commands.cp([self.wsel,'/tmp/roller-copy'])
 
     def open_act (self):
+        try:
+            commands.down([files.readall('/proc/info/wsel').replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+        except:
+            pass
+
         splitext = files.output(files.readall('/proc/info/wsel')).split('.')
         ext = max(splitext)
 
@@ -541,6 +563,11 @@ class MainApp (QtWidgets.QMainWindow):
             self.Env.RunApp(always, [files.readall('/proc/info/wsel')])
 
     def open_with_act (self):
+        try:
+            commands.down([files.readall('/proc/info/wsel').replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+        except:
+            pass
+
         self.Env.RunApp('open',[files.readall('/proc/info/wsel')])
 
     def cut_act(self):
@@ -548,18 +575,34 @@ class MainApp (QtWidgets.QMainWindow):
 
         if files.isdir('/tmp/roller-copy'):
             files.removedirs('/tmp/roller-copy')
+
         elif files.isfile('/tmp/roller-copy'):
             files.remove('/tmp/roller-copy')
 
         files.write('/tmp/roller-src.tmp', self.wsel)
 
         if files.isdir(self.wsel) or files.isfile(self.wsel):
-            commands.mv ([self.wsel,'/tmp/roller-copy'])
+
+            if files.isfile(self.wsel):
+                try:
+                    commands.cp([self.wsel, '/tmp/roller-copy'])
+                    commands.rem([str(self.wsel).replace(
+                        f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                except:
+                    commands.mv([self.wsel, '/tmp/roller-copy'])
+            else:
+                commands.mv ([self.wsel,'/tmp/roller-copy'])
 
         self.refresh()
 
     def execute_act (self):
         if permissions.check(files.readall('/proc/info/wsel'),'x',self.Env.username):
+            try:
+                commands.down(
+                    [files.readall('/proc/info/wsel').replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
+
             execute_file = files.readall('/proc/info/wsel').replace ('.pyc','').replace ('.py','').replace ('.jar','').replace ('.exe','').replace ('.sa','')
 
             files.write('/tmp/exec.sa', f'''
@@ -585,6 +628,13 @@ pause
         else:
             if files.isdir('/tmp/roller-copy') or files.isfile('/tmp/roller-copy'):
                 commands.mv (['/tmp/roller-copy',self.dest])
+
+                if files.isfile (self.dest):
+                    try:
+                        commands.up(
+                            [self.dest.replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                    except:
+                        pass
 
         self.refresh()
 

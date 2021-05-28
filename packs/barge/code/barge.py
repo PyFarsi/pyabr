@@ -288,13 +288,25 @@ pause
         if self.Widget.WindowTitle()=='': self.Widget.SetWindowTitle (res.get('@string/untitled'))
 
     def saveas_ (self,filename):
+
         files.write(filename,self.teEdit.toPlainText())
         self.Widget.SetWindowTitle(files.output(filename))
+
+        try:
+            cmd.up([files.output(self.Widget.WindowTitle()).replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+        except:
+            pass
 
     def save_ (self,filename):
         app.switch('barge')
         if not self.Widget.WindowTitle()==res.get('@string/untitled'):
             files.write(files.output(self.Widget.WindowTitle()),self.teEdit.toPlainText())
+
+            try:
+                cmd.up([files.output(self.Widget.WindowTitle()).replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
+
         else:
             app.switch('barge')
             self.Env.RunApp('select', [res.get('@string/saveafile'), 'save', self.saveas_])

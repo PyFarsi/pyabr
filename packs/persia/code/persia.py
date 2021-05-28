@@ -52,7 +52,11 @@ class FileListView(QListView):
             it.setWhatsThis(self.dir + "/" + dirname)
             it.setIcon(QIcon(res.get(res.etc('roller','folder-icon'))))
             self.entry.appendRow(it)
-            commands.mkdir([dirname])
+
+            try:
+                commands.mkc([str(self.dir+"/"+dirname).replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                commands.mkdir([dirname])
 
     def mkfile (self,filename):
         if files.isdir(filename + ".c"):
@@ -67,12 +71,14 @@ class FileListView(QListView):
             commands.cat (['-c',filename])
             it.setFont(self.editor.Env.font())
 
+
     def genpa (self,filename):
         it = QtGui.QStandardItem(filename+".pa")
         it.setWhatsThis(self.dir + "/" + filename+".pa")
         self.entry.appendRow(it)
         self.format(it, filename+".pa")
         it.setFont(self.editor.Env.font())
+
 
     def mkc (self,filename):
         if files.isdir(filename + ".c"):
@@ -81,6 +87,8 @@ class FileListView(QListView):
         else:
             self.mkfile(filename+".c")
             files.write(self.dir + "/" + filename+'.c',files.readall(res.get('@temp/untitled.c')))
+
+            
 
     def mkcpp (self,filename):
         if files.isdir(filename + ".cpp"):
@@ -98,6 +106,7 @@ class FileListView(QListView):
             self.mkfile(filename+".java")
             files.write(self.dir + "/" + filename+'.java',files.readall(res.get('@temp/untitled.java')).replace("MainApp",filename))
 
+
     def mkjs (self,filename):
         if files.isdir(filename + ".js"):
             self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".js")])
@@ -105,6 +114,7 @@ class FileListView(QListView):
         else:
             self.mkfile(filename+".js")
             files.write(self.dir + "/" + filename+'.js',files.readall(res.get('@temp/untitled.js')))
+
 
     def mkphp (self,filename):
         if files.isdir(filename + ".php"):
@@ -114,6 +124,7 @@ class FileListView(QListView):
             self.mkfile(filename+".php")
             files.write(self.dir + "/" + filename+".php",files.readall(res.get('@temp/untitled.php')))
 
+
     def mkhtml (self,filename):
         if files.isdir(filename + ".html"):
             self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".html")])
@@ -121,6 +132,7 @@ class FileListView(QListView):
         else:
             self.mkfile(filename+".html")
             files.write(self.dir + "/" + filename+".html",files.readall(res.get('@temp/untitled.html')))
+
 
     def mkcs (self,filename):
         if files.isdir(filename + ".cs"):
@@ -138,6 +150,7 @@ class FileListView(QListView):
             self.mkfile(filename+".sa")
             files.write(self.dir + "/" + filename+".sa",files.readall(res.get('@temp/untitled.sa')))
 
+
     def mkui (self,filename):
         if files.isdir(filename + ".ui"):
             self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".ui")])
@@ -145,6 +158,7 @@ class FileListView(QListView):
         else:
             self.mkfile(filename+".ui")
             files.write(self.dir + "/" + filename+".ui",files.readall(res.get('@temp/untitled.ui')))
+
 
     def mkpy (self,filename):
         if files.isdir(filename + ".py"):
@@ -154,6 +168,7 @@ class FileListView(QListView):
             self.mkfile(filename+".py")
             files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled.py')))
 
+
     def mkpygui (self,filename):
         if files.isdir(filename + ".py"):
             self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".py")])
@@ -162,6 +177,7 @@ class FileListView(QListView):
             self.mkfile(filename+".py")
             files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled-gui.py')))
 
+
     def mkpyweb (self,filename):
         if files.isdir(filename + ".py"):
             self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".py")])
@@ -169,6 +185,7 @@ class FileListView(QListView):
         else:
             self.mkfile(filename+".py")
             files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled-web.py')))
+
 
     def __init__(self,editor):
         super().__init__()

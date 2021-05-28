@@ -502,7 +502,7 @@ roller.execute: اجرا
 roller.open: بازکردن
 roller.openwith: بازکردن با
 roller.delete: حذف کردن
-roller.deletemf: آیا
+roller.deletemf: آیا مایلید این فایل را حذف کنید؟
 open.always: همیشه
 open.atonce: فقط یک بار
 open.choose: یک برنامه را انتخاب کنید
@@ -607,3 +607,16 @@ cloudroller.app_name: درایوها
 cloudroller.add: افزودن درایو
 cloudroller.e: خطا در اتصال
 cloudroller.em: در حال حاضر امکان اتصال به این دیسک ابری ممکن نیست
+connectcloud.app_name: افزودن درایو
+connectcloud.host: آدرس هاست ابری
+connectcloud.check: بکند برسی کننده
+connectcloud.list: بکند لیست کننده
+connectcloud.dir: بکند ایجاد پوشه
+connectcloud.remove: بکند حذف
+connectcloud.upload: بکند آپلود
+connectcloud.download: بکند دانلود
+connectcloud.password: رمزعبور
+connectcloud.value: نام درایو
+connectcloud.add: اتصال و افزودن
+connectcloud.cm: لطفا فیلدهای ورودی یا اتصال اینترنت را برسی کنید
+connectcloud.c: مشکل در افزودن درایو

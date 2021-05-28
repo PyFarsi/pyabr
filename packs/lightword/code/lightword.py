@@ -19,12 +19,13 @@ import os
 import sys
 import uuid, baran
 
-from libabr import Files, Control, Res, App, System
+from libabr import *
 
 files = Files()
 control = Control()
 res = Res()
 app = App()
+commands = Commands()
 
 FONT_SIZES = [7, 8, 9, 10, 11, 12, 13, 14, 18, 24, 36, 48, 64, 72, 96, 144, 288]
 IMAGE_EXTENSIONS = ['.jpg','.png','.bmp']
@@ -412,6 +413,11 @@ class MainApp(QMainWindow):
         files.write(filename, text)
         self.Widget.SetWindowTitle(filename)
 
+        try:
+            commands.down([files.output(filename).replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+        except:
+            pass
+
     def file_saveas(self):
         app.switch('lightword')
         self.Env.RunApp('select', [res.get('@string/sad'), 'save-as', self.file_saveas_])
@@ -420,6 +426,11 @@ class MainApp(QMainWindow):
     def file_saveas_(self,filename):
         files.write(filename, self.editor.toHtml())
         self.Widget.SetWindowTitle(files.output(filename))
+
+        try:
+            commands.down([files.output(filename).replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+        except:
+            pass
 
     def edit_toggle_wrap(self):
         self.editor.setLineWrapMode( 1 if self.editor.lineWrapMode() == 0 else 0 )

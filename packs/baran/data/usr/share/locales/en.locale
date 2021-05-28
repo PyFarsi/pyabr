@@ -608,3 +608,16 @@ cloudroller.app_name: Drives
 cloudroller.add: Add Drives
 cloudroller.e: Connection error
 cloudroller.em: Cannot connect to this cloud drive; connection failed
+connectcloud.app_name: Add drive
+connectcloud.host: Hostname URL
+connectcloud.check: Check backend
+connectcloud.list: List backend
+connectcloud.dir: Directory backend
+connectcloud.remove: Remove backend
+connectcloud.upload: Upload backend
+connectcloud.download: Download backend
+connectcloud.password: Password
+connectcloud.value: Value name
+connectcloud.add: Add && Connect
+connectcloud.cm: Cannot add drive; there is some problems in fields or connection
+connectcloud.c: Problem adding

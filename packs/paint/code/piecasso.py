@@ -20,11 +20,11 @@ from PyQt5 import QtGui, QtWidgets, QtCore
 
 from PyQt5.QtGui import QPainter, QBitmap, QPolygon, QPen, QBrush, QColor
 from PyQt5.QtCore import Qt
-from libabr import System, App, Control, Files, Res
+from libabr import *
 
 from piecasso_frontend import Ui_MainWindow
 
-res = Res();files = Files();app = App();control=Control()
+res = Res();files = Files();app = App();control=Control();commands = Commands()
 
 class MainApp(QtWidgets.QMainWindow):
     def onCloseProcess (self):
@@ -963,6 +963,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if path:
             pixmap = self.canvas.pixmap()
             pixmap.save(files.input(path), "PNG" )
+
+            try:
+                commands.up(
+                    [files.output(path).replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
 
     def invert(self):
         img = QImage(self.canvas.pixmap())

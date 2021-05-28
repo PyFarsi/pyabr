@@ -126,6 +126,10 @@ class MainApp (QMainWindow):
         self.x = DriveListView([self.Backend,self.Env,self.Widget,self.AppName,self.External])
         self.setCentralWidget(self.x)
 
+    def connectcloud_act (self):
+        self.Widget.Close()
+        self.Env.RunApp('connectcloud',[None])
+
     def __init__(self,ports):
         super(MainApp, self).__init__()
 
@@ -148,6 +152,7 @@ class MainApp (QMainWindow):
         self.setMenuBar(self.menubar)
 
         self.adddrive = self.menubar.addAction(res.get('@string/add'))
+        self.adddrive.triggered.connect (self.connectcloud_act)
         
         if getdata('submenu.direction')=='ltr':
             self.menubar.setLayoutDirection(Qt.LeftToRight)
