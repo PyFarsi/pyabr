@@ -942,8 +942,9 @@ class Commands:
         commands = Commands()
 
         if not permissions.check_root(files.readall('/proc/info/su')):
-            colors.show("mount", "perm", "")
-            sys.exit(0)
+            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
+                colors.show("mount", "perm", "")
+                sys.exit(0)
 
         if args==[]:
             colors.show("mount", "fail", "no inputs.")
@@ -1003,8 +1004,9 @@ class Commands:
         commands = Commands()
 
         if not permissions.check_root(files.readall('/proc/info/su')):
-            colors.show("umount", "perm", "")
-            sys.exit(0)
+            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
+                colors.show("umount", "perm", "")
+                sys.exit(0)
 
         if args == []:
             colors.show("umount", "fail", "no inputs.")
@@ -1028,8 +1030,9 @@ class Commands:
         control = Control()
 
         if not permissions.check_root(files.readall('/proc/info/su')):
-            colors.show("down", "perm", "")
-            sys.exit(0)
+            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
+                colors.show("down", "perm", "")
+                sys.exit(0)
 
         if args == []:
             colors.show("down", "fail", "no inputs.")
@@ -1061,8 +1064,9 @@ class Commands:
         control = Control()
 
         if not permissions.check_root(files.readall('/proc/info/su')):
-            colors.show("rem", "perm", "")
-            sys.exit(0)
+            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
+                colors.show("rem", "perm", "")
+                sys.exit(0)
 
         if args == []:
             colors.show("rem", "fail", "no inputs.")
@@ -1097,8 +1101,9 @@ class Commands:
         control = Control()
 
         if not permissions.check_root(files.readall('/proc/info/su')):
-            colors.show("mkc", "perm", "")
-            sys.exit(0)
+            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
+                colors.show("mkc", "perm", "")
+                sys.exit(0)
 
         if args == []:
             colors.show("mkc", "fail", "no inputs.")
@@ -1134,8 +1139,9 @@ class Commands:
         control = Control()
 
         if not permissions.check_root(files.readall('/proc/info/su')):
-            colors.show("up", "perm", "")
-            sys.exit(0)
+            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
+                colors.show("up", "perm", "")
+                sys.exit(0)
 
         if args == []:
             colors.show("up", "fail", "no inputs.")
