@@ -1,0 +1,3 @@
+host: http://localhost/ic0
+address: addr.php
+cloud: cloud.php

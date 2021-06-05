@@ -1045,12 +1045,12 @@ border-radius: 6% 6%;
         self.clicked[QModelIndex].connect(self.on_clicked)
         # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
         # on the given model index to get a pointer to the item
+        if files.isfile ('/usr/share/applications/samplenot.desk~'): files.remove('/usr/share/applications/samplenot.desk~')
 
         self.listdir = files.list('/usr/share/applications')
         self.listdir.sort()
 
         for text in self.listdir:
-
             if res.etc(text.replace('.desk',''),'application')=='Yes':
                 it = QStandardItem(text.replace('.desk',''))
                 it.setWhatsThis(f'/usr/share/applications/{text}')

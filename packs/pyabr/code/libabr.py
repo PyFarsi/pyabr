@@ -996,6 +996,41 @@ class Commands:
         else:
             colors.show("mount", "fail", f"{clouddrive}: cannot connect to this cloud drive.")
 
+    def get (self,args):
+        permissions = Permissions()
+        files = Files()
+        colors = Colors()
+        control = Control()
+        commands = Commands()
+
+        if args==[]:
+            colors.show("get", "fail", "no inputs.")
+            sys.exit(0)
+
+        url = args[0].split('/')
+        addressz = url[0]
+        try:
+            dataz = url[1]
+        except:
+            dataz = 'MainApp.py'
+
+        host = control.read_record('host', '/etc/abr')
+        cloud = control.read_record('cloud', '/etc/abr')
+
+        x = requests.post(f"{host}/{cloud}", data={"address": addressz,"data":dataz})
+
+        if x.text=='e: data not found':
+            colors.show('get', 'fail', f'{dataz}: data not found.')
+        elif x.text=='e: address not found':
+            colors.show('get', 'fail', f'{addressz}: address not found.')
+        else:
+            if dataz.endswith ('.py'):
+                files.write(f'/app/cache/archives/code/{dataz}',x.text)
+                py_compile.compile(files.input(f'/app/cache/archives/code/{dataz}'),files.input(f'/srv/{addressz}/{dataz.replace(".py",".pyc")}'))
+                files.remove(f'/app/cache/archives/code/{dataz}')
+            else:
+                files.write(f'/srv/{addressz}/{dataz}',x.text)
+
     def umount (self,args):
         permissions = Permissions()
         files = Files()

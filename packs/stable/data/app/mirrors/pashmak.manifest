@@ -1,8 +1,0 @@
-name: pashmak
-copyright: Copyright 2020-2021 Parsa Shahmaleki <parsampsh@gmail.com>
-license: GPL v3
-unpack: /
-build: 1399-12-11
-version: 0.8.1
-description: Pashmak Programming Language
-compile: Yes

@@ -1,0 +1,5 @@
+name[en]: Breeze theme
+name[fa]: پوسته بریز
+exec: /usr/share/themes/breeze
+logo: @icon/breeze
+theme-name: breeze

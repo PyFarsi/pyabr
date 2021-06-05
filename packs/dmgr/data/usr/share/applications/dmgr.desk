@@ -1,6 +1,0 @@
-name[en]: Download Manager
-name[fa]: دانلود ها
-logo: @icon/dmgr
-exec: dmgr
-application: Yes
-category: tools

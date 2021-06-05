@@ -1,0 +1,423 @@
+sel /etc/gui
+set theme-name: breeze
+set logo: @icon/breeze
+set backend.color: #730c5a
+set backend.timeout: 1000
+set taskbar.location: bottom
+set taskbar.pins: browser,roller,barge,calculator,calendar,commento,pysys,runapp,about
+set splash.timeout: 3000
+set splash.logo: @icon/breeze
+set splash.logo-size: 300
+set menu: @icon/breeze-menu
+set splash.color: #730c5a
+set login.bgcolor: #730c5a
+set taskbar.icon.style: No
+set login.background: @background/breeze
+set login.fgcolor: #FFFFFF
+set enter.bgcolor: #fff
+set enter.background: @background/breeze
+set enter.fgcolor: #FFFFFF
+set unlock.bgcolor: #123456
+set unlock.background: @background/breeze
+set unlock.fgcolor: #FFFFFF
+set oginw.bgcolor: white
+set loginw.fgcolor: black
+set loginw.round: Yes
+set loginw.round-size: 20 20
+set loginw.location: center
+set loginw.shadow: Yes
+set loginw.userlogo: @icon/breeze-users
+set loginw.userlogo.shadow: Yes
+set loginw.userlogo.color: white
+set loginw.userlogo.round: Yes
+set loginw.userlogo.round-size: 125 125
+set loginw.input.shadow: Yes
+set loginw.input.fgcolor: gray
+set loginw.input.bgcolor: white
+set loginw.input.round: Yes
+set loginw.input.round-size: 20 20
+set loginw.input.font-size: 12
+set taskbar.bgcolor: white
+set taskbar.fgcolor: black
+set taskbar.locked: Yes
+set taskbar.float: Yes
+set taskbar.size: 40
+set desktop.bgcolor: white
+set desktop.fgcolor: black
+set desktop.background: @background/default
+set lock.fgcolor: black
+set lock.bgcolor: black
+set lock.background: @background/default
+set lock.clock.shadow: No
+set lock.clock.size: 100
+set lock.clock.color: white
+set lock.clock.location: center
+set lock.clock.format: hh:mm:ss
+set loginw.login.round: Yes
+set loginw.login.round-size: 20
+set loginw.enter.round: Yes
+set loginw.enter.round-size: 20
+set loginw.unlock.round: Yes
+set loginw.unlock.round-size: 20
+set submenu.hide: No
+set submenu.fgcolor: white
+set submenu.bgcolor: #1d1d1d
+set submenu.direction: ltr
+set submenu.fontsize: 12
+set loginw.login.bgcolor: #ABCDEF
+set loginw.login.fgcolor: #FFFFFF
+set loginw.login.bgcolor-hover: #123456
+set loginw.login.fgcolor: #FFFFFF
+set loginw.login.fontsize: 12
+set loginw.login.hide: No
+set loginw.login.width: 300
+set loginw.enter.bgcolor: pink
+set loginw.enter.fgcolor: #FFFFFF
+set loginw.enter.bgcolor-hover: purple
+set loginw.enter.fgcolor: #FFFFFF
+set loginw.enter.fontsize: 12
+set loginw.enter.hide: No
+set loginw.enter.width: 300
+set loginw.unlock.bgcolor: green
+set loginw.unlock.fgcolor: #FFFFFF
+set loginw.unlock.bgcolor-hover: lime
+set loginw.unlock.fgcolor: #FFFFFF
+set loginw.unlock.fontsize: 12
+set loginw.unlock.hide: No
+set loginw.unlock.width: 300
+set loginw.enter.shadow: No
+set loginw.unlock.shadow: No
+set loginw.login.shadow: No
+set loginw.login.height: 40
+set loginw.enter.height: 40
+set loginw.unlock.height: 40
+set appw.body.fgcolor: black
+set appw.body.bgcolor: white
+set appw.logo: @icon/breeze-app
+set appw.shadow: Yes
+set appw.title.size: 50
+set appw.title.fgcolor: white
+set appw.title.bgcolor: #475057
+set appw.title.float: @icon/breeze-float
+set appw.title.float-hover: white
+set appw.title.close: @icon/breeze-close
+set appw.title.close-hover: red
+set menu.scroll.color: #94cee9
+set menu.scroll.color-hover: #94cee9
+set menu.scroll.round-size: 0
+set menu.scroll.bgcolor: white
+unsel
+
+sel /etc/ext
+set 7zip.icon: @icon/breeze-7zip
+set apk.icon: @icon/breeze-apk
+set zip.icon: @icon/breeze-zip
+set sql.icon: @icon/breeze-database
+set accdb.icon: @icon/breeze-database
+set dwg.icon: @icon/breeze-3d
+set dxf.icon: @icon/breeze-3d
+set ttf.icon: @icon/breeze-font
+set snf.icon: @icon/breeze-snf
+set gz.icon: @icon/breeze-gzip
+set ai.icon: @icon/breeze-image
+set bmp.icon: @icon/breeze-bmp
+set gif.icon: @icon/breeze-gif
+set ico.icon: @icon/breeze-ico
+set jpg.icon: @icon/breeze-image
+set png.icon: @icon/breeze-png
+set psd.icon: @icon/breeze-psd
+set tga.icon: @icon/breeze-tga
+set tiff.icon: @icon/breeze-tiff
+set jpeg.icon: @icon/breeze-image
+set java.icon: @icon/breeze-java
+set js.icon: @icon/breeze-js
+set json.icon: @icon/breeze-json
+set ogg.icon: @icon/breeze-ogg
+set pdf.icon: @icon/breeze-pdf
+set rss.icon: @icon/breeze-rss
+set rtf.icon: @icon/breeze-rtf
+set txt.icon: @icon/breeze-txt
+set list.icon: @icon/breeze-txt
+set cat.icon: @icon/breeze-txt
+set manifest.icon: @icon/breeze-txt
+set compile.icon: @icon/breeze-txt
+set doc.icon: @icon/breeze-doc
+set docx.icon: @icon/breeze-doc
+set acad.icon: @icon/breeze-3d
+set ace.icon: @icon/breeze-archive
+set ar.icon: @icon/breeze-archive
+set arc.icon: @icon/breeze-arc
+set bz.icon: @icon/breeze-bz
+set bz2.icon: @icon/breeze-bz
+set tar.bz.icon: @icon/breeze-bz
+set tar.bz2.icon: @icon/breeze-bz
+set iso.icon: @icon/breeze-iso
+set desk.icon: @icon/breeze-desk
+set saye.icon: @icon/breeze-shell
+set gz.icon: @icon/breeze-archive
+set img.icon: @icon/breeze-iso
+set jar.icon: @icon/breeze-jar
+set m4.icon: @icon/breeze-m4
+set msi.icon: @icon/breeze-exe
+set pak.icon: @icon/breeze-archive
+set perl.icon: @icon/breeze-perl
+set php.icon: @icon/breeze-php
+set pyc.icon: @icon/breeze-pyc
+set rar.icon: @icon/breeze-tar
+set rpm.icon: @icon/breeze-rpm
+set so.icon: @icon/breeze-so
+set swf.icon: @icon/breeze-swf
+set sln.icon: @icon/breeze-m4
+set sqlite.icon: @icon/breeze-database
+set tar.icon: @icon/breeze-tar
+set xz.icon: @icon/breeze-xz
+set tar.xz.icon: @icon/breeze-xz
+set aac.icon: @icon/breeze-ac3
+set ac3.icon: @icon/breeze-ac3
+set m4a.icon: @icon/breeze-m4a
+set midi.icon: @icon/breeze-midi
+set mp2.icon: @icon/breeze-m4a
+set mp3.icon: @icon/breeze-mp3
+set aiff.icon: @icon/breeze-ac3
+set wav.icon: @icon/breeze-wav
+set deb.icon: @icon/breeze-deb
+set otf.icon: @icon/breeze-otf
+set woff.icon: @icon/breeze-otf
+set html.icon: @icon/breeze-html
+set emf.icon: @icon/breeze-cmf
+set svg.icon: @icon/breeze-svg
+set webp.icon: @icon/breeze-mp4
+set wmf.icon: @icon/breeze-wmf
+set dng.icon: @icon/breeze-dng
+set eps.icon: @icon/breeze-eps
+set exr.icon: @icon/breeze-image
+set odb.icon: @icon/breeze-database
+set odg.icon: @icon/breeze-odg
+set odf.icon: @icon/breeze-odf
+set odp.icon: @icon/breeze-odp
+set oth.icon: @icon/breeze-oth
+set ods.icon: @icon/breeze-ods
+set pa.icon: @icon/breeze-archive
+set sh.icon: @icon/breeze-shell
+set sa.icon: @icon/breeze-shell
+set preinstall.icon: @icon/breeze-shell
+set postinstall.icon: @icon/breeze-shell
+set preremove.icon: @icon/breeze-shell
+set postremove.icon: @icon/breeze-shell
+set cs.icon: @icon/breeze-cs
+set css.icon: @icon/breeze-css
+set csv.icon: @icon/breeze-txt
+set md.icon: @icon/breeze-md
+set rdf.icon: @icon/breeze-txt
+set sgml.icon: @icon/breeze-xml
+set bak.icon: @icon/breeze-iso
+set cpp.icon: @icon/breeze-c++
+set c++.icon: @icon/breeze-c++
+set cxx.icon: @icon/breeze-c++
+set hpp.icon: @icon/breeze-h++
+set bat.icon: @icon/breeze-shell
+set c.icon: @icon/breeze-c
+set changelog.icon: @icon/breeze-txt
+set h.icon: @icon/breeze-h
+set make.icon: @icon/breeze-make
+set dtd.icon: @icon/breeze-xml
+set go.icon: @icon/breeze-go
+set log.icon: @icon/breeze-txt
+set lua.icon: @icon/breeze-lua
+set pas.icon: @icon/breeze-pas
+set patch.icon: @icon/breeze-patch
+set py.icon: @icon/breeze-py
+set qml.icon: @icon/breeze-qml
+set ui.icon: @icon/breeze-ui
+set r.icon: @icon/breeze-r
+set sass.icon: @icon/breeze-sass
+set xhtml.icon: @icon/breeze-xhtml
+set xml.icon: @icon/breeze-xml
+set mp4.icon: @icon/breeze-mp4
+set webm.icon: @icon/breeze-webm
+set flv.icon: @icon/breeze-swf
+set mng.icon: @icon/breeze-png
+set wmp.icon: @icon/breeze-wmp
+set wmv.icon: @icon/breeze-wmv
+set nsv.icon: @icon/breeze-mp4
+set ogm.icon: @icon/breeze-ogm
+set sgi.icon: @icon/breeze-mp4
+set ova.icon: @icon/breeze-ova
+set ovf.icon: @icon/breeze-ovf
+set vbox.icon: @icon/breeze-vbox
+set ext.icon: @icon/breeze-ext
+set vdi.icon: @icon/breeze-vdi
+set vhd.icon: @icon/breeze-vhd
+set vmdk.icon: @icon/breeze-vmdk
+set ppt.icon: @icon/breeze-ppt
+set pptx.icon: @icon/breeze-ppt
+set xls.icon: @icon/breeze-xls
+set xlsx.icon: @icon/breeze-xls
+set url.icon: @icon/breeze-html
+unsel
+
+sel /usr/share/applications/roller.desk
+set folder-icon: @icon/breeze-folder
+set file-icon: @icon/breeze-txt
+set logo: @icon/breeze-roller
+unsel
+
+sel /usr/share/applications/pysys.desk
+set logo: @icon/breeze-pysys
+unsel
+
+sel /usr/share/applications/pyshell.desk
+set logo: @icon/breeze-pyshell
+unsel
+
+sel /usr/share/applications/paye.desk
+set logo: @icon/breeze-paye
+unsel
+
+sel /usr/share/applications/paint.desk
+set logo: @icon/breeze-paint
+unsel
+
+sel /usr/share/applications/lightword.desk
+set logo: @icon/breeze-lightword
+unsel
+
+sel /usr/share/applications/help.desk
+set logo: @icon/breeze-help
+unsel
+
+sel /usr/share/applications/commento.desk
+set logo: @icon/breeze-commento
+unsel
+
+sel /usr/share/applications/calendar.desk
+set logo: @icon/breeze-calendar
+unsel
+
+sel /usr/share/applications/calculator.desk
+set logo: @icon/breeze-calculator
+unsel
+
+sel /usr/share/applications/dmgr.desk
+set logo: @icon/breeze-dmgr
+unsel
+
+sel /usr/share/applications/nama.desk
+set logo: @icon/breeze-shotwell
+unsel
+
+sel /usr/share/applications/setting.desk
+set logo: @icon/breeze-setting
+unsel
+
+sel /usr/share/applications/process.desk
+set logo: @icon/breeze-process
+unsel
+
+sel /usr/share/applications/wifi.desk
+set logo: @icon/breeze-w100
+set wifi-020: @icon/breeze-w020
+set wifi-040: @icon/breeze-w040
+set wifi-080: @icon/breeze-w080
+set wifi-100: @icon/breeze-w100
+unsel
+
+sel /usr/share/applications/setup.desk
+set logo: @icon/breeze-setup
+unsel
+
+sel /usr/share/applications/lang.desk
+set logo: @icon/breeze-lang
+unsel
+
+sel /usr/share/applications/key.desk
+set logo: @icon/breeze-lang
+unsel
+
+sel /usr/share/applications/wallpaper.desk
+set logo: @icon/breeze-wallpaper
+unsel
+
+sel /usr/share/applications/sample.desk
+set logo: @icon/breeze-app
+unsel
+
+sel /usr/share/applications/samplenot.desk
+set logo: @icon/breeze-app
+unsel
+
+sel /usr/share/applications/persia.desk
+set logo: @icon/breeze-persia
+unsel
+
+sel /usr/share/applications/cloud.desk
+set logo: @icon/breeze-roller
+unsel
+sel /usr/share/applications/cloudroller.desk
+set logo: @icon/breeze-roller
+unsel
+sel /usr/share/applications/connectcloud.desk
+set logo: @icon/breeze-roller
+unsel
+sel /usr/share/applications/debug.desk
+set logo: @icon/breeze-app
+unsel
+sel /usr/share/applications/bool.desk
+set logo: @icon/breeze-app
+unsel
+sel /usr/share/applications/sudoprocess.desk
+set logo: @icon/breeze-box
+unsel
+
+sel /usr/share/applications/not.desk
+set logo: @icon/breeze-box
+unsel
+
+sel /usr/share/applications/theme.desk
+set logo: @icon/breeze-theme
+unsel
+
+sel /usr/share/applications/users.desk
+set logo: @icon/breeze-users
+unsel
+
+sel /usr/share/applications/uedit.desk
+set logo: @icon/breeze-users
+unsel
+
+sel /usr/share/applications/barge.desk
+set logo: @icon/breeze-barge
+unsel
+
+sel /usr/share/applications/about.desk
+set logo: @icon/breeze-info
+unsel
+
+sel /usr/share/applications/input.desk
+set logo: @icon/breeze-box
+unsel
+
+sel /usr/share/applications/runapp.desk
+set logo: @icon/breeze-runapp
+unsel
+
+sel /usr/share/applications/select.desk
+set logo: @icon/breeze-box
+unsel
+
+sel /usr/share/applications/uiv.desk
+set logo: @icon/breeze-designer
+unsel
+
+sel /usr/share/applications/open.desk
+set logo: @icon/breeze-box
+unsel
+
+
+sel /usr/share/applications/screen.desk
+set logo: @icon/breeze-display
+unsel
+
+sel /usr/share/applications/text.desk
+set logo: @icon/breeze-box
+unsel

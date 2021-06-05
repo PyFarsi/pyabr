@@ -1,3 +1,0 @@
-default: index.php
-engine: abr://pyabr.com
-server: http://localhost/

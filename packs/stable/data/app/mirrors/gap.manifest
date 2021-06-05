@@ -1,8 +1,0 @@
-name: gap
-copyright: (c) 2021 Gap Inc
-license: Free Software License
-unpack: /
-build: 1400-01-23
-version: 4.5.15
-description: Webview Gap for Pyabr
-compile: Yes

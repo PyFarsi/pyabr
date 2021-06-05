@@ -1,7 +1,0 @@
-default: https://gerdoo.me
-default-site: gerdoo.me
-default-name: گردو
-abr.index: index
-abr.default: pyabr.com
-abr.finder: http://pyabr.rf.gd/domain.php?url=
-abr.server: http://pyabr.rf.gd/

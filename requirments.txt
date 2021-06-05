@@ -1,7 +1,6 @@
 PyQt5
 requests
 pyqtconsole
-PyQtWebEngine
 pygame
 kivy
 QScintilla

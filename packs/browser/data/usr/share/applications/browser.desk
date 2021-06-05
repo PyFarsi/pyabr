@@ -1,7 +1,0 @@
-name[en]: Browser
-name[fa]: مرورگر اینترنتی
-exec: browser
-logo: @icon/web-browser
-application: Yes
-category: internet
-pin: Yes

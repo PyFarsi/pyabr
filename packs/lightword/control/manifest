@@ -1,8 +1,0 @@
-name: lightword
-copyright: (c) Megasolid Idiom
-license: Free Software License
-unpack: /
-build: 1400-03-07
-version: 1.1.7
-description: Simple rich text editor
-compile: Yes

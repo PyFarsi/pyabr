@@ -27,7 +27,7 @@ ip = ""
 arch = ""
 os_user = ""
 kernel_name = "vmabr"
-kernel_version = "1.3.0"
+kernel_version = "1.3.2"
 user = ""
 code = ""
 argv = sys.argv[1:] # kernel parameters
@@ -421,11 +421,6 @@ if argv[0]=="gui":
     from PyQt5.QtCore import *
     from PyQt5.QtWidgets import *
 
-    try:
-        from PyQt5.QtWebEngineWidgets import *
-    except:
-        pass
-
     ## Main entry ##
     application = QApplication(sys.argv)
     app.start('desktop')
@@ -453,10 +448,7 @@ if argv[0]=="gui-splash":
     from PyQt5.QtCore import *
     from PyQt5.QtWidgets import *
 
-    try:
-        from PyQt5.QtWebEngineWidgets import *
-    except:
-        pass
+    
 
     ## Main entry ##
     application = QApplication(sys.argv)
@@ -484,10 +476,7 @@ if argv[0]=="gui-login":
     from PyQt5.QtCore import *
     from PyQt5.QtWidgets import *
 
-    try:
-        from PyQt5.QtWebEngineWidgets import *
-    except:
-        pass
+    
 
     ## Main entry ##
     application = QApplication(sys.argv)
@@ -528,10 +517,7 @@ if argv[0]=="gui-enter":
     from PyQt5.QtCore import *
     from PyQt5.QtWidgets import *
 
-    try:
-        from PyQt5.QtWebEngineWidgets import *
-    except:
-        pass
+    
 
     ## Main entry ##
     application = QApplication(sys.argv)
@@ -573,10 +559,7 @@ if argv[0]=="gui-unlock":
     from PyQt5.QtCore import *
     from PyQt5.QtWidgets import *
 
-    try:
-        from PyQt5.QtWebEngineWidgets import *
-    except:
-        pass
+    
 
     ## Main entry ##
     application = QApplication(sys.argv)
@@ -627,10 +610,7 @@ if argv[0]=="gui-desktop":
     from PyQt5.QtCore import *
     from PyQt5.QtWidgets import *
 
-    try:
-        from PyQt5.QtWebEngineWidgets import *
-    except:
-        pass
+    
 
     ## Main entry ##
     application = QApplication(sys.argv)

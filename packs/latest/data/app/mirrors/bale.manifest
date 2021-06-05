@@ -1,8 +1,0 @@
-name: bale
-copyright: (c) 2020 Bale
-license: Free Software License
-unpack: /
-build: 1399-12-11
-version: 0.0.1
-description: Webview Bale for Pyabr
-compile: Yes
