@@ -736,25 +736,20 @@ pause
         self.new_pygui.setFont(self.Env.font())
         self.new_pygui.setIcon(QIcon(res.get(res.etc("roller", "py"))))
 
-        self.new_pyweb = self.new_code.addAction(res.get('@string/newpyweb'))
-        self.new_pyweb.triggered.connect(self.New_PyWeb)
-        self.new_pyweb.setFont(self.Env.font())
-        self.new_pyweb.setIcon(QIcon(res.get('@icon/web-browser')))
-
         self.new_ui = self.new_code.addAction(res.get('@string/uix'))
         self.new_ui.setFont(self.Env.font())
         self.new_ui.triggered.connect(self.New_UI)
-        self.new_ui.setIcon(QIcon(res.get('@icon/application-x-designer')))
+        self.new_ui.setIcon(QIcon(res.get('@icon/breeze-ui')))
         ##
 
         self.new_folder = self.file.addAction(res.get('@string/newfolder'))
         self.new_folder.triggered.connect(self.New_Folder)
         self.new_folder.setShortcut('Ctrl+Alt+D')
         self.new_folder.setFont(self.Env.font())
-        self.new_folder.setIcon(QIcon(res.get(res.etc("roller","folder-icon"))))
+        self.new_folder.setIcon(QIcon(res.get('@icon/breeze-newfolder')))
 
         self.open = self.file.addAction(res.get('@string/open'))
-        self.open.setIcon(QIcon(res.get('@icon/blue-fileopen')))
+        self.open.setIcon(QIcon(res.get('@icon/breeze-open')))
         self.open.triggered.connect(self.open_act)
         self.open.setShortcut('Ctrl+O')
         self.open.setFont(self.Env.font())
@@ -762,36 +757,35 @@ pause
         self.openwith = self.file.addAction(res.get('@string/openwith'))
         self.openwith.triggered.connect(self.open_with_act)
         self.openwith.setShortcut('Ctrl+Alt+O')
-
-        self.openwith.setIcon(QIcon(res.get('@icon/blue-fileopen')))
+        self.openwith.setIcon(QIcon(res.get('@icon/breeze-open')))
         self.openwith.setFont(self.Env.font())
 
         self.execute = self.file.addAction(res.get('@string/execute'))
         self.execute.triggered.connect(self.execute_act)
         self.execute.setFont(self.Env.font())
-        self.execute.setIcon(QIcon(res.get('@icon/execute')))
+        self.execute.setIcon(QIcon(res.get('@icon/breeze-execute')))
         self.execute.setShortcut('Ctrl+Alt+X')
 
         self.cut = self.file.addAction(res.get('@string/cut'))
         self.cut.triggered.connect(self.cut_act)
         self.cut.setShortcut('Ctrl+X')
-        self.cut.setIcon(QIcon(res.get('@icon/cut')))
+        self.cut.setIcon(QIcon(res.get('@icon/breeze-cut')))
         self.cut.setFont(self.Env.font())
 
         self.copy = self.file.addAction(res.get('@string/copy'))
         self.copy.triggered.connect(self.copy_act)
-        self.copy.setIcon(QIcon(res.get('@icon/copy')))
+        self.copy.setIcon(QIcon(res.get('@icon/breeze-copy')))
         self.copy.setFont(self.Env.font())
         self.copy.setShortcut('Ctrl+C')
 
         self.paste = self.file.addAction(res.get('@string/paste'))
         self.paste.triggered.connect(self.paste_act)
         self.paste.setFont(self.Env.font())
-        self.paste.setIcon(QIcon(res.get('@icon/paste')))
+        self.paste.setIcon(QIcon(res.get('@icon/breeze-paste')))
         self.paste.setShortcut('Ctrl+V')
 
         self.delete = self.file.addAction(res.get('@string/delete'))
-        self.delete.setIcon(QIcon(res.get('@icon/delete')))
+        self.delete.setIcon(QIcon(res.get('@icon/breeze-delete')))
         self.delete.setShortcut('Ctrl+T')
         self.delete.triggered.connect (self.delete_act)
         self.delete.setFont(self.Env.font())
@@ -799,14 +793,14 @@ pause
         self.rename = self.file.addAction(res.get('@string/rename'))
         self.rename.triggered.connect(self.rename_act)
         self.rename.setShortcut('F2')
-        self.rename.setIcon(QIcon(res.get('@icon/rename')))
+        self.rename.setIcon(QIcon(res.get('@icon/breeze-rename')))
         self.rename.setFont(self.Env.font())
 
         self.exit = self.file.addAction(res.get('@string/exit'))
         self.exit.triggered.connect(self.Widget.Close)
         self.exit.setFont(self.Env.font())
         self.exit.setShortcut('Alt+F4')
-        self.exit.setIcon(QIcon(res.get(res.etc("roller","exit-icon"))))
+        self.exit.setIcon(QIcon(res.get('@string/breeze-exit')))
 
         self.open.setVisible(False)
         self.openwith.setVisible(False)
@@ -878,11 +872,6 @@ pause
     def New_PyGui (self):
         app.switch('roller')
         self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkpygui])
-        app.switch('roller')
-
-    def New_PyWeb (self):
-        app.switch('roller')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkpyweb])
         app.switch('roller')
 
     def New_Sa (self):

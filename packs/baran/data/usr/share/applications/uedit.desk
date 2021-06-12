@@ -1,7 +1,7 @@
 name[en]: User Editor
 name[fa]: ویرایشگر حساب ها
 exec: uedit
-logo: @icon/users
+logo: @icon/breeze-users
 application: No
 hidden: Yes
 category: system

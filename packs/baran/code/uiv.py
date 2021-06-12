@@ -1,3 +1,5 @@
+import sys
+
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -41,6 +43,22 @@ class MainApp(QMainWindow):
             else:
                 if self.External[0]==None:
                     self.Widget.Close()
+                elif self.External[0].startswith ("abr://"):
+
+                    ############# ABR Version 1 #########################
+                    splitabr = self.External[0].split("://")
+                    url = splitabr[1]
+                    commands.get([url])
+
+                    if url.endswith ('.xml'):
+                        uic.loadUi(files.input(f'/srv/{url}'), self)
+                    else:
+                        uic.loadUi(files.input(f'/srv/{url}/index.xml'), self)
+
+                    self.Widget.SetWindowTitle(self.windowTitle())
+                    self.Widget.SetWindowIcon(self.windowIcon())
+                    self.Widget.Resize(self, self.width(), self.height())
+                    ####################################################
                 else:
                     uic.loadUi(files.input(self.External[0]),self)
 

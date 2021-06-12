@@ -1,7 +1,7 @@
 name[en]: Process Manager
 name[fa]: مدیریت فرایندها
 exec: process
-logo: @icon/monitor
+logo: @icon/breeze-process
 application: Yes
 hidden: No
 category: system

@@ -1,6 +1,6 @@
 name[en]: Wallpaper
 name[fa]: تنظیمات پس زمینه
-logo: @icon/wallpaper
+logo: @icon/breeze-wallpaper
 exec: wallpaper
 application: No
 hidden: Yes

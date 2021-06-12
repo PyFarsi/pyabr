@@ -37,7 +37,7 @@ class MainApp(QWidget):
 
         self.Widget.Resize (self,500,200)
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
-        self.Widget.SetWindowIcon (QIcon(res.get('@icon/dmgr')))
+        self.Widget.SetWindowIcon (QIcon(res.get('@icon/breeze-dmgr')))
 
 
         layout = QVBoxLayout(self)

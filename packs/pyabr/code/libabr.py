@@ -1012,7 +1012,7 @@ class Commands:
         try:
             dataz = url[1]
         except:
-            dataz = 'MainApp.py'
+            dataz = 'index.xml'
 
         host = control.read_record('host', '/etc/abr')
         cloud = control.read_record('cloud', '/etc/abr')
@@ -1024,12 +1024,13 @@ class Commands:
         elif x.text=='e: address not found':
             colors.show('get', 'fail', f'{addressz}: address not found.')
         else:
-            if dataz.endswith ('.py'):
-                files.write(f'/app/cache/archives/code/{dataz}',x.text)
-                py_compile.compile(files.input(f'/app/cache/archives/code/{dataz}'),files.input(f'/srv/{addressz}/{dataz.replace(".py",".pyc")}'))
-                files.remove(f'/app/cache/archives/code/{dataz}')
-            else:
+            if not files.isdir(f'/srv/{addressz}'):
+                files.mkdir(f'/srv/{addressz}')
+
+            try:
                 files.write(f'/srv/{addressz}/{dataz}',x.text)
+            except:
+                pass
 
     def umount (self,args):
         permissions = Permissions()

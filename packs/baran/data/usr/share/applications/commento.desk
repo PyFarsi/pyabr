@@ -1,7 +1,7 @@
 name[en]: Terminal
 name[fa]: پایانه
 name[ar]: محطة
-logo: @icon/commento
+logo: @icon/breeze-commento
 exec: terminal
 shortcut: Ctrl+Alt+C
 bgcolor: white

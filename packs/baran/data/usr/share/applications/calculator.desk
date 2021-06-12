@@ -1,7 +1,7 @@
 name[en]: Calculator
 name[fa]: ماشین حساب
 name[ar]: آلة حاسبة
-logo: @icon/calculator
+logo: @icon/breeze-calculator
 exec: calculator
 shortcut: Ctrl+Q
 width: 600

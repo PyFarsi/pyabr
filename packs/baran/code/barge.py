@@ -161,10 +161,6 @@ class MainApp(QtWidgets.QMainWindow):
         self.lang_pythongui.setFont(self.Env.font())
         self.lang_pythongui.triggered.connect(self.langpythonx)
         self.lang_pythongui.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'py'))))
-        self.lang_pythonweb = self.insert_c.addAction(res.get('@string/pyweb'))
-        self.lang_pythonweb.setFont(self.Env.font())
-        self.lang_pythonweb.triggered.connect(self.langpythonweb)
-        self.lang_pythonweb.setIcon(QtGui.QIcon(res.get('@icon/web-browser')))
         self.lang_saye = self.insert_c.addAction(res.get('@string/saye'))
         self.lang_saye.setFont(self.Env.font())
         self.lang_saye.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'sa'))))
@@ -183,7 +179,7 @@ class MainApp(QtWidgets.QMainWindow):
         self.lang_js.triggered.connect(self.langjs)
 
         self.lang_ui = self.insert_c.addAction(res.get('@string/uix'))
-        self.lang_ui.setIcon(QtGui.QIcon(res.get('@icon/application-x-designer')))
+        self.lang_ui.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'ui'))))
         self.lang_ui.setFont(self.Env.font())
         self.lang_ui.triggered.connect(self.langui)
 
@@ -226,7 +222,7 @@ pause
                 files.create(f'/usr/share/applications/debug_{rand}.desk')
                 control.write_record('name[en]','Debug App',f'/usr/share/applications/debug_{rand}.desk')
                 control.write_record('name[fa]','برنامه تستی',f'/usr/share/applications/debug_{rand}.desk')
-                control.write_record('logo','@icon/app',f'/usr/share/applications/debug_{rand}.desk')
+                control.write_record('logo','@icon/breeze-app',f'/usr/share/applications/debug_{rand}.desk')
                 control.write_record('exec',f"debug_{rand}",f'/usr/share/applications/debug_{rand}.desk')
                 py_compile.compile(files.input(self.Widget.WindowTitle()),files.input(f'/usr/app/debug_{rand}.pyc'))
                 self.Env.RunApp(f'debug_{rand}',[None])
@@ -336,9 +332,6 @@ pause
 
     def langpythonx (self):
         self.teEdit.setPlainText(files.readall(res.get('@temp/untitled-gui.py')))
-
-    def langpythonweb (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled-web.py')))
 
     def langcs (self):
         self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.cs')))

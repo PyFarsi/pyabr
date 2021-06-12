@@ -230,7 +230,7 @@ set loginw.unlock.round-size: 20
 set submenu.hide: Yes
 set submenu.fgcolor: white
 set submenu.bgcolor: #1d1d1d
-set submenu.direction: ltr
+set submenu.direction: rtl
 set submenu.fontsize: 12
 set loginw.login.bgcolor: #ABCDEF
 set loginw.login.fgcolor: #FFFFFF

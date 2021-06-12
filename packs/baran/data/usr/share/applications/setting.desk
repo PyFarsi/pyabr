@@ -1,7 +1,7 @@
 name[en]: Settings
 name[fa]: تنظیمات
 exec: setting
-logo: @icon/setting
+logo: @icon/breeze-setting
 application: Yes
 hidden: No
 category: system

@@ -1,12 +1,12 @@
 name[en]: WiFi
 name[fa]: شبکه بی سیم
-logo: @icon/network
+logo: @icon/breeze-w100
 exec: wifi_gui
 application: No
 hidden: Yes
 category: tools
 setting: Yes
-wifi-020: @icon/wifi-020
-wifi-040: @icon/wifi-040
-wifi-080: @icon/wifi-080
-wifi-100: @icon/wifi-100
+wifi-020: @icon/breeze-w020
+wifi-040: @icon/breeze-w040
+wifi-080: @icon/breeze-w080
+wifi-100: @icon/breeze-w100

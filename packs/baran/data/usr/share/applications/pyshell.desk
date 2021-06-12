@@ -1,7 +1,7 @@
 name[en]: Python shell
 name[fa]: مفسر پایتون
 name[ar]: قذيفة بايثون
-logo: @icon/python
+logo: @icon/breeze-pyshell
 exec: pyshell
 shortcut: Ctrl+Alt+P
 bgcolor: white

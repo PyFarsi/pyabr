@@ -36,7 +36,7 @@ class UserListView (QListView):
     def format(self, it, text):
         self.logo = control.read_record('loginw.userlogo',f'/etc/users/{it.whatsThis()}')
         if self.logo==None:
-            it.setIcon(QIcon(res.get('@icon/account')))
+            it.setIcon(QIcon(res.get('@icon/breeze-users')))
         else:
             if str(self.logo).startswith('@icon/'):
                 it.setIcon(QIcon(res.get(self.logo)))
@@ -174,7 +174,7 @@ class ShowUserInformation (QMainWindow):
         self.logo = control.read_record('loginw.userlogo',self.path)
 
         if self.logo==None:
-            self.btnImage.setIcon(QIcon(res.get('@icon/account')))
+            self.btnImage.setIcon(QIcon(res.get('@icon/breeze-users')))
         else:
             if str(self.logo).startswith('@icon/'):
                 self.btnImage.setIcon(QIcon(res.get(self.logo)))

@@ -1,6 +1,6 @@
 name[en]: Open Box
 exec: openbox
 hidden: Yes
-logo: @icon/help-about
+logo: @icon/breeze-app
 application: No
 category: system

@@ -319,7 +319,7 @@ class LoginWidget (QMainWindow):
             if not logo == None:
                 loginw_userlogo = logo
             else:
-                loginw_userlogo = '@icon/account'
+                loginw_userlogo = '@icon/breeze-users'
 
             if loginw_userlogo.startswith('@icon/'):
                 self.userlogo.setIcon(QIcon(res.get(loginw_userlogo)))

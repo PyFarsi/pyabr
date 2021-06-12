@@ -43,7 +43,7 @@ class DriveListView (QListView):
         else:
             it.setText(f"New Cloud Drive - ({it.whatsThis()}:)")
 
-        it.setIcon(QIcon(res.get('@icon/harddrive')))
+        it.setIcon(QIcon(res.get('@icon/breeze-harddisk')))
 
     def __init__(self, ports):
         super().__init__()

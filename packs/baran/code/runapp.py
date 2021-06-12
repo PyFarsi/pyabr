@@ -39,22 +39,8 @@ class MainApp(baran.BLineEdit):
     def RunApp (self):
         command = self.text().split(' ')
 
-        ## ABR Protocol ##
-        if command[0].startswith ('abr://'):
-            app.switch('runapp')
-            self.Env.RunApp('cloud',[command[0]])
-            app.switch('runapp')
-            QTimer.singleShot(1000, self.correct)
-
-        ## WEB Protocol ##
-        elif command[0].startswith('http://') or command[0].startswith('https://'):
-            app.switch('runapp')
-            self.Env.RunApp('wapp', [command[0]])
-            app.switch('runapp')
-            QTimer.singleShot(1000, self.correct)
-
         ## Desktop based applications ##
-        elif app.exists(command[0]):
+        if app.exists(command[0]):
             self.Env.RunApp(command[0],command[1:])
             app.switch('runapp')
             self.setEnabled(False)

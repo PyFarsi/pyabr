@@ -1,6 +1,6 @@
 name[en]: Drives
 name[fa]: درایوها
-logo: @icon/disk
+logo: @icon/breeze-disk
 exec: cloudroller
 shortcut: Ctrl+D
 application: Yes

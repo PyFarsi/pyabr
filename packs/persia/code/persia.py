@@ -177,16 +177,6 @@ class FileListView(QListView):
             self.mkfile(filename+".py")
             files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled-gui.py')))
 
-
-    def mkpyweb (self,filename):
-        if files.isdir(filename + ".py"):
-            self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".py")])
-            app.switch('persia')
-        else:
-            self.mkfile(filename+".py")
-            files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled-web.py')))
-
-
     def __init__(self,editor):
         super().__init__()
         self.editor = editor
@@ -674,7 +664,7 @@ class MainApp(QtWidgets.QMainWindow):
         self.new_ui = self.new_code.addAction(res.get('@string/uix'))
         self.new_ui.triggered.connect(self.New_UI)
         self.new_ui.setFont(self.Env.font())
-        self.new_ui.setIcon(QIcon(res.get('@icon/application-x-designer')))
+        self.new_ui.setIcon(QIcon(res.get('@icon/breeze-ui')))
 
         ##
 
@@ -691,16 +681,6 @@ class MainApp(QtWidgets.QMainWindow):
         self.new_gui.triggered.connect(self.new_gui_act)
         self.new_gui.setFont(self.Env.font())
         self.new_gui.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName, 'py'))))
-
-        self.new_web = self.new_project.addAction(res.get('@string/nwebp'))
-        self.new_web.triggered.connect(self.new_web_act)
-        self.new_web.setFont(self.Env.font())
-        self.new_web.setIcon(QtGui.QIcon(res.get('@icon/web-browser')))
-
-        self.new_ui = self.new_project.addAction(res.get('@string/uix'))
-        self.new_ui.triggered.connect(self.new_web_act)
-        self.new_ui.setFont(self.Env.font())
-        self.new_ui.setIcon(QtGui.QIcon(res.get('@icon/web-browser')))
 
         self.open = self.file.addAction(res.get('@string/open'))
         self.open.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'open'))))
@@ -769,9 +749,6 @@ class MainApp(QtWidgets.QMainWindow):
         self.lang_pythongui = self.insert_c.addAction(res.get('@string/pythongui'))
         self.lang_pythongui.triggered.connect(self.langpythonx)
         self.lang_pythongui.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'py'))))
-        self.lang_pythonweb = self.insert_c.addAction(res.get('@string/pythonwebi'))
-        self.lang_pythonweb.triggered.connect(self.langpyweb)
-        self.lang_pythonweb.setIcon(QIcon(res.get('@icon/web-browser')))
         self.lang_saye = self.insert_c.addAction(res.get('@string/saye'))
         self.lang_saye.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'sa'))))
         self.lang_saye.triggered.connect(self.langsaye)
@@ -887,7 +864,7 @@ pause
         compile = compile.replace(f'{project}.pyc', f'{project}_{rand}.pyc')
         files.write(f'{path}/packs/{project}/control/compile', compile)
 
-        if control.read_record('type',config)=='gui' or control.read_record('type',config)=='web':
+        if control.read_record('type',config)=='gui':
             control.write_record('exec', f'{project}_{rand}',f'{path}/packs/{project}/data/usr/share/applications/{project}.desk')
             files.cut(f'{path}/packs/{project}/data/usr/share/applications/{project}.desk',
                       f'{path}/packs/{project}/data/usr/share/applications/{project}_{rand}.desk')
@@ -929,11 +906,6 @@ pause
     def new_gui_act (self):
         app.switch('persia')
         self.Env.RunApp('input', [res.get('@string/proname'), self.project_create_gui])
-        app.switch('persia')
-
-    def new_web_act (self):
-        app.switch('persia')
-        self.Env.RunApp('input', [res.get('@string/proname'), self.project_create_web])
         app.switch('persia')
 
     def project_create (self,projectname):
@@ -989,35 +961,6 @@ pause
 
         control.write_record('name', projectname, ".pypersia")
         control.write_record('type', 'gui', ".pypersia")
-        control.write_record('lang','python','.pypersia')
-        app.switch('persia')
-        self.Env.RunApp ('persia',[projectname,None])
-        app.switch('persia')
-
-    def project_create_web (self,projectname):
-        su = self.Env.username
-
-        if not su=='root':
-            System (f"paye crt web /desk/{su}/{self.project_folder}/{projectname}")
-            commands.cd([f'/desk/{su}/{self.project_folder}/{projectname}'])
-        else:
-            System(f"paye crt web /root/{self.project_folder}/{projectname}")
-            commands.cd([f'/root/{self.project_folder}/{projectname}'])
-
-        commands.mv(['packs/app',f'packs/{projectname}'])
-        commands.mv([f'packs/{projectname}/data/usr/share/docs/hello',f'packs/{projectname}/data/usr/share/docs/{projectname}'])
-        commands.mv([f'packs/{projectname}/code/hello.py',f'packs/{projectname}/code/{projectname}.py'])
-        commands.mv([f'packs/{projectname}/data/usr/share/applications/hello.desk',f'packs/{projectname}/data/usr/share/applications/{projectname}.desk'])
-        files.write (f'packs/{projectname}/control/manifest',f'name: {projectname}\ncopyright: (c) 2020 Your name\nlicense: Your license\nunpack: /\nbuild: year-month-day\nversion: 0.0.1\ndescription: Your application description\ncompile: Yes')
-        files.write(f'packs/{projectname}/control/compile', f'{projectname}.py:usr/app/{projectname}.pyc')
-        files.write(f'packs/{projectname}/control/list',f'/usr/app/{projectname}.pyc\n/usr/share/docs/{projectname}')
-        files.write(f'packs/{projectname}/data/usr/share/applications/{projectname}.desk',f'name[en]: {projectname}\nlogo: @icon/runner\nexec: {projectname}')
-
-        files.write('/proc/info/psel', projectname)
-        files.create(".pypersia")
-
-        control.write_record('name', projectname, ".pypersia")
-        control.write_record('type', 'web', ".pypersia")
         control.write_record('lang','python','.pypersia')
         app.switch('persia')
         self.Env.RunApp ('persia',[projectname,None])
