@@ -1,3 +1,4 @@
+import py_compile
 import sys
 
 from PyQt5.QtCore import *
@@ -48,16 +49,31 @@ class MainApp(QMainWindow):
                     ############# ABR Version 1 #########################
                     splitabr = self.External[0].split("://")
                     url = splitabr[1]
-                    commands.get([url])
 
-                    if url.endswith ('.xml'):
-                        uic.loadUi(files.input(f'/srv/{url}'), self)
-                    else:
-                        uic.loadUi(files.input(f'/srv/{url}/index.xml'), self)
+                    if not '/' in url:
+                        url +='/index'
 
-                    self.Widget.SetWindowTitle(self.windowTitle())
-                    self.Widget.SetWindowIcon(self.windowIcon())
-                    self.Widget.Resize(self, self.width(), self.height())
+                    commands.get([url+".xml"])
+                    commands.get([url+".css"])
+                    commands.get([url+".py"])
+
+                    try:
+                        uic.loadUi(files.input(f'/srv/{url}.xml'), self)
+
+                        if files.isfile(f'/srv/{url}.css'):
+                            self.setStyleSheet(files.readall(f'/srv/{url}.css'))
+
+                        if files.isfile(f'/srv/{url}.py'):
+                            py_compile.compile(files.input(f'/srv/{url}.py'),files.input('/srv/cloud.pyc'))
+                            self.m = importlib.import_module('srv.cloud')
+                            importlib.reload(self.m)
+                            self.m.MainApp (self)
+
+                        self.Widget.SetWindowTitle(self.windowTitle())
+                        self.Widget.SetWindowIcon(self.windowIcon())
+                        self.Widget.Resize(self, self.width(), self.height())
+                    except:
+                        pass
                     ####################################################
                 else:
                     uic.loadUi(files.input(self.External[0]),self)

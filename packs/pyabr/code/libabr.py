@@ -156,6 +156,16 @@ class Commands:
         else:
             colors.show('start', 'fail', f'{args[0]}: application not found.')
 
+    def cl (self,args):
+        files = Files()
+        colors = Colors()
+
+        if args==[]:
+            colors.show ('cl','fail','no inputs.')
+            sys.exit(0)
+
+        files.write('/tmp/cloud.tmp',args[0])
+
     # kill process #
     def kill (self,args):
         app = App()

@@ -396,6 +396,7 @@ browser.ab: درباره مرورگر
 browser.pc: رفتن به کانال رسمی پای ابر
 browser.pg: پشتیبانی پای ابر
 browser.owp: بازکردن یک صفحه وب
+browser.close: بستن
 wapp.app_name: سرویس ابری
 barge.code: کد
 barge.run: اجرا

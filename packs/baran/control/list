@@ -9,8 +9,10 @@ usr/app/inputbox.pyc
 usr/app/runapp.pyc
 usr/share/applications/runapp.desk
 usr/app/dmgr.pyc
+usr/app/browser.pyc
 usr/share/applications/dmgr.desk
 usr/app/calendar_app.pyc
+usr/app/browser_app.pyc
 usr/share/icons/pysys_escape.svg
 usr/share/icons/pysys_lock.svg
 usr/share/icons/pysys_logout.svg

@@ -45,6 +45,8 @@ class MainApp(QWidget):
         self.leUrl = LineEdit(ports)
         self.leUrl.setFont(self.Env.font())
         self.leUrl.setStyleSheet('border: none;')
+        if files.isfile('/tmp/download.tmp'):
+            self.leUrl.setText(files.readall('/tmp/download.tmp'))
         self.leUrl.setPlaceholderText(res.get('@string/link'))
         layout.addWidget(self.leUrl)
 

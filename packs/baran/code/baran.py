@@ -1864,6 +1864,8 @@ class Shell (QWidget):
         # self.threadIsStarted = False
 ## Desktop ##
 class Desktop (QMainWindow):
+    def RunCl (self,url):
+        self.RunApp('uiv',[url])
 
     def RunApp (self,appname,external):
         app.switch(appname)
@@ -2159,6 +2161,11 @@ class Desktop (QMainWindow):
             files.remove('/tmp/start.tmp')
 
             self.RunApp(appx,[None])
+
+        if files.isfile ('/tmp/cloud.tmp'):
+            appx = files.readall('/tmp/cloud.tmp')
+            files.remove('/tmp/cloud.tmp')
+            self.RunCl (appx)
 
         QTimer.singleShot(1,self.Loop)
 

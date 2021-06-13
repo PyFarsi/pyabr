@@ -11,6 +11,8 @@ runapp.py:usr/app/runapp.pyc
 piecasso.py:usr/app/piecasso.pyc
 piecasso_frontend.py:usr/app/piecasso_frontend.pyc
 resources_rc.py:usr/app/resources_rc.pyc
+browser.py:usr/app/browser.pyc
+browser_app.py:usr/app/browser_app.pyc
 lightword.py:usr/app/lightword.pyc
 process.py:usr/app/process.pyc
 openbox.py:usr/app/openbox.pyc

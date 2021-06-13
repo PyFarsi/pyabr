@@ -398,6 +398,7 @@ browser.ab: About Browser
 browser.pc: Go to Pyabr channel
 browser.pg: Pyabr Support
 browser.owp: Open a web page
+browser.close: Close
 wapp.app_name: Abr Service
 barge.code: Code
 barge.run: Run
