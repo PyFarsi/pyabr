@@ -14,6 +14,8 @@ resources_rc.py:usr/app/resources_rc.pyc
 browser.py:usr/app/browser.pyc
 browser_app.py:usr/app/browser_app.pyc
 lightword.py:usr/app/lightword.pyc
+wapp.py:usr/app/wapp.pyc
+wapp_app.py:usr/app/wapp_app.pyc
 process.py:usr/app/process.pyc
 openbox.py:usr/app/openbox.pyc
 uiv.py:usr/app/uiv.pyc

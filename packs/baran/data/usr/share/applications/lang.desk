@@ -1,6 +1,6 @@
 name[en]: Language Box
 name[fa]: تنظیمات زبان رایانه
-logo: @icon/breeze-lang
+logo: @icon/breeze-locale
 exec: langbox
 hidden: Yes
 logo: @icon/help-about

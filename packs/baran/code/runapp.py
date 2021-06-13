@@ -41,23 +41,31 @@ class MainApp(baran.BLineEdit):
 
         ## Desktop based applications ##
         if app.exists(command[0]):
-            self.Env.RunApp(command[0],command[1:])
+            try:
+                self.Env.RunApp(command[0],command[1:])
+            except:
+                commands.start([command[0]])
+
             app.switch('runapp')
             self.setEnabled(False)
-            QTimer.singleShot(1000, self.correct)
+
+        elif command[0].startswith ('http://') or command[0].startswith ('https://'):
+            self.Env.RunApp('wapp',[command[0]])
+
+        elif command[0].startswith ('abr://'):
+            commands.cl([command[0]])
 
         ## Command based application ##
         elif hasattr(commands,command[0]):
             app.switch('runapp')
             getattr(commands,command[0])(command[1:])
             app.switch('runapp')
-            QTimer.singleShot(1000, self.correct)
 
         else:
             app.switch('runapp')
             self.Env.RunApp('text', [res.get('@string/not_found'), res.get('@string/not_found_msg').replace('{0}',command[0])])
             app.switch('runapp')
-            QTimer.singleShot(1000, self.correct)
+        QTimer.singleShot(1000, self.correct)
 
     def __init__(self,args):
         super(MainApp, self).__init__()
