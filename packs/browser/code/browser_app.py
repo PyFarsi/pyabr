@@ -14,10 +14,10 @@ files = Files()
 
 class MainApp(QMainWindow):
     def Browser (self):
-        System('/usr/app/wapp')  # Run CatBall Browser
+        System('/usr/app/browser')  # Run CatBall Browser
 
     def onCloseProcess (self):
-        if not app.check('wapp'):
+        if not app.check('browser'):
             self.Widget.Close()
         else:
             QTimer.singleShot(1,self.onCloseProcess)
@@ -30,12 +30,10 @@ class MainApp(QMainWindow):
         self.AppName = ports[3]
         self.External = ports[4]
 
-        try:
-            files.write('/tmp/url.tmp',self.External[0])
-        except:
-            pass
-
         self.onCloseProcess()
+
+        files.write('/tmp/width.tmp', str(self.Env.width()))
+        files.write('/tmp/height.tmp', str(self.Env.height()))
 
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc(self.AppName,"logo"))))

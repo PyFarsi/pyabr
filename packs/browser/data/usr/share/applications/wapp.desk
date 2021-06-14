@@ -3,5 +3,5 @@ name[fa]: صفحه وب
 logo: @icon/breeze-wapp
 exec: wapp_app
 application: Yes
-category: tools
+category: internet
 pin: Yes

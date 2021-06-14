@@ -42,13 +42,13 @@ class PackageListView (QListView):
                 it.setIcon(QIcon(res.get(self.logo)))
                 it.setFont(self.Env.font())
             else:
-                it.setIcon(QIcon(res.get('@icon/runner')))
+                it.setIcon(QIcon(res.get('@icon/breeze-runapp')))
         elif not files.isfile (f'/app/packages/{it.text()}.manifest'):
-            it.setIcon(QIcon(res.get('@icon/download')))
+            it.setIcon(QIcon(res.get('@icon/breeze-tar')))
         else:
-            it.setIcon(QIcon(res.get('@icon/application-x-pak')))
+            it.setIcon(QIcon(res.get('@icon/breeze-archive')))
 
-        #it.setIcon(QIcon(res.get('@icon/application-x-pak')))
+        #it.setIcon(QIcon(res.get('@icon/breeze-archive')))
 
     def __init__(self,ports):
         super().__init__()
@@ -179,11 +179,11 @@ class ShowMirrorInformation (QMainWindow):
                 elif files.isfile(f'/app/mirrors/{self.name}.jpeg'):
                     self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.jpeg')))
                 else:
-                    self.btnImage.setIcon(QIcon(res.get('@icon/runner')))
+                    self.btnImage.setIcon(QIcon(res.get('@icon/breeze-runapp')))
             else:
-                self.btnImage.setIcon(QIcon(res.get('@icon/runner')))
+                self.btnImage.setIcon(QIcon(res.get('@icon/breeze-runapp')))
         else:
-            self.btnImage.setIcon(QIcon(res.get('@icon/download')))
+            self.btnImage.setIcon(QIcon(res.get('@icon/breeze-tar')))
 
 
         self.Env.SetWindowTitle(self.namex)
@@ -397,9 +397,9 @@ class ShowPackageInformation (QMainWindow):
                 self.namex =  control.read_record(f'name[{self.locale}]',f'/usr/share/applications/{self.name}.desk')
                 self.btnImage.setIcon(QIcon(res.get(self.logo)))
             else:
-                self.btnImage.setIcon(QIcon(res.get('@icon/runner')))
+                self.btnImage.setIcon(QIcon(res.get('@icon/breeze-runapp')))
         else:
-            self.btnImage.setIcon(QIcon(res.get('@icon/application-x-pak')))
+            self.btnImage.setIcon(QIcon(res.get('@icon/breeze-archive')))
 
 
         self.Env.SetWindowTitle(self.namex)

@@ -30,21 +30,76 @@ class MainWindow(QMainWindow):
 
         self.setFont(f)
 
+        self.titlebar = QWidget()
+        self.titlebar.setStyleSheet(
+            f'background-color: {getdata("appw.title.bgcolor")};color: {getdata("appw.title.fgcolor")};')
+
+        self.layouts = QHBoxLayout()
+        self.titlebar.setLayout(self.layouts)
+
+        # icon widget #
+        self.icon = QIcon(res.get('@icon/breeze-browser'))
+
+
+        self.iconwidget = QLabel()
+        self.iconwidget.setPixmap(
+            self.icon.pixmap(int(getdata("appw.title.size")) - 18, int(getdata("appw.title.size")) - 18))
+        self.iconwidget.resize(int(getdata("appw.title.size")), int(getdata("appw.title.size")))
+        self.layouts.addWidget(self.iconwidget)
+
+        self.iconwidget.setGeometry(0, 0, int(getdata("appw.title.size")), int(getdata("appw.title.size")))
+
+        # text title #
+        self.titletext = QLabel()
+        self.titletext.setStyleSheet(
+            f'background-color:  {getdata("appw.title.bgcolor")};color: {getdata("appw.title.fgcolor")};')
+        self.titletext.setMaximumWidth(self.titlebar.width())
+        self.titletext.setGeometry(int(getdata("appw.title.size")), 0, self.titlebar.width(),
+                                   int(getdata("appw.title.size")))
+
+        self.titletext.setFont(f)
+
+        self.titletext.setText(res.get('@string/app_name'))
+
+        self.layouts.addWidget(self.titletext)
+
+        round = '0'
+
+        if getdata("appw.title.btn-round") == 'Yes':
+            round = str(int((int(getdata("appw.title.size"))) - 16) / 2)
+
+        # float button #
+
+        self.btnEscape = QToolButton()
+        self.btnEscape.setIcon(QIcon(res.get(getdata("appw.title.close"))))
+        self.btnEscape.setMinimumSize(int(getdata("appw.title.size")) - 15, int(getdata("appw.title.size")) - 15)
+        self.btnEscape.setGeometry(self.titlebar.width() - int(getdata("appw.title.size")), 0,
+                                   int(getdata("appw.title.size")), int(getdata("appw.title.size")))
+        self.btnEscape.clicked.connect(self.close)
+        self.btnEscape.setStyleSheet(
+            'QToolButton {border-radius: {0}% {0}%;} QToolButton::hover {border-radius: {0}% {0}%;background-color: {1}}'.replace(
+                "{1}", getdata("appw.title.close-hover")).replace("{0}", round))
+        self.layouts.addWidget(self.btnEscape)
+        self.titlebar.setGeometry(0, 0, int(getdata('width')), int(getdata("appw.title.size")))
+
         self.tabs = QTabWidget()
         self.tabs.setDocumentMode(True)
         self.tabs.tabBarDoubleClicked.connect(self.tab_open_doubleclick)
         self.tabs.currentChanged.connect(self.current_tab_changed)
         self.tabs.setTabsClosable(True)
         self.tabs.tabCloseRequested.connect(self.close_current_tab)
-
-        self.setCentralWidget(self.tabs)
+        self.tabs.setGeometry(0, int(getdata("appw.title.size")), int(files.readall('/tmp/width.tmp')),
+                            int(files.readall("/tmp/height.tmp")) - int(getdata("appw.title.size")))
+        self.layout().addWidget(self.tabs)
+        self.layout().addWidget(self.titlebar)
 
         self.status = QStatusBar()
         self.setStatusBar(self.status)
 
         navtb = QToolBar(res.get('@string/nav'))
         navtb.setIconSize(QSize(16, 16))
-        self.addToolBar(navtb)
+        self.addToolBar(Qt.BottomToolBarArea,navtb)
+        #addToolBar
 
         back_btn = QAction(QIcon(res.get('@icon/breeze-back')), res.get('@string/ba'), self)
         back_btn.triggered.connect(lambda: self.tabs.currentWidget().back())
@@ -54,13 +109,18 @@ class MainWindow(QMainWindow):
         next_btn.triggered.connect(lambda: self.tabs.currentWidget().forward())
         navtb.addAction(next_btn)
 
-        reload_btn = QAction(QIcon(res.get('@icon/breeze-reload')), res.get('@string/fw'), self)
+        reload_btn = QAction(QIcon(res.get('@icon/breeze-reload')), res.get('@string/rl'), self)
         reload_btn.triggered.connect(lambda: self.tabs.currentWidget().reload())
         navtb.addAction(reload_btn)
 
         home_btn = QAction(QIcon(res.get('@icon/breeze-home')), res.get('@string/hm'), self)
         home_btn.triggered.connect(self.navigate_home)
         navtb.addAction(home_btn)
+
+        new_tab_action = QAction(QIcon(res.get('@icon/breeze-newtab')),res.get('@string/ntab'), self)
+        new_tab_action.triggered.connect(lambda _: self.add_new_tab())
+        new_tab_action.setFont(f)
+        navtb.addAction(new_tab_action)
 
         navtb.addSeparator()
 
@@ -76,27 +136,11 @@ class MainWindow(QMainWindow):
         stop_btn.triggered.connect(lambda: self.tabs.currentWidget().stop())
         navtb.addAction(stop_btn)
 
+
         # Uncomment to disable native menubar on Mac
         # self.menuBar().setNativeMenuBar(False)
 
-        if getdata('submenu.direction') == 'ltr':
-            self.menuBar().setLayoutDirection(Qt.LeftToRight)
-        else:
-            self.menuBar().setLayoutDirection(Qt.RightToLeft)
-
-        self.file = QMenu()
-        self.file.setTitle(res.get('@string/file'))
-        self.menuBar().addMenu(self.file)
-
-        new_tab_action = QAction(QIcon(res.get('@icon/breeze-newtab')),res.get('@string/ntab'), self)
-        new_tab_action.triggered.connect(lambda _: self.add_new_tab())
-        new_tab_action.setFont(f)
-        self.file.addAction(new_tab_action)
-
-        exitx = QAction(QIcon(res.get('@icon/breeze-close')),res.get('@string/close'), self)
-        exitx.triggered.connect(self.close)
-        exitx.setFont(f)
-        self.file.addAction(exitx)
+        self.menuBar().hide()
 
         self.add_new_tab(QUrl(control.read_record("engine","/etc/webconfig")), res.get('@string/hm'))
         self.showFullScreen()
@@ -108,6 +152,7 @@ class MainWindow(QMainWindow):
 
         browser = QWebEngineView()
         browser.setUrl(qurl)
+
         i = self.tabs.addTab(browser, label)
 
         self.tabs.setCurrentIndex(i)

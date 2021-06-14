@@ -1,4 +1,3 @@
-7zip.icon: @icon/application-7zip
 sql.external.barge: Yes
 sql.external.persia: Yes
 bmp.external.nama: Yes
@@ -46,7 +45,6 @@ php.external.barge: Yes
 php.external.persia: Yes
 sln.external.barge: Yes
 sln.external.persia: Yes
-#.icon: @icon/
 bin.icon: @icon/binary
 html.external.html: Yes
 html.external.barge: Yes
@@ -132,6 +130,7 @@ url.external.barge: Yes
 url.external.persia: Yes
 url.external.browser: Yes
 7zip.icon: @icon/breeze-7zip
+7z.icon: @icon/breeze-7zip
 apk.icon: @icon/breeze-apk
 zip.icon: @icon/breeze-zip
 sql.icon: @icon/breeze-database

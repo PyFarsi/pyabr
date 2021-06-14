@@ -1,30 +1,8 @@
-# lock : Lock Screen Style
-
-# submenu : Submenu Style
-
-# taskbar : Taskbar Style
 taskbar.icon.bgcolor: white
 taskbar.icon.border-color: silver
 taskbar.icon.bgcolor-hover: #ABCDEF
 taskbar.icon.border-color-hover: #ABCDEF
-# Normal, Windows, Unity
-
-# backend : Backend Style
-
-# splash : Splash Style
-
-# login : Login Style
-
-# enter : Enter password page Style
-
-# unlock : Unlock page
-
-# appw : Application Window page Style
 appw.title.btn-round: Yes
-
-# desktop : Desktop style
-
-# loginw : Login Dialog Style
 loginw.input.width: 300
 loginw.input.height: 40
 loginw.enter-hover.bgcolor: pink
@@ -36,12 +14,7 @@ loginw.login-hover.fgcolor: #123456
 loginw.userlogo.bgcolor: white
 loginw.width: 500
 loginw.height: 500
-
-# menu : Menu Applications Style
-# S, N, E, W
 menu.tab.position: S
-
-# virtual keyboard
 key.enable: No
 key.bgcolor: silver
 key.background: @background/none
@@ -51,15 +24,9 @@ key.btn.bgcolor: white
 key.btn.fgcolor: black
 key.btn.bgcolor-hover: #123456
 key.btn.fgcolor-hover: white
-
-# alert
-
 alert.width: 500
 alert.height: 40
-# N, NE, SE, NW, SW
 alert.location: SE
-
-# root : Root Settings in GUI
 locale: fa
 layout: fa
 autosize: Yes

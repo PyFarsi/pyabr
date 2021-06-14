@@ -397,7 +397,7 @@ browser.pc: رفتن به کانال رسمی پای ابر
 browser.pg: پشتیبانی پای ابر
 browser.owp: بازکردن یک صفحه وب
 browser.close: بستن
-wapp.app_name: سرویس ابری
+wapp.app_name: پروتکل وب
 barge.code: کد
 barge.run: اجرا
 barge.icode: جایگذاری کد
@@ -621,3 +621,4 @@ connectcloud.value: نام درایو
 connectcloud.add: اتصال و افزودن
 connectcloud.cm: لطفا فیلدهای ورودی یا اتصال اینترنت را برسی کنید
 connectcloud.c: مشکل در افزودن درایو
+html.app_name: نمایش دهنده ابرمتن

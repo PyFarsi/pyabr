@@ -399,7 +399,7 @@ browser.pc: Go to Pyabr channel
 browser.pg: Pyabr Support
 browser.owp: Open a web page
 browser.close: Close
-wapp.app_name: Abr Service
+wapp.app_name: Web Protocol
 barge.code: Code
 barge.run: Run
 barge.icode: Insert Code
@@ -622,3 +622,4 @@ connectcloud.value: Value name
 connectcloud.add: Add && Connect
 connectcloud.cm: Cannot add drive; there is some problems in fields or connection
 connectcloud.c: Problem adding
+html.app_name: HTML Viewer

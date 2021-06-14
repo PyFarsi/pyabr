@@ -3,5 +3,5 @@ name[fa]: مرورگر
 logo: @icon/breeze-browser
 exec: browser_app
 application: Yes
-category: tools
+category: internet
 pin: Yes
