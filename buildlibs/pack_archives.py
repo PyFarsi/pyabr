@@ -35,7 +35,6 @@ def manifest(name):
         exit(0)
 
     shutil.copyfile('packs/'+name+'/control/manifest',f'packs/latest/data/app/mirrors/{name}.manifest')
-    shutil.copyfile('packs/'+name+'/control/manifest',f'packs/stable/data/app/mirrors/{name}.manifest')
 
 ## Clean the cache ##
 def clean():

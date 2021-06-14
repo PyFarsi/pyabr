@@ -6,3 +6,4 @@ build: 1400-02-15
 version: 1.4.0
 description: Setup installer of Pyabr OS
 compile: Yes
+logo: @icon/breeze-setup

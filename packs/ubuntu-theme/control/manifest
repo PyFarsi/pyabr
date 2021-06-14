@@ -6,3 +6,4 @@ build: 1400-03-15
 version: 1.1.7
 description: Ubuntu 21.04 theme for Pyabr
 compile: No
+logo: @icon/ubuntu

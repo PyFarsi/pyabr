@@ -7,12 +7,9 @@ textbox.py:usr/app/textbox.pyc
 keybox.py:usr/app/keybox.pyc
 langbox.py:usr/app/langbox.pyc
 screen.py:usr/app/screen.pyc
-runapp.py:usr/app/runapp.pyc
-lightword.py:usr/app/lightword.pyc
 process.py:usr/app/process.pyc
 openbox.py:usr/app/openbox.pyc
 uiv.py:usr/app/uiv.pyc
-gap.py:usr/app/gap.pyc
 setting.py:usr/app/setting.pyc
 wallpaper.py:usr/app/wallpaper.pyc
 pysys.py:usr/app/pysys.pyc
@@ -22,11 +19,8 @@ users.py:usr/app/users.pyc
 dmgr.py:usr/app/dmgr.pyc
 uedit.py:usr/app/uedit.pyc
 digital_clock.py:usr/app/digital_clock.pyc
-pyshell.py:usr/app/pyshell.pyc
 sudoprocess.py:usr/app/sudoprocess.pyc
 notbox.py:usr/app/notbox.pyc
 wifi_gui.py:usr/app/wifi_gui.pyc
 sms.py:usr/app/sms.pyc
 sample.py:usr/app/sample.pyc
-calculator.py:usr/app/calculator.pyc
-calendar_app.py:usr/app/calendar_app.pyc

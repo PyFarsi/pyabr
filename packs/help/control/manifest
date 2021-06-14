@@ -6,3 +6,4 @@ build: 1400-03-15
 version: 1.1.5
 description: General Help application
 compile: No
+logo: @icon/breeze-help

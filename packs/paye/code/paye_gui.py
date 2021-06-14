@@ -30,6 +30,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 def getdata (name):
     return control.read_record (name,'/etc/gui')
+
 class PackageListView (QListView):
     def format(self, it, text):
         if files.isfile (f'/usr/share/applications/{it.text()}.desk'):
@@ -46,7 +47,11 @@ class PackageListView (QListView):
         elif not files.isfile (f'/app/packages/{it.text()}.manifest'):
             it.setIcon(QIcon(res.get('@icon/breeze-tar')))
         else:
-            it.setIcon(QIcon(res.get('@icon/breeze-archive')))
+            self.logo = control.read_record('logo', f'/app/packages/{it.text()}.manifest')
+            if self.logo==None:
+                it.setIcon(QIcon(res.get('@icon/breeze-archive')))
+            else:
+                it.setIcon(QIcon(res.get(self.logo)))
 
         #it.setIcon(QIcon(res.get('@icon/breeze-archive')))
 

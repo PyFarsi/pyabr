@@ -1,0 +1,9 @@
+name: gap
+copyright: (c) 2021 Gap
+license: GNU GPL v3.0
+unpack: /
+build: 1400-03-15
+version: 1.4.3
+description: Gap messenger
+compile: Yes
+logo: @icon/gap

@@ -2,7 +2,7 @@ name: help
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-build: 1400-01-23
-version: 1.1.3
+build: 1400-03-15
+version: 1.1.5
 description: General Help application
 compile: No

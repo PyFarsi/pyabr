@@ -6,3 +6,4 @@ build: 1400-03-15
 version: 0.0.9
 description: Squares Game
 compile: Yes
+logo: @icon/catball

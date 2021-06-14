@@ -6,3 +6,4 @@ build: 1400-03-15
 version: 2.1.7
 description: PyPersia IDE
 compile: Yes
+logo: @icon/breeze-persia
