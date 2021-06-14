@@ -39,6 +39,16 @@ class PackageListView (QListView):
             if self.application=='Yes' or self.game=='Yes':
                 self.logo = control.read_record('logo',f'/usr/share/applications/{it.text()}.desk')
                 self.locale = control.read_record('locale', '/etc/gui')
+
+                self.logox = control.read_record('logo', f'/app/packages/{it.text()}.manifest')
+                if self.logo == None:
+                    if self.logox == None:
+                        it.setIcon(QIcon(res.get(self.logox)))
+                    else:
+                        it.setIcon(QIcon(res.get('@icon/breeze-archive')))
+                else:
+                    it.setIcon(QIcon(res.get(self.logo)))
+
                 it.setText(control.read_record(f'name[{self.locale}]', f'/usr/share/applications/{it.text()}.desk'))
                 it.setIcon(QIcon(res.get(self.logo)))
                 it.setFont(self.Env.font())
