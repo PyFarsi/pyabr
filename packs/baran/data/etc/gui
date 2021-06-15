@@ -17,8 +17,8 @@ loginw.height: 500
 menu.tab.position: S
 key.enable: No
 key.bgcolor: silver
-key.background: @background/none
-key.btn.round-size: 15
+key.background: @background/breeze-splash
+key.btn.round-size: 2
 key.btn.shadow: Yes
 key.btn.bgcolor: white
 key.btn.fgcolor: black
@@ -145,3 +145,5 @@ menu.scroll.color-hover: #94cee9
 menu.scroll.round-size: 0
 menu.scroll.bgcolor: white
 params: gui
+taskbar.direction: ltr
+menu.tab.direction: ltr

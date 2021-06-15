@@ -86,10 +86,12 @@ class MainWindow(QMainWindow):
         self.tabs.setDocumentMode(True)
         self.tabs.tabBarDoubleClicked.connect(self.tab_open_doubleclick)
         self.tabs.currentChanged.connect(self.current_tab_changed)
+
         self.tabs.setTabsClosable(True)
         self.tabs.tabCloseRequested.connect(self.close_current_tab)
         self.tabs.setGeometry(0, int(getdata("appw.title.size")), int(files.readall('/tmp/width.tmp')),
                             int(files.readall("/tmp/height.tmp")) - int(getdata("appw.title.size")))
+
         self.layout().addWidget(self.tabs)
         self.layout().addWidget(self.titlebar)
 

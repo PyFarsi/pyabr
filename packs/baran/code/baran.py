@@ -1356,6 +1356,11 @@ class TaskBar (QToolBar):
         else:
             self.setFloatable(False)
 
+        if getdata("taskbar.direction")=='rtl':
+            self.setLayoutDirection(Qt.RightToLeft)
+        else:
+            self.setLayoutDirection(Qt.LeftToRight)
+
         # size #
         self.setMinimumSize(QSize(int(getdata("taskbar.size")),int(getdata("taskbar.size"))))
         self.setIconSize(QSize(int(getdata("taskbar.size")),int(getdata("taskbar.size")))) # https://stackoverflow.com/questions/21133612/how-to-change-iconsize-of-qtoolbutton
@@ -1603,6 +1608,11 @@ class MenuApplications (QMainWindow):
             self.tabs.setTabPosition(QTabWidget.South)
         else:
             self.tabs.setTabPosition(QTabWidget.North)
+
+        if getdata("menu.tab.direction")=='rtl':
+            self.tabs.setLayoutDirection(Qt.RightToLeft)
+        else:
+            self.tabs.setLayoutDirection(Qt.LeftToRight)
 
         self.x = AppListView([self.Env, self])
         self.x1 = GameListView([self.Env,self])

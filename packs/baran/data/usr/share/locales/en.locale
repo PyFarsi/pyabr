@@ -293,6 +293,8 @@ paye.mirror: Mirror
 paye.package: Package
 paye.add: Add
 paye.remove: Remove
+paye.store: Store
+paye.myapps: Installed
 paye.install: Install
 paye.installing: Installing
 paye.uninstall: Uninstall

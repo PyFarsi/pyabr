@@ -622,3 +622,5 @@ connectcloud.add: اتصال و افزودن
 connectcloud.cm: لطفا فیلدهای ورودی یا اتصال اینترنت را برسی کنید
 connectcloud.c: مشکل در افزودن درایو
 html.app_name: نمایش دهنده ابرمتن
+paye.store: فروشگاه
+paye.myapps: نصب شده ها

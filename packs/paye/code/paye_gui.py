@@ -31,37 +31,100 @@ from PyQt5.QtWidgets import *
 def getdata (name):
     return control.read_record (name,'/etc/gui')
 
+class MyAppListView (QListView):
+    def format(self, it, text):
+        if files.isfile(f'/app/mirrors/{it.text()}.svg'):
+            it.setIcon(QIcon(files.input(f'/app/mirrors/{it.text()}.svg')))
+        elif files.isfile(f'/app/mirrors/{it.text()}.png'):
+            it.setIcon(QIcon(files.input(f'/app/mirrors/{it.text()}.png')))
+        elif files.isfile(f'/app/mirrors/{it.text()}.gif'):
+            it.setIcon(QIcon(files.input(f'/app/mirrors/{it.text()}.gif')))
+        elif files.isfile(f'/app/mirrors/{it.text()}.jpg'):
+            it.setIcon(QIcon(files.input(f'/app/mirrors/{it.text()}.jpg')))
+        elif files.isfile(f'/app/mirrors/{it.text()}.jpeg'):
+            it.setIcon(QIcon(files.input(f'/app/mirrors/{it.text()}.jpeg')))
+        else:
+            it.setIcon(QIcon(res.get('@icon/breeze-archive')))
+
+        #it.setIcon(QIcon(res.get('@icon/breeze-archive')))
+
+    def __init__(self,ports):
+        super().__init__()
+        self.ports = ports
+
+        self.Backend = ports[0]
+        self.Env = ports[1]
+        self.Widget = ports[2]
+        self.AppName = ports[3]
+        self.External = ports[4]
+
+        self.entry = QStandardItemModel()
+        self.setModel(self.entry)
+        self.setIconSize(QSize(80, 80))
+        self.clicked[QModelIndex].connect(self.on_clicked)
+        # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
+
+        self.setStyleSheet("""
+                       QScrollBar
+                       {
+                       background : white;
+                       }
+                       QScrollBar::handle
+                       {
+                       background : #123456;
+                       border-radius: 6% 6%;
+                       }
+                       QScrollBar::handle::pressed
+                       {
+                       background : #ABCDEF;
+                       border-radius: 6% 6%;
+                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                     getdata(
+                                                                                         "menu.scroll.color")).replace(
+            '6',
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")))
+        # on the given model index to get a pointer to the item
+
+        self.listdir = files.list('/app/mirrors')
+        self.listdir.sort()
+
+        for text in self.listdir:
+            if files.isfile(f'/app/mirrors/{text}') and text.endswith('.manifest') and files.isfile(f'/app/packages/{text}'):
+                it = QStandardItem(text.replace('.manifest',''))
+                it.setWhatsThis(text.replace('.manifest',''))
+                self.format(it, text.replace('.manifest',''))
+                self.entry.appendRow(it)
+
+
+        self.itemOld = QStandardItem("text")
+
+    def on_clicked(self, index):
+        self.item = self.entry.itemFromIndex(index)
+
+        x = hasattr(self.item, 'whatsThis')  # W3CSHCOOL.COM LEARN IT
+
+        if x == True:
+            if files.isfile(f'/app/packages/{self.item.whatsThis()}.manifest'):
+                w = ShowPackageInformation([self.Backend,self.Env,self.Widget,self.AppName,[self.item.whatsThis(),self]])
+                w.setGeometry(0,0,self.Env.width(),self.Env.height())
+                self.Widget.layout().addWidget (w)
+
 class PackageListView (QListView):
     def format(self, it, text):
-        if files.isfile (f'/usr/share/applications/{it.text()}.desk'):
-            self.application = control.read_record('application',f'/usr/share/applications/{it.text()}.desk')
-            self.game = control.read_record('game', f'/usr/share/applications/{it.text()}.desk')
-            if self.application=='Yes' or self.game=='Yes':
-                self.logo = control.read_record('logo',f'/usr/share/applications/{it.text()}.desk')
-                self.locale = control.read_record('locale', '/etc/gui')
-
-                self.logox = control.read_record('logo', f'/app/packages/{it.text()}.manifest')
-                if self.logo == None:
-                    if self.logox == None:
-                        it.setIcon(QIcon(res.get(self.logox)))
-                    else:
-                        it.setIcon(QIcon(res.get('@icon/breeze-archive')))
-                else:
-                    it.setIcon(QIcon(res.get(self.logo)))
-
-                it.setText(control.read_record(f'name[{self.locale}]', f'/usr/share/applications/{it.text()}.desk'))
-                it.setIcon(QIcon(res.get(self.logo)))
-                it.setFont(self.Env.font())
-            else:
-                it.setIcon(QIcon(res.get('@icon/breeze-runapp')))
-        elif not files.isfile (f'/app/packages/{it.text()}.manifest'):
-            it.setIcon(QIcon(res.get('@icon/breeze-tar')))
+        if files.isfile(f'/app/mirrors/{it.text()}.svg'):
+            it.setIcon(QIcon(files.input(f'/app/mirrors/{it.text()}.svg')))
+        elif files.isfile(f'/app/mirrors/{it.text()}.png'):
+            it.setIcon(QIcon(files.input(f'/app/mirrors/{it.text()}.png')))
+        elif files.isfile(f'/app/mirrors/{it.text()}.gif'):
+            it.setIcon(QIcon(files.input(f'/app/mirrors/{it.text()}.gif')))
+        elif files.isfile(f'/app/mirrors/{it.text()}.jpg'):
+            it.setIcon(QIcon(files.input(f'/app/mirrors/{it.text()}.jpg')))
+        elif files.isfile(f'/app/mirrors/{it.text()}.jpeg'):
+            it.setIcon(QIcon(files.input(f'/app/mirrors/{it.text()}.jpeg')))
         else:
-            self.logo = control.read_record('logo', f'/app/packages/{it.text()}.manifest')
-            if self.logo==None:
-                it.setIcon(QIcon(res.get('@icon/breeze-archive')))
-            else:
-                it.setIcon(QIcon(res.get(self.logo)))
+            it.setIcon(QIcon(res.get('@icon/breeze-archive')))
 
         #it.setIcon(QIcon(res.get('@icon/breeze-archive')))
 
@@ -176,29 +239,18 @@ class ShowMirrorInformation (QMainWindow):
 
         self.namex = self.name
 
-        if files.isfile (f'/app/mirrors/{self.name}.desk'):
-            self.application = control.read_record('application',f'/app/mirrors/{self.name}.desk')
-            self.game = control.read_record('game', f'/app/mirrors/{self.name}.desk')
-            if self.application=='Yes' or self.game=='Yes':
-                self.locale = control.read_record('locale','/etc/gui')
-                self.namex =  control.read_record(f'name[{self.locale}]',f'/app/mirrors/{self.name}.desk')
-
-                if files.isfile (f'/app/mirrors/{self.name}.svg'):
-                    self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.svg')))
-                elif files.isfile (f'/app/mirrors/{self.name}.png'):
-                    self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.png')))
-                elif files.isfile (f'/app/mirrors/{self.name}.gif'):
-                    self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.gif')))
-                elif files.isfile (f'/app/mirrors/{self.name}.jpg'):
-                    self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.jpg')))
-                elif files.isfile(f'/app/mirrors/{self.name}.jpeg'):
-                    self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.jpeg')))
-                else:
-                    self.btnImage.setIcon(QIcon(res.get('@icon/breeze-runapp')))
-            else:
-                self.btnImage.setIcon(QIcon(res.get('@icon/breeze-runapp')))
+        if files.isfile(f'/app/mirrors/{self.name}.svg'):
+            self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.svg')))
+        elif files.isfile(f'/app/mirrors/{self.name}.png'):
+            self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.png')))
+        elif files.isfile(f'/app/mirrors/{self.name}.gif'):
+            self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.gif')))
+        elif files.isfile(f'/app/mirrors/{self.name}.jpg'):
+            self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.jpg')))
+        elif files.isfile(f'/app/mirrors/{self.name}.jpeg'):
+            self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.jpeg')))
         else:
-            self.btnImage.setIcon(QIcon(res.get('@icon/breeze-tar')))
+            self.btnImage.setIcon(QIcon(res.get('@icon/breeze-archive')))
 
 
         self.Env.SetWindowTitle(self.namex)
@@ -255,7 +307,7 @@ class ShowMirrorInformation (QMainWindow):
         self.text1.append(f'Build date:')
         self.text1.append(f'Copyright:')
         self.text1.append(f'License:')
-        self.text1.append(f'Installed in:')
+        self.text1.append(f'Unpack location:')
         self.hbox.addWidget(self.text1)
 
         self.text2 = QTextBrowser()
@@ -403,16 +455,16 @@ class ShowPackageInformation (QMainWindow):
 
         self.namex = self.name
 
-        if files.isfile (f'/usr/share/applications/{self.name}.desk'):
-            self.application = control.read_record('application',f'/usr/share/applications/{self.name}.desk')
-            self.game = control.read_record('game', f'/usr/share/applications/{self.name}.desk')
-            if self.application=='Yes' or self.game=='Yes':
-                self.logo = control.read_record('logo',f'/usr/share/applications/{self.name}.desk')
-                self.locale = control.read_record('locale','/etc/gui')
-                self.namex =  control.read_record(f'name[{self.locale}]',f'/usr/share/applications/{self.name}.desk')
-                self.btnImage.setIcon(QIcon(res.get(self.logo)))
-            else:
-                self.btnImage.setIcon(QIcon(res.get('@icon/breeze-runapp')))
+        if files.isfile(f'/app/mirrors/{self.name}.svg'):
+            self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.svg')))
+        elif files.isfile(f'/app/mirrors/{self.name}.png'):
+            self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.png')))
+        elif files.isfile(f'/app/mirrors/{self.name}.gif'):
+            self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.gif')))
+        elif files.isfile(f'/app/mirrors/{self.name}.jpg'):
+            self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.jpg')))
+        elif files.isfile(f'/app/mirrors/{self.name}.jpeg'):
+            self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.jpeg')))
         else:
             self.btnImage.setIcon(QIcon(res.get('@icon/breeze-archive')))
 
@@ -598,10 +650,6 @@ class MainApp (QMainWindow):
         else:
             QTimer.singleShot(1,self.onCloseProcess)
 
-    def refresh (self):
-        self.x = PackageListView([self.Env, self.Widget, self, self.AppName, self.External])
-        self.setCentralWidget(self.x)
-
     def __init__(self,ports):
         super(MainApp, self).__init__()
 
@@ -651,8 +699,18 @@ class MainApp (QMainWindow):
         self.downp.triggered.connect (self.down_)
         app.switch('paye')
 
-        self.x = PackageListView([self.Env,self.Widget,self,self.AppName,self.External])
-        self.setCentralWidget(self.x)
+
+
+        self.x = MyAppListView([self.Env,self.Widget,self,self.AppName,self.External])
+        self.y = PackageListView([self.Env,self.Widget,self,self.AppName,self.External])
+
+        self.tabs = QTabWidget()
+        self.tabs.setFont(self.Env.font())
+
+        self.tabs.addTab(self.x, res.get('@string/myapps'))
+        self.tabs.addTab(self.y, res.get('@string/store'))
+
+        self.setCentralWidget(self.tabs)
 
     def addm_ (self):
         app.switch('paye')
