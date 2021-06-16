@@ -661,6 +661,8 @@ class MainApp (QMainWindow):
 
         self.onCloseProcess()
 
+        System("paye up") # update mirror
+
         app.switch('paye')
 
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc(self.AppName,"logo"))))
@@ -698,8 +700,6 @@ class MainApp (QMainWindow):
         self.downp.setFont(self.Env.font())
         self.downp.triggered.connect (self.down_)
         app.switch('paye')
-
-
 
         self.x = MyAppListView([self.Env,self.Widget,self,self.AppName,self.External])
         self.y = PackageListView([self.Env,self.Widget,self,self.AppName,self.External])

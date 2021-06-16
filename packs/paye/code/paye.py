@@ -149,7 +149,7 @@ elif option=="in":
         if files.isfile(f'/app/packages/{i.lower()}.manifest'):
             old = control.read_record('version', f'/app/packages/{i}.manifest')
             new = control.read_record('version', f'/app/mirrors/{i}.manifest')
-            if not i=='latest' and old == new and not i == 'stable':
+            if not i=='latest' and old == new:
                 colors.show('paye','warning',f'{i}: package is up to date.')
             else:
                 pack.download(i.lower())
@@ -243,10 +243,6 @@ elif option=='up':
 elif option=='latest':
     pack.download('latest')
     pack.unpack('/app/cache/gets/latest.pa')
-
-elif option=='stable':
-    pack.download('stable')
-    pack.unpack('/app/cache/gets/stable.pa')
 
 elif option=='crt':
     if sys.argv[2:]==[]:
