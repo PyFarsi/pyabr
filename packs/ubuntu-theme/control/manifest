@@ -1,7 +1,7 @@
 name: ubuntu-theme
 name[fa]: پوسته اوبونتو
 name[en]: Ubuntu theme
-copyright: (c) 2021 Mani Jamali
+copyright: (c) 2021 Canonical Ltd
 license: GNU GPL v3.0
 unpack: /
 version: 1.2.0

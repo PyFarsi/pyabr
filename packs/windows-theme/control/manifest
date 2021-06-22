@@ -1,7 +1,7 @@
 name: windows-theme
 name[fa]: پوسته ویندوز
 name[en]: Windows theme
-copyright: (c) 2021 Mani Jamali
+copyright: (c) 2021 Microsoft
 license: GNU GPL v3.0
 unpack: /
 version: 1.2.0
