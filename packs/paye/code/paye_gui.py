@@ -94,7 +94,7 @@ class MyAppListView (QListView):
             if files.isfile(f'/app/mirrors/{text}') and text.endswith('.manifest') and files.isfile(f'/app/packages/{text}'):
                 it = QStandardItem(text.replace('.manifest',''))
                 it.setWhatsThis(text.replace('.manifest',''))
-                self.format(it, text.replace('.manifest',''))
+                self.format(it, '')
                 self.entry.appendRow(it)
 
 
@@ -171,10 +171,10 @@ class PackageListView (QListView):
         self.listdir.sort()
 
         for text in self.listdir:
-            if files.isfile(f'/app/mirrors/{text}') and text.endswith('.manifest'):
+            if files.isfile(f'/app/mirrors/{text}') and text.endswith('.manifest') and not files.isfile(f'/app/packages/{text}'):
                 it = QStandardItem(text.replace('.manifest',''))
                 it.setWhatsThis(text.replace('.manifest',''))
-                self.format(it, text.replace('.manifest',''))
+                self.format(it,'')
                 self.entry.appendRow(it)
 
 
@@ -222,6 +222,7 @@ class ShowMirrorInformation (QMainWindow):
         self.license = control.read_record('license',self.manifest)
         self.copyright = control.read_record('copyright',self.manifest)
         self.description = control.read_record('description',self.manifest)
+        self.namex = control.read_record(f'name[{getdata("locale")}]',self.manifest)
         self.resize(self.Env.width(),self.Env.height())
 
         self.btnBack = QPushButton()
@@ -236,8 +237,6 @@ class ShowMirrorInformation (QMainWindow):
 
         self.btnImage = QToolButton()
         self.btnImage.setIconSize(QSize(128,128))
-
-        self.namex = self.name
 
         if files.isfile(f'/app/mirrors/{self.name}.svg'):
             self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.svg')))
@@ -413,6 +412,7 @@ class ShowPackageInformation (QMainWindow):
         self.XShowpackages.hide()
 
         self.path = f'/app/packages/{self.External[0]}'
+        self.mirror = f'/app/mirrors/{self.External[0]}'
 
         self.manifest = self.path+".manifest"
         self.compile = self.path+".compile"
@@ -421,6 +421,7 @@ class ShowPackageInformation (QMainWindow):
         self.postremove= self.path+".postremove"
         self.preinstall = self.path+".preinstall"
         self.postinstall = self.path+".postinstall"
+        self.manifestx = self.mirror+".manifest"
 
         self.name = control.read_record('name',self.manifest)
         self.version = control.read_record('version',self.manifest)
@@ -429,6 +430,7 @@ class ShowPackageInformation (QMainWindow):
         self.license = control.read_record('license',self.manifest)
         self.copyright = control.read_record('copyright',self.manifest)
         self.description = control.read_record('description',self.manifest)
+        self.namex = control.read_record(f'name[{getdata("locale")}]',self.manifestx)
         self.resize(self.Env.width(),self.Env.height())
 
         self.progressBar = QProgressBar(self)
@@ -453,7 +455,6 @@ class ShowPackageInformation (QMainWindow):
         self.btnImage = QToolButton()
         self.btnImage.setIconSize(QSize(128,128))
 
-        self.namex = self.name
 
         if files.isfile(f'/app/mirrors/{self.name}.svg'):
             self.btnImage.setIcon(QIcon(files.input(f'/app/mirrors/{self.name}.svg')))

@@ -34,6 +34,9 @@ def manifest(name):
             "packs/"+name + "/control") and ("packs/"+name + "/control/manifest"):
         exit(0)
 
+    f = open ('build-date.txt','r')
+    control.write_record('build',f.read(),f'packs/{name}/control/manifest')
+    f.close()
     shutil.copyfile('packs/'+name+'/control/manifest',f'packs/latest/data/app/mirrors/{name}.manifest')
 
 ## Clean the cache ##

@@ -1,9 +1,10 @@
 name: calculator
+name[fa]: ماشین حساب
+name[en]: Calculator
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-build: 1400-03-15
-version: 1.4.3
+version: 1.5.0
 description: Simple calculator
 compile: Yes
-logo: @icon/breeze-calculator
+build: 1400-03-31

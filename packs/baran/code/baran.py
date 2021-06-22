@@ -1391,6 +1391,9 @@ class TaskBar (QToolBar):
                 'taskbar.icon.bgcolor')).replace('{3}', getdata('taskbar.icon.bgcolor-hover')).replace('{4}', getdata(
                 'taskbar.icon.border-color')).replace('{5}', getdata('taskbar.icon.border-color-hover')))
 
+        elif getdata('taskbar.icon.style') == 'Windows':
+            self.btnMenu.setStyleSheet("border:none;background:none;")
+
         self.addWidget(self.btnMenu)
 
         # pins #

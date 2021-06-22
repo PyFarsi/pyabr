@@ -1,8 +1,10 @@
 name: pashmak
+name[en]: Pashmak Programming Language
+name[fa]: زبان برنامه نویسی پشمک
 copyright: Copyright 2020-2021 Parsa Shahmaleki <parsampsh@gmail.com>
 license: GPL v3
 unpack: /
-build: 1399-12-11
-version: 0.8.1
+version: 0.9
 description: Pashmak Programming Language
 compile: Yes
+build: 1400-03-29

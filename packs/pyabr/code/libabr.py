@@ -2656,7 +2656,7 @@ class Package:
                     old = control.read_record('version',f'/app/packages/{i}.manifest')
                     new = control.read_record('version',f'/app/mirrors/{i}.manifest')
 
-                    if not old==new and not i=='latest' and not i=='stable':
+                    if not old==new and not i=='latest':
                         self.download(i)
                         self.unpack(f'/app/cache/gets/{i}.pa')
 

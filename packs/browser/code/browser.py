@@ -157,7 +157,8 @@ class MainWindow(QMainWindow):
         self.menuBar().hide()
 
         self.add_new_tab(QUrl(control.read_record("engine","/etc/webconfig")), res.get('@string/hm'))
-        self.showFullScreen()
+        self.show()
+        self.resize(int(getdata("width")),int(getdata("height")))
 
     def add_new_tab(self, qurl=None, label="Blank"):
 

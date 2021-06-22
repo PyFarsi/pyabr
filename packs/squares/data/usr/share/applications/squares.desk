@@ -1,6 +1,6 @@
 name[en]: Squares
 name[fa]: مربع ها
 exec: squaresr
-logo: @icon/catball
+logo: @icon/breeze-squares
 category: games
 game: Yes

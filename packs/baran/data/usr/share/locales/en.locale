@@ -605,7 +605,7 @@ wifi.off: off
 wifi.password: Enter wifi password
 wifi.ssid: Enter SSID name
 wifi.wrongp: Wrong password
-sms.app_name: SMS
+assistant.app_name: Ava Assistant
 sms.enter: Enter your message
 cloudroller.app_name: Drives
 cloudroller.add: Add Drives
@@ -625,3 +625,9 @@ connectcloud.add: Add && Connect
 connectcloud.cm: Cannot add drive; there is some problems in fields or connection
 connectcloud.c: Problem adding
 html.app_name: HTML Viewer
+clock.stopwatch: Stopwatch
+clock.app_name: Clock
+clock.stop: Stop
+clock.resume: Resume
+clock.reset: Reset
+clock.start: Start

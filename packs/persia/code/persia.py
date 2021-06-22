@@ -840,6 +840,10 @@ pause
             app.switch('persia')
             self.Env.RunApp('uiv', [file])
             app.switch('persia')
+        elif file.endswith ('.html') or file.endswith('.htm') or file.endswith('.xml') or file.endswith('.xhtml'):
+            app.switch('persia')
+            self.Env.RunApp('html', [file])
+            app.switch('persia')
         else:
             app.switch('persia')
             self.Env.RunApp('text', [res.get('@string/spc'), res.get('@string/spcm')])

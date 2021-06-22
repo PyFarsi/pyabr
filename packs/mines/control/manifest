@@ -1,9 +1,10 @@
 name: mines
+name[fa]: مین ها
+name[en]: Mines
 copyright: (c) 2021 Martin Fitzpatrick
 license: MIT
 unpack: /
-build: 1400-01-15
-version: 1.1.4
+version: 1.2.0
 description: Mines Game
 compile: Yes
-logo: @icon/mines
+build: 1400-03-31

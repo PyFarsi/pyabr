@@ -101,7 +101,8 @@ class MainWindow(QMainWindow):
         except:
             self.add_new_tab("<p>Please open some HTML file to read it by HTML Viewer application</p>")
 
-        self.showFullScreen()
+        self.show()
+        self.resize(int(getdata("width")), int(getdata("height")))
 
     def add_new_tab(self, qurl=None):
 

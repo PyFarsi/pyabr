@@ -1,9 +1,10 @@
 name: squares
+name[fa]: بازی مربع ها
+name[en]: Squares
 copyright: (c) 2021 Alireza Kefayati
 license: Free Software
 unpack: /
-build: 1400-03-15
-version: 0.0.9
+version: 0.1.0
 description: Squares Game
 compile: Yes
-logo: @icon/catball
+build: 1400-03-31

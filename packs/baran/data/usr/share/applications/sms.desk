@@ -1,8 +1,0 @@
-name[en]: SMS
-name[fa]: پیام رسان
-exec: sms
-logo: @icon/qtchat
-application: No
-hidden: No
-category: internet
-external: No

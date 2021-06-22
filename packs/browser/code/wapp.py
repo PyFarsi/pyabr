@@ -106,8 +106,8 @@ class MainWindow(QMainWindow):
             self.add_new_tab(QUrl(files.readall('/tmp/url.tmp')))
         except:
             self.add_new_tab(QUrl(control.read_record("engine","/etc/webconfig")))
-
-        self.showFullScreen()
+        self.show()
+        self.resize(int(getdata("width")), int(getdata("height")))
 
     def add_new_tab(self, qurl=None):
 

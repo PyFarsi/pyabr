@@ -1,3 +1,2 @@
-host: http://localhost/ic0
-address: addr.php
+host: https://cloud.projop.ir
 cloud: cloud.php

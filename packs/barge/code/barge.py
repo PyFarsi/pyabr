@@ -183,7 +183,6 @@ class MainApp(QtWidgets.QMainWindow):
         self.lang_ui.setFont(self.Env.font())
         self.lang_ui.triggered.connect(self.langui)
 
-
         # set font size
         self.teEdit.setFont(self.Env.font())
 
@@ -263,11 +262,11 @@ pause
             app.switch('barge')
             self.Env.RunApp('uiv',[filename])
             app.switch('barge')
-        else:
-            if not self.Widget.WindowTitle()==res.get('@string/untitled'):
-                app.switch('barge')
-                self.Env.RunApp('text', [res.get('@string/cs'), res.get('@string/csm')])
-                app.switch('barge')
+        elif self.Widget.WindowTitle().endswith ('.html') or self.Widget.WindowTitle().endswith ('.htm') or self.Widget.WindowTitle().endswith ('.xml') or self.Widget.WindowTitle().endswith ('.xhtml'):
+            filename = self.Widget.WindowTitle()
+            app.switch('barge')
+            self.Env.RunApp('html', [filename])
+            app.switch('barge')
 
     def new_page_act (self):
         self.Env.RunApp ('barge',None)

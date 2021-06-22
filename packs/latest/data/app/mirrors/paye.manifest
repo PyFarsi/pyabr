@@ -1,8 +1,10 @@
 name: paye
+name[fa]: مدیریت بسته پایه
+name[en]: Paye Package Manager
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-build: 1400-03-15
-version: 1.1.9
+version: 1.2.0
 description: Paye package manager as a default package manager that can control the system
 compile: Yes
+build: 1400-03-31

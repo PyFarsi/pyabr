@@ -614,6 +614,7 @@ connectcloud.check: بکند برسی کننده
 connectcloud.list: بکند لیست کننده
 connectcloud.dir: بکند ایجاد پوشه
 connectcloud.remove: بکند حذف
+assistant.app_name: دستیارصوتی
 connectcloud.upload: بکند آپلود
 connectcloud.download: بکند دانلود
 connectcloud.password: رمزعبور
@@ -624,3 +625,9 @@ connectcloud.c: مشکل در افزودن درایو
 html.app_name: نمایش دهنده ابرمتن
 paye.store: فروشگاه
 paye.myapps: نصب شده ها
+clock.stopwatch: کرنومتر
+clock.app_name: ساعت
+clock.stop: توقف
+clock.resume: ادامه
+clock.reset: پاک کردن
+clock.start: شروع
