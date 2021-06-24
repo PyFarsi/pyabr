@@ -36,23 +36,32 @@ class AppListView(QListView):
 
         self.username = self.Env.username
 
-
         self.setStyleSheet("""
-QScrollBar
-{
-background : white;
-}
-QScrollBar::handle
-{
-background : #123456;
-border-radius: 6% 6%;
-}
-QScrollBar::handle::pressed
-{
-background : #ABCDEF;
-border-radius: 6% 6%;
-}""".replace('white',getdata("menu.scroll.bgcolor")).replace('#123456',getdata("menu.scroll.color")).replace('6',getdata("menu.scroll.round-size")).replace('#ABCDEF',getdata("menu.scroll.color-hover")))
-
+                        AppListView,QListView {
+                        background-color: !whitez;
+                        color: !blackz;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
+            '6',
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
+            '!blackz', getdata("appw.body.fgcolor")))
         # Get font #
 
         self.entry = QStandardItemModel()
@@ -100,6 +109,7 @@ class MainApp (QMainWindow):
         self.External = ports[3]
 
         self.onCloseProcess()
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
         self.Widget.SetWindowIcon (QIcon(res.get(res.etc('setting','logo'))))

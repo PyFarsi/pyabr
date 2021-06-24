@@ -1020,23 +1020,32 @@ class AppListView(QListView):
         self.setFont(f)
         self.username = self.Env.username
 
-
         self.setStyleSheet("""
-QScrollBar
-{
-background : white;
-}
-QScrollBar::handle
-{
-background : #123456;
-border-radius: 6% 6%;
-}
-QScrollBar::handle::pressed
-{
-background : #ABCDEF;
-border-radius: 6% 6%;
-}""".replace('white',getdata("menu.scroll.bgcolor")).replace('#123456',getdata("menu.scroll.color")).replace('6',getdata("menu.scroll.round-size")).replace('#ABCDEF',getdata("menu.scroll.color-hover")))
-
+                        AppListView,QListView {
+                        background-color: !whitez;
+                        color: !blackz;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
+            '6',
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
+            '!blackz', getdata("appw.body.fgcolor")))
         # Get font #
 
         self.entry = QStandardItemModel()
@@ -1086,24 +1095,32 @@ class GameListView(QListView):
         self.setFont(f)
         self.username = self.Env.username
 
-
         self.setStyleSheet("""
-        QScrollBar
-        {
-        background : white;
-        }
-        QScrollBar::handle
-        {
-        background : #123456;
-        border-radius: 6% 6%;
-        }
-        QScrollBar::handle::pressed
-        {
-        background : #ABCDEF;
-        border-radius: 6% 6%;
-        }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456', getdata("menu.scroll.color")).replace('6',
-                                                                                                 getdata("menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")))
+                        GameListView,QListView {
+                        background-color: !whitez;
+                        color: !blackz;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
+            '6',
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
+            '!blackz', getdata("appw.body.fgcolor")))
 
         # Get font #
 
@@ -1156,22 +1173,31 @@ class ThemeListView(QListView):
         self.username = self.Env.username
 
         self.setStyleSheet("""
-        QScrollBar
-        {
-        background : white;
-        }
-        QScrollBar::handle
-        {
-        background : #123456;
-        border-radius: 6% 6%;
-        }
-        QScrollBar::handle::pressed
-        {
-        background : #ABCDEF;
-        border-radius: 6% 6%;
-        }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456', getdata("menu.scroll.color")).replace('6',
-                                                                                                 getdata("menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")))
+                        ThemeListView,QListView {
+                        background-color: !whitez;
+                        color: !blackz;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
+            '6',
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
+            '!blackz', getdata("appw.body.fgcolor")))
 
 
         self.entry = QStandardItemModel()
@@ -1203,15 +1229,11 @@ class ThemeListView(QListView):
                 files.write('/proc/info/id', 'desktop')
                 self.Env.RunApp('text', [res.get('@string/perm'), res.get('@string/guestperm')])
                 files.write('/proc/info/id', 'desktop')
-            elif not control.read_record ('theme-name','/etc/gui')==control.read_record('theme-name',self.item.whatsThis()):
+            else:
                 self.Widget.hide()
                 Script(control.read_record('exec', self.item.whatsThis()))
                 self.Env.signout_act()
                 files.write('/proc/info/id','desktop')
-            else:
-                files.write('/proc/info/id', 'desktop')
-                self.Env.RunApp('text', [self.item.text(), res.get('@string/selectedon')])
-                files.write('/proc/info/id', 'desktop')
 
 class SessionListView(QListView):
     def __init__(self,ports):
@@ -1223,22 +1245,31 @@ class SessionListView(QListView):
         self.setFont(f)
 
         self.setStyleSheet("""
-        QScrollBar
-        {
-        background : white;
-        }
-        QScrollBar::handle
-        {
-        background : #123456;
-        border-radius: 6% 6%;
-        }
-        QScrollBar::handle::pressed
-        {
-        background : #ABCDEF;
-        border-radius: 6% 6%;
-        }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456', getdata("menu.scroll.color")).replace('6',
-                                                                                                 getdata("menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")))
+                        SessionListView,QListView {
+                        background-color: !whitez;
+                        color: !blackz;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
+            '6',
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
+            '!blackz', getdata("appw.body.fgcolor")))
 
         # Get font #
         self.entry = QStandardItemModel()
@@ -1465,7 +1496,6 @@ class TaskBar (QToolBar):
     def menuApps (self):
         if self.menu_click==False:
             self.w = MenuApplications([self.Backend,self.Env])
-            self.w.setStyleSheet('background-color: white;')
             self.Env.layout().addWidget(self.w)
             self.menu_click = True
         else:
@@ -1576,7 +1606,7 @@ class MenuApplications (QMainWindow):
         self.username = self.Env.username
 
         self.setGeometry(0,0,self.Env.width(),self.Env.height())
-        self.setStyleSheet('background-color: white')
+        self.setStyleSheet (f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
 
         size = int(getdata("taskbar.size"))
@@ -1600,6 +1630,7 @@ class MenuApplications (QMainWindow):
 
 
         self.tabs = QTabWidget()
+        self.tabs.setStyleSheet (f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.tabs.setFont(f)
         if getdata('menu.tab.position')=='W':
             self.tabs.setTabPosition(QTabWidget.West)
@@ -1966,7 +1997,7 @@ class Desktop (QMainWindow):
         os.environ['TZ'] = files.readall( "/proc/info/tz")  # https://stackoverflow.com/questions/1301493/setting-timezone-in-python
         time.tzset()
 
-        screenshot.save(files.input(res.get('@string/pictures'))+f'/Screenshot {datetime.datetime.now().ctime()}.png', 'png')
+        screenshot.save(files.input(res.get('@string/pictures'))+f'/Screenshot-{datetime.datetime.now().ctime()}.png', 'png')
         files.write('/proc/info/id', 'desktop')
 
     def wakeup_act (self):

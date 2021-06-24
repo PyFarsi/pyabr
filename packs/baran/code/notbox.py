@@ -52,6 +52,8 @@ class MainApp (QMainWindow):
         self.AppName = ports[3]
         self.External = ports[4]
 
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+
         self.onCloseProcess()
         self.Widget.Resize (self,int(getdata('alert.width')),int(getdata('alert.height')))
         self.Widget.DisableFloat()
@@ -61,6 +63,7 @@ class MainApp (QMainWindow):
         self.Widget.SetWindowTitle(res.etc(self.External[0],'name['+getdata('locale')+"]"))
         #  External[1]
         self.btnView.clicked.connect (self.opener)
+        self.btnView.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.setCentralWidget(self.btnView)
 
         self.Widget.SetWindowIcon (QIcon(res.get(res.etc(self.External[0],'logo'))))

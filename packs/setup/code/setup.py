@@ -25,6 +25,9 @@ commands = Commands()
 files = Files()
 control = Control()
 
+def getdata (value):
+    return control.read_record(value,'/etc/gui')
+
 class MainApp(QtWidgets.QWizard):
     def Finish(self):
         ## Get all configure information ##
@@ -106,156 +109,156 @@ class MainApp(QtWidgets.QWizard):
             file.close()
 
             f = open('/stor/etc/gui','w')
-            f.write('''# lock : Lock Screen Style
-lock.clock.shadow: Yes
-lock.clock.color: white
-lock.clock.location: center
-lock.clock.format: hh:mm
-lock.clock.size: 100
-lock.bgcolor: white
-lock.fgcolor: white
-lock.background: @background/glass
-
-# submenu : Submenu Style
-submenu.hide: No
-submenu.bgcolor: white
-submenu.direction: rtl
-
-# taskbar : Taskbar Style
-taskbar.location: bottom
-taskbar.size: 70
-taskbar.locked: Yes
-taskbar.float: No
-taskbar.bgcolor: white
-taskbar.fgcolor: black
-
-# backend : Backend Style
-backend.color: black
-backend.timeout: 1000
-
-# splash : Splash Style
-splash.logo: @icon/pyabr-logo
-splash.logo-size: 300
-splash.color: #ABCDEF
-splash.timeout: 3000
-
-# login : Login Style
-login.bgcolor: white
-login.fgcolor: black
-login.background: @background/glass
-
-# enter : Enter password page Style
-enter.bgcolor: white
-enter.fgcolor: black
-enter.background: @background/glass
-
-# unlock : Unlock page
-unlock.bgcolor: white
-unlock.fgcolor: black
-unlock.background: @background/glass
-
-# appw : Application Window page Style
-appw.title.size: 50
-appw.title.fgcolor: white
-appw.title.bgcolor: #123456
-appw.title.float: @icon/float
-appw.title.float-hover: #ABCDEF
-appw.title.close: @icon/close
-appw.title.close-hover: red
+            f.write(f'''taskbar.icon.bgcolor: white
+taskbar.icon.border-color: silver
+taskbar.icon.bgcolor-hover: #3daee9
+taskbar.icon.border-color-hover: #3daee9
 appw.title.btn-round: Yes
-appw.shadow: Yes
-appw.logo: @icon/runner
-appw.body.bgcolor: white
-appw.body.fgcolor: gray
-
-# desktop : Desktop style
-desktop.bgcolor: white
-desktop.fgcolor: black
-desktop.background: @background/glass
-
-# loginw : Login Dialog Style
-loginw.input.bgcolor: white
-loginw.input.fgcolor: black
-loginw.input.round-size: 20
-loginw.input.shadow: Yes
 loginw.input.width: 300
 loginw.input.height: 40
-loginw.enter.bgcolor: purple
-loginw.enter.fgcolor: pink
 loginw.enter-hover.bgcolor: pink
 loginw.enter-hover.fgcolor: purple
-loginw.enter.round-size: 20
-loginw.enter.hide: No
-loginw.enter.width: 300
-loginw.enter.shadow: Yes
-loginw.enter.height: 40
-loginw.unlock.bgcolor: green
-loginw.unlock.fgcolor: lime
 loginw.unlock-hover.bgcolor: lime
 loginw.unlock-hover.fgcolor: green
-loginw.unlock.round-size: 20
-loginw.unlock.hide: No
-loginw.unlock.width: 300
-loginw.unlock.height: 40
-loginw.unlock.shadow: Yes
-loginw.login.hide: No
-loginw.login.shadow: Yes
-loginw.login.height: 40
-loginw.login-hover.bgcolor: #ABCDEF
+loginw.login-hover.bgcolor: #3daee9
 loginw.login-hover.fgcolor: #123456
-loginw.login.width: 300
-loginw.login.bgcolor: #123456
-loginw.login.fgcolor: #ABCDEF
-loginw.login.round-size: 20
-loginw.userlogo: @icon/account
-loginw.userlogo.shadow: Yes
 loginw.userlogo.bgcolor: white
-loginw.userlogo.round-size: 125
-loginw.bgcolor: white
-loginw.fgcolor: black
-loginw.round-size: 40
-loginw.location: center
-loginw.shadow: Yes
 loginw.width: 500
 loginw.height: 500
-
-# menu : Menu Applications Style
-menu: @icon/menu
-menu.scroll.color: #123456
-menu.scroll.color-hover: #ABCDEF
-menu.scroll.round-size: 0
-menu.scroll.bgcolor: white
-# S, N, E, W
 menu.tab.position: S
-
-# virtual keyboard
 key.enable: No
 key.bgcolor: silver
-key.background: @background/none
-key.btn.round-size: 15
+key.background: @background/breeze-splash
+key.btn.round-size: 2
 key.btn.shadow: Yes
 key.btn.bgcolor: white
 key.btn.fgcolor: black
 key.btn.bgcolor-hover: #123456
 key.btn.fgcolor-hover: white
-
-# root : Root Settings in GUI
-locale: fa
+alert.width: 500
+alert.height: 40
+alert.location: SE
+locale: {locale}
 layout: fa
-logo: @icon/pyabr-logo
 autosize: Yes
 fullscreen: Yes
 width: 1920
 height: 1080
 terminal: commento
-params: gui
 sides: No
 font: Iran Sans
 fontsize: 12
-theme-name: glass-light
 username: guest
 password: *
-desktop: baran''')
+desktop: baran
+theme-name: breeze
+logo: @icon/breeze
+backend.color: black
+backend.timeout: 1000
+taskbar.location: bottom
+taskbar.pins: browser,roller,barge,calculator,calendar,commento,pysys,runapp,about
+splash.timeout: 3000
+splash.logo: @icon/breeze-logo
+splash.logo-size: 300
+menu: @icon/breeze-menu
+splash.color: black
+login.bgcolor: #730c5a
+taskbar.icon.style: Windows
+login.background: @background/breeze-splash
+login.fgcolor: #FFFFFF
+enter.bgcolor: #fff
+enter.background: @background/breeze-splash
+enter.fgcolor: #FFFFFF
+unlock.bgcolor: #123456
+unlock.background: @background/breeze-splash
+unlock.fgcolor: #FFFFFF
+loginw.bgcolor: white
+loginw.fgcolor: black
+loginw.round: Yes
+loginw.round-size: 20
+loginw.location: center
+loginw.shadow: Yes
+loginw.userlogo: @icon/breeze-users
+loginw.userlogo.shadow: Yes
+loginw.userlogo.color: white
+loginw.userlogo.round: Yes
+loginw.userlogo.round-size: 125
+loginw.input.shadow: Yes
+loginw.input.fgcolor: gray
+loginw.input.bgcolor: white
+loginw.input.round: Yes
+loginw.input.round-size: 20
+loginw.input.font-size: 12
+taskbar.bgcolor: white
+taskbar.fgcolor: black
+taskbar.locked: Yes
+taskbar.float: Yes
+taskbar.size: 40
+desktop.bgcolor: white
+desktop.fgcolor: black
+desktop.background: @background/breeze-next
+lock.fgcolor: black
+lock.bgcolor: black
+lock.background: @background/breeze-splash
+lock.clock.shadow: No
+lock.clock.size: 100
+lock.clock.color: white
+lock.clock.location: center
+lock.clock.format: hh:mm:ss
+loginw.login.round: Yes
+loginw.login.round-size: 20
+loginw.enter.round: Yes
+loginw.enter.round-size: 20
+loginw.unlock.round: Yes
+loginw.unlock.round-size: 20
+submenu.hide: No
+submenu.fgcolor: white
+submenu.bgcolor: #1d1d1d
+submenu.direction: rtl
+submenu.fontsize: 12
+loginw.login.bgcolor: #3daee9
+loginw.login.bgcolor-hover: #123456
+loginw.login.fgcolor: #FFFFFF
+loginw.login.fontsize: 12
+loginw.login.hide: No
+loginw.login.width: 300
+loginw.enter.bgcolor: pink
+loginw.enter.bgcolor-hover: purple
+loginw.enter.fgcolor: #FFFFFF
+loginw.enter.fontsize: 12
+loginw.enter.hide: No
+loginw.enter.width: 300
+loginw.unlock.bgcolor: green
+loginw.unlock.bgcolor-hover: lime
+loginw.unlock.fgcolor: #FFFFFF
+loginw.unlock.fontsize: 12
+loginw.unlock.hide: No
+loginw.unlock.width: 300
+loginw.enter.shadow: No
+loginw.unlock.shadow: No
+loginw.login.shadow: No
+loginw.login.height: 40
+loginw.enter.height: 40
+loginw.unlock.height: 40
+appw.body.fgcolor: black
+appw.body.bgcolor: white
+appw.logo: @icon/breeze-app
+appw.shadow: Yes
+appw.title.size: 50
+appw.title.fgcolor: white
+appw.title.bgcolor: #475057
+appw.title.float: @icon/breeze-float
+appw.title.float-hover: white
+appw.title.close: @icon/breeze-close
+appw.title.close-hover: #da4453
+menu.scroll.color: #4f5357
+menu.scroll.color-hover: #3eb4f1
+menu.scroll.round-size: 0
+menu.scroll.bgcolor: white
+params: gui
+taskbar.direction: ltr
+menu.tab.direction: ltr
+''')
             f.close()
 
             os.system('mkdir -p /stor/proc/info')
@@ -277,8 +280,7 @@ desktop: baran''')
         uic.loadUi(res.get('@layout/setup'), self)
 
         ## Finds ##
-        self.setStyleSheet('background-color:white;')
-
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};')
         self.lblLang = self.findChild(QtWidgets.QLabel,'lblLang')
         self.lblLang.setFont(self.Env.font())
 
@@ -287,97 +289,52 @@ desktop: baran''')
 
         self.leHostname = self.findChild(QtWidgets.QLineEdit, 'leHostname')
         self.leHostname.setFont(self.Env.font())
-        self.leHostname.setStyleSheet ('background-color: white;border-radius: 20% 20%;border-color: #ABCDEF;border-style: solid;padding-left: 10%;padding-right: 10%;border-width: 2%')
-
+        self.leHostname.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leRootCode = self.findChild(QtWidgets.QLineEdit, 'leRootCode')
         self.leRootCode.setFont(self.Env.font())
-        self.leRootCode.setStyleSheet ('background-color: white;border-radius: 20% 20%;border-color: #ABCDEF;border-style: solid;padding-left: 10%;padding-right: 10%;border-width: 2%')
+        self.leRootCode.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leUsername = self.findChild(QtWidgets.QLineEdit, 'leUsername')
         self.leUsername.setFont(self.Env.font())
-        self.leUsername.setStyleSheet ('background-color: white;border-radius: 20% 20%;border-color: #ABCDEF;border-style: solid;padding-left: 10%;padding-right: 10%;border-width: 2%')
+        self.leUsername.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.lePassword = self.findChild(QtWidgets.QLineEdit, 'lePassword')
         self.lePassword.setFont(self.Env.font())
-        self.lePassword.setStyleSheet ('background-color: white;border-radius: 20% 20%;border-color: #ABCDEF;border-style: solid;padding-left: 10%;padding-right: 10%;border-width: 2%')
+        self.lePassword.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
 
         self.chGuest = self.findChild(QtWidgets.QCheckBox, 'chGuest')
+        self.chGuest.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
 
         self.chGuest.setFont(self.Env.font())
-        self.chGuest.setStyleSheet ('background-color: white;border-radius: 20% 20%;border-color: #ABCDEF;border-style: solid;padding-left: 10%;padding-right: 10%;border-width: 2%')
         self.cmLang = self.findChild(QtWidgets.QComboBox, 'cmLang')
         self.cmLang.setFont(self.Env.font())
-        self.cmLang.setStyleSheet ('background-color: white;border-radius: 20% 20%;border-color: #ABCDEF;border-style: solid;padding-left: 10%;padding-right: 10%;border-width: 2%')
+        self.cmLang.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leFirstName = self.findChild(QtWidgets.QLineEdit, 'leFirstName')
         self.leFirstName.setFont(self.Env.font())
-        self.leFirstName.setStyleSheet ('background-color: white;border-radius: 20% 20%;border-color: #ABCDEF;border-style: solid;padding-left: 10%;padding-right: 10%;border-width: 2%')
+        self.leFirstName.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leEmail = self.findChild(QtWidgets.QLineEdit, 'leEmail')
         self.leEmail.setFont(self.Env.font())
-        self.leEmail.setStyleSheet ('background-color: white;border-radius: 20% 20%;border-color: #ABCDEF;border-style: solid;padding-left: 10%;padding-right: 10%;border-width: 2%')
+        self.leEmail.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.lePhone = self.findChild(QtWidgets.QLineEdit, 'lePhone')
         self.lePhone.setFont(self.Env.font())
-        self.lePhone.setStyleSheet ('background-color: white;border-radius: 20% 20%;border-color: #ABCDEF;border-style: solid;padding-left: 10%;padding-right: 10%;border-width: 2%')
+        self.lePhone.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
 
         self.button(QtWidgets.QWizard.FinishButton).clicked.connect(self.Finish)
         self.button(QtWidgets.QWizard.FinishButton).setFont(self.Env.font())
-        self.button(QtWidgets.QWizard.FinishButton).setStyleSheet ('''
-        QPushButton {
-            background-color: #ABCDEF;
-            color: white;
-            border-radius: 20% 20%;
-        }
-        QPushButton::hover {
-            background-color: #123456;
-            color: white;
-            border-radius: 20% 20%;
-        }
-        ''')
+        self.button(QtWidgets.QWizard.FinishButton).setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.button(QtWidgets.QWizard.FinishButton).setMinimumSize(100,40)
         self.button(QtWidgets.QWizard.FinishButton).setText(res.get('@string/install'))
 
-        self.button(QtWidgets.QWizard.NextButton).setStyleSheet ('''
-        QPushButton {
-            background-color: #ABCDEF;
-            color: white;
-            border-radius: 20% 20%;
-        }
-        QPushButton::hover {
-            background-color: #123456;
-            color: white;
-            border-radius: 20% 20%;
-        }
-        ''')
+        self.button(QtWidgets.QWizard.NextButton).setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.button(QtWidgets.QWizard.NextButton).setMinimumSize(100,40)
         self.button(QtWidgets.QWizard.NextButton).setFont(self.Env.font())
         self.button(QtWidgets.QWizard.NextButton).setText(res.get('@string/next'))
 
-        self.button(QtWidgets.QWizard.CancelButton).setStyleSheet ('''
-        QPushButton {
-            background-color: #ABCDEF;
-            color: white;
-            border-radius: 20% 20%;
-        }
-        QPushButton::hover {
-            background-color: #123456;
-            color: white;
-            border-radius: 20% 20%;
-        }
-        ''')
+        self.button(QtWidgets.QWizard.CancelButton).setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.button(QtWidgets.QWizard.CancelButton).setMinimumSize(100,40)
         self.button(QtWidgets.QWizard.CancelButton).clicked.connect (self.Discard)
         self.button(QtWidgets.QWizard.CancelButton).setFont(self.Env.font())
         self.button(QtWidgets.QWizard.CancelButton).setText(res.get('@string/cancel'))
 
-        self.button(QtWidgets.QWizard.BackButton).setStyleSheet ('''
-        QPushButton {
-            background-color: #ABCDEF;
-            color: white;
-            border-radius: 20% 20%;
-        }
-        QPushButton::hover {
-            background-color: #123456;
-            color: white;
-            border-radius: 20% 20%;
-        }
-        ''')
+        self.button(QtWidgets.QWizard.BackButton).setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.button(QtWidgets.QWizard.BackButton).setMinimumSize(100,40)
         self.button(QtWidgets.QWizard.BackButton).setFont(self.Env.font())
         self.button(QtWidgets.QWizard.BackButton).setText(res.get('@string/back'))

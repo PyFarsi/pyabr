@@ -22,7 +22,8 @@ colors = Colors()
 control = Control()
 res = Res()
 app = App()
-
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 class LineEdit (baran.BLineEdit):
     def __init__(self,ports):
         super(LineEdit, self).__init__()
@@ -47,10 +48,11 @@ class MainApp (QMainWindow):
 
         self.onCloseProcess()
 
-        self.setStyleSheet('background-color: white;')
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc('input',"logo"))))
         ## Finds ##
         self.leInput = LineEdit(ports)
+        self.leInput.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leInput.setFont(self.Env.font())
 
         if self.Env.width() > 1000 and self.Env.height() > 720:
@@ -73,12 +75,14 @@ class MainApp (QMainWindow):
             self.Widget.SetWindowTitle (self.External[0])
 
         self.btnCancel = QPushButton()
+        self.btnCancel.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnCancel.setText(res.get('@string/cancel'))
         self.btnCancel.setFont(self.Env.font())
         self.btnCancel.clicked.connect(self.Widget.Close)
         self.layout().addWidget(self.btnCancel)
 
         self.btnOK = QPushButton()
+        self.btnOK.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnOK.setFont(self.Env.font())
         self.btnOK.clicked.connect (self.inp)
         self.btnOK.setText(res.get('@string/ok'))

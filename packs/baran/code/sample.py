@@ -18,7 +18,10 @@ from libabr import *
 app = App()
 commands = Commands()
 res = Res()
+control = Control()
 
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 class MainApp (QWidget):
 
     def onCloseProcess (self):

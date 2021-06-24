@@ -102,11 +102,19 @@ class MainApp(QMainWindow):
         self.AppName = ports[3]
         self.External = ports[4]
 
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.setFont(self.Env.font())
         self.tabs = QTabWidget()
+        self.tabs.setFont(self.Env.font())
+        self.tabs.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.tabs.setFont(self.Env.font())
 
         self.x1 = QMainWindow()
+        self.x1.setFont(self.Env.font())
+        self.x1.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.x2 = QWidget()
+        self.x2.setFont(self.Env.font())
+        self.x2.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.tabs.addTab(self.x1,res.get('@string/app_name'))
         self.tabs.addTab(self.x2,res.get('@string/stopwatch'))
@@ -118,6 +126,8 @@ class MainApp(QMainWindow):
 
         self.lbl = QLabel()
         self.lbl.setText('18:36:32')
+        self.lbl.setFont(self.Env.font())
+        self.lbl.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.x1.setCentralWidget(self.lbl)
         self.setCentralWidget(self.tabs)
@@ -143,6 +153,7 @@ class MainApp(QMainWindow):
 
         # Create label to display the watch
         self.label = QLabel()
+        self.label.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.cl = QVBoxLayout()
         self.clvw = QWidget()
@@ -156,19 +167,23 @@ class MainApp(QMainWindow):
         # Create start button
         app.switch('clock')
         self.start = QPushButton(res.get('@string/start'))
+        self.start.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         app.switch('clock')
         # Set geometry to the start button
         # Call start() method when the start button is clicked
         self.start.pressed.connect(self.Start)
+        self.start.setFont(self.Env.font())
         self.clv.addWidget(self.start)
 
         # Create reset button
         app.switch('clock')
         resetWatch = QPushButton(res.get('@string/reset'))
+        resetWatch.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         app.switch('clock')
         # Set geometry to the stop button
         # Call reset() method when the reset button is clicked
         resetWatch.pressed.connect(self.Reset)
+        resetWatch.setFont(self.Env.font())
         self.clv.addWidget(resetWatch)
 
         # Create timer object
@@ -180,5 +195,6 @@ class MainApp(QMainWindow):
 
         self.label.setFont(QFont(self.Env.font().family(), 50))
         self.label.setAlignment(Qt.AlignCenter)
+        self.label.setFont(self.Env.font())
 
         self.x2.setLayout(self.cl)

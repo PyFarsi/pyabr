@@ -117,16 +117,27 @@ class MainApp(QWidget):
         self.Widget.Resize(self, 720, 700)
 
         self.leUsername = LineEdit(ports)
+        self.leUsername.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.lePassword = LineEdit(ports)
+        self.lePassword.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leConfirm = LineEdit(ports)
+        self.leConfirm.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leFullname = LineEdit(ports)
+        self.leFullname.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leCompany = LineEdit(ports)
+        self.leCompany.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leEmail = LineEdit(ports)
+        self.leEmail.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.lePhone = LineEdit(ports)
+        self.lePhone.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leBirthday = QDateEdit()
+        self.leBirthday.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.cbGender = QComboBox()
+        self.cbGender.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.cbBloodtype = QComboBox()
+        self.cbBloodtype.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.cbtype = QComboBox()
+        self.cbtype.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
 
         self.btnSave = QPushButton()
 
@@ -211,5 +222,6 @@ class MainApp(QWidget):
                 self.leBirthday.setDate(s)
 
         self.btnSave.clicked.connect (self.btnSave_act)
+        self.btnSave.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.Widget.Resize(self,336,383)

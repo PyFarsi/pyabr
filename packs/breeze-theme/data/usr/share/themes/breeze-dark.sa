@@ -1,6 +1,6 @@
 echo Setting GUI themes ...
 sel /etc/gui
-add /usr/share/themes/breeze-gui
+add /usr/share/themes/breeze-gui-dark
 unsel
 
 echo Setting Extension themes ...

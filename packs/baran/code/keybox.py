@@ -57,28 +57,32 @@ class KeyListView(QListView):
 
         self.username = self.Env.username
 
-
-        self.setStyleSheet('background:white;')
-
         self.setStyleSheet("""
-               QScrollBar
-               {
-               background : white;
-               }
-               QScrollBar::handle
-               {
-               background : #123456;
-               border-radius: 6% 6%;
-               }
-               QScrollBar::handle::pressed
-               {
-               background : #ABCDEF;
-               border-radius: 6% 6%;
-               }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
-                                                                             getdata("menu.scroll.color")).replace('6',
-                                                                                                                   getdata(
-                                                                                                                       "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")))
+                KeyListView,QListView {
+                background-color: !whitez;
+                color: !blackz;
+                }
+                               QScrollBar
+                               {
+                               background : white;
+                               }
+                               QScrollBar::handle
+                               {
+                               background : #123456;
+                               border-radius: 6% 6%;
+                               }
+                               QScrollBar::handle::pressed
+                               {
+                               background : #ABCDEF;
+                               border-radius: 6% 6%;
+                               }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                             getdata(
+                                                                                                 "menu.scroll.color")).replace(
+            '6',
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
+            '!blackz', getdata("appw.body.fgcolor")))
 
         self.listdir = files.list('/usr/share/locales')
         self.listdir.sort()
@@ -93,6 +97,7 @@ class KeyListView(QListView):
                 self.entry.appendRow(it)
 
         self.itemOld = QStandardItem("text")
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
     def on_clicked(self, index):
         self.item = self.entry.itemFromIndex(index)
@@ -121,11 +126,12 @@ class MainApp (QMainWindow):
         self.External = ports[4]
 
         self.onCloseProcess()
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
-        self.setStyleSheet('background-color: white;')
         ## Finds ##
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc('select',"logo"))))
         self.btnCancel = QPushButton()
+        self.btnCancel.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnCancel.setText(res.get('@string/cancel'))
         self.btnCancel.setFont(self.Env.font())
         if self.Env.width() > 1000 and self.Env.height() > 720:
@@ -136,6 +142,7 @@ class MainApp (QMainWindow):
         self.layout().addWidget(self.btnCancel)
 
         self.btnSelect = QPushButton()
+        self.btnSelect.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnSelect.setFont(self.Env.font())
         self.btnSelect.clicked.connect(self.inp)
         if self.Env.width() > 1000 and self.Env.height() > 720:
@@ -147,6 +154,7 @@ class MainApp (QMainWindow):
         self.layout().addWidget(self.btnSelect)
 
         self.leSave = QLineEdit()
+        self.leSave.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.leSave.setFont(self.Env.font())
         if self.Env.width() > 1000 and self.Env.height() > 720:
             self.leSave.setGeometry(0, int(self.Env.height() / 4)-90, int(self.Env.width() / 4), 40)
@@ -161,6 +169,7 @@ class MainApp (QMainWindow):
         self.xwid = KeyListView([self.Env,self.Widget,self])
 
         self.ywid = QMainWindow()
+        self.ywid.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         if self.Env.width() > 1000 and self.Env.height() > 720:
             self.ywid.resize(int(self.Env.width() / 4), int(self.Env.height() / 4) - 50)

@@ -65,26 +65,31 @@ class MyAppListView (QListView):
         # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
 
         self.setStyleSheet("""
-                       QScrollBar
-                       {
-                       background : white;
-                       }
-                       QScrollBar::handle
-                       {
-                       background : #123456;
-                       border-radius: 6% 6%;
-                       }
-                       QScrollBar::handle::pressed
-                       {
-                       background : #ABCDEF;
-                       border-radius: 6% 6%;
-                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
-                                                                                     getdata(
-                                                                                         "menu.scroll.color")).replace(
+                        MyAppListView,QListView {
+                        background-color: !whitez;
+                        color: !blackz;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
+            '!blackz', getdata("appw.body.fgcolor")))
         # on the given model index to get a pointer to the item
 
         self.listdir = files.list('/app/mirrors')
@@ -145,26 +150,31 @@ class PackageListView (QListView):
         # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
 
         self.setStyleSheet("""
-                       QScrollBar
-                       {
-                       background : white;
-                       }
-                       QScrollBar::handle
-                       {
-                       background : #123456;
-                       border-radius: 6% 6%;
-                       }
-                       QScrollBar::handle::pressed
-                       {
-                       background : #ABCDEF;
-                       border-radius: 6% 6%;
-                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
-                                                                                     getdata(
-                                                                                         "menu.scroll.color")).replace(
+                        PackageListView,QListView {
+                        background-color: !whitez;
+                        color: !blackz;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
+            '!blackz', getdata("appw.body.fgcolor")))
         # on the given model index to get a pointer to the item
 
         self.listdir = files.list('/app/mirrors')
@@ -550,10 +560,12 @@ class ShowPackageInformation (QMainWindow):
             app.switch('paye')
 
         self.w = QWidget()
+        self.w.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.w.setGeometry(30,200,self.width()-60,275)
         self.hbox = QHBoxLayout()
         self.w.setLayout(self.hbox)
         self.text1 = QTextBrowser()
+        self.text1.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.text1.setAlignment(Qt.AlignRight)
         self.text1.setFont(self.Env.font())
         self.text1.append(f'\nPackage name:')
@@ -565,6 +577,7 @@ class ShowPackageInformation (QMainWindow):
         self.hbox.addWidget(self.text1)
 
         self.text2 = QTextBrowser()
+        self.text2.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.text2.setFont(self.Env.font())
         self.text2.append("\n"+self.name)
         self.text2.append(self.version)
@@ -706,6 +719,7 @@ class MainApp (QMainWindow):
         self.y = PackageListView([self.Env,self.Widget,self,self.AppName,self.External])
 
         self.tabs = QTabWidget()
+        self.tabs.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.tabs.setFont(self.Env.font())
 
         self.tabs.addTab(self.x, res.get('@string/myapps'))

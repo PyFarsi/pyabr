@@ -13,11 +13,13 @@ files = Files()
 res = Res()
 control = Control()
 app = App()
+def getdata (value): return control.read_record(value,'/etc/gui')
 
 class LineEdit (baran.BLineEdit):
     def __init__(self,ports):
         super(LineEdit, self).__init__()
         self.Env = ports[1]
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
 ################################################
 class MainApp(QWidget):
     def __init__(self,ports, *args, **kwargs):
@@ -28,6 +30,8 @@ class MainApp(QWidget):
         self.Widget = ports[2]
         self.AppName = ports[3]
         self.External = ports[4]
+
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};')
 
         ## Download history ##
         if files.isdir('.download-history'):
@@ -44,7 +48,6 @@ class MainApp(QWidget):
 
         self.leUrl = LineEdit(ports)
         self.leUrl.setFont(self.Env.font())
-        self.leUrl.setStyleSheet('border: none;')
         if files.isfile('/tmp/download.tmp'):
             self.leUrl.setText(files.readall('/tmp/download.tmp'))
         self.leUrl.setPlaceholderText(res.get('@string/link'))
@@ -59,6 +62,7 @@ class MainApp(QWidget):
         # Add Download Button
         self.pushButton = QPushButton(self, minimumWidth=100)
         self.pushButton.setText(res.get('@string/download'))
+        self.pushButton.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         layout.addWidget(self.pushButton)
 
         # Binding Button Event

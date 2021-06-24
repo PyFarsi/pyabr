@@ -49,27 +49,32 @@ class IDListView(QListView):
 
         self.username = self.Env.username
 
-        self.setStyleSheet('background:white;')
-
         self.setStyleSheet("""
-               QScrollBar
-               {
-               background : white;
-               }
-               QScrollBar::handle
-               {
-               background : #123456;
-               border-radius: 6% 6%;
-               }
-               QScrollBar::handle::pressed
-               {
-               background : #ABCDEF;
-               border-radius: 6% 6%;
-               }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
-                                                                             getdata("menu.scroll.color")).replace('6',
-                                                                                                                   getdata(
-                                                                                                                       "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")))
+                        IDListView,QListView {
+                        background-color: !whitez;
+                        color: !blackz;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
+            '6',
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
+            '!blackz', getdata("appw.body.fgcolor")))
 
         self.dir = files.readall('/proc/info/pwd')
         files.write('/proc/info/isel', self.dir)
@@ -131,7 +136,7 @@ class MainApp (QMainWindow):
 
         self.onCloseProcess()
 
-        self.setStyleSheet('background-color: white;')
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.Widget.SetWindowIcon (QIcon(res.get(res.etc('process','logo'))))
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
 
@@ -144,6 +149,7 @@ class MainApp (QMainWindow):
             self.menubar.setLayoutDirection(Qt.RightToLeft)
 
         self.menubar.setFont(self.Env.font())
+        self.menubar.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.restart_act = self.menubar.addAction(res.get('@string/restart'))
         self.kill_act = self.menubar.addAction(res.get('@string/kill'))
         self.kill_act.triggered.connect (self.kill)

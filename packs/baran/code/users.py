@@ -69,26 +69,31 @@ class UserListView (QListView):
         # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
 
         self.setStyleSheet("""
-                       QScrollBar
-                       {
-                       background : white;
-                       }
-                       QScrollBar::handle
-                       {
-                       background : #123456;
-                       border-radius: 6% 6%;
-                       }
-                       QScrollBar::handle::pressed
-                       {
-                       background : #ABCDEF;
-                       border-radius: 6% 6%;
-                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
-                                                                                     getdata(
-                                                                                         "menu.scroll.color")).replace(
+                        UserListView,QListView {
+                        background-color: !whitez;
+                        color: !blackz;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
+            '!blackz', getdata("appw.body.fgcolor")))
         # on the given model index to get a pointer to the item
 
         self.listdir = files.list('/etc/users')
@@ -141,6 +146,8 @@ class ShowUserInformation (QMainWindow):
 
         self.XShowpackages = self.External[1]
         self.XShowpackages.hide()
+
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.path = f'/etc/users/{self.External[0]}'
 

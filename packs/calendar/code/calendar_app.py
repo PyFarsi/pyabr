@@ -20,6 +20,9 @@ control = Control()
 res = Res()
 app = App()
 
+def getdata (value):
+    return control.read_record(value,'/etc/gui')
+
 class MainApp (QMainWindow):
     def onCloseProcess (self):
         if not app.check(self.AppName):
@@ -51,6 +54,7 @@ class MainApp (QMainWindow):
         ## Calender widget ##
 
         self.calendar.setFont(self.Env.font())
+        self.calendar.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         ## Start week ##
         if sweek=="Sat":
@@ -71,3 +75,4 @@ class MainApp (QMainWindow):
         self.calendar.setGridVisible(True) # https://www.tutorialspoint.com/pyqt/pyqt_qcalender_widget.htm
 
         self.setCentralWidget(self.calendar)
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')

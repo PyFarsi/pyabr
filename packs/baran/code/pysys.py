@@ -27,7 +27,8 @@ app = App()
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 class MainApp (QWidget):
     def onCloseProcess (self):
         if not app.check(self.AppName):

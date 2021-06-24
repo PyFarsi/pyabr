@@ -55,7 +55,13 @@ class MainApp(QtWidgets.QMainWindow):
 
         # text box
         self.teEdit = Barge([None,self.Env])
+        # self.text2.setStyleSheet(
+        #             f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.teEdit.setStyleSheet("""
+        Barge {
+        background-color: !whitez;
+        color: !blackz;
+        }
                        QScrollBar
                        {
                        background : white;
@@ -75,7 +81,7 @@ class MainApp(QtWidgets.QMainWindow):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez',getdata("appw.body.bgcolor")).replace('!blackz',getdata("appw.body.fgcolor")))
 
         ## External Support Source Code ##
         if not self.External==None:

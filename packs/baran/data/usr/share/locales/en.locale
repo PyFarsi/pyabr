@@ -631,3 +631,4 @@ clock.stop: Stop
 clock.resume: Resume
 clock.reset: Reset
 clock.start: Start
+gappyabr.app_name: Pyabr Support

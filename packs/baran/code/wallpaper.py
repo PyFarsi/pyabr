@@ -32,6 +32,8 @@ class MainApp (QMainWindow):
         self.Widget = ports[2]
         self.External = ports[3]
 
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+
         self.onCloseProcess()
 
         commands.cd(['/usr/share/backgrounds'])
@@ -40,44 +42,56 @@ class MainApp (QMainWindow):
         self.Widget.SetWindowIcon (QIcon(res.etc('wallpaper','logo')))
 
         self.btnDesktopWallpaper = QPushButton()
+        self.btnDesktopWallpaper.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnDesktopWallpaper.setFont(self.Env.font())
         self.btnDesktopWallpaper.setText(res.get('@string/desktop'))
         self.btnDesktopWallpaper.clicked.connect (self.desktop_act)
 
         self.imgDesktop = QToolButton()
+        self.imgDesktop.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.btnLockWallpaper = QPushButton()
+        self.btnLockWallpaper.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnLockWallpaper.setFont(self.Env.font())
         self.btnLockWallpaper.setText(res.get('@string/lock'))
         self.btnLockWallpaper.clicked.connect(self.lock_act)
 
         self.imgLock = QToolButton()
+        self.imgLock.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.btnUnlockWallpaper = QPushButton()
+        self.btnUnlockWallpaper.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnUnlockWallpaper.setFont(self.Env.font())
         self.btnUnlockWallpaper.setText(res.get('@string/unlock'))
         self.btnUnlockWallpaper.clicked.connect(self.unlock_act)
 
         self.imgUnlock = QToolButton()
+        self.imgUnlock.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.btnLoginWallpaper = QPushButton()
+        self.btnLoginWallpaper.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnLoginWallpaper.setFont(self.Env.font())
         self.btnLoginWallpaper.setText(res.get('@string/login'))
         self.btnLoginWallpaper.clicked.connect(self.login_act)
 
         self.imgLogin = QToolButton()
+        self.imgLogin.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.btnEnterWallpaper = QPushButton()
         self.btnEnterWallpaper.setFont(self.Env.font())
         self.btnEnterWallpaper.setText(res.get('@string/enter'))
         self.btnEnterWallpaper.clicked.connect(self.enter_act)
+        self.btnEnterWallpaper.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.imgEnter = QToolButton()
+        self.imgEnter.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.Widget.Resize (self,1280,300)
 
         self.imgw = QWidget()
+        self.imgw.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnw = QWidget()
+        self.btnw.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.layout().addWidget(self.imgw)
         self.imgw.setGeometry(0,0,self.width(),int(self.height()-self.height()/4))
         self.btnw.setGeometry(0,int(self.height()-self.height()/4),self.width(),int(self.height()/4))

@@ -22,6 +22,8 @@ colors = Colors()
 control = Control()
 res = Res()
 app = App()
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 
 class MainApp (QMainWindow):
     def onCloseProcess (self):
@@ -41,12 +43,12 @@ class MainApp (QMainWindow):
 
         self.onCloseProcess()
 
-        self.setStyleSheet('background-color: white;')
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc('bool',"logo"))))
         ## Finds ##
 
         self.lblText = QLabel()
-        self.lblText.setStyleSheet('padding-left: 10%;padding-right: 10%;')
         if self.Env.width() > 1000 and self.Env.height() > 720:
             self.lblText.resize(int(self.Env.width() / 3), 50)
             self.Widget.Resize(self, int(self.Env.width() / 3), 100)
@@ -54,6 +56,7 @@ class MainApp (QMainWindow):
             self.lblText.resize(int(self.Env.width() / 1.5), 50)
             self.Widget.Resize(self, int(self.Env.width() / 1.5), 100)
         self.lblText.setFont(self.Env.font())
+        self.lblText.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.layout().addWidget(self.lblText)
 
         if self.External[0]=='' or self.External[0]==None:
@@ -70,10 +73,12 @@ class MainApp (QMainWindow):
         self.btnCancel = QPushButton()
         self.btnCancel.setText(res.get('@string/cancel'))
         self.btnCancel.setFont(self.Env.font())
+        self.btnCancel.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnCancel.clicked.connect(self.cancel_)
         self.layout().addWidget(self.btnCancel)
 
         self.btnOK = QPushButton()
+        self.btnOK.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnOK.setFont(self.Env.font())
         self.btnOK.clicked.connect (self.ok_)
         self.btnOK.setText(res.get('@string/ok'))

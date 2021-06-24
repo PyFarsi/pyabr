@@ -64,28 +64,32 @@ class WifiListView (QListView):
         self.setIconSize(QSize(64, 64))
         self.clicked[QModelIndex].connect(self.on_clicked)
         # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
-
         self.setStyleSheet("""
-                       QScrollBar
-                       {
-                       background : white;
-                       }
-                       QScrollBar::handle
-                       {
-                       background : #123456;
-                       border-radius: 6% 6%;
-                       }
-                       QScrollBar::handle::pressed
-                       {
-                       background : #ABCDEF;
-                       border-radius: 6% 6%;
-                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
-                                                                                     getdata(
-                                                                                         "menu.scroll.color")).replace(
+                        WifiListView,QListView {
+                        background-color: !whitez;
+                        color: !blackz;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
+            '!blackz', getdata("appw.body.fgcolor")))
         # on the given model index to get a pointer to the item
 
         files.write('/etc/wifi/list',subprocess.check_output(['nmcli','-t','-f','SSID','device','wifi','list']).decode('utf-8'))
@@ -168,17 +172,6 @@ class MainApp (QMainWindow):
         else:
             QTimer.singleShot(1,self.onCloseProcess)
 
-    '''
-wifi.scan: برسی
-wifi.connect: اتصال
-wifi.forget: فراموش کردن
-wifi.on: خاموش کردن
-wifi.off: روشن کردن
-wifi.password: رمز این شبکه بی سیم را وارد کنید
-wifi.ssid: نام این شبکه بی سیم را وارد کنید
-wifi.wrongp: رمز عبور اشتباه است
-    '''
-
     def refresh (self):
         self.x = WifiListView([self.Backend,self.Env,self.Widget,self.AppName,self.External])
         self.setCentralWidget(self.x)
@@ -202,6 +195,7 @@ wifi.wrongp: رمز عبور اشتباه است
         self.onCloseProcess()
 
         subprocess.call(['nmcli','radio','wifi','on'])
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
         self.Widget.SetWindowIcon (QIcon(res.get(res.etc('wifi','logo'))))
@@ -210,6 +204,7 @@ wifi.wrongp: رمز عبور اشتباه است
         self.setCentralWidget(self.x)
 
         self.menubar = QMenuBar()
+        self.menubar.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.menubar.setFont(self.Env.font())
         self.setMenuBar(self.menubar)
 

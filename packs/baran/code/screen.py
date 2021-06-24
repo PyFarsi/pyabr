@@ -23,7 +23,8 @@ res = Res()
 control = Control()
 files = Files()
 app = App()
-
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 class MainApp(QWidget):
     def onCloseProcess (self):
         if not app.check('screen'):
@@ -40,12 +41,13 @@ class MainApp(QWidget):
         self.External = ports[4]
 
         self.onCloseProcess()
-
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc(self.AppName,"logo"))))
         self.Widget.Resize(self,560,200)
 
         self.cmBox = QComboBox()
+        self.cmBox.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.cmBox.addItem('800x600')
         self.cmBox.addItem('2560x1600')
         self.cmBox.addItem('1920x1440')
@@ -67,16 +69,7 @@ class MainApp(QWidget):
         self.btnSet = QPushButton (res.get('@string/savec'))
         self.btnSet.clicked.connect (self.act_Set)
         self.btnSet.setFont(self.Env.font())
-        self.btnSet.setStyleSheet('''
-        QPushButton {
-        background-color: #123456;
-        color: white;
-        }
-        QPushButton::hover {
-        background-color: #ABCDEF;
-        color: #123456;
-        }
-        ''')
+        self.btnSet.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.vbox = QVBoxLayout()
         self.vbox.addWidget(self.cmBox)

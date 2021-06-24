@@ -20,7 +20,8 @@ res = Res()
 app = App()
 commands = Commands()
 control = Control()
-
+def getdata (value):
+    return control.read_record(value,'/etc/gui')
 class MainApp(baran.BLineEdit):
 
     def onCloseProcess (self):
@@ -30,7 +31,7 @@ class MainApp(baran.BLineEdit):
             QTimer.singleShot(1,self.onCloseProcess)
 
     def correct (self):
-        self.setStyleSheet(f'background-color: {res.etc(self.AppName,"bgcolor")};color: {res.etc(self.AppName,"fgcolor")};')
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         app.switch('runapp')
         self.Widget.SetWindowTitle(res.get('@string/app_name'))
         self.setEnabled(True)
@@ -78,6 +79,7 @@ class MainApp(baran.BLineEdit):
 
         self.onCloseProcess()
 
+
         if not self.External==None:
             if not self.External==[]:
                 if not self.External[0]==None:
@@ -92,7 +94,7 @@ class MainApp(baran.BLineEdit):
         ## Widget configs ##
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc(self.AppName,"logo"))))
-        self.setStyleSheet(f'background-color: {res.etc(self.AppName,"bgcolor")};color: {res.etc(self.AppName,"fgcolor")};')
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.Widget.Resize (self,int(res.etc(self.AppName,"width")),int(res.etc(self.AppName,"height")))
         self.returnPressed.connect(self.RunApp)  # https://pythonbasics.org/pyqt/ learn it
         self.setFont(self.Env.font())

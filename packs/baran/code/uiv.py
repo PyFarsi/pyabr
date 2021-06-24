@@ -12,7 +12,8 @@ res = Res()
 files = Files()
 control = Control()
 commands = Commands()
-
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 class MainApp(QMainWindow):
 
     def onCloseProcess (self):
@@ -32,6 +33,7 @@ class MainApp(QMainWindow):
         self.External = args[4]
 
         self.onCloseProcess()
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc('uiv','logo'))))
 

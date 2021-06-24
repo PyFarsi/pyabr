@@ -34,6 +34,7 @@ class MainApp (QMainWindow):
         self.External = ports[3]
 
         self.onCloseProcess()
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.Widget.SetWindowIcon (QIcon(res.etc('theme','logo')))
 

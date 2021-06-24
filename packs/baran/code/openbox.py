@@ -49,28 +49,32 @@ class AppListView(QListView):
 
         self.username = self.Env.username
 
-
-        self.setStyleSheet('background:white;')
-
         self.setStyleSheet("""
-               QScrollBar
-               {
-               background : white;
-               }
-               QScrollBar::handle
-               {
-               background : #123456;
-               border-radius: 6% 6%;
-               }
-               QScrollBar::handle::pressed
-               {
-               background : #ABCDEF;
-               border-radius: 6% 6%;
-               }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
-                                                                             getdata("menu.scroll.color")).replace('6',
-                                                                                                                   getdata(
-                                                                                                                       "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")))
+                        AppListView,QListView {
+                        background-color: !whitez;
+                        color: !blackz;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
+            '6',
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
+            '!blackz', getdata("appw.body.fgcolor")))
 
         self.dir = files.readall('/proc/info/pwd')
         files.write('/proc/info/dsel', self.dir)
@@ -152,10 +156,11 @@ class MainApp (QMainWindow):
 
         self.onCloseProcess()
 
-        self.setStyleSheet('background-color: white;')
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         ## Finds ##
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc('select',"logo"))))
         self.btnOpenOnce = QPushButton()
+        self.btnOpenOnce.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnOpenOnce.setText(res.get('@string/atonce'))
         self.btnOpenOnce.setFont(self.Env.font())
         if self.Env.width() > 1000 and self.Env.height() > 720:
@@ -168,6 +173,7 @@ class MainApp (QMainWindow):
         self.btnOpenAlways = QPushButton()
         self.btnOpenAlways.setFont(self.Env.font())
         self.btnOpenAlways.clicked.connect(self.inp)
+        self.btnOpenAlways.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         if self.Env.width() > 1000 and self.Env.height() > 720:
             self.btnOpenAlways.setGeometry(int(self.Env.width() / 8), int(self.Env.height() / 4) - 50,
                                    int(self.Env.width() / 8), 50)
@@ -177,6 +183,7 @@ class MainApp (QMainWindow):
         self.layout().addWidget(self.btnOpenAlways)
 
         self.leSave = QLineEdit()
+        self.leSave.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leSave.setFont(self.Env.font())
         if self.Env.width() > 1000 and self.Env.height() > 720:
             self.leSave.setGeometry(0, int(self.Env.height() / 4)-90, int(self.Env.width() / 4), 40)
@@ -191,6 +198,7 @@ class MainApp (QMainWindow):
         self.xwid = AppListView([self.Env,self.Widget,self])
 
         self.ywid = QMainWindow()
+        self.ywid.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         if self.Env.width() > 1000 and self.Env.height() > 720:
             self.ywid.resize(int(self.Env.width() / 4), int(self.Env.height() / 4) - 50)

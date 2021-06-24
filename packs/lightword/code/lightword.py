@@ -106,26 +106,31 @@ class MainApp(QMainWindow):
         layout = QVBoxLayout()
         self.editor = TextEdit(ports)
         self.editor.setStyleSheet("""
-                       QScrollBar
-                       {
-                       background : white;
-                       }
-                       QScrollBar::handle
-                       {
-                       background : #123456;
-                       border-radius: 6% 6%;
-                       }
-                       QScrollBar::handle::pressed
-                       {
-                       background : #ABCDEF;
-                       border-radius: 6% 6%;
-                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
-                                                                                     getdata(
-                                                                                         "menu.scroll.color")).replace(
+                        TextEdit,QTextEdit {
+                        background-color: !whitez;
+                        color: !blackz;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
+            '!blackz', getdata("appw.body.fgcolor")))
 
         # Setup the QTextEdit editor configuration
         self.editor.setAutoFormatting(QTextEdit.AutoAll)

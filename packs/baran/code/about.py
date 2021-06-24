@@ -21,6 +21,8 @@ files = Files()
 colors = Colors()
 app = App()
 res = Res()
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 
 class MainApp(QWidget):
 
@@ -57,9 +59,11 @@ class MainApp(QWidget):
         self.setLayout(self.vmbox)
         self.extral.setLayout(self.hbox)
         self.text1 = QTextBrowser()
+        self.extral.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.text1.setAlignment(Qt.AlignRight)
-
         self.text1.append(f'Static hostname:')
+        self.text1.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.text1.append(f'Cloud Software:')
         self.text1.append(f'Desktop Enviroment:')
         self.text1.append(f'Kernel:')
@@ -71,6 +75,8 @@ class MainApp(QWidget):
 
 
         self.text2 = QTextBrowser()
+        self.text2.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.text2.append(files.readall('/proc/info/host'))
         self.text2.append(files.readall('/proc/info/cs')+' '+files.readall('/proc/info/ver')+' ('+files.readall('/proc/info/cd')+")")
         self.text2.append(files.readall('/proc/info/de'))
