@@ -41,9 +41,12 @@ class MainApp(PythonConsole):
         self.Widget.Resize (self,int(res.etc(self.AppName,"width")),int(res.etc(self.AppName,"height")))
         self.Widget.SetWindowTitle (res.get("@string/app_name"))
         self.Widget.SetWindowIcon (QIcon(res.get(res.etc(self.AppName,'logo'))))
-        self.setStyleSheet(f'background-color:{res.etc(self.AppName,"bgcolor")};')
 
         self.setStyleSheet("""
+        MainApp, PythonConsole {
+        background-color: !z;
+                        color: !y;
+        }
                        QScrollBar
                        {
                        background : white;
@@ -63,7 +66,8 @@ class MainApp(PythonConsole):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
 
         f = QFont()
         f.setFamily('DejaVu Sans Mono')

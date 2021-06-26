@@ -284,16 +284,12 @@ class FileListView (QtWidgets.QListView):
         # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
         # on the given model index to get a pointer to the item
 
-        self.setStyleSheet(f'background:{res.etc("roller","bgcolor")};')
-
         self.username = self.Env.username
-
-        self.setStyleSheet('background:white;')
 
         self.setStyleSheet("""
                         FileListView,QListView {
-                        background-color: !whitez;
-                        color: !blackz;
+                        background-color: !z;
+                        color: !y;
                         }
                                        QScrollBar
                                        {
@@ -314,8 +310,8 @@ class FileListView (QtWidgets.QListView):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
-            '!blackz', getdata("appw.body.fgcolor")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
 
         self.dir = files.readall('/proc/info/pwd')
         files.write('/proc/info/dsel', self.dir)
@@ -608,7 +604,7 @@ class MainApp (QtWidgets.QMainWindow):
             except:
                 pass
 
-            execute_file = files.readall('/proc/info/wsel').replace ('.pyc','').replace ('.py','').replace ('.jar','').replace ('.exe','').replace ('.sa','')
+            execute_file = files.readall('/proc/info/wsel').replace ('.pyc','').replace ('.py','').replace ('.jar','').replace ('.exe','').replace ('.sa','').replace('.out','')
 
             files.write('/tmp/exec.sa', f'''
 {execute_file}
@@ -671,12 +667,16 @@ pause
 
         self.menubar = self.menuBar()
         self.menubar.setFont(self.Env.font())
+        self.menubar.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         if getdata('submenu.direction')=='ltr':
             self.menubar.setLayoutDirection(Qt.LeftToRight)
         else:
             self.menubar.setLayoutDirection(Qt.RightToLeft)
 
         self.file = self.menubar.addMenu(res.get('@string/file'))
+        self.file.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.file.setFont(self.Env.font())
         ## File menu
 
@@ -687,6 +687,8 @@ pause
         self.new_file.setIcon(QIcon(res.get(res.etc("roller","file-icon"))))
 
         self.new_code = self.file.addMenu(res.get('@string/newcode'))
+        self.new_code.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.new_code.setFont(self.Env.font())
         self.new_code.setIcon(QIcon(res.get(res.etc('roller','c'))))
 

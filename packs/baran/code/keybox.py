@@ -59,8 +59,8 @@ class KeyListView(QListView):
 
         self.setStyleSheet("""
                 KeyListView,QListView {
-                background-color: !whitez;
-                color: !blackz;
+                background-color: !z;
+                color: !y;
                 }
                                QScrollBar
                                {
@@ -81,8 +81,8 @@ class KeyListView(QListView):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
-            '!blackz', getdata("appw.body.fgcolor")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
 
         self.listdir = files.list('/usr/share/locales')
         self.listdir.sort()

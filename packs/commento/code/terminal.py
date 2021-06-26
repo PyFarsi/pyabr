@@ -17,6 +17,8 @@ control = Control()
 app = App()
 files = Files()
 
+def getdata (value): return control.read_record(value,'/etc/gui')
+
 class MainApp(QTabWidget):
     def onCloseProcess (self):
         if not app.check(self.AppName):
@@ -33,6 +35,9 @@ class MainApp(QTabWidget):
         self.External = args[4]
 
         self.onCloseProcess()
+
+        self.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};')
 
         self.proc_info = ProcessInfo()
         self.setTabPosition(QTabWidget.South)

@@ -63,6 +63,7 @@ class MainApp(QWidget):
         self.pushButton = QPushButton(self, minimumWidth=100)
         self.pushButton.setText(res.get('@string/download'))
         self.pushButton.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.pushButton.setFont(self.Env.font())
         layout.addWidget(self.pushButton)
 
         # Binding Button Event
@@ -71,6 +72,10 @@ class MainApp(QWidget):
     # Download button event
     def on_pushButton_clicked(self):
         the_url = self.leUrl.text()
+
+        if not ('http://' in the_url or 'https://' in the_url):
+            the_url+='http://'
+
         the_filesize = requests.get(the_url, stream=True).headers['Content-Length']
         the_filepath = '/tmp/download-manager.tmp'
 

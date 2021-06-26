@@ -62,26 +62,32 @@ class DriveListView (QListView):
         # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
 
         self.setStyleSheet("""
-                       QScrollBar
-                       {
-                       background : white;
-                       }
-                       QScrollBar::handle
-                       {
-                       background : #123456;
-                       border-radius: 6% 6%;
-                       }
-                       QScrollBar::handle::pressed
-                       {
-                       background : #ABCDEF;
-                       border-radius: 6% 6%;
-                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
-                                                                                     getdata(
-                                                                                         "menu.scroll.color")).replace(
+                DriveListView,QListView {
+                background-color: !z;
+                color: !y;
+                }
+                               QScrollBar
+                               {
+                               background : white;
+                               }
+                               QScrollBar::handle
+                               {
+                               background : #123456;
+                               border-radius: 6% 6%;
+                               }
+                               QScrollBar::handle::pressed
+                               {
+                               background : #ABCDEF;
+                               border-radius: 6% 6%;
+                               }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                             getdata(
+                                                                                                 "menu.scroll.color")).replace(
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace('!y',
+                                                                                                               getdata(
+                                                                                                                   "appw.body.fgcolor")))
         # on the given model index to get a pointer to the item
 
         self.listdir = files.list('/dev')
@@ -139,6 +145,9 @@ class MainApp (QMainWindow):
         self.AppName = ports[3]
         self.External = ports[4]
 
+        self.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+
         self.onCloseProcess()
 
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
@@ -149,6 +158,8 @@ class MainApp (QMainWindow):
 
         self.menubar = QMenuBar()
         self.menubar.setFont(self.Env.font())
+        self.menubar.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.setMenuBar(self.menubar)
 
         self.adddrive = self.menubar.addAction(res.get('@string/add'))

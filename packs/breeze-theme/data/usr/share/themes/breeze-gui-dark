@@ -41,15 +41,15 @@ username: guest
 password: *
 desktop: baran
 theme-name: breeze-dark
-logo: @icon/breeze
+logo: @icon/breeze-cloud-light
 backend.color: black
 backend.timeout: 1000
 taskbar.location: bottom
 taskbar.pins: browser,roller,barge,calculator,calendar,commento,pysys,runapp,about
 splash.timeout: 3000
-splash.logo: @icon/breeze-logo
+splash.logo: @icon/breeze-cloud-light
 splash.logo-size: 300
-menu: @icon/breeze-logo
+menu: @icon/breeze-cloud-light
 splash.color: black
 login.bgcolor: #730c5a
 taskbar.icon.style: Windows
@@ -61,8 +61,8 @@ enter.fgcolor: #FFFFFF
 unlock.bgcolor: #123456
 unlock.background: @background/breeze-dark
 unlock.fgcolor: #FFFFFF
-loginw.bgcolor: white
-loginw.fgcolor: black
+loginw.bgcolor: #232629
+loginw.fgcolor: white
 loginw.round: Yes
 loginw.round-size: 20
 loginw.location: center
@@ -111,7 +111,7 @@ loginw.login.fgcolor: #FFFFFF
 loginw.login.fontsize: 12
 loginw.login.hide: No
 loginw.login.width: 300
-loginw.enter.bgcolor: pink
+loginw.enter.bgcolor: purple
 loginw.enter.bgcolor-hover: purple
 loginw.enter.fgcolor: #FFFFFF
 loginw.enter.fontsize: 12
@@ -143,7 +143,7 @@ appw.title.close-hover: #da4453
 menu.scroll.color: #4f5357
 menu.scroll.color-hover: #3eb4f1
 menu.scroll.round-size: 0
-menu.scroll.bgcolor: white
+menu.scroll.bgcolor: #232629
 params: gui
 taskbar.direction: ltr
 menu.tab.direction: ltr

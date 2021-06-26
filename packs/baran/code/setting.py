@@ -38,8 +38,8 @@ class AppListView(QListView):
 
         self.setStyleSheet("""
                         AppListView,QListView {
-                        background-color: !whitez;
-                        color: !blackz;
+                        background-color: !z;
+                        color: !y;
                         }
                                        QScrollBar
                                        {
@@ -60,8 +60,8 @@ class AppListView(QListView):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
-            '!blackz', getdata("appw.body.fgcolor")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
         # Get font #
 
         self.entry = QStandardItemModel()

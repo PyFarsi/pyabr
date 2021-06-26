@@ -51,8 +51,8 @@ class IDListView(QListView):
 
         self.setStyleSheet("""
                         IDListView,QListView {
-                        background-color: !whitez;
-                        color: !blackz;
+                        background-color: !z;
+                        color: !y;
                         }
                                        QScrollBar
                                        {
@@ -73,8 +73,8 @@ class IDListView(QListView):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
-            '!blackz', getdata("appw.body.fgcolor")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
 
         self.dir = files.readall('/proc/info/pwd')
         files.write('/proc/info/isel', self.dir)

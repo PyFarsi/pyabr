@@ -66,8 +66,8 @@ class WifiListView (QListView):
         # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
         self.setStyleSheet("""
                         WifiListView,QListView {
-                        background-color: !whitez;
-                        color: !blackz;
+                        background-color: !z;
+                        color: !y;
                         }
                                        QScrollBar
                                        {
@@ -88,8 +88,8 @@ class WifiListView (QListView):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
-            '!blackz', getdata("appw.body.fgcolor")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
         # on the given model index to get a pointer to the item
 
         files.write('/etc/wifi/list',subprocess.check_output(['nmcli','-t','-f','SSID','device','wifi','list']).decode('utf-8'))
@@ -120,7 +120,7 @@ class WifiListView (QListView):
         if x == True:
             app.switch('wifi')
             self.ssid = self.item.text()
-            self.Env.RunApp ('bool',['Connect to '+self.item.text(),'Do you want to connect to this network?',self.connect_])
+            self.Env.RunApp ('bool',[res.get('@string/c')+" "+self.item.text(),res.get('@string/cm'),self.connect_])
             app.switch('wifi')
 
     def _enter_password_ (self,password):
@@ -139,11 +139,11 @@ class WifiListView (QListView):
 
         if status.startswith('D'):
             app.switch('wifi')
-            self.Env.RunApp('text', ['Successfully connected', 'Successfully connected to this network'])
+            self.Env.RunApp('text', [res.get('@string/s'), res.get('@string/sm')])
             app.switch('wifi')
         else:
             app.switch('wifi')
-            self.Env.RunApp('text', ['Incorrect password', 'Your entered password is incorrect'])
+            self.Env.RunApp('text', [res.get('@string/i'), res.get('@string/im')])
             app.switch('wifi')
 
     def check_connection_(self):
@@ -151,7 +151,7 @@ class WifiListView (QListView):
 
         if status.startswith ('D'):
             app.switch('wifi')
-            self.Env.RunApp('text',['Successfully connected','Successfully connected to this network'])
+            self.Env.RunApp('text',[res.get('@string/s'),res.get('@string/sm')])
             app.switch('wifi')
         else:
             control.write_record('input.password_hint','Yes','/etc/configbox')

@@ -66,8 +66,8 @@ class MyAppListView (QListView):
 
         self.setStyleSheet("""
                         MyAppListView,QListView {
-                        background-color: !whitez;
-                        color: !blackz;
+                        background-color: !z;
+                        color: !y;
                         }
                                        QScrollBar
                                        {
@@ -88,8 +88,8 @@ class MyAppListView (QListView):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
-            '!blackz', getdata("appw.body.fgcolor")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
         # on the given model index to get a pointer to the item
 
         self.listdir = files.list('/app/mirrors')
@@ -151,8 +151,8 @@ class PackageListView (QListView):
 
         self.setStyleSheet("""
                         PackageListView,QListView {
-                        background-color: !whitez;
-                        color: !blackz;
+                        background-color: !z;
+                        color: !y;
                         }
                                        QScrollBar
                                        {
@@ -173,8 +173,8 @@ class PackageListView (QListView):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
-            '!blackz', getdata("appw.body.fgcolor")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
         # on the given model index to get a pointer to the item
 
         self.listdir = files.list('/app/mirrors')
@@ -686,6 +686,8 @@ class MainApp (QMainWindow):
         self.Widget.Resize(self,720,640)
 
         self.menubar = QMenuBar()
+        self.menubar.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         if getdata('submenu.direction')=='ltr':
             self.menubar.setLayoutDirection(Qt.LeftToRight)
         else:
@@ -694,8 +696,12 @@ class MainApp (QMainWindow):
         self.setMenuBar(self.menubar)
         app.switch('paye')
         self.mirror = self.menubar.addMenu(res.get('@string/mirror'))
+        self.mirror.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.mirror.setFont(self.Env.font())
         self.package = self.menubar.addMenu(res.get('@string/package'))
+        self.package.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.package.setFont(self.Env.font())
         self.addm = self.mirror.addAction (res.get('@string/add'))
         self.addm.setFont(self.Env.font())

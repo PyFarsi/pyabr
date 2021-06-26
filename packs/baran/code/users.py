@@ -70,8 +70,8 @@ class UserListView (QListView):
 
         self.setStyleSheet("""
                         UserListView,QListView {
-                        background-color: !whitez;
-                        color: !blackz;
+                        background-color: !z;
+                        color: !y;
                         }
                                        QScrollBar
                                        {
@@ -92,8 +92,8 @@ class UserListView (QListView):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
-            '!blackz', getdata("appw.body.fgcolor")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
         # on the given model index to get a pointer to the item
 
         self.listdir = files.list('/etc/users')
@@ -380,6 +380,8 @@ class MainApp (QMainWindow):
         self.Widget.Resize(self,720,640)
 
         self.menubar = QMenuBar()
+        self.menubar.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.setMenuBar(self.menubar)
         self.addx = self.menubar.addAction(res.get('@string/add'))
         self.addx.triggered.connect (self.adduser_act)

@@ -52,6 +52,9 @@ class MainApp (QMainWindow):
 
         app.switch('nama')
 
+        self.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+
         self.Widget.Resize (self,int(self.Env.width()/0.8),int(self.Env.height()/0.8))
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
         self.Widget.SetWindowIcon (QIcon(res.get(res.etc('nama','logo'))))

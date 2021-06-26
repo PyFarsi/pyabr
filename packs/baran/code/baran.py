@@ -669,6 +669,8 @@ class Login (QMainWindow):
 
         #
         self.submenu = QMenuBar()  # Sub menu
+        self.submenu.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.Backend.setMenuBar(self.submenu)
 
         # self.submenu.setStyleSheet(f'background-color:none;color:{submenu_bgcolor};')
@@ -689,6 +691,8 @@ class Login (QMainWindow):
         self.submenu.setCornerWidget(Shell([self.Backend, self]))
 
         self.etcmenu = QMenu()
+        self.etcmenu.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.etcmenu.setFont(f)
         self.etcmenu.setTitle(res.get('@string/etcmenu'))
         self.etcmenu.setFont(f)
@@ -698,6 +702,8 @@ class Login (QMainWindow):
 
         # Power menu #
         self.powermenu = QMenu()
+        self.powermenu.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.powermenu.setFont(f)
         self.etcmenu.addMenu(self.powermenu)
         self.powermenu.setTitle(res.get('@string/powermenu'))
@@ -815,6 +821,8 @@ class Enter (QMainWindow):
         ## Menu Back
         ## Etcetra menu ##
         self.submenu = QMenuBar()  # Sub menu
+        self.submenu.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.Backend.setMenuBar(self.submenu)
 
         # self.submenu.setStyleSheet(f'background-color:none;color:{submenu_bgcolor};')
@@ -835,6 +843,8 @@ class Enter (QMainWindow):
         self.submenu.setCornerWidget(Shell([self.Backend, self]))
 
         self.etcmenu = QMenu()
+        self.etcmenu.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.etcmenu.setFont(f)
         self.etcmenu.setTitle(res.get('@string/etcmenu'))
         self.etcmenu.setFont(f)
@@ -842,6 +852,8 @@ class Enter (QMainWindow):
 
         # Account menu #
         self.usermenu = QMenu()
+        self.usermenu.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.usermenu.setFont(f)
         self.etcmenu.addMenu(self.usermenu)
 
@@ -860,6 +872,8 @@ class Enter (QMainWindow):
 
         # Power menu #
         self.powermenu = QMenu()
+        self.powermenu.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.powermenu.setFont(f)
         self.etcmenu.addMenu(self.powermenu)
         self.powermenu.setTitle(res.get('@string/powermenu'))
@@ -1022,8 +1036,8 @@ class AppListView(QListView):
 
         self.setStyleSheet("""
                         AppListView,QListView {
-                        background-color: !whitez;
-                        color: !blackz;
+                        background-color: !z;
+                        color: !y;
                         }
                                        QScrollBar
                                        {
@@ -1044,8 +1058,8 @@ class AppListView(QListView):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
-            '!blackz', getdata("appw.body.fgcolor")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
         # Get font #
 
         self.entry = QStandardItemModel()
@@ -1097,8 +1111,8 @@ class GameListView(QListView):
 
         self.setStyleSheet("""
                         GameListView,QListView {
-                        background-color: !whitez;
-                        color: !blackz;
+                        background-color: !z;
+                        color: !y;
                         }
                                        QScrollBar
                                        {
@@ -1119,8 +1133,8 @@ class GameListView(QListView):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
-            '!blackz', getdata("appw.body.fgcolor")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
 
         # Get font #
 
@@ -1174,8 +1188,8 @@ class ThemeListView(QListView):
 
         self.setStyleSheet("""
                         ThemeListView,QListView {
-                        background-color: !whitez;
-                        color: !blackz;
+                        background-color: !z;
+                        color: !y;
                         }
                                        QScrollBar
                                        {
@@ -1196,8 +1210,8 @@ class ThemeListView(QListView):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
-            '!blackz', getdata("appw.body.fgcolor")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
 
 
         self.entry = QStandardItemModel()
@@ -1246,8 +1260,8 @@ class SessionListView(QListView):
 
         self.setStyleSheet("""
                         SessionListView,QListView {
-                        background-color: !whitez;
-                        color: !blackz;
+                        background-color: !z;
+                        color: !y;
                         }
                                        QScrollBar
                                        {
@@ -1268,8 +1282,8 @@ class SessionListView(QListView):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
-            '!blackz', getdata("appw.body.fgcolor")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
 
         # Get font #
         self.entry = QStandardItemModel()
@@ -1889,7 +1903,7 @@ class Shell (QWidget):
     def __init__(self,ports):
         super(Shell, self).__init__()
         self.setFont(f)
-        self.boxl = QVBoxLayout() # layout
+        self.boxl = QHBoxLayout() # layout
         self.setLayout(self.boxl)
 
         # ports #
@@ -2296,6 +2310,8 @@ class Desktop (QMainWindow):
         ## menu section
 
         self.submenu =QMenuBar() # Sub menu
+        self.submenu.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.Backend.setMenuBar(self.submenu)
 
         #self.submenu.setStyleSheet(f'background-color:none;color:{submenu_bgcolor};')
@@ -2388,6 +2404,8 @@ class Desktop (QMainWindow):
 
         ## Etcetra menu ##
         self.etcmenu = QMenu()
+        self.etcmenu.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.etcmenu.setFont(f)
         self.etcmenu.setTitle (res.get('@string/etcmenu'))
         self.etcmenu.setFont(f)
@@ -2395,6 +2413,8 @@ class Desktop (QMainWindow):
 
         # Account menu #
         self.usermenu = QMenu()
+        self.usermenu.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.usermenu.setFont(f)
         self.etcmenu.addMenu(self.usermenu)
 
@@ -2411,6 +2431,8 @@ class Desktop (QMainWindow):
 
         # Power menu #
         self.powermenu = QMenu()
+        self.powermenu.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.powermenu.setFont(f)
         self.etcmenu.addMenu(self.powermenu)
         self.powermenu.setTitle(res.get('@string/powermenu'))

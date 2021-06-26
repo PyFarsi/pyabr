@@ -107,8 +107,8 @@ class MainApp(QMainWindow):
         self.editor = TextEdit(ports)
         self.editor.setStyleSheet("""
                         TextEdit,QTextEdit {
-                        background-color: !whitez;
-                        color: !blackz;
+                        background-color: !z;
+                        color: !y;
                         }
                                        QScrollBar
                                        {
@@ -129,8 +129,8 @@ class MainApp(QMainWindow):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez', getdata("appw.body.bgcolor")).replace(
-            '!blackz', getdata("appw.body.fgcolor")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
 
         # Setup the QTextEdit editor configuration
         self.editor.setAutoFormatting(QTextEdit.AutoAll)
@@ -162,28 +162,32 @@ class MainApp(QMainWindow):
 
         self.menuBar = QMenuBar()
         self.setMenuBar(self.menuBar)
+        self.menuBar.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.menuBar.setFont(self.Env.font())
         if getdata('submenu.direction')=='ltr':
             self.menuBar.setLayoutDirection(Qt.LeftToRight)
         else:
             self.menuBar.setLayoutDirection(Qt.RightToLeft)
         file_menu = self.menuBar.addMenu(res.get('@string/file'))
+        file_menu.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         file_menu.setFont(self.Env.font())
-        img = res.get('@icon/blue-fileopen')
+        img = res.get('@icon/breeze-open')
         open_file_action = QAction(QIcon(img), res.get('@string/of'), self)
         open_file_action.setFont(self.Env.font())
         open_file_action.setStatusTip(res.get('@string/of'))
         open_file_action.triggered.connect(self.file_open)
         file_menu.addAction(open_file_action)
         file_toolbar.addAction(open_file_action)
-        img = res.get('@icon/document-save')
+        img = res.get('@icon/breeze-save')
         save_file_action = QAction(QIcon(img), res.get('@string/sv'), self)
         save_file_action.setFont(self.Env.font())
         save_file_action.setStatusTip(res.get('@string/sv'))
         save_file_action.triggered.connect(self.file_save)
         file_menu.addAction(save_file_action)
         file_toolbar.addAction(save_file_action)
-        img = res.get('@icon/document-save-as')
+        img = res.get('@icon/breeze-saveas')
         saveas_file_action = QAction(QIcon(img), res.get('@string/sa'), self)
         saveas_file_action.setFont(self.Env.font())
         saveas_file_action.setStatusTip(res.get('@string/sa'))
@@ -196,14 +200,16 @@ class MainApp(QMainWindow):
         edit_toolbar.setIconSize(QSize(16, 16))
         self.addToolBar(edit_toolbar)
         edit_menu = self.menuBar.addMenu(res.get('@string/ed'))
+        edit_menu.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         edit_menu.setFont(self.Env.font())
-        img = res.get('@icon/arrow-curve-180-left')
+        img = res.get('@icon/breeze-undo')
         undo_action = QAction(QIcon(img), res.get('@string/un'), self)
         undo_action.setFont(self.Env.font())
         undo_action.setStatusTip(res.get('@string/un'))
         undo_action.triggered.connect(self.editor.undo)
         edit_menu.addAction(undo_action)
-        img = res.get('@icon/arrow-curve')
+        img = res.get('@icon/breeze-redo')
         redo_action = QAction(QIcon(img), res.get('@string/rd'), self)
         redo_action.setFont(self.Env.font())
         redo_action.setStatusTip(res.get('@string/rd'))
@@ -212,7 +218,7 @@ class MainApp(QMainWindow):
         edit_menu.addAction(redo_action)
 
         edit_menu.addSeparator()
-        img = res.get('@icon/scissors')
+        img = res.get('@icon/breeze-cut')
         cut_action = QAction(QIcon(img), res.get('@string/ct'), self)
         cut_action.setFont(self.Env.font())
         cut_action.setStatusTip(res.get('@string/ct'))
@@ -220,7 +226,7 @@ class MainApp(QMainWindow):
         cut_action.triggered.connect(self.editor.cut)
         edit_toolbar.addAction(cut_action)
         edit_menu.addAction(cut_action)
-        img = res.get('@icon/document-copy')
+        img = res.get('@icon/breeze-copy')
         copy_action = QAction(QIcon(img), res.get('@string/cp'), self)
         copy_action.setFont(self.Env.font())
         copy_action.setStatusTip(res.get('@string/cp'))
@@ -228,7 +234,7 @@ class MainApp(QMainWindow):
         copy_action.triggered.connect(self.editor.copy)
         edit_toolbar.addAction(copy_action)
         edit_menu.addAction(copy_action)
-        img = res.get('@icon/clipboard-paste-document-text')
+        img = res.get('@icon/breeze-paste')
         paste_action = QAction(QIcon(img), res.get('@string/pa'), self)
         paste_action.setFont(self.Env.font())
         paste_action.setStatusTip(res.get('@string/pa'))
@@ -236,7 +242,7 @@ class MainApp(QMainWindow):
         paste_action.triggered.connect(self.editor.paste)
         edit_toolbar.addAction(paste_action)
         edit_menu.addAction(paste_action)
-        img = res.get('@icon/selection-input')
+        img = res.get('@icon/breeze-select')
         select_action = QAction(QIcon(img), res.get('@string/sll'), self)
         select_action.setStatusTip(res.get('@string/sll'))
         select_action.setFont(self.Env.font())
@@ -245,7 +251,7 @@ class MainApp(QMainWindow):
         edit_menu.addAction(select_action)
 
         edit_menu.addSeparator()
-        img = res.get('@icon/arrow-continue')
+        img = res.get('@icon/breeze-wrap')
         wrap_action = QAction(QIcon(img), res.get('@string/wtw'), self)
         wrap_action.setFont(self.Env.font())
         wrap_action.setStatusTip(res.get('@string/ttw'))
@@ -259,6 +265,8 @@ class MainApp(QMainWindow):
         format_toolbar.setIconSize(QSize(16, 16))
         self.addToolBar(format_toolbar)
         format_menu = self.menuBar.addMenu(res.get('@string/fm'))
+        format_menu.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         format_menu.setFont(self.Env.font())
 
         # We need references to these actions/settings to update as selection changes, so attach to self.
@@ -273,7 +281,7 @@ class MainApp(QMainWindow):
         # and set as the pointsize. We could also use the index + retrieve from FONT_SIZES.
         self.fontsize.currentIndexChanged[str].connect(lambda s: self.editor.setFontPointSize(float(s)) )
         format_toolbar.addWidget(self.fontsize)
-        img = res.get('@icon/edit-bold')
+        img = res.get('@icon/breeze-bold')
         self.bold_action = QAction(QIcon(img), res.get('@string/bl'), self)
         self.bold_action.setStatusTip(res.get('@string/bl'))
         self.bold_action.setFont(self.Env.font())
@@ -283,7 +291,7 @@ class MainApp(QMainWindow):
         format_toolbar.addAction(self.bold_action)
         format_menu.addAction(self.bold_action)
 
-        img = res.get('@icon/edit-italic')
+        img = res.get('@icon/breeze-italic')
         self.italic_action = QAction(QIcon(img), res.get('@string/it'), self)
         self.italic_action.setStatusTip(res.get('@string/it'))
         self.italic_action.setFont(self.Env.font())
@@ -293,7 +301,7 @@ class MainApp(QMainWindow):
         format_toolbar.addAction(self.italic_action)
         format_menu.addAction(self.italic_action)
 
-        img = res.get('@icon/edit-underline')
+        img = res.get('@icon/breeze-underline')
         self.underline_action = QAction(QIcon(img), res.get('@string/un'), self)
         self.underline_action.setFont(self.Env.font())
         self.underline_action.setStatusTip(res.get('@string/un'))
@@ -305,7 +313,7 @@ class MainApp(QMainWindow):
 
         format_menu.addSeparator()
 
-        img = res.get('@icon/edit-alignment')
+        img = res.get('@icon/breeze-alignl')
         self.alignl_action = QAction(QIcon(img), res.get('@string/al'), self)
         self.alignl_action.setStatusTip(res.get('@string/al'))
         self.alignl_action.setFont(self.Env.font())
@@ -314,7 +322,7 @@ class MainApp(QMainWindow):
         format_toolbar.addAction(self.alignl_action)
         format_menu.addAction(self.alignl_action)
 
-        img = res.get('@icon/edit-alignment-center')
+        img = res.get('@icon/breeze-alignc')
         self.alignc_action = QAction(QIcon(img), res.get('@string/ac'), self)
         self.alignc_action.setFont(self.Env.font())
         self.alignc_action.setStatusTip(res.get('@string/ac'))
@@ -323,7 +331,7 @@ class MainApp(QMainWindow):
         format_toolbar.addAction(self.alignc_action)
         format_menu.addAction(self.alignc_action)
 
-        img = res.get('@icon/edit-alignment-right')
+        img = res.get('@icon/breeze-alignr')
         self.alignr_action = QAction(QIcon(img), res.get('@string/ar'), self)
         self.alignr_action.setStatusTip(res.get('@string/ar'))
         self.alignr_action.setCheckable(True)
@@ -332,7 +340,7 @@ class MainApp(QMainWindow):
         format_toolbar.addAction(self.alignr_action)
         format_menu.addAction(self.alignr_action)
 
-        img = res.get('@icon/edit-alignment-justify')
+        img = res.get('@icon/breeze-justify')
         self.alignj_action = QAction(QIcon(img), res.get('@string/jf'), self)
         self.alignj_action.setFont(self.Env.font())
 

@@ -195,6 +195,5 @@ class MainApp(QMainWindow):
 
         self.label.setFont(QFont(self.Env.font().family(), 50))
         self.label.setAlignment(Qt.AlignCenter)
-        self.label.setFont(self.Env.font())
 
         self.x2.setLayout(self.cl)

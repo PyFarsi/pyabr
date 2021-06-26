@@ -40,3 +40,5 @@ class MainApp (QWidget):
         self.External = ports[4]
 
         self.onCloseProcess()
+        self.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')

@@ -23,4 +23,4 @@ class MainApp(QWidget):
 
         self.Widget.Resize(self, 500, 300)
         self.Widget.SetWindowTitle("Welcome")
-        self.Widget.SetWindowIcon(QIcon(res.get('@icon/runner')))
+        self.Widget.SetWindowIcon(QIcon(res.get('@icon/breeze-app')))

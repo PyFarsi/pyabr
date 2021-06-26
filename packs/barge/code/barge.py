@@ -58,9 +58,9 @@ class MainApp(QtWidgets.QMainWindow):
         # self.text2.setStyleSheet(
         #             f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.teEdit.setStyleSheet("""
-        Barge {
-        background-color: !whitez;
-        color: !blackz;
+        Barge,QTextEdit {
+        background-color: !z;
+        color: !y;
         }
                        QScrollBar
                        {
@@ -81,7 +81,7 @@ class MainApp(QtWidgets.QMainWindow):
             '6',
             getdata(
                 "menu.scroll.round-size")).replace(
-            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!whitez',getdata("appw.body.bgcolor")).replace('!blackz',getdata("appw.body.fgcolor")))
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z',getdata("appw.body.bgcolor")).replace('!y',getdata("appw.body.fgcolor")))
 
         ## External Support Source Code ##
         if not self.External==None:
@@ -94,7 +94,12 @@ class MainApp(QtWidgets.QMainWindow):
 
         # menubar
         self.menubar = self.menuBar()
+        self.menubar.setFont(self.Env.font())
+        self.menubar.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.file = self.menubar.addMenu(res.get('@string/file'))
+        self.file.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.file.setFont(self.Env.font())
 
         if getdata('submenu.direction')=='ltr':
@@ -133,6 +138,8 @@ class MainApp(QtWidgets.QMainWindow):
 
         # code menu
         self.code = self.menubar.addMenu(res.get('@string/code'))
+        self.code.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.code.setFont(self.Env.font())
         self.run = self.code.addAction(res.get('@string/run'))
         self.run.setFont(self.Env.font())
@@ -140,6 +147,8 @@ class MainApp(QtWidgets.QMainWindow):
         self.run.setShortcut('Shift+F10')
 
         self.insert_c = self.code.addMenu(res.get('@string/icode'))
+        self.insert_c.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.insert_c.setFont(self.Env.font())
 
         # Codes #

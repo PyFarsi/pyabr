@@ -51,6 +51,9 @@ class MainApp (QtWidgets.QWidget):
         self.AppName = args[3]
         self.onCloseProcess()
 
+        self.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
         self.Widget.SetWindowIcon (QIcon(res.get(res.etc('connectcloud','logo'))))
 
@@ -58,14 +61,32 @@ class MainApp (QtWidgets.QWidget):
         self.setLayout(self.vbox)
 
         self.leHost = LineEdit(args)
+        self.leHost.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
         self.lePassword = LineEdit(args)
+        self.lePassword.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
         self.leCheck = LineEdit(args)
+        self.leCheck.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
         self.leList = LineEdit(args)
+        self.leList.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
         self.leDownload = LineEdit(args)
+        self.leDownload.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
         self.leUpload = LineEdit(args)
+        self.leUpload.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
         self.leRemove = LineEdit(args)
+        self.leRemove.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
         self.leDirectory = LineEdit(args)
+        self.leDirectory.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
         self.leValue = LineEdit(args)
+        self.leValue.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
     
 
         self.vbox.addWidget(self.leHost)
@@ -96,6 +117,8 @@ class MainApp (QtWidgets.QWidget):
         self.leValue.setPlaceholderText (res.get('@string/value'))
 
         self.btnConnect = QPushButton()
+        self.btnConnect.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
         self.btnConnect.setText(res.get('@string/add'))
         self.vbox.addWidget(self.btnConnect)
         self.btnConnect.clicked.connect (self.connect_)

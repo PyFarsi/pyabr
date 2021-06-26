@@ -26,6 +26,8 @@ from piecasso_frontend import Ui_MainWindow
 
 res = Res();files = Files();app = App();control=Control();commands = Commands()
 
+def getdata (value): return control.read_record(value,'/etc/gui')
+
 class MainApp(QtWidgets.QMainWindow):
     def onCloseProcess (self):
         if not app.check(self.AppName):
@@ -48,6 +50,9 @@ class MainApp(QtWidgets.QMainWindow):
         self.Widget.Resize (self,int(res.etc(self.AppName,"width")),int(res.etc(self.AppName,"height")))
         self.Widget.SetWindowTitle(res.get('@string/app_name'))
         self.Widget.SetWindowIcon (QtGui.QIcon(res.get(res.etc(self.AppName,'logo'))))
+
+        self.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.setCentralWidget(MainWindow(args))
 
@@ -739,6 +744,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self,ports)
 
+        self.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+
         # ports
         self.Backend = ports[0]
         self.Env = ports[1]
@@ -867,7 +875,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionUnderline.triggered.connect(lambda s: self.canvas.set_config('underline', s))
 
         sizeicon = QLabel()
+        sizeicon.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         sizeicon.setPixmap(QPixmap(':/icons/border-weight.png'))
+        sizeicon.setFont(self.Env.font())
         self.drawingToolbar.addWidget(sizeicon)
         self.sizeselect = QSlider()
         self.sizeselect.setRange(1,20)

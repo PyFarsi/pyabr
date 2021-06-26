@@ -22,6 +22,8 @@ app = App()
 import random
 import time
 
+def getdata (value): return control.read_record(value,'/etc/gui')
+
 IMG_BOMB = QImage(res.get(res.etc("mines",'bug')))
 IMG_FLAG = QImage(res.get(res.etc("mines",'flag')))
 IMG_START = QImage(res.get(res.etc("mines",'rocket')))
@@ -165,6 +167,8 @@ class MainApp(QMainWindow):
         self.onCloseProcess()
 
         self.Widget.Resize(self, int(res.etc("mines",'width')), int(res.etc("mines",'height')))
+        self.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.Widget.SetWindowTitle(res.get("@string/app_name"))
         self.Widget.SetWindowIcon (QIcon(res.get(res.etc("mines",'logo'))))
@@ -194,6 +198,8 @@ class MainApp(QMainWindow):
         self.clock.setText("000")
 
         self.button = QPushButton()
+        self.button.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.button.setFixedSize(QSize(32, 32))
         self.button.setIconSize(QSize(32, 32))
         self.button.setIcon(QIcon(res.get(res.etc("mines",'smiley'))))
@@ -202,6 +208,8 @@ class MainApp(QMainWindow):
         self.button.pressed.connect(self.button_pressed)
 
         l = QLabel()
+        l.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         l.setPixmap(QPixmap.fromImage(IMG_BOMB))
         l.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         hb.addWidget(l)
@@ -211,6 +219,8 @@ class MainApp(QMainWindow):
         hb.addWidget(self.clock)
 
         l = QLabel()
+        l.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         l.setPixmap(QPixmap.fromImage(IMG_CLOCK))
         l.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
         hb.addWidget(l)
