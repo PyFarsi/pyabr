@@ -7,4 +7,4 @@ unpack: /
 version: 1.2.0
 description: Paye package manager as a default package manager that can control the system
 compile: Yes
-build: 1400-03-31
+build: 1400-04-06

@@ -16,24 +16,6 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <widget class="QWizardPage" name="wizardPage1">
-   <property name="styleSheet">
-    <string notr="true">background-image: url(setup.png);</string>
-   </property>
-   <widget class="QWidget" name="widget" native="true">
-    <property name="geometry">
-     <rect>
-      <x>-10</x>
-      <y>-10</y>
-      <width>612</width>
-      <height>411</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-image: url(setup.png);</string>
-    </property>
-   </widget>
-  </widget>
   <widget class="QWizardPage" name="wizardPage2">
    <widget class="QLineEdit" name="leLocation">
     <property name="geometry">
@@ -45,7 +27,10 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">padding-left: 5%;padding-right: 5%;</string>
+    </property>
+    <property name="placeholderText">
+     <string>Choose current location for install Pyabr</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnLocation">
@@ -89,36 +74,13 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">padding-left: 5%;padding-right: 5%;</string>
     </property>
     <property name="echoMode">
      <enum>QLineEdit::Password</enum>
     </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>240</y>
-      <width>331</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
+    <property name="placeholderText">
      <string>New Password</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>180</y>
-      <width>331</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Pick a username</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="leUsername">
@@ -131,20 +93,10 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">padding-left: 5%;padding-right: 5%;</string>
     </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>120</y>
-      <width>251</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>New Root password</string>
+    <property name="placeholderText">
+     <string>Pick a username</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="leRootCode">
@@ -157,23 +109,13 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">padding-left: 5%;padding-right: 5%;</string>
     </property>
     <property name="echoMode">
      <enum>QLineEdit::Password</enum>
     </property>
-   </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>60</y>
-      <width>341</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Hostname</string>
+    <property name="placeholderText">
+     <string>New Root password</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="leHostname">
@@ -186,7 +128,10 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">padding-left: 5%;padding-right: 5%;</string>
+    </property>
+    <property name="placeholderText">
+     <string>Hostname</string>
     </property>
    </widget>
   </widget>
@@ -293,46 +238,10 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">padding-left: 5%;padding-right: 5%;</string>
     </property>
-   </widget>
-   <widget class="QLabel" name="label_11">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>90</y>
-      <width>251</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
+    <property name="placeholderText">
      <string>Last name</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_12">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>90</y>
-      <width>251</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>First name</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_13">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>150</y>
-      <width>500</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Email address</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="leEmail">
@@ -345,7 +254,10 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">padding-left: 5%;padding-right: 5%;</string>
+    </property>
+    <property name="placeholderText">
+     <string>Email address (optional)</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="leFirstName">
@@ -358,20 +270,10 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">padding-left: 5%;padding-right: 5%;</string>
     </property>
-   </widget>
-   <widget class="QLabel" name="label_14">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>210</y>
-      <width>331</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Phone number</string>
+    <property name="placeholderText">
+     <string>First name</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lePhone">
@@ -384,15 +286,14 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">padding-left: 5%;padding-right: 5%;</string>
+    </property>
+    <property name="placeholderText">
+     <string>Phone number (optional)</string>
     </property>
    </widget>
    <zorder>leLastName</zorder>
-   <zorder>label_11</zorder>
-   <zorder>label_12</zorder>
-   <zorder>label_13</zorder>
    <zorder>leFirstName</zorder>
-   <zorder>label_14</zorder>
    <zorder>lePhone</zorder>
    <zorder>leEmail</zorder>
   </widget>
