@@ -1,6 +1,6 @@
 name: English
-logo: @icon/en
-logo-selected: @icon/en-selected
+logo: @icon/breeze-lang
+logo-selected: @icon/breeze-lang
 font: Comic Sans MS
 submenu-direction: ltr
 enter: Enter

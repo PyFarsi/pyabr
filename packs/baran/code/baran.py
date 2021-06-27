@@ -740,8 +740,7 @@ class Login (QMainWindow):
 
         self.fakewidgetkeyboard = QMainWindow()
         self.fakewidgetkeyboard.setFixedHeight(356)
-        self.fakewidgetkeyboard.setStyleSheet(
-            f'background-color: {getdata("key.bgcolor")};background-image: url({getdata("key.background")})')
+        self.fakewidgetkeyboard.setStyleSheet(f'background-color: {getdata("key.bgcolor")};background-image: url({res.get(getdata("key.background"))})')
 
         self.layout().addWidget(self.fakewidgetkeyboard)
         self.layout().addWidget(self.keyboardWidget)
@@ -932,7 +931,7 @@ class Enter (QMainWindow):
         self.fakewidgetkeyboard = QMainWindow()
         self.fakewidgetkeyboard.setFixedHeight(356)
         self.fakewidgetkeyboard.setStyleSheet(
-            f'background-color: {getdata("key.bgcolor")};background-image: url({getdata("key.background")})')
+            f'background-color: {getdata("key.bgcolor")};background-image: url({res.get(getdata("key.background"))})')
 
         self.layout().addWidget(self.fakewidgetkeyboard)
         self.layout().addWidget(self.keyboardWidget)
@@ -1006,7 +1005,7 @@ class Unlock (QMainWindow):
         self.fakewidgetkeyboard = QMainWindow()
         self.fakewidgetkeyboard.setFixedHeight(356)
         self.fakewidgetkeyboard.setStyleSheet(
-            f'background-color: {getdata("key.bgcolor")};background-image: url({getdata("key.background")})')
+            f'background-color: {getdata("key.bgcolor")};background-image: url({res.get(getdata("key.background"))})')
 
         self.layout().addWidget(self.fakewidgetkeyboard)
         self.layout().addWidget(self.keyboardWidget)

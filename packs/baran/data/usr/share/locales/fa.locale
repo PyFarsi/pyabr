@@ -1,6 +1,6 @@
 name: فارسی
-logo: @icon/fa
-logo-selected: @icon/fa-selected
+logo: @icon/breeze-lang
+logo-selected: @icon/breeze-lang
 font: Iran Sans
 submenu-direction: rtl
 enter: جدید
