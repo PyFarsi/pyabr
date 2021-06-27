@@ -5,10 +5,11 @@
 echo 'Help of copydisk for Pyabr: '
 echo "1. n"
 echo "2. p"
-echo "3. 2048"
-echo "4. "
-echo '5. a'
-echo '6. w'
+echo '3. 1'
+echo "4. 2048"
+echo "5. "
+echo '6. a'
+echo '7. w'
 
 fdisk /dev/sda
 mkfs.vfat -F 32 -v /dev/sda1

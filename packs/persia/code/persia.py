@@ -476,7 +476,7 @@ class SimplePythonEditor(baran.BCodeEdit):
 
         # Current line visible with special background color
         self.setCaretLineVisible(True)
-        self.setCaretLineBackgroundColor(QColor("#ffe4e4"))
+        self.setCaretLineBackgroundColor(QColor("#ffe4e4")) # ffe4e4
 
         # Set Python lexer
         # Set style for Python comments (style number 1) to a fixed-width
@@ -804,7 +804,6 @@ echo
 echo
 echo Finish running process with exit 0 ...
 rm /tmp/exec.sa
-rm {execname}
 pause
                         ''')
             self.Env.RunApp('commento', [None])

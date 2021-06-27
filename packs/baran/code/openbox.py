@@ -10,7 +10,7 @@
 #
 #######################################################################################
 
-import sys, os
+import sys, os,baran
 from libabr import Files, Colors, Control, Res, Commands, App, Permissions
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -26,6 +26,10 @@ commands = Commands()
 permissions = Permissions()
 def getdata (name):
     return control.read_record (name,'/etc/gui')
+class LineEdit (baran.BLineEdit):
+    def __init__(self,ports):
+        super(LineEdit, self).__init__()
+        self.Env = ports[1]
 class AppListView(QListView):
     def format(self, it, text):
         if files.isfile(f'/usr/share/applications/{it.whatsThis()}.desk'):
@@ -182,7 +186,7 @@ class MainApp (QMainWindow):
 
         self.layout().addWidget(self.btnOpenAlways)
 
-        self.leSave = QLineEdit()
+        self.leSave = LineEdit()
         self.leSave.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leSave.setFont(self.Env.font())
         if self.Env.width() > 1000 and self.Env.height() > 720:
