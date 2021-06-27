@@ -36,6 +36,7 @@ def manifest(name):
 
     f = open ('build-date.txt','r')
     control.write_record('build',f.read(),f'packs/{name}/control/manifest')
+    control.write_record('build', f.read(), f'packs/pyabr/data/etc/distro')
     f.close()
     shutil.copyfile('packs/'+name+'/control/manifest',f'packs/latest/data/app/mirrors/{name}.manifest')
 

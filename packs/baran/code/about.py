@@ -50,7 +50,7 @@ class MainApp(QWidget):
         self.btnInfo = QToolButton()
         self.btnInfo.setMinimumSize(128,128)
         self.btnInfo.setIconSize(QSize(128,128))
-        self.btnInfo.setStyleSheet(f'background-color: #ABCDEF;border-radius: 64% 64%;margin-left: {str(int(self.width()/2.666666))}%;')
+        self.btnInfo.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};border-radius: 64% 64%;margin-left: {str(int(self.width()/2.666666))}%;')
         self.btnInfo.setIcon(QIcon(res.get(control.read_record('logo','/etc/gui'))))
         self.vmbox.addWidget(self.btnInfo)
         self.extral = QWidget()

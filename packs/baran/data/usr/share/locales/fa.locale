@@ -120,7 +120,7 @@ September: سپتامبر
 October: اکتبر
 November: نوابر
 December: دسامبر
-desktop.username_placeholder: نام حساب کاربری وارد کنید
+desktop.username_placeholder: نام حساب کاربری را وارد کنید
 desktop.password_placeholder: رمز عبور را وارد کنید
 desktop.user_not_found: این حساب کاربری وجود ندارد
 desktop.wrong_password: رمز عبور نادرست می باشد؛ دوباره امتحان کنید
@@ -638,3 +638,5 @@ wifi.s: با موفقیت متصل شد
 wifi.sm: با موفقیت به این شبکه بی سیم متصل شد
 wifi.i: رمزعبور اشتباه می باشد
 wifi.im: رمزعبور وارد شده توسط شما اشتباه می باشد
+weather.app_name: آب و هوا
+weather.city: نام شهر خود را وارد کنید

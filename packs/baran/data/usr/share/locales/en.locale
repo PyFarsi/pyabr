@@ -638,3 +638,5 @@ wifi.sm: Successfully connected to this network
 wifi.i: Incorrect password
 wifi.im: Your entered password is incorrect
 gappyabr.app_name: Pyabr Support
+weather.app_name: Weather
+weather.city: Enter your city name
