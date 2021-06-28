@@ -43,7 +43,10 @@ files.remove('/tmp/width')
 files.write('/proc/info/de','Baran Desktop Enviroment')
 
 if files.isfile('/proc/info/scn'):
-    subprocess.call (['xrandr','-s',files.readall('/proc/info/scn')])
+    try:
+        subprocess.call (['xrandr','-s',files.readall('/proc/info/scn')])
+    except:
+        pass
 
 ## variables ##
 
