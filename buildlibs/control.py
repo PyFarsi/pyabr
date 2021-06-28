@@ -12,7 +12,7 @@
 import os
 
 def read_record (name,filename):
-    file = open (filename,"r")
+    file = open (filename,"r",encoding='utf-8')
     strv = file.read()
     file.close()
     strv = strv.split("\n")
@@ -24,14 +24,14 @@ def read_record (name,filename):
                 return i[1]
 
 def read_list (filename):
-    file = open (filename,"r")
+    file = open (filename,"r",encoding='utf-8')
     strv = file.read()
     file.close()
     strv = strv.split("\n")
     return strv
 
 def write_record(name, value, filename):
-    file = open (filename,'r')
+    file = open (filename,'r',encoding='utf-8')
     all = file.read()
     file.close()
     record = read_record(name, filename)
