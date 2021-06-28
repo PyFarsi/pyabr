@@ -156,6 +156,9 @@ roller.app_name: فایل ها
 input.title: یک مقدار وارد کنید
 input.cancel: لغو
 input.ok: تایید
+code.title: رمز را وارد کنید
+code.cancel: لغو
+code.ok: تایید
 bool.title: آیا می خواهید؟
 bool.cancel: خیر
 bool.ok: بله

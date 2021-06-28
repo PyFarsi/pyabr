@@ -27,19 +27,8 @@ key.btn.fgcolor-hover: white
 alert.width: 500
 alert.height: 40
 alert.location: SE
-locale: fa
-layout: fa
-autosize: Yes
-fullscreen: Yes
-width: 1920
-height: 1080
-terminal: commento
-sides: No
 font: Iran Sans
 fontsize: 12
-username: guest
-password: *
-desktop: baran
 theme-name: breeze-dark
 logo: @icon/breeze-cloud-light
 backend.color: black
@@ -144,6 +133,5 @@ menu.scroll.color: #4f5357
 menu.scroll.color-hover: #3eb4f1
 menu.scroll.round-size: 0
 menu.scroll.bgcolor: #232629
-params: gui
 taskbar.direction: ltr
 menu.tab.direction: ltr

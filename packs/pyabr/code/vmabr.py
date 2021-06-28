@@ -362,35 +362,30 @@ else:
     sys.exit(0)
 
 ## @core/mount ##
-if platform.system()=='Linux' and argv[0]=='gui':
-## @core/kernel-info ##
+files.write("/proc/info/kname", kernel_name)
+files.write("/proc/info/kver", kernel_version)
 
-    files.write("/proc/info/kname", kernel_name)
-    files.write("/proc/info/kver", kernel_version)
-## @core/system-info ##
+arch = platform.architecture()[0]
+os_user = getpass.getuser()
+os_host = platform.node()
+tz = control.read_record("format", "/etc/time")
+sweek = control.read_record("start-week", "/etc/time")
+py = sys.executable
 
-    arch = platform.architecture()[0]
-    os_user = getpass.getuser()
-    os_host = platform.node()
-    tz = control.read_record("format", "/etc/time")
-    sweek = control.read_record("start-week", "/etc/time")
-    py = sys.executable
-    #mac = getmac.getmac.get_mac_address()
+if argv[0] == "kernel":
+    interface = "CLI"
+else:
+    interface = "GUI"
 
-    if argv[0] == "kernel":
-        interface = "CLI"
-    else:
-        interface = "GUI"
-
-    files.write("/proc/info/os", osname)
-    files.write("/proc/info/arch", arch)
-    files.write("/proc/info/os_su", os_user)
-    files.write("/proc/info/os_host", os_user)
-    files.write("/proc/info/inter", interface)
-    files.write("/proc/info/tz", tz)
-    files.write("/proc/info/sweek", sweek)
-    files.write("/proc/info/boot", kernel_file)
-    files.write('/proc/info/py',py)
+files.write("/proc/info/os", osname)
+files.write("/proc/info/arch", arch)
+files.write("/proc/info/os_su", os_user)
+files.write("/proc/info/os_host", os_user)
+files.write("/proc/info/inter", interface)
+files.write("/proc/info/tz", tz)
+files.write("/proc/info/sweek", sweek)
+files.write("/proc/info/boot", kernel_file)
+files.write('/proc/info/py',py)
 
 ## @core/dirs ##
 
@@ -692,10 +687,6 @@ def shell():
         user_symbol = control.read_record("user", "/etc/prompt")
 
         ## Setting up prompt data base 2 ##
-
-        color_uh = ""
-        color_path = ""
-        prompt_symbol = ""
 
         if user=="root":
             prompt_symbol = root_symbol

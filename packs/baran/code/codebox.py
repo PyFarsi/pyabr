@@ -32,7 +32,7 @@ class LineEdit (baran.BLineEdit):
 # input box #
 class MainApp (QMainWindow):
     def onCloseProcess (self):
-        if not app.check('input'):
+        if not app.check('code'):
             self.Widget.Close()
         else:
             QTimer.singleShot(1,self.onCloseProcess)
@@ -64,6 +64,8 @@ class MainApp (QMainWindow):
 
         self.layout().addWidget(self.leInput)
         self.leInput.returnPressed.connect (self.inp)
+
+        self.leInput.setEchoMode(QLineEdit.Password)
 
         if self.External[0]=='' or self.External[0]==None:
             self.Widget.SetWindowTitle (res.get('@string/title'))

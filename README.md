@@ -22,7 +22,7 @@ Pyabr is a small and lightweight software use as:
 
 ## How to install it?
 
-- Persia Document for Installaction of Pyabr [Click Here](https://vrgl.ir/PJcx1)
+- Persian Document for Installaction of Pyabr [Click Here](https://vrgl.ir/PJcx1)
 
 - Stable release:
 

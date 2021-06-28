@@ -59,7 +59,7 @@ class MainApp (QMainWindow):
         else:
             if self.Env.username in control.read_list('/etc/sudoers'):
                 app.switch('sudoprocess')
-                self.Env.RunApp('input',[res.get('@string/pass'),self.getpass_])
+                self.Env.RunApp('code',[res.get('@string/pass'),self.getpass_])
                 app.switch('sudoprocess')
                 control.write_record('input.password_hint', 'No', '/etc/configbox')
             else:

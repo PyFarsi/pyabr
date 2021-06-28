@@ -131,7 +131,7 @@ class WifiListView (QListView):
 
     def enter_password_(self):
         app.switch('wifi')
-        self.Env.RunApp('input', ['Enter network password',self._enter_password_])
+        self.Env.RunApp('code', ['Enter network password',self._enter_password_])
         app.switch('wifi')
 
     def check_password_(self):

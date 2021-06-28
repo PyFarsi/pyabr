@@ -784,7 +784,7 @@ class Enter (QMainWindow):
 
     def signout_act_(self):
             app.endall()
-            commands.shutdown([])
+            #commands.shutdown([])
             subprocess.call([sys.executable, 'vmabr.pyc', "gui-login"])
             sys.exit(0)
 
@@ -2039,7 +2039,7 @@ class Desktop (QMainWindow):
     def signout_act_ (self,yes):
         if yes:
             app.endall()
-            commands.shutdown([])
+            #commands.shutdown([])
             subprocess.call([sys.executable, 'vmabr.pyc', "gui-login"])
             sys.exit(0)
 

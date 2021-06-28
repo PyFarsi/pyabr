@@ -25,9 +25,12 @@ list.remove('pack-wheel.py')
 list.remove('README.md')
 list.remove('clouddrive')
 list.remove('requirments.txt')
-list.remove('setup.svg')
-list.remove('setup.py')
 list.remove('setup.ui')
+list.remove('setup.py')
+list.remove('.gitignore')
+list.remove('mark_updates')
+list.remove('build-date.txt')
+list.remove('CONTRIBUTING.md')
 if '__pycache__' in list:
     list.remove('__pycache__')
 list.remove('AUTHERS')
@@ -40,6 +43,15 @@ if not os.path.isdir('sb'):
 
     f = open('sb/etc/issue.net', 'w')
     f.write('Pyabr')
+    f.close()
+
+    f = open('sb/etc/os-release','w')
+    f.write('''PRETTY_NAME="Pyabr 2 (Aras)"
+NAME="Pyabr"
+VERSION_ID="2"
+VERSION="2 (Aras)"
+VERSION_CODENAME=aras
+ID=pyabr''')
     f.close()
 else:
     list.remove('sb')

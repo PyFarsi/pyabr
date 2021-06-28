@@ -225,6 +225,8 @@ class ShowMirrorInformation (QMainWindow):
 
         self.manifest = self.path+".manifest"
 
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+
         self.name = control.read_record('name',self.manifest)
         self.version = control.read_record('version',self.manifest)
         self.build = control.read_record('build',self.manifest)
@@ -242,7 +244,7 @@ class ShowMirrorInformation (QMainWindow):
         self.btnBack.setText(res.get('@string/back'))
         app.switch('paye')
         self.btnBack.setGeometry(0, 0, self.Env.width(), 50)
-        self.btnBack.setStyleSheet('background-color: #123456;color:white;')
+        self.btnBack.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.layout().addWidget(self.btnBack)
 
         self.btnImage = QToolButton()
@@ -264,11 +266,12 @@ class ShowMirrorInformation (QMainWindow):
 
         self.Env.SetWindowTitle(self.namex)
 
-        self.btnImage.setStyleSheet('background-color:white;border-radius: 64% 64%;')
+        self.btnImage.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};border-radius: 64% 64%')
         self.btnImage.setGeometry(30, 70, 128, 128)
         self.layout().addWidget (self.btnImage)
 
         self.lblName = QLabel()
+        self.lblName.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
 
         if res.lang(self.namex)=='fa':
@@ -305,6 +308,7 @@ class ShowMirrorInformation (QMainWindow):
         self.progressBar.setGeometry(0, self.btnBack.height(), self.Env.width(), 20)
 
         self.w = QWidget()
+        self.w.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.w.setGeometry(30,200,self.width()-60,275)
         self.hbox = QHBoxLayout()
         self.w.setLayout(self.hbox)
@@ -313,6 +317,7 @@ class ShowMirrorInformation (QMainWindow):
         self.text1.setFont(self.Env.font())
         self.text1.append(f'\nPackage name:')
         self.text1.append(f'Package version:')
+        self.text1.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.text1.append(f'Build date:')
         self.text1.append(f'Copyright:')
         self.text1.append(f'License:')
@@ -320,6 +325,7 @@ class ShowMirrorInformation (QMainWindow):
         self.hbox.addWidget(self.text1)
 
         self.text2 = QTextBrowser()
+        self.text2.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.text2.setFont(self.Env.font())
         self.text2.append("\n"+self.name)
         self.text2.append(self.version)
@@ -433,6 +439,9 @@ class ShowPackageInformation (QMainWindow):
         self.postinstall = self.path+".postinstall"
         self.manifestx = self.mirror+".manifest"
 
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+
+
         self.name = control.read_record('name',self.manifest)
         self.version = control.read_record('version',self.manifest)
         self.build = control.read_record('build',self.manifest)
@@ -451,12 +460,12 @@ class ShowPackageInformation (QMainWindow):
 
         self.btnBack = QPushButton()
         self.btnBack.setFont(self.Env.font())
+        self.btnBack.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnBack.clicked.connect(self.xhide)
         app.switch('paye')
         self.btnBack.setText(res.get('@string/back'))
         app.switch('paye')
         self.btnBack.setGeometry(0, 0, self.Env.width(), 50)
-        self.btnBack.setStyleSheet('background-color: #123456;color:white;')
         self.layout().addWidget(self.btnBack)
 
         self.progressBar.setGeometry(0, self.btnBack.height(), self.Env.width(), 20)
@@ -482,12 +491,12 @@ class ShowPackageInformation (QMainWindow):
 
         self.Env.SetWindowTitle(self.namex)
 
-        self.btnImage.setStyleSheet('background-color:white;border-radius: 64% 64%;')
+        self.btnImage.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};border-radius: 64% 64%')
         self.btnImage.setGeometry(30, 70, 128, 128)
         self.layout().addWidget (self.btnImage)
 
         self.lblName = QLabel()
-
+        self.lblName.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         if res.lang(self.namex)=='fa':
             self.lblName.setAlignment(Qt.AlignRight)
@@ -674,6 +683,9 @@ class MainApp (QMainWindow):
         self.External = ports[4]
 
         self.onCloseProcess()
+
+        self.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         System("paye up") # update mirror
 

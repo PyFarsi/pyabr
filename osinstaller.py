@@ -69,11 +69,6 @@ else:
 	from PyQt5.QtCore import *
 	from PyQt5.QtWidgets import *
 
-	try:
-		from PyQt5.QtWebEngineWidgets import *
-	except:
-		pass
-
 	## Main entry ##
 	application = QApplication(sys.argv)
 	## https://www.cdog.pythonlibrary.org/2015/08/18/getting-your-screen-resolution-with-python/ Get screen model ##

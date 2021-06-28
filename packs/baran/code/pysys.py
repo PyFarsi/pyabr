@@ -64,7 +64,7 @@ class MainApp (QWidget):
             background-color: {1};
             border-radius: {2}% {2}%;
         }
-        '''.replace("{0}",res.etc(self.AppName,"btncolor")).replace("{1}",res.etc(self.AppName,"btnhovercolor")).replace("{2}",res.etc(self.AppName,"btnround"))
+        '''.replace("{0}",getdata("appw.body.bgcolor")).replace("{1}",res.etc(self.AppName,"btnhovercolor")).replace("{2}",res.etc(self.AppName,"btnround"))
 
         btnsize = int(res.etc(self.AppName,"btnsize"))
         self.btnEscape = QToolButton()

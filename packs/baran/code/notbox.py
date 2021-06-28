@@ -68,3 +68,6 @@ class MainApp (QMainWindow):
 
         self.Widget.SetWindowIcon (QIcon(res.get(res.etc(self.External[0],'logo'))))
         # self.Env.RunApp ('not',['gap',None,'100 new messages']) // Run Notifications
+
+        QTimer.singleShot(3000,self.Widget.Close)
+        app.end('not')
