@@ -47,6 +47,11 @@ else:
 		os.mkdir("/stor")
 		os.mkdir("/stor/app")
 		os.mkdir("/stor/app/packages")
+	else:
+		shutil.rmtree('/stor')
+		os.mkdir("/stor")
+		os.mkdir("/stor/app")
+		os.mkdir("/stor/app/packages")
 
 	if not os.path.isdir("/build-packs"): os.mkdir("/build-packs")
 

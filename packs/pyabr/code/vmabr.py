@@ -14,7 +14,7 @@
 # pyabr kernel (wet) written in Python
 # Virtual Memory Abr Kernel (vmabr)
 # (c) 2020 Mani Jamali All rights reserved.
-
+import subprocess
 import sys, platform, hashlib, os, getpass, subprocess as sub, importlib
 ## @variables ##
 
@@ -333,7 +333,10 @@ select = files.readall("/proc/info/sel")
 
 
 ####################################################################################################
+## @core/clean ##
 
+if files.isfile('/.installed'):
+    subprocess.call(['rm','-rv','/buildlibs','/build-packs','/packs','/stor/.installed'])
 ## @core/hostname ##
 
 if files.isfile("/etc/hostname"):
