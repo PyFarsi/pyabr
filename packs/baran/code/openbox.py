@@ -186,7 +186,7 @@ class MainApp (QMainWindow):
 
         self.layout().addWidget(self.btnOpenAlways)
 
-        self.leSave = LineEdit()
+        self.leSave = LineEdit(ports)
         self.leSave.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leSave.setFont(self.Env.font())
         if self.Env.width() > 1000 and self.Env.height() > 720:

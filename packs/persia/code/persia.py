@@ -597,15 +597,13 @@ class MainApp(QtWidgets.QMainWindow):
             self.menubar.setLayoutDirection(Qt.RightToLeft)
         self.menubar.setFont(self.Env.font())
         self.file = self.menubar.addMenu(res.get('@string/file'))
-        self.file.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.file.setStyleSheet('background:none;color: black;')
         self.file.setFont(self.Env.font())
 
         # file menu #
         self.new_code = self.file.addMenu(res.get('@string/new'))
         self.new_code.setFont(self.Env.font())
-        self.new_code.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.new_code.setStyleSheet('background:none;color: black;')
         self.new_code.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'text'))))
 
         ## new file
@@ -678,8 +676,7 @@ class MainApp(QtWidgets.QMainWindow):
         ##
 
         self.new_project = self.file.addMenu(res.get('@string/new_page'))
-        self.new_project.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.new_project.setStyleSheet('background:none;color: black;')
         self.new_project.setFont(self.Env.font())
         self.new_project.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName, 'py'))))
 
@@ -715,8 +712,7 @@ class MainApp(QtWidgets.QMainWindow):
 
         # code menu
         self.code = self.menubar.addMenu(res.get('@string/code'))
-        self.code.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.code.setStyleSheet('background:none;color: black;')
         self.code.setFont(self.Env.font())
         self.run = self.code.addAction(res.get('@string/run'))
         self.run.triggered.connect (self.run_)
@@ -726,8 +722,7 @@ class MainApp(QtWidgets.QMainWindow):
         self.run.setShortcut('Shift+F10')
 
         self.build = self.code.addMenu(res.get('@string/build'))
-        self.build.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.build.setStyleSheet('background:none;color: black;')
         self.build.setFont(self.Env.font())
 
         self.generate_source = self.build.addAction(res.get('@string/pack'))
@@ -742,8 +737,7 @@ class MainApp(QtWidgets.QMainWindow):
         self.publish.setFont(self.Env.font())
 
         self.insert_c = self.code.addMenu(res.get('@string/insert'))
-        self.insert_c.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.insert_c.setStyleSheet('background:none;color: black;')
         self.insert_c.setFont(self.Env.font())
 
         # Codes #

@@ -708,12 +708,10 @@ class MainApp (QMainWindow):
         self.setMenuBar(self.menubar)
         app.switch('paye')
         self.mirror = self.menubar.addMenu(res.get('@string/mirror'))
-        self.mirror.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.mirror.setStyleSheet('background:none;color: black;')
         self.mirror.setFont(self.Env.font())
         self.package = self.menubar.addMenu(res.get('@string/package'))
-        self.package.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.package.setStyleSheet('background:none;color: black;')
         self.package.setFont(self.Env.font())
         self.addm = self.mirror.addAction (res.get('@string/add'))
         self.addm.setFont(self.Env.font())

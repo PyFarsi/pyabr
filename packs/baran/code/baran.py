@@ -694,8 +694,7 @@ class Login (QMainWindow):
         self.submenu.setCornerWidget(Shell([self.Backend, self]))
 
         self.etcmenu = QMenu()
-        self.etcmenu.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.etcmenu.setStyleSheet('background:none;color: black;')
         self.etcmenu.setFont(f)
         self.etcmenu.setTitle(res.get('@string/etcmenu'))
         self.etcmenu.setFont(f)
@@ -705,8 +704,7 @@ class Login (QMainWindow):
 
         # Power menu #
         self.powermenu = QMenu()
-        self.powermenu.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.powermenu.setStyleSheet('background:none;color: black;')
         self.powermenu.setFont(f)
         self.etcmenu.addMenu(self.powermenu)
         self.powermenu.setTitle(res.get('@string/powermenu'))
@@ -845,8 +843,7 @@ class Enter (QMainWindow):
         self.submenu.setCornerWidget(Shell([self.Backend, self]))
 
         self.etcmenu = QMenu()
-        self.etcmenu.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.etcmenu.setStyleSheet('background:none;color: black;')
         self.etcmenu.setFont(f)
         self.etcmenu.setTitle(res.get('@string/etcmenu'))
         self.etcmenu.setFont(f)
@@ -854,8 +851,7 @@ class Enter (QMainWindow):
 
         # Account menu #
         self.usermenu = QMenu()
-        self.usermenu.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.usermenu.setStyleSheet('background:none;color: black;')
         self.usermenu.setFont(f)
         self.etcmenu.addMenu(self.usermenu)
 
@@ -874,8 +870,7 @@ class Enter (QMainWindow):
 
         # Power menu #
         self.powermenu = QMenu()
-        self.powermenu.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.powermenu.setStyleSheet('background:none;color: black;')
         self.powermenu.setFont(f)
         self.etcmenu.addMenu(self.powermenu)
         self.powermenu.setTitle(res.get('@string/powermenu'))
@@ -2406,8 +2401,7 @@ class Desktop (QMainWindow):
 
         ## Etcetra menu ##
         self.etcmenu = QMenu()
-        self.etcmenu.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.etcmenu.setStyleSheet('background:none;color: black;')
         self.etcmenu.setFont(f)
         self.etcmenu.setTitle (res.get('@string/etcmenu'))
         self.etcmenu.setFont(f)
@@ -2415,8 +2409,7 @@ class Desktop (QMainWindow):
 
         # Account menu #
         self.usermenu = QMenu()
-        self.usermenu.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.usermenu.setStyleSheet('background:none;color: black;')
         self.usermenu.setFont(f)
         self.etcmenu.addMenu(self.usermenu)
 
@@ -2433,8 +2426,7 @@ class Desktop (QMainWindow):
 
         # Power menu #
         self.powermenu = QMenu()
-        self.powermenu.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.powermenu.setStyleSheet('background:none;color: black;')
         self.powermenu.setFont(f)
         self.etcmenu.addMenu(self.powermenu)
         self.powermenu.setTitle(res.get('@string/powermenu'))

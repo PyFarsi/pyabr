@@ -675,8 +675,7 @@ pause
             self.menubar.setLayoutDirection(Qt.RightToLeft)
 
         self.file = self.menubar.addMenu(res.get('@string/file'))
-        self.file.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.file.setStyleSheet('background:none;color: black;')
         self.file.setFont(self.Env.font())
         ## File menu
 
@@ -687,8 +686,7 @@ pause
         self.new_file.setIcon(QIcon(res.get(res.etc("roller","file-icon"))))
 
         self.new_code = self.file.addMenu(res.get('@string/newcode'))
-        self.new_code.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        self.new_code.setStyleSheet('background:none;color: black;')
         self.new_code.setFont(self.Env.font())
         self.new_code.setIcon(QIcon(res.get(res.etc('roller','c'))))
 

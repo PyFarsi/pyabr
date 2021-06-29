@@ -333,10 +333,6 @@ select = files.readall("/proc/info/sel")
 
 
 ####################################################################################################
-## @core/clean ##
-
-if files.isfile('/.installed'):
-    subprocess.call(['rm','-rv','/buildlibs','/build-packs','/packs','/stor/.installed'])
 ## @core/hostname ##
 
 if files.isfile("/etc/hostname"):

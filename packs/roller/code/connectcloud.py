@@ -33,6 +33,7 @@ class LineEdit (baran.BLineEdit):
     def __init__(self,ports):
         super(LineEdit, self).__init__()
         self.Env = ports[1]
+        self.setFont(self.Env.font())
 
 class MainApp (QtWidgets.QWidget):
     def onCloseProcess(self):
@@ -99,6 +100,7 @@ class MainApp (QtWidgets.QWidget):
         self.vbox.addWidget(self.leDirectory)
         self.vbox.addWidget(self.leValue)
 
+
         self.leHost.setPlaceholderText (res.get('@string/host'))
         self.lePassword.setEchoMode (QLineEdit.Password)
         self.lePassword.setPlaceholderText (res.get('@string/password'))
@@ -117,6 +119,7 @@ class MainApp (QtWidgets.QWidget):
         self.leValue.setPlaceholderText (res.get('@string/value'))
 
         self.btnConnect = QPushButton()
+        self.btnConnect.setFont(self.Env.font())
         self.btnConnect.setStyleSheet(
             f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
         self.btnConnect.setText(res.get('@string/add'))

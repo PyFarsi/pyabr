@@ -65,6 +65,7 @@ class MainApp(QWidget):
         self.cmBox.addItem('1280x768')
         self.cmBox.addItem('1024x768')
         self.cmBox.addItem('640x460')
+        self.cmBox.setFont(self.Env.font())
 
         self.btnSet = QPushButton (res.get('@string/savec'))
         self.btnSet.clicked.connect (self.act_Set)

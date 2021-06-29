@@ -26,6 +26,8 @@ from libabr import *
 res = Res()
 control = Control()
 
+def getdata (value): return control.read_record(value,'/etc/gui')
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow,ports):
 
@@ -639,6 +641,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         MainWindow.setCentralWidget(self.centralWidget)
         self.menuBar = QtWidgets.QMenuBar(MainWindow)
+        self.menuBar.setStyleSheet(f'background: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.menuBar.setFont(self.Env.font())
         if control.read_record('submenu.direction','/etc/gui')=='ltr':
             self.menuBar.setLayoutDirection(Qt.LeftToRight)
@@ -647,10 +650,13 @@ class Ui_MainWindow(object):
         self.menuBar.setGeometry(QtCore.QRect(0, 0, 706, 26))
         self.menuBar.setObjectName("menuBar")
         self.menuFIle = QtWidgets.QMenu(self.menuBar)
+        self.menuFIle.setStyleSheet('background:none;color: black;')
         self.menuFIle.setObjectName("menuFIle")
         self.menuEdit = QtWidgets.QMenu(self.menuBar)
+        self.menuEdit.setStyleSheet('background:none;color: black;')
         self.menuEdit.setObjectName("menuEdit")
         self.menuImage = QtWidgets.QMenu(self.menuBar)
+        self.menuImage.setStyleSheet('background:none;color: black;')
         self.menuImage.setObjectName("menuImage")
         MainWindow.setMenuBar(self.menuBar)
         self.statusBar = QtWidgets.QStatusBar(MainWindow)

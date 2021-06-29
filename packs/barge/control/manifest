@@ -4,7 +4,7 @@ name[en]: Barge Text Editor
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 1.5.0
+version: 2.0.0
 description: Barge text editor
 compile: Yes
-build: 1400-04-07
+build: 1400-04-08

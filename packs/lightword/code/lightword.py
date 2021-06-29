@@ -170,8 +170,7 @@ class MainApp(QMainWindow):
         else:
             self.menuBar.setLayoutDirection(Qt.RightToLeft)
         file_menu = self.menuBar.addMenu(res.get('@string/file'))
-        file_menu.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        file_menu.setStyleSheet('background:none;color: black;')
         file_menu.setFont(self.Env.font())
         img = res.get('@icon/breeze-open')
         open_file_action = QAction(QIcon(img), res.get('@string/of'), self)
@@ -200,8 +199,7 @@ class MainApp(QMainWindow):
         edit_toolbar.setIconSize(QSize(16, 16))
         self.addToolBar(edit_toolbar)
         edit_menu = self.menuBar.addMenu(res.get('@string/ed'))
-        edit_menu.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        edit_menu.setStyleSheet('background:none;color: black;')
         edit_menu.setFont(self.Env.font())
         img = res.get('@icon/breeze-undo')
         undo_action = QAction(QIcon(img), res.get('@string/un'), self)
@@ -265,8 +263,7 @@ class MainApp(QMainWindow):
         format_toolbar.setIconSize(QSize(16, 16))
         self.addToolBar(format_toolbar)
         format_menu = self.menuBar.addMenu(res.get('@string/fm'))
-        format_menu.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        format_menu.setStyleSheet('background:none;color: black;')
         format_menu.setFont(self.Env.font())
 
         # We need references to these actions/settings to update as selection changes, so attach to self.

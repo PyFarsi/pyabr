@@ -643,3 +643,5 @@ wifi.i: رمزعبور اشتباه می باشد
 wifi.im: رمزعبور وارد شده توسط شما اشتباه می باشد
 weather.app_name: آب و هوا
 weather.city: نام شهر خود را وارد کنید
+cloudroller.master: درایوهای اصلی
+cloudroller.cloud: درایوهای ابری

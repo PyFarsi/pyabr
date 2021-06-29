@@ -5,7 +5,7 @@ copyright: (c) 2021 LearnPyQt
 web: https://github.com/learnpyqt/15-minute-apps
 license: GNU GPL v3.0
 unpack: /
-version: 1.5.0
+version: 2.0.0
 description: Webtools for cloud operating systems
 compile: Yes
-build: 1400-04-07
+build: 1400-04-08
