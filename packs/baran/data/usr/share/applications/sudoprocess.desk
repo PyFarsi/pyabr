@@ -1,7 +1,0 @@
-name[en]: Sudo Process
-name[fa]: پروسه برتر
-exec: sudoprocess
-hidden: Yes
-logo: @icon/breeze-process
-application: No
-category: system

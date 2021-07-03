@@ -243,7 +243,6 @@ class LeInput (QLineEdit):
         super(LeInput, self).focusInEvent(e)
 
     def mousePressEvent(self, e):
-        # print(e)
         # self.setFocusPolicy(Qt.ClickFocus)
         super(LeInput, self).mousePressEvent(e)
 
@@ -1922,6 +1921,17 @@ class Desktop (QMainWindow):
     def RunCl (self,url):
         self.RunApp('uiv',[url])
 
+    def getpass_(self,password):
+        if self.password == password:
+            files.write('/proc/info/sudo', self.appname)
+            self.RunApp(self.appname, [None])
+        else:
+            app.switch('desktop')
+            self.RunApp('text', [res.get('@string/pnot'), res.get('@string/wrongp')])
+            app.switch('desktop')
+
+            commands.kill([self.appname])
+
     def RunApp (self,appname,external):
         app.switch(appname)
         files.write('/proc/info/su', self.username)
@@ -1932,9 +1942,22 @@ class Desktop (QMainWindow):
 
         elif files.isfile(f'/usr/share/applications/{appname}.desk'):
             sudoprocess = res.etc(appname,'sudoprocess')
-            if sudoprocess=='Yes':
+            if sudoprocess=='Yes' and self.username in files.readall('/etc/sudoers'):
                 if not files.readall('/proc/info/sudo')==appname:
-                    self.layout().addWidget(AppWidget([self.Backend, self, 'sudoprocess',[appname]]))
+                    self.appname = appname
+                    self.external = external
+
+                    app.switch('desktop')
+                    self.layout().addWidget(AppWidget([self.Backend, self, 'code', [res.get('@string/pass'),self.getpass_]]))
+                    app.switch('desktop')
+
+                elif self.username == 'root':
+                    self.layout().addWidget(AppWidget([self.Backend, self, appname, external]))
+                elif self.username == 'guest' or not self.username in files.readall('/etc/sudoers'):
+                    app.switch('desktop')
+                    self.layout().addWidget(AppWidget([self.Backend, self, 'text', [res.get('@string/pnot'),res.get('@string/pnotm')]]))
+                    app.switch('desktop')
+                    commands.kill([appname])
                 else:
                     self.layout().addWidget(AppWidget([self.Backend, self, appname, external]))
             else:
@@ -1958,7 +1981,6 @@ class Desktop (QMainWindow):
                         strv+=j
                     else:
                         strv+=' '+j
-                print(strv)
                 self.RunApp(x[0],[strv])
                 files.write('/proc/info/id','desktop')
 
@@ -2277,13 +2299,13 @@ class Desktop (QMainWindow):
 
         if self.username == "root":
             for i in deskdirs:
-                if not files.isdir("/root/" + res.get(i)):
-                    files.mkdir("/root/" + res.get(i))
+                if not files.isdir("/root/" + i):
+                    files.mkdir("/root/" + i)
         else:
             if not files.isdir("/desk/" + self.username): files.mkdir("/desk/" + self.username)
             for i in deskdirs:
-                if not files.isdir("/desk/" + self.username + "/" + res.get(i)):
-                    files.mkdir("/desk/" + self.username + "/" + res.get(i))
+                if not files.isdir("/desk/" + self.username + "/" + i):
+                    files.mkdir("/desk/" + self.username + "/" + i)
 
         ## Create pwd for this user
         if self.username == "root":

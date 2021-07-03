@@ -370,6 +370,9 @@ class ShowMirrorInformation (QMainWindow):
         if yes:
             self.progressBar.show()
             self.btnInstall.setText(res.get('@string/installing'))
+
+            System("paye in latest")  # update mirror
+
             the_url = files.readall(f'/app/mirrors/{self.External[0]}')
             the_filesize = requests.get(the_url, stream=True).headers['Content-Length']
             the_filepath = f'/app/cache/gets/{self.External[0]}.pa'
@@ -686,8 +689,6 @@ class MainApp (QMainWindow):
 
         self.setStyleSheet(
             f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
-
-        System("paye up") # update mirror
 
         app.switch('paye')
 

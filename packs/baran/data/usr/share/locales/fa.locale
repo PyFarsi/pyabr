@@ -239,6 +239,7 @@ persia.new: یک فایل جدید
 persia.new_page: یک پروژه جدید
 persia.empty: یک پروژه معمولی
 persia.gui: یک پروژه گرافیکی
+persia.web: یک پروژه تحت وب
 persia.save: ذخیره
 persia.save_as: ذخیره با عنوانی دیگر
 persia.exit: خروج
@@ -580,11 +581,11 @@ uedit.low: حساب معمولی
 uedit.cprofile: تغییر تصویر پروفایل
 nama.app_name: نمایشگر تصویر
 nama.open: بازکردن تصویر
-sudoprocess.app_name: پروسه مجوز
-sudoprocess.pnot: مجوز ندارد
-sudoprocess.pnotm: نمی توان این پروسه را اجرا کرد؛ مجوز ندارد
-sudoprocess.pass: رمز عبور را وارد کنید
-sudoprocess.wrongp: نمی توان این پروسه را اجرا کرد؛ رمزعبور نادرست است
+desktop.app_name: پروسه مجوز
+desktop.pnot: مجوز ندارد
+desktop.pnotm: نمی توان این پروسه را اجرا کرد؛ مجوز ندارد
+desktop.pass: رمز عبور را وارد کنید
+desktop.wrongp: نمی توان این پروسه را اجرا کرد؛ رمزعبور نادرست است
 uiv.pnot: صفحه یافت نشد
 uiv.pnotm: نمی توان بارگذاری کرد؛ صفحه مورد نظر یافت نشد
 uiv.dnot: دامنه موجود نیست

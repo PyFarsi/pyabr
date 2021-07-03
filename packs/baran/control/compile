@@ -17,7 +17,6 @@ themes.py:usr/app/themes.pyc
 samplenot.py:usr/app/samplenot.pyc
 users.py:usr/app/users.pyc
 uedit.py:usr/app/uedit.pyc
-sudoprocess.py:usr/app/sudoprocess.pyc
 notbox.py:usr/app/notbox.pyc
 wifi_shell.py:usr/app/wifi_shell.pyc
 wifi_gui.py:usr/app/wifi_gui.pyc

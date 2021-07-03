@@ -611,11 +611,11 @@ class MainApp(QtWidgets.QMainWindow):
         self.new_file = self.new_code.addAction(res.get('@string/newfile'))
         self.new_file.setFont(self.Env.font())
         self.new_file.triggered.connect(self.New_File)
-        self.new_file.setIcon(QIcon(res.get('@icon/gtk-file')))
+        self.new_file.setIcon(QIcon(res.get('@icon/breeze-txt')))
 
         self.new_fldr = self.new_code.addAction(res.get('@string/newfolder'))
         self.new_fldr.triggered.connect(self.New_Folder)
-        self.new_fldr.setIcon(QIcon(res.get('@icon/folder')))
+        self.new_fldr.setIcon(QIcon(res.get('@icon/breeze-folder')))
         self.new_fldr.setFont(self.Env.font())
 
         self.new_c = self.new_code.addAction(res.get('@string/c'))
@@ -689,6 +689,11 @@ class MainApp(QtWidgets.QMainWindow):
         self.new_gui.triggered.connect(self.new_gui_act)
         self.new_gui.setFont(self.Env.font())
         self.new_gui.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName, 'py'))))
+
+        self.new_web = self.new_project.addAction(res.get('@string/web'))
+        self.new_web.triggered.connect(self.new_gui_act)
+        self.new_web.setFont(self.Env.font())
+        self.new_web.setIcon(QtGui.QIcon(res.get('@icon/breeze-browser')))
 
         self.open = self.file.addAction(res.get('@string/open'))
         self.open.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'open'))))
@@ -811,7 +816,7 @@ pause
                 files.create(f'/usr/share/applications/debug_{rand}.desk')
                 control.write_record('name[en]','Debug App',f'/usr/share/applications/debug_{rand}.desk')
                 control.write_record('name[fa]','برنامه تستی',f'/usr/share/applications/debug_{rand}.desk')
-                control.write_record('logo','@icon/runner',f'/usr/share/applications/debug_{rand}.desk')
+                control.write_record('logo','@icon/breeze-app',f'/usr/share/applications/debug_{rand}.desk')
                 control.write_record('exec',f"debug_{rand}",f'/usr/share/applications/debug_{rand}.desk')
                 app.switch('persia')
                 py_compile.compile(files.input(file),files.input(f'/usr/app/debug_{rand}.pyc'))
@@ -870,30 +875,30 @@ pause
         else:
             path = f'/root/{self.project_folder}/{project}'
 
-        config = path+"/.pypersia"
+        config = path+"/config"
 
         rand = str(random.randint(1000,9999))
 
-        compile = files.readall(f'{path}/packs/{project}/control/compile')
+        compile = files.readall(f'{path}/{project}/control/compile')
         compile = compile.replace(f'{project}.pyc', f'{project}_{rand}.pyc')
-        files.write(f'{path}/packs/{project}/control/compile', compile)
+        files.write(f'{path}/{project}/control/compile', compile)
 
-        if control.read_record('type',config)=='gui':
-            control.write_record('exec', f'{project}_{rand}',f'{path}/packs/{project}/data/usr/share/applications/{project}.desk')
-            files.cut(f'{path}/packs/{project}/data/usr/share/applications/{project}.desk',
-                      f'{path}/packs/{project}/data/usr/share/applications/{project}_{rand}.desk')
+        if control.read_record('project_type',config)=='gui' or control.read_record('project_type',config)=='web':
+            control.write_record('exec', f'{project}_{rand}',f'{path}/{project}/data/usr/share/applications/{project}.desk')
+            files.cut(f'{path}/{project}/data/usr/share/applications/{project}.desk',
+                      f'{path}/{project}/data/usr/share/applications/{project}_{rand}.desk')
 
-            System(f'paye pak {path}/packs/{project}')
-            System(f'paye upak {path}/packs/{project}.pa')
+            System(f'paye pak {path}/{project}')
+            System(f'paye upak {path}/{project}.pa')
             app.switch('persia')
             self.Env.RunApp(f'{project}_{rand}', [None])
             app.switch('persia')
 
-            files.cut(f'{path}/packs/{project}/data/usr/share/applications/{project}_{rand}.desk',
-                      f'{path}/packs/{project}/data/usr/share/applications/{project}.desk')
+            files.cut(f'{path}/{project}/data/usr/share/applications/{project}_{rand}.desk',
+                      f'{path}/{project}/data/usr/share/applications/{project}.desk')
         else:
-            System(f'paye pak {path}/packs/{project}')
-            System(f'paye upak {path}/packs/{project}.pa')
+            System(f'paye pak {path}/{project}')
+            System(f'paye upak {path}/{project}.pa')
             app.switch('persia')
             filename = self.Widget.WindowTitle()
             execname = filename.replace('.py', '')
@@ -905,12 +910,12 @@ pause
             self.Env.RunApp('commento', [None])
             app.switch('persia')
 
-        if files.isfile(f'{path}/packs/{project}.pa'): files.remove(f'{path}/packs/{project}.pa')
+        if files.isfile(f'{path}/{project}.pa'): files.remove(f'{path}/{project}.pa')
         System(f'paye rm {project}')
 
-        compile = files.readall(f'{path}/packs/{project}/control/compile')
+        compile = files.readall(f'{path}/{project}/control/compile')
         compile = compile.replace(f'{project}_{rand}.pyc', f'{project}.pyc')
-        files.write(f'{path}/packs/{project}/control/compile', compile)
+        files.write(f'{path}/{project}/control/compile', compile)
 
     def new_empty_act (self):
         app.switch('persia')
@@ -922,31 +927,36 @@ pause
         self.Env.RunApp('input', [res.get('@string/proname'), self.project_create_gui])
         app.switch('persia')
 
+    def new_web_act (self):
+        app.switch('persia')
+        self.Env.RunApp('input', [res.get('@string/proname'), self.project_create_web])
+        app.switch('persia')
+
     def project_create (self,projectname):
         su = files.readall('/proc/info/su')
 
         if not su=='root':
-            System (f"paye crt empty /desk/{su}/{self.project_folder}/{projectname}")
+            System (f"paye crt /desk/{su}/{self.project_folder}/{projectname}")
             commands.cd([f'/desk/{su}/{self.project_folder}/{projectname}'])
         else:
-            System(f"paye crt empty /root/{self.project_folder}/{projectname}")
+            System(f"paye crt /root/{self.project_folder}/{projectname}")
             commands.cd([f'/root/{self.project_folder}/{projectname}'])
 
-        commands.mv(['packs/app', f'packs/{projectname}'])
-        commands.mv([f'packs/{projectname}/data/usr/share/docs/hello',
-                     f'packs/{projectname}/data/usr/share/docs/{projectname}'])
-        commands.mv([f'packs/{projectname}/code/hello.py', f'packs/{projectname}/code/{projectname}.py'])
-        files.write(f'packs/{projectname}/control/manifest', f'name: {projectname}\ncopyright: (c) 2020 Your name\nlicense: Your license\nunpack: /\nbuild: year-month-day\nversion: 0.0.1\ndescription: Your application description\ncompile: Yes')
+        commands.mv(['app', f'{projectname}'])
+        commands.mv([f'{projectname}/code/hello.py', f'{projectname}/code/{projectname}.py'])
+        files.write(f'{projectname}/control/manifest', f'name: {projectname}\ncopyright: (c) 2020 Your name\nlicense: Your license\nunpack: /\nbuild: year-month-day\nversion: 0.0.1\ndescription: Your application description\ncompile: Yes')
 
-        files.write(f'packs/{projectname}/control/compile', f'{projectname}.py:usr/app/{projectname}.pyc')
-        files.write(f'packs/{projectname}/control/list', f'/usr/app/{projectname}.pyc\n/usr/share/docs/{projectname}')
+        files.write(f'{projectname}/control/compile', f'{projectname}.py:usr/app/{projectname}.pyc')
+        files.write(f'{projectname}/control/list', f'/usr/app/{projectname}.pyc\n')
 
         files.write('/proc/info/psel', projectname)
-        files.create(".pypersia")
+        files.create("config")
 
-        control.write_record('name', projectname, ".pypersia")
-        control.write_record('type', 'empty', ".pypersia")
-        control.write_record('lang', 'python', '.pypersia')
+        control.write_record('project_name', projectname, "config")
+        control.write_record('project_type', 'empty', "config")
+        control.write_record('project_lang', 'python', 'config')
+        control.write_record('project_pack', projectname + '.pa', 'config')
+        control.write_record('project_dir', projectname,'config')
         app.switch('persia')
         self.Env.RunApp ('persia',[projectname,None])
         app.switch('persia')
@@ -955,27 +965,58 @@ pause
         su = self.Env.username
 
         if not su=='root':
-            System (f"paye crt empty /desk/{su}/{self.project_folder}/{projectname}")
+            System (f"paye crt gui /desk/{su}/{self.project_folder}/{projectname}")
             commands.cd([f'/desk/{su}/{self.project_folder}/{projectname}'])
         else:
             System(f"paye crt gui /root/{self.project_folder}/{projectname}")
             commands.cd([f'/root/{self.project_folder}/{projectname}'])
 
-        commands.mv(['packs/app',f'packs/{projectname}'])
-        commands.mv([f'packs/{projectname}/data/usr/share/docs/hello',f'packs/{projectname}/data/usr/share/docs/{projectname}'])
-        commands.mv([f'packs/{projectname}/code/hello.py',f'packs/{projectname}/code/{projectname}.py'])
-        commands.mv([f'packs/{projectname}/data/usr/share/applications/hello.desk',f'packs/{projectname}/data/usr/share/applications/{projectname}.desk'])
-        files.write (f'packs/{projectname}/control/manifest',f'name: {projectname}\ncopyright: (c) 2020 Your name\nlicense: Your license\nunpack: /\nbuild: year-month-day\nversion: 0.0.1\ndescription: Your application description\ncompile: Yes')
-        files.write(f'packs/{projectname}/control/compile', f'{projectname}.py:usr/app/{projectname}.pyc')
-        files.write(f'packs/{projectname}/control/list',f'/usr/app/{projectname}.pyc\n/usr/share/docs/{projectname}')
-        files.write(f'packs/{projectname}/data/usr/share/applications/{projectname}.desk',f'name[en]: {projectname}\nlogo: @icon/runner\nexec: {projectname}')
+        commands.mv(['app',f'{projectname}'])
+        commands.mv([f'{projectname}/code/hello.py',f'{projectname}/code/{projectname}.py'])
+        commands.mv([f'{projectname}/data/usr/share/applications/hello.desk',f'{projectname}/data/usr/share/applications/{projectname}.desk'])
+        files.write (f'{projectname}/control/manifest',f'name: {projectname}\ncopyright: (c) 2020 Your name\nlicense: Your license\nunpack: /\nbuild: year-month-day\nversion: 0.0.1\ndescription: Your application description\ncompile: Yes')
+        files.write(f'{projectname}/control/compile', f'{projectname}.py:usr/app/{projectname}.pyc')
+        files.write(f'{projectname}/control/list',f'/usr/app/{projectname}.pyc\n')
+        files.write(f'{projectname}/data/usr/share/applications/{projectname}.desk',f'name[en]: {projectname}\nlogo: @icon/breeze-app\nexec: {projectname}')
 
         files.write('/proc/info/psel', projectname)
-        files.create(".pypersia")
+        files.create("config")
 
-        control.write_record('name', projectname, ".pypersia")
-        control.write_record('type', 'gui', ".pypersia")
-        control.write_record('lang','python','.pypersia')
+        control.write_record('project_name', projectname, "config")
+        control.write_record('project_type', 'gui', "config")
+        control.write_record('project_lang','python','config')
+        control.write_record('project_pack', projectname + '.pa', 'config')
+        control.write_record('project_dir', projectname,'config')
+        app.switch('persia')
+        self.Env.RunApp ('persia',[projectname,None])
+        app.switch('persia')
+
+    def project_create_web (self,projectname):
+        su = self.Env.username
+
+        if not su=='root':
+            System (f"paye crt web /desk/{su}/{self.project_folder}/{projectname}")
+            commands.cd([f'/desk/{su}/{self.project_folder}/{projectname}'])
+        else:
+            System(f"paye crt web /root/{self.project_folder}/{projectname}")
+            commands.cd([f'/root/{self.project_folder}/{projectname}'])
+
+        commands.mv(['app',f'{projectname}'])
+        commands.mv([f'{projectname}/code/hello.py',f'{projectname}/code/{projectname}.py'])
+        commands.mv([f'{projectname}/data/usr/share/applications/hello.desk',f'{projectname}/data/usr/share/applications/{projectname}.desk'])
+        files.write (f'{projectname}/control/manifest',f'name: {projectname}\ncopyright: (c) 2020 Your name\nlicense: Your license\nunpack: /\nbuild: year-month-day\nversion: 0.0.1\ndescription: Your application description\ncompile: Yes')
+        files.write(f'{projectname}/control/compile', f'{projectname}.py:usr/app/{projectname}.pyc')
+        files.write(f'{projectname}/control/list',f'/usr/app/{projectname}.pyc\n')
+        files.write(f'{projectname}/data/usr/share/applications/{projectname}.desk',f'name[en]: {projectname}\nlogo: @icon/breeze-browser\nexec: {projectname}')
+
+        files.write('/proc/info/psel', projectname)
+        files.create("config")
+
+        control.write_record('project_name', projectname, "config")
+        control.write_record('project_type', 'web', "config")
+        control.write_record('project_lang','python','config')
+        control.write_record('project_pack',projectname+'.pa','config')
+        control.write_record('project_dir',projectname,'config')
         app.switch('persia')
         self.Env.RunApp ('persia',[projectname,None])
         app.switch('persia')
@@ -989,12 +1030,12 @@ pause
         else:
             self.path = f'/root/{self.project_folder}/{self.project}'
 
-        self.config = self.path + "/.pypersia"
+        self.config = self.path + "/config"
 
-        self.projectname = control.read_record('name',self.config)
+        self.projectname = control.read_record('project_name',self.config)
 
-        System(f'paye pak {self.path}/packs/{self.projectname}')
-        commands.mv([f'{self.path}/packs/{self.projectname}.pa',f'{self.path}/{self.projectname}.pa'])
+        System(f'paye pak {self.path}/{self.projectname}')
+        commands.mv([f'{self.path}/{self.projectname}.pa',f'{self.path}/{self.projectname}.pa'])
 
         self.x.genpa(self.projectname)
 

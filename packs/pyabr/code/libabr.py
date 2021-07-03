@@ -2919,6 +2919,8 @@ class Res:
             elif share.startswith('@temp'):
                 if files.isfile("/usr/share/" + share.replace("@temp", "templates") + "/" + name ):
                     return "/usr/share/" + share.replace("@temp", "templates") + "/" + name
+                elif files.isdir("/usr/share/" + share.replace("@temp", "templates") + "/" + name ):
+                    return "/usr/share/" + share.replace("@temp", "templates") + "/" + name
                 else:
                     return ''
 

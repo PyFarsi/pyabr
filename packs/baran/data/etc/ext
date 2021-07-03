@@ -20,6 +20,14 @@ rss.external.barge: Yes
 rss.external.persia: Yes
 txt.external.barge: Yes
 txt.external.persia: Yes
+cfg.external.barge: Yes
+cfg.external.persia: Yes
+cfg.external.barge: Yes
+cfg.external.persia: Yes
+asm.external.barge: Yes
+asm.external.persia: Yes
+s.external.barge: Yes
+s.external.persia: Yes
 list.external.barge: Yes
 list.external.persia: Yes
 cat.external.barge: Yes
@@ -53,6 +61,8 @@ html.external.lightword: Yes
 cgm.icon: @icon/breeze-png
 svg.external.paint: Yes
 svg.external.nama: Yes
+svg.external.persia: Yes
+svg.external.barge: Yes
 oxt.icon: @icon/breeze-oxt
 sh.external.barge: Yes
 sh.external.persia: Yes
@@ -153,6 +163,10 @@ pdf.icon: @icon/breeze-pdf
 rss.icon: @icon/breeze-rss
 rtf.icon: @icon/breeze-rtf
 txt.icon: @icon/breeze-txt
+cfg.icon: @icon/breeze-txt
+conf.icon: @icon/breeze-txt
+asm.icon: @icon/breeze-txt
+s.icon: @icon/breeze-txt
 list.icon: @icon/breeze-txt
 cat.icon: @icon/breeze-txt
 manifest.icon: @icon/breeze-txt
@@ -175,6 +189,10 @@ img.icon: @icon/breeze-iso
 jar.icon: @icon/breeze-jar
 m4.icon: @icon/breeze-m4
 msi.icon: @icon/breeze-exe
+exe.icon: @icon/breeze-exe
+com.icon: @icon/breeze-exe
+efi.icon: @icon/breeze-exe
+c32.icon: @icon/breeze-exe
 pak.icon: @icon/breeze-archive
 perl.icon: @icon/breeze-perl
 php.icon: @icon/breeze-php
@@ -227,6 +245,7 @@ md.icon: @icon/breeze-md
 rdf.icon: @icon/breeze-txt
 sgml.icon: @icon/breeze-xml
 bak.icon: @icon/breeze-iso
+bin.icon: @icon/breeze-iso
 cpp.icon: @icon/breeze-c++
 c++.icon: @icon/breeze-c++
 cxx.icon: @icon/breeze-c++

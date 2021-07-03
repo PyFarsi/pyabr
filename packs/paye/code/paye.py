@@ -12,7 +12,7 @@
 
 import sys, subprocess
 
-from libabr import Files, Control, Permissions, Colors, Process, Modules, Package, Commands, Res
+from libabr import *
 
 modules = Modules()
 files = Files()
@@ -256,14 +256,14 @@ elif option=='crt':
     else:
         crname = sys.argv[3]
 
-    if not files.isdir(crname):
-        files.mkdir(crname)
-
-    if crtype=='gui':
-        cmd.unzip ([res.get('@temp/simple-gui-project.zip'),crname])
-    elif crtype=='web':
-        cmd.unzip([res.get('@temp/simple-web-project.zip'), crname])
-    else:
-        cmd.unzip([res.get('@temp/simple-project.zip'), crname])
+    try:
+        if crtype == 'gui':
+            files.copydir(res.get('@temp/simple-gui-project'), crname)
+        elif crtype == 'web':
+            files.copydir(res.get('@temp/simple-web-project'), crname)
+        else:
+            files.copydir(res.get('@temp/simple-project'), crtype)
+    except:
+        colors.show('paye','fail',f'cannot create project with {crname} name.')
 else:
     colors.show ("paye","fail",option+": option not found.")

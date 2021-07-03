@@ -21,6 +21,7 @@ list.remove('pack-sb.py')
 list.remove('build-packs.py')
 list.remove('LICENSE')
 list.remove('pack.py')
+list.remove('upgrade.sa')
 list.remove('pack-wheel.py')
 list.remove('README.md')
 list.remove('clouddrive')
@@ -77,6 +78,10 @@ ff02::2 ip6-allrouters''')
 
     f = open('sb/etc/hostname','w')
     f.write('pyabr')
+    f.close()
+
+    f = open ('sb/etc/timezone','w')
+    f.write('Asia/Tehran')
     f.close()
 else:
     list.remove('sb')

@@ -239,6 +239,7 @@ persia.new: New File
 persia.new_page: New Project
 persia.empty: New Empty Project
 persia.gui: New GUI Project
+persia.web: New Web Project
 persia.save: Save
 persia.save_as: Save As
 persia.exit: Exit
@@ -587,11 +588,11 @@ uedit.low: Standard Account
 uedit.cprofile: Change profile image
 nama.app_name: Image Viewer
 nama.open: Open Image
-sudoprocess.app_name: Sudo Process
-sudoprocess.pnot: Permission denied
-sudoprocess.pnotm: Cannot open this process, Permission denied
-sudoprocess.pass: Enter password
-sudoprocess.wrongp: Cannot open this process, Wrong password
+desktop.app_name: Sudo Process
+desktop.pnot: Permission denied
+desktop.pnotm: Cannot open this process, Permission denied
+desktop.pass: Enter password
+desktop.wrongp: Cannot open this process, Wrong password
 uiv.pnot: Page not found
 uiv.pnotm: Cannot find this page; page not found
 uiv.dnot: Domain not exists

@@ -7,4 +7,4 @@ unpack: /
 version: 2.0.0
 description: Setup installer of Pyabr OS
 compile: Yes
-build: 1400-04-08
+build: 1400-04-12
