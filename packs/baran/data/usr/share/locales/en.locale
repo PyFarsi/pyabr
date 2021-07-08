@@ -646,3 +646,8 @@ weather.app_name: Weather
 weather.city: Enter your city name
 cloudroller.master: Master Drives
 cloudroller.cloud: Cloud Drives
+vplayer.app_name: Video Player
+vplayer.open: Open
+vplayer.npv: Unknown format
+vplayer.npvm: Cannot play this video; because it is unknown format
+vplayer.hide: Hide tools

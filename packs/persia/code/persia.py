@@ -527,7 +527,7 @@ class MainApp(QtWidgets.QMainWindow):
 
         self.onCloseProcess()
 
-        self.project_folder = control.read_record('desktop.projects',f'/usr/share/locales/{getdata("locale")}.locale')
+        self.project_folder = 'Projects'
 
         # resize
         self.Widget.Resize (self,self.Env.width(),self.Env.height())
@@ -691,7 +691,7 @@ class MainApp(QtWidgets.QMainWindow):
         self.new_gui.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName, 'py'))))
 
         self.new_web = self.new_project.addAction(res.get('@string/web'))
-        self.new_web.triggered.connect(self.new_gui_act)
+        self.new_web.triggered.connect(self.new_web_act)
         self.new_web.setFont(self.Env.font())
         self.new_web.setIcon(QtGui.QIcon(res.get('@icon/breeze-browser')))
 
@@ -947,7 +947,7 @@ pause
         files.write(f'{projectname}/control/manifest', f'name: {projectname}\ncopyright: (c) 2020 Your name\nlicense: Your license\nunpack: /\nbuild: year-month-day\nversion: 0.0.1\ndescription: Your application description\ncompile: Yes')
 
         files.write(f'{projectname}/control/compile', f'{projectname}.py:usr/app/{projectname}.pyc')
-        files.write(f'{projectname}/control/list', f'/usr/app/{projectname}.pyc\n')
+        files.write(f'{projectname}/control/list', f'/usr/app/{projectname}.pyc')
 
         files.write('/proc/info/psel', projectname)
         files.create("config")
@@ -976,7 +976,7 @@ pause
         commands.mv([f'{projectname}/data/usr/share/applications/hello.desk',f'{projectname}/data/usr/share/applications/{projectname}.desk'])
         files.write (f'{projectname}/control/manifest',f'name: {projectname}\ncopyright: (c) 2020 Your name\nlicense: Your license\nunpack: /\nbuild: year-month-day\nversion: 0.0.1\ndescription: Your application description\ncompile: Yes')
         files.write(f'{projectname}/control/compile', f'{projectname}.py:usr/app/{projectname}.pyc')
-        files.write(f'{projectname}/control/list',f'/usr/app/{projectname}.pyc\n')
+        files.write(f'{projectname}/control/list',f'/usr/app/{projectname}.pyc\n/usr/share/application/{projectname}.desk')
         files.write(f'{projectname}/data/usr/share/applications/{projectname}.desk',f'name[en]: {projectname}\nlogo: @icon/breeze-app\nexec: {projectname}')
 
         files.write('/proc/info/psel', projectname)
@@ -1006,7 +1006,7 @@ pause
         commands.mv([f'{projectname}/data/usr/share/applications/hello.desk',f'{projectname}/data/usr/share/applications/{projectname}.desk'])
         files.write (f'{projectname}/control/manifest',f'name: {projectname}\ncopyright: (c) 2020 Your name\nlicense: Your license\nunpack: /\nbuild: year-month-day\nversion: 0.0.1\ndescription: Your application description\ncompile: Yes')
         files.write(f'{projectname}/control/compile', f'{projectname}.py:usr/app/{projectname}.pyc')
-        files.write(f'{projectname}/control/list',f'/usr/app/{projectname}.pyc\n')
+        files.write(f'{projectname}/control/list',f'/usr/app/{projectname}.pyc\n/usr/share/application/{projectname}.desk')
         files.write(f'{projectname}/data/usr/share/applications/{projectname}.desk',f'name[en]: {projectname}\nlogo: @icon/breeze-browser\nexec: {projectname}')
 
         files.write('/proc/info/psel', projectname)

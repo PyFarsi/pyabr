@@ -7,6 +7,7 @@ jpg.external.paint: Yes
 jpg.external.nama: Yes
 png.external.paint: Yes
 png.external.nama: Yes
+pv.external.vplayer: Yes
 tiff.external.nama: Yes
 jpeg.external.paint: Yes
 jpeg.external.nama: Yes
@@ -289,3 +290,4 @@ pptx.icon: @icon/breeze-ppt
 xls.icon: @icon/breeze-xls
 xlsx.icon: @icon/breeze-xls
 url.icon: @icon/breeze-html
+pv.icon: @icon/breeze-mp4

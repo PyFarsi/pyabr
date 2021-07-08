@@ -646,3 +646,8 @@ weather.app_name: آب و هوا
 weather.city: نام شهر خود را وارد کنید
 cloudroller.master: درایوهای اصلی
 cloudroller.cloud: درایوهای ابری
+vplayer.app_name: بخش کننده ویدئو
+vplayer.open: بازکردن
+vplayer.npv: قالب ویدئو ناشناخته می باشد
+vplayer.npvm: نمی توان این ویدئو را اجرا نمود؛ قالب ناشناخته می باشد
+vplayer.hide: مخفی کردن ابزارها
