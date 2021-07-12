@@ -2,3 +2,4 @@ logo: @icon/breeze-php
 name[en]: New PHP Code
 name[fa]: یک کد پی اچ پی
 connect: @temp/untitled.php
+ext: php

@@ -15,6 +15,9 @@ java.external.persia: Yes
 js.external.barge: Yes
 js.external.persia: Yes
 json.external.barge: Yes
+pashm.external.barge: Yes
+pashm.external.persia: Yes
+pashm.icon: @icon/pashmak
 json.external.persia: Yes
 rss.external.barge: Yes
 rss.external.persia: Yes

@@ -79,103 +79,16 @@ class FileListView(QListView):
         self.format(it, filename+".pa")
         it.setFont(self.editor.Env.font())
 
+    def mkcode (self,filename):
+        self.code = files.readall('/tmp/code.tmp')
+        self.ext = control.read_record('ext', res.get(self.code))
 
-    def mkc (self,filename):
-        if files.isdir(filename + ".c"):
-            self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".c")])
+        if files.isdir(filename + f".{self.ext}"):
+            self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+f".{self.ext}")])
             app.switch('persia')
         else:
-            self.mkfile(filename+".c")
-            files.write(self.dir + "/" + filename+'.c',files.readall(res.get('@temp/untitled.c')))
-
-            
-
-    def mkcpp (self,filename):
-        if files.isdir(filename + ".cpp"):
-            self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".cpp")])
-            app.switch('persia')
-        else:
-            self.mkfile(filename+".cpp")
-            files.write(self.dir + "/" + filename+'.cpp',files.readall(res.get('@temp/untitled.cpp')))
-
-    def mkjava (self,filename):
-        if files.isdir(filename + ".java"):
-            self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".java")])
-            app.switch('persia')
-        else:
-            self.mkfile(filename+".java")
-            files.write(self.dir + "/" + filename+'.java',files.readall(res.get('@temp/untitled.java')).replace("MainApp",filename))
-
-
-    def mkjs (self,filename):
-        if files.isdir(filename + ".js"):
-            self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".js")])
-            app.switch('persia')
-        else:
-            self.mkfile(filename+".js")
-            files.write(self.dir + "/" + filename+'.js',files.readall(res.get('@temp/untitled.js')))
-
-
-    def mkphp (self,filename):
-        if files.isdir(filename + ".php"):
-            self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".php")])
-            app.switch('persia')
-        else:
-            self.mkfile(filename+".php")
-            files.write(self.dir + "/" + filename+".php",files.readall(res.get('@temp/untitled.php')))
-
-
-    def mkhtml (self,filename):
-        if files.isdir(filename + ".html"):
-            self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".html")])
-            app.switch('persia')
-        else:
-            self.mkfile(filename+".html")
-            files.write(self.dir + "/" + filename+".html",files.readall(res.get('@temp/untitled.html')))
-
-
-    def mkcs (self,filename):
-        if files.isdir(filename + ".cs"):
-            self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".cs")])
-            app.switch('persia')
-        else:
-            self.mkfile(filename+".cs")
-            files.write(self.dir + "/" + filename+".cs",files.readall(res.get('@temp/untitled.cs')))
-
-    def mksa (self,filename):
-        if files.isdir(filename + ".sa"):
-            self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".sa")])
-            app.switch('persia')
-        else:
-            self.mkfile(filename+".sa")
-            files.write(self.dir + "/" + filename+".sa",files.readall(res.get('@temp/untitled.sa')))
-
-
-    def mkui (self,filename):
-        if files.isdir(filename + ".ui"):
-            self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".ui")])
-            app.switch('persia')
-        else:
-            self.mkfile(filename+".ui")
-            files.write(self.dir + "/" + filename+".ui",files.readall(res.get('@temp/untitled.ui')))
-
-
-    def mkpy (self,filename):
-        if files.isdir(filename + ".py"):
-            self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".py")])
-            app.switch('persia')
-        else:
-            self.mkfile(filename+".py")
-            files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled.py')))
-
-
-    def mkpygui (self,filename):
-        if files.isdir(filename + ".py"):
-            self.editor.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace('{0}',filename+".py")])
-            app.switch('persia')
-        else:
-            self.mkfile(filename+".py")
-            files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled-gui.py')))
+            self.mkfile(filename+f".{self.ext}")
+            files.write(self.dir + "/" + filename+f'.{self.ext}',files.readall(res.get(control.read_record('connect',res.get(self.code)))))
 
     def __init__(self,editor):
         super().__init__()
@@ -618,61 +531,16 @@ class MainApp(QtWidgets.QMainWindow):
         self.new_fldr.setIcon(QIcon(res.get('@icon/breeze-folder')))
         self.new_fldr.setFont(self.Env.font())
 
-        self.new_c = self.new_code.addAction(res.get('@string/c'))
-        self.new_c.triggered.connect(self.New_C)
-        self.new_c.setFont(self.Env.font())
-        self.new_c.setIcon(QIcon(res.get(res.etc("persia", "c"))))
-
-        self.new_cpp = self.new_code.addAction(res.get('@string/c++'))
-        self.new_cpp.triggered.connect(self.New_Cpp)
-        self.new_cpp.setFont(self.Env.font())
-        self.new_cpp.setIcon(QIcon(res.get(res.etc("persia", "c++"))))
-
-        self.new_cs = self.new_code.addAction(res.get('@string/csharp'))
-        self.new_cs.triggered.connect(self.New_Csharp)
-        self.new_cs.setFont(self.Env.font())
-        self.new_cs.setIcon(QIcon(res.get(res.etc("persia", "c#"))))
-
-        self.new_html = self.new_code.addAction(res.get('@string/html'))
-        self.new_html.triggered.connect(self.New_Html)
-        self.new_html.setFont(self.Env.font())
-        self.new_html.setIcon(QIcon(res.get(res.etc("persia", "html"))))
-
-        self.new_java = self.new_code.addAction(res.get('@string/java'))
-        self.new_java.triggered.connect(self.New_Java)
-        self.new_java.setFont(self.Env.font())
-        self.new_java.setIcon(QIcon(res.get(res.etc("persia", "java"))))
-
-        self.new_js = self.new_code.addAction(res.get('@string/javascript'))
-        self.new_js.triggered.connect(self.New_Js)
-        self.new_js.setFont(self.Env.font())
-        self.new_js.setIcon(QIcon(res.get(res.etc("persia", "js"))))
-
-        self.new_Php = self.new_code.addAction(res.get('@string/php'))
-        self.new_Php.triggered.connect(self.New_Php)
-        self.new_Php.setFont(self.Env.font())
-        self.new_Php.setIcon(QIcon(res.get(res.etc("persia", "php"))))
-
-        self.new_py = self.new_code.addAction(res.get('@string/python'))
-        self.new_py.triggered.connect(self.New_Py)
-        self.new_py.setFont(self.Env.font())
-        self.new_py.setIcon(QIcon(res.get(res.etc("persia", "py"))))
-
-        self.new_sa = self.new_code.addAction(res.get('@string/saye'))
-        self.new_sa.triggered.connect(self.New_Sa)
-        self.new_sa.setFont(self.Env.font())
-        self.new_sa.setIcon(QIcon(res.get(res.etc("persia", "sa"))))
-
-        self.new_pygui = self.new_code.addAction(res.get('@string/pythongui'))
-        self.new_pygui.triggered.connect(self.New_PyGui)
-        self.new_pygui.setFont(self.Env.font())
-        self.new_pygui.setIcon(QIcon(res.get(res.etc("persia", "py"))))
-
-        self.new_ui = self.new_code.addAction(res.get('@string/uix'))
-        self.new_ui.triggered.connect(self.New_UI)
-        self.new_ui.setFont(self.Env.font())
-        self.new_ui.setIcon(QIcon(res.get('@icon/breeze-ui')))
-
+        self.templist = files.list('/usr/share/templates')
+        self.templist.sort()
+        for i in self.templist:
+            if i.endswith('.desk'):
+                self.new_cz = self.new_code.addAction(
+                    control.read_record(f'name[{control.read_record("locale", "/etc/gui")}]', res.get(f'@temp/{i}')))
+                self.new_cz.setFont(self.Env.font())
+                self.new_cz.setObjectName(i)
+                self.new_cz.triggered.connect(self.New_Code)
+                self.new_cz.setIcon(QIcon(res.get(control.read_record('logo', res.get(f'@temp/{i}')))))
         ##
 
         self.new_project = self.file.addMenu(res.get('@string/new_page'))
@@ -746,40 +614,16 @@ class MainApp(QtWidgets.QMainWindow):
         self.insert_c.setFont(self.Env.font())
 
         # Codes #
-
-        self.lang_c = self.insert_c.addAction(res.get('@string/c'))
-        self.lang_c.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'c'))))
-        self.lang_c.triggered.connect (self.langc)
-        self.lang_cpp = self.insert_c.addAction(res.get('@string/c++'))
-        self.lang_cpp.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'c++'))))
-        self.lang_cpp.triggered.connect(self.langcpp)
-        self.lang_cs = self.insert_c.addAction(res.get('@string/csharp'))
-        self.lang_cs.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'c#'))))
-        self.lang_cs.triggered.connect(self.langcs)
-        self.lang_java = self.insert_c.addAction(res.get('@string/java'))
-        self.lang_java.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'java'))))
-        self.lang_java.triggered.connect(self.langjava)
-        self.lang_python = self.insert_c.addAction(res.get('@string/python'))
-        self.lang_python.triggered.connect(self.langpython)
-        self.lang_python.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'py'))))
-        self.lang_pythongui = self.insert_c.addAction(res.get('@string/pythongui'))
-        self.lang_pythongui.triggered.connect(self.langpythonx)
-        self.lang_pythongui.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'py'))))
-        self.lang_saye = self.insert_c.addAction(res.get('@string/saye'))
-        self.lang_saye.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'sa'))))
-        self.lang_saye.triggered.connect(self.langsaye)
-        self.lang_html = self.insert_c.addAction(res.get('@string/html'))
-        self.lang_html.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'html'))))
-        self.lang_html.triggered.connect(self.langhtml)
-        self.lang_php = self.insert_c.addAction(res.get('@string/php'))
-        self.lang_php.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'php'))))
-        self.lang_php.triggered.connect(self.langphp)
-        self.lang_js = self.insert_c.addAction(res.get('@string/javascript'))
-        self.lang_js.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'js'))))
-        self.lang_js.triggered.connect(self.langjs)
-        self.uix = self.insert_c.addAction(res.get('@string/uix'))
-        self.uix.setIcon(QIcon(res.get('@icon/application-x-designer')))
-        self.uix.triggered.connect (self.langui)
+        self.templist = files.list('/usr/share/templates')
+        self.templist.sort()
+        for i in self.templist:
+            if i.endswith('.desk'):
+                self.new_czx = self.insert_c.addAction(
+                    control.read_record(f'name[{control.read_record("locale", "/etc/gui")}]', res.get(f'@temp/{i}')))
+                self.new_czx.setFont(self.Env.font())
+                self.new_czx.setObjectName(i)
+                self.new_czx.triggered.connect(self.langcode)
+                self.new_czx.setIcon(QIcon(res.get(control.read_record('logo', res.get(f'@temp/{i}')))))
 
         # set font size
         self.teEdit.setFont(f)
@@ -849,6 +693,18 @@ echo Finish running process with exit 0 ...
 rm /tmp/exec.sa
 pause
                                         ''')
+            self.Env.RunApp('commento', [None])
+            app.switch('persia')
+        elif file.endswith('.pashm'):
+            files.write('/tmp/exec.sa', f'''
+echo Running {file} ...
+echo
+pashmak {file}
+echo
+echo Finish running process with exit 0 ...
+rm /tmp/exec.sa
+pause
+                                                ''')
             self.Env.RunApp('commento', [None])
             app.switch('persia')
         elif file.endswith('.ui'):
@@ -1078,81 +934,45 @@ pause
         self.Env.RunApp('select', [res.get('@string/saveasfile'), 'save-as', self.saveas_])
         app.switch('persia')
 
-    def langc (self):
-        self.teEdit.setText(files.readall(res.get('@temp/untitled.c')))
-        lexer = Qsci.QsciLexerCPP()
-        lexer.setDefaultFont(font)
-        self.teEdit.setLexer(lexer)
 
-    def langcpp (self):
-        self.teEdit.setText(files.readall(res.get('@temp/untitled.cpp')))
-        lexer = Qsci.QsciLexerCPP()
-        lexer.setDefaultFont(font)
-        self.teEdit.setLexer(lexer)
+    def langcode (self):
+        code = '@temp/' + self.sender().objectName()
+        ext = control.read_record('ext',res.get(code))
+        connect  = res.get(control.read_record('connect',res.get(code)))
+        self.teEdit.setText(files.readall(connect))
 
-    def langjava (self):
-        self.teEdit.setText(files.readall(res.get('@temp/untitled.java')))
-        lexer = Qsci.QsciLexerJava()
-        lexer.setDefaultFont(font)
-        self.teEdit.setLexer(lexer)
-
-    def langpython (self):
-        x = files.readall(res.get('@temp/untitled.py'))
-        self.teEdit.setText(x)
-        lexer = Qsci.QsciLexerPython()
-        lexer.setDefaultFont(font)
-        self.teEdit.setLexer(lexer)
-
-    def langpythonx (self):
-        x = files.readall(res.get('@temp/untitled-gui.py'))
-        self.teEdit.setText(x)
-        lexer = Qsci.QsciLexerPython()
-        lexer.setDefaultFont(font)
-        self.teEdit.setLexer(lexer)
-
-    def langpyweb (self):
-        x = files.readall(res.get('@temp/untitled-web.py'))
-        self.teEdit.setText(x)
-        lexer = Qsci.QsciLexerPython()
-        lexer.setDefaultFont(font)
-        self.teEdit.setLexer(lexer)
-
-    def langui (self):
-        x = files.readall(res.get('@temp/untitled.ui'))
-        self.teEdit.setText(x)
-        lexer = Qsci.QsciLexerXML()
-        lexer.setDefaultFont(font)
-        self.teEdit.setLexer(lexer)
-
-    def langcs (self):
-        self.teEdit.setText(files.readall(res.get('@temp/untitled.cs')))
-        lexer = Qsci.QsciLexerCSharp()
-        lexer.setDefaultFont(font)
-        self.teEdit.setLexer(lexer)
-
-    def langsaye (self):
-        self.teEdit.setText(files.readall(res.get('@temp/untitled.sa')))
-        lexer = Qsci.QsciLexerPython()
-        lexer.setDefaultFont(font)
-        self.teEdit.setLexer(lexer)
-
-    def langhtml (self):
-        self.teEdit.setText(files.readall(res.get('@temp/untitled.html')))
-        lexer = Qsci.QsciLexerHTML()
-        lexer.setDefaultFont(font)
-        self.teEdit.setLexer(lexer)
-
-    def langphp (self):
-        self.teEdit.setText(files.readall(res.get('@temp/untitled.php')))
-        lexer = Qsci.QsciLexerHTML()
-        lexer.setDefaultFont(font)
-        self.teEdit.setLexer(lexer)
-
-    def langjs (self):
-        self.teEdit.setText(files.readall(res.get('@temp/untitled.js')))
-        lexer = Qsci.QsciLexerJava()
-        lexer.setDefaultFont(font)
-        self.teEdit.setLexer(lexer)
+        if ext=='cpp' or ext=='c++' or ext=='cxx' or ext=='c':
+            lexer = Qsci.QsciLexerCPP()
+            lexer.setDefaultFont(font)
+            self.teEdit.setLexer(lexer)
+        elif ext=='py' or ext=='pashm' or ext=='sa':
+            lexer = Qsci.QsciLexerPython()
+            lexer.setDefaultFont(font)
+            self.teEdit.setLexer(lexer)
+        elif ext=='java':
+            lexer = Qsci.QsciLexerJava()
+            lexer.setDefaultFont(font)
+            self.teEdit.setLexer(lexer)
+        elif ext=='php' or ext=='html':
+            lexer = Qsci.QsciLexerHTML()
+            lexer.setDefaultFont(font)
+            self.teEdit.setLexer(lexer)
+        elif ext=='css':
+            lexer = Qsci.QsciLexerCSS()
+            lexer.setDefaultFont(font)
+            self.teEdit.setLexer(lexer)
+        elif ext=='cs':
+            lexer = Qsci.QsciLexerCSharp()
+            lexer.setDefaultFont(font)
+            self.teEdit.setLexer(lexer)
+        elif ext=='js':
+            lexer = Qsci.QsciLexerJavaScript()
+            lexer.setDefaultFont(font)
+            self.teEdit.setLexer(lexer)
+        else:
+            lexer = Qsci.QsciLexerPython()
+            lexer.setDefaultFont(font)
+            self.teEdit.setLexer(lexer)
 
     def New_Folder (self):
         app.switch('persia')
@@ -1164,62 +984,8 @@ pause
         self.Env.RunApp('input',[res.get('@string/filename'),self.x.mkfile])
         app.switch('persia')
 
-    def New_C (self):
-        app.switch('persia')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkc])
-        app.switch('persia')
-
-    def New_Cpp (self):
-        app.switch('persia')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkcpp])
-        app.switch('persia')
-
-    def New_Csharp (self):
-        app.switch('persia')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkcs])
-        app.switch('persia')
-
-    def New_Html (self):
-        app.switch('persia')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkhtml])
-        app.switch('persia')
-
-    def New_Java (self):
-        app.switch('persia')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkjava])
-        app.switch('persia')
-
-    def New_Js (self):
-        app.switch('persia')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkjs])
-        app.switch('persia')
-
-    def New_Php (self):
-        app.switch('persia')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkphp])
-        app.switch('persia')
-
-    def New_Py (self):
-        app.switch('persia')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkpy])
-        app.switch('persia')
-
-    def New_PyGui (self):
-        app.switch('persia')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkpygui])
-        app.switch('persia')
-
-    def New_PyWeb (self):
-        app.switch('persia')
-        self.Env.RunApp('input',[res.get('@string/filename'),self.x.mkpyweb])
-        app.switch('persia')
-
-    def New_Sa (self):
-        app.switch('persia')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mksa])
-        app.switch('persia')
-
-    def New_UI (self):
-        app.switch('persia')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkui])
-        app.switch('persia')
+    def New_Code (self):
+        files.write('/tmp/code.tmp','@temp/'+self.sender().objectName())
+        app.switch('roller')
+        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkcode])
+        app.switch('roller')

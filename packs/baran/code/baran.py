@@ -1541,7 +1541,7 @@ class BLineEdit (QLineEdit):
             self.Env.keyboardWidget.raise_()
 
         if getdata('layout.keyless') == 'Yes':
-            self.setPlainText(res.key(self.toPlainText()))
+            self.setText(res.key(self.text()))
 
         super(BLineEdit, self).focusInEvent(e)
 
@@ -1552,7 +1552,7 @@ class BLineEdit (QLineEdit):
         super(BLineEdit, self).mousePressEvent(e)
 
         if getdata('layout.keyless') == 'Yes':
-            self.setPlainText(res.key(self.toPlainText()))
+            self.setText(res.key(self.text()))
 
 class BTextEdit (QTextEdit):
 

@@ -149,51 +149,16 @@ class MainApp(QtWidgets.QMainWindow):
         self.insert_c.setFont(self.Env.font())
 
         # Codes #
-        self.lang_c = self.insert_c.addAction(res.get('@string/c'))
-        self.lang_c.setFont(self.Env.font())
-        self.lang_c.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'c'))))
-        self.lang_c.triggered.connect (self.langc)
-        self.lang_cpp = self.insert_c.addAction(res.get('@string/c++'))
-        self.lang_cpp.setFont(self.Env.font())
-        self.lang_cpp.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'c++'))))
-        self.lang_cpp.triggered.connect(self.langcpp)
-        self.lang_cs = self.insert_c.addAction(res.get('@string/csharp'))
-        self.lang_cs.setFont(self.Env.font())
-        self.lang_cs.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'c#'))))
-        self.lang_cs.triggered.connect(self.langcs)
-        self.lang_java = self.insert_c.addAction(res.get('@string/java'))
-        self.lang_java.setFont(self.Env.font())
-        self.lang_java.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'java'))))
-        self.lang_java.triggered.connect(self.langjava)
-        self.lang_python = self.insert_c.addAction(res.get('@string/python'))
-        self.lang_python.setFont(self.Env.font())
-        self.lang_python.triggered.connect(self.langpython)
-        self.lang_python.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'py'))))
-        self.lang_pythongui = self.insert_c.addAction(res.get('@string/pythongui'))
-        self.lang_pythongui.setFont(self.Env.font())
-        self.lang_pythongui.triggered.connect(self.langpythonx)
-        self.lang_pythongui.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'py'))))
-        self.lang_saye = self.insert_c.addAction(res.get('@string/saye'))
-        self.lang_saye.setFont(self.Env.font())
-        self.lang_saye.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'sa'))))
-        self.lang_saye.triggered.connect(self.langsaye)
-        self.lang_html = self.insert_c.addAction(res.get('@string/html'))
-        self.lang_html.setFont(self.Env.font())
-        self.lang_html.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'html'))))
-        self.lang_html.triggered.connect(self.langhtml)
-        self.lang_php = self.insert_c.addAction(res.get('@string/php'))
-        self.lang_php.setFont(self.Env.font())
-        self.lang_php.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'php'))))
-        self.lang_php.triggered.connect(self.langphp)
-        self.lang_js = self.insert_c.addAction(res.get('@string/javascript'))
-        self.lang_js.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'js'))))
-        self.lang_js.setFont(self.Env.font())
-        self.lang_js.triggered.connect(self.langjs)
-
-        self.lang_ui = self.insert_c.addAction(res.get('@string/uix'))
-        self.lang_ui.setIcon(QtGui.QIcon(res.get(res.etc(self.AppName,'ui'))))
-        self.lang_ui.setFont(self.Env.font())
-        self.lang_ui.triggered.connect(self.langui)
+        self.templist = files.list('/usr/share/templates')
+        self.templist.sort()
+        for i in self.templist:
+            if i.endswith('.desk'):
+                self.new_czx = self.insert_c.addAction(
+                    control.read_record(f'name[{control.read_record("locale", "/etc/gui")}]', res.get(f'@temp/{i}')))
+                self.new_czx.setFont(self.Env.font())
+                self.new_czx.setObjectName(i)
+                self.new_czx.triggered.connect(self.langcode)
+                self.new_czx.setIcon(QtGui.QIcon(res.get(control.read_record('logo', res.get(f'@temp/{i}')))))
 
         # set font size
         self.teEdit.setFont(self.Env.font())
@@ -268,6 +233,19 @@ pause
                                         ''')
             self.Env.RunApp('commento', [None])
             app.switch('barge')
+        elif self.Widget.WindowTitle().endswith('.pashm'):
+            filename = self.Widget.WindowTitle()
+            files.write('/tmp/exec.sa', f'''
+echo Running {filename} ...
+echo
+pashmak {filename}
+echo
+echo Finish running process with exit 0 ...
+rm /tmp/exec.sa
+pause
+                                                ''')
+            self.Env.RunApp('commento', [None])
+            app.switch('barge')
         elif self.Widget.WindowTitle().endswith ('.ui'):
             filename = self.Widget.WindowTitle()
             app.switch('barge')
@@ -328,35 +306,8 @@ pause
         self.Env.RunApp('select', [res.get('@string/saveasfile'), 'save-as', self.saveas_])
         app.switch('barge')
 
-    def langc (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.c')))
+    def langcode (self):
+        code = '@temp/' + self.sender().objectName()
+        connect = res.get(control.read_record('connect', res.get(code)))
 
-    def langcpp (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.cpp')))
-
-    def langjava (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.java')))
-
-    def langpython (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.py')))
-
-    def langpythonx (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled-gui.py')))
-
-    def langcs (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.cs')))
-
-    def langsaye (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.sa')))
-
-    def langhtml (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.html')))
-
-    def langphp (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.php')))
-
-    def langjs (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.js')))
-
-    def langui (self):
-        self.teEdit.setPlainText(files.readall(res.get('@temp/untitled.ui')))
+        self.teEdit.setPlainText(files.readall(connect))
