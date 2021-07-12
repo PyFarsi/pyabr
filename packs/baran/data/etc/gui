@@ -29,6 +29,7 @@ alert.height: 40
 alert.location: SE
 locale: fa
 layout: fa
+layout.keyless: Yes
 autosize: Yes
 fullscreen: Yes
 width: 1920

@@ -1,0 +1,4 @@
+logo: @icon/breeze-html
+name[en]: New Web Page
+name[fa]: یک صفحه وب
+connect: @temp/untitled-web.py

@@ -44,7 +44,12 @@ class MainApp(QMainWindow):
         self.btnWifi.clicked.connect(self.openWifi_manager)
         self.btnWifi.setIconSize(QSize(15,15))
         self.btnWifi.setStyleSheet(f'background:none;border:none')
-        self.btnWifi.setIcon(QIcon(res.get('@icon/breeze-w100')))
+
+        if files.isfile('/etc/wifi/main.sa'):
+            self.btnWifi.setIcon(QIcon(res.get('@icon/breeze-w100')))
+        else:
+            self.hide()
+
         self.setCentralWidget(self.btnWifi)
 
         self.setFixedSize(15,15)

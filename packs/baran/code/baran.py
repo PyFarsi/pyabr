@@ -1520,6 +1520,7 @@ class TaskBar (QToolBar):
 # @Built in QLineEdit
 
 class BLineEdit (QLineEdit):
+
     def __init__(self):
         super(BLineEdit, self).__init__()
         self.setFocusPolicy(Qt.ClickFocus)
@@ -1539,15 +1540,22 @@ class BLineEdit (QLineEdit):
             self.Env.keyboardWidget.activateWindow()
             self.Env.keyboardWidget.raise_()
 
-        # self.setStyleSheet("border: 1px solid red;")
+        if getdata('layout.keyless') == 'Yes':
+            self.setPlainText(res.key(self.toPlainText()))
+
         super(BLineEdit, self).focusInEvent(e)
 
     def mousePressEvent(self, e):
         # print(e)
         # self.setFocusPolicy(Qt.ClickFocus)
+
         super(BLineEdit, self).mousePressEvent(e)
 
+        if getdata('layout.keyless') == 'Yes':
+            self.setPlainText(res.key(self.toPlainText()))
+
 class BTextEdit (QTextEdit):
+
     def __init__(self):
         super(BTextEdit, self).__init__()
         self.setFocusPolicy(Qt.ClickFocus)
@@ -1573,7 +1581,11 @@ class BTextEdit (QTextEdit):
     def mousePressEvent(self, e):
         # print(e)
         # self.setFocusPolicy(Qt.ClickFocus)
+
         super(BTextEdit, self).mousePressEvent(e)
+
+        if getdata('layout.keyless') == 'Yes':
+            self.setPlainText(res.key(self.toPlainText()))
 
 class BCodeEdit (QsciScintilla):
     def __init__(self):

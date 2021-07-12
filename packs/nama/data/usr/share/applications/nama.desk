@@ -4,5 +4,5 @@ exec: nama
 hidden: Yes
 logo: @icon/breeze-shotwell
 application: Yes
-category: tools
+category: multimedia
 external: Yes

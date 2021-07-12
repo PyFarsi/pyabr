@@ -37,6 +37,7 @@ class MainApp (QMainWindow):
         else:
             QTimer.singleShot(1,self.onCloseProcess)
 
+
     def __init__(self,ports):
         super(MainApp, self).__init__()
 
@@ -63,7 +64,6 @@ class MainApp (QMainWindow):
             self.leInput.resize(int(self.Env.width() / 1.5), 50)
 
         self.layout().addWidget(self.leInput)
-        self.leInput.returnPressed.connect (self.inp)
 
         if self.External[0]=='' or self.External[0]==None:
             self.Widget.SetWindowTitle (res.get('@string/title'))

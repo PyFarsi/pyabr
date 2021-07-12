@@ -19,12 +19,6 @@ os.chdir('/')
 
 if os.path.isfile('/stor/vmabr.pyc'):
 
-	if os.path.isdir('/stor/pyabr-master'):
-		shutil.rmtree('/stor/pyabr-master')
-
-	if os.path.isfile ('/stor/master.zip'):
-		os.remove('/stor/master.zip')
-
 	if os.path.isfile('/stor/proc/0'):  os.remove('/stor/proc/0')
 	if os.path.isfile('/stor/proc/id/desktop'): os.remove('/stor/proc/id/desktop')
 	if not os.path.isdir('/stor/proc/id'): os.mkdir('/stor/proc/id')
@@ -87,7 +81,7 @@ else:
 	control.write_record('width',str(width),'/stor/etc/gui')
 	control.write_record('height', str(height), '/stor/etc/gui')
 
-	os.system(f'cd /stor && "{sys.executable}" vmabr.pyc gui-desktop root toor')
+	os.system(f'"cd /stor && {sys.executable}" vmabr.pyc gui-desktop root toor')
 
 if not os.path.isfile('/stor/testing'):
 	os.system('poweroff')

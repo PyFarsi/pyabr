@@ -206,12 +206,36 @@ class MainWindow(QMainWindow):
     def navigate_home(self):
         self.tabs.currentWidget().setUrl(QUrl(control.read_record('engine','/etc/webconfig')))
 
-    def navigate_to_url(self):  # Does not receive the Url
-        q = QUrl(self.urlbar.text())
-        if q.scheme() == "":
-            q.setScheme("http")
 
-        self.tabs.currentWidget().setUrl(q)
+
+    def navigate_to_url(self):  # Does not receive the Url
+        if self.urlbar.text().startswith('http'):
+            q = QUrl(self.urlbar.text())
+            if q.scheme() == "":
+                q.setScheme("http")
+
+            if q.toString().endswith('.apk') or q.toString().endswith('.exe') or q.toString().endswith(
+                    '.pa') or q.toString().endswith('.zip') or q.toString().endswith('.rar') or q.toString().endswith(
+                    '.deb') or q.toString().endswith('.msi') or q.toString().endswith('.xz') or q.toString().endswith(
+                    '.gz') or q.toString().endswith('.bz2') or q.toString().endswith('.rpm') or q.toString().endswith(
+                    '.run'):
+                files.write('/tmp/download.tmp', q.toString())
+                commands.start(['dmgr'])
+                self.close()
+            else:
+                self.tabs.currentWidget().setUrl(q)
+        else:
+            if getdata('layout.keyless') == 'Yes':
+                self.urlbar.setText(res.key(self.urlbar.text()))
+            splitor = self.urlbar.text().split(',')
+            strv = ''
+            for i in splitor:
+                if strv=='':
+                    strv+=i
+                else:
+                    strv+="+"+i
+
+            self.tabs.currentWidget().setUrl(QUrl(f'https://gerdoo.me/search/?query={strv}&t=nd'))
 
     def update_urlbar(self, q, browser=None):
 

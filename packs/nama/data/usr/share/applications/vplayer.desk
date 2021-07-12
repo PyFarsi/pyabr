@@ -1,7 +1,0 @@
-name[en]: Video Player
-exec: vplayer
-hidden: Yes
-logo: @icon/breeze-mp4
-application: Yes
-category: tools
-external: Yes

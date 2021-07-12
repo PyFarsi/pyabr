@@ -126,6 +126,7 @@ class WifiListView (QListView):
     def _enter_password_ (self,password):
         status = subprocess.check_output(f'nmcli device wifi connect "{self.ssid}" password "{password}"', shell=True).decode()
         files.write('/etc/wifi/status', status)
+        self.password = password
 
         QTimer.singleShot(500, self.check_password_)
 
@@ -141,6 +142,8 @@ class WifiListView (QListView):
             app.switch('wifi')
             self.Env.RunApp('text', [res.get('@string/s'), res.get('@string/sm')])
             app.switch('wifi')
+
+            files.write('/etc/wifi/main.sa',f'nmcli device wifi connect "{self.ssid}" password "{self.password}"')
         else:
             app.switch('wifi')
             self.Env.RunApp('text', [res.get('@string/i'), res.get('@string/im')])
@@ -195,6 +198,8 @@ class MainApp (QMainWindow):
         self.onCloseProcess()
 
         subprocess.call(['nmcli','radio','wifi','on'])
+        subprocess.call(['sh','etc/wifi/main.sa'])
+
         self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
