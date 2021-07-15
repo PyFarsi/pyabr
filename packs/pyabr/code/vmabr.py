@@ -19,25 +19,9 @@ import sys, platform, hashlib, os, getpass, subprocess as sub, importlib
 
 ## @variables ##
 
-ip = ""
 user = ""
 code = ""
-argv = sys.argv[1:]  # kernel parameters
 
-if os.path.isfile('/etc/issue.net'):
-    f = open('/etc/issue.net', 'r')
-    osname = f.read()
-    f.close()
-else:
-    osname = platform.system()
-
-kernel_file = 'vmabr.pyc'
-
-select = ""
-tz = ""
-cpu = ''
-cpuc = ''
-ram = ''
 ## Configure kernel ###############################################################################
 
 ################## Module configure ##########################
@@ -61,13 +45,13 @@ modules.get_modules()
 
 ## @core/interface ##
 
-if argv == []:
+if sys.argv[1:] == []:
     interface = files.readall("/etc/interface").upper()
 
     if interface.startswith("CLI"):
-        argv = ['kernel']
+        sys.argv[1:] = ['kernel']
     elif interface.startswith("GUI"):
-        argv = ['gui']
+        sys.argv[1:] = ['gui']
     else:
         colors.show("interface", "fail-start", "")
         colors.show("kernel", "stop", "")
@@ -75,54 +59,47 @@ if argv == []:
 
 ## @core/params-check ##
 
-if not (argv[0] == "kernel" or
-        argv[0] == "gui" or
-        argv[0] == "user" or
-        argv[0] == "login" or
-        argv[0] == "gui-splash" or
-        argv[0] == "gui-login" or
-        argv[0] == 'gui-enter' or
-        argv[0] == 'gui-desktop' or
-        argv[0] == 'gui-unlock' or
-        argv[0] == "exec"):
+if not (sys.argv[1:][0] == "kernel" or
+        sys.argv[1:][0] == "gui" or
+        sys.argv[1:][0] == "user" or
+        sys.argv[1:][0] == "login" or
+        sys.argv[1:][0] == "gui-splash" or
+        sys.argv[1:][0] == "gui-login" or
+        sys.argv[1:][0] == 'gui-enter' or
+        sys.argv[1:][0] == 'gui-desktop' or
+        sys.argv[1:][0] == 'gui-unlock' or
+        sys.argv[1:][0] == "exec"):
     colors.show("params-check", "fail-start", "")
     colors.show("kernel", "stop", "")
     sys.exit(0)
 else:
-    if argv[0] == 'kernel' or argv[0] == 'gui':
+    if sys.argv[1:][0] == 'kernel' or sys.argv[1:][0] == 'gui':
         if files.isfile("/proc/0"):
             colors.show("params-check", "fail-start", "")
             colors.show("kernel", "stop", "")
             sys.exit(0)
 
-colors.argv = argv[0]  ## Set color argv
+colors.argv = sys.argv[1:][0]  ## Set color argv
 
 ## @core/exec ##
 
-if argv[0] == 'exec':
-    user = files.readall("/proc/info/su")
+if sys.argv[1:][0] == 'exec':
 
-    inside = control.read_record('inside', '/etc/exec')
-    outside = control.read_record('outside', '/etc/exec')
-    script = control.read_record('script', '/etc/exec')
-    portable = control.read_record('portable', '/etc/exec')
-    mirror = control.read_record('mirror', '/etc/exec')
-
-    if (argv[1:] == [] or
-            argv[1] == "" or
-            argv[1] == " " or
-            argv[1].startswith(";")
+    if (sys.argv[1:][1:] == [] or
+            sys.argv[1:][1] == "" or
+            sys.argv[1:][1] == " " or
+            sys.argv[1:][1].startswith(";")
     ):
         print(end='')
 
-    elif argv[1].__contains__("/"):
+    elif sys.argv[1:][1].__contains__("/"):
 
-        if files.isfile(argv[1] + ".pyc") and outside == 'Yes':
-            if permissions.check(files.output(argv[1]) + ".pyc", "x", user):
+        if files.isfile(sys.argv[1:][1] + ".pyc") and control.read_record('outside', '/etc/exec') == 'Yes':
+            if permissions.check(files.output(sys.argv[1:][1]) + ".pyc", "x", files.readall("/proc/info/su")):
                 ## Set args ##
-                sys.argv = argv[1:]
+                sys.argv = sys.argv[1:][1:]
 
-                appname = argv[1]
+                appname = sys.argv[1:][1]
 
                 parent = files.parentdir(files.output(appname))[1:]
 
@@ -133,147 +110,66 @@ if argv[0] == 'exec':
                 # remove pycache
                 if files.isdir(files.output('./__pycache__')): files.removedirs(files.output('./__pycache__'))
             else:
-                colors.show(argv[1], "perm", "")
+                colors.show(sys.argv[1:][1], "perm", "")
 
-        elif files.isfile(argv[1] + ".py") and outside == 'Yes':
-            if permissions.check(files.output(argv[1]) + ".py", "x", user):
-                ## Set args ##
-                sys.argv = argv[1:]
-
-                appname = argv[1]
-
-                parent = files.parentdir(files.output(appname))[1:]
-                sys.path.append(parent)
-                __import__(files.filename(appname))
-                sys.path.remove(parent)
-
-                if files.isdir(files.output('./__pycache__')): files.removedirs(files.output('./__pycache__'))
-            else:
-                colors.show(argv[1], "perm", "")
-
-        elif files.isfile(argv[1] + ".jar") and portable == 'Yes':
-            if permissions.check(files.output(argv[1] + ".jar"), "x", user):
+        elif files.isfile(sys.argv[1:][1] + ".out") and control.read_record('portable', '/etc/exec') == 'Yes':
+            if permissions.check(files.output(sys.argv[1:][1] + ".out"), "x", files.readall("/proc/info/su")):
                 ## command ##
-                command = ["java", '--jar', files.input(argv[1] + ".jar")]
+                command = [files.input(sys.argv[1:][1] + ".out")]
 
-                for i in argv[2:]:
+                for i in sys.argv[1:][2:]:
                     command.append(i)
 
                 sub.call(command)
             else:
-                colors.show(argv[1], "perm", "")
+                colors.show(sys.argv[1:][1], "perm", "")
 
-        elif files.isfile(argv[1] + ".exe") and portable == 'Yes':
-            if permissions.check(files.output(argv[1] + ".exe"), "x", user):
-                ## command ##
-                command = [files.input(argv[1]) + ".exe"]
-
-                for i in argv[2:]:
-                    command.append(i)
-
-                sub.call(command)
+        elif files.isfile(sys.argv[1:][1] + '.sa') and control.read_record('script', '/etc/exec') == 'Yes':
+            if permissions.check(files.output(sys.argv[1:][1]) + '.sa', "x", files.readall("/proc/info/su")):
+                Script(sys.argv[1:][1])
             else:
-                colors.show(argv[1], "perm", "")
-
-        elif files.isfile(argv[1] + ".out") and portable == 'Yes':
-            if permissions.check(files.output(argv[1] + ".out"), "x", user):
-                ## command ##
-                command = [files.input(argv[1] + ".out")]
-
-                for i in argv[2:]:
-                    command.append(i)
-
-                sub.call(command)
-            else:
-                colors.show(argv[1], "perm", "")
-
-        elif files.isfile(argv[1] + '.sa') and script == 'Yes':
-            if permissions.check(files.output(argv[1]) + '.sa', "x", user):
-                Script(argv[1])
-            else:
-                colors.show(argv[1], "perm", "")
+                colors.show(sys.argv[1:][1], "perm", "")
         else:
-            colors.show(argv[1], "fail", "command not found.")
+            colors.show(sys.argv[1:][1], "fail", "command not found.")
     else:
         ## Library execute in path ##
-        if hasattr(commands, argv[1]) and inside == 'Yes':
-            result = getattr(commands, argv[1])(argv[
+        if hasattr(commands, sys.argv[1:][1]) and control.read_record('inside', '/etc/exec') == 'Yes':
+            result = getattr(commands, sys.argv[1:][1])(sys.argv[1:][
                                                 2:])  # https://stackoverflow.com/questions/3061/calling-a-function-of-a-module-by-using-its-name-a-string
 
-        elif files.isfile("/usr/app/" + argv[1] + ".pyc") and outside == 'Yes':
-            if permissions.check("/usr/app/" + files.output(argv[1]) + ".pyc", "x", user):
+        elif files.isfile("/usr/app/" + sys.argv[1:][1] + ".pyc") and control.read_record('outside', '/etc/exec') == 'Yes':
+            if permissions.check("/usr/app/" + files.output(sys.argv[1:][1]) + ".pyc", "x", files.readall("/proc/info/su")):
                 ## Set args ##
-                sys.argv = argv[1:]
+                sys.argv = sys.argv[1:][1:]
 
-                __import__(argv[1])
+                __import__(sys.argv[1:][1])
             else:
-                colors.show(argv[1], "perm", "")
+                colors.show(sys.argv[1:][1], "perm", "")
 
-        elif files.isfile("/usr/app/" + argv[1] + ".py") and outside == 'Yes':
-            if permissions.check("/usr/app/" + files.output(argv[1]) + ".py", "x", user):
-                ## Set args ##
-                sys.argv = argv[1:]
-
-                __import__(argv[1])
-
-                if files.isdir(files.output('./__pycache__')): files.removedirs(files.output('./__pycache__'))
-            else:
-                colors.show(argv[1], "perm", "")
-
-        elif files.isfile('/usr/app/' + argv[1] + ".jar") and portable == 'Yes':
-            if permissions.check('/usr/app/' + files.output(argv[1] + ".jar"), "x", user):
+        elif files.isfile('/usr/app/' + sys.argv[1:][1] + ".out") and control.read_record('portable', '/etc/exec') == 'Yes':
+            if permissions.check("/usr/app/" + files.output(sys.argv[1:][1] + ".out"), "x", files.readall("/proc/info/su")):
                 ## command ##
-                command = ["java", '--jar', files.input('/usr/app/' + argv[1] + ".jar")]
+                command = [files.input('/usr/app/' + sys.argv[1:][1] + ".out")]
 
-                for i in argv[2:]:
+                for i in sys.argv[1:][2:]:
                     command.append(i)
 
                 sub.call(command)
             else:
-                colors.show(argv[1], "perm", "")
+                colors.show(sys.argv[1:][1], "perm", "")
 
-        elif files.isfile('/usr/app/' + argv[1] + '.exe') and portable == 'Yes':
-            if permissions.check("/usr/app/" + files.output(argv[1]) + ".exe", "x", user):
-                ## command ##
-                command = [files.input('/usr/app/' + argv[1]) + ".exe"]
-
-                for i in argv[2:]:
-                    command.append(i)
-
-                sub.call(command)
+        elif files.isfile('/usr/app/' + sys.argv[1:][1] + '.sa') and control.read_record('script', '/etc/exec') == 'Yes':
+            if permissions.check(files.output('/usr/app/' + sys.argv[1:][1] + '.sa'), "x", files.readall("/proc/info/su")):
+                Script('/usr/app/' + sys.argv[1:][1])
             else:
-                colors.show(argv[1], "perm", "")
+                colors.show(sys.argv[1:][1], "perm", "")
 
-        elif files.isfile('/usr/app/' + argv[1] + ".out") and portable == 'Yes':
-            if permissions.check("/usr/app/" + files.output(argv[1] + ".out"), "x", user):
-                ## command ##
-                command = [files.input('/usr/app/' + argv[1] + ".out")]
+        elif not control.read_record('command.' + sys.argv[1:][1], '/etc/exec') == None:
 
-                for i in argv[2:]:
-                    command.append(i)
+            command = [sys.argv[1:][1]]
 
-                sub.call(command)
-            else:
-                colors.show(argv[1], "perm", "")
-
-        elif files.isfile('/usr/app/' + argv[1] + '.sa') and script == 'Yes':
-            if permissions.check(files.output('/usr/app/' + argv[1] + '.sa'), "x", user):
-                Script('/usr/app/' + argv[1])
-            else:
-                colors.show(argv[1], "perm", "")
-
-        elif files.isfile('/app/mirrors/' + argv[1]) and mirror == 'Yes':
-            if files.isfile('/app/mirrors/' + argv[1] + ".try"):
-                print(files.readall('/app/mirrors/' + argv[1] + ".try"))
-            else:
-                print("Run `sudo paye in " + argv[1] + '`')
-
-        elif not control.read_record('command.' + argv[1], '/etc/exec') == None:
-
-            command = [argv[1]]
-
-            args = control.read_record(f'command.{argv[1]}.args', '/etc/exec')
-            perm = control.read_record(f'command.{argv[1]}.perm', '/etc/exec')
+            args = control.read_record(f'command.{sys.argv[1:][1]}.args', '/etc/exec')
+            perm = control.read_record(f'command.{sys.argv[1:][1]}.perm', '/etc/exec')
 
             # args check #
             if not args == None:
@@ -288,22 +184,20 @@ if argv[0] == 'exec':
             if perm == None:
                 perm = 3
 
-            user = files.readall('/proc/info/su')
-
-            if user == 'guest' and int(perm) < 3:
-                colors.show(argv[1], 'perm', '')
+            if files.readall('/proc/info/su') == 'guest' and int(perm) < 3:
+                colors.show(sys.argv[1:][1], 'perm', '')
                 sys.exit(0)
-            elif not user == 'root' and int(perm) < 2:
-                colors.show(argv[1], 'perm', '')
+            elif not files.readall('/proc/info/su') == 'root' and int(perm) < 2:
+                colors.show(sys.argv[1:][1], 'perm', '')
                 sys.exit(0)
 
             if args:
-                for i in argv[2:]:
+                for i in sys.argv[1:][2:]:
                     command.append(i)
 
             sub.call(command)
         else:
-            colors.show(argv[1], "fail", "command not found.")
+            colors.show(sys.argv[1:][1], "fail", "command not found.")
 
     sys.exit()
 
@@ -322,7 +216,6 @@ if switch == None:
     switch = 0
 
 files.write("/proc/info/sel", "/proc/" + str(switch))
-select = files.readall("/proc/info/sel")
 
 ####################################################################################################
 ## @core/hostname ##
@@ -350,50 +243,49 @@ else:
 files.write("/proc/info/kname", 'vmabr')
 files.write("/proc/info/kver", '2.0.0')
 
-os_host = platform.node()
-tz = control.read_record("format", "/etc/time")
-sweek = control.read_record("start-week", "/etc/time")
-py = sys.executable
-
-if argv[0] == "kernel":
+if sys.argv[1:][0] == "kernel":
     interface = "CLI"
 else:
     interface = "GUI"
+if os.path.isfile('/etc/issue.net'):
+    f = open('/etc/issue.net', 'r')
+    s = f.read();f.close()
+    files.write("/proc/info/os", s)
+else:
+    files.write("/proc/info/os", platform.system())
 
-files.write("/proc/info/os", osname)
 files.write("/proc/info/arch", platform.architecture()[0])
 files.write("/proc/info/os_su", getpass.getuser())
 files.write("/proc/info/os_host", platform.node())
 files.write("/proc/info/inter", interface)
-files.write("/proc/info/tz", tz)
-files.write("/proc/info/sweek", sweek)
-files.write("/proc/info/boot", kernel_file)
-files.write('/proc/info/py', py)
+files.write("/proc/info/tz", control.read_record("format", "/etc/time"))
+files.write("/proc/info/sweek", control.read_record("start-week", "/etc/time"))
+files.write("/proc/info/boot", 'vmabr.pyc')
+files.write('/proc/info/py', sys.executable)
 
 ## @core/dirs ##
 
-fhs = control.read_list("/etc/fhs")
-for i in fhs:
+for i in control.read_list("/etc/fhs"):
     if not files.isdir(i) and not files.isfile(i):
         files.mkdir(i)
 
 ## @core/welcome ##
 
-if argv[0] == "kernel":
+if sys.argv[1:][0] == "kernel":
     print()
     print("Welcome to " + control.read_record("name", "/etc/distro") + " " +  control.read_record("version", "/etc/distro") + " (" + control.read_record("code", "/etc/distro") + ") cloud software.")
     print()
 
 ## @core/issue ##
 
-if (argv[0] == "kernel") and files.isfile("/etc/issue"):
+if (sys.argv[1:][0] == "kernel") and files.isfile("/etc/issue"):
     print()
     print(files.readall("/etc/issue"))
     print()
 
 ## @core/gui ##
 
-if argv[0] == "gui":
+if sys.argv[1:][0] == "gui":
     desktop = control.read_record('desktop', '/etc/gui')
 
     from PyQt5.QtCore import *
@@ -419,7 +311,7 @@ if argv[0] == "gui":
 
 ## @core/gui-splash ##
 
-if argv[0] == "gui-splash":
+if sys.argv[1:][0] == "gui-splash":
     desktop = control.read_record('desktop', '/etc/gui')
     control.write_record('params', 'splash', '/etc/gui')
 
@@ -445,7 +337,7 @@ if argv[0] == "gui-splash":
 
 ## @core/gui-login ##
 
-if argv[0] == "gui-login":
+if sys.argv[1:][0] == "gui-login":
     desktop = control.read_record('desktop', '/etc/gui')
     control.write_record('params', 'login', '/etc/gui')
 
@@ -471,13 +363,13 @@ if argv[0] == "gui-login":
 
 ## @core/gui-enter ##
 
-if argv[0] == "gui-enter":
-    if argv[1:] == [] or argv[1] == 'guest' or not files.isfile('/etc/users/' + argv[1]):
+if sys.argv[1:][0] == "gui-enter":
+    if sys.argv[1:][1:] == [] or sys.argv[1:][1] == 'guest' or not files.isfile('/etc/users/' + sys.argv[1:][1]):
         colors.show('gui-enter', 'fail-start', '')
         colors.show('kernel', 'stop', '')
         sys.exit(0)
 
-    if not hashlib.sha3_256(argv[1].encode()).hexdigest() == control.read_record('username', '/etc/users/' + argv[1]):
+    if not hashlib.sha3_256(sys.argv[1:][1].encode()).hexdigest() == control.read_record('username', '/etc/users/' + sys.argv[1:][1]):
         colors.show('gui-enter', 'fail-start', '')
         colors.show('kernel', 'stop', '')
         sys.exit(0)
@@ -499,7 +391,7 @@ if argv[0] == "gui-enter":
     files.write('/tmp/height', str(height))
 
     control.write_record('params', 'enter', '/etc/gui')
-    control.write_record('username', argv[1], '/etc/gui')
+    control.write_record('username', sys.argv[1:][1], '/etc/gui')
     if not desktop == None:
         w = importlib.import_module(desktop).Backend()
     else:
@@ -507,13 +399,13 @@ if argv[0] == "gui-enter":
         colors.show('kernel', 'stop', '')
     sys.exit(application.exec_())
 
-if argv[0] == "gui-unlock":
-    if argv[1:] == [] or argv[1] == 'guest' or not files.isfile('/etc/users/' + argv[1]):
+if sys.argv[1:][0] == "gui-unlock":
+    if sys.argv[1:][1:] == [] or sys.argv[1:][1] == 'guest' or not files.isfile('/etc/users/' + sys.argv[1:][1]):
         colors.show('gui-unlock', 'fail-start', '')
         colors.show('kernel', 'stop', '')
         sys.exit(0)
 
-    if not hashlib.sha3_256(argv[1].encode()).hexdigest() == control.read_record('username', '/etc/users/' + argv[1]):
+    if not hashlib.sha3_256(sys.argv[1:][1].encode()).hexdigest() == control.read_record('username', '/etc/users/' + sys.argv[1:][1]):
         colors.show('gui-unlock', 'fail-start', '')
         colors.show('kernel', 'stop', '')
         sys.exit(0)
@@ -527,7 +419,7 @@ if argv[0] == "gui-unlock":
     ## Main entry ##
     application = QApplication(sys.argv)
     app.start('desktop')
-    ## https://www.cdog.pythonlibrary.org/2015/08/18/getting-your-screen-resolution-with-python/ Get screen model ##
+    ## https://www.cdog.pythonlibrary.org/2015/08/18/getting-your-screen-resolution-with-,thon/ Get screen model ##
     screen_resolution = application.desktop().screenGeometry()
     width, height = screen_resolution.width(), screen_resolution.height()
 
@@ -535,7 +427,7 @@ if argv[0] == "gui-unlock":
     files.write('/tmp/height', str(height))
 
     control.write_record('params', 'unlock', '/etc/gui')
-    control.write_record('username', argv[1], '/etc/gui')
+    control.write_record('username', sys.argv[1:][1], '/etc/gui')
     if not desktop == None:
         w = importlib.import_module(desktop).Backend()
     else:
@@ -546,19 +438,19 @@ if argv[0] == "gui-unlock":
 
 ## @core/gui-desktop ##
 
-if argv[0] == "gui-desktop":
-    if argv[1:] == [] or argv[2:] == [] or argv[1] == 'guest' or not files.isfile('/etc/users/' + argv[1]):
+if sys.argv[1:][0] == "gui-desktop":
+    if sys.argv[1:][1:] == [] or sys.argv[1:][2:] == [] or sys.argv[1:][1] == 'guest' or not files.isfile('/etc/users/' + sys.argv[1:][1]):
         colors.show('gui-desktop', 'fail-start', '')
         colors.show('kernel', 'stop', '')
         sys.exit(0)
 
-    if not hashlib.sha3_256(argv[1].encode()).hexdigest() == control.read_record('username', '/etc/users/' + argv[1]):
+    if not hashlib.sha3_256(sys.argv[1:][1].encode()).hexdigest() == control.read_record('username', '/etc/users/' + sys.argv[1:][1]):
         colors.show('gui-desktop', 'fail-start', '')
         colors.show('kernel', 'stop', '')
         sys.exit(0)
 
-    hashcode = hashlib.sha3_512(argv[2].encode()).hexdigest()
-    password = control.read_record('code', '/etc/users/' + argv[1])
+    hashcode = hashlib.sha3_512(sys.argv[1:][2].encode()).hexdigest()
+    password = control.read_record('code', '/etc/users/' + sys.argv[1:][1])
 
     if not hashcode == password:
         colors.show('gui-desktop', 'fail-start', '')
@@ -583,8 +475,8 @@ if argv[0] == "gui-desktop":
     control.write_record('params',
                          'desktop',
                          '/etc/gui')
-    control.write_record('username', argv[1], '/etc/gui')
-    control.write_record('password', argv[2], '/etc/gui')
+    control.write_record('username', sys.argv[1:][1], '/etc/gui')
+    control.write_record('password', sys.argv[1:][2], '/etc/gui')
 
     if not desktop == None:
         w = importlib.import_module(desktop).Backend()
@@ -597,7 +489,6 @@ if argv[0] == "gui-desktop":
 ## @lib/shell ##
 
 def shell():
-    print()
 
     if files.isfile(f'/etc/profile.sa'):
         Script('/etc/profile')
@@ -614,7 +505,6 @@ def shell():
     if files.isfile(f'/tmp/exec.sa'):
         Script('/tmp/exec')
 
-    select = files.readall("/proc/info/sel")  # Change selected database
 
     while True:
         if not files.isfile("/proc/selected"):
@@ -639,46 +529,40 @@ def shell():
 
         ## Prompt data base ##
 
-        show_username = control.read_record("show_username", "/etc/prompt")
-        show_hostname = control.read_record("show_hostname", "/etc/prompt")
-        show_path = control.read_record("show_path", "/etc/prompt")
-        root_symbol = control.read_record("root", "/etc/prompt")
-        user_symbol = control.read_record("user", "/etc/prompt")
-
         ## Setting up prompt data base 2 ##
 
         if user == "root":
-            prompt_symbol = root_symbol
+            prompt_symbol = control.read_record("root", "/etc/prompt")
             color_uh = colors.get_colors()
             color_path = colors.get_colors()
         else:
-            prompt_symbol = user_symbol
+            prompt_symbol = control.read_record("user", "/etc/prompt")
             color_uh = colors.get_ok()
             color_path = colors.get_path()
 
         ## Setting up space of prompt ##
 
-        if show_username == "Yes":
+        if control.read_record("show_username", "/etc/prompt") == "Yes":
             space_username = user
         else:
             space_username = ""
 
-        if show_hostname == "Yes":
+        if control.read_record("show_hostname", "/etc/prompt") == "Yes":
             space_hostname = files.readall("/etc/hostname")
         else:
             space_hostname = ""
 
-        if show_path == "Yes":
+        if control.read_record("show_path", "/etc/prompt") == "Yes":
             space_path = files.readall("/proc/info/pwd")
         else:
             space_path = ""
 
-        if show_hostname == "Yes" and show_username == "Yes":
+        if control.read_record("show_hostname", "/etc/prompt") == "Yes" and control.read_record("show_username", "/etc/prompt") == "Yes":
             space1 = "@"
         else:
             space1 = ""
 
-        if (show_hostname == "Yes" or show_username == "Yes") and show_path == "Yes":
+        if (control.read_record("show_hostname", "/etc/prompt") == "Yes" or control.read_record("show_username", "/etc/prompt") == "Yes") and control.read_record("show_path", "/etc/prompt") == "Yes":
             space2 = ":"
         else:
             space2 = ""
@@ -694,8 +578,7 @@ def shell():
 
         for i in cmdln:
             if str(i).startswith("$"):
-                select = files.readall("/proc/info/sel")
-                var = control.read_record(str(i).replace("$", ""), select)
+                var = control.read_record(str(i).replace("$", ""), files.readall("/proc/info/sel"))
                 if var == None:
                     strcmdln = strcmdln + " " + i
                 else:
@@ -725,7 +608,7 @@ def shell():
         else:
             ## Prompt ##
             prompt = [
-                sys.executable, kernel_file,
+                sys.executable, 'vmabr.pyc',
                 'exec',
                 cmdln[0]
             ]
@@ -740,27 +623,27 @@ def shell():
 
 ## @core/user ##
 
-if argv[0] == "user":
-    if argv[1] == "guest":
+if sys.argv[1:][0] == "user":
+    if sys.argv[1:][1] == "guest":
         enable_cli = control.read_record("enable_cli", "/etc/guest")
         if enable_cli == "Yes":
             ## Set variables ##
             user = "guest"
             code = "*"
             ## Create info ##
-            files.write("/proc/info/su", argv[1])
+            files.write("/proc/info/su", sys.argv[1:][1])
             shell()
             sys.exit(0)
         else:
-            colors.show(argv[1], "fail", "user not found.")
+            colors.show(sys.argv[1:][1], "fail", "user not found.")
     else:
-        if files.isfile("/etc/users/" + argv[1]):
-            if  control.read_record("username", "/etc/users/" + argv[1]) == hashlib.sha3_256(str(argv[1]).encode()).hexdigest() and control.read_record("code", "/etc/users/" + argv[1]) == hashlib.sha3_512(str(argv[2]).encode()).hexdigest():
+        if files.isfile("/etc/users/" + sys.argv[1:][1]):
+            if  control.read_record("username", "/etc/users/" + sys.argv[1:][1]) == hashlib.sha3_256(str(sys.argv[1:][1]).encode()).hexdigest() and control.read_record("code", "/etc/users/" + sys.argv[1:][1]) == hashlib.sha3_512(str(sys.argv[1:][2]).encode()).hexdigest():
                 ## Set variables ##
-                user = argv[1]
-                code = argv[2]
+                user = sys.argv[1:][1]
+                code = sys.argv[1:][2]
                 ## Create info ##
-                files.write("/proc/info/su", argv[1])
+                files.write("/proc/info/su", sys.argv[1:][1])
                 permissions.user = user
                 permissions.code = code
                 shell()
@@ -776,7 +659,7 @@ if argv[0] == "user":
 
 ## @core/login ##
 
-if argv[0] == "kernel" or argv[0] == "login":
+if sys.argv[1:][0] == "kernel" or sys.argv[1:][0] == "login":
     while True:
         print()
 
