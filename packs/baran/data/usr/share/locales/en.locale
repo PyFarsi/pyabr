@@ -405,7 +405,7 @@ browser.pc: Go to Pyabr channel
 browser.pg: Pyabr Support
 browser.owp: Open a web page
 browser.close: Close
-wapp.app_name: Web Protocol
+wapp.app_name: Web Page
 barge.code: Code
 barge.run: Run
 barge.icode: Insert Code

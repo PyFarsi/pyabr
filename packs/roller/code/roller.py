@@ -86,22 +86,6 @@ class FileListView (QtWidgets.QListView):
 
             it.setFont(self.Env.font())
 
-    def mkc (self,filename):
-        if files.isdir(filename +".c"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                                                         res.get('@string/isdir_msg').replace("{0}",filename+".c")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".c")
-
-            files.write(self.dir + "/" + filename+'.c',files.readall(res.get('@temp/untitled.c')))
-
-            try:
-                commands.up([str(self.dir + "/" + filename+".c").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
-            except:
-                pass
-
     def mkcode (self,filename):
         self.code = files.readall('/tmp/code.tmp')
         self.ext = control.read_record('ext',res.get(self.code))
@@ -117,171 +101,6 @@ class FileListView (QtWidgets.QListView):
 
             try:
                 commands.up([str(self.dir + "/" + filename+f".{self.ext}").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
-            except:
-                pass
-
-    def mkcpp (self,filename):
-        if files.isdir(filename+".cpp"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".cpp")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".cpp")
-            files.write(self.dir + "/" + filename+'.cpp',files.readall(res.get('@temp/untitled.cpp')))
-
-            try:
-                commands.up([str(self.dir + "/" + filename+".cpp").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
-            except:
-                pass
-
-    def mkjava (self,filename):
-        if files.isdir(filename+".java"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".java")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".java")
-            files.write(self.dir + "/" + filename+'.java',files.readall(res.get('@temp/untitled.java')).replace("MainApp",filename))
-
-            try:
-                commands.up([str(self.dir + "/" + filename+".java").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
-            except:
-                pass
-
-    def mkjs (self,filename):
-        if files.isdir(filename+".js"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".js")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".js")
-            files.write(self.dir + "/" + filename+'.js',files.readall(res.get('@temp/untitled.js')))
-
-            try:
-                commands.up([str(self.dir + "/" + filename+".js").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
-            except:
-                pass
-
-    def mkui (self,filename):
-        if files.isdir(filename+".ui"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".ui")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".ui")
-            files.write(self.dir + "/" + filename+'.ui',files.readall(res.get('@temp/untitled.ui')))
-
-            try:
-                commands.up([str(self.dir + "/" + filename+".ui").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
-            except:
-                pass
-
-    def mkphp (self,filename):
-        if files.isdir(filename+".php"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".php")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".php")
-            files.write(self.dir + "/" + filename+".php",files.readall(res.get('@temp/untitled.php')))
-
-            try:
-                commands.up([str(self.dir + "/" + filename+".php").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
-            except:
-                pass
-
-    def mkhtml (self,filename):
-        if files.isdir(filename+".html"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".html")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".html")
-            files.write(self.dir + "/" + filename+".html",files.readall(res.get('@temp/untitled.html')))
-
-            try:
-                commands.up([str(self.dir + "/" + filename+".html").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
-            except:
-                pass
-
-    def mkcs (self,filename):
-        if files.isdir(filename+".cs"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".cs")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".cs")
-            files.write(self.dir + "/" + filename+".cs",files.readall(res.get('@temp/untitled.cs')))
-
-            try:
-                commands.up([str(self.dir + "/" + filename+".cs").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
-            except:
-                pass
-
-    def mksa (self,filename):
-        if files.isdir(filename+".sa"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".sa")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".sa")
-            files.write(self.dir + "/" + filename+".sa",files.readall(res.get('@temp/untitled.sa')))
-
-            try:
-                commands.up([str(self.dir + "/" + filename+".sa").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
-            except:
-                pass
-
-    def mkpy (self,filename):
-        if files.isdir(filename+".py"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".py")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".py")
-            files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled.py')))
-
-            try:
-                commands.up([str(self.dir + "/" + filename+".py").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
-            except:
-                pass
-
-    def mkpygui (self,filename):
-        if files.isdir(filename+".py"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".py")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".py")
-            files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled-gui.py')))
-
-            try:
-                commands.up([str(self.dir + "/" + filename+".py").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
-            except:
-                pass
-
-    def mkpyweb (self,filename):
-        if files.isdir(filename+".py"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".py")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".py")
-            files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled-web.py')))
-
-            try:
-                commands.up([str(self.dir + "/" + filename+".py").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
             except:
                 pass
 
@@ -365,7 +184,6 @@ class FileListView (QtWidgets.QListView):
         x = hasattr(self.item, 'whatsThis')  # W3CSHCOOL.COM LEARN IT
 
         if x == True:
-
             if files.isdir(self.item.whatsThis()):
                 files.write('/proc/info/wsel', self.item.whatsThis())  # Send Directory selected
             elif files.isfile(self.item.whatsThis()):
@@ -506,35 +324,42 @@ class MainApp (QtWidgets.QMainWindow):
         self.setCentralWidget(self.x)
 
     def delete_act (self):
-        self.wsel = files.readall('/proc/info/wsel')
-        if files.isdir(self.wsel):
-            app.switch('roller')
-            self.Env.RunApp('bool',[res.get('@string/delete'),res.get('@string/deletem'),self.delete_act_])
-            app.switch('roller')
-        else:
-            app.switch('roller')
-            self.Env.RunApp('bool', [res.get('@string/delete'), res.get('@string/deletemf'), self.delete_act_])
-            app.switch('roller')
+        try:
+            self.wsel = files.readall('/proc/info/wsel')
+            if files.isdir(self.wsel):
+                app.switch('roller')
+                self.Env.RunApp('bool',[res.get('@string/delete'),res.get('@string/deletem'),self.delete_act_])
+                app.switch('roller')
+            else:
+                app.switch('roller')
+                self.Env.RunApp('bool', [res.get('@string/delete'), res.get('@string/deletemf'), self.delete_act_])
+                app.switch('roller')
+        except:
+            pass
 
     def delete_act_ (self,yes):
         if yes:
-            if files.isdir(self.wsel) or files.isfile(self.wsel):
-                if files.isfile(self.wsel):
-                    try:
-                        commands.rem([str(self.wsel).replace(
-                            f'/stor/{files.readall("/proc/info/mnt")}/', '')])
-                    except:
+            try:
+                if files.isdir(self.wsel) or files.isfile(self.wsel):
+                    if files.isfile(self.wsel):
+                        try:
+                            commands.rem([str(self.wsel).replace(
+                                f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                        except:
+                            commands.rm([self.wsel])
+                    else:
                         commands.rm([self.wsel])
-                else:
-                    commands.rm([self.wsel])
 
-            self.refresh()
+                self.refresh()
+            except: pass
 
     def rename_act (self):
-        self.wsel = files.readall('/proc/info/wsel')
-        app.switch('roller')
-        self.Env.RunApp('input',[res.get('@string/rename'),self.rename_act_])
-        app.switch('roller')
+        try:
+            self.wsel = files.readall('/proc/info/wsel')
+            app.switch('roller')
+            self.Env.RunApp('input',[res.get('@string/rename'),self.rename_act_])
+            app.switch('roller')
+        except: pass
 
     def rename_act_(self,text):
         if files.isdir(self.wsel) or files.isfile(self.wsel):
@@ -553,15 +378,18 @@ class MainApp (QtWidgets.QMainWindow):
         self.refresh()
 
     def copy_act (self):
-        self.wsel = files.readall('/proc/info/wsel')
+        try:
+            self.wsel = files.readall('/proc/info/wsel')
 
-        if files.isdir('/tmp/roller-copy'): files.removedirs('/tmp/roller-copy')
-        elif files.isfile('/tmp/roller-copy'): files.remove('/tmp/roller-copy')
+            if files.isdir('/tmp/roller-copy'): files.removedirs('/tmp/roller-copy')
+            elif files.isfile('/tmp/roller-copy'): files.remove('/tmp/roller-copy')
 
-        files.write('/tmp/roller-src.tmp',self.wsel)
+            files.write('/tmp/roller-src.tmp',self.wsel)
 
-        if files.isdir(self.wsel) or files.isfile(self.wsel):
-            commands.cp([self.wsel,'/tmp/roller-copy'])
+            if files.isdir(self.wsel) or files.isfile(self.wsel):
+                commands.cp([self.wsel,'/tmp/roller-copy'])
+        except:
+            pass
 
     def open_act (self):
         try:
@@ -590,29 +418,31 @@ class MainApp (QtWidgets.QMainWindow):
         self.Env.RunApp('open',[files.readall('/proc/info/wsel')])
 
     def cut_act(self):
-        self.wsel = files.readall('/proc/info/wsel')
+        try:
+            self.wsel = files.readall('/proc/info/wsel')
 
-        if files.isdir('/tmp/roller-copy'):
-            files.removedirs('/tmp/roller-copy')
+            if files.isdir('/tmp/roller-copy'):
+                files.removedirs('/tmp/roller-copy')
 
-        elif files.isfile('/tmp/roller-copy'):
-            files.remove('/tmp/roller-copy')
+            elif files.isfile('/tmp/roller-copy'):
+                files.remove('/tmp/roller-copy')
 
-        files.write('/tmp/roller-src.tmp', self.wsel)
+            files.write('/tmp/roller-src.tmp', self.wsel)
 
-        if files.isdir(self.wsel) or files.isfile(self.wsel):
+            if files.isdir(self.wsel) or files.isfile(self.wsel):
 
-            if files.isfile(self.wsel):
-                try:
-                    commands.cp([self.wsel, '/tmp/roller-copy'])
-                    commands.rem([str(self.wsel).replace(
-                        f'/stor/{files.readall("/proc/info/mnt")}/', '')])
-                except:
-                    commands.mv([self.wsel, '/tmp/roller-copy'])
-            else:
-                commands.mv ([self.wsel,'/tmp/roller-copy'])
+                if files.isfile(self.wsel):
+                    try:
+                        commands.cp([self.wsel, '/tmp/roller-copy'])
+                        commands.rem([str(self.wsel).replace(
+                            f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                    except:
+                        commands.mv([self.wsel, '/tmp/roller-copy'])
+                else:
+                    commands.mv ([self.wsel,'/tmp/roller-copy'])
 
-        self.refresh()
+            self.refresh()
+        except: pass
 
     def execute_act (self):
         if permissions.check(files.readall('/proc/info/wsel'),'x',self.Env.username):

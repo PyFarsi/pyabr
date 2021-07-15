@@ -10,6 +10,7 @@
 #  Git source:              github.com/PyFarsi/pyabr
 #
 #######################################################################################
+import subprocess
 
 from buildlibs import pack_archives as pack
 from buildlibs import control
@@ -18,6 +19,12 @@ import shutil, os, sys, hashlib,getpass
 os.chdir('/')
 
 if os.path.isfile('/stor/vmabr.pyc'):
+
+	if os.path.isdir('/stor/pyabr-master'):
+		shutil.rmtree('/stor/pyabr-master')
+
+	if os.path.isfile ('/stor/master.zip'):
+		os.remove('/stor/master.zip')
 
 	if os.path.isfile('/stor/proc/0'):  os.remove('/stor/proc/0')
 	if os.path.isfile('/stor/proc/id/desktop'): os.remove('/stor/proc/id/desktop')
@@ -81,7 +88,18 @@ else:
 	control.write_record('width',str(width),'/stor/etc/gui')
 	control.write_record('height', str(height), '/stor/etc/gui')
 
-	os.system(f'"cd /stor && {sys.executable}" vmabr.pyc gui-desktop root toor')
+	try:
+		subprocess.call('rm -rf /etc/localtime',shell=True)
+		subprocess.call('ln -s /usr/share/zoneinfo/Asia/Tehran /etc/localtime',shell=True)
+		f = open ('/etc/sysconfig/clock','w')
+		f.write('''ZONE="Asia/Tehran"
+	UTC=false
+	ARC=false''')
+		f.close()
+		subprocess.call('hwclock --systohc --localtime',shell=True)
+	except: pass
+
+	os.system(f'cd /stor && "{sys.executable}" vmabr.pyc gui-desktop root toor')
 
 if not os.path.isfile('/stor/testing'):
 	os.system('poweroff')

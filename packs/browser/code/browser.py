@@ -225,8 +225,6 @@ class MainWindow(QMainWindow):
             else:
                 self.tabs.currentWidget().setUrl(q)
         else:
-            if getdata('layout.keyless') == 'Yes':
-                self.urlbar.setText(res.key(self.urlbar.text()))
             splitor = self.urlbar.text().split(',')
             strv = ''
             for i in splitor:

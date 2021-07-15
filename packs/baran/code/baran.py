@@ -1540,19 +1540,7 @@ class BLineEdit (QLineEdit):
             self.Env.keyboardWidget.activateWindow()
             self.Env.keyboardWidget.raise_()
 
-        if getdata('layout.keyless') == 'Yes':
-            self.setText(res.key(self.text()))
-
         super(BLineEdit, self).focusInEvent(e)
-
-    def mousePressEvent(self, e):
-        # print(e)
-        # self.setFocusPolicy(Qt.ClickFocus)
-
-        super(BLineEdit, self).mousePressEvent(e)
-
-        if getdata('layout.keyless') == 'Yes':
-            self.setText(res.key(self.text()))
 
 class BTextEdit (QTextEdit):
 
@@ -1577,15 +1565,6 @@ class BTextEdit (QTextEdit):
 
         # self.setStyleSheet("border: 1px solid red;")
         super(BTextEdit, self).focusInEvent(e)
-
-    def mousePressEvent(self, e):
-        # print(e)
-        # self.setFocusPolicy(Qt.ClickFocus)
-
-        super(BTextEdit, self).mousePressEvent(e)
-
-        if getdata('layout.keyless') == 'Yes':
-            self.setPlainText(res.key(self.toPlainText()))
 
 class BCodeEdit (QsciScintilla):
     def __init__(self):
