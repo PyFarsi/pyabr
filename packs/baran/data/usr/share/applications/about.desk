@@ -1,9 +1,0 @@
-name[en]: About System
-name[fa]: درباره فضای ابری
-name[ar]: حول النظام
-logo: @icon/breeze-info
-exec: page_about
-application: Yes
-category: system
-pin: Yes
-setting: Yes

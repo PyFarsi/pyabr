@@ -1,7 +1,0 @@
-name[en]: Download
-name[fa]: دانلود
-logo: @icon/breeze-dmgr
-exec: dmgr
-application: Yes
-hidden: No
-category: tools

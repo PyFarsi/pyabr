@@ -1,5 +1,0 @@
-backend.py:usr/app/pyqterm/backend.pyc
-frontend.py:usr/app/pyqterm/frontend.pyc
-procinfo.py:usr/app/pyqterm/procinfo.pyc
-terminal.py:usr/app/terminal.pyc
-pyqterm.py:usr/app/pyqterm/__init__.pyc

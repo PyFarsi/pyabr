@@ -1,8 +1,0 @@
-name[en]: MPV Video Player
-name[fa]: پخش کنند ویدئو
-exec: mpv
-hidden: Yes
-logo: @icon/breeze-mpv
-application: Yes
-category: multimedia
-external: Yes

@@ -1,4 +1,0 @@
-
-kill [id] ...
-
-Job: Kill id process

@@ -1,8 +1,0 @@
-name[en]: Display
-name[fa]: تنظیمات رزولوشن
-logo: @icon/breeze-display
-exec: screen
-application: No
-hidden: Yes
-category: tools
-setting: Yes
