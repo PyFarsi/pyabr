@@ -1,7 +1,0 @@
-PyQt5
-requests
-pyqtconsole
-pygame
-kivy
-QScintilla
-wget
