@@ -1,0 +1,6 @@
+PyQt5
+requests
+pyqtconsole
+pygame
+QScintilla
+wget
