@@ -1,0 +1,7 @@
+name[en]: Lightword
+name[fa]: ورد سبک
+logo: @icon/breeze-lightword
+exec: lightword
+application: Yes
+category: tools
+external: Yes

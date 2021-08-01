@@ -1,0 +1,10 @@
+name: latest
+name[fa]: جدیدترین بسته ها
+name[en]: Latest Package
+copyright: (c) 2021 Mani Jamali
+license: MIT
+unpack: /
+version: 2.0.0
+description: The latest version of Paye package manager dynamic mirror
+compile: No
+build: 1400-05-06

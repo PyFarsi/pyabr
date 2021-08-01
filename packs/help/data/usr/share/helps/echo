@@ -1,0 +1,3 @@
+echo [text] ...
+
+Job: Print a text in line

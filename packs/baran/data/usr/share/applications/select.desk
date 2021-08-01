@@ -1,0 +1,6 @@
+name[en]: Select Box
+exec: selectbox
+hidden: Yes
+logo: @icon/breeze-app
+application: No
+category: system

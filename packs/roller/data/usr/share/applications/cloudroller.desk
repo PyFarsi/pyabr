@@ -1,0 +1,9 @@
+name[en]: Drives
+name[fa]: درایوها
+logo: @icon/breeze-disk
+exec: cloudroller
+shortcut: Ctrl+D
+application: Yes
+category: tools
+pin: No
+sudoprocess: Yes

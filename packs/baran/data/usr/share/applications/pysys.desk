@@ -1,0 +1,22 @@
+name[en]: Power Options
+name[fa]: تنظیمات خاموش/روشن
+name[ar]: خيارات الطاقة
+logo: @icon/breeze-pysys
+exec: pysys
+shortcut: Esc
+bgcolor: white
+width: 800
+height: 400
+btncolor: white
+btnhovercolor: #ABCDEF
+btnround: 64
+btnsize: 128
+escape-icon: @icon/breeze-shutdown
+lock-icon: @icon/breeze-lock
+logout-icon: @icon/breeze-logout
+restart-icon: @icon/breeze-reboot
+suspend-icon: @icon/breeze-suspend
+switchuser-icon: @icon/breeze-switchuser
+application: Yes
+category: system
+pin: Yes

@@ -1,0 +1,656 @@
+name: English
+keyless: setxkbmap us
+keyless.shortcut: Shift+Alt+E
+keyless.enable: Yes
+logo: @icon/breeze-lang
+logo-selected: @icon/breeze-lang
+font: Comic Sans MS
+submenu-direction: ltr
+enter: Enter
+done: Done
+shift: Next
+back: Back
+tab: Tab
+0: 0
+1: 1
+2: 2
+3: 3
+4: 4
+5: 5
+6: 6
+7: 7
+8: 8
+9: 9
+A: A
+B: B
+C: C
+D: D
+E: E
+F: F
+G: G
+H: H
+I: I
+J: J
+K: K
+L: L
+M: M
+N: N
+O: O
+P: P
+Q: Q
+R: R
+S: S
+T: T
+U: U
+V: V
+W: W
+X: X
+Y: Y
+Z: Z
+a: a
+b: b
+c: c
+d: d
+e: e
+f: f
+g: g
+h: h
+i: i
+j: j
+k: k
+l: l
+m: m
+n: n
+o: o
+p: p
+q: q
+r: r
+s: s
+t: t
+u: u
+v: v
+w: w
+x: x
+y: y
+z: z
+`: `
+~: ~
+!: !
+@: @
+#: #
+$: $
+%: %
+^: ^
+&: &
+*: *
+(: (
+): )
+-: -
+_: _
+=: =
++: +
+{: {
+[: [
+}: }
+]: ]
+\: \
+|: |
+<: <
+>: >
+,: ,
+.: .
+/: /
+": "
+?: ?
+': '
+;: ;
+Sat: Saturday
+Sun: Sunday
+Mon: Monday
+Tue: Tuesday
+Wed: Wednesday
+Thu: Thursday
+Fri: Friday
+January: January
+February: February
+March: March
+April: April
+May: May
+June: June
+July: July
+August: August
+September: September
+October: October
+November: November
+December: December
+desktop.username_placeholder: Enter an username
+desktop.password_placeholder: Enter your password
+desktop.user_not_found: This user not exists
+desktop.wrong_password: Password is not correct. Try again
+desktop.next_text: Next
+desktop.enter_text: Login
+desktop.unlock_text: Unlock
+desktop.appmenu: Applications
+desktop.etcmenu: Etcetra
+desktop.guest: Guest Account
+desktop.powermenu: Power Options
+desktop.accountsettings: Account Settings
+desktop.signout: Sign out
+desktop.switchuser: Switch user
+desktop.lock: Lock
+desktop.escape: Escape
+desktop.restart: Restart
+desktop.unlock_hint: Enter your password
+desktop.sleep: Sleep
+pyshell.app_name: PyShell
+calendar.app_name: Calendar
+calculator.app_name: Calculator
+runapp.app_name: App Runner
+runapp.app_not_found: Application not found
+pysys.signout: Sign out
+pysys.switchuser: Switch user
+pysys.lock: Lock
+pysys.escape: Escape
+pysys.restart: Restart
+pysys.sleep: Sleep
+pysys.app_name: Power Options
+commento.app_name: Terminal
+roller.app_name: Files
+input.title: Enter a value
+input.cancel: Cancel
+input.ok: OK
+code.title: Enter the password
+code.cancel: Cancel
+code.ok: OK
+bool.title: Are you sure?
+bool.cancel: No
+bool.ok: Yes
+bool.text: Do you want to do this action?
+select.dir: Choose a directory
+select.file: Choose a file
+select.choose: Choose
+select.cancel: Cancel
+select.open: Open
+select.save: Save
+select.save-as: Save As
+barge.app_name: Barge Text Editor
+barge.file: File
+barge.open: Open
+barge.new: New
+barge.new_page: New Page
+barge.save: Save
+barge.save_as: Save As
+barge.exit: Exit
+barge.untitled: Untitled - Barge
+barge.saveafile: Save a file
+barge.chooseafile: Choose a file
+barge.saveasfile: Save as file
+calculator.backspace: Backscape
+calculator.clear: Clear
+calculator.clearall: Clear All
+roller.file: File
+roller.newfile: New File
+roller.newfolder: New Folder
+persia.newfile: New File
+persia.newfolder: New Folder
+roller.exit: Exit
+roller.foldername: Enter your folder name
+roller.filename: Enter your file name
+paint.app_name: Paint
+about.app_name: About System
+mines.app_name: Mines
+barge.c: C
+barge.c++: C++
+barge.python: Python
+perisa.foldername: Enter your folder name
+persia.filename: Enter your file name
+barge.pythongui: Python GUI
+barge.saye: Saye
+barge.java: Java
+barge.html: HTML
+barge.css: CSS
+barge.javascript: Java Script
+barge.csharp: C#
+barge.php: PHP
+roller.newcode: New Code
+roller.c: New C file
+roller.c++: New C++ file
+roller.python: New Python script
+roller.pythongui: New Python GUI script
+roller.saye: New Saye script
+roller.java: New Java file
+roller.html: New HTML document
+roller.css: New CSS file
+roller.javascript: New Java Script file
+roller.csharp: New C# file
+roller.php: New PHP file
+persia.c: C
+persia.c++: C++
+persia.python: Python
+persia.pythongui: Python GUI
+persia.saye: Saye
+persia.java: Java
+persia.html: HTML
+persia.css: CSS
+persia.javascript: Java Script
+persia.csharp: C#
+persia.php: PHP
+persia.app_name: PyPersia IDE
+persia.file: File
+persia.open: Open
+persia.new: New File
+persia.new_page: New Project
+persia.empty: New Empty Project
+persia.gui: New GUI Project
+persia.web: New Web Project
+persia.save: Save
+persia.save_as: Save As
+persia.exit: Exit
+persia.untitled: Untitled - PyPersia
+persia.saveafile: Save a file
+persia.chooseafile: Choose a file
+persia.saveasfile: Save as file
+text.title: Text box
+text.text: This is a simple text box
+text.ok: OK
+runapp.not_found: Application not found
+runapp.not_found_msg: Application not found.
+roller.isfile: Is a file
+roller.isdir: Is a directory
+roller.isfile_msg: Cannot create directory; because it is a file.
+roller.isdir_msg: Cannot create file; because it is a directory.
+roller.newpyweb: New Python Web Application file
+persia.isfile: Is a file
+persia.isfile_msg: Cannot create directory; because it is a file.
+persia.isdir: Is a directory
+persia.isdir_msg: Cannot create file; because it is a directory.
+persia.nwebp: New Web Application Project
+persia.code: Code
+persia.run: Run
+persia.runp: Run Project
+persia.build: Build
+persia.pack: Pack Source code
+persia.pa: Generate .PA Package
+persia.buildi: Build and Install Project
+persia.publish: Publish Project
+persia.insert: Insert Code
+persia.ce: Compile error
+persia.cem: There is some problem with C/C++ Compiler.
+persia.pycon: PyPersia Console
+persia.spc: Cannot Support
+persia.spcm: PyPersia cannot support this language or syntax.
+persia.pythonwebi: Python Web Application
+paye.name: Package Name
+paye.version: Package Version
+paye.date: Release date
+paye.copy: Copyright
+paye.license: License
+paye.unpack: Installed in
+paye.app_name: Package Manager
+paye.rm: Uninstall
+paye.rmm: Do you want to uninstall this package?
+paye.inmx: Do you want to install this package?
+paye.up: Update
+paye.upm: Do you want to update this package?
+paye.rmx: Successfully Uninstalled
+paye.rmxm: This package successfully uninstalled.
+paye.upx: Successfully Updated
+paye.upxm: This package successfully updated.
+paye.mirror: Mirror
+paye.package: Package
+paye.add: Add
+paye.remove: Remove
+paye.store: Store
+paye.myapps: Installed
+paye.install: Install
+paye.installing: Installing
+paye.uninstall: Uninstall
+paye.download: Dowload
+paye.mname: Enter your mirror name
+paye.mex: Mirror exists
+paye.mexm: Your entered mirror has already exists.
+paye.ml: Enter your mirror link
+paye.ndl: Not a download link
+paye.ndlm: Your entered link is not a download link.
+paye.mdf: Mirror not found
+paye.mdfm: Your entered mirror cannot be found.
+paye.pname: Enter a package name
+paye.mdfmx: Cannot install package with this name; because mirror of this package not found.
+paye.si: Successfully installed
+paye.sim: This package successfully installed.
+paye.ci: Cannot install
+paye.cim: Cannot install package with this name; there are some errors in connection or etc.
+paye.pwi: Package was not installed
+paye.pwim: Cannot remove this package; because this package was not installed.
+paye.dname: Enter a package name for downloading
+paye.dd: Successfully downloaded
+paye.ddm: This package successfully downloaded in current path.
+paye.cdx: Cannot download
+paye.cdxm: Cannot download package with this name; there are some errors in connection or etc.
+paint.of: Open File
+paint.sf: Save File
+paint.file: File
+paint.edit: Edit
+paint.image: Image
+paint.help: Help
+paint.toolbar: toolBar
+paint.copy: Copy
+paint.ci: Clear Image
+paint.oi: Open Image...
+paint.sia: Save Image As...
+paint.ivc: Invert Colors
+paint.fh: Flip Horizontal
+paint.fv: Flip Vertical
+paint.nim: New Image
+paint.bl: Bold
+paint.il: Italic
+paint.ul: Underline
+paint.fs: Fill Shapes?
+lightword.untitled: Untitled - Lightword
+lightword.file: File
+lightword.of: Open File...
+lightword.sv: Save
+lightword.sa: Save As...
+lightword.ed: Edit
+lightword.un: Undo
+lightword.rd: Redo
+lightword.ct: Cut
+lightword.cp: Copy
+lightword.pa: Paste
+lightword.sll: Select All
+lightword.wtw: Wrap text to window
+lightword.ttw: Toggle wrap text to window
+lightword.fm: Format
+lightword.bl: Bold
+lightword.it: Italtic
+lightword.un: Underline
+lightword.al: Align Left
+lightword.ac: Align Center
+lightword.ar: Align Right
+lightword.jf: Justify
+lightword.od: Open Document
+lightword.sd: Save Document
+lightword.sad: Save Document As
+gap.app_name: Gap Massenger
+commento.uname: Pick a username
+commento.ename: Enter an username
+commento.vname: Enter a variable name
+commento.ue: User exists
+commento.uem: Cannot create user account; because this user has already exists.
+commento.ga: Guest Account
+commento.sa: Super Account
+commento.gam: Cannot remove Guest account at all; because it is a permanetly user.
+commento.sam: Cannot remove Super account at all; because it is a permanetly user.
+commento.passx: Choose your password
+commento.confx: Confirm your password
+commento.nmat: Not match
+commento.nmatm: Your new password and your confirm password are not match.
+commento.sc: Successfully created
+commento.scm: Your new user successfully created.
+commento.unf: User not found
+commento.epass: Enter a password
+commento.sr: Successfully removed
+commento.srm: This user account successfully removed.
+commento.vl: Enter a value
+browser.app_name: Browser
+browser.nav: Navigation
+browser.ba: Back
+browser.fw: Forward
+browser.rl: Rload
+browser.hm: Home
+browser.st: Stop
+browser.file: File
+browser.ntab: New Tab
+browser.of: Open file...
+browser.hl: Help
+browser.ab: About Browser
+browser.pc: Go to Pyabr channel
+browser.pg: Pyabr Support
+browser.owp: Open a web page
+browser.close: Close
+wapp.app_name: Web Page
+barge.code: Code
+barge.run: Run
+barge.icode: Insert Code
+barge.pyweb: Python Web Application
+barge.ce: Compile error
+barge.cem: There is some problem with C/++ Compiler.
+barge.con: Barge Console
+barge.cs: Cannot support
+barge.csm: Barge cannot support this syntax or language.
+desktop.esc: Escape
+desktop.rb: Restart
+desktop.escm: Do you want to escape from Pyabr?
+desktop.rbm: Do you want to restart the Pyabr?
+desktop.sg: Sign Out
+desktop.sgm: Do you want to sign out from this session?
+desktop.sau: Switch another user
+desktop.saum: Do you want to switch another user?
+desktop.notf: Application not found
+desktop.notfm: Cannot run this application; because it was not found.
+about.st: Static hostname
+about.cs: Cloud software
+about.de: Desktop Enviroment
+about.krnl: Kernel
+about.bd: Build date
+about.os: Operating System
+about.su: Switched user
+about.intr: Interface
+edituser.savec: Save changes
+edituser.savecm: Do you want to save changes?
+edituser.firstname: First name
+edituser.lastname: Last name
+edituser.phone: Phone number
+edituser.email: Email address
+edituser.company: Company name
+edituser.bloodtype: Blood type
+edituser.app_name: Edit Account
+select.fn: Enter a filename
+usermanager.fullname: Full name
+usermanager.phone: Phone number
+usermanager.email: Email address
+usermanager.company: Company name
+usermanager.bloodtype: Blood type
+usermanager.gender: Gender
+usermanager.birthday: Birthday
+usermanager.username: Username
+usermanager.nots: Not set
+usermanager.app_name: Accout Manager
+usermanager.rm: Remove Account
+usermanager.rmm: Do you want to remove this account?
+usermanager.ed: Edit
+usermanager._rm: Remove
+persia.proname: Enter your project name
+browser.search: Search with Google or enter address
+browser.go: Go
+browser.addb: Add bookmark
+browser.hist: History
+browser.bookm: Bookmarks
+browser.delh: Delete Histroy
+browser.delb: Delete bookmark
+browser.open: Open
+browser.openn: Open in a new tab
+browser.bookp: Bookmark page
+browser.dn: Done
+browser.name: Name
+browser.folder: Folder
+browser.booked: Page bookmarked
+paye.open: Open
+paye.update: Update
+paye.unxp: Uninstall
+paye.back: Back
+desktop.apps: Applications
+desktop.games: Games
+desktop.themes: Themes
+desktop.sessions: Sessions
+desktop.perm: Permission denied
+desktop.guestperm: Permission denied with guest account
+desktop.selectedon: This theme has already set it
+desktop.reboott: For setting this theme you should reboot
+screen.app_name: Screen Resolution
+screen.savec: Save changes
+screen.reboot: For saving changes you should reboot
+squares.app_name: Squares
+desktop.audios: Audios
+desktop.desktop: Desktop
+desktop.downloads: Downloads
+desktop.documents: Documents
+desktop.templates: Templates
+desktop.pictures: Pictures
+desktop.projects: Projects
+desktop.public: Public
+desktop.videos: Videos
+process.app_name: Process Manager
+process.refresh: Refresh
+process.tasks: Tasks
+process.end: End
+process.kill: Kill
+process.restart: Restart
+roller.cut: Cut
+roller.copy: Copy
+roller.paste: Paste
+roller.rename: Rename
+roller.execute: Execute
+roller.open: Open
+roller.openwith: Open With
+roller.delete: Delete
+roller.deletem: Do you want to delete this directory?
+roller.deletemf: Do you want to delete this file?
+roller.perm: Permission denied
+roller.permm: Cannot execute this file; Permission denied
+open.always: Always
+open.atonce: At once
+open.choose: Choose an application
+dmgr.app_name: Download Manager
+dmgr.download: Dowload
+dmgr.link: Paste your link here
+dmgr.saveafile: Save a file
+paye.isnotapp: Is not application
+paye.isnotappm: This package is not an application
+persia.uix: UI
+open.isexe: Executable file
+open.isexem: Do you want to execute this file?
+open.unk: Unknown file
+open.unkm: Cannot open this file, because it's an unknown file.
+barge.uix: UI
+roller.uix: New UI file
+key.select: Select
+key.cancel: Cancel
+key.choose: Choose a language
+lang.select: Select
+lang.cancel: Cancel
+lang.choose: Choose a language
+setup.app_name: Pyabr installer
+setup.hostname: Enter a hostname for your computer
+setup.rootcode: Choose a strong password for root user
+setup.username: Pick a username
+setup.password: Choose a password for your user
+setup.lang: Select your current language
+setup.guest: Enable Guest user
+setup.fullname: Full name
+setup.email: Email address
+setup.phone: Phone number
+setup.next: Next
+setup.install: Install
+setup.cancel: Cancel
+setup.back: Back
+setting.app_name: Settings
+wallpaper.app_name: Wallpapers
+wallpaper.desktop: Desktop
+wallpaper.enter: Enter
+wallpaper.login: Login
+wallpaper.unlock: Unlock
+wallpaper.lock: Lock
+theme.app_name: Themes & Style
+users.app_name: Users
+users.back: Back
+users.remove: Remove
+users.edit: Edit
+users.remove_user: Remove user
+users.removem: Do you want to remove this user?
+users.removed: Successfully removed
+users.removedm: This user successfully removed
+users.root: Super user
+users.rootm: Cannot remove super user account at all
+uedit.app_name: User editor
+uedit.fullname: Full name
+uedit.company: Company
+uedit.email: Email
+uedit.phone: Phone
+uedit.male: Male
+uedit.female: Female
+uedit.save: Save changes
+desktop.vkey: Virtual Keyboard
+users.add: Add user
+uedit.username: Username
+uedit.password: Password
+uedit.confirm: Confirm
+uedit.add: Add account
+uedit.admin: Administrator Account
+uedit.low: Standard Account
+uedit.cprofile: Change profile image
+nama.app_name: Image Viewer
+nama.open: Open Image
+desktop.app_name: Sudo Process
+desktop.pnot: Permission denied
+desktop.pnotm: Cannot open this process, Permission denied
+desktop.pass: Enter password
+desktop.wrongp: Cannot open this process, Wrong password
+uiv.pnot: Page not found
+uiv.pnotm: Cannot find this page; page not found
+uiv.dnot: Domain not exists
+uiv.dnotm: Cannot find this domain; domain not exists
+uiv.enet: Connection failed
+uiv.enetm: Cannot load this page; connection failed
+desktop.screenshot: Screenshot
+wifi.app_name: WiFi Manager
+wifi.scan: Scan
+wifi.connect: Connect
+wifi.forget: Forget
+wifi.on: on
+wifi.off: off
+wifi.password: Enter wifi password
+wifi.ssid: Enter SSID name
+wifi.wrongp: Wrong password
+assistant.app_name: Ava Assistant
+sms.enter: Enter your message
+cloudroller.app_name: Drives
+cloudroller.add: Add Drives
+cloudroller.e: Connection error
+cloudroller.em: Cannot connect to this cloud drive; connection failed
+connectcloud.app_name: Add drive
+connectcloud.host: Hostname URL
+connectcloud.check: Check backend
+connectcloud.list: List backend
+connectcloud.dir: Directory backend
+connectcloud.remove: Remove backend
+connectcloud.upload: Upload backend
+connectcloud.download: Download backend
+connectcloud.password: Password
+connectcloud.value: Value name
+connectcloud.add: Add && Connect
+connectcloud.cm: Cannot add drive; there is some problems in fields or connection
+connectcloud.c: Problem adding
+html.app_name: HTML Viewer
+clock.stopwatch: Stopwatch
+clock.app_name: Clock
+clock.stop: Stop
+clock.resume: Resume
+clock.reset: Reset
+clock.start: Start
+wifi.cm: Do you want to connect to this network?
+wifi.c: Connect to
+wifi.s: Successfully connected
+wifi.sm: Successfully connected to this network
+wifi.i: Incorrect password
+wifi.im: Your entered password is incorrect
+pyabrsite.app_name: Pyabr Website
+weather.app_name: Weather
+weather.city: Enter your city name
+cloudroller.master: Master Drives
+cloudroller.cloud: Cloud Drives
+mpv.app_name: Video Player
+mpv.open: Open
+roller.archive: Compress
+roller.extract: Extract
+desktop.keyless: Keyboard Layouts

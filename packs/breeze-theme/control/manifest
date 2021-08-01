@@ -1,0 +1,10 @@
+name: breeze-theme
+name[fa]: پوسته گرافیکی بریز
+name[en]: Breeze theme
+copyright: (c) 2021 KDE
+license: GNU GPL v3.0
+unpack: /
+version: 2.0.0
+description: Breeze theme for Pyabr
+compile: No
+build: 1400-05-06

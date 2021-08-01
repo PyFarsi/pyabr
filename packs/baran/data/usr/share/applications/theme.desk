@@ -1,0 +1,9 @@
+name[en]: Themes & Style
+name[fa]: پوسته ها
+exec: themes
+logo: @icon/breeze-theme
+application: No
+hidden: Yes
+category: tools
+setting: Yes
+sudoprocess: Yes

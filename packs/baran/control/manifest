@@ -1,0 +1,10 @@
+name: baran
+name[en]: Baran Desktop Enviroment
+name[fa]: میزکار باران
+copyright: (c) 2021 Mani Jamali
+license: GNU GPL v3.0
+unpack: /
+version: 2.0.0
+description: Baran Desktop Enviroment is the default desktop enviroment.
+compile: Yes
+build: 1400-05-06

@@ -1,0 +1,26 @@
+name[en]: Files
+name[fa]: فایل ها
+name[ar]: الملفات
+logo: @icon/breeze-roller
+exec: roller
+shortcut: Ctrl+F
+folder-icon: @icon/breeze-folder
+file-icon: @icon/breeze-txt
+exit-icon: @icon/breeze-exit
+icon-size: 64
+bgcolor: white
+fontsize: 12
+width: 1000
+height: 600
+c: @icon/breeze-c
+c++: @icon/breeze-c++
+c#: @icon/breeze-cs
+java: @icon/breeze-java
+py: @icon/breeze-py
+sa: @icon/breeze-shell
+html: @icon/breeze-html
+php: @icon/breeze-php
+js: @icon/breeze-js
+application: Yes
+category: tools
+pin: Yes

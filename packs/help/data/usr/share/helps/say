@@ -1,0 +1,3 @@
+say [text] ...
+
+Job: Print a text without creating a line

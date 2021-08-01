@@ -1,0 +1,7 @@
+mv [src] [dest]
+
+Tip: If src is file, dest should be file
+Tip: If src is directory, dest should be directory
+
+ <src>          <dest>          <job>
+ myreads.txt    readme.txt      Cut myreads.txt to readme.txt
