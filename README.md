@@ -15,6 +15,7 @@ for contributing in pyabr please read [CONTRIBUTING.md](/CONTRIBUTING.md)
 Pyabr is a small and lightweight platform and OS written in Python
 
 - **Official Website**: https://pyabr.ir
+- **Telegram Channel**: https://t.me/PyFarsi
 
 ## How to install Pyabr platform in Linux?
 
