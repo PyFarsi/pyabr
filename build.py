@@ -45,7 +45,23 @@ if not os.path.isdir('stor/proc/id'): os.mkdir('stor/proc/id')
 if os.path.isdir('/stor'): shutil.rmtree('/stor')
 shutil.copytree('stor/','/stor')
 
-if platform.system()=='Linux':
+if platform.node()=='localhost':
+	auto = input ('Do you want to run Pyabr in Termux automatically? [Y/n]: ')
+
+	f = open ('pyabr.py','w')
+	f.write('''import subprocess,sys
+subprocess.call (f'cd stor && {sys.executable} vmabr.pyc login',shell=True)
+''')
+	f.close()
+
+	if auto.lower()=='y':
+		f.write('.bashrc','w')
+		f.write(f'{sys.executable} pyabr.py')
+		f.close()
+	else:
+		print ('For run Pyabr use `python pyabr.py`')
+
+elif platform.system()=='Linux':
 	f = open('/usr/bin/pyabr','w')
 	f.write('''#!/bin/bash
 cd /stor
