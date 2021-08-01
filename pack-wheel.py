@@ -20,6 +20,8 @@ shutil.unpack_archive('wheel/setup.zip','wheel/setup','zip') # Unpack setup whee
 ## Copy all files and dirs in wheel/setup/src ##
 
 list = os.listdir('.')
+list.remove('.git')
+list.remove('.idea')
 list.remove('wheel')
 list.remove('clouddrive')
 list.remove('AUTHERS')

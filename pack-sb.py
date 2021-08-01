@@ -13,6 +13,8 @@
 import subprocess, os, sys, shutil
 
 list = os.listdir('.')
+list.remove('.git')
+list.remove('.idea')
 list.remove('wheel')
 list.remove('build.py')
 list.remove('pack-sb.py')
@@ -32,7 +34,6 @@ list.remove('debug_apps')
 
 if '__pycache__' in list:
     list.remove('__pycache__')
-list.remove('AUTHERS')
 
 if not os.path.isdir('sb'):
     os.mkdir('sb')

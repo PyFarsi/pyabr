@@ -27,8 +27,8 @@ key.btn.fgcolor-hover: white
 alert.width: 500
 alert.height: 40
 alert.location: SE
-locale: fa
-layout: fa
+locale: en
+layout: en
 layout.keyless: Yes
 autosize: Yes
 fullscreen: Yes
@@ -104,7 +104,7 @@ loginw.unlock.round-size: 20
 submenu.hide: No
 submenu.fgcolor: white
 submenu.bgcolor: #1d1d1d
-submenu.direction: rtl
+submenu.direction: ltr
 submenu.fontsize: 12
 loginw.login.bgcolor: #3daee9
 loginw.login.bgcolor-hover: #123456
