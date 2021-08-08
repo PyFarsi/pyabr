@@ -2,7 +2,7 @@
 #  In the name of God, the Compassionate, the Merciful
 #  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
 #
-#  Official Website: 		http://pyabr.rf.gd
+#  Official Website: 		https://pyabr.ir
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
@@ -13,139 +13,117 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtWebEngineWidgets import QWebEngineView
+from PyQt5.QtWebEngineWidgets import *
+from PyQt5.QtPrintSupport import *
 
-import os,subprocess
-import sys,requests
+import os
+import sys
 
-from libabr import Res, Control, Files
+from libabr import *
 
 res = Res()
 control = Control()
 files = Files()
+app = App()
+commands = Commands()
 
-# Your URL for your webview project
-URL = "https://gerdoo.me"
+app.switch('wapp')
 
-class MainApp(QMainWindow):
+f = QFont()
+f.setFamily(control.read_record("font","/etc/gui"))
+f.setPointSize(int(control.read_record("fontsize","/etc/gui")))
 
-    def __init__(self,ports, *args, **kwargs):
-        super(MainApp, self).__init__(*args, **kwargs)
-        self.Backend = ports[0]
-        self.Env = ports[1]
-        self.Widget = ports[2]
-        self.AppName = ports[3]
-        self.External = ports[4]
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 
-        self.Widget.SetWindowIcon (QIcon(res.get('@icon/web-browser')))
-        self.Widget.Resize(self,int(self.Env.width())/1.5,int(self.Env.height())/1.5)
+class MainWindow(QMainWindow):
+    def __init__(self, *args, **kwargs):
+        super(MainWindow, self).__init__(*args, **kwargs)
 
-        if self.External==[]:
-            self.add_new_tab(QUrl(URL), res.get('@string/app_name'))
+        self.setFont(f)
+
+
+        self.titlebar = QWidget()
+        self.titlebar.setStyleSheet(f'background-color: {getdata("appw.title.bgcolor")};color: {getdata("appw.title.fgcolor")};')
+
+
+        self.layouts = QHBoxLayout()
+        self.titlebar.setLayout(self.layouts)
+
+        # icon widget #
+        if files.isfile('/tmp/wapp-logo.tmp'):
+            self.icon = QIcon(res.get(files.readall('/tmp/wapp-logo.tmp')))
         else:
-            if self.External[0]==None:
-                self.add_new_tab(QUrl(URL), res.get('@string/app_name'))
-            else:
-                if self.External[0].startswith ('http://') or self.External[0].startswith ('https://'):
-                    self.add_new_tab(QUrl(self.External[0]), res.get('@string/app_name'))
+            self.icon = QIcon(res.get('@icon/breeze-wapp'))
 
-                elif self.External[0].startswith ('abr://'):
-                    protocol = self.External[0].replace('abr://','/srv/')
-                    prspl = protocol.split('/')
-                    prspl.remove('')
+        self.iconwidget = QLabel()
+        self.iconwidget.setPixmap(
+            self.icon.pixmap(int(getdata("appw.title.size")) - 18, int(getdata("appw.title.size")) - 18))
+        self.iconwidget.resize(int(getdata("appw.title.size")), int(getdata("appw.title.size")))
+        self.layouts.addWidget(self.iconwidget)
 
-                    proto = prspl[0]
-                    try:
-                        domain = prspl[1]
-                    except:
-                        domain = control.read_record('abr.default','/etc/webconfig')
+        self.iconwidget.setGeometry(0, 0, int(getdata("appw.title.size")), int(getdata("appw.title.size")))
 
-                    try:
-                        filename = prspl[2]
-                    except:
-                        filename = control.read_record('abr.index','/etc/webconfig')
+        # text title #
+        self.titletext = QLabel()
+        self.titletext.setStyleSheet(
+            f'background-color:  {getdata("appw.title.bgcolor")};color: {getdata("appw.title.fgcolor")};')
+        self.titletext.setMaximumWidth(self.titlebar.width())
+        self.titletext.setGeometry(int(getdata("appw.title.size")), 0, self.titlebar.width(),
+                                   int(getdata("appw.title.size")))
 
-                    revspl = domain.split('.')
-                    revspl.reverse()
+        self.titletext.setFont(f)
 
-                    self.domain = revspl[1]+"."+revspl[0]
-
-                    package = ''
-                    for i in revspl:
-                        package+='/'+i
-
-                    if not files.isdir(f'/srv/{revspl[0]}/{revspl[1]}'):
-                        result = subprocess.check_output(f'"{sys.executable}" {files.readall("/proc/info/boot")} exec /srv/com/pyabr/error/DomainNotExists', shell=True)
-                        html = result.decode('utf-8')
-                        self.abr(html)
-                    else:
-                        if files.isfile(f'/srv/{package}/{filename}.py') or files.isfile(f'/srv/{package}/{filename}.sa') or files.isfile(f'/srv/{package}/{filename}') or files.isfile(f'/srv/{package}/{filename}.exe') or files.isfile(f'/srv/{package}/{filename}.jar'):
-                            result = subprocess.check_output(f'"{sys.executable}" {files.readall("/proc/info/boot")} exec /srv/{package}/{filename}',shell=True)
-                            html = result.decode('utf-8')
-                            self.abr(html)
-                        elif files.isfile(f'/srv/{package}/{filename}.html'):
-                            html = files.readall(f'/srv/{package}/{filename}.html')
-                            self.abr(html)
-                        elif files.isfile(f'/srv/{package}/{filename}.xhtml'):
-                            html = files.readall(f'/srv/{package}/{filename}.xhtml')
-                            self.abr(html)
-                        elif files.isfile(f'/srv/{package}/{filename}.xml'):
-                            html = files.readall(f'/srv/{package}/{filename}.xml')
-                            self.abr(html)
-                        else:
-                            result = subprocess.check_output(
-                                f'"{sys.executable}" {files.readall("/proc/info/boot")} exec /srv/com/pyabr/error/PageNotFound',
-                                shell=True)
-                            html = result.decode('utf-8')
-                            self.abr(html)
-                else:
-                    result = subprocess.check_output(
-                        f'"{sys.executable}" {files.readall("/proc/info/boot")} exec /srv/com/pyabr/error/InvalidURL',
-                        shell=True)
-                    html = result.decode('utf-8')
-                    self.abr(html)
-
-    def add_new_tab(self, qurl=None, label="Blank"):
-
-        self.browser = QWebEngineView()
-        self.browser.setUrl(qurl)
-        self.setCentralWidget(self.browser)
-        self.Loop()
-
-    finder = control.read_record('abr.finder', '/etc/webconfig')
-
-    def abr (self, data):
-        ## Connect to ABR Finder location AFL
-        data = data.replace('abr://',self.finder)
-        self.browser = QWebEngineView()
-        self.browser.setHtml(data)
-        self.setCentralWidget(self.browser)
-        self.Loop()
-
-
-    def Loop(self):
-        self.browser.update()
-
-        isabr = self.browser.page().url().toString().replace('data:text/html;charset=UTF-8,', '').replace('%0A', '')
-        isabrweb = self.browser.page().url().toString()
-
-        if isabr.startswith('abr%3A%2F%2F'):
-            self.close()
-            self.Widget.Close()
-            self.Env.RunApp ('wapp',[f'abr://{isabr.replace("abr%3A%2F%2F","")}'])
-        elif isabrweb.startswith(self.finder):
-            self.close()
-            self.Widget.Close()
-            self.Env.RunApp('wapp', [f'{isabrweb.replace(self.finder,"abr://")}'])
+        if files.isfile('/tmp/wapp-title.tmp'):
+            self.titletext.setText(files.readall('/tmp/wapp-title.tmp'))
         else:
-            self.Widget.SetWindowTitle (self.browser.page().title())
-            self.Widget.SetWindowIcon (QIcon(self.browser.page().icon()))
+            self.titletext.setText(res.get('@string/app_name'))
 
-            QTimer.singleShot(50,self.Loop)
 
-    def navigate_to_url(self):  # Does not receive the Url
-        q = QUrl(self.urlbar.text())
-        if q.scheme() == "":
-            q.setScheme("http")
+        self.layouts.addWidget(self.titletext)
 
-        self.tabs.currentWidget().setUrl(q)
+        round = '0'
+
+        if getdata("appw.title.btn-round") == 'Yes':
+            round = str(int((int(getdata("appw.title.size"))) - 16) / 2)
+
+        # float button #
+
+        self.btnEscape = QToolButton()
+        self.btnEscape.setIcon(QIcon(res.get(getdata("appw.title.close"))))
+        self.btnEscape.setMinimumSize(int(getdata("appw.title.size")) - 15, int(getdata("appw.title.size")) - 15)
+        self.btnEscape.setGeometry(self.titlebar.width() - int(getdata("appw.title.size")), 0,
+                                   int(getdata("appw.title.size")), int(getdata("appw.title.size")))
+        self.btnEscape.clicked.connect(self.close)
+        self.btnEscape.setStyleSheet(
+            'QToolButton {border-radius: {0}% {0}%;} QToolButton::hover {border-radius: {0}% {0}%;background-color: {1}}'.replace(
+                "{1}", getdata("appw.title.close-hover")).replace("{0}", round))
+        self.layouts.addWidget(self.btnEscape)
+        self.titlebar.setGeometry(0, 0, int(getdata('width')), int(getdata("appw.title.size")))
+
+
+        try:
+            self.add_new_tab(QUrl(files.readall('/tmp/url.tmp')))
+        except:
+            self.add_new_tab(QUrl(control.read_record("website","/etc/distro")))
+        self.showFullScreen()
+        self.resize(int(getdata("width")), int(getdata("height")))
+
+    def add_new_tab(self, qurl=None):
+
+        if qurl is None:
+            qurl = QUrl(control.read_record('website','/etc/distro'))
+
+        browser = QWebEngineView()
+        browser.setUrl(qurl)
+
+        browser.setGeometry(0, int(getdata("appw.title.size")),int(files.readall('/tmp/width.tmp')),int(files.readall('/tmp/height.tmp')) - int(getdata("appw.title.size")))
+
+        self.layout().addWidget(browser)
+        self.layout().addWidget(self.titlebar)
+
+app = QApplication(sys.argv)
+
+window = MainWindow()
+
+app.exec_()

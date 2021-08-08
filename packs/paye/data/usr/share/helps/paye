@@ -1,0 +1,17 @@
+
+paye [options] [package] ...
+
+ <options>      <package>    <job>
+ cl                                                 Clear the cache
+ upak           app.pa                              Unpack 'app.pa' archive package
+ pak            app                                 Build 'app' project
+ in             app                                 Install 'app' package
+ rm             app                                 Remove 'app' package
+ add            https://example.com/app.pa          Add 'app' mirror
+ del            app                                 Remove 'app' mirror
+ info           app                                 Show informations about 'app'
+ get            app                                 Download 'app' archive package
+ git            https://github.com/example/app      Install 'app' from git
+ ls                                                 List all installed packages
+ up                                                 Update cloud software
+ crt            app                                 Create 'app' project

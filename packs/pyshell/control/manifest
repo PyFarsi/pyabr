@@ -1,8 +1,10 @@
 name: pyshell
-copyright: (c) 2020 Mani Jamali
+name[fa]: مفسر پایتون
+name[en]: Python Shell
+copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-build: 1399-12-10
-version: 1.1.1
-description: Python Shell for Pyabr
+version: 2.0.0
+description: Graphical Python shell
 compile: Yes
+build: 1400-05-13

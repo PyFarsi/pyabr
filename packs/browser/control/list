@@ -1,6 +1,9 @@
-etc/webconfig
-srv
-usr/app/browser.pyc
 usr/app/wapp.pyc
+usr/app/wapp_app.pyc
+usr/app/browser.pyc
+usr/app/browser_app.pyc
+usr/app/htmlx.pyc
+usr/app/html_app.pyc
+usr/share/applications/wapp.desk
 usr/share/applications/browser.desk
-usr/share/docs/browser
+usr/share/applications/html.desk

@@ -1,7 +1,7 @@
 name[en]: Calendar
 name[fa]: تقویم
 name[ar]: التقويم
-logo: @icon/calendar
+logo: @icon/breeze-calendar
 exec: calendar_app
 shortcut: Ctrl+Alt+D
 width: 600

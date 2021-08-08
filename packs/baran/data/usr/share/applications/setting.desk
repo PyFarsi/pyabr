@@ -1,0 +1,8 @@
+name[en]: Settings
+name[fa]: تنظیمات
+exec: setting
+logo: @icon/breeze-setting
+application: Yes
+hidden: No
+category: system
+external: No

@@ -2,7 +2,7 @@
 #  In the name of God, the Compassionate, the Merciful
 #  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
 #
-#  Official Website: 		http://pyabr.rf.gd
+#  Official Website: 		https://pyabr.ir
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
@@ -10,13 +10,12 @@
 #
 #######################################################################################
 
-import importlib, shutil, os, sys, hashlib, subprocess,time,datetime,getpass,py_compile,socket
-
+import importlib, shutil, os, sys, hashlib, subprocess,time,datetime,getpass,py_compile,wget,requests
+from termcolor import colored
 def read_record (name,filename):
     file = open (filename,"r")
-    strv = file.read()
+    strv = (file.read()).split("\n")
     file.close()
-    strv = strv.split("\n")
 
     for i in strv:
         if i.startswith(name):
@@ -26,9 +25,8 @@ def read_record (name,filename):
 
 def read_list (filename):
     file = open (filename,"r")
-    strv = file.read()
+    strv = (file.read()).split("\n")
     file.close()
-    strv = strv.split("\n")
     return strv
 
 def write_record(name, value, filename):
@@ -38,32 +36,28 @@ def write_record(name, value, filename):
     record = read_record(name, filename)
     os.remove(filename)
     if not (record == None):
-        all = all.replace("\n"+name + ": " + record, "")
+        all = all.replace(f"\n{name}: {record}", "")
     file = open(filename,'w')
-    file.write(all + "\n" + name + ": " + value)
+    file.write(f"{all}\n{name}: {value}")
     file.close()
 
 # script #
 class Script:
     def __init__(self,filename):
-        modules = Modules()
+        permissions = Permissions()
+        colors = Colors()
         files = Files()
         control = Control()
-        colors = Colors()
-        process = Process()
-        permissions = Permissions()
 
         # check perms #
-        if not permissions.check(files.output(filename) + '.sa', "x", files.readall("/proc/info/su")):
+        if not permissions.check(f'{files.output(filename)}.sa', "x", files.readall("/proc/info/su")):
             colors.show(filename, "perm", "")
             sys.exit(0)
 
-        cmdall = control.read_list(filename + '.sa') # read all lines from script
-
         k = 0
 
-        for cmd in cmdall:
-            k = k + 1
+        for cmd in  control.read_list(f'{filename}.sa'):
+            k += 1
             ## Create cmdln with variables ##
 
             cmdln = cmd.split(" ")
@@ -75,18 +69,18 @@ class Script:
                     select = files.readall("/proc/info/sel")
                     var = control.read_record(str(i).replace("$", ""), select)
                     if var == None:
-                        strcmdln = strcmdln + " " + i
+                        strcmdln  += f" {i}"
                     else:
-                        strcmdln = strcmdln + " " + var
+                        strcmdln  += f" {var}"
                 else:
-                    strcmdln = strcmdln + " " + i
+                    strcmdln  += f" {i}"
 
             cmdln = strcmdln.split(" ")
             cmdln.remove('')
 
             cmd = ""
             for j in cmdln:
-                cmd = cmd + " " + j
+                cmd  += f" {j}"
 
             if (cmdln == [] or cmdln[0].startswith("#")):
                 continue
@@ -100,290 +94,74 @@ class Commands:
     def __init__(self):
         pass
 
+    # start #
+    
+    def start (self,args):
+        files = Files()
+        colors = Colors()
+        if args==[]:
+            colors.show ('start','fail','no inputs.')
+            sys.exit(0)
+        if files.isfile (f'/usr/share/applications/{args[0]}.desk'):
+            files.write('/tmp/start.tmp',args[0])
+        else:
+            colors.show('start', 'fail', f'{args[0]}: application not found.')
+
+    def cl (self,args):
+        files = Files()
+        colors = Colors()
+
+        if args==[]:
+            colors.show ('cl','fail','no inputs.')
+            sys.exit(0)
+
+        files.write('/tmp/cloud.tmp',args[0])
+
+    # kill process #
+    def kill (self,args):
+        colors = Colors()
+        app = App()
+        for i in args:
+            if app.check(i):
+                app.end(i)
+            else:
+                colors.show ('kill','fail',f'{i}: id process not found.')
+
     # un set a variable
     def unset(self,args):
         files = Files()
+        colors = Colors()
         control = Control()
         permissions = Permissions()
-        colors = Colors()
+
         for name in args:
-            select = files.readall("/proc/info/sel")
-            if not select.startswith("/proc/"):
-                if permissions.check(files.output(select), "w", files.readall("/proc/info/su")):
-                    control.remove_record(name, select)
+            if not (files.readall("/proc/info/sel")).startswith("/proc/"):
+                if permissions.check(files.output(files.readall("/proc/info/sel")), "w", files.readall("/proc/info/su")):
+                    control.remove_record(name, files.readall("/proc/info/sel"))
                 else:
                     colors.show("unset", "perm", "")
             else:
-                control.remove_record(name, select)
+                control.remove_record(name, files.readall("/proc/info/sel"))
 
     # pause
     def pause (self,args):
+
         self.sleep(['1000000'])
 
     # add controller data base
     def add (self,args):
         files = Files()
-        control = Control()
-        colors = Colors()
-
         for i in args:
-            x = files.readall(i)
-            x = x.split('\n')
+            x = (files.readall(i)).split('\n')
             for j in x:
                 if j.__contains__(': '):
                     s = j.split(': ')
-                    self.set([s[0]+":",s[1]])
-
-    # enc is a encriptor #
-    def uenc (self,args):
-        files = Files()
-        colors = Colors()
-        for i in args:
-            src = files.readall (i)
-            #header = f'{magic},{version},{type},{security},{password},{filename},'
-            split = src.split(',')
-            if not split[0]=='BA':
-                colors.show ('enc','fail',f'{i}: is not a binary application file.')
-                sys.exit(0)
-
-            if not split[5]==hashlib.sha3_512(files.output(i).encode()).hexdigest():
-                colors.show('enc', 'fail', f'{i}: is not a real file name.')
-                sys.exit(0)
-
-            if split[3]=='\x01':
-                password = getpass.getpass('Enter a password: ')
-                hashcode = hashlib.sha3_512(password.encode()).hexdigest()
-                if not hashcode==split[4]:
-                    colors.show('enc', 'fail', f'{i}: wrong password.')
-                    sys.exit(0)
-
-            text = split[6]
-            files.write(i,text.replace('\xF0','a')
-                  .replace('\xF1','b')
-                  .replace('\xF2','c')
-                  .replace('\xF3','d')
-                  .replace( '\xF4','e')
-                  .replace( '\xF5','f')
-                  .replace( '\xF6','g')
-                  .replace( '\xF7','h')
-                  .replace( '\xF8','i')
-                  .replace( '\xF9','j')
-                  .replace( '\xFA','k')
-                  .replace( '\xFB','l')
-                  .replace( '\xFC','m')
-                  .replace( '\xFD','o')
-                  .replace( '\xFE','p')
-                  .replace( '\xFF','q')
-                  .replace( '\xE0','r')
-                  .replace( '\xE1','s')
-                  .replace( '\xE2','t')
-                  .replace( '\xE3','u')
-                  .replace( '\xE4','v')
-                  .replace( '\xE5','w')
-                  .replace( '\xE6','x')
-                  .replace( '\xE7','y')
-                  .replace( '\xE8','z')
-                  .replace( '\xE9','A')
-                  .replace( '\xEA','B')
-                  .replace( '\xEB','C')
-                        .replace( '\xEC','D')
-                        .replace( '\xED','E')
-                        .replace( '\xEE','F')
-                        .replace( '\xEF','G')
-                        .replace( '\xD0','H')
-                        .replace( '\xD1','I')
-                        .replace( '\xD2','J')
-                        .replace( '\xD3','K')
-                        .replace( '\xD4','L')
-                        .replace( '\xD5','M')
-                        .replace( '\xD6','O')
-                        .replace( '\xD7','P')
-                        .replace( '\xD8','Q')
-                        .replace( '\xD9','R')
-                        .replace( '\xDA','S')
-                        .replace( '\xDB','T')
-                        .replace( '\xDC','U')
-                        .replace( '\xDD','V')
-                        .replace( '\xDE','W')
-                        .replace( '\xDF','X')
-                        .replace( '\xC0','Y')
-                        .replace( '\xC1','Z')
-                        .replace( '\xC2','0')
-                        .replace( '\xC3','1')
-                        .replace('\xC4','2')
-                        .replace( '\xC5','3')
-                        .replace( '\xC6','4')
-                        .replace( '\xC7','5')
-                        .replace( '\xC8','6')
-                        .replace( '\xC9','7')
-                        .replace( '\xCA','8')
-                        .replace( '\xCB','9')
-                        .replace('\xCC','\n')
-                        .replace( '\xCD',':')
-                        .replace( '\xCE','=')
-                        .replace( '\xCF','{')
-                        .replace( '\xBA','}')
-                        .replace( '\xBB','[')
-                        .replace( '\xBC',']')
-                        .replace( '\xBD',';')
-                        .replace( '\xBE','!')
-                        .replace( '\xBF','#')
-                        .replace( '\xB9','$')
-                        .replace( '\xB8','%')
-                        .replace( '\xB7','&')
-                        .replace('\xB6','+')
-                        .replace( '\xB5','-')
-                        .replace( '\xB4','*')
-                        .replace( '\xB3','/')
-                        .replace('\xB2','^')
-                        .replace( '\xB1','(')
-                        .replace( '\xB0',')')
-                        .replace( '\xAF','\t')
-                        .replace( '\xAF','    ')
-                        .replace( '\xAF','        ')
-                        .replace( '\xAE','"')
-                        .replace( '\xAD',"'")
-                        .replace( '\xAC',',')
-                        .replace( '\xAB','<')
-                        .replace( '\x9F','>')
-                        .replace( '\x9E','.')
-            )
-
-    def enc (self,args):
-        files = Files()
-        control = Control()
-
-        for i in args:
-            src = files.readall (i)
-            magic = 'BA'
-            version = control.read_record('version',files.readall('/proc/info/sel'))
-            if version==None: version='1'
-
-            type = control.read_record('type', files.readall('/proc/info/sel'))
-
-            if type == None: type = '\x05'
-            else:
-                if type=='code': type = '\x01'
-                elif type=='message': type = '\x02'
-                elif type == 'database': type = '\x03'
-                elif type == 'variable': type = '\x04'
-                else: type = '\x05'
-
-            security = control.read_record('security', files.readall('/proc/info/sel'))
-            if security=='Yes':
-                security = '\x01'
-            else:
-                security = '\x02'
-
-            password = control.read_record('password', files.readall('/proc/info/sel'))
-
-            if not password == None:
-                password = hashlib.sha3_512(password.encode()).hexdigest()
-            else:
-                password = hashlib.sha3_512(''.encode()).hexdigest()
-
-            filename = hashlib.sha3_512(files.output(i).encode()).hexdigest()
-
-            header = f'{magic},{version},{type},{security},{password},{filename},'
-
-            files.write(i,header+src
-                  .replace('a','\xF0')
-                  .replace('b', '\xF1')
-                  .replace('c', '\xF2')
-                  .replace('d', '\xF3')
-                  .replace('e', '\xF4')
-                  .replace('f', '\xF5')
-                  .replace('g', '\xF6')
-                  .replace('h', '\xF7')
-                  .replace('i', '\xF8')
-                  .replace('j', '\xF9')
-                  .replace('k', '\xFA')
-                  .replace('l', '\xFB')
-                  .replace('m', '\xFC')
-                  .replace('o', '\xFD')
-                  .replace('p', '\xFE')
-                  .replace('q', '\xFF')
-                  .replace('r', '\xE0')
-                  .replace('s', '\xE1')
-                  .replace('t', '\xE2')
-                  .replace('u', '\xE3')
-                  .replace('v', '\xE4')
-                  .replace('w', '\xE5')
-                  .replace('x', '\xE6')
-                  .replace('y', '\xE7')
-                  .replace('z', '\xE8')
-                  .replace('A', '\xE9')
-                  .replace('B', '\xEA')
-                  .replace('C', '\xEB')
-                        .replace('D', '\xEC')
-                        .replace('E', '\xED')
-                        .replace('F', '\xEE')
-                        .replace('G', '\xEF')
-                        .replace('H', '\xD0')
-                        .replace('I', '\xD1')
-                        .replace('J', '\xD2')
-                        .replace('K', '\xD3')
-                        .replace('L', '\xD4')
-                        .replace('M', '\xD5')
-                        .replace('O', '\xD6')
-                        .replace('P', '\xD7')
-                        .replace('Q', '\xD8')
-                        .replace('R', '\xD9')
-                        .replace('S', '\xDA')
-                        .replace('T', '\xDB')
-                        .replace('U', '\xDC')
-                        .replace('V', '\xDD')
-                        .replace('W', '\xDE')
-                        .replace('X', '\xDF')
-                        .replace('Y', '\xC0')
-                        .replace('Z', '\xC1')
-                        .replace('0', '\xC2')
-                        .replace('1', '\xC3')
-                        .replace('2', '\xC4')
-                        .replace('3', '\xC5')
-                        .replace('4', '\xC6')
-                        .replace('5', '\xC7')
-                        .replace('6', '\xC8')
-                        .replace('7', '\xC9')
-                        .replace('8', '\xCA')
-                        .replace('9', '\xCB')
-                        .replace('\n','\xCC')
-                        .replace(':','\xCD')
-                        .replace('=','\xCE')
-                        .replace('{','\xCF')
-                        .replace('}','\xBA')
-                        .replace('[','\xBB')
-                        .replace(']', '\xBC')
-                        .replace(';', '\xBD')
-                        .replace('!', '\xBE')
-                        .replace('#', '\xBF')
-                        .replace('$', '\xB9')
-                        .replace('%', '\xB8')
-                        .replace('&', '\xB7')
-                        .replace('+', '\xB6')
-                        .replace('-', '\xB5')
-                        .replace('*', '\xB4')
-                        .replace('/', '\xB3')
-                        .replace('^', '\xB2')
-                        .replace('(', '\xB1')
-                        .replace(')', '\xB0')
-                        .replace('\t','\xAF')
-                        .replace('    ','\xAF')
-                        .replace('        ','\xAF')
-                        .replace('"','\xAE')
-                        .replace("'",'\xAD')
-                        .replace(',','\xAC')
-                        .replace('<','\xAB')
-                        .replace('>','\x9F')
-                        .replace('.','\x9E')
-            )
+                    self.set([f'{s[0]}:',s[1]])
     # zip #
     def zip (self, args):
         files = Files()
-        control = Control()
-        permissions = Permissions()
         colors = Colors()
-
+        permissions = Permissions()
         if args==[]:
             colors.show ('zip','fail','no inputs.')
             sys.exit(0)
@@ -399,14 +177,14 @@ class Commands:
             colors.show('zip', 'fail', f'{src}: source directory not found.')
             sys.exit(0)
 
-        if files.isdir (dest+".zip"):
-            colors.show('zip', 'fail', f'{dest+".zip"}: dest is not a archive file.')
+        if files.isdir (f"{dest}.zip"):
+            colors.show('zip', 'fail', f'{dest}.zip: dest is not a archive file.')
             sys.exit(0)
 
-        if files.isfile (dest+".zip"):
-            colors.show('zip', 'warning', f'{dest+".zip"}: dest archives exists.')
+        if files.isfile (f"{dest}.zip"):
+            colors.show('zip', 'warning', f'{dest}.zip: dest archives exists.')
 
-        if permissions.check(files.output(src), "r", files.readall("/proc/info/su")) and permissions.check(files.output(dest+'.zip'), "w", files.readall("/proc/info/su")):
+        if permissions.check(files.output(src), "r", files.readall("/proc/info/su")) and permissions.check(files.output(f'{dest}.zip'), "w", files.readall("/proc/info/su")):
             shutil.make_archive(files.input(dest),'zip',files.input(src))
         else:
             colors.show('zip', 'perm', '')
@@ -415,9 +193,8 @@ class Commands:
     # zip #
     def tar (self, args):
         files = Files()
-        control = Control()
-        permissions = Permissions()
         colors = Colors()
+        permissions = Permissions()
 
         if args==[]:
             colors.show ('tar','fail','no inputs.')
@@ -434,14 +211,14 @@ class Commands:
             colors.show('tar', 'fail', f'{src}: source directory not found.')
             sys.exit(0)
 
-        if files.isdir (dest+".tar"):
-            colors.show('tar', 'fail', f'{dest+".tar"}: dest is not a archive file.')
+        if files.isdir (f"{dest}.tar"):
+            colors.show('tar', 'fail', f'{dest}.tar: dest is not a archive file.')
             sys.exit(0)
 
-        if files.isfile (dest+".tar"):
-            colors.show('tar', 'warning', f'{dest+".tar"}: dest archives exists.')
+        if files.isfile (f"{dest}.tar"):
+            colors.show('tar', 'warning', f'{dest}.tar: dest archives exists.')
 
-        if permissions.check(files.output(src), "r", files.readall("/proc/info/su")) and permissions.check(files.output(dest+'.tar'), "w", files.readall("/proc/info/su")):
+        if permissions.check(files.output(src), "r", files.readall("/proc/info/su")) and permissions.check(files.output(f'{dest}.tar'), "w", files.readall("/proc/info/su")):
             shutil.make_archive(files.input(dest),'tar',files.input(src))
         else:
             colors.show('tar', 'perm', '')
@@ -450,14 +227,14 @@ class Commands:
     # pwd #
     def pwd (self,args):
         files = Files()
+
         print (files.readall('/proc/info/pwd'))
 
     # zip #
     def xzip (self, args):
         files = Files()
-        control = Control()
-        permissions = Permissions()
         colors = Colors()
+        permissions = Permissions()
 
         if args==[]:
             colors.show ('xzip','fail','no inputs.')
@@ -474,14 +251,14 @@ class Commands:
             colors.show('xzip', 'fail', f'{src}: source directory not found.')
             sys.exit(0)
 
-        if files.isdir (dest+".tar.xz"):
-            colors.show('xzip', 'fail', f'{dest+".tar.xz"}: dest is not a archive file.')
+        if files.isdir (f"{dest}.tar.xz"):
+            colors.show('xzip', 'fail', f'{dest}.tar.xz: dest is not a archive file.')
             sys.exit(0)
 
-        if files.isfile (dest+".tar.xz"):
-            colors.show('xzip', 'warning', f'{dest+".tar.xz"}: dest archives exists.')
+        if files.isfile (f"{dest}.tar.xz"):
+            colors.show('xzip', 'warning', f'{dest}.tar.xz: dest archives exists.')
 
-        if permissions.check(files.output(src), "r", files.readall("/proc/info/su")) and permissions.check(files.output(dest+'.tar.xz'), "w", files.readall("/proc/info/su")):
+        if permissions.check(files.output(src), "r", files.readall("/proc/info/su")) and permissions.check(files.output(f'{dest}.tar.xz'), "w", files.readall("/proc/info/su")):
             shutil.make_archive(files.input(dest),'xztar',files.input(src))
         else:
             colors.show('xzip', 'perm', '')
@@ -490,10 +267,8 @@ class Commands:
     # zip #
     def gzip (self, args):
         files = Files()
-        control = Control()
-        permissions = Permissions()
         colors = Colors()
-
+        permissions = Permissions()
         if args==[]:
             colors.show ('gzip','fail','no inputs.')
             sys.exit(0)
@@ -509,14 +284,14 @@ class Commands:
             colors.show('gzip', 'fail', f'{src}: source directory not found.')
             sys.exit(0)
 
-        if files.isdir (dest+".tar.gz"):
-            colors.show('gzip', 'fail', f'{dest+".tar.gz"}: dest is not a archive file.')
+        if files.isdir (f"{dest}.tar.gz"):
+            colors.show('gzip', 'fail', f'{dest}.tar.gz: dest is not a archive file.')
             sys.exit(0)
 
-        if files.isfile (dest+".tar.gz"):
-            colors.show('gzip', 'warning', f'{dest+".tar.gz"}: dest archive exists.')
+        if files.isfile (f"{dest}.tar.gz"):
+            colors.show('gzip', 'warning', f'{dest}.tar.gz: dest archive exists.')
 
-        if permissions.check(files.output(src), "r", files.readall("/proc/info/su")) and permissions.check(files.output(dest+'.tar.gz'), "w", files.readall("/proc/info/su")):
+        if permissions.check(files.output(src), "r", files.readall("/proc/info/su")) and permissions.check(files.output(f'{dest}.tar.gz'), "w", files.readall("/proc/info/su")):
             shutil.make_archive(files.input(dest),'gztar',files.input(src))
         else:
             colors.show('gzip', 'perm', '')
@@ -525,9 +300,8 @@ class Commands:
     # zip #
     def bzip (self, args):
         files = Files()
-        control = Control()
-        permissions = Permissions()
         colors = Colors()
+        permissions = Permissions()
 
         if args==[]:
             colors.show ('bzip','fail','no inputs.')
@@ -544,14 +318,14 @@ class Commands:
             colors.show('bzip', 'fail', f'{src}: source directory not found.')
             sys.exit(0)
 
-        if files.isdir (dest+".tar.bz2"):
-            colors.show('bzip', 'fail', f'{dest+".tar.bz2"}: dest is not a archive file.')
+        if files.isdir (f"{dest}.tar.bz2"):
+            colors.show('bzip', 'fail', f'{dest}.tar.bz2: dest is not a archive file.')
             sys.exit(0)
 
-        if files.isfile (dest+".tar.bz"):
-            colors.show('bzip', 'warning', f'{dest+".tar.bz2"}: dest archive exists.')
+        if files.isfile (f"{dest}.tar.bz2"):
+            colors.show('bzip', 'warning', f'{dest}.tar.bz2: dest archive exists.')
 
-        if permissions.check(files.output(src), "r", files.readall("/proc/info/su")) and permissions.check(files.output(dest+'.tar.bz2'), "w", files.readall("/proc/info/su")):
+        if permissions.check(files.output(src), "r", files.readall("/proc/info/su")) and permissions.check(files.output(f'{dest}.tar.bz2'), "w", files.readall("/proc/info/su")):
             shutil.make_archive(files.input(dest),'bztar',files.input(src))
         else:
             colors.show('bzip', 'perm', '')
@@ -559,9 +333,8 @@ class Commands:
 
     def unzip (self,args):
         files = Files()
-        control = Control()
-        permissions = Permissions()
         colors = Colors()
+        permissions = Permissions()
 
         if args == []:
             colors.show('unzip', 'fail', 'no inputs.')
@@ -590,10 +363,8 @@ class Commands:
 
     def xunzip (self, args):
         files = Files()
-        control = Control()
-        permissions = Permissions()
         colors = Colors()
-
+        permissions = Permissions()
         if args == []:
             colors.show('xunzip', 'fail', 'no inputs.')
             sys.exit(0)
@@ -622,9 +393,8 @@ class Commands:
 
     def gunzip(self, args):
         files = Files()
-        control = Control()
-        permissions = Permissions()
         colors = Colors()
+        permissions = Permissions()
 
         if args == []:
             colors.show('gunzip', 'fail', 'no inputs.')
@@ -654,10 +424,8 @@ class Commands:
 
     def bunzip(self, args):
         files = Files()
-        control = Control()
-        permissions = Permissions()
         colors = Colors()
-
+        permissions = Permissions()
         if args == []:
             colors.show('bunzip', 'fail', 'no inputs.')
             sys.exit(0)
@@ -686,9 +454,8 @@ class Commands:
 
     def untar(self, args):
         files = Files()
-        control = Control()
-        permissions = Permissions()
         colors = Colors()
+        permissions = Permissions()
 
         if args == []:
             colors.show('untar', 'fail', 'no inputs.')
@@ -718,12 +485,9 @@ class Commands:
 
     # cc command #
     def cc (self,args):
-        permissions = Permissions()
         files = Files()
         colors = Colors()
-        control = Control()
-        # args #
-
+        permissions = Permissions()
         if args==[]:
             colors.show('cc','fail','no inputs.')
             sys.exit(0)
@@ -731,15 +495,12 @@ class Commands:
         # args after checking #
         filename = args[0]
         # check file #
-        type = None
-
-        # check file #
         if not files.isfile (filename):
-            colors.show ('cc','fail',filename+": file not found.")
+            colors.show ('cc','fail',f"{filename}: file not found.")
             sys.exit(0)
 
         if files.isdir (filename):
-            colors.show('cc','fail',filename+": is a directory.")
+            colors.show('cc','fail',f"{filename}: is a directory.")
             sys.exit(0)
 
         # check permission of filename to read #
@@ -747,76 +508,27 @@ class Commands:
             colors.show('cc','perm','')
             sys.exit(0)
 
-        if filename.endswith ('.c'):
-            type = 'c'
-        elif filename.endswith ('.cpp') or filename.endswith('.c++') or filename.endswith('.cxx'):
-            type = 'c++'
-        elif filename.endswith ('.py'):
-            type = 'python'
-        elif filename.endswith ('.java'):
-            type = 'java'
-
         # compile types #
-        if type=='python':
-            if args[1:]==[]:
-                py_compile.compile(files.input(filename),files.input(filename.replace('.py','.pyc')))
-                if not permissions.check(files.output(filename.replace('.py','.pyc')), "w", files.readall("/proc/info/su")):
-                    colors.show('cc', 'perm', '')
-                    sys.exit(0)
-            else:
-                output = args[1]
-                if not permissions.check(files.output(output), "w", files.readall("/proc/info/su")):
-                    colors.show('cc', 'perm', '')
-                    sys.exit(0)
-                py_compile.compile(files.input(filename), files.input(output))
-
-
-        elif type=='c':
-            if args[1:] == []:
-                output = filename.replace('.c','')
-            else:
-                output = args[1]
-
-            if not permissions.check(files.output(output), "w", files.readall("/proc/info/su")):
+        if args[1:]==[]:
+            py_compile.compile(files.input(filename),files.input(filename.replace('.py','.pyc')))
+            if not permissions.check(files.output(filename.replace('.py','.pyc')), "w", files.readall("/proc/info/su")):
                 colors.show('cc', 'perm', '')
                 sys.exit(0)
-
-            strv = control.read_record('exec.c','/etc/compiler').replace ("{src}",files.input(filename)).replace ("{dest}",files.input(output))
-
-            strv = strv.split(" ")
-
-            subprocess.call(strv)
-
-
-        elif type=='c++':
-            if args[1:] == []:
-                output = filename.replace('.cpp','').replace('.cxx','').replace('.c++','')
-            else:
-                output = args[1]
-
-            if not permissions.check(files.output(output), "w", files.readall("/proc/info/su")):
-                colors.show('cc', 'perm', '')
-                sys.exit(0)
-
-            strv = control.read_record('exec.c++', '/etc/compiler').replace("{src}", files.input(filename)).replace(
-                "{dest}", files.input(output)).split (" ")
-
-            subprocess.call(strv)
-        elif type=='java':
-            if not permissions.check(files.output(filename.replace('.java','.class')), "w", files.readall("/proc/info/su")):
-                colors.show('cc', 'perm', '')
-                sys.exit(0)
-            strv = (control.read_record('class.java', '/etc/compiler').replace("{src}", files.input(filename).replace('.//',''))).split (' ')
-            subprocess.call(strv)
         else:
-            colors.show('cc','fail','not supported programing language.')
+            output = args[1]
+            if not permissions.check(files.output(output), "w", files.readall("/proc/info/su")):
+                colors.show('cc', 'perm', '')
+                sys.exit(0)
+            py_compile.compile(files.input(filename), files.input(output))
+
 
     # check command #
     def check (self,args):
-        filename = args[0]
-        permissions = Permissions()
         files = Files()
         colors = Colors()
+        permissions = Permissions()
+
+        filename = args[0]
 
         perm = permissions.get_permissions(files.output(filename))
         numperm = permissions.show_number(perm)
@@ -824,34 +536,33 @@ class Commands:
         w = permissions.check(files.output(filename), "w", files.readall("/proc/info/su"))
         x = permissions.check(files.output(filename), "x", files.readall("/proc/info/su"))
 
-        bold = colors.color(1, colors.get_bgcolor(), colors.get_fgcolor())
 
-        print("   Seleted path: " + bold + files.output(filename) + colors.get_colors())
-        print("     Permission: " + bold + perm + colors.get_colors())
-        print(" Permission Num: " + bold + str(numperm) + colors.get_colors())
+        print(f"   Seleted path: {files.output(filename)}")
+        print(f"     Permission: {perm}" )
+        print(f" Permission Num: {str(numperm)}" )
         if r == True:
-            print("           Read: " + bold + colors.get_ok() + "Yes" + colors.get_colors())
+            print("           Read: Yes")
         else:
-            print("           Read: " + bold + colors.get_fail() + "No" + colors.get_colors())
+            print("           Read: No" )
 
         if w == True:
-            print("          Write: " + bold + colors.get_ok() + "Yes" + colors.get_colors())
+            print("          Write: Yes" )
         else:
-            print("          Write: " + bold + colors.get_fail() + "No" + colors.get_colors())
+            print("          Write: No")
 
         if x == True:
-            print("        Execute: " + bold + colors.get_ok() + "Yes" + colors.get_colors())
+            print("        Execute: Yes")
         else:
-            print("        Execute: " + bold + colors.get_fail() + "No" + colors.get_colors())
+            print("        Execute: No")
 
     # chmod command #
     def chmod (self,args):
+        files = Files()
+        colors = Colors()
+        permissions = Permissions()
 
         mod = args[0]
         filename = args[1]
-        permissions = Permissions()
-        files = Files()
-        colors = Colors()
 
         if args==[] or args[1:]==[]:
             colors.show("chmod", "fail", "no inputs.")
@@ -866,13 +577,281 @@ class Commands:
         else:
             colors.show("chmod", "perm", "")
 
-    # chown #
-    def chown (self,args):
-        new_owner = args[0]
-        name = args[1]
-        permissions = Permissions()
+    def mount (self,args):
         files = Files()
         colors = Colors()
+        control = Control()
+        permissions = Permissions()
+        commands = Commands()
+
+        if not permissions.check_root(files.readall('/proc/info/su')):
+            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
+                colors.show("mount", "perm", "")
+                sys.exit(0)
+
+        if args==[]:
+            colors.show("mount", "fail", "no inputs.")
+            sys.exit(0)
+
+        clouddrive = args[0]
+
+        if not files.isfile(f'/dev/{clouddrive}'):
+            colors.show("mount", "fail", f"{clouddrive}: cloud drive not exists.")
+            sys.exit(0)
+
+        clouddrivez = f'/dev/{clouddrive}'
+
+
+        host = control.read_record('host',clouddrivez)
+        password = control.read_record('password', clouddrivez)
+
+        x = requests.post(f"{host}/{control.read_record('index',clouddrivez)}",data={"password":password})
+
+        if x.text=='s: connected':
+            if files.isdir (f'/stor/{clouddrive}'):
+                files.removedirs(f'/stor/{clouddrive}')
+
+            files.mkdir(f'/stor/{clouddrive}')
+            commands.cd([f'/stor/{clouddrive}'])
+            files.write('/proc/info/csel',clouddrive)
+
+            x = requests.post(f"{host}/{control.read_record('list',clouddrivez)}",data={"password":password})
+
+            split_list_items = str(x.text).split('\n')
+            if '' in split_list_items:
+                split_list_items.remove('')
+
+            split_list_items.reverse()
+
+            for item in split_list_items:
+                split_remove_host = item.split("/stor/")
+                myitem = split_remove_host[1]
+
+                if myitem.endswith ('/') and not files.isdir (f'/stor/{clouddrive}/{myitem}'):
+                    files.mkdir(f'/stor/{clouddrive}/{myitem}')
+                else:
+                    files.create(f'/stor/{clouddrive}/{myitem}')
+
+        elif x.text=='e: wrong password':
+            colors.show("mount", "fail", f"{clouddrive}: wrong password in device database.")
+        elif x.text=='e: empty password':
+            colors.show("mount", "fail", f"{clouddrive}: empty password in device database.")
+        else:
+            colors.show("mount", "fail", f"{clouddrive}: cannot connect to this cloud drive.")
+
+    def get (self,args):
+        files = Files()
+        colors = Colors()
+        control = Control()
+
+        if args==[]:
+            colors.show("get", "fail", "no inputs.")
+            sys.exit(0)
+
+        url = args[0].split('/')
+        addressz = url[0]
+        try:
+            dataz = url[1]
+        except:
+            dataz = 'index.xml'
+
+        host = control.read_record('host', '/etc/abr')
+        cloud = control.read_record('cloud', '/etc/abr')
+
+        x = requests.post(f"{host}/{cloud}", data={"address": addressz,"data":dataz})
+
+        if x.text=='e: data not found':
+            colors.show('get', 'fail', f'{dataz}: data not found.')
+        elif x.text=='e: address not found':
+            colors.show('get', 'fail', f'{addressz}: address not found.')
+        else:
+            if not files.isdir(f'/srv/{addressz}'):
+                files.mkdir(f'/srv/{addressz}')
+
+            try:
+                files.write(f'/srv/{addressz}/{dataz}',x.text)
+            except:
+                pass
+
+    def umount (self,args):
+        files = Files()
+        colors = Colors()
+        permissions = Permissions()
+        commands = Commands()
+
+
+        if not permissions.check_root(files.readall('/proc/info/su')):
+            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
+                colors.show("umount", "perm", "")
+                sys.exit(0)
+
+        if args == []:
+            colors.show("umount", "fail", "no inputs.")
+            sys.exit(0)
+
+        clouddrive = args[0]
+
+        if not files.isfile(f'/dev/{clouddrive}'):
+            colors.show("umount", "fail", f"{clouddrive}: cloud drive not exists.")
+            sys.exit(0)
+
+        commands.cd (['/'])
+        files.removedirs(f'/stor/{clouddrive}')
+
+    # down mani:/Files/mani
+
+    def down (self,args):
+        files = Files()
+        colors = Colors()
+        control = Control()
+        permissions = Permissions()
+
+
+        if not permissions.check_root(files.readall('/proc/info/su')):
+            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
+                colors.show("down", "perm", "")
+                sys.exit(0)
+
+        if args == []:
+            colors.show("down", "fail", "no inputs.")
+            sys.exit(0)
+
+        filename = args[0]
+
+        clouddrive = files.readall('/proc/info/csel')
+        clouddrivez = f'/dev/{clouddrive}'
+
+        host = control.read_record('host', clouddrivez)
+        password = control.read_record('password', clouddrivez)
+
+        x = requests.post(f"{host}/{control.read_record('download',clouddrivez)}",data={"password":password,"filename":filename})
+
+        if x.text == 'e: wrong password':
+            colors.show("down", "fail", f"{clouddrive}: wrong password in device database.")
+        elif x.text == 'e: empty password':
+            colors.show("down", "fail", f"{clouddrive}: empty password in device database.")
+        elif x.text == 'e: file not found':
+            colors.show("down", "fail", f"{clouddrive}: {filename}: file not file in cloud drive.")
+        else:
+            files.write(f'/stor/{clouddrive}/{filename}',x.text)
+
+    def rem (self,args):
+        files = Files()
+        colors = Colors()
+        control = Control()
+        permissions = Permissions()
+
+        if not permissions.check_root(files.readall('/proc/info/su')):
+            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
+                colors.show("rem", "perm", "")
+                sys.exit(0)
+
+        if args == []:
+            colors.show("rem", "fail", "no inputs.")
+            sys.exit(0)
+
+        filename = args[0]
+
+        clouddrive = files.readall('/proc/info/csel')
+        clouddrivez = f'/dev/{clouddrive}'
+
+        host = control.read_record('host', clouddrivez)
+        password = control.read_record('password', clouddrivez)
+
+        x = requests.post(f"{host}/{control.read_record('remove',clouddrivez)}",data={"password":password,"filename":filename})
+
+        if x.text == 'e: wrong password':
+            colors.show("down", "fail", f"{clouddrive}: wrong password in device database.")
+        elif x.text == 'e: empty password':
+            colors.show("down", "fail", f"{clouddrive}: empty password in device database.")
+        elif x.text == 'e: file not found':
+            colors.show("down", "fail", f"{clouddrive}: {filename}: file not file in cloud drive.")
+        else:
+            if files.isfile (f'/stor/{clouddrive}/{filename}'):
+                files.remove(f'/stor/{clouddrive}/{filename}')
+            elif files.isdir(f'/stor/{clouddrive}/{filename}'):
+                files.removedirs(f'/stor/{clouddrive}/{filename}')
+
+    def mkc (self,args):
+        files = Files()
+        colors = Colors()
+        control = Control()
+        permissions = Permissions()
+
+
+        if not permissions.check_root(files.readall('/proc/info/su')):
+            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
+                colors.show("mkc", "perm", "")
+                sys.exit(0)
+
+        if args == []:
+            colors.show("mkc", "fail", "no inputs.")
+            sys.exit(0)
+
+        dirname = args[0]
+
+        clouddrive = files.readall('/proc/info/csel')
+        clouddrivez = f'/dev/{clouddrive}'
+
+        host = control.read_record('host', clouddrivez)
+        password = control.read_record('password', clouddrivez)
+
+        x = requests.post(f"{host}/{control.read_record('directory',clouddrivez)}",data={"password":password,"dirname":dirname})
+
+        if x.text == 'e: wrong password':
+            colors.show("mkc", "fail", f"{clouddrive}: wrong password in device database.")
+        elif x.text == 'e: empty password':
+            colors.show("mkc", "fail", f"{clouddrive}: empty password in device database.")
+        elif x.text == 'e: is a file':
+            colors.show("mkc", "fail", f"{clouddrive}: {dirname}: cannot create directory; is a file.")
+        else:
+            x = f'/stor/{clouddrive}/{dirname}'
+            if files.isfile (x):
+                colors.show("mkc", "fail", f"{clouddrive}: {dirname}: cannot create directory; is a file.")
+            elif not files.isdir (x):
+                files.mkdir(x)
+
+    def up (self,args):
+        files = Files()
+        colors = Colors()
+        control = Control()
+        permissions = Permissions()
+
+        if not permissions.check_root(files.readall('/proc/info/su')):
+            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
+                colors.show("up", "perm", "")
+                sys.exit(0)
+
+        if args == []:
+            colors.show("up", "fail", "no inputs.")
+            sys.exit(0)
+
+        clouddrive = files.readall('/proc/info/csel')
+        filename = args[0]
+
+        clouddrivez = f'/dev/{clouddrive}'
+
+        host = control.read_record('host', clouddrivez)
+        password = control.read_record('password', clouddrivez)
+
+        data = files.readall(f'/stor/{clouddrive}/{filename}')
+
+        x = requests.post(f"{host}/{control.read_record('upload',clouddrivez)}",data={"password":password,"filename":filename,"data":data})
+
+        if x.text == 'e: wrong password':
+            colors.show("up", "fail", f"{clouddrive}: wrong password in device database.")
+        elif x.text == 'e: empty password':
+            colors.show("up", "fail", f"{clouddrive}: empty password in device database.")
+        elif x.text == 'e: is a directory':
+            colors.show("up", "fail", f"{clouddrive}: {filename}: cannot create file; is a directory in cloud drive.")
+
+    # chown #
+    def chown (self,args):
+        files = Files()
+        colors = Colors()
+        permissions = Permissions()
+        new_owner = args[0]
+        name = args[1]
 
         if args==[]:
             colors.show("chown", "fail", "no inputs.")
@@ -901,32 +880,29 @@ class Commands:
     # logout #
     def logout (self,args):
         files = Files()
-        colors = Colors()
         process = Process()
-
         if files.isfile("/proc/selected"): files.remove("/proc/selected")
         process.endall()
-        subprocess.call([sys.executable,files.readall("/proc/info/boot"), 'login'])
+        subprocess.call([sys.executable,'vmabr.pyc', 'login'])
 
     # new #
     def new (self,args):
-        colors = Colors()
         files = Files()
         control = Control()
-
-        boot = files.readall("/proc/info/boot")
 
         user = control.read_record("username", "/tmp/su.tmp")
         code = control.read_record ("code","/tmp/su.tmp")
 
         if files.isfile("/proc/selected"): files.remove("/proc/selected")
         if user == "guest":
-            subprocess.call([sys.executable,boot, 'user', 'guest'])
+            subprocess.call([sys.executable,'vmabr.pyc', 'user', 'guest'])
         else:
-            subprocess.call([sys.executable,boot, 'user', user, code])
+            subprocess.call([sys.executable,'vmabr.pyc', 'user', user, code])
 
     # det Delete Text from a line
     def det (self,args):
+        files = Files()
+        control = Control()
         control = Control()
         files = Files()
         for i in args:
@@ -934,8 +910,9 @@ class Commands:
 
     # reboot #
     def reboot (self,args):
-        colors = Colors()
+
         files = Files()
+        colors = Colors()
         process = Process()
 
         if files.isfile("/proc/selected"): files.remove("/proc/selected")
@@ -958,14 +935,12 @@ class Commands:
         process.endall()
 
         if files.readall('/proc/info/os')=='Pyabr' and not files.isfile ('/.unlocked'):
-            os.system('echo "toor" | sudo -S -k systemctl reboot')
+            subprocess.call(['reboot'])
         else:
-            subprocess.call([sys.executable,files.readall("/proc/info/boot")])
+            subprocess.call([sys.executable,'vmabr.pyc'])
 
     # shut command #
     def shut (self,args):
-        colors = Colors()
-        control = Control()
         files = Files()
         process = Process()
 
@@ -982,12 +957,10 @@ class Commands:
             process.endall()
 
             if files.readall('/proc/info/os') == 'Pyabr' and not files.isfile('/.unlocked'):
-                os.system('echo "toor" | sudo -S -k systemctl poweroff')
+                subprocess.call(['poweroff'])
 
     # shutdown command #
     def shutdown (self,args):
-        colors = Colors()
-        control = Control()
         files = Files()
         process = Process()
 
@@ -1010,24 +983,22 @@ class Commands:
         process.endall()
 
         if files.readall('/proc/info/os') == 'Pyabr' and not files.isfile('/.unlocked'):
-            os.system('echo "toor" | sudo -S -k systemctl poweroff')
+            subprocess.call(['poweroff'])
 
 
     # touch #
     def touch (self,args):
         files = Files()
+
         for i in args:
             files.create(i)
 
     # cat command #
     def cat (self,args):
-        colors = Colors()
-        control = Control()
         files = Files()
-        process = Process()
+        colors = Colors()
         permissions = Permissions()
 
-        ## args ##
 
         cmdln = ['']
         cmdln[1:] = args
@@ -1051,14 +1022,14 @@ class Commands:
                 else:
                     colors.show("cat", "perm", "")
             elif files.isdir(name):
-                colors.show("cat", "fail", name + ": is a directory.")
+                colors.show("cat", "fail", f"{name}: is a directory.")
             else:
-                colors.show("cat", "fail", name + ": file not found.")
+                colors.show("cat", "fail", f"{name}: file not found.")
 
         ## Create files ##
         elif option == '-c':
             if files.isdir(name):
-                colors.show("cat", "fail", name + ": is a directory.")
+                colors.show("cat", "fail", f"{name}: is a directory.")
             else:
                 if permissions.check(files.output(name), "w", files.readall("/proc/info/su")):
                     files.create(name)
@@ -1068,12 +1039,12 @@ class Commands:
         ## Write in lines
         elif option == '-l':
             if files.isdir(name):
-                colors.show("cat", "fail", name + ": is a directory.")
+                colors.show("cat", "fail",  f"{name}: is a directory.")
             else:
                 if permissions.check(files.output(name), "w", files.readall("/proc/info/su")):
                     strv = ''
                     for i in cmdln[3:]:
-                        strv+=' '+i
+                        strv+=f' {i}'
                     files.write(name,strv[1:])
                 else:
                     colors.show("cat", "perm", "")
@@ -1081,7 +1052,7 @@ class Commands:
         ## Write into files ##
         elif option == '-w':
             if files.isdir(name):
-                colors.show("cat", "fail", name + ": is a directory.")
+                colors.show("cat", "fail", f"{name}: is a directory.")
             else:
                 if permissions.check(files.output(name), "w", files.readall("/proc/info/su")):
 
@@ -1103,7 +1074,7 @@ class Commands:
                             if texts == '':
                                 texts = cmd
                             else:
-                                texts = texts + '\n' + cmd
+                                texts =  f'{texts}\n{cmd}'
 
                     ## WRITE INTO FILE
                     files.write(cmdln[2], texts)
@@ -1113,7 +1084,7 @@ class Commands:
         ## Write into files ##
         elif option == '-a':
             if files.isdir(name):
-                colors.show("cat", "fail", name + ": is a directory.")
+                colors.show("cat", "fail", f"{name}: is a directory.")
             else:
                 if permissions.check(files.output(name), "w", files.readall("/proc/info/su")):
 
@@ -1135,7 +1106,7 @@ class Commands:
                             if texts == '':
                                 texts = cmd
                             else:
-                                texts = texts + '\n' + cmd
+                                texts = f'{texts}\n{cmd}'
 
                     ## WRITE INTO FILE
                     files.append(cmdln[2], texts)
@@ -1144,10 +1115,9 @@ class Commands:
 
     # cd command #
     def cd (self,args):
-        permissions = Permissions()
         files = Files()
         colors = Colors()
-
+        permissions = Permissions()
         if args==[]:
             colors.show("cd", "fail", "no inputs.")
             sys.exit (0)
@@ -1166,7 +1136,7 @@ class Commands:
                 strv = ''
 
                 for i in pwd:
-                    strv += "/" + i
+                    strv += f"/{i}"
 
                 if strv.startswith('////'):
                     strv = strv.replace('////','/')
@@ -1181,19 +1151,16 @@ class Commands:
             elif files.isdir(path):
                 files.write("/proc/info/pwd", files.output(path))
             else:
-                colors.show("cd", "fail", path + ": directory not found.")
+                colors.show("cd", "fail", f"{path}: directory not found.")
         else:
             colors.show("cd", "perm", "")
 
     # clean command #
     def clean (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
         permissions = Permissions()
-
+ 
         user = files.readall("/proc/info/su")
         select = files.readall("/proc/info/sel")
 
@@ -1207,12 +1174,7 @@ class Commands:
 
     # clear command #
     def clear (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
-        colors = Colors()
-        process = Process()
-        permissions = Permissions()
 
         osname = files.readall("/proc/info/os")
         if osname == "Windows":
@@ -1222,12 +1184,11 @@ class Commands:
 
     # cp command #
     def cp (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
+        control = Control()
         permissions = Permissions()
+
 
         # args #
         cmdln = ['']
@@ -1245,7 +1206,7 @@ class Commands:
 
         if files.isdir(src):
             if files.isfile(dest):
-                colors.show("cp", "fail", dest + ": dest is a file.")
+                colors.show("cp", "fail", f"{dest}: dest is a file.")
             else:
                 if permissions.check(files.output(src), "r", files.readall("/proc/info/su")):
                     if permissions.check(files.output(dest), "w", files.readall("/proc/info/su")):
@@ -1259,7 +1220,7 @@ class Commands:
                     colors.show("cp", "perm", "")
         elif files.isfile(src):
             if files.isdir(dest):
-                colors.show("cp", "fail", dest + ": dest is a directory.")
+                colors.show("cp", "fail", f"{dest}: dest is a directory.")
             else:
                 if permissions.check(files.output(src), "r", files.readall("/proc/info/su")):
                     if permissions.check(files.output(dest), "w", files.readall("/proc/info/su")):
@@ -1271,16 +1232,11 @@ class Commands:
                 else:
                     colors.show("cp", "perm", "")
         else:
-            colors.show("cp", "fail", src + ": source not found.")
+            colors.show("cp", "fail", f"{src}: source not found.")
 
     # date command #
     def date (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
-        colors = Colors()
-        process = Process()
-        permissions = Permissions()
 
         ## Show all time and date ##
         if args == []:
@@ -1294,11 +1250,9 @@ class Commands:
 
     # getv command #
     def getv (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
+        control = Control()
         permissions = Permissions()
 
         select = files.readall("/proc/info/sel")
@@ -1306,45 +1260,48 @@ class Commands:
             if permissions.check(files.output(select), "w", files.readall("/proc/info/su")):
                 listinfo = files.list("/proc/info")
                 for i in listinfo:
-                    control.write_record(i, files.readall("/proc/info/" + i), select)
+                    control.write_record(i, files.readall(f"/proc/info/{i}"), select)
             else:
                 colors.show("getv", "perm", "")
         else:
             listinfo = files.list("/proc/info")
             for i in listinfo:
-                control.write_record(i, files.readall("/proc/info/" + i), select)
+                control.write_record(i, files.readall(f"/proc/info/{i}"), select)
 
     # help command #
     def help (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
-        permissions = Permissions()
+
+        x =  files.list ('/usr/share/helps')
+        x.sort()
 
         if args==[]:
-            print(files.readall("/usr/share/helps/cmdall.txt"))
+            
+            print (f"{colored('Commands are:','cyan')}")
+            for i in x:
+                print(i,end=' ')
+            print (f"\n{colored('Try help [command] to see more informations','cyan')}")
         else:
-            if files.isfile("/usr/share/helps/" + args[0] + ".txt"):
-                print(files.readall("/usr/share/helps/" + args[0] + ".txt"))
+            if files.isfile(f"/usr/share/helps/{args[0]}"):
+                print(files.readall(f"/usr/share/helps/{args[0]}"))
             else:
-                print(files.readall("/usr/share/helps/cmdall.txt"))
+                print (f"{colored('Commands are:','cyan')}")
+                for i in x:
+                    print(i,end=' ')
+                print (f"\n{colored('Try help [command] to see more informations','cyan')}")
 
     # read command #
     def read (self,args):
+
         for i in args:
-            self.set([i+":",input()])
+            self.set([f"{i}:",input()])
 
     # ls command #
     def ls (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
         permissions = Permissions()
-
         path = None
         options = None
 
@@ -1366,63 +1323,61 @@ class Commands:
                     list = files.list(path)
                     list.sort()
                     for i in list:
-                        if files.isdir(path + "/" + i):
-                            print(colors.get_path() + i + "/" + colors.get_colors())
+                        if files.isdir(f"{path}/{i}"):
+                            print(f"{colored(f'{i}/','cyan')}")
                         else:
                             print(i)
                 else:
                     colors.show("ls", "perm", "")
             else:
-                colors.show("ls", "fail", path + ": directory not found.")
+                colors.show("ls", "fail", f"{path}: directory not found.")
         elif options == "-p":
             if files.isdir(path):
                 if permissions.check(files.output(path), "r", files.readall("/proc/info/su")):
                     list = files.list(path)
                     list.sort()
                     for i in list:
-                        if files.isdir(path + "/" + i):
-                            perm = permissions.get_permissions(files.output(path + i))
-                            print(perm + "\t" + colors.get_path() + i + "/" + colors.get_colors())
+                        if files.isdir( f"{path}/{i}"):
+                            perm = permissions.get_permissions(files.output(f"{path}{i}"))
+                            c = colored(f'{perm}\t{i}/','cyan')
+                            print(f"{c}")
                         else:
-                            perm = permissions.get_permissions(files.output(path + i))
-                            print(perm + "\t" + i)
+                            perm = permissions.get_permissions(files.output(f"{path}{i}"))
+                            print(f"{perm}\t{i}")
                 else:
                     colors.show("ls", "perm", "")
             else:
-                colors.show("ls", "fail", path + ": directory not found.")
+                colors.show("ls", "fail",  f"{path}: directory not found.")
         elif options == "-n":
             if files.isdir(path):
                 if permissions.check(files.output(path), "r", files.readall("/proc/info/su")):
                     list = files.list(path)
                     list.sort()
                     for i in list:
-                        if files.isdir(path + "/" + i):
-                            perm = permissions.get_permissions(path + "/" + i)
+                        if files.isdir(f"{path}/{i}"):
+                            perm = permissions.get_permissions(f"{path}/{i}")
                             perm = str(permissions.show_number(perm))
-                            print(perm + "\t" + colors.get_path() + i + "/" + colors.get_colors())
+                            c = colored(f'{perm}\t{i}/','cyan')
+                            print(f"{c}")
                         else:
-                            perm = permissions.get_permissions(path + "/" + i)
+                            perm = permissions.get_permissions(f"{path}/{i}")
                             perm = str(permissions.show_number(perm))
-                            print(perm + "\t" + i)
+                            print(f"{perm}\t{i}")
                 else:
                     colors.show("ls", "perm", "")
             else:
-                colors.show("ls", "fail", path + ": directory not found.")
-
+                colors.show("ls", "fail", f"{path}: directory not found.")
     # mkdir command #
     def mkdir (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
         permissions = Permissions()
 
         for i in args:
             if files.isfile(i):
-                colors.show("mkdir", "fail", i + ": is a file.")
+                colors.show("mkdir", "fail", f"{i}: is a file.")
             elif files.isdir(i):
-                colors.show("mkdir", "warning", i + ": directory exists.")
+                colors.show("mkdir", "warning", f"{i}: directory exists.")
             else:
                 if permissions.check(files.output(i), "w", files.readall("/proc/info/su")):
                     files.makedirs(i)
@@ -1431,11 +1386,9 @@ class Commands:
 
     # mv command #
     def mv (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
+        control = Control()
         permissions = Permissions()
 
         # args #
@@ -1452,7 +1405,7 @@ class Commands:
 
         if files.isdir(src):
             if files.isfile(dest):
-                colors.show("mv", "fail", dest + ": dest is a file.")
+                colors.show("mv", "fail", f"{dest}: dest is a file.")
             else:
                 if permissions.check(files.output(src), "r", files.readall("/proc/info/su")) and permissions.check(
                         files.output(src), "w", files.readall("/proc/info/su")):
@@ -1467,7 +1420,7 @@ class Commands:
                     colors.show("mv", "perm", "")
         elif files.isfile(src):
             if files.isdir(dest):
-                colors.show("mv", "fail", dest + ": dest is a directory.")
+                colors.show("mv", "fail", f"{dest}: dest is a directory.")
             else:
                 if permissions.check(files.output(src), "r", files.readall("/proc/info/su")) and permissions.check(
                         files.output(src), "w", files.readall("/proc/info/su")):
@@ -1481,7 +1434,7 @@ class Commands:
                 else:
                     colors.show("mv", "perm", "")
         else:
-            colors.show("mv", "fail", src + ": source not found.")
+            colors.show("mv", "fail", f"{src}: source not found.")
 
     # echo command #
     def echo (self,args):
@@ -1499,11 +1452,9 @@ class Commands:
 
     # rm command #
     def rm (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
+        control = Control()
         permissions = Permissions()
 
         for i in args:
@@ -1522,18 +1473,14 @@ class Commands:
                     colors.show("rm", "perm", "")
                     sys.exit(0)
             else:
-                colors.show("rm", "fail", i + ": file or directory not found.")
+                colors.show("rm", "fail", f"{i}: file or directory not found.")
                 sys.exit(0)
 
     ## passwd ##
     def passwd (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
-        permissions = Permissions()
-
+        control = Control()
         if args==[]:
             colors.show('passwd','fail','no inputs.')
             sys.exit(0)
@@ -1541,27 +1488,13 @@ class Commands:
         user = args[0]
 
         # check user exists
-        if not files.isfile('/etc/users/'+user):
-            colors.show('passwd', 'fail', user+": user not found.")
+        if not files.isfile(f'/etc/users/{user}'):
+            colors.show('passwd', 'fail', f"{user}: user not found.")
             sys.exit(0)
 
-        # check user exists with hashname
 
-        username = control.read_record('username','/etc/users/'+user)
-        hashname = hashlib.sha3_256(user.encode()).hexdigest()
-
-        if not username==hashname:
-            colors.show('passwd', 'fail', user + ": user not found.")
-            sys.exit(0)
-
-        # old password
-
-        code = control.read_record('code','/etc/users/'+user)
-
-        oldcode = hashlib.sha3_512(getpass.getpass('Enter '+user+"'s old password: ").encode()).hexdigest()
-
-        if not code==oldcode:
-            colors.show('passwd', 'fail', user + ": wrong password.")
+        if not control.read_record('code',f'/etc/users/{user}')== hashlib.sha3_512(getpass.getpass(f'Enter {user}\'s old password: ').encode()).hexdigest():
+            colors.show('passwd', 'fail', f"{user}: wrong password.")
             sys.exit(0)
 
         newcode = getpass.getpass('Enter a new password: ')
@@ -1572,7 +1505,7 @@ class Commands:
             else:
                 print('Try agian!')
 
-        control.write_record('code',hashlib.sha3_512(newcode.encode()).hexdigest(),'/etc/users/'+user)
+        control.write_record('code',hashlib.sha3_512(newcode.encode()).hexdigest(),f'/etc/users/{user}')
 
     # say command #
     def say (self,args):
@@ -1589,11 +1522,8 @@ class Commands:
 
     # sel command #
     def sel (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
         permissions = Permissions()
 
         if args == []:
@@ -1610,15 +1540,13 @@ class Commands:
             else:
                 colors.show("sel", "perm", "")
         else:
-            colors.show("sel", "fail", database_name + ": controller not found.")
+            colors.show("sel", "fail", f"{database_name}: controller not found.")
 
     # set command #
     def set (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
+        control = Control()
         permissions = Permissions()
 
         if args == [] or args[1:] == []:
@@ -1643,13 +1571,6 @@ class Commands:
 
     # sleep command #
     def sleep (self,args):
-        modules = Modules()
-        files = Files()
-        control = Control()
-        colors = Colors()
-        process = Process()
-        permissions = Permissions()
-
         if args == []:
             time.sleep(3)
         else:
@@ -1658,12 +1579,9 @@ class Commands:
 
     # su command #
     def su (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
-        permissions = Permissions()
+        control = Control()
 
         if args == []:
             colors.show("su", "fail", "no inputs.")
@@ -1674,37 +1592,29 @@ class Commands:
 
         if files.isfile("/proc/selected"): files.remove("/proc/selected")
         if user == input_username:
-            colors.show("su", "warning", user + " has already switched.")
+            colors.show("su", "warning", f"{user} has already switched.")
         elif input_username == "guest":
             enable_cli = control.read_record("enable_cli", "/etc/guest")
             if enable_cli == "Yes":
-                subprocess.call ([sys.executable,files.readall("/proc/info/boot"),'user','guest'])
+                subprocess.call ([sys.executable,'vmabr.pyc','user','guest'])
             else:
                 colors.show(input_username, "fail", "user not found.")
 
-        elif files.isfile("/etc/users/" + input_username):
-            hashname = hashlib.sha3_256(str(input_username).encode()).hexdigest()
-            username = control.read_record("username", "/etc/users/" + input_username)
-            if hashname == username:
-                input_password = getpass.getpass('Enter ' + input_username + '\'s password: ')
-                hashcode = hashlib.sha3_512(str(input_password).encode()).hexdigest()
-                password = control.read_record("code", "/etc/users/" + input_username)
-                if hashcode == password:
-                    subprocess.call ([sys.executable,files.readall("/proc/info/boot"),'user',input_username,input_password])
+        elif files.isfile(f"/etc/users/{input_username}"):
+
+                input_password = getpass.getpass(f'Enter {input_username}\'s password: ')
+                if hashlib.sha3_512(str(input_password).encode()).hexdigest() == control.read_record("code", f"/etc/users/{input_username}"):
+                    subprocess.call ([sys.executable,'vmabr.pyc','user',input_username,input_password])
                 else:
-                    colors.show("su", "fail", input_username + ": wrong password.")
-            else:
-                colors.show("su", "fail", input_username + " user not found.")
+                    colors.show("su", "fail", f"{input_username}: wrong password.")
+
         else:
-            colors.show("su", "fail", input_username + " user not found.")
+            colors.show("su", "fail", f"{input_username} user not found.")
 
     # sudo command #
     def sudo (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
         permissions = Permissions()
 
         if args == []:
@@ -1727,14 +1637,14 @@ class Commands:
                 sudoers = files.readall('/etc/sudoers')
 
                 if not sudoers.__contains__(thisuser):
-                    colors.show('sudo', 'fail', thisuser + ": user isn't sudoers account.")
+                    colors.show('sudo', 'fail', f"{thisuser}: user isn't sudoers account.")
                     sys.exit()
 
             ## Send /etc/users/root to /proc/info/su username ##
 
             files.write("/proc/info/su", 'root')
 
-            prompt = [sys.executable,files.readall('/proc/info/boot'), 'exec']
+            prompt = [sys.executable,'vmabr.pyc', 'exec']
 
             for i in args:
                 prompt.append(i)
@@ -1748,26 +1658,18 @@ class Commands:
                 colors.show("sudo", "perm", "")
                 sys.exit(0)
             ## Check user exists or no ##
-            if files.isfile('/etc/users/' + args[1]):
-                hashname = hashlib.sha3_256(args[1].encode()).hexdigest()
-                username = control.read_record('username', '/etc/users/' + args[1])
-
-                if hashname == username:
-                    files.append('/etc/sudoers', args[1] + "\n")
-                else:
-                    colors.show('sudo', 'fail', args[1] + ": user not found.")
+            if files.isfile(f'/etc/users/{args[1]}'):
+                files.append('/etc/sudoers', f"{args[1]}\n")
             else:
-                colors.show('sudo', 'fail', args[1] + ": user not found.")
+                colors.show('sudo', 'fail', f"{args[1]}: user not found.")
         else:
-            colors.show('sudo', 'fail', args[1] + ": option not found.")
+            colors.show('sudo', 'fail', f"{args[1]}: option not found.")
 
     # uadd command #
     def uadd (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
+        control = Control()
         permissions = Permissions()
 
         if args == []:
@@ -1779,8 +1681,8 @@ class Commands:
 
         if permissions.check_root(user):
             ## Check exists user ##
-            if files.isfile("/etc/users/" + input_username) or input_username == "root":
-                colors.show("uadd", "fail", input_username + ": user exists.")
+            if files.isfile(f"/etc/users/{input_username}") or input_username == "root":
+                colors.show("uadd", "fail", f"{input_username}: user exists.")
             elif input_username == "guest":
                 colors.show("uadd", "fail", "cannot create user account with guest username.")
             else:
@@ -1790,8 +1692,7 @@ class Commands:
                     if password == confirm: break
 
                 ## Informations ##
-                first_name = input('\tFirst name      []: ')
-                last_name =  input('\tLast name       []: ')
+                fullname = input  ('\tFull name       []: ')
                 company =    input('\tCompany name    []: ')
                 birthday =   input('\tBirthday        []: ')
                 gender =     input('\tGender          [Male/Female]: ')
@@ -1800,45 +1701,37 @@ class Commands:
                 website =    input('\tWebsite address []: ')
                 email =      input('\tEmail address   []: ')
 
-                hashname = hashlib.sha3_256(str(input_username).encode()).hexdigest()
-                hashcode = hashlib.sha3_512(str(password).encode()).hexdigest()
-
-                files.create("/etc/users/" + input_username)
-                control.write_record("username", hashname, '/etc/users/' + input_username)
-                control.write_record("code", hashcode, '/etc/users/' + input_username)
+                files.create(f"/etc/users/{input_username}")
+                control.write_record("code", hashlib.sha3_512(str(password).encode()).hexdigest(), f'/etc/users/{input_username}')
 
                 ## Add informations ##
-                if not (first_name == None or first_name == ""):
-                    control.write_record("first_name", first_name, '/etc/users/' + input_username)
-                if not (last_name == None or last_name == ""):
-                    control.write_record("last_name", last_name, '/etc/users/' + input_username)
+                if not (fullname == None or fullname == ""):
+                    control.write_record("fullname", fullname,f'/etc/users/{input_username}')
                 if not (company == None or company == ""):
-                    control.write_record("company", company, '/etc/users/' + input_username)
+                    control.write_record("company", company, f'/etc/users/{input_username}')
                 if not (birthday == None or birthday == ""):
-                    control.write_record("birthday", birthday, '/etc/users/' + input_username)
+                    control.write_record("birthday", birthday, f'/etc/users/{input_username}')
                 if not (gender == None or gender == ""):
-                    control.write_record("gender", gender, '/etc/users/' + input_username)
+                    control.write_record("gender", gender, f'/etc/users/{input_username}')
                 if not (blood_type == None or blood_type == ""):
-                    control.write_record("blood_type", blood_type, '/etc/users/' + input_username)
+                    control.write_record("blood_type", blood_type, f'/etc/users/{input_username}')
                 if not (phone == None or phone == ""):
-                    control.write_record("phone", phone, '/etc/users/' + input_username)
+                    control.write_record("phone", phone, f'/etc/users/{input_username}')
                 if not (website == None or website == ""):
-                    control.write_record("website", website, '/etc/users/' + input_username)
+                    control.write_record("website", website, f'/etc/users/{input_username}')
                 if not (email == None or email == ""):
-                    control.write_record("email", email, '/etc/users/' + input_username)
+                    control.write_record("email", email, f'/etc/users/{input_username}')
 
-                control.write_record('/desk/'+input_username,"drwxr-x---/"+input_username,'/etc/permtab')
+                control.write_record(f'/desk/{input_username}',f"drwxr-x---/{input_username}",'/etc/permtab')
 
         else:
             colors.show("uadd", "perm", "")
 
     # udel command #
     def udel (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
+        control = Control()
         permissions = Permissions()
 
         if args == []:
@@ -1849,38 +1742,27 @@ class Commands:
         user = files.readall ("/proc/info/su")
 
         if input_username == user:
-            colors.show("udel", "fail", input_username + ": cannot remove switched user.")
+            colors.show("udel", "fail", f"{input_username}: cannot remove switched user.")
         else:
             if permissions.check_root(user):
-                if not files.isfile("/etc/users/" + input_username):
-                    colors.show("udel", "fail", input_username + ": user not found.")
+                if not files.isfile(f"/etc/users/{input_username}"):
+                    colors.show("udel", "fail",  f"{input_username}: user not found.")
                 else:
                     if input_username == "root":
-                        colors.show("udel", "fail", input_username + ": is a permanet user.")
+                        colors.show("udel", "fail",   f"{input_username}: is a permanet user.")
                     else:
-                        hashname = hashlib.sha3_256(str(input_username).encode()).hexdigest()  ## Create hashname
-                        username = control.read_record("username", "/etc/users/" + input_username)
-
-                        if not hashname == username:
-                            colors.show("udel", "fail", input_username + ": user not found.")
-                        else:
-                            files.remove("/etc/users/" + input_username)
-                            if files.isdir('/desk/' + input_username):
-                                files.removedirs("/desk/" + input_username)
-                                control.remove_record('/desk/'+input_username,'/etc/permtab')
+                        files.remove(f"/etc/users/{input_username}")
+                        if files.isdir(f'/desk/{input_username}'):
+                            files.removedirs(f"/desk/{input_username}")
+                            control.remove_record(f'/desk/{input_username}','/etc/permtab')
             else:
                 colors.show("udel", "perm", "")
 
     # uinfo command #
     def uinfo (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
-        permissions = Permissions()
-
-        input_username = None
+        control = Control()
 
         if args == []:
             input_username = files.readall ("/proc/info/su")
@@ -1889,65 +1771,55 @@ class Commands:
 
         enable_cli = control.read_record("enable_cli", "/etc/guest")
         if not (input_username == "guest" and enable_cli == "Yes"):
-            if files.isfile("/etc/users/" + input_username):
+            if files.isfile(f"/etc/users/{input_username}"):
                 ## Get information from user database ##
-                first_name = control.read_record("first_name", "/etc/users/" + input_username)
-                last_name = control.read_record("last_name", "/etc/users/" + input_username)
-                company = control.read_record("company", "/etc/users/" + input_username)
-                birthday = control.read_record("birthday", "/etc/users/" + input_username)
-                gender = control.read_record("gender", "/etc/users/" + input_username)
-                blood_type = control.read_record("blood_type", "/etc/users/" + input_username)
-                phone = control.read_record("phone", "/etc/users/" + input_username)
-                website = control.read_record("website", "/etc/users/" + input_username)
-                email = control.read_record("email", "/etc/users/" + input_username)
+                fullname = control.read_record("fullname", f"/etc/users/{input_username}")
+                company = control.read_record("company", f"/etc/users/{input_username}")
+                birthday = control.read_record("birthday", f"/etc/users/{input_username}")
+                gender = control.read_record("gender", f"/etc/users/{input_username}")
+                blood_type = control.read_record("blood_type", f"/etc/users/{input_username}")
+                phone = control.read_record("phone", f"/etc/users/{input_username}")
+                website = control.read_record("website", f"/etc/users/{input_username}")
+                email = control.read_record("email", f"/etc/users/{input_username}")
 
                 ## Show it on screen ##
-                bold = colors.color(1, colors.get_bgcolor(), colors.get_fgcolor())
-                if not (first_name == None or first_name == ""):  print(
-                    "\t   First name: " + bold + first_name + colors.get_colors())
-                if not (last_name == None or last_name == ""):    print(
-                    "\t    Last name: " + bold + last_name + colors.get_colors())
+                if not (fullname == None or fullname == ""):  print(
+                    f"\t   Full name: {fullname}")
                 if not (company == None or company == ""):        print(
-                    "\t      Company: " + bold + company + colors.get_colors())
+                    f"\t      Company: {company}" )
                 if not (birthday == None or birthday == ""):      print(
-                    "\t     Birthday: " + bold + birthday + colors.get_colors())
+                    f"\t     Birthday: {birthday}" )
                 if not (gender == None or gender == ""):          print(
-                    "\t       Gender: " + bold + gender + colors.get_colors())
+                    f"\t       Gender: {gender}")
                 if not (blood_type == None or blood_type == ""):  print(
-                    "\t    BloodType: " + bold + blood_type + colors.get_colors())
+                    f"\t    BloodType: {blood_type}" )
                 if not (phone == None or phone == ""):            print(
-                    "\t Phone number: " + bold + phone + colors.get_colors())
+                    f"\t Phone number: {phone}")
                 if not (website == None or website == ""):        print(
-                    "\t      Website: " + bold + website + colors.get_colors())
+                    f"\t      Website: {website}")
                 if not (email == None or email == ""):            print(
-                    "\tEmail address: " + bold + email + colors.get_colors())
+                    f"\tEmail address: {email}")
             else:
-                colors.show("uinfo", "fail", input_username + ": user not found.")
+                colors.show("uinfo", "fail", f"{input_username}: user not found.")
 
     # unsel command #
     def unsel (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
-        permissions = Permissions()
 
         select = files.readall("/proc/info/sel")
 
-        if select == "/proc/" + files.readall("/proc/info/sp"):
+        if select == f'/proc/{files.readall("/proc/info/sp")}':
             colors.show("unsel", "warning", "controller has already selected.")
         else:
-            files.write("/proc/info/sel", "/proc/" + files.readall("/proc/info/sp"))
+            files.write("/proc/info/sel", f'/proc/{files.readall("/proc/info/sp")}')
             if files.isfile("/proc/selected"): files.remove("/proc/selected")
 
     # upv command #
     def upv (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
+        control = Control()
         permissions = Permissions()
 
         if not permissions.check_root(files.readall("/proc/info/su")):
@@ -1965,16 +1837,14 @@ class Commands:
                 pass
             else:
                 spliter = i.split(': ')
-                files.write('/proc/info/' + spliter[0], spliter[1])
+                files.write(f'/proc/info/{spliter[0]}', spliter[1])
 
     # wget command #
     def wget (self,args):
-        modules = Modules()
         files = Files()
-        control = Control()
         colors = Colors()
-        process = Process()
         permissions = Permissions()
+
 
         # https://www.tutorialspoint.com/downloading-files-from-web-using-python
 
@@ -1986,13 +1856,10 @@ class Commands:
 
         ## Download ##
 
-        url = args[0]
-
-        import requests
-        r = requests.get(url, allow_redirects=True)
         ## Check permissions ##
         if permissions.check(files.output(args[1]), "w", files.readall("/proc/info/su")):
-            open(files.input(args[1]), 'wb').write(r.content)
+            wget.download(args[0],files.input(args[1]))
+            print()
         else:
             colors.show("wget", "perm", "")
 
@@ -2000,14 +1867,17 @@ class Commands:
 # package #
 class Package:
     ## Clean the cache ##
+    def __init__(self):
+        pass
+
     def clean (self):
+
         permissions = Permissions()
         files = Files()
         colors = Colors()
 
         if permissions.check_root(files.readall("/proc/info/su")):
             if files.isdir("/app/cache"):
-                print('Cleaning the cache ...',end='')
                 files.removedirs("/app/cache")
                 files.mkdir("/app/cache")
                 files.mkdir("/app/cache/gets")
@@ -2016,7 +1886,6 @@ class Package:
                 files.mkdir("/app/cache/archives/control")
                 files.mkdir("/app/cache/archives/data")
                 files.mkdir("/app/cache/archives/build")
-                print('done')
         else:
             colors.show("paye", "perm", "")
 
@@ -2026,32 +1895,26 @@ class Package:
         permissions = Permissions()
         files = Files()
         colors = Colors()
-        commands = Commands()
 
         if permissions.check_root(files.readall("/proc/info/su")):
-            if not files.isfile(name + "/control/manifest"):
+            if not files.isfile( f"{name}/control/manifest"):
                 colors.show("paye", "fail", "cannot create archive package")
                 self.clean()
                 sys.exit(0)
 
-            if not files.isdir(name + "/data"): files.mkdir(name + "/data")
-            if not files.isdir(name + "/code"): files.mkdir(name + "/code")
+            if not files.isdir(f"{name}/data"): files.mkdir(f"{name}/data")
+            if not files.isdir(f"{name}/code"): files.mkdir(f"{name}/code")
 
             ## Remove cache archives ##
-            print('Precleaning the cache ...',end='')
             if files.isdir('/app/cache/archives/control'): files.removedirs('/app/cache/archives/control')
             if files.isdir('/app/cache/archives/data'): files.removedirs('/app/cache/archives/data')
             if files.isdir('/app/cache/archives/code'): files.removedirs('/app/cache/archives/code')
-            print('done')
 
             ## Copy dir ##
-            print('Copying package source code to cache ...',end='')
-            files.copydir(name + '/data', '/app/cache/archives/data')
-            files.copydir(name + '/control', '/app/cache/archives/control')
-            files.copydir(name + '/code', '/app/cache/archives/code')
-            print('done')
+            files.copydir(f'{name}/data', '/app/cache/archives/data')
+            files.copydir(f'{name}/control', '/app/cache/archives/control')
+            files.copydir(f'{name}/code', '/app/cache/archives/code')
 
-            print('Creating archive package ...',end='')
             ## Pack archives ##
             shutil.make_archive(files.input("/app/cache/archives/build/data"), "zip",
                                 files.input('/app/cache/archives/data'))
@@ -2061,8 +1924,7 @@ class Package:
                                 files.input('/app/cache/archives/code'))
             shutil.make_archive(files.input(name), "zip", files.input("/app/cache/archives/build"))
 
-            files.cut(name + ".zip", name + ".pa")
-            print('done')
+            files.cut(f"{name}.zip", f"{name}.pa")
             ## Unlock the cache ##
         else:
             colors.show("paye", "perm", "")
@@ -2073,14 +1935,13 @@ class Package:
     def unpack(self,name):
         permissions = Permissions()
         files = Files()
-        colors = Colors()
         control = Control()
+        colors = Colors()
         commands = Commands()
 
         if permissions.check_root(files.readall("/proc/info/su")):
 
             ## unpack package ##
-            print('Unpacking into cache ...',end='')
             shutil.unpack_archive(files.input(name), files.input("/app/cache/archives/build"), "zip")
 
             shutil.unpack_archive(files.input("/app/cache/archives/build/data.zip"),
@@ -2092,66 +1953,33 @@ class Package:
 
             ## Get database of this package ##
             name = control.read_record("name", "/app/cache/archives/control/manifest").lower()
-            unpack = control.read_record("unpack", "/app/cache/archives/control/manifest")
-            depends = control.read_record("depends", "/app/cache/archives/control/manifest")
-
-            print('done')
-
-            if not (depends == None):
-                depends.split(",")
-
-            ## Search for tree dependency ##
-
-            if not depends == None:
-                print('Checking depends ...')
-                for i in depends:
-                    if not files.isfile("/app/packages/" + i + ".manifest"):
-                        System ('paye -i ' + name)
-
-            ## Write dependency ##
-
-            if not depends == None:
-                print ('Writing dependencies ...')
-                for i in depends:
-                    files.create("/app/packages/" + i + ".depends")
-                    files.write("/app/packages/" + i + ".depends", name + "\n")
+            unpack =control.read_record("unpack", "/app/cache/archives/control/manifest")
 
             ## Run preinstall script ##
 
             if files.isfile('/app/cache/archives/control/preinstall.sa'):
-                print('Runing Preinstall script ...')
                 System('/app/cache/archives/preinstall')  # Run it
 
                 ## Copy preinstall script ##
 
-                files.copy('/app/cache/archives/control/preinstall.sa', '/app/packages/' + name + ".preinstall")
+                files.copy('/app/cache/archives/control/preinstall.sa', f"/app/packages/{name}.preinstall")
 
             ## Setting up ##
 
-            print ('Setting up package ...',end='')
+            if files.isfile("/app/cache/archives/control/list"): files.copy("/app/cache/archives/control/list",f"/app/packages/{name}.list")
+            if files.isfile("/app/cache/archives/control/manifest"): files.copy("/app/cache/archives/control/manifest",f"/app/packages/{name}.manifest")
+            if files.isfile("/app/cache/archives/control/compile"): files.copy("/app/cache/archives/control/compile",f"/app/packages/{name}.compile")
 
-            if files.isfile("/app/cache/archives/control/list"): files.copy("/app/cache/archives/control/list","/app/packages/" + name + ".list")
-            if files.isfile("/app/cache/archives/control/manifest"): files.copy("/app/cache/archives/control/manifest","/app/packages/" + name + ".manifest")
-            if files.isfile("/app/cache/archives/control/compile"): files.copy("/app/cache/archives/control/compile","/app/packages/" + name + ".compile")
-
-            print('done')
-
-            compilefiles = control.read_record('compile','/app/cache/archives/control/manifest')
-            if compilefiles=='Yes':
-                compiles = control.read_list('/app/cache/archives/control/compile')
-
-                for i in compiles:
+            if control.read_record('compile','/app/cache/archives/control/manifest')=='Yes':
+                for i in control.read_list('/app/cache/archives/control/compile'):
                     spl = i.split(":")
 
-                    code = '/app/cache/archives/code/' + spl[0]
-                    dest = "/app/cache/archives/data/" + spl[1]
+                    code = f'/app/cache/archives/code/{spl[0]}'
+                    dest = f"/app/cache/archives/data/{spl[1]}"
 
-                    print(f'Compiling {code} code ...',end='')
                     commands.cc([code, dest])
-                    print('done')
 
             ## Create data archive ##
-            print('Unpacking archive package ...',end='')
             shutil.make_archive(files.input("/app/cache/archives/build/data"), 'zip',files.input('/app/cache/archives/data'))
 
             ## Unpack data again ##
@@ -2159,27 +1987,25 @@ class Package:
 
             ## Save the source
 
-            shutil.unpack_archive(files.input('/app/cache/archives/build/code.zip'),files.input('/usr/src/'+name),'zip')
-            print('done')
+            shutil.unpack_archive(files.input('/app/cache/archives/build/code.zip'),files.input(f'/usr/src/{name}'),'zip')
 
             ## After install ##
 
             ## Run postinstall script ##
 
             if files.isfile('/app/cache/archives/control/postinstall.sa'):
-                print('Runing Postinstall script ...')
                 System('/app/cache/archives/control/postinstall')  # Run it
 
                 ## Copy postinstall script ##
 
-                files.copy('/app/cache/archives/control/postinstall.sa', '/app/packages/' + name + ".postinstall")
+                files.copy('/app/cache/archives/control/postinstall.sa', f'/app/packages/{name}.postinstall')
 
             ## Copy other scripts ##
             if files.isfile('/app/cache/archives/control/preremove.sa'):
-                files.copy('/app/cache/archives/control/preremove.sa', '/app/packages/' + name + ".preremove")
+                files.copy('/app/cache/archives/control/preremove.sa', f'/app/packages/{name}.preremove')
 
             if files.isfile('/app/cache/archives/control/postremove.sa'):
-                files.copy('/app/cache/archives/control/postremove.sa', '/app/packages/' + name + ".postremove")
+                files.copy('/app/cache/archives/control/postremove.sa', f'/app/packages/{name}.postremove')
 
             ## Unlock the cache ##
         else:
@@ -2189,76 +2015,57 @@ class Package:
     def uninstall (self,name):
         permissions = Permissions()
         files = Files()
+        control = Control()
         colors = Colors()
-        control = Control ()
         name = name.lower()
 
         if permissions.check_root(files.readall("/proc/info/su")):
 
-            location = "/app/packages/" + name + ".manifest"
+            location = f"/app/packages/{name}.manifest"
 
             if not files.isfile(location):
-                colors.show("paye", "fail", name + ": package not found")
+                colors.show("paye", "fail", f"{name}: package not found")
                 self.clean()
                 sys.exit(0)
 
             ## Database control ##
 
-            print('Selecting database ...',end='')
 
-            list = "/app/packages/" + name + ".list"
-            compile = '/app/packages/'+name+".compile"
-            preinstall = "/app/packages/" + name + ".preinstall"
-            postinstall = "/app/packages/" + name + ".postinstall"
-            preremove = "/app/packages/" + name + ".preremove"
-            postremove = "/app/packages/" + name + ".postremove"
-            depends = "/app/packages/" + name+ ".depends"
-
-            print('done')
+            list = f"/app/packages/{name}.list"
+            compile = f'/app/packages/{name}.compile'
+            preinstall = f"/app/packages/{name}.preinstall"
+            postinstall = f"/app/packages/{name}.postinstall"
+            preremove = f"/app/packages/{name}.preremove"
+            postremove = f"/app/packages/{name}.postremove"
 
             ## Create preremove and postremove copies ##
 
-            print('Copying scripts ...',end='')
 
             if files.isfile(preremove): files.copy(preremove, "/usr/app/preremove.sa")
             if files.isfile(postremove): files.copy(postremove, "/usr/app/postremove.sa")
 
-            print('done')
 
             ## Run pre remove script ##
 
             if files.isfile ('/usr/app/preremove.sa'):
-                print('Runing Preremove script ...')
                 System("/usr/app/preremove")
                 files.remove('/usr/app/preremove.sa')
-
-            ## Remove depends ##
-
-            if files.isfile(depends):
-                print('Checking depends ...')
-                depends = control.read_list(depends)
-                for i in depends:
-                    self.remove(i)
 
             ####################
 
             unpack = control.read_record("unpack", location)
 
             ## Unpacked removal ##
-            print(f'Removing data ...',end='')
             filelist = control.read_list(list)
 
             for i in filelist:
-                if files.isdir(unpack + "/" + i):
-                    files.removedirs(unpack + "/" + i)
-                elif files.isfile(unpack + "/" + i):
-                    files.remove(unpack + "/" + i)
+                if files.isdir("{unpack}/{i}"):
+                    files.removedirs("{unpack}/{i}")
+                elif files.isfile("{unpack}/{i}"):
+                    files.remove("{unpack}/{i}")
 
-            print('done')
 
             ## Database removal ##
-
-            print('Removing database ...',end='')
 
             if files.isfile(location): files.remove(location)
             if files.isfile(list): files.remove(list)
@@ -2266,19 +2073,11 @@ class Package:
             if files.isfile(postinstall): files.remove(postinstall)
             if files.isfile(preremove): files.remove(preremove)
             if files.isfile(postremove): files.remove(postremove)
-            if files.isfile(depends): files.remove(depends)
             if files.isfile(compile): files.remove(compile)
-
-            print('done')
-
-            ## Remove the source code ##
-
-            if files.isdir ('/usr/src/'+name): files.removedirs('/usr/src/'+name)
 
             ## Run postremove script ##
 
             if files.isfile ('/usr/app/postremove.sa'):
-                print ('Runing Postremove script ...')
                 System ("postremove")
                 files.remove('/usr/app/postremove.sa')
         else:
@@ -2290,21 +2089,16 @@ class Package:
         permissions = Permissions()
         files = Files()
         colors = Colors()
-        control = Control()
-
         packname = packname.lower()
 
         if permissions.check_root(files.readall("/proc/info/su")):
-            mirror = files.readall('/app/mirrors/' + packname)
+            mirror = files.readall(f'/app/mirrors/{packname}')
 
             ## Download the file ##
-            url = mirror
 
-            import requests
-            r = requests.get(url, allow_redirects=True)
+            wget.download(mirror,files.input(f'/app/cache/gets/{packname}.pa'))
+            print()
 
-            ## Check permissions ##
-            open(files.input('/app/cache/gets/' + packname + '.pa'), 'wb').write(r.content)
         else:
             colors.show("paye", "perm", "")
 
@@ -2313,12 +2107,10 @@ class Package:
         permissions = Permissions()
         files = Files()
         colors = Colors()
-        control = Control()
-
         if permissions.check_root(files.readall("/proc/info/su")):
-            endsplit = mirror.replace('https://', '').replace('http://', '')
-            endsplit = mirror.split('/')
-            files.write('/app/mirrors/' + name.replace('.pa',''), mirror)
+            #endsplit = mirror.replace('https://', '').replace('http://', '')
+            #endsplit = mirror.split('/')
+            files.write(f"/app/mirrors/{name.replace('.pa','')}", mirror)
         else:
             colors.show("paye", "perm", "")
 
@@ -2326,37 +2118,30 @@ class Package:
     def upcloud (self):
         permissions = Permissions()
         files = Files()
-        colors = Colors()
         control = Control()
-        commands = Commands()
-
+        colors = Colors()
         if permissions.check_root(files.readall("/proc/info/su")):
 
             # backup #
-            print('Creating backup ...',end='')
             shutil.make_archive(files.input('/app/cache/backups/users.bak'),'zip',files.input('/etc/users'))
-            files.copy('/etc/color','/app/cache/backups/color.bak')
-            files.copy('/etc/compiler','/app/cache/backups/compiler.bak')
-            files.copy('/etc/exec','/app/cache/backups/exec.bak')
+            files.copy('/etc/commands','/app/cache/backups/commands.bak')
             files.copy('/etc/guest','/app/cache/backups/guest.bak')
             files.copy('/etc/gui','/app/cache/backups/gui.bak')
             files.copy('/etc/hostname','/app/cache/backups/hostname.bak')
             files.copy('/etc/interface','/app/cache/backups/interface.bak')
             files.copy('/etc/modules', '/app/cache/backups/modules.bak')
             files.copy('/etc/permtab','/app/cache/backups/permtab.bak')
+            files.copy('/etc/sudoers','/app/cache/backups/sudoers.bak')
+            files.copy('/etc/profile.sa','/app/cache/backups/profile.sa.bak')
             files.copy('/etc/time', '/app/cache/backups/time.bak')
 
             mode = control.read_record('mode','/etc/paye/sources')
 
-            print('done')
 
-            print(f'Downloading {mode} archive package ... ', end='')
             self.download(mode)
             self.unpack(f'/app/cache/gets/{mode}.pa')
-            print('done')
 
             for i in files.list ('/app/packages'):
-                print('Checing for updates ...')
                 if i.endswith ('.manifest') and files.isfile(f'/app/mirrors/{i.replace(".manifest","")}'):
                     i = i.replace('.manifest','')
 
@@ -2364,49 +2149,23 @@ class Package:
                     old = control.read_record('version',f'/app/packages/{i}.manifest')
                     new = control.read_record('version',f'/app/mirrors/{i}.manifest')
 
-                    if not old==new and not i=='latest' and not i=='stable':
-                        print(f'Downloading {i} archive package ... ', end='')
+                    if not old==new and not i=='latest':
                         self.download(i)
-                        print('done')
-                        print(f'Upgrading {i} package ... ', end='')
                         self.unpack(f'/app/cache/gets/{i}.pa')
-                        print('done')
 
             # backup #
-            print('Restoring backup ...',end='')
             shutil.unpack_archive(files.input('/app/cache/backups/users.bak.zip'), files.input('/etc/users'), 'zip')
             files.remove('/app/cache/backups/users.bak.zip')
-            files.cut('/app/cache/backups/color.bak', '/etc/color')
-            files.cut('/app/cache/backups/compiler.bak', '/etc/compiler')
-            files.cut('/app/cache/backups/exec.bak', '/etc/exec')
+            files.cut('/app/cache/backups/commands.bak', '/etc/commands')
             files.cut('/app/cache/backups/guest.bak', '/etc/guest')
             files.cut('/app/cache/backups/gui.bak', '/etc/gui')
             files.cut('/app/cache/backups/hostname.bak', '/etc/hostname')
             files.cut('/app/cache/backups/interface.bak', '/etc/interface')
             files.cut('/app/cache/backups/modules.bak', '/etc/modules')
             files.cut('/app/cache/backups/permtab.bak', '/etc/permtab')
+            files.cut('/app/cache/backups/sudoers.bak', '/etc/sudoers')
+            files.cut('/app/cache/backups/profile.sa.bak', '/etc/profile.sa')
             files.cut('/app/cache/backups/time.bak', '/etc/time')
-            print('done')
-        else:
-            colors.show("paye", "perm", "")
-
-    ## install from git source ##
-    def gitinstall (self,name):
-        permissions = Permissions()
-        files = Files()
-        colors = Colors()
-        control = Control()
-        commands = Commands()
-
-        if permissions.check_root(files.readall("/proc/info/su")):
-            self.download(name.lower())
-
-            ## unpack pyabr ##
-            shutil.unpack_archive(files.input('/app/cache/gets/'+name.lower()+'.pa'), files.input('/tmp'), 'zip')
-
-            self.build('/tmp/'+name+'-master/packs/'+name.lower())
-            self.unpack('/tmp/'+name+'-master/packs/'+name.lower()+".pa")
-            files.removedirs('/tmp/'+name+"-master")
         else:
             colors.show("paye", "perm", "")
 
@@ -2415,10 +2174,8 @@ class Package:
         permissions = Permissions()
         files = Files()
         colors = Colors()
-        control = Control()
-
         if permissions.check_root(files.readall("/proc/info/su")):
-            files.remove('/app/mirrors/' + name)
+            files.remove(f'/app/mirrors/{name}')
         else:
             colors.show("paye", "perm", "")
 # res #
@@ -2430,98 +2187,101 @@ class Res:
         control = Control()
         return control.read_record(name,f"/usr/share/applications/{app}.desk")
 
+    # Check lang #
+
+    def lang (self,str):
+
+        # en
+        if str.lower().startswith ('a')\
+                or str.startswith ('b')\
+                or str.startswith ('c')\
+                or str.startswith ('d')\
+                or str.startswith ('e')\
+                or str.startswith ('f')\
+                or str.startswith ('g')\
+                or str.startswith ('h')\
+                or str.startswith ('i')\
+                or str.startswith ('j')\
+                or str.startswith ('k')\
+                or str.startswith ('l')\
+                or str.startswith ('m')\
+                or str.startswith ('n')\
+                or str.startswith ('o')\
+                or str.startswith ('p')\
+                or str.startswith ('q')\
+                or str.startswith ('r')\
+                or str.startswith ('s')\
+                or str.startswith ('t')\
+                or str.startswith ('u')\
+                or str.startswith ('v')\
+                or str.startswith ('w')\
+                or str.startswith ('x')\
+                or str.startswith ('y')\
+                or str.startswith ('z'):
+            return 'en'
+        elif str.lower().startswith ('آ')\
+                or str.startswith ('ا')\
+                or str.startswith ('ب')\
+                or str.startswith ('پ')\
+                or str.startswith ('ت')\
+                or str.startswith ('ث')\
+                or str.startswith ('ج')\
+                or str.startswith ('چ')\
+                or str.startswith ('ح')\
+                or str.startswith ('خ')\
+                or str.startswith ('د')\
+                or str.startswith ('ذ')\
+                or str.startswith ('ر')\
+                or str.startswith ('ز')\
+                or str.startswith ('ژ')\
+                or str.startswith ('س')\
+                or str.startswith ('ش')\
+                or str.startswith ('ص')\
+                or str.startswith ('ض')\
+                or str.startswith ('ط')\
+                or str.startswith ('ظ')\
+                or str.startswith ('ع')\
+                or str.startswith ('غ')\
+                or str.startswith ('ک')\
+                or str.startswith ('گ')\
+                or str.startswith ('ل')\
+                or str.startswith ('م')\
+                or str.startswith ('ن')\
+                or str.startswith ('و')\
+                or str.startswith ('ه')\
+                or str.startswith ('ی'):
+            return 'fa'
+        else:
+            # for latest update
+            return 'en'
+
     # layout #
     def key (self,str):
         control = Control()
         files = Files()
+        layout = control.read_record('layout', '/etc/gui')
 
-        locale = control.read_record('locale', '/etc/gui')
+        if not files.isfile(f'/usr/share/locales/{layout}.locale'):
+            layout = 'en'
 
-        if not files.isfile('/usr/share/locales/' + locale + ".locale"):
-            locale = 'en'
+        data = f'/usr/share/locales/{layout}.locale'
 
-        data = f'/usr/share/locales/{locale}.locale'
-
-        str = str.replace ('0',control.read_record('0',data)) \
-            .replace('1', control.read_record('1', data)) \
-            .replace('2', control.read_record('2', data)) \
-            .replace('3', control.read_record('3', data)) \
-            .replace('4', control.read_record('4', data)) \
-            .replace('5', control.read_record('5', data)) \
-            .replace('6', control.read_record('6', data)) \
-            .replace('7', control.read_record('7', data)) \
-            .replace('8', control.read_record('8', data)) \
-            .replace('9', control.read_record('9', data)) \
-            .replace('A', control.read_record('A', data)) \
-            .replace('B', control.read_record('B', data)) \
-            .replace('C', control.read_record('C', data)) \
-            .replace('D', control.read_record('D', data)) \
-            .replace('E', control.read_record('E', data)) \
-            .replace('F', control.read_record('F', data)) \
-            .replace('G', control.read_record('G', data)) \
-            .replace('H', control.read_record('H', data)) \
-            .replace('I', control.read_record('I', data)) \
-            .replace('J', control.read_record('J', data)) \
-            .replace('K', control.read_record('K', data)) \
-            .replace('L', control.read_record('L', data)) \
-            .replace('M', control.read_record('M', data)) \
-            .replace('N', control.read_record('N', data)) \
-            .replace('O', control.read_record('O', data)) \
-            .replace('P', control.read_record('P', data)) \
-            .replace('Q', control.read_record('Q', data)) \
-            .replace('R', control.read_record('R', data)) \
-            .replace('S', control.read_record('S', data)) \
-            .replace('T', control.read_record('T', data)) \
-            .replace('U', control.read_record('U', data)) \
-            .replace('V', control.read_record('V', data)) \
-            .replace('W', control.read_record('W', data)) \
-            .replace('X', control.read_record('X', data)) \
-            .replace('Y', control.read_record('Y', data)) \
-            .replace('Z', control.read_record('Z', data)) \
-            .replace('a', control.read_record('a', data)) \
-            .replace('b', control.read_record('b', data)) \
-            .replace('c', control.read_record('c', data)) \
-            .replace('d', control.read_record('d', data)) \
-            .replace('e', control.read_record('e', data)) \
-            .replace('f', control.read_record('f', data)) \
-            .replace('g', control.read_record('g', data)) \
-            .replace('h', control.read_record('h', data)) \
-            .replace('i', control.read_record('i', data)) \
-            .replace('j', control.read_record('j', data)) \
-            .replace('k', control.read_record('k', data)) \
-            .replace('l', control.read_record('l', data)) \
-            .replace('m', control.read_record('m', data)) \
-            .replace('n', control.read_record('n', data)) \
-            .replace('o', control.read_record('o', data)) \
-            .replace('p', control.read_record('p', data)) \
-            .replace('q', control.read_record('q', data)) \
-            .replace('r', control.read_record('r', data)) \
-            .replace('s', control.read_record('s', data)) \
-            .replace('t', control.read_record('t', data)) \
-            .replace('u', control.read_record('u', data)) \
-            .replace('v', control.read_record('v', data)) \
-            .replace('w', control.read_record('w', data)) \
-            .replace('x', control.read_record('x', data)) \
-            .replace('y', control.read_record('u', data)) \
-            .replace('z', control.read_record('z', data))
-
-        return str
+        return str.replace ('0',control.read_record('0',data)).replace('1', control.read_record('1', data)).replace('2', control.read_record('2', data)).replace('3', control.read_record('3', data)).replace('4', control.read_record('4', data)).replace('5', control.read_record('5', data)).replace('6', control.read_record('6', data)).replace('7', control.read_record('7', data)).replace('8', control.read_record('8', data)).replace('9', control.read_record('9', data)).replace('A', control.read_record('A', data)).replace('B', control.read_record('B', data)).replace('C', control.read_record('C', data)).replace('D', control.read_record('D', data)).replace('E', control.read_record('E', data)).replace('F', control.read_record('F', data)).replace('G', control.read_record('G', data)).replace('H', control.read_record('H', data)).replace('I', control.read_record('I', data)).replace('J', control.read_record('J', data)).replace('K', control.read_record('K', data)).replace('L', control.read_record('L', data)).replace('M', control.read_record('M', data)).replace('N', control.read_record('N', data)).replace('O', control.read_record('O', data)).replace('P', control.read_record('P', data)).replace('Q', control.read_record('Q', data)).replace('R',control.read_record('R', data)).replace('S', control.read_record('S', data)).replace('T', control.read_record('T', data)).replace('U', control.read_record('U', data)).replace('V', control.read_record('V', data)).replace('W', control.read_record('W', data)).replace('X', control.read_record('X', data)).replace('Y', control.read_record('Y', data)).replace('Z', control.read_record('Z', data)).replace('a', control.read_record('a', data)).replace('b', control.read_record('b', data)).replace('c', control.read_record('c', data)).replace('d', control.read_record('d', data)).replace('e', control.read_record('e', data)).replace('f', control.read_record('f', data)).replace('g', control.read_record('g', data)).replace('h', control.read_record('h', data)).replace('i', control.read_record('i', data)).replace('j', control.read_record('j', data)).replace('k', control.read_record('k', data)).replace('l', control.read_record('l', data)).replace('m', control.read_record('m', data)).replace('n', control.read_record('n', data)).replace('o', control.read_record('o', data)).replace('p', control.read_record('p', data)).replace('q', control.read_record('q', data)).replace('r', control.read_record('r', data)).replace('s', control.read_record('s', data)).replace('t', control.read_record('t', data)).replace('u', control.read_record('u', data)).replace('v', control.read_record('v', data)).replace('w', control.read_record('w', data)).replace('x', control.read_record('x', data)).replace('y', control.read_record('y', data)).replace('z', control.read_record('z', data)).replace('~', control.read_record('~', data)).replace('`', control.read_record('`', data)).replace('!', control.read_record('!', data)).replace('@', control.read_record('@', data)).replace('#', control.read_record('#', data)).replace('$', control.read_record('$', data)).replace('%', control.read_record('%', data)).replace('^', control.read_record('^', data)).replace('&', control.read_record('&', data)).replace('*', control.read_record('*', data)).replace('(', control.read_record('(', data)).replace(')', control.read_record(')', data)).replace('-', control.read_record('-', data)).replace('_', control.read_record('_', data)).replace('+', control.read_record('+', data)).replace('=', control.read_record('=', data)).replace('{', control.read_record('{', data)).replace('}', control.read_record('}', data)).replace('[', control.read_record('[', data)).replace(']', control.read_record(']', data)).replace('\\', control.read_record('\\', data)).replace('|', control.read_record('|', data)).replace(';', control.read_record(';', data)).replace('\'', control.read_record('\'', data)).replace('"', control.read_record('"', data)).replace('<', control.read_record('<', data)).replace('>', control.read_record('>', data)).replace(',', control.read_record(',', data)).replace('.', control.read_record('.', data)).replace('/', control.read_record('/', data)).replace('?', control.read_record('?', data))
 
     # get translated number #
     def num (self,number):
         control = Control()
         files = Files()
-        number = str(number)
 
         locale = control.read_record('locale','/etc/gui')
 
-        if not files.isfile('/usr/share/locales/'+locale+".locale"):
+        if not files.isfile(f"/usr/share/locales/{control.read_record('locale','/etc/gui')}.locale"):
             locale = 'en'
 
         tnumber = ''
-        for i in number:
+        for i in str(number):
             if i.isdigit():
-                tnumber += i.replace(i,control.read_record(i,'/usr/share/locales/'+locale+".locale"))
+                tnumber += i.replace(i,control.read_record(i,f'/usr/share/locales/{locale}.locale'))
             else:
                 tnumber += i
 
@@ -2529,13 +2289,8 @@ class Res:
 
     # get resource #
     def get(self,filename):
-        files = Files()
         control = Control()
-
-        # Check android_or_32bit #
-        android_or_32bit = False
-        if files.readall('/proc/info/os')=='Android' or files.readall('/proc/info/arch')=='32bit': android_or_32bit=True
-
+        files = Files()
         if not filename == None:
             filename = filename.split("/")  # @widget:barge
 
@@ -2544,105 +2299,102 @@ class Res:
 
             ## Real Resource ##
             if share.startswith("@layout"):
-                if files.isfile("/usr/share/" + share.replace("@layout", "layouts") + "/" + name + ".ui"):
-                    return files.input("/usr/share/" + share.replace("@layout", "layouts") + "/" + name + ".ui")
-                else:
-                    return None
-
-            elif share.startswith("@font"):
-                if files.isfile("/usr/share/fonts/" + name + ".ttf"):
-                    return files.input("/usr/share/fonts/" + name + ".ttf")
-                else:
-                    return None
+                try:
+                    return files.input(f"/usr/share/layouts/{name}.ui")
+                except:
+                    return ''
 
             elif share.startswith("@background"):
-                if files.isfile("/usr/share/backgrounds/" + name + ".svg"):
-                    if android_or_32bit==False:
-                        return files.input(
-                            "/usr/share/backgrounds/" + name + ".svg")
-                    elif files.isfile("/usr/share/backgrounds/" + name + ".png"):
-                        return files.input("/usr/share/backgrounds/" + name + ".png")
-                elif files.isfile(
-                        "/usr/share/backgrounds/" + name + ".png"):
+                if files.isfile(f"/usr/share/backgrounds/{name}.svg"):
                     return files.input(
-                        "/usr/share/backgrounds/" + name + ".png")
+                            f"/usr/share/backgrounds/{name}.svg")
                 elif files.isfile(
-                        "/usr/share/backgrounds/" + name + ".jpg"):
+                        f"/usr/share/backgrounds/{name}.png"):
                     return files.input(
-                        "/usr/share/backgrounds/" + name + ".jpg")
+                        f"/usr/share/backgrounds/{name}.png")
                 elif files.isfile(
-                        "/usr/share/backgrounds/" + name + ".jpeg"):
+                        f"/usr/share/backgrounds/{name}.jpg"):
                     return files.input(
-                        "/usr/share/backgrounds/" + name + ".jpeg")
+                        f"/usr/share/backgrounds/{name}.jpg")
                 elif files.isfile(
-                        "/usr/share/backgrounds/" + name + ".gif"):
+                        f"/usr/share/backgrounds/{name}.jpeg"):
                     return files.input(
-                        "/usr/share/backgrounds/" + name + ".gif")
+                       f"/usr/share/backgrounds/{name}.jpeg")
+                elif files.isfile(
+                        f"/usr/share/backgrounds/{name}.gif"):
+                    return files.input(
+                       f"/usr/share/backgrounds/{name}.gif")
+                elif files.isfile(
+                        f"/usr/share/backgrounds/{name}.tif"):
+                    return files.input(
+                       f"/usr/share/backgrounds/{name}.tif")
                 else:
-                    return None
+                    return ''
 
             elif share.startswith("@image"):
-                if files.isfile("/usr/share/images/" + name + ".svg"):
-                    if android_or_32bit==False:
-                        return files.input(
-                        "/usr/share/images/" + name + ".svg")
-                    elif files.isfile("/usr/share/images/" + name + ".png"):
-                        return files.input("/usr/share/images/" + name + ".png")
-                elif files.isfile(
-                        "/usr/share/images/" + name + ".png"):
+                if files.isfile( f"/usr/share/images/{name}.svg"):
                     return files.input(
-                        "/usr/share/images/" + name + ".png")
+                        f"/usr/share/images/{name}.svg")
                 elif files.isfile(
-                        "/usr/share/images/" + name + ".jpg"):
+                        f"/usr/share/images/{name}.png"):
                     return files.input(
-                        "/usr/share/images/" + name + ".jpg")
+                        f"/usr/share/images/{name}.png")
                 elif files.isfile(
-                        "/usr/share/images/" + name + ".jpeg"):
+                        f"/usr/share/images/{name}.jpg"):
                     return files.input(
-                        "/usr/share/images/" + name + ".jpeg")
+                        f"/usr/share/images/{name}.jpg")
                 elif files.isfile(
-                        "/usr/share/images/" + name + ".gif"):
+                        f"/usr/share/images/{name}.jpeg"):
                     return files.input(
-                        "/usr/share/images/" + name + ".gif")
+                       f"/usr/share/images/{name}.jpeg")
+                elif files.isfile(
+                        f"/usr/share/images/{name}.gif"):
+                    return files.input(
+                        f"/usr/share/images/{name}.gif")
+                elif files.isfile(
+                        f"/usr/share/images/{name}.tif"):
+                    return files.input(
+                        f"/usr/share/images/{name}.tif")
                 else:
-                    return None
+                    return ''
 
             elif share.startswith("@app"):
-                if files.isfile("/usr/share/" + share.replace("@app", "applications") + "/" + name + ".desk"):
-                    return files.input("/usr/share/" + share.replace("@app", "applications") + "/" + name + ".desk")
-                else:
-                    return None
+                try:
+                    return files.input(f"/usr/share/applications/{name}.desk")
+                except:
+                    return ''
 
             elif share.startswith("@widget"):
-                if files.isfile("/usr/share/" + share.replace("@widget", "widgets") + "/" + name + ".desk"):
-                    return files.input("/usr/share/" + share.replace("@widget", "widgets") + "/" + name + ".desk")
-                else:
-                    return None
+                try:
+                    return files.input(f"/usr/share/widgets/{name}.desk")
+                except:
+                    return ''
 
             elif share.startswith("@shell"):
-                if files.isfile("/usr/share/" + share.replace("@shell", "shells") + "/" + name + ".desk"):
-                    return files.input("/usr/share/" + share.replace("@shell", "shells") + "/" + name + ".desk")
-                else:
-                    return None
+                try:
+                    return files.input(f"/usr/share/shells/{name}.desk")
+                except:
+                    return ''
 
             elif share.startswith("@icon"):
-                if files.isfile("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".svg"):
-                    if android_or_32bit==False:
-                        return files.input("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".svg")
-                    elif files.isfile("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".png"):
-                        return files.input("/usr/share/icons/" + name + ".png")
-                elif files.isfile("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".png"):
-                    return files.input("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".png")
-                elif files.isfile("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".gif"):
-                    return files.input("/usr/share/" + share.replace("@icon", "icons") + "/" + name + ".gif")
+                if files.isfile(f"/usr/share/icons/{name}.svg"):
+                    return files.input(f"/usr/share/icons/{name}.svg")
+                elif files.isfile(f"/usr/share/icons/{name}.png"):
+                    return files.input(f"/usr/share/icons/{name}.png")
+                elif files.isfile(f"/usr/share/icons/{name}.gif"):
+                    return files.input(f"/usr/share/icons/{name}.gif")
+                elif files.isfile(f"/usr/share/icons/{name}.tif"):
+                    return files.input(f"/usr/share/icons/{name}.tif")
                 else:
-                    return None
+                    return ''
 
             elif share.startswith('@temp'):
-                if files.isfile("/usr/share/" + share.replace("@temp", "templates") + "/" + name ):
-                    return "/usr/share/" + share.replace("@temp", "templates") + "/" + name
+                if files.isfile(f"/usr/share/templates/{name}" ):
+                    return f"/usr/share/templates/{name}"
+                elif files.isdir(f"/usr/share/templates/{name}" ):
+                    return f"/usr/share/templates/{name}"
                 else:
-                    return None
+                    return ''
 
             elif share.startswith("@string"):
                 locale = control.read_record("locale", "/etc/gui")
@@ -2652,26 +2404,25 @@ class Res:
                 if locale == None: locale = "en"
 
                 ## Get value from string ##
-                result = control.read_record(id.replace(".desk", "") + "." + name,
-                                             "/usr/share/locales/" + locale + ".locale")
+                result = control.read_record(f'{id.replace(".desk", "")}.{name}',
+                                             f"/usr/share/locales/{locale}.locale")
 
                 ## Find default ##
                 if result == None:
-                    result = control.read_record(id.replace(".desk", "") + "." + name,
-                                                 "/usr/share/locales/" + 'en' + ".locale")
+                    result = control.read_record(f'{id.replace(".desk", "")}.{name}',
+                                                 f"/usr/share/locales/en.locale")
 
                 return result
 
             ## None Resource ##
             else:
-                return None
+                return ''
         else:
-            return None
+            return ''
 # system #
 class System:
     def __init__(self,cmd):
-        files = Files()
-        prompt = [sys.executable,files.readall("/proc/info/boot"), 'exec']
+        prompt = [sys.executable,'vmabr.pyc', 'exec']
         cmdln = cmd.split(" ")
 
         if '' in cmdln:
@@ -2684,23 +2435,23 @@ class System:
 # app #
 class App:
     ## Start ID Process ##
+    def __init__(self):
+        pass
     def start(self,id):
         files = Files()
-        control = Control()
-        colors = Colors()
-        self.lang = control.read_record('locale', '/etc/gui')
+
         ## Check exists ##
-        if files.isfile('/proc/id/' + id):
+        if files.isfile(f'/proc/id/{id}'):
             pass
 
 
         ## Create id ##
-        files.create("/proc/id/" + id)
+        files.create(f"/proc/id/{id}")
 
         ## Check desktop shortcut ##
-        if files.isfile("/usr/share/applications/" + id):
-            files.copy("/usr/share/applications/" + id + ".desk",
-                       "/proc/id/" + id)  # Copy all informations about this GUI application
+        if files.isfile(f"/usr/share/applications/{id}"):
+            files.copy(f"/usr/share/applications/{id}.desk",
+                       f"/proc/id/{id}")  # Copy all informations about this GUI application
 
         ## Set default id ##
         files.write("/proc/info/id", id)
@@ -2708,63 +2459,45 @@ class App:
     ## Check id ##
     def check(self,id):
         files = Files()
-        control = Control()
-        colors = Colors()
-        self.lang = control.read_record('locale', '/etc/gui')
-        if not files.isfile('/proc/id/' + id):
-            return False
-        else:
-            return True
+
+        return files.isfile(f'/proc/id/{id}')
 
     ## End id ##
     def end(self,id):
         files = Files()
-        control = Control()
-        colors = Colors()
-        self.lang = control.read_record('locale', '/etc/gui')
-        if files.isfile('/proc/id/' + id):
+
+        if files.isfile(f'/proc/id/{id}'):
             ## Remove id ##
-            files.remove("/proc/id/" + id)
+            files.remove(f"/proc/id/{id}")
 
     ## Shut id ##
     def shut(self):
         files = Files()
-        control = Control()
-        colors = Colors()
-        self.lang = control.read_record('locale', '/etc/gui')
+
         default = files.readall("/proc/info/id")
-        if files.isfile("/proc/id/" + default):
+        if files.isfile(f"/proc/id/{default}"):
             self.end(default)
 
     ## Endall id ##
     def endall(self):
         files = Files()
-        control = Control()
-        colors = Colors()
-        commands = Commands()
-        self.lang = control.read_record('locale', '/etc/gui')
         self.switch('desktop')
-        listid = files.list("/proc/id")
-        for i in listid:
-            if files.isfile('/proc/id/' + i):
-                files.remove('/proc/id/' + i)
+        for i in files.list("/proc/id"):
+            if files.isfile(f'/proc/id/{i}'):
+                files.remove(f'/proc/id/{i}')
 
     ## Switch id process ##
     def switch(self,id):
         files = Files()
-        control = Control()
-        colors = Colors()
-        self.lang = control.read_record('locale', '/etc/gui')
-        if files.isfile('/proc/id/' + id):
+
+        if files.isfile(f'/proc/id/{id}'):
             files.write("/proc/info/id", id)
 
     ## Check application ##
     def exists (self,app):
         files = Files()
-        if files.isfile('/usr/share/applications/'+app+".desk"):
-            return True
-        else:
-            return False
+
+        return files.isfile(f'/usr/share/applications/{app}.desk')
 
 # process #
 
@@ -2773,12 +2506,10 @@ class Process:
         pass
     def processor(self):
         files = Files()
-        control = Control()
-        colors = Colors()
 
         j = 0
-        if not files.isfile("/proc/" + str(0)):
-            files.create("/proc/" + str(0))
+        if not files.isfile(f"/proc/{str(0)}"):
+            files.create(f"/proc/{str(0)}")
             j = j + 1
         else:
             list = files.list("/proc")
@@ -2786,12 +2517,12 @@ class Process:
             list.remove('info')
 
             for i in list:
-                if files.isfile("/proc/" + i):
+                if files.isfile(f"/proc/{i}"):
 
-                    files.create("/proc/" + str(int(i) + 1))
+                    files.create(f"/proc/{str(int(i) + 1)}")
                     j = j + 1
                 else:
-                    files.create("/proc/" + i)
+                    files.create(f"/proc/{i}")
 
         if files.isfile("/proc/1"):
             files.write("/proc/info/sp", str(j))
@@ -2803,10 +2534,8 @@ class Process:
     ## Check switched process ##
     def check(self,switch):
         files = Files()
-        control = Control()
-        colors = Colors()
 
-        if not files.isfile("/proc/" + str(switch)):
+        if not files.isfile(f"/proc/{str(switch)}"):
             sys.exit(0)
         else:
             if files.isfile("/proc/info/sp"): files.remove("/proc/info/sp")
@@ -2815,37 +2544,33 @@ class Process:
     ## End switched process ##
     def end(self,switch):
         files = Files()
-        control = Control()
-        colors = Colors()
 
         if files.isfile("/proc/info/sp"): files.remove("/proc/info/sp")
-        if files.isfile("/proc/" + str(switch)):
-            files.remove("/proc/" + str(switch))
+        if files.isfile(f"/proc/{str(switch)}"):
+            files.remove(f"/proc/{str(switch)}")
             sys.exit(0)
 
     ## Endall all switched processes ##
     def endall(self):
         files = Files()
-        control = Control()
-        colors = Colors()
 
         if files.isfile("/proc/info/sp"): files.remove("/proc/info/sp")
         list = files.list("/proc")
         list.remove("id")
         list.remove("info")
         for i in list:
-            files.remove("/proc/" + str(i))
+            files.remove(f"/proc/{str(i)}")
 
 # permissions #
 class Permissions:
+
+
     def __init__(self):
         pass
     ## Create permissions ##
     def create(self,name, user, others, guest, owner):
         files = Files()
         control = Control()
-        colors = Colors()
-
         if files.isfile(name) or files.isdir(name):
             ## Learned by Guru99 2020 ##
             ## Set user permissions section
@@ -2909,17 +2634,14 @@ class Permissions:
                 guest = "rwx"
 
             if files.isdir(name):
-                control.write_record(name, "d" + user + others + guest + "/" + owner,
+                control.write_record(name, f"d{user}{others}{guest}/{owner}",
                                      "/etc/permtab")  # Write permissions for this directory
             else:
-                control.write_record(name, "-" + user + others + guest + "/" + owner,
+                control.write_record(name, f"-{user}{others}{guest}/{owner}",
                                      "/etc/permtab")  # Write permissions for this file
 
     def exists(self,name):
-        files = Files()
         control = Control()
-        colors = Colors()
-
         perms = control.read_record(name, "/etc/permtab")  ## get permissions
         if perms == None:
             return False
@@ -2928,15 +2650,12 @@ class Permissions:
 
     ## This function e.g. drwxrwxrwx/root --> 777 ##
     def show_number(self,perm):
-        files = Files()
-        control = Control()
-        colors = Colors()
 
         perm = perm.split("/")
-        owner = perm[1]
+        #owner = perm[1]
         perms = perm[0]
 
-        dirfile = perms[0]
+        #dirfile = perms[0]
         user_r = perms[1]
         user_w = perms[2]
         user_x = perms[3]
@@ -2947,9 +2666,9 @@ class Permissions:
         guest_w = perms[8]
         guest_x = perms[9]
 
-        user = user_r + user_w + user_x
-        others = others_r + others_w + others_x
-        guest = guest_r + guest_w + guest_x
+        user = f"{user_r}{user_w}{user_x}"
+        others = f"{others_r}{others_w}{others_x}"
+        guest = f"{guest_r}{guest_w}{guest_x}"
 
         if user == '---':
             user = 0
@@ -3002,17 +2721,12 @@ class Permissions:
         elif guest == 'rwx':
             guest = 7
 
-        strnum = str(user) + str(others) + str(guest)  # e.g. 7, 7, 7 --> "777"
-        num = int(strnum)  # e.g. "777"-> 777
-
-        return num
+        return  int(f"{str(user)}{str(others)}{str(guest)}")
 
     ## This function correct at all ##
     def get_permissions(self,name):
         files = Files()
         control = Control()
-        colors = Colors()
-
         perms = control.read_record(name, "/etc/permtab")  ## get permissions
         if not perms == None:
             return perms
@@ -3031,11 +2745,10 @@ class Permissions:
                 names.pop(l)
                 name = ""
                 for i in names:
-                    name = name + "/" + i
+                    name += f"/{i}"
                 name = name.replace("//", "/")
 
-            perm = control.read_record(name, "/etc/permtab")  ## get permissions
-            perm = perm.split("/")
+            perm = (control.read_record(name, "/etc/permtab")).split("/")
             owner = perm[1]
             perms = perm[0]
             user_r = perms[1]
@@ -3047,21 +2760,19 @@ class Permissions:
             guest_r = perms[7]
             guest_w = perms[8]
             guest_x = perms[9]
-            return dirfile + user_r + user_w + user_x + others_r + others_w + others_x + guest_r + guest_w + guest_x + "/" + owner
+            return f"{dirfile}{user_r}{user_w}{user_x}{others_r}{others_w}{others_x}{guest_r}{guest_w}{guest_x}/{owner}"
 
     ## This function correct at all ##
     def check(self,name, request, user):
         files = Files()
         control = Control()
-        colors = Colors()
 
-        perm = self.get_permissions(name)
-        perm = perm.split("/")
+        perm = (self.get_permissions(name)).split("/")
 
         perms = perm[0]
         owner = perm[1]
 
-        dirfile = perms[0]
+        #dirfile = perms[0]
         user_r = perms[1]
         user_w = perms[2]
         user_x = perms[3]
@@ -3074,15 +2785,11 @@ class Permissions:
 
         if user == "root":
             ## Check exists user ##
-            if files.isfile("/etc/users/" + user):
-                hashname = hashlib.sha3_256(str("root").encode()).hexdigest()
-                username = control.read_record("username", "/etc/users/root")
-                if (hashname == username):
-                    return True
-                else:
-                    return False
+            if files.isfile(f"/etc/users/{user}"):
+                return True
             else:
                 return False
+
         elif user == "guest":
             enable_cli = control.read_record("enable_cli", "/etc/guest")
             if enable_cli == "Yes":
@@ -3132,10 +2839,7 @@ class Permissions:
                 return False
         else:
             ## Check exists user ##
-            if files.isfile("/etc/users/" + user):
-                hashname = hashlib.sha3_256(str(user).encode()).hexdigest()
-                username = control.read_record("username", "/etc/users/" + user)
-                if (hashname == username):
+            if files.isfile(f"/etc/users/{user}"):
                     if owner == user:
                         if request == "r":
                             r = user_r
@@ -3178,23 +2882,20 @@ class Permissions:
                                 return False
                         else:
                             return False
-                else:
-                    return False
             else:
                 return False
 
     ## Get owner ##
     def get_owner(self,filename):
+
         perm = self.get_permissions(filename)
 
-        perm = perm.split("/")
-        return perm[1]
+        return perm.split("/")[1]
 
     ## Check owner ##
-    def check_owner(self,filename, user):
+    def check_owner(self,filename, user): 
         files = Files()
         control = Control()
-        colors = Colors()
 
         owner = self.get_owner(filename)
         if user == "guest":
@@ -3207,59 +2908,41 @@ class Permissions:
             else:
                 return False
         elif user == "root":
-            if files.isfile("/etc/users/" + user):
-                hashname = hashlib.sha3_256(str(user).encode()).hexdigest()
-                username = control.read_record("username", "/etc/users/" + user)
-                if (hashname == username):
-                    return True
-                else:
-                    return False
+            if files.isfile(f"/etc/users/{user}"):
+                return True
             else:
                 return False
         else:
-            if files.isfile("/etc/users/" + user):
-                hashname = hashlib.sha3_256(str(user).encode()).hexdigest()
-                username = control.read_record("username", "/etc/users/" + user)
-                if (hashname == username):
+            if files.isfile(f"/etc/users/{user}"):
                     if owner == user:
                         return True
                     elif owner == "guest":
                         return True
                     else:
                         return False
-                else:
-                    return False
             else:
                 return False
 
     ## Check root ##
     def check_root(self,user):
         files = Files()
-        control = Control()
-        colors = Colors()
 
-        if user == "root":
-            if files.isfile("/etc/users/" + user):
-                hashname = hashlib.sha3_256(str(user).encode()).hexdigest()
-                username = control.read_record("username", "/etc/users/" + user)
-                if (hashname == username):
-                    return True
-                else:
-                    return False
-            else:
-                return False
+        if user == "root" and files.isfile(f"/etc/users/{user}"):
+            return True
+        else:
+            return False
 # modules #
 class Modules:
     def __init__(self):
         pass
+
     def get_modules(self):
 
         file = open("etc/modules")
         strv = file.read()
         file.close()
-        strv = strv.split("\n")
-        for i in strv:
-            sys.path.append("./" + i)
+        for i in strv.split("\n"):
+            sys.path.append(f"./{i}")
 
     ## Import module ##
     def run_module(self,module):
@@ -3279,17 +2962,15 @@ class Files:
     def __init__(self):
         pass
 
-    root = "./"
-
     def input(self, filename):
         f = open ('proc/info/pwd','r')
         pwd = f.read()
         f.close()
 
         if filename.startswith("/"):
-            return self.root +"/"+ filename
+            return f"./{filename}"
         else:
-            return self.root +"/"+ pwd + "/" + filename
+            return f"./{pwd}/{filename}"
 
     def input_exec(self,filename):
         x = self.input(filename.replace("./", "")).replace(".//", "").replace("/", ".")
@@ -3321,8 +3002,7 @@ class Files:
 
 
     def create(self,filename):
-        file = open(self.input(filename), "w")
-        file.close()
+        open(self.input(filename), "w")
 
     def readall(self,filename):
         file = open(self.input(filename), "rb")
@@ -3332,7 +3012,6 @@ class Files:
             return check_bin
         else:
             file = open(self.input(filename), "r", encoding='utf-8')
-
             strv = file.read()
             file.close()
             return strv
@@ -3348,16 +3027,10 @@ class Files:
         file.close()
 
     def isfile(self,filename):
-        if os.path.isfile(self.input(filename)):
-            return True
-        else:
-            return False
+        return os.path.isfile(self.input(filename))
 
     def isdir(self,dirname):
-        if os.path.isdir(self.input(dirname)):
-            return True
-        else:
-            return False
+        return os.path.isdir(self.input(dirname))
 
     def mkdir(self,dirname):
         os.mkdir(self.input(dirname))
@@ -3378,15 +3051,15 @@ class Files:
         shutil.copyfile(self.input(src), self.input(dest))
 
     def cut(self,src, dest):
-        self.copy(src, dest)
-        self.remove(src)
+        shutil.copyfile(self.input(src), self.input(dest))
+        os.remove(self.input(src))
 
     def copydir(self,src, dest):
         shutil.copytree(self.input(src), self.input(dest))
 
     def cutdir(self,src, dest):
-        self.copydir(self.input(src), self.input(dest))
-        self.removedirs(src)
+        shutil.copytree(self.input(src), self.input(dest))
+        shutil.rmtree(self.input(src))
 
     def list(self,path):
         if not path.startswith ('/..'):
@@ -3402,26 +3075,23 @@ class Files:
 
         strv = ''
         for i in file:
-            strv += '/'+ i
+            strv += f'/{i}'
 
         return strv
 
     def filename(self,path):
-        file = self.input(path)  ## Get file name
-
-        file = file.split('/')
+        file = (self.input(path)).split('/')
 
         return file[len(file) - 1]
 # control #
 class Control:
+
     def __init__(self):
         pass
+
     def read_record(self,name, filename):
         files = Files()
-        strv = files.readall(filename)
-        strv = strv.split("\n")
-
-        for i in strv:
+        for i in (files.readall(filename)).split("\n"):
             if i.startswith(name):
                 i = i.split(": ")
                 if i[0] == (name):
@@ -3429,9 +3099,7 @@ class Control:
 
     def read_list(self,filename):
         files = Files()
-        strv = files.readall(filename)
-        strv = strv.split("\n")
-        return strv
+        return (files.readall(filename)).split("\n")
 
     def write_record(self,name, value, filename):
         files = Files()
@@ -3439,9 +3107,9 @@ class Control:
         record = self.read_record(name, filename)
         files.remove(filename)
         if not (record == None):
-            all = all.replace("\n"+name + ": " + record, "")
+            all = all.replace(f"\n{name}: {record}", "")
 
-        files.write(filename, all + "\n" + name + ": " + value)
+        files.write(filename, f"{all}\n{name}: {value}")
 
     def remove_record(self,name, filename):
         files = Files()
@@ -3449,184 +3117,29 @@ class Control:
         record = self.read_record(name, filename)
         files.remove(filename)
         if not (record == None):
-            all = all.replace(name + ": " + record, "")
+            all = all.replace(f"{name}: {record}", "")
+            
         files.write(filename, all)
 
     def remove_item(self,name, filename):
         files = Files()
-        items = self.read_list(filename)
         strv = ""
-        for i in items:
+        for i in self.read_list(filename):
             if i == name:
-                strv = strv + "\n"
+                strv += "\n"
             else:
-                strv = strv + "\n" + i
+                strv += "\n{i}"
         files.write(filename, strv)
 
 # colors #
 class Colors:
-    files = Files()
-    control = Control()
     def __init__(self):
         pass
-    argv = 'kernel'
-
-    black = 30
-    red = 31
-    green = 32
-    yellow = 33
-    blue = 34
-    purple = 35
-    cyan = 36
-    white = 37
-
-    style_none = 0
-    style_bold = 1
-    style_underline = 2
-    style_negative1 = 3
-    style_negative2 = 5
-
-    bg_black = 40
-    bg_red = 41
-    bg_green = 42
-    bg_yellow = 43
-    bg_blue = 44
-    bg_purple = 45
-    bg_cyan = 46
-    bg_white = 47
 
     def show(self,process_name, process_type, process_message):
-        files = Files()
-        control = Control()
         if process_type == "fail":
-            print(self.get_fail() + process_name + ": error: " + process_message + self.get_colors())
+            print(f'{colored(f"{process_name}: error: {process_message}","red")}')
         elif process_type == "perm":
-            print(self.get_fail() + process_name + ": error: " + "Permission denied." + self.get_colors())
+            print(f'{colored(f"{process_name}: error: Permission denied.","red")}')
         elif process_type == "warning":
-            print(self.get_warning() + process_name + ": warning: " + process_message + self.get_colors())
-        elif process_type == "fail-start":
-            print("[ " + self.get_fail() + "FAIL " + self.get_colors() + "] Fail to start " + process_name + " process.")
-        elif process_type == "fail-switch":
-            print("[ " + self.get_fail() + "FAIL " + self.get_colors() + "] Fail to switch " + process_name + " process.")
-        elif process_type == "stop":
-            print("[ " + self.get_fail() + "STOP" + self.get_colors() + " ] Stop the " + process_name)
-        elif process_type == "fail-show":
-            print("[ " + self.get_fail() + "FAIL" + self.get_colors() + " ] " + process_message)
-
-    def color(self,style, text, background):
-        files = Files()
-        if not files.isfile("/proc/id/desktop"):
-            return "\033[" + str(style) + ";" + str(text) + ";" + str(background) + "m"
-        else:
-            return ""
-
-    def get_colors(self):
-        files = Files()
-        control = Control()
-        if not files.isfile("/proc/id/desktop"):
-            fgcolor = control.read_record("fgcolor", "/etc/color")
-            bgcolor = control.read_record("bgcolor", "/etc/color")
-            style = control.read_record("style", "/etc/color")
-            strv = "\033[" + str(style) + ";" + str(fgcolor) + ";" + str(bgcolor) + "m"
-            return strv
-        else:
-            return ""
-
-    def get_style(self):
-        files = Files()
-        control = Control()
-        if not files.isfile("/proc/id/desktop"):
-            style = control.read_record("style", "/etc/color")
-            return style
-        else:
-            return ""
-
-    def get_fgcolor(self):
-        files = Files()
-        control = Control()
-        if not files.isfile("/proc/id/desktop"):
-            fgcolor = control.read_record("fgcolor", "/etc/color")
-            return fgcolor
-        else:
-            return ""
-
-    def get_bgcolor(self):
-        files = Files()
-        control = Control()
-        if not files.isfile("/proc/id/desktop"):
-            bgcolor = control.read_record("bgcolor", "/etc/color")
-            return bgcolor
-        else:
-            return ""
-
-    def get_warning(self):
-        files = Files()
-        control = Control()
-        if not files.isfile("/proc/id/desktop"):
-            style = control.read_record("warning_style", "/etc/color")
-            fgcolor = control.read_record("warning_fgcolor", "/etc/color")
-            bgcolor = control.read_record("warning_bgcolor", "/etc/color")
-            strv = "\033[" + str(style) + ";" + str(fgcolor) + ";" + str(bgcolor) + "m"
-            return strv
-        else:
-            return ""
-
-    def get_path(self):
-        files = Files()
-        control = Control()
-        if not files.isfile("/proc/id/desktop"):
-            style = control.read_record("path_style", "/etc/color")
-            fgcolor = control.read_record("path_fgcolor", "/etc/color")
-            bgcolor = control.read_record("path_bgcolor", "/etc/color")
-            strv = "\033[" + str(style) + ";" + str(fgcolor) + ";" + str(bgcolor) + "m"
-            return strv
-        else:
-            return ""
-
-    def get_prompt(self):
-        files = Files()
-        control = Control()
-        if not files.isfile("/proc/id/desktop"):
-            style = control.read_record("prompt_style", "/etc/color")
-            fgcolor = control.read_record("prompt_fgcolor", "/etc/color")
-            bgcolor = control.read_record("prompt_bgcolor", "/etc/color")
-            strv = "\033[" + str(style) + ";" + str(fgcolor) + ";" + str(bgcolor) + "m"
-            return strv
-        else:
-            return ""
-
-    def get_fail(self):
-        files = Files()
-        control = Control()
-        if not files.isfile("/proc/id/desktop"):
-            style = control.read_record("fail_style", "/etc/color")
-            fgcolor = control.read_record("fail_fgcolor", "/etc/color")
-            bgcolor = control.read_record("fail_bgcolor", "/etc/color")
-            strv = "\033[" + str(style) + ";" + str(fgcolor) + ";" + str(bgcolor) + "m"
-            return strv
-        else:
-            return ""
-
-    def get_ok(self):
-        files = Files()
-        control = Control()
-        if not files.isfile("/proc/id/desktop"):
-            style = control.read_record("ok_style", "/etc/color")
-            fgcolor = control.read_record("ok_fgcolor", "/etc/color")
-            bgcolor = control.read_record("ok_bgcolor", "/etc/color")
-            strv = "\033[" + str(style) + ";" + str(fgcolor) + ";" + str(bgcolor) + "m"
-            return strv
-        else:
-            return ""
-
-    def get_hide(self):
-        files = Files()
-        control = Control()
-        if not files.isfile("/proc/id/desktop"):
-            style = control.read_record("style", "/etc/color")
-            bgcolor = control.read_record("bgcolor", "/etc/color")
-            fgcolor = int(control.read_record("bgcolor", "/etc/color")) + 10
-            strv = "\033[" + str(style) + ";" + str(fgcolor) + ";" + str(bgcolor) + "m"
-            return strv
-        else:
-            return ""
+            print(f'{colored(f"{process_name}: warning: {process_message}","yellow")}')

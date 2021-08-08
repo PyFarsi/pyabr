@@ -1,0 +1,8 @@
+name[en]: Image Viewer
+name[fa]: نمایشگر تصویر
+exec: nama
+hidden: Yes
+logo: @icon/breeze-shotwell
+application: Yes
+category: multimedia
+external: Yes

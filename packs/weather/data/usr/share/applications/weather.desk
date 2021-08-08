@@ -1,0 +1,6 @@
+name[en]: Weather
+name[fa]: آب و هوا
+logo: @icon/breeze-weather-clouds
+exec: weather_gui
+application: Yes
+category: tools

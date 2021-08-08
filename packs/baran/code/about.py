@@ -2,7 +2,7 @@
 #  In the name of God, the Compassionate, the Merciful
 #  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
 #
-#  Official Website: 		http://pyabr.rf.gd
+#  Official Website: 		https://pyabr.ir
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
@@ -21,8 +21,17 @@ files = Files()
 colors = Colors()
 app = App()
 res = Res()
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 
 class MainApp(QWidget):
+
+    def onCloseProcess (self):
+        if not app.check('about'):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
+
     def __init__(self, ports):
         super(MainApp, self).__init__()
 
@@ -32,6 +41,7 @@ class MainApp(QWidget):
         self.AppName = ports[3]
         self.External = ports[4]
 
+        self.onCloseProcess()
 
         self.Widget.Resize(self, 600, 500)
         self.Widget.SetWindowTitle(res.get('@string/app_name'))
@@ -40,7 +50,7 @@ class MainApp(QWidget):
         self.btnInfo = QToolButton()
         self.btnInfo.setMinimumSize(128,128)
         self.btnInfo.setIconSize(QSize(128,128))
-        self.btnInfo.setStyleSheet(f'background-color: #ABCDEF;border-radius: 64% 64%;margin-left: {str(int(self.width()/2.666666))}%;')
+        self.btnInfo.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};border-radius: 64% 64%;margin-left: {str(int(self.width()/2.666666))}%;')
         self.btnInfo.setIcon(QIcon(res.get(control.read_record('logo','/etc/gui'))))
         self.vmbox.addWidget(self.btnInfo)
         self.extral = QWidget()
@@ -49,9 +59,11 @@ class MainApp(QWidget):
         self.setLayout(self.vmbox)
         self.extral.setLayout(self.hbox)
         self.text1 = QTextBrowser()
+        self.extral.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.text1.setAlignment(Qt.AlignRight)
-
         self.text1.append(f'Static hostname:')
+        self.text1.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.text1.append(f'Cloud Software:')
         self.text1.append(f'Desktop Enviroment:')
         self.text1.append(f'Kernel:')
@@ -63,10 +75,12 @@ class MainApp(QWidget):
 
 
         self.text2 = QTextBrowser()
+        self.text2.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.text2.append(files.readall('/proc/info/host'))
-        self.text2.append(files.readall('/proc/info/cs')+' '+files.readall('/proc/info/ver')+' ('+files.readall('/proc/info/cd')+")")
+        self.text2.append(f"{files.readall('/proc/info/cs')} {files.readall('/proc/info/ver')} ({files.readall('/proc/info/cd')})")
         self.text2.append(files.readall('/proc/info/de'))
-        self.text2.append(files.readall('/proc/info/kname')+" "+files.readall('/proc/info/kver'))
+        self.text2.append(f"{files.readall('/proc/info/kname')} {files.readall('/proc/info/kver')}")
         self.text2.append(files.readall('/proc/info/bl'))
         self.text2.append(files.readall('/proc/info/os'))
         self.text2.append(files.readall('/proc/info/su'))

@@ -1,0 +1,8 @@
+name[en]: Wallpaper
+name[fa]: تنظیمات پس زمینه
+logo: @icon/breeze-wallpaper
+exec: wallpaper
+application: No
+hidden: Yes
+category: tools
+setting: Yes

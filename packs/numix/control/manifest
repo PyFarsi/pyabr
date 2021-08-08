@@ -1,8 +1,0 @@
-name: numix
-copyright: (c) Debian Desktop Theme Team
-license: GNU GPL v3.+
-unpack: /
-build: 1399-12-10
-version: 1.1.1
-description: Numix for Pyabr cloud system
-compile: No

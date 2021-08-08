@@ -2,8 +2,9 @@ name[en]: Paint
 name[fa]: نقاشی
 name[ar]: الطلاء
 exec: piecasso
-logo: @icon/paint
+logo: @icon/breeze-paint
 width: 700
 height: 500
 application: Yes
 category: multimedia
+external: Yes

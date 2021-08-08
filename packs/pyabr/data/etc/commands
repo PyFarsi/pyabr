@@ -1,0 +1,51 @@
+arp: arp
+arp.args: Yes
+arp.perm: 3
+
+host: host
+host.args: Yes
+host.perm: 3
+
+route: route
+route.args: Yes
+route.perm: 3
+
+ss: ss
+ss.args: Yes
+ss.perm: 3
+
+traceroute: traceroute
+traceroute.args: Yes
+traceroute.perm: 3
+
+ip: ip
+ip.args: Yes
+ip.perm: 3
+
+nmcli: nmcli
+nmcli.args: Yes
+nmcli.perm: 2
+
+iwconfig: iwconfig
+iwconfig.args: Yes
+iwconfig.perm: 2
+
+ifconfig: ifconfig
+ifconfig.args: Yes
+ifconfig.perm: 3
+
+ping: ping
+ping.args: Yes
+ping.perm: 3
+
+pip: python3 -m pip
+pip.args: Yes
+pip.perm: 1
+
+python: python3
+python.args: No
+python.perm: 3
+
+bash: bash
+bash.args: No
+bash.perm: 1

@@ -22,5 +22,5 @@ class MainApp(QWidget):
         self.External = ports[4]
 
         self.Widget.Resize(self, 500, 300)
-        self.Widget.SetWindowTitle("Hello World!")
-        self.Widget.SetWindowIcon(QIcon(res.get('@icon/app')))
+        self.Widget.SetWindowTitle("Welcome")
+        self.Widget.SetWindowIcon(QIcon(res.get('@icon/breeze-app')))

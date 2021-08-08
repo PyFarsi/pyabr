@@ -2,7 +2,7 @@
 #  In the name of God, the Compassionate, the Merciful
 #  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
 #
-#  Official Website: 		http://pyabr.rf.gd
+#  Official Website: 		https://pyabr.ir
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
@@ -20,9 +20,13 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from libabr import Res
+from PyQt5.QtCore import *
+from libabr import *
 
 res = Res()
+control = Control()
+
+def getdata (value): return control.read_record(value,'/etc/gui')
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow,ports):
@@ -637,14 +641,22 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         MainWindow.setCentralWidget(self.centralWidget)
         self.menuBar = QtWidgets.QMenuBar(MainWindow)
+        self.menuBar.setStyleSheet(f'background: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.menuBar.setFont(self.Env.font())
+        if control.read_record('submenu.direction','/etc/gui')=='ltr':
+            self.menuBar.setLayoutDirection(Qt.LeftToRight)
+        else:
+            self.menuBar.setLayoutDirection(Qt.RightToLeft)
         self.menuBar.setGeometry(QtCore.QRect(0, 0, 706, 26))
         self.menuBar.setObjectName("menuBar")
         self.menuFIle = QtWidgets.QMenu(self.menuBar)
+        self.menuFIle.setStyleSheet('background:none;color: black;')
         self.menuFIle.setObjectName("menuFIle")
         self.menuEdit = QtWidgets.QMenu(self.menuBar)
+        self.menuEdit.setStyleSheet('background:none;color: black;')
         self.menuEdit.setObjectName("menuEdit")
         self.menuImage = QtWidgets.QMenu(self.menuBar)
+        self.menuImage.setStyleSheet('background:none;color: black;')
         self.menuImage.setObjectName("menuImage")
         MainWindow.setMenuBar(self.menuBar)
         self.statusBar = QtWidgets.QStatusBar(MainWindow)

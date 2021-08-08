@@ -2,7 +2,7 @@
 #  In the name of God, the Compassionate, the Merciful
 #  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
 #
-#  Official Website: 		http://pyabr.rf.gd
+#  Official Website: 		https://pyabr.ir
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
@@ -13,13 +13,16 @@
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-from libabr import Files, Control, Res
+from libabr import Files, Control, Res, App
 
 files = Files()
 control = Control()
 res = Res()
+app = App()
 import random
 import time
+
+def getdata (value): return control.read_record(value,'/etc/gui')
 
 IMG_BOMB = QImage(res.get(res.etc("mines",'bug')))
 IMG_FLAG = QImage(res.get(res.etc("mines",'flag')))
@@ -145,6 +148,13 @@ class Pos(QWidget):
 
 
 class MainApp(QMainWindow):
+
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
+
     def __init__(self,ports, *args, **kwargs):
         super(MainApp, self).__init__(*args, **kwargs)
 
@@ -154,7 +164,11 @@ class MainApp(QMainWindow):
         self.AppName = ports[3]
         self.External = ports[4]
 
+        self.onCloseProcess()
+
         self.Widget.Resize(self, int(res.etc("mines",'width')), int(res.etc("mines",'height')))
+        self.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.Widget.SetWindowTitle(res.get("@string/app_name"))
         self.Widget.SetWindowIcon (QIcon(res.get(res.etc("mines",'logo'))))
@@ -184,6 +198,8 @@ class MainApp(QMainWindow):
         self.clock.setText("000")
 
         self.button = QPushButton()
+        self.button.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.button.setFixedSize(QSize(32, 32))
         self.button.setIconSize(QSize(32, 32))
         self.button.setIcon(QIcon(res.get(res.etc("mines",'smiley'))))
@@ -192,6 +208,8 @@ class MainApp(QMainWindow):
         self.button.pressed.connect(self.button_pressed)
 
         l = QLabel()
+        l.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         l.setPixmap(QPixmap.fromImage(IMG_BOMB))
         l.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         hb.addWidget(l)
@@ -201,6 +219,8 @@ class MainApp(QMainWindow):
         hb.addWidget(self.clock)
 
         l = QLabel()
+        l.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         l.setPixmap(QPixmap.fromImage(IMG_CLOCK))
         l.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
         hb.addWidget(l)

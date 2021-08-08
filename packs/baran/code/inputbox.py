@@ -2,7 +2,7 @@
 #  In the name of God, the Compassionate, the Merciful
 #  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
 #
-#  Official Website: 		http://pyabr.rf.gd
+#  Official Website: 		https://pyabr.ir
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
@@ -10,8 +10,8 @@
 #
 #######################################################################################
 
-import sys, os
-from libabr import Files, Colors, Control, Res
+import sys, os, baran
+from libabr import Files, Colors, Control, Res, App
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -21,9 +21,23 @@ files = Files()
 colors = Colors()
 control = Control()
 res = Res()
+app = App()
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
+class LineEdit (baran.BLineEdit):
+    def __init__(self,ports):
+        super(LineEdit, self).__init__()
+        self.Env = ports[1]
 
 # input box #
 class MainApp (QMainWindow):
+    def onCloseProcess (self):
+        if not app.check('input'):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
+
+
     def __init__(self,ports):
         super(MainApp, self).__init__()
 
@@ -33,10 +47,13 @@ class MainApp (QMainWindow):
         self.Appname = ports[3]
         self.External = ports[4]
 
-        self.setStyleSheet('background-color: white;')
+        self.onCloseProcess()
+
+        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc('input',"logo"))))
         ## Finds ##
-        self.leInput = QLineEdit()
+        self.leInput = LineEdit(ports)
+        self.leInput.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leInput.setFont(self.Env.font())
 
         if self.Env.width() > 1000 and self.Env.height() > 720:
@@ -47,10 +64,6 @@ class MainApp (QMainWindow):
             self.leInput.resize(int(self.Env.width() / 1.5), 50)
 
         self.layout().addWidget(self.leInput)
-        self.leInput.returnPressed.connect (self.inp)
-        password_hint = control.read_record ('input.password_hint','/etc/configbox')
-        if password_hint=='Yes':
-            self.leInput.setEchoMode(QLineEdit.Password)
 
         if self.External[0]=='' or self.External[0]==None:
             self.Widget.SetWindowTitle (res.get('@string/title'))
@@ -58,12 +71,14 @@ class MainApp (QMainWindow):
             self.Widget.SetWindowTitle (self.External[0])
 
         self.btnCancel = QPushButton()
+        self.btnCancel.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnCancel.setText(res.get('@string/cancel'))
         self.btnCancel.setFont(self.Env.font())
         self.btnCancel.clicked.connect(self.Widget.Close)
         self.layout().addWidget(self.btnCancel)
 
         self.btnOK = QPushButton()
+        self.btnOK.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnOK.setFont(self.Env.font())
         self.btnOK.clicked.connect (self.inp)
         self.btnOK.setText(res.get('@string/ok'))

@@ -1,8 +1,10 @@
 name: gap
-copyright: (c) 2020 Gap Inc
-license: Free Software License
+name[fa]: پیام رسان گپ
+name[en]: Gap Messenger
+copyright: (c) 2021 Gap
+license: GNU GPL v3.0
 unpack: /
-build: 1399-12-10
-version: 4.5.15
-description: Webview Gap for Pyabr
+version: 2.0.0
+description: Gap messenger
 compile: Yes
+build: 1400-05-13

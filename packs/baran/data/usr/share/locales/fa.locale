@@ -1,5 +1,16 @@
-#!etcetra
-
+name: فارسی
+keyless: setxkbmap ir
+keyless.shortcut: Shift+Alt+F
+keyless.enable: Yes
+logo: @icon/breeze-lang
+logo-selected: @icon/breeze-lang
+font: Iran Sans
+submenu-direction: rtl
+enter: جدید
+done: تمام
+shift: بعدی
+back: برگرد
+tab: پرش
 0: ۰
 1: ۱
 2: ۲
@@ -62,6 +73,37 @@ w: ص
 x: ط
 y: غ
 z: ظ
+`: ‍
+~: ÷
+!: !
+@: ٬
+#: ٫
+$: ﷼
+%: ٪
+^: ×
+&: ،
+*: *
+(: (
+): )
+-: -
+_: ـ
+=: =
++: +
+{: {
+[: ج
+}: }
+]: چ
+\: \
+|: |
+<: >
+>: <
+,: و
+.: .
+/: /
+": ؛
+?: ؟
+': گ
+;: ک
 Sat: شنبه
 Sun: یکشنبه
 Mon: دوشنبه
@@ -81,7 +123,7 @@ September: سپتامبر
 October: اکتبر
 November: نوابر
 December: دسامبر
-desktop.username_placeholder: نام حساب کاربری وارد کنید
+desktop.username_placeholder: نام حساب کاربری را وارد کنید
 desktop.password_placeholder: رمز عبور را وارد کنید
 desktop.user_not_found: این حساب کاربری وجود ندارد
 desktop.wrong_password: رمز عبور نادرست می باشد؛ دوباره امتحان کنید
@@ -117,6 +159,9 @@ roller.app_name: فایل ها
 input.title: یک مقدار وارد کنید
 input.cancel: لغو
 input.ok: تایید
+code.title: رمز را وارد کنید
+code.cancel: لغو
+code.ok: تایید
 bool.title: آیا می خواهید؟
 bool.cancel: خیر
 bool.ok: بله
@@ -197,6 +242,7 @@ persia.new: یک فایل جدید
 persia.new_page: یک پروژه جدید
 persia.empty: یک پروژه معمولی
 persia.gui: یک پروژه گرافیکی
+persia.web: یک پروژه تحت وب
 persia.save: ذخیره
 persia.save_as: ذخیره با عنوانی دیگر
 persia.exit: خروج
@@ -253,7 +299,7 @@ paye.mirror: پیوند
 paye.package: بسته
 paye.add: اضافه کردن یک پیوند
 paye.remove: حذف یک پیوند
-paye.install: نصب یک بسته
+paye.install: نصب
 paye.uninstall: حذف یک بسته
 paye.download: دانلود کردن
 paye.mname: نام پیوند مورد نظر را وارد کنید
@@ -357,7 +403,8 @@ browser.ab: درباره مرورگر
 browser.pc: رفتن به کانال رسمی پای ابر
 browser.pg: پشتیبانی پای ابر
 browser.owp: بازکردن یک صفحه وب
-wapp.app_name: سرویس ابری
+browser.close: بستن
+wapp.app_name: صفحه وب
 barge.code: کد
 barge.run: اجرا
 barge.icode: جایگذاری کد
@@ -436,3 +483,174 @@ desktop.perm: عدم دسترسی
 desktop.guestperm: با حساب کاربری مهمان نمی توان دسترسی داشت
 desltop.selectedon: این پوسته از پیش تنظیم شده است
 desktop.reboott: جهت اعمال این پوسته باید راه اندازی مجدد کنید
+screen.app_name: تنظیم رزولوشن صفحه
+screen.savec: ذخیره تغییرات
+screen.reboot: برای اعمال تغییرات صفحه لطفا راه اندازی مجدد کنید
+squares.app_name: مربع ها
+desktop.audios: صداها
+paye.installing: در حال نصب
+desktop.desktop: میزکار
+desktop.downloads: دانلودها
+desktop.documents: اسناد
+desktop.templates: الگوها
+desktop.pictures: تصاویر
+paye.inmx: آیا می خواهید این بسته را نصب کنید؟
+desktop.projects: پروژه
+desktop.public: عمومی
+desktop.videos: ویدئو
+process.app_name: مدیریت فرایندها
+process.refresh: بروزرسانی
+process.kill: بستن
+process.restart: بازکردن
+roller.cut: برش
+roller.copy: کپی
+roller.paste: جای گذاری
+roller.rename: تغییر نام
+roller.execute: اجرا
+roller.open: بازکردن
+roller.openwith: بازکردن با
+roller.delete: حذف کردن
+roller.deletemf: آیا مایلید این فایل را حذف کنید؟
+open.always: همیشه
+open.atonce: فقط یک بار
+open.choose: یک برنامه را انتخاب کنید
+dmgr.app_name: مدیریت دانلودها
+dmgr.download: دانلود
+dmgr.link: لینک خود را اینجا جایگذاری کنید
+dmgr.saveafile: ذخیره کردن فایل
+paye.isnotapp: برنامه نیست
+paye.isnotappm: این بسته مورد نظر یک برنامه گرافیکی نیست
+persia.uix: پوسته گرافیکی
+open.isexe: فایل اجرایی
+open.isexem: آیا می خواهید این فایل را اجرا کنید؟
+open.unk: فایل ناشناخته
+open.unkm: نمی توان این فایل را اجرا کرد چون ناشناخته است
+barge.uix: پوسته گرافیکی
+roller.uix: یک فایل پوسته گرافیکی
+key.select: انتخاب
+key.cancel: لغو
+key.choose: یک زبان انتخاب کنید
+lang.select: انتخاب
+lang.cancel: لغو
+lang.choose: یک زبان انتخاب کنید
+setup.app_name: نصاب پای ابر
+setup.hostname: یک نامی برای رایانه خود انتخاب کنید
+setup.rootcode: رمزی قوی برای حساب ادمین تنظیم کنید
+setup.username: یک نامی برای حساب کاربری خود وارد کنید
+setup.password: حالا برای آن رمزی تنظیم کنید
+setup.lang: زبان مورد نظر خود را انتخاب کنید
+setup.guest: حساب مهمان داشته باشد
+setup.fullname: نام و نام خانوادگی
+setup.email: پست الکترونیکی
+setup.phone: شماره تلفن همراه
+setup.next: بعدی
+setup.install: نصب
+setup.cancel: لغو
+setup.back: قبلی
+setting.app_name: تنظیمات
+wallpaper.app_name: تصویر پس زمینه
+wallpaper.desktop: میزکار
+wallpaper.enter: صفحه رمزعبور
+wallpaper.login: صفحه ورود
+wallpaper.unlock: صفحه بازکردن قفل
+wallpaper.lock: صفحه قفل
+theme.app_name: پوسته ها
+users.app_name: حساب ها
+users.back: بازگشت
+users.remove: حذف
+users.edit: ویرایش
+users.remove_user: حذف حساب کاربری
+users.removem: آیا می خواهید این حساب کاربری را حذف کنید؟
+users.removed: با موفقیت حذف شد
+users.removedm: این حساب با موفقیت حذف گردید
+users.root: ابر حساب
+users.rootm: نمی توان ابرحساب را حذف کرد چون یک حساب دائمی است
+uedit.app_name: ویرایشگر حساب
+uedit.fullname: نام و نام خانوادگی
+uedit.company: نام شرکت
+uedit.email: پست الکترونیکی
+uedit.phone: شماره تلفن
+uedit.male: مذکر
+uedit.female: مونث
+uedit.save: ذخیره سازی تغییرات
+desktop.vkey: کیبورد مجازی
+users.add: حساب جدید
+uedit.username: شناسه کاربری
+uedit.password: رمزعبور
+uedit.confirm: تکرار رمز عبور
+uedit.add: افزودن حساب کاربری
+uedit.admin: حساب مدیر
+uedit.low: حساب معمولی
+uedit.cprofile: تغییر تصویر پروفایل
+nama.app_name: نمایشگر تصویر
+nama.open: بازکردن تصویر
+desktop.app_name: پروسه مجوز
+desktop.pnot: مجوز ندارد
+desktop.pnotm: نمی توان این پروسه را اجرا کرد؛ مجوز ندارد
+desktop.pass: رمز عبور را وارد کنید
+desktop.wrongp: نمی توان این پروسه را اجرا کرد؛ رمزعبور نادرست است
+uiv.pnot: صفحه یافت نشد
+uiv.pnotm: نمی توان بارگذاری کرد؛ صفحه مورد نظر یافت نشد
+uiv.dnot: دامنه موجود نیست
+uiv.dnotm: هیچ دامنه ای با این نام موجود نیست
+uiv.enet: خطا در اتصال
+uiv.enetm: نمی توان بارگذاری کرد؛ خطا در اتصال
+desktop.screenshot: تصویر بردای از میزکار
+roller.deletem: آیا می خواهید این پوشه را پاک کنید؟
+roller.deletemf: آیا می خواهید این فایل را پاک کنید؟
+roller.perm: مجوز ندارد
+roller.permm: نمی توان این فایل را اجرا کرد؛ مجوز ندارد
+wifi.app_name: شبکه بی سیم
+wifi.scan: برسی
+wifi.connect: اتصال
+wifi.forget: فراموش کردن
+wifi.on: خاموش کردن
+wifi.off: روشن کردن
+wifi.password: رمز این شبکه بی سیم را وارد کنید
+wifi.ssid: نام این شبکه بی سیم را وارد کنید
+wifi.wrongp: رمز عبور اشتباه است
+sms.app_name: پیامک
+sms.enter: پیام خود را بنویسید
+cloudroller.app_name: درایوها
+cloudroller.add: افزودن درایو
+cloudroller.e: خطا در اتصال
+cloudroller.em: در حال حاضر امکان اتصال به این دیسک ابری ممکن نیست
+connectcloud.app_name: افزودن درایو
+connectcloud.host: آدرس هاست ابری
+connectcloud.check: بکند برسی کننده
+connectcloud.list: بکند لیست کننده
+connectcloud.dir: بکند ایجاد پوشه
+connectcloud.remove: بکند حذف
+assistant.app_name: دستیارصوتی
+connectcloud.upload: بکند آپلود
+connectcloud.download: بکند دانلود
+connectcloud.password: رمزعبور
+connectcloud.value: نام درایو
+connectcloud.add: اتصال و افزودن
+connectcloud.cm: لطفا فیلدهای ورودی یا اتصال اینترنت را برسی کنید
+connectcloud.c: مشکل در افزودن درایو
+html.app_name: نمایش دهنده ابرمتن
+paye.store: فروشگاه
+paye.myapps: نصب شده ها
+clock.stopwatch: کرنومتر
+clock.app_name: ساعت
+clock.stop: توقف
+clock.resume: ادامه
+clock.reset: پاک کردن
+clock.start: شروع
+pyabrsite.app_name: وب سایت پای ابر
+wifi.cm: آیا می خواهید به این شبکه بی سیم متصل شوید؟
+wifi.c: اتصال به
+wifi.s: با موفقیت متصل شد
+wifi.sm: با موفقیت به این شبکه بی سیم متصل شد
+wifi.i: رمزعبور اشتباه می باشد
+wifi.im: رمزعبور وارد شده توسط شما اشتباه می باشد
+weather.app_name: آب و هوا
+weather.city: نام شهر خود را وارد کنید
+cloudroller.master: درایوهای اصلی
+cloudroller.cloud: درایوهای ابری
+mpv.app_name: بخش کننده ویدئو
+mpv.open: بازکردن
+roller.archive: فشرده سازی
+roller.extract: استخراج از حالت فشرده سازی
+desktop.keyless: زبان کیبورد

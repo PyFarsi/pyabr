@@ -1,8 +1,11 @@
 name: lightword
-copyright: (c) Megasolid Idiom
-license: Free Software License
+name[fa]: وردسبک
+name[en]: Lightword
+copyright: (c) 2021 LearnPyQt
+web: https://github.com/learnpyqt/15-minute-apps
+license: GNU GPL v3.0
 unpack: /
-build: 1399-12-10
-version: 1.1.1
-description: Simple rich text editor
+version: 2.0.0
+description: Lightweight word application
 compile: Yes
+build: 1400-05-13

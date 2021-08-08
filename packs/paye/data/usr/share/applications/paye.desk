@@ -1,7 +1,10 @@
 name[en]: Package Manager
 name[fa]: مدیریت بسته
 name[ar]: مدير مجموعة
-logo: @icon/paye
+logo: @icon/breeze-paye
 exec: paye_gui
 application: Yes
 category: system
+external: Yes
+setting: Yes
+sudoprocess: Yes

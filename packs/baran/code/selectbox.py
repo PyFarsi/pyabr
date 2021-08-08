@@ -2,7 +2,7 @@
 #  In the name of God, the Compassionate, the Merciful
 #  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
 #
-#  Official Website: 		http://pyabr.rf.gd
+#  Official Website: 		https://pyabr.ir
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
@@ -10,8 +10,8 @@
 #
 #######################################################################################
 
-import sys, os
-from libabr import Files, Colors, Control, Res, Commands
+import sys, os, baran
+from libabr import Files, Colors, Control, Res, Commands, App
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -21,17 +21,24 @@ files = Files()
 colors = Colors()
 control = Control()
 res = Res()
+app = App()
 commands = Commands()
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
+class LineEdit (baran.BLineEdit):
+    def __init__(self,ports):
+        super(LineEdit, self).__init__()
+        self.Env = ports[1]
 
 class FileListView(QListView):
     def format(self, it, text):
-        if files.isdir(self.dir + '/' + text):
+        if files.isdir(f'{self.dir}/{text}'):
             it.setIcon(QIcon(res.get(res.etc('roller','folder-icon'))))
         else:
             format = it.whatsThis().split('.')
             format = max(format)
             if it.whatsThis().endswith(format):
-                logo = control.read_record(format + '.icon', '/etc/ext')
+                logo = control.read_record(  f'{format}.icon', '/etc/ext')
                 if not logo == None:
                     it.setIcon(QIcon(res.get(logo)))
                 else:
@@ -41,7 +48,7 @@ class FileListView(QListView):
 
     def mkdir(self, dirname):
         it = QStandardItem(dirname)
-        it.setWhatsThis(self.dir + "/" + dirname)
+        it.setWhatsThis( f"{self.dir}/{dirname}" )
         it.setIcon(QIcon(res.get(res.etc('roller','folder-icon'))))
         self.entry.appendRow(it)
         it.setFont(self.Env.font())
@@ -61,7 +68,36 @@ class FileListView(QListView):
         # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
         # on the given model index to get a pointer to the item
 
-        self.setStyleSheet('background:white;')
+        self.username = self.Env.username
+
+        self.setStyleSheet("""
+                        FileListView,QListView {
+                        background-color: !z;
+                        color: !y;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
+            '6',
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
+
+
 
         self.dir = files.readall('/proc/info/pwd')
         files.write('/proc/info/dsel', self.dir)
@@ -69,17 +105,17 @@ class FileListView(QListView):
         self.listdir.sort()
 
         for text in self.listdir:
-            if files.isdir(self.dir+"/"+text):
+            if files.isdir(f"{self.dir}/{text}"):
                 it = QStandardItem(text)
-                it.setWhatsThis(self.dir + "/" + text)
+                it.setWhatsThis(f"{self.dir}/{text}")
                 it.setFont(self.Env.font())
                 self.format(it, text)
                 self.entry.appendRow(it)
 
         for text in self.listdir:
-            if files.isfile(self.dir+"/"+text):
+            if files.isfile(f"{self.dir}/{text}"):
                 it = QStandardItem(text)
-                it.setWhatsThis(self.dir + "/" + text)
+                it.setWhatsThis(f"{self.dir}/{text}")
                 it.setFont(self.Env.font())
                 self.format(it, text)
                 self.entry.appendRow(it)
@@ -110,17 +146,17 @@ class FileListView(QListView):
                 self.entry.appendRow(self.parentdir)
 
                 for text in self.listdir:
-                    if files.isdir(self.dir+"/"+text):
+                    if files.isdir(f"{self.dir}/{text}"):
                         it = QStandardItem(text)
-                        it.setWhatsThis(self.dir + "/" + text)
+                        it.setWhatsThis(f"{self.dir}/{text}")
                         it.setFont(self.Env.font())
                         self.format(it, text)
                         self.entry.appendRow(it)
 
                 for text in self.listdir:
-                    if files.isfile(self.dir+"/"+text):
+                    if files.isfile(f"{self.dir}/{text}"):
                         it = QStandardItem(text)
-                        it.setWhatsThis(self.dir + "/" + text)
+                        it.setWhatsThis(f"{self.dir}/{text}")
                         it.setFont(self.Env.font())
                         self.format(it, text)
                         self.entry.appendRow(it)
@@ -142,17 +178,17 @@ class FileListView(QListView):
                 self.entry.appendRow(self.parentdir)
 
                 for text in self.listdir:
-                    if files.isdir(self.dir+"/"+text):
+                    if files.isdir(f"{self.dir}/{text}"):
                         it = QStandardItem(text)
-                        it.setWhatsThis(self.dir + "/" + text)
+                        it.setWhatsThis(f"{self.dir}/{text}")
                         it.setFont(self.Env.font())
                         self.format(it, text)
                         self.entry.appendRow(it)
 
                 for text in self.listdir:
-                    if files.isfile(self.dir+"/"+text):
+                    if files.isfile(f"{self.dir}/{text}"):
                         it = QStandardItem(text)
-                        it.setWhatsThis(self.dir + "/" + text)
+                        it.setWhatsThis(f"{self.dir}/{text}")
                         it.setFont(self.Env.font())
                         self.format(it, text)
                         self.entry.appendRow(it)
@@ -163,12 +199,12 @@ class FileListView(QListView):
 
 class DirListView(QListView):
     def format(self, it, text):
-        if files.isdir(self.dir + '/' + text):
+        if files.isdir(f"{self.dir}/{text}"):
             it.setIcon(QIcon(res.get(res.etc('roller','folder-icon'))))
 
     def mkdir(self, dirname):
         it = QStandardItem(dirname)
-        it.setWhatsThis(self.dir + "/" + dirname)
+        it.setWhatsThis(f"{self.dir}/{dirname}")
         it.setIcon(QIcon(res.get(res.etc('roller','folder-icon'))))
         self.entry.appendRow(it)
 
@@ -187,15 +223,44 @@ class DirListView(QListView):
         # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
         # on the given model index to get a pointer to the item
 
+        self.username = self.Env.username
+
+        self.setStyleSheet("""
+                        DirListView,QListView {
+                        background-color: !z;
+                        color: !y;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
+            '6',
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
+
         self.dir = files.readall('/proc/info/pwd')
         files.write('/proc/info/dsel', self.dir)
         self.listdir = (files.list(self.dir))
         self.listdir.sort()
 
         for text in self.listdir:
-            if files.isdir(self.dir + "/" + text):
+            if files.isdir(f"{self.dir}/{text}"):
                 it = QStandardItem(text)
-                it.setWhatsThis(self.dir + "/" + text)
+                it.setWhatsThis(f"{self.dir}/{text}")
                 it.setFont(self.Env.font())
                 self.format(it, text)
                 self.entry.appendRow(it)
@@ -226,9 +291,9 @@ class DirListView(QListView):
                 self.entry.appendRow(self.parentdir)
 
                 for text in self.listdir:
-                    if files.isdir(self.dir + "/" + text):
+                    if files.isdir(f"{self.dir}/{text}"):
                         it = QStandardItem(text)
-                        it.setWhatsThis(self.dir + "/" + text)
+                        it.setWhatsThis(f"{self.dir}/{text}")
                         it.setFont(self.Env.font())
                         self.format(it, text)
                         self.entry.appendRow(it)
@@ -250,15 +315,21 @@ class DirListView(QListView):
                 self.entry.appendRow(self.parentdir)
 
                 for text in self.listdir:
-                    if files.isdir(self.dir + "/" + text):
+                    if files.isdir(f"{self.dir}/{text}"):
                         it = QStandardItem(text)
-                        it.setWhatsThis(self.dir + "/" + text)
+                        it.setWhatsThis(f"{self.dir}/{text}")
                         it.setFont(self.Env.font())
                         self.format(it, text)
                         self.entry.appendRow(it)
 
 # select box #
 class MainApp (QMainWindow):
+    def onCloseProcess (self):
+        if not app.check('select'):
+            self.Widget.Close()
+        else:
+            QTimer.singleShot(1,self.onCloseProcess)
+
     def __init__(self,ports):
         super(MainApp, self).__init__()
 
@@ -268,10 +339,13 @@ class MainApp (QMainWindow):
         self.AppName = ports[3]
         self.External = ports[4]
 
+        self.onCloseProcess()
+
         self.setStyleSheet('background-color: white;')
         ## Finds ##
         self.Widget.SetWindowIcon(QIcon(res.get(res.etc('select',"logo"))))
         self.btnCancel = QPushButton()
+        self.btnCancel.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnCancel.setText(res.get('@string/cancel'))
         self.btnCancel.setFont(self.Env.font())
         if self.Env.width() > 1000 and self.Env.height() > 720:
@@ -282,6 +356,7 @@ class MainApp (QMainWindow):
         self.layout().addWidget(self.btnCancel)
 
         self.btnSelect = QPushButton()
+        self.btnSelect.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         self.btnSelect.setFont(self.Env.font())
         self.btnSelect.clicked.connect(self.inp)
         if self.Env.width() > 1000 and self.Env.height() > 720:
@@ -292,7 +367,8 @@ class MainApp (QMainWindow):
 
         self.layout().addWidget(self.btnSelect)
 
-        self.leSave = QLineEdit()
+        self.leSave = LineEdit(ports)
+        self.leSave.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leSave.setFont(self.Env.font())
         if self.Env.width() > 1000 and self.Env.height() > 720:
             self.leSave.setGeometry(0, int(self.Env.height() / 2)-90, int(self.Env.width() / 2), 40)
@@ -348,6 +424,7 @@ class MainApp (QMainWindow):
                 self.xwid = FileListView(self.Env)
 
         self.ywid = QMainWindow()
+        self.ywid.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         if self.External[1].startswith('save'):
             if self.Env.width() > 1000 and self.Env.height() > 720:
                 self.ywid.resize(int(self.Env.width()/2),int(self.Env.height()/2)-90)
@@ -370,15 +447,18 @@ class MainApp (QMainWindow):
         self.Widget.DisableFloat()
 
     def inp(self):
-        if self.mode=='select':
-            inputx = files.readall('/proc/info/dsel')
-            self.External[2](inputx)
-        elif self.mode=='save' or self.mode=='save-as':
-            self.leSave.setPlaceholderText(res.get('@string/fn'))
-            inputx = files.readall('/proc/info/dsel')+'/'+self.leSave.text()
-            self.External[2](inputx)
-        else:
-            inputx = files.readall('/proc/info/fsel')
-            self.External[2](inputx)
+        try:
+            if self.mode=='select':
+                inputx = files.readall('/proc/info/dsel')
+                self.External[2](inputx)
+            elif self.mode=='save' or self.mode=='save-as':
+                self.leSave.setPlaceholderText(res.get('@string/fn'))
+                inputx = f"{files.readall('/proc/info/dsel')}/{self.leSave.text()}"
+                self.External[2](inputx)
+            else:
+                inputx = files.readall('/proc/info/fsel')
+                self.External[2](inputx)
+        except:
+            self.External[2]('')
 
         self.Widget.Close()

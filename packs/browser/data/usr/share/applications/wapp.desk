@@ -1,7 +1,7 @@
-name[en]: Web Application Runner
-name[fa]: ابر سرویس
-exec: wapp
-logo: @icon/web-browser
-application: No
-hidden: Yes
+name[en]: Web Page
+name[fa]: صفحه وب
+logo: @icon/breeze-wapp
+exec: wapp_app
+application: Yes
 category: internet
+pin: Yes

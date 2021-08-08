@@ -1,8 +1,7 @@
-#!etcetra
-
-code: Arvand
-version: 1.2.1
+code: Aras
+version: 2.0.1
 name: Pyabr
-build: 1399-12-10
-copyright: (c) 2020 Mani Jamali
+copyright: (c) 2021 Mani Jamali
 license: GNU General Public License v3.0
+build: 1400-05-06
+website: https://pyabr.ir

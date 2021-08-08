@@ -1,6 +1,6 @@
 name[en]: Debug Application
 name[fa]: برنامه آزمایشی
-logo: @icon/runner
+logo: @icon/breeze-app
 exec: debug_app
 shortcut: Ctrl+Q
 application: No

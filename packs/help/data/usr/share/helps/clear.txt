@@ -1,4 +1,0 @@
-
-clear
-
-Job: Clear screen

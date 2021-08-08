@@ -2,7 +2,7 @@
 #  In the name of God, the Compassionate, the Merciful
 #  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
 #
-#  Official Website: 		http://pyabr.rf.gd
+#  Official Website: 		https://pyabr.ir
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
@@ -13,180 +13,172 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtWebEngineWidgets import QWebEngineView
+from PyQt5.QtWebEngineWidgets import *
+from PyQt5.QtPrintSupport import *
 
 import os
 import sys
 
-from libabr import Res, Control, Files, App
+from libabr import *
 
 res = Res()
 control = Control()
 files = Files()
 app = App()
+commands = Commands()
 
-class AboutDialog(QDialog):
+app.switch('browser')
+
+f = QFont()
+f.setFamily(control.read_record("font","/etc/gui"))
+f.setPointSize(int(control.read_record("fontsize","/etc/gui")))
+
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
+
+class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
-        super(AboutDialog, self).__init__(*args, **kwargs)
+        super(MainWindow, self).__init__(*args, **kwargs)
 
-        QBtn = QDialogButtonBox.Ok  # No cancel
-        self.buttonBox = QDialogButtonBox(QBtn)
-        self.buttonBox.accepted.connect(self.accept)
-        self.buttonBox.rejected.connect(self.reject)
+        self.setFont(f)
 
-        layout = QVBoxLayout()
+        self.titlebar = QWidget()
+        self.titlebar.setStyleSheet(
+            f'background-color: {getdata("appw.title.bgcolor")};color: {getdata("appw.title.fgcolor")};')
 
-        logo = QLabel()
-        img = res.get('@icon/ma-icon-128')
-        logo.setPixmap(QPixmap(img))
-        layout.addWidget(logo)
+        self.layouts = QHBoxLayout()
+        self.titlebar.setLayout(self.layouts)
 
-        layout.addWidget(QLabel("Version 23.35.211.233232"))
-        layout.addWidget(QLabel("Copyright 2015 Mozarella Inc."))
+        # icon widget #
+        self.icon = QIcon(res.get('@icon/breeze-browser'))
 
-        for i in range(0, layout.count()):
-            layout.itemAt(i).setAlignment(Qt.AlignHCenter)
 
-        layout.addWidget(self.buttonBox)
+        self.iconwidget = QLabel()
+        self.iconwidget.setPixmap(
+            self.icon.pixmap(int(getdata("appw.title.size")) - 18, int(getdata("appw.title.size")) - 18))
+        self.iconwidget.resize(int(getdata("appw.title.size")), int(getdata("appw.title.size")))
+        self.layouts.addWidget(self.iconwidget)
 
-        self.setLayout(layout)
+        self.iconwidget.setGeometry(0, 0, int(getdata("appw.title.size")), int(getdata("appw.title.size")))
 
-class MainApp(QMainWindow):
-    def __init__(self,ports, *args, **kwargs):
-        super(MainApp, self).__init__(*args, **kwargs)
-        self.Backend = ports[0]
-        self.Env = ports[1]
-        self.Widget = ports[2]
-        self.AppName = ports[3]
-        self.External = ports[4]
+        # text title #
+        self.titletext = QLabel()
+        self.titletext.setStyleSheet(
+            f'background-color:  {getdata("appw.title.bgcolor")};color: {getdata("appw.title.fgcolor")};')
+        self.titletext.setMaximumWidth(self.titlebar.width())
+        self.titletext.setGeometry(int(getdata("appw.title.size")), 0, self.titlebar.width(),
+                                   int(getdata("appw.title.size")))
 
-        self.Widget.SetWindowTitle (res.get('@string/app_name'))
-        self.Widget.SetWindowIcon(QIcon(res.get(res.etc(self.AppName,"logo"))))
-        self.Widget.Resize(self,self.Env.width(),self.Env.height())
+        self.titletext.setFont(f)
+
+        self.titletext.setText(res.get('@string/app_name'))
+
+        self.layouts.addWidget(self.titletext)
+
+        round = '0'
+
+        if getdata("appw.title.btn-round") == 'Yes':
+            round = str(int((int(getdata("appw.title.size"))) - 16) / 2)
+
+        # float button #
+
+        self.btnEscape = QToolButton()
+        self.btnEscape.setIcon(QIcon(res.get(getdata("appw.title.close"))))
+        self.btnEscape.setMinimumSize(int(getdata("appw.title.size")) - 15, int(getdata("appw.title.size")) - 15)
+        self.btnEscape.setGeometry(self.titlebar.width() - int(getdata("appw.title.size")), 0,
+                                   int(getdata("appw.title.size")), int(getdata("appw.title.size")))
+        self.btnEscape.clicked.connect(self.close)
+        self.btnEscape.setStyleSheet(
+            'QToolButton {border-radius: {0}% {0}%;} QToolButton::hover {border-radius: {0}% {0}%;background-color: {1}}'.replace(
+                "{1}", getdata("appw.title.close-hover")).replace("{0}", round))
+        self.layouts.addWidget(self.btnEscape)
+        self.titlebar.setGeometry(0, 0, int(getdata('width')), int(getdata("appw.title.size")))
 
         self.tabs = QTabWidget()
         self.tabs.setDocumentMode(True)
         self.tabs.tabBarDoubleClicked.connect(self.tab_open_doubleclick)
         self.tabs.currentChanged.connect(self.current_tab_changed)
+
         self.tabs.setTabsClosable(True)
         self.tabs.tabCloseRequested.connect(self.close_current_tab)
+        self.tabs.setGeometry(0, int(getdata("appw.title.size")), int(files.readall('/tmp/width.tmp')),
+                            int(files.readall("/tmp/height.tmp")) - int(getdata("appw.title.size")))
 
-        self.setCentralWidget(self.tabs)
+        self.layout().addWidget(self.tabs)
+        self.layout().addWidget(self.titlebar)
 
         self.status = QStatusBar()
         self.setStatusBar(self.status)
 
         navtb = QToolBar(res.get('@string/nav'))
         navtb.setIconSize(QSize(16, 16))
-        self.addToolBar(navtb)
+        self.addToolBar(Qt.BottomToolBarArea,navtb)
+        #addToolBar
 
-        back_btn = QAction(QIcon(res.get('@icon/arrow-180')), res.get('@string/ba'), self)
-        back_btn.setFont(self.Env.font())
-        back_btn.setStatusTip(res.get('@string/ba'))
+        back_btn = QAction(QIcon(res.get('@icon/breeze-back')), res.get('@string/ba'), self)
         back_btn.triggered.connect(lambda: self.tabs.currentWidget().back())
         navtb.addAction(back_btn)
 
-        next_btn = QAction(QIcon(res.get('@icon/arrow-000')), res.get('@string/fw'), self)
-        next_btn.setFont(self.Env.font())
-        next_btn.setStatusTip(res.get('@string/fw'))
+        next_btn = QAction(QIcon(res.get('@icon/breeze-next')), res.get('@string/fw'), self)
         next_btn.triggered.connect(lambda: self.tabs.currentWidget().forward())
         navtb.addAction(next_btn)
 
-        reload_btn = QAction(QIcon(res.get('@icon/arrow-circle-315')), res.get('@string/rl'), self)
-        reload_btn.setFont(self.Env.font())
-        reload_btn.setStatusTip(res.get('@string/rl'))
+        reload_btn = QAction(QIcon(res.get('@icon/breeze-reload')), res.get('@string/rl'), self)
         reload_btn.triggered.connect(lambda: self.tabs.currentWidget().reload())
         navtb.addAction(reload_btn)
 
-        home_btn = QAction(QIcon(res.get('@icon/home')), res.get('@string/hm'), self)
-        home_btn.setFont(self.Env.font())
-        home_btn.setStatusTip(res.get('@string/hm'))
+        home_btn = QAction(QIcon(res.get('@icon/breeze-home')), res.get('@string/hm'), self)
         home_btn.triggered.connect(self.navigate_home)
         navtb.addAction(home_btn)
+
+        new_tab_action = QAction(QIcon(res.get('@icon/breeze-newtab')),res.get('@string/ntab'), self)
+        new_tab_action.triggered.connect(lambda _: self.add_new_tab())
+        new_tab_action.setFont(f)
+        navtb.addAction(new_tab_action)
 
         navtb.addSeparator()
 
         self.httpsicon = QLabel()  # Yes, really!
-        self.httpsicon.setPixmap(QPixmap(res.get('@icon/lock-nossl')))
+        self.httpsicon.setPixmap(QPixmap(res.get('@icon/breeze-browser')))
         navtb.addWidget(self.httpsicon)
 
         self.urlbar = QLineEdit()
         self.urlbar.returnPressed.connect(self.navigate_to_url)
         navtb.addWidget(self.urlbar)
 
-        stop_btn = QAction(QIcon(res.get('@icon/cross-circle')), res.get('@string/st'), self)
-        stop_btn.setFont(self.Env.font())
-        stop_btn.setStatusTip(res.get('@string/st'))
+        stop_btn = QAction(QIcon(res.get('@icon/breeze-stop')), res.get('@string/st'), self)
         stop_btn.triggered.connect(lambda: self.tabs.currentWidget().stop())
         navtb.addAction(stop_btn)
+
 
         # Uncomment to disable native menubar on Mac
         # self.menuBar().setNativeMenuBar(False)
 
-        file_menu = self.menuBar().addMenu(res.get('@string/file'))
-        file_menu.setFont(self.Env.font())
+        self.menuBar().hide()
 
-        img = res.get('@icon/ui-tab--plus')
-        new_tab_action = QAction(QIcon(img), res.get('@string/ntab'), self)
-        new_tab_action.setFont(self.Env.font())
-        new_tab_action.setStatusTip(res.get('@string/ntab'))
-        new_tab_action.triggered.connect(lambda _: self.add_new_tab())
-        file_menu.addAction(new_tab_action)
-
-        img = res.get('@icon/disk--arrow')
-        open_file_action = QAction(QIcon(img), res.get('@string/of'), self)
-        open_file_action.setStatusTip(res.get('@string/of'))
-        open_file_action.setFont(self.Env.font())
-        open_file_action.triggered.connect(self.open_file)
-        file_menu.addAction(open_file_action)
-
-        help_menu = self.menuBar().addMenu(res.get('@string/hl'))
-        help_menu.setFont(self.Env.font())
-
-        img = res.get('@icon/question')
-        about_action = QAction(QIcon(img), res.get('@string/ab'), self)
-        about_action.setFont(self.Env.font())
-        about_action.setStatusTip(res.get('@string/ab'))  # Hungry!
-        about_action.triggered.connect(self.about)
-        help_menu.addAction(about_action)
-
-        img = res.get('@icon/lifebuoy')
-        navigate_mozarella_action = QAction(QIcon(img),res.get('@string/pg'), self)
-        navigate_mozarella_action.setStatusTip(res.get('@string/pc'))
-        navigate_mozarella_action.setFont(self.Env.font())
-        navigate_mozarella_action.triggered.connect(self.navigate_mozarella)
-        help_menu.addAction(navigate_mozarella_action)
-
-        self.add_new_tab(QUrl(control.read_record('default','/etc/webconfig')), 'Homepage')
-
-        self.show()
-
-        img = res.get('@icon/ma-icon-64')
-        self.setWindowIcon(QIcon(img))
+        self.add_new_tab(QUrl(control.read_record("engine","/etc/webconfig")), res.get('@string/hm'))
+        self.showFullScreen()
+        self.resize(int(getdata("width")),int(getdata("height")))
 
     def add_new_tab(self, qurl=None, label="Blank"):
 
         if qurl is None:
             qurl = QUrl('')
 
-        self.browser = QWebEngineView()
-        self.browser.setUrl(qurl)
-        i = self.tabs.addTab(self.browser, label)
+        browser = QWebEngineView()
+        browser.setUrl(qurl)
+
+        i = self.tabs.addTab(browser, label)
 
         self.tabs.setCurrentIndex(i)
 
         # More difficult! We only want to update the url when it's from the
         # correct tab
-        self.browser.urlChanged.connect(lambda qurl, browser=self.browser:
-                                        self.update_urlbar(qurl, self.browser))
+        browser.urlChanged.connect(lambda qurl, browser=browser:
+                                   self.update_urlbar(qurl, browser))
 
-        self.browser.loadFinished.connect(lambda _, i=i, browser=self.browser:self.tabs.setTabText(i, self.browser.page().title()))
-
-        self.Loop()
-
-    def Loop(self):
-        self.browser.update()
-        QTimer.singleShot(50,self.Loop)
+        browser.loadFinished.connect(lambda _, i=i, browser=browser:
+                                     self.tabs.setTabText(i, browser.page().title()))
 
     def tab_open_doubleclick(self, i):
         if i == -1:  # No tab under the click
@@ -209,35 +201,39 @@ class MainApp(QMainWindow):
             return
 
         title = self.tabs.currentWidget().page().title()
-        self.Widget.setWindowTitle(f"%s - {res.get('@string/app_name')}" % title)
-
-    def navigate_mozarella(self):
-        self.tabs.currentWidget().setUrl(QUrl("https://gap.im/pyabr"))
-
-    def about(self):
-        dlg = AboutDialog()
-        dlg.exec_()
-
-    def open_file(self):
-        app.switch('browser')
-        self.Env.RunApp('select',[res.get('@string/owp'),'open',self.open_file_])
-        app.switch('browser')
-
-    def open_file_(self,filename):
-        html = files.readall(filename)
-
-        self.tabs.currentWidget().setHtml(html)
-        self.urlbar.setText(filename)
+        self.setWindowTitle("%s - Mozarella Ashbadger" % title)
 
     def navigate_home(self):
-        self.tabs.currentWidget().setUrl(QUrl(control.read_record('default','/etc/webconfig')))
+        self.tabs.currentWidget().setUrl(QUrl(control.read_record('website','/etc/distro')))
+
+
 
     def navigate_to_url(self):  # Does not receive the Url
-        q = QUrl(self.urlbar.text())
-        if q.scheme() == "":
-            q.setScheme("http")
+        if self.urlbar.text().startswith('http'):
+            q = QUrl(self.urlbar.text())
+            if q.scheme() == "":
+                q.setScheme("http")
 
-        self.tabs.currentWidget().setUrl(q)
+            if q.toString().endswith('.apk') or q.toString().endswith('.exe') or q.toString().endswith(
+                    '.pa') or q.toString().endswith('.zip') or q.toString().endswith('.rar') or q.toString().endswith(
+                    '.deb') or q.toString().endswith('.msi') or q.toString().endswith('.xz') or q.toString().endswith(
+                    '.gz') or q.toString().endswith('.bz2') or q.toString().endswith('.rpm') or q.toString().endswith(
+                    '.run') or q.toString().endswith('.iso') or q.toString().endswith('.bin') or q.toString().endswith('.txt'):
+                files.write('/tmp/download.tmp', q.toString())
+                commands.start(['dmgr'])
+                self.close()
+            else:
+                self.tabs.currentWidget().setUrl(q)
+        else:
+            splitor = self.urlbar.text().split(',')
+            strv = ''
+            for i in splitor:
+                if strv=='':
+                    strv+=i
+                else:
+                    strv+=f"+{i}"
+
+            self.tabs.currentWidget().setUrl(QUrl(f'https://gerdoo.me/search/?query={strv}&t=nd'))
 
     def update_urlbar(self, q, browser=None):
 
@@ -247,12 +243,27 @@ class MainApp(QMainWindow):
 
         if q.scheme() == 'https':
             # Secure padlock icon
-            img = res.get('@icon/lock-ssl')
-            self.httpsicon.setPixmap(QPixmap(img))
+            self.httpsicon.setPixmap(QPixmap(res.get('@icon/breeze-ssl')))
+
+        elif q.toString().startswith ('abr://'):
+            commands.cl([q.toString()])
+            self.close()
+
+        elif q.toString().endswith ('.apk') or q.toString().endswith ('.exe') or q.toString().endswith ('.pa') or q.toString().endswith ('.zip') or q.toString().endswith ('.rar') or q.toString().endswith ('.deb') or q.toString().endswith ('.msi') or q.toString().endswith ('.xz') or q.toString().endswith ('.gz') or q.toString().endswith ('.bz2') or q.toString().endswith ('.rpm') or q.toString().endswith ('.run'):
+            files.write('/tmp/download.tmp',q.toString())
+            commands.start(['dmgr'])
+            self.close()
+
         else:
             # Insecure padlock icon
-            img = res.get('@icon/lock-nossl')
-            self.httpsicon.setPixmap(QPixmap(img))
+            self.httpsicon.setPixmap(QPixmap(res.get('@icon/breeze-browser')))
 
         self.urlbar.setText(q.toString())
         self.urlbar.setCursorPosition(0)
+
+
+app = QApplication(sys.argv)
+
+window = MainWindow()
+
+app.exec_()

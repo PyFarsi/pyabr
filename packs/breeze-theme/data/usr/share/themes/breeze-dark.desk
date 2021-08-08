@@ -1,0 +1,5 @@
+name[en]: Dark theme
+name[fa]: پوسته تاریک
+exec: /usr/share/themes/breeze-dark
+logo: @icon/breeze
+theme-name: breeze

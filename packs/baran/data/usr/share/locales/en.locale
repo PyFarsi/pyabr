@@ -1,5 +1,16 @@
-#!etcetra
-
+name: English
+keyless: setxkbmap us
+keyless.shortcut: Shift+Alt+E
+keyless.enable: Yes
+logo: @icon/breeze-lang
+logo-selected: @icon/breeze-lang
+font: Comic Sans MS
+submenu-direction: ltr
+enter: Enter
+done: Done
+shift: Next
+back: Back
+tab: Tab
 0: 0
 1: 1
 2: 2
@@ -62,6 +73,37 @@ w: w
 x: x
 y: y
 z: z
+`: `
+~: ~
+!: !
+@: @
+#: #
+$: $
+%: %
+^: ^
+&: &
+*: *
+(: (
+): )
+-: -
+_: _
+=: =
++: +
+{: {
+[: [
+}: }
+]: ]
+\: \
+|: |
+<: <
+>: >
+,: ,
+.: .
+/: /
+": "
+?: ?
+': '
+;: ;
 Sat: Saturday
 Sun: Sunday
 Mon: Monday
@@ -117,6 +159,9 @@ roller.app_name: Files
 input.title: Enter a value
 input.cancel: Cancel
 input.ok: OK
+code.title: Enter the password
+code.cancel: Cancel
+code.ok: OK
 bool.title: Are you sure?
 bool.cancel: No
 bool.ok: Yes
@@ -197,6 +242,7 @@ persia.new: New File
 persia.new_page: New Project
 persia.empty: New Empty Project
 persia.gui: New GUI Project
+persia.web: New Web Project
 persia.save: Save
 persia.save_as: Save As
 persia.exit: Exit
@@ -243,6 +289,7 @@ paye.unpack: Installed in
 paye.app_name: Package Manager
 paye.rm: Uninstall
 paye.rmm: Do you want to uninstall this package?
+paye.inmx: Do you want to install this package?
 paye.up: Update
 paye.upm: Do you want to update this package?
 paye.rmx: Successfully Uninstalled
@@ -253,7 +300,10 @@ paye.mirror: Mirror
 paye.package: Package
 paye.add: Add
 paye.remove: Remove
+paye.store: Store
+paye.myapps: Installed
 paye.install: Install
+paye.installing: Installing
 paye.uninstall: Uninstall
 paye.download: Dowload
 paye.mname: Enter your mirror name
@@ -357,7 +407,8 @@ browser.ab: About Browser
 browser.pc: Go to Pyabr channel
 browser.pg: Pyabr Support
 browser.owp: Open a web page
-wapp.app_name: Abr Service
+browser.close: Close
+wapp.app_name: Web Page
 barge.code: Code
 barge.run: Run
 barge.icode: Insert Code
@@ -436,3 +487,170 @@ desktop.perm: Permission denied
 desktop.guestperm: Permission denied with guest account
 desktop.selectedon: This theme has already set it
 desktop.reboott: For setting this theme you should reboot
+screen.app_name: Screen Resolution
+screen.savec: Save changes
+screen.reboot: For saving changes you should reboot
+squares.app_name: Squares
+desktop.audios: Audios
+desktop.desktop: Desktop
+desktop.downloads: Downloads
+desktop.documents: Documents
+desktop.templates: Templates
+desktop.pictures: Pictures
+desktop.projects: Projects
+desktop.public: Public
+desktop.videos: Videos
+process.app_name: Process Manager
+process.refresh: Refresh
+process.tasks: Tasks
+process.end: End
+process.kill: Kill
+process.restart: Restart
+roller.cut: Cut
+roller.copy: Copy
+roller.paste: Paste
+roller.rename: Rename
+roller.execute: Execute
+roller.open: Open
+roller.openwith: Open With
+roller.delete: Delete
+roller.deletem: Do you want to delete this directory?
+roller.deletemf: Do you want to delete this file?
+roller.perm: Permission denied
+roller.permm: Cannot execute this file; Permission denied
+open.always: Always
+open.atonce: At once
+open.choose: Choose an application
+dmgr.app_name: Download Manager
+dmgr.download: Dowload
+dmgr.link: Paste your link here
+dmgr.saveafile: Save a file
+paye.isnotapp: Is not application
+paye.isnotappm: This package is not an application
+persia.uix: UI
+open.isexe: Executable file
+open.isexem: Do you want to execute this file?
+open.unk: Unknown file
+open.unkm: Cannot open this file, because it's an unknown file.
+barge.uix: UI
+roller.uix: New UI file
+key.select: Select
+key.cancel: Cancel
+key.choose: Choose a language
+lang.select: Select
+lang.cancel: Cancel
+lang.choose: Choose a language
+setup.app_name: Pyabr installer
+setup.hostname: Enter a hostname for your computer
+setup.rootcode: Choose a strong password for root user
+setup.username: Pick a username
+setup.password: Choose a password for your user
+setup.lang: Select your current language
+setup.guest: Enable Guest user
+setup.fullname: Full name
+setup.email: Email address
+setup.phone: Phone number
+setup.next: Next
+setup.install: Install
+setup.cancel: Cancel
+setup.back: Back
+setting.app_name: Settings
+wallpaper.app_name: Wallpapers
+wallpaper.desktop: Desktop
+wallpaper.enter: Enter
+wallpaper.login: Login
+wallpaper.unlock: Unlock
+wallpaper.lock: Lock
+theme.app_name: Themes & Style
+users.app_name: Users
+users.back: Back
+users.remove: Remove
+users.edit: Edit
+users.remove_user: Remove user
+users.removem: Do you want to remove this user?
+users.removed: Successfully removed
+users.removedm: This user successfully removed
+users.root: Super user
+users.rootm: Cannot remove super user account at all
+uedit.app_name: User editor
+uedit.fullname: Full name
+uedit.company: Company
+uedit.email: Email
+uedit.phone: Phone
+uedit.male: Male
+uedit.female: Female
+uedit.save: Save changes
+desktop.vkey: Virtual Keyboard
+users.add: Add user
+uedit.username: Username
+uedit.password: Password
+uedit.confirm: Confirm
+uedit.add: Add account
+uedit.admin: Administrator Account
+uedit.low: Standard Account
+uedit.cprofile: Change profile image
+nama.app_name: Image Viewer
+nama.open: Open Image
+desktop.app_name: Sudo Process
+desktop.pnot: Permission denied
+desktop.pnotm: Cannot open this process, Permission denied
+desktop.pass: Enter password
+desktop.wrongp: Cannot open this process, Wrong password
+uiv.pnot: Page not found
+uiv.pnotm: Cannot find this page; page not found
+uiv.dnot: Domain not exists
+uiv.dnotm: Cannot find this domain; domain not exists
+uiv.enet: Connection failed
+uiv.enetm: Cannot load this page; connection failed
+desktop.screenshot: Screenshot
+wifi.app_name: WiFi Manager
+wifi.scan: Scan
+wifi.connect: Connect
+wifi.forget: Forget
+wifi.on: on
+wifi.off: off
+wifi.password: Enter wifi password
+wifi.ssid: Enter SSID name
+wifi.wrongp: Wrong password
+assistant.app_name: Ava Assistant
+sms.enter: Enter your message
+cloudroller.app_name: Drives
+cloudroller.add: Add Drives
+cloudroller.e: Connection error
+cloudroller.em: Cannot connect to this cloud drive; connection failed
+connectcloud.app_name: Add drive
+connectcloud.host: Hostname URL
+connectcloud.check: Check backend
+connectcloud.list: List backend
+connectcloud.dir: Directory backend
+connectcloud.remove: Remove backend
+connectcloud.upload: Upload backend
+connectcloud.download: Download backend
+connectcloud.password: Password
+connectcloud.value: Value name
+connectcloud.add: Add && Connect
+connectcloud.cm: Cannot add drive; there is some problems in fields or connection
+connectcloud.c: Problem adding
+html.app_name: HTML Viewer
+clock.stopwatch: Stopwatch
+clock.app_name: Clock
+clock.stop: Stop
+clock.resume: Resume
+clock.reset: Reset
+clock.start: Start
+wifi.cm: Do you want to connect to this network?
+wifi.c: Connect to
+wifi.s: Successfully connected
+wifi.sm: Successfully connected to this network
+wifi.i: Incorrect password
+wifi.im: Your entered password is incorrect
+pyabrsite.app_name: Pyabr Website
+weather.app_name: Weather
+weather.city: Enter your city name
+cloudroller.master: Master Drives
+cloudroller.cloud: Cloud Drives
+mpv.app_name: Video Player
+mpv.open: Open
+roller.archive: Compress
+roller.extract: Extract
+desktop.keyless: Keyboard Layouts

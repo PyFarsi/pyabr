@@ -2,7 +2,7 @@
 #  In the name of God, the Compassionate, the Merciful
 #  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
 #
-#  Official Website: 		http://pyabr.rf.gd
+#  Official Website: 		https://pyabr.ir
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
@@ -20,13 +20,20 @@ from PyQt5 import QtGui, QtWidgets, QtCore
 
 from PyQt5.QtGui import QPainter, QBitmap, QPolygon, QPen, QBrush, QColor
 from PyQt5.QtCore import Qt
-from libabr import System, App, Control, Files, Res
+from libabr import *
 
 from piecasso_frontend import Ui_MainWindow
 
-res = Res();files = Files();app = App();control=Control()
+res = Res();files = Files();app = App();control=Control();commands = Commands()
+
+def getdata (value): return control.read_record(value,'/etc/gui')
 
 class MainApp(QtWidgets.QMainWindow):
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QtCore.QTimer.singleShot(1,self.onCloseProcess)
     def __init__(self,args):
         super(MainApp, self).__init__()
 
@@ -37,10 +44,15 @@ class MainApp(QtWidgets.QMainWindow):
         self.AppName = args[3]
         self.External = args[4]
 
+        self.onCloseProcess()
+
         # resize
         self.Widget.Resize (self,int(res.etc(self.AppName,"width")),int(res.etc(self.AppName,"height")))
         self.Widget.SetWindowTitle(res.get('@string/app_name'))
         self.Widget.SetWindowIcon (QtGui.QIcon(res.get(res.etc(self.AppName,'logo'))))
+
+        self.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.setCentralWidget(MainWindow(args))
 
@@ -407,7 +419,7 @@ class Canvas(QLabel):
             if e.key() == Qt.Key_Backspace:
                 self.current_text = self.current_text[:-1]
             else:
-                self.current_text = self.current_text + e.text()
+                self.current_text = f"{self.current_text}{e.text()}"
 
     def text_mousePressEvent(self, e):
         if e.button() == Qt.LeftButton and self.current_pos is None:
@@ -732,6 +744,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self,ports)
 
+        self.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+
         # ports
         self.Backend = ports[0]
         self.Env = ports[1]
@@ -761,6 +776,36 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Setup the color selection buttons.
         self.primaryButton.pressed.connect(lambda: self.choose_color(self.set_primary_color))
         self.secondaryButton.pressed.connect(lambda: self.choose_color(self.set_secondary_color))
+
+        ## External Support ##
+        if not self.External==None:
+            if not self.External==[]:
+                if not self.External[0]==None:
+                    pixmap = QPixmap()
+                    pixmap.load(files.input(self.External[0]))
+
+                    # We need to crop down to the size of our canvas. Get the size of the loaded image.
+                    iw = pixmap.width()
+                    ih = pixmap.height()
+
+                    # Get the size of the space we're filling.
+                    cw, ch = CANVAS_DIMENSIONS
+
+                    if iw / cw < ih / ch:  # The height is relatively bigger than the width.
+                        pixmap = pixmap.scaledToWidth(cw)
+                        hoff = (pixmap.height() - ch) // 2
+                        pixmap = pixmap.copy(
+                            QRect(QPoint(0, hoff), QPoint(cw, pixmap.height() - hoff))
+                        )
+
+                    elif iw / cw > ih / ch:  # The height is relatively bigger than the width.
+                        pixmap = pixmap.scaledToHeight(ch)
+                        woff = (pixmap.width() - cw) // 2
+                        pixmap = pixmap.copy(
+                            QRect(QPoint(woff, 0), QPoint(pixmap.width() - woff, ch))
+                        )
+
+                    self.canvas.setPixmap(pixmap)
 
         # Initialize button colours.
         for n, hex in enumerate(COLORS, 1):
@@ -830,7 +875,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionUnderline.triggered.connect(lambda s: self.canvas.set_config('underline', s))
 
         sizeicon = QLabel()
+        sizeicon.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
         sizeicon.setPixmap(QPixmap(':/icons/border-weight.png'))
+        sizeicon.setFont(self.Env.font())
         self.drawingToolbar.addWidget(sizeicon)
         self.sizeselect = QSlider()
         self.sizeselect.setRange(1,20)
@@ -926,6 +974,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if path:
             pixmap = self.canvas.pixmap()
             pixmap.save(files.input(path), "PNG" )
+
+            try:
+                commands.up(
+                    [files.output(path).replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
 
     def invert(self):
         img = QImage(self.canvas.pixmap())

@@ -1,0 +1,6 @@
+name[en]: Clock
+name[fa]: ساعت
+logo: @icon/breeze-clock
+exec: clock_app
+application: Yes
+category: tools

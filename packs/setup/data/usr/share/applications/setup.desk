@@ -1,0 +1,6 @@
+name[en]: Pyabr installer
+name[fa]: نصاب پای ابر
+exec: setupc
+logo: @icon/breeze-setup
+category: tools
+application: Yes

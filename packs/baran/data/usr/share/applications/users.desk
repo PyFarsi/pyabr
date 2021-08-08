@@ -1,0 +1,9 @@
+name[en]: Users
+name[fa]: حساب ها
+exec: users
+logo: @icon/breeze-users
+application: No
+hidden: Yes
+category: system
+setting: Yes
+sudoprocess: Yes

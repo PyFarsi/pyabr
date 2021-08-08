@@ -1,0 +1,6 @@
+name[en]: Notification Box
+exec: notbox
+logo: @icon/breeze-app
+application: No
+hidden: Yes
+category: system

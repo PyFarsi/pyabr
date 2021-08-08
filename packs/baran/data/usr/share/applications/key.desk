@@ -1,0 +1,8 @@
+name[en]: Key Box
+name[fa]: تنظیمات زبان کیبورد
+logo: @icon/breeze-lang
+exec: keybox
+hidden: Yes
+logo: @icon/help-about
+application: No
+category: system

@@ -2,7 +2,7 @@
 #  In the name of God, the Compassionate, the Merciful
 #  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
 #
-#  Official Website: 		http://pyabr.rf.gd
+#  Official Website: 		https://pyabr.ir
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
@@ -12,7 +12,7 @@
 
 from buildlibs import pack_archives as pack
 from buildlibs import control
-import shutil, os, sys, hashlib,getpass
+import shutil, os, sys, hashlib,getpass,subprocess
 
 import shutil, os
 
@@ -39,6 +39,7 @@ if not os.path.isdir ("build-packs"): os.mkdir ("build-packs")
 
 pack.install()
 pack.inst('baran')
+pack.inst('setup')
 
 # run #
 if os.path.isfile ('stor/proc/0'):  os.remove ('stor/proc/0')
@@ -48,7 +49,7 @@ if not os.path.isdir('stor/proc/id'): os.mkdir('stor/proc/id')
 # debug app #
 shutil.copyfile('debug_apps','stor/etc/suapp')
 file = open ('debug_params','r')
-os.system('cd stor && "{0}" vmabr.pyc {1}'.replace('{0}', sys.executable).replace("{1}",file.read()))
+os.system(f'cd stor && {sys.executable} vmabr.pyc {file.read()}')
 file.close()
 
 # clean #

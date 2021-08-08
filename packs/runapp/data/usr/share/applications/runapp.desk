@@ -1,7 +1,7 @@
 name[en]: Runner
 name[fa]: بارگذار
 name[ar]: عداء
-logo: @icon/runner
+logo: @icon/breeze-runapp
 exec: runapp
 shortcut: Ctrl+Alt+R
 bgcolor: white
@@ -14,3 +14,4 @@ width: 600
 application: Yes
 category: system
 pin: Yes
+external: Yes

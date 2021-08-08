@@ -1,18 +1,17 @@
 import pygame, sys, random, time
 from pygame.locals import *
 from pygame import mixer
-from libabr import Res, Control, Files, System
+from libabr import Res, Control, Files, System,App
 
 res = Res()
 control = Control()
 files = Files()
-
 pygame.init()
-
-win = pygame.display.set_mode((int(files.readall('/tmp/w')), int(files.readall('/tmp/h'))))
-pygame.display.set_caption("Game")
+app = App()
+app.start('squares')
+win = pygame.display.set_mode((800, 600))
+pygame.display.set_caption(res.get('@string/app_name'))
 clock = pygame.time.Clock()
-
 
 red = (255, 0, 0)
 green = (0, 255, 0)
@@ -35,8 +34,8 @@ def collision(player_pos, enemy_pos):
     p_y = player_pos[1]
     e_x = enemy_pos[0]
     e_y = enemy_pos[1]
-    if (p_x <= e_x < (p_x + 60)) or (e_x <= p_x <(e_x + 60)):
-        if (p_y <= e_y <(p_y + 60)) or (e_y <= p_y < (e_y + 60)):
+    if (p_x <= e_x < (p_x + 60)) or (e_x <= p_x < (e_x + 60)):
+        if (p_y <= e_y < (p_y + 60)) or (e_y <= p_y < (e_y + 60)):
             return True
     else:
         return False
@@ -79,7 +78,6 @@ def level(scr, spd):
     return spd
 
 
-
 def check_collision(enemy_list, player_pos):
     for enemy in enemy_list:
         if collision(enemy, player_pos):
@@ -88,14 +86,13 @@ def check_collision(enemy_list, player_pos):
 
 
 def game_opening():
-
     font3 = pygame.font.Font(None, 500)
     text_s = font3.render("3", True, red)
     win.blit(text_s, (300, 150))
     pygame.display.update()
     time.sleep(1)
     win.fill(black)
-    text_s = font3.render("2", True, (255,201,14))
+    text_s = font3.render("2", True, (255, 201, 14))
     win.blit(text_s, (300, 150))
     pygame.display.update()
     time.sleep(1)
@@ -114,7 +111,6 @@ def game_opening():
 
 game_opening()
 
-
 while not game_over:
     for event in pygame.event.get():
 
@@ -124,6 +120,7 @@ while not game_over:
         if event.type == KEYDOWN:
             if event.key == K_RIGHT:
                 p_pos[0] += speed
+
             if event.key == K_LEFT:
                 p_pos[0] -= speed
 
@@ -133,7 +130,7 @@ while not game_over:
     if check_collision(enemy_l, p_pos):
         t_s2 = font2.render('Game Over', True, (0, 255, 255))
         win.blit(t_s2, (270, 270))
-        t_s = font.render("Your score is : " + str(score), True, (0, 255, 0))
+        t_s = font.render(f"Your score is : {str(score)}", True, (0, 255, 0))
         win.blit(t_s, (270, 320))
         pygame.display.update()
         time.sleep(3)
@@ -152,10 +149,10 @@ while not game_over:
     enemies(enemy_l)
     draw_enemies(enemy_l)
     score = enemy_pos_update(enemy_l, score)
-    t_s = font.render("score : " + str(score), True, (0, 255, 0))
+    t_s = font.render(f"score : {str(score)}", True, (0, 255, 0))
     win.blit(t_s, (20, 20))
     speed_e = level(score, speed_e)
- 
+
     img1 = pygame.image.load(res.get("@icon/catball"))
     img1 = pygame.transform.scale(img1, (60, 60))
     win.blit(img1, (p_pos[0], p_pos[1], 60, 60))

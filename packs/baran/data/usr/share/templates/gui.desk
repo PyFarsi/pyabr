@@ -1,0 +1,5 @@
+logo: @icon/breeze-js
+name[en]: New GUI Page
+name[fa]: یک صفحه گرافیکی
+connect: @temp/untitled-gui.py
+ext: py

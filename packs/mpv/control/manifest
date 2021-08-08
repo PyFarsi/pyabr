@@ -1,0 +1,10 @@
+name: mpv
+name[fa]: بخش کننده ویدئو
+name[en]: MPV Video Player
+copyright: (c) 2021 MPlayer and MPlayer2
+license: GNU GPL v2.+
+unpack: /
+version: 2.0.0
+description: MPV Video Player for Pyabr
+compile: Yes
+build: 1400-05-13

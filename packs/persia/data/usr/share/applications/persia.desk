@@ -1,20 +1,21 @@
 name[en]: PyPersia IDE
 name[fa]: پای پرشیا
 exec: persia
-logo: @icon/python
-text: @icon/application-text
-open: @icon/blue-fileopen
-save: @icon/document-save
-save-as: @icon/document-save-as
-exit: @icon/system-shutdown
-c: @icon/text-x-c
-c++: @icon/text-x-c++
-c#: @icon/text-csharp
-java: @icon/application-java
-py: @icon/text-x-python3
-sa: @icon/application-x-executable-script
-html: @icon/html
-php: @icon/application-x-php
-js: @icon/application-javascript
+logo: @icon/breeze-persia
+text: @icon/breeze-txt
+open: @icon/breeze-open
+save: @icon/breeze-save
+save-as: @icon/breeze-saveas
+exit: @icon/breeze-exit
+c: @icon/breeze-c
+c++: @icon/breeze-c++
+c#: @icon/breeze-cs
+java: @icon/breeze-java
+py: @icon/breeze-py
+sa: @icon/breeze-shell
+html: @icon/breeze-html
+php: @icon/breeze-php
+js: @icon/breeze-js
 application: Yes
 category: develop
+external: Yes

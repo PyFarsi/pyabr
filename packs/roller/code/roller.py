@@ -2,7 +2,7 @@
 #  In the name of God, the Compassionate, the Merciful
 #  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
 #
-#  Official Website: 		http://pyabr.rf.gd
+#  Official Website: 		https://pyabr.ir
 #  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
 #  Gap channel: 			@pyabr
 #  Gap group:   			@pyabr_community
@@ -24,6 +24,9 @@ commands = Commands()
 permissions = Permissions()
 app = App()
 
+## Get data ##
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 
 class FileListView (QtWidgets.QListView):
     AppName = "roller"
@@ -53,10 +56,14 @@ class FileListView (QtWidgets.QListView):
             it.setWhatsThis(self.dir + "/" + dirname)
             it.setIcon(QtGui.QIcon(res.get(res.etc("roller",'folder-icon'))))
             self.entry.appendRow(it)
-            commands.mkdir([dirname])
+
+            try:
+                commands.mkc([it.whatsThis().replace(f'/stor/{files.readall("/proc/info/mnt")}/','')])
+            except:
+                files.mkdir(dirname)
+
             it.setFont(self.Env.font())
             x = self.Env.font()
-            print(x.family())
 
     def mkfile (self,filename):
         if files.isdir(filename ):
@@ -70,122 +77,39 @@ class FileListView (QtWidgets.QListView):
             it.setIcon(QtGui.QIcon(res.get(res.etc('roller','file-icon'))))
             self.entry.appendRow(it)
             self.format(it, filename)
-            commands.cat (['-c',filename])
+            files.create(filename)
+
+            try:
+                commands.up([it.whatsThis().replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
+
             it.setFont(self.Env.font())
 
-    def mkc (self,filename):
-        if files.isdir(filename +".c"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                                                         res.get('@string/isdir_msg').replace("{0}",filename+".c")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".c")
-            files.write(self.dir + "/" + filename+'.c',files.readall(res.get('@temp/untitled.c')))
+    def mkcode (self,filename):
+        self.code = files.readall('/tmp/code.tmp')
+        self.ext = control.read_record('ext',res.get(self.code))
 
-    def mkcpp (self,filename):
-        if files.isdir(filename+".cpp"):
+        if files.isdir(filename+f".{self.ext}"):
             app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".cpp")])
+            self.Env.RunApp('text', [res.get('@string/isdir'),res.get('@string/isdir_msg').replace("{0}",filename+f".{self.ext}")])
             app.switch('roller')
         else:
-            self.mkfile(filename+".cpp")
-            files.write(self.dir + "/" + filename+'.cpp',files.readall(res.get('@temp/untitled.cpp')))
+            self.mkfile(filename+f".{self.ext}")
 
-    def mkjava (self,filename):
-        if files.isdir(filename+".java"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".java")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".java")
-            files.write(self.dir + "/" + filename+'.java',files.readall(res.get('@temp/untitled.java')).replace("MainApp",filename))
+            files.write(self.dir + "/" + filename+f'.{self.ext}',files.readall(res.get(control.read_record('connect',res.get(self.code)))))
 
-    def mkjs (self,filename):
-        if files.isdir(filename+".js"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".js")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".js")
-            files.write(self.dir + "/" + filename+'.js',files.readall(res.get('@temp/untitled.js')))
-
-    def mkphp (self,filename):
-        if files.isdir(filename+".php"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".php")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".php")
-            files.write(self.dir + "/" + filename+".php",files.readall(res.get('@temp/untitled.php')))
-
-    def mkhtml (self,filename):
-        if files.isdir(filename+".html"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".html")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".html")
-            files.write(self.dir + "/" + filename+".html",files.readall(res.get('@temp/untitled.html')))
-
-    def mkcs (self,filename):
-        if files.isdir(filename+".cs"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".cs")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".cs")
-            files.write(self.dir + "/" + filename+".cs",files.readall(res.get('@temp/untitled.cs')))
-
-    def mksa (self,filename):
-        if files.isdir(filename+".sa"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".sa")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".sa")
-            files.write(self.dir + "/" + filename+".sa",files.readall(res.get('@temp/untitled.sa')))
-
-    def mkpy (self,filename):
-        if files.isdir(filename+".py"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".py")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".py")
-            files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled.py')))
-
-    def mkpygui (self,filename):
-        if files.isdir(filename+".py"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".py")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".py")
-            files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled-gui.py')))
-
-    def mkpyweb (self,filename):
-        if files.isdir(filename+".py"):
-            app.switch('roller')
-            self.Env.RunApp('text', [res.get('@string/isdir'),
-                                     res.get('@string/isdir_msg').replace("{0}", filename + ".py")])
-            app.switch('roller')
-        else:
-            self.mkfile(filename+".py")
-            files.write(self.dir + "/" + filename+".py",files.readall(res.get('@temp/untitled-web.py')))
+            try:
+                commands.up([str(self.dir + "/" + filename+f".{self.ext}").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+            except:
+                pass
 
     def __init__(self,ports):
         super().__init__()
         self.Env = ports[0]
+        self.Widget = ports[1]
+        self.Dialog = ports[2]
+
         self.entry = QtGui.QStandardItemModel()
         self.parentdir = QtGui.QStandardItem()
         self.parentdir.setIcon(QtGui.QIcon(res.get(res.etc("roller",'folder-icon'))))
@@ -197,15 +121,45 @@ class FileListView (QtWidgets.QListView):
         # When you receive the signal, you call QtGui.QStandardItemModel.itemFromIndex()
         # on the given model index to get a pointer to the item
 
-        self.setStyleSheet(f'background:{res.etc("roller","bgcolor")};')
+        self.username = self.Env.username
+
+        self.setStyleSheet("""
+                        FileListView,QListView {
+                        background-color: !z;
+                        color: !y;
+                        }
+                                       QScrollBar
+                                       {
+                                       background : white;
+                                       }
+                                       QScrollBar::handle
+                                       {
+                                       background : #123456;
+                                       border-radius: 6% 6%;
+                                       }
+                                       QScrollBar::handle::pressed
+                                       {
+                                       background : #ABCDEF;
+                                       border-radius: 6% 6%;
+                                       }""".replace('white', getdata("menu.scroll.bgcolor")).replace('#123456',
+                                                                                                     getdata(
+                                                                                                         "menu.scroll.color")).replace(
+            '6',
+            getdata(
+                "menu.scroll.round-size")).replace(
+            '#ABCDEF', getdata("menu.scroll.color-hover")).replace('!z', getdata("appw.body.bgcolor")).replace(
+            '!y', getdata("appw.body.fgcolor")))
 
         self.dir = files.readall('/proc/info/pwd')
         files.write('/proc/info/dsel', self.dir)
         self.listdir = (files.list(self.dir))
         self.listdir.sort()
 
+        #self.w.hide()
+
         #self.clicked[QtCore.QModelIndex].connect(self.on_clicked)
         self.doubleClicked[QtCore.QModelIndex].connect (self.on_clicked)
+        self.clicked[QModelIndex].connect (self.onSelect)
 
         for text in self.listdir:
             if files.isdir(self.dir+"/"+text):
@@ -225,18 +179,26 @@ class FileListView (QtWidgets.QListView):
 
         self.itemOld = QtGui.QStandardItem("text")
 
+    def onSelect (self,index):
+        self.item = self.entry.itemFromIndex(index)
+        x = hasattr(self.item, 'whatsThis')  # W3CSHCOOL.COM LEARN IT
+
+        if x == True:
+            if files.isdir(self.item.whatsThis()):
+                files.write('/proc/info/wsel', self.item.whatsThis())  # Send Directory selected
+            elif files.isfile(self.item.whatsThis()):
+                files.write('/proc/info/wsel', self.item.whatsThis())  # Send File selected
+
+
     def on_clicked(self, index):
         self.item = self.entry.itemFromIndex(index)
-
         x = hasattr(self.item,'whatsThis') # W3CSHCOOL.COM LEARN IT
-
 
         if x == True:
             if self.item.whatsThis() == "<parent>":
                 commands.cd (['..'])
                 self.dir = files.readall('/proc/info/pwd')
                 files.write('/proc/info/dsel',self.dir)
-
                 self.listdir = files.list(self.dir)
                 self.listdir.sort() # Credit: https://www.geeksforgeeks.org/sort-in-python/
 
@@ -299,7 +261,52 @@ class FileListView (QtWidgets.QListView):
             elif files.isfile (self.item.whatsThis()):
                 files.write ('/proc/info/fsel',self.item.whatsThis()) # Send File selected
 
+
 class MainApp (QtWidgets.QMainWindow):
+
+    def contextMenuEvent(self, event):
+        self.file.setGeometry(int(self.width()/2),int(self.height()/2),self.file.width(),self.file.height())
+        try:
+            if not files.isfile (files.readall('/proc/info/wsel')) and not files.readall('/proc/info/wsel')==files.output('/'):
+                self.open.setVisible(False)
+                self.openwith.setVisible(False)
+                self.execute.setVisible(False)
+                self.delete.setVisible(True)
+                self.copy.setVisible(True)
+                self.paste.setVisible(True)
+                self.cut.setVisible(True)
+                self.rename.setVisible(True)
+                #self.archivex.setVisible(True)
+                self.extractx.setVisible(False)
+            elif files.readall('/proc/info/wsel')==files.output('/'):
+                self.open.setVisible(False)
+                self.openwith.setVisible(False)
+                self.execute.setVisible(False)
+                self.delete.setVisible(False)
+                self.copy.setVisible(False)
+                self.paste.setVisible(True)
+                self.cut.setVisible(False)
+                self.rename.setVisible(False)
+                #self.archivex.setVisible(False)
+                self.extractx.setVisible(False)
+            else:
+                self.open.setVisible(True)
+                self.openwith.setVisible(True)
+                self.execute.setVisible(True)
+                self.delete.setVisible(True)
+                self.copy.setVisible(True)
+                self.paste.setVisible(True)
+                self.cut.setVisible(True)
+                self.rename.setVisible(True)
+                #self.archivex.setVisible(True)
+                self.extractx.setVisible(True)
+
+            self.exit.setVisible(False)
+        except:
+            pass
+
+        action = self.file.exec_()
+
     def format (self,it,text):
         if os.path.isdir(self.dir + '/' + text):
             it.setIcon(QtGui.QIcon(res.get(res.etc("roller","folder-icon"))))
@@ -315,15 +322,316 @@ class MainApp (QtWidgets.QMainWindow):
             else:
                 it.setIcon(QtGui.QIcon(res.get(res.etc("roller","file-icon"))))
 
+    def onCloseProcess (self):
+        if not app.check(self.AppName):
+            self.Widget.Close()
+        else:
+            QtCore.QTimer.singleShot(1,self.onCloseProcess)
+
+    def refresh (self):
+        self.x = FileListView([self.Env,self.Widget,self])
+        self.setCentralWidget(self.x)
+
+    def delete_act (self):
+        try:
+            self.wsel = files.readall('/proc/info/wsel')
+            if files.isdir(self.wsel):
+                app.switch('roller')
+                self.Env.RunApp('bool',[res.get('@string/delete'),res.get('@string/deletem'),self.delete_act_])
+                app.switch('roller')
+            else:
+                app.switch('roller')
+                self.Env.RunApp('bool', [res.get('@string/delete'), res.get('@string/deletemf'), self.delete_act_])
+                app.switch('roller')
+        except:
+            pass
+
+    def delete_act_ (self,yes):
+        if yes:
+            try:
+                if files.isdir(self.wsel) or files.isfile(self.wsel):
+                    if files.isfile(self.wsel):
+                        try:
+                            commands.rem([str(self.wsel).replace(
+                                f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                        except:
+                            commands.rm([self.wsel])
+                    else:
+                        commands.rm([self.wsel])
+
+                self.refresh()
+            except: pass
+
+    def rename_act (self):
+        try:
+            self.wsel = files.readall('/proc/info/wsel')
+            app.switch('roller')
+            self.Env.RunApp('input',[res.get('@string/rename'),self.rename_act_])
+            app.switch('roller')
+        except: pass
+
+    def rename_act_(self,text):
+        if files.isdir(self.wsel) or files.isfile(self.wsel):
+            if files.isfile(self.wsel):
+                try:
+                    commands.cp([self.wsel, text])
+                    commands.up([str(files.output(text)).replace(
+                        f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                    commands.rem([str(self.wsel).replace(
+                        f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                except:
+                    commands.mv([self.wsel, text])
+            else:
+                commands.mv([self.wsel, text])
+
+        self.refresh()
+
+    def copy_act (self):
+        try:
+            self.wsel = files.readall('/proc/info/wsel')
+
+            if files.isdir('/tmp/roller-copy'): files.removedirs('/tmp/roller-copy')
+            elif files.isfile('/tmp/roller-copy'): files.remove('/tmp/roller-copy')
+
+            files.write('/tmp/roller-src.tmp',self.wsel)
+
+            if files.isdir(self.wsel) or files.isfile(self.wsel):
+                commands.cp([self.wsel,'/tmp/roller-copy'])
+        except:
+            pass
+
+    def open_act (self):
+        try:
+            commands.down([files.readall('/proc/info/wsel').replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+        except:
+            pass
+
+        splitext = files.output(files.readall('/proc/info/wsel')).split('.')
+        ext = max(splitext)
+
+        always = control.read_record (f'{ext}.always','/etc/ext')
+
+        if always==None:
+            self.open_with_act()
+        elif always=='persia':
+            self.Env.RunApp('persia', [None,files.readall('/proc/info/wsel')])
+        else:
+            self.Env.RunApp(always, [files.readall('/proc/info/wsel')])
+
+    def open_with_act (self):
+        try:
+            commands.down([files.readall('/proc/info/wsel').replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+        except:
+            pass
+
+        self.Env.RunApp('open',[files.readall('/proc/info/wsel')])
+
+    def cut_act(self):
+        try:
+            self.wsel = files.readall('/proc/info/wsel')
+
+            if files.isdir('/tmp/roller-copy'):
+                files.removedirs('/tmp/roller-copy')
+
+            elif files.isfile('/tmp/roller-copy'):
+                files.remove('/tmp/roller-copy')
+
+            files.write('/tmp/roller-src.tmp', self.wsel)
+
+            if files.isdir(self.wsel) or files.isfile(self.wsel):
+
+                if files.isfile(self.wsel):
+                    try:
+                        commands.cp([self.wsel, '/tmp/roller-copy'])
+                        commands.rem([str(self.wsel).replace(
+                            f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                    except:
+                        commands.mv([self.wsel, '/tmp/roller-copy'])
+                else:
+                    commands.mv ([self.wsel,'/tmp/roller-copy'])
+
+            self.refresh()
+        except: pass
+
+    def execute_act (self):
+        try:
+            if permissions.check(files.readall('/proc/info/wsel'),'x',self.Env.username):
+                try:
+                    commands.down(
+                        [files.readall('/proc/info/wsel').replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                except:
+                    pass
+
+                execute_file = files.readall('/proc/info/wsel')
+
+                if execute_file.endswith ('.pashm'):
+                    files.write('/tmp/exec.sa', f'''pashmak {execute_file}
+rm /tmp/exec.sa
+pause''')
+                    self.Env.RunApp('commento', [None])
+                    app.switch('roller')
+                else:
+                    files.write('/tmp/exec.sa', f'''{execute_file.replace ('.pyc','').replace ('.sa','')}
+rm /tmp/exec.sa
+pause''')
+                    self.Env.RunApp('commento', [None])
+                    app.switch('roller')
+            else:
+                app.switch('roller')
+                self.Env.RunApp('text', [res.get('@string/perm'),res.get('@string/permm')])
+                app.switch('roller')
+        except:
+            pass
+
+    def zip_act (self):
+        try:
+            if permissions.check(files.readall('/proc/info/wsel'),'r',self.Env.username) and permissions.check(f"{files.readall('/proc/info/wsel')}.zip",'w',self.Env.username):
+                if files.isdir (files.readall("/proc/info/wsel")):
+                    commands.zip ([files.readall("/proc/info/wsel")])
+                    if files.isfile (f"{files.readall('/proc/info/wsel')}.tar.zip"):
+                        try:
+                            commands.up(
+                                [(f"{files.readall('/proc/info/wsel')}.tar.zip").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                        except:
+                            pass
+            else:
+                app.switch('roller')
+                self.Env.RunApp('text', [res.get('@string/perm'),res.get('@string/permm')])
+                app.switch('roller')
+            self.refresh()
+        except:
+            pass
+
+    def tar_act (self):
+        try:
+            if permissions.check(files.readall('/proc/info/wsel'),'r',self.Env.username) and permissions.check(f"{files.readall('/proc/info/wsel')}.tar",'w',self.Env.username):
+                if files.isdir (files.readall("/proc/info/wsel")):
+                    commands.tar ([files.readall("/proc/info/wsel")])
+                    if files.isfile (f"{files.readall('/proc/info/wsel')}.tar"):
+                        try:
+                            commands.up(
+                                [(f"{files.readall('/proc/info/wsel')}.tar").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                        except:
+                            pass
+            else:
+                app.switch('roller')
+                self.Env.RunApp('text', [res.get('@string/perm'),res.get('@string/permm')])
+                app.switch('roller')
+            self.refresh()
+        except:
+            pass
+
+    def gztar_act (self):
+        try:
+            if permissions.check(files.readall('/proc/info/wsel'),'r',self.Env.username) and permissions.check(f"{files.readall('/proc/info/wsel')}.tar.gz",'w',self.Env.username):
+                if files.isdir (files.readall("/proc/info/wsel")):
+                    commands.gzip ([files.readall("/proc/info/wsel")])
+                    if files.isfile (f"{files.readall('/proc/info/wsel')}.tar.gz"):
+                        try:
+                            commands.up(
+                                [(f"{files.readall('/proc/info/wsel')}.tar.gz").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                        except:
+                            pass
+            else:
+                app.switch('roller')
+                self.Env.RunApp('text', [res.get('@string/perm'),res.get('@string/permm')])
+                app.switch('roller')
+            self.refresh()
+        except:
+            pass
+
+    def xztar_act (self):
+        try:
+            if permissions.check(files.readall('/proc/info/wsel'),'r',self.Env.username) and permissions.check(f"{files.readall('/proc/info/wsel')}.tar.xz",'w',self.Env.username):
+                if files.isdir (files.readall("/proc/info/wsel")):
+                    commands.xzip ([files.readall("/proc/info/wsel")])
+                    if files.isfile (f"{files.readall('/proc/info/wsel')}.tar.xz"):
+                        try:
+                            commands.up(
+                                [(f"{files.readall('/proc/info/wsel')}.tar.xz").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                        except:
+                            pass
+            else:
+                app.switch('roller')
+                self.Env.RunApp('text', [res.get('@string/perm'),res.get('@string/permm')])
+                app.switch('roller')
+            self.refresh()
+        except:
+            pass
+
+    def bz2tar_act (self):
+        try:
+            if permissions.check(files.readall('/proc/info/wsel'),'r',self.Env.username) and permissions.check(f"{files.readall('/proc/info/wsel')}.tar.bz2",'w',self.Env.username):
+                if files.isdir (files.readall("/proc/info/wsel")):
+                    commands.bzip ([files.readall("/proc/info/wsel")])
+                    if files.isfile (f"{files.readall('/proc/info/wsel')}.tar.bz2"):
+                        try:
+                            commands.up(
+                                [(f"{files.readall('/proc/info/wsel')}.tar.bz2").replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                        except:
+                            pass
+            else:
+                app.switch('roller')
+                self.Env.RunApp('text', [res.get('@string/perm'),res.get('@string/permm')])
+                app.switch('roller')
+            self.refresh()
+        except:
+            pass
+
+    def extract_act (self):
+        try:
+            wsel = files.readall('/proc/info/wsel')
+            fselx = wsel.replace ('.zip','').replace ('.tar.xz','').replace ('.tar.gz','').replace ('.tar.bz2','').replace ('.tar','').replace ('.pa','').replace ('.apk','').replace ('.jar','')
+            if permissions.check(wsel,'r',self.Env.username) and permissions.check(fselx,'w',self.Env.username):
+                if wsel.endswith('.zip') or wsel.endswith('.pa') or wsel.endswith('.apk') or wsel.endswith('.jar'):
+                    commands.unzip ([wsel,fselx])
+                elif wsel.endswith('.tar.bz2'):
+                    commands.bunzip ([wsel,fselx])
+                elif wsel.endswith('.tar.gz'):
+                    commands.gunzip ([wsel,fselx])
+                elif wsel.endswith('.tar.xz'):
+                    commands.xunzip ([wsel,fselx])
+                elif wsel.endswith('.tar'):
+                    commands.untar ([wsel,fselx])
+                self.refresh()
+            else:
+                app.switch('roller')
+                self.Env.RunApp('text', [res.get('@string/perm'),res.get('@string/permm')])
+                app.switch('roller')
+        except:
+            pass
+
+    def paste_act (self):
+        try:
+            self.src = files.readall('/tmp/roller-src.tmp')
+            self.dest = files.output(files.filename(self.src))
+
+            if files.isdir(self.dest):
+                pass
+            elif files.isfile(self.dest):
+                pass
+            else:
+                if files.isdir('/tmp/roller-copy') or files.isfile('/tmp/roller-copy'):
+                    commands.mv (['/tmp/roller-copy',self.dest])
+
+                    if files.isfile (self.dest):
+                        try:
+                            commands.up(
+                                [self.dest.replace(f'/stor/{files.readall("/proc/info/mnt")}/', '')])
+                        except:
+                            pass
+        except:
+            pass
+        self.refresh()
+
     def __init__(self,args):
         super().__init__()
 
-        self.Backend = args[0]
         self.Env = args[1]
         self.Widget = args[2]
         self.AppName = args[3]
         self.External = args[4]
-
+        self.onCloseProcess()
 
 
         if not self.External == None:
@@ -333,92 +641,155 @@ class MainApp (QtWidgets.QMainWindow):
                         files.write('/proc/info/pwd',files.output(self.External[0]))
 
         ## Menubar ##
+        self.x = FileListView([self.Env,self.Widget,self])
+        self.setCentralWidget(self.x)
 
-        self.x = FileListView([self.Env])
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.contextMenuEvent)
+
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
 
         self.menubar = self.menuBar()
         self.menubar.setFont(self.Env.font())
+        self.menubar.setStyleSheet(
+            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+        if getdata('submenu.direction')=='ltr':
+            self.menubar.setLayoutDirection(Qt.LeftToRight)
+        else:
+            self.menubar.setLayoutDirection(Qt.RightToLeft)
 
         self.file = self.menubar.addMenu(res.get('@string/file'))
+        self.file.setStyleSheet('background:none;color: black;')
         self.file.setFont(self.Env.font())
-
         ## File menu
 
         self.new_file = self.file.addAction(res.get('@string/newfile'))
         self.new_file.setFont(self.Env.font())
+        self.new_file.setShortcut('Ctrl+Alt+F')
         self.new_file.triggered.connect(self.New_File)
         self.new_file.setIcon(QIcon(res.get(res.etc("roller","file-icon"))))
 
         self.new_code = self.file.addMenu(res.get('@string/newcode'))
+        self.new_code.setStyleSheet('background:none;color: black;')
         self.new_code.setFont(self.Env.font())
         self.new_code.setIcon(QIcon(res.get(res.etc('roller','c'))))
 
         ##
-        self.new_c = self.new_code.addAction(res.get('@string/c'))
-        self.new_c.setFont(self.Env.font())
-        self.new_c.triggered.connect(self.New_C)
-        self.new_c.setIcon(QIcon(res.get(res.etc("roller", "c"))))
-
-        self.new_cpp = self.new_code.addAction(res.get('@string/c++'))
-        self.new_cpp.triggered.connect(self.New_Cpp)
-        self.new_cpp.setFont(self.Env.font())
-        self.new_cpp.setIcon(QIcon(res.get(res.etc("roller", "c++"))))
-
-        self.new_cs = self.new_code.addAction(res.get('@string/csharp'))
-        self.new_cs.triggered.connect(self.New_Csharp)
-        self.new_cs.setFont(self.Env.font())
-        self.new_cs.setIcon(QIcon(res.get(res.etc("roller", "c#"))))
-
-        self.new_html = self.new_code.addAction(res.get('@string/html'))
-        self.new_html .triggered.connect(self.New_Html)
-        self.new_html.setFont(self.Env.font())
-        self.new_html.setIcon(QIcon(res.get(res.etc("roller", "html"))))
-
-        self.new_java = self.new_code.addAction(res.get('@string/java'))
-        self.new_java.triggered.connect(self.New_Java)
-        self.new_java.setFont(self.Env.font())
-        self.new_java.setIcon(QIcon(res.get(res.etc("roller", "java"))))
-
-        self.new_js = self.new_code.addAction(res.get('@string/javascript'))
-        self.new_js.triggered.connect(self.New_Js)
-        self.new_js.setFont(self.Env.font())
-        self.new_js.setIcon(QIcon(res.get(res.etc("roller", "js"))))
-
-        self.new_Php = self.new_code.addAction(res.get('@string/php'))
-        self.new_Php.triggered.connect(self.New_Php)
-        self.new_Php.setFont(self.Env.font())
-        self.new_Php.setIcon(QIcon(res.get(res.etc("roller", "php"))))
-
-        self.new_py = self.new_code.addAction(res.get('@string/python'))
-        self.new_py.triggered.connect(self.New_Py)
-        self.new_py.setFont(self.Env.font())
-        self.new_py.setIcon(QIcon(res.get(res.etc("roller", "py"))))
-
-        self.new_sa = self.new_code.addAction(res.get('@string/saye'))
-        self.new_sa.triggered.connect(self.New_Sa)
-        self.new_sa.setFont(self.Env.font())
-        self.new_sa.setIcon(QIcon(res.get(res.etc("roller", "sa"))))
-
-        self.new_pygui = self.new_code.addAction(res.get('@string/pythongui'))
-        self.new_pygui.triggered.connect(self.New_PyGui)
-        self.new_pygui.setFont(self.Env.font())
-        self.new_pygui.setIcon(QIcon(res.get(res.etc("roller", "py"))))
-
-        self.new_pyweb = self.new_code.addAction(res.get('@string/newpyweb'))
-        self.new_pyweb.triggered.connect(self.New_PyWeb)
-        self.new_pyweb.setFont(self.Env.font())
-        self.new_pyweb.setIcon(QIcon(res.get('@icon/web-browser')))
-        ##
+        self.templist = files.list('/usr/share/templates')
+        self.templist.sort()
+        for i in self.templist:
+            if i.endswith('.desk'):
+                self.new_cz = self.new_code.addAction(control.read_record(f'name[{control.read_record("locale","/etc/gui")}]',res.get(f'@temp/{i}')))
+                self.new_cz.setFont(self.Env.font())
+                self.new_cz.setObjectName(i)
+                self.new_cz.triggered.connect(self.New_Code)
+                self.new_cz.setIcon(QIcon(res.get(control.read_record('logo',res.get(f'@temp/{i}')))))
 
         self.new_folder = self.file.addAction(res.get('@string/newfolder'))
         self.new_folder.triggered.connect(self.New_Folder)
+        self.new_folder.setShortcut('Ctrl+Alt+D')
         self.new_folder.setFont(self.Env.font())
-        self.new_folder.setIcon(QIcon(res.get(res.etc("roller","folder-icon"))))
+        self.new_folder.setIcon(QIcon(res.get('@icon/breeze-newfolder')))
+
+        self.open = self.file.addAction(res.get('@string/open'))
+        self.open.setIcon(QIcon(res.get('@icon/breeze-open')))
+        self.open.triggered.connect(self.open_act)
+        self.open.setShortcut('Ctrl+O')
+        self.open.setFont(self.Env.font())
+
+        self.openwith = self.file.addAction(res.get('@string/openwith'))
+        self.openwith.triggered.connect(self.open_with_act)
+        self.openwith.setShortcut('Ctrl+Alt+O')
+        self.openwith.setIcon(QIcon(res.get('@icon/breeze-open')))
+        self.openwith.setFont(self.Env.font())
+
+        self.execute = self.file.addAction(res.get('@string/execute'))
+        self.execute.triggered.connect(self.execute_act)
+        self.execute.setFont(self.Env.font())
+        self.execute.setIcon(QIcon(res.get('@icon/breeze-execute')))
+        self.execute.setShortcut('Ctrl+Alt+X')
+
+        self.cut = self.file.addAction(res.get('@string/cut'))
+        self.cut.triggered.connect(self.cut_act)
+        self.cut.setShortcut('Ctrl+X')
+        self.cut.setIcon(QIcon(res.get('@icon/breeze-cut')))
+        self.cut.setFont(self.Env.font())
+
+        self.copy = self.file.addAction(res.get('@string/copy'))
+        self.copy.triggered.connect(self.copy_act)
+        self.copy.setIcon(QIcon(res.get('@icon/breeze-copy')))
+        self.copy.setFont(self.Env.font())
+        self.copy.setShortcut('Ctrl+C')
+
+        self.paste = self.file.addAction(res.get('@string/paste'))
+        self.paste.triggered.connect(self.paste_act)
+        self.paste.setFont(self.Env.font())
+        self.paste.setIcon(QIcon(res.get('@icon/breeze-paste')))
+        self.paste.setShortcut('Ctrl+V')
+
+        self.delete = self.file.addAction(res.get('@string/delete'))
+        self.delete.setIcon(QIcon(res.get('@icon/breeze-delete')))
+        self.delete.setShortcut('Ctrl+T')
+        self.delete.triggered.connect (self.delete_act)
+        self.delete.setFont(self.Env.font())
+
+        self.rename = self.file.addAction(res.get('@string/rename'))
+        self.rename.triggered.connect(self.rename_act)
+        self.rename.setShortcut('F2')
+        self.rename.setIcon(QIcon(res.get('@icon/breeze-rename')))
+        self.rename.setFont(self.Env.font())
+
+        self.archivex = self.file.addMenu (res.get('@string/archive'))
+        self.archivex.setIcon (QIcon(res.get('@icon/breeze-compress')))
+        self.archivex.setStyleSheet('background:none;color: black;')
+        self.archivex.setFont(self.Env.font())
+
+        self.zipa = self.archivex.addAction('zip')
+        self.zipa.triggered.connect(self.zip_act)
+        self.zipa.setIcon(QIcon(res.get('@icon/breeze-zip')))
+        self.zipa.setFont(self.Env.font())
+
+        self.tar = self.archivex.addAction('tar')
+        self.tar.triggered.connect(self.tar_act)
+        self.tar.setIcon(QIcon(res.get('@icon/breeze-tar')))
+        self.tar.setFont(self.Env.font())
+
+        self.xztar = self.archivex.addAction('tar.xz')
+        self.xztar.triggered.connect(self.xztar_act)
+        self.xztar.setIcon(QIcon(res.get('@icon/breeze-xz')))
+        self.xztar.setFont(self.Env.font())
+
+        self.gztar = self.archivex.addAction('tar.gz')
+        self.gztar.triggered.connect(self.gztar_act)
+        self.gztar.setIcon(QIcon(res.get('@icon/breeze-gz')))
+        self.gztar.setFont(self.Env.font())
+
+        self.bz2tar = self.archivex.addAction('tar.bz2')
+        self.bz2tar.triggered.connect(self.bz2tar_act)
+        self.bz2tar.setIcon(QIcon(res.get('@icon/breeze-bz')))
+        self.bz2tar.setFont(self.Env.font())
+
+        self.extractx = self.file.addAction (res.get('@string/extract'))
+        self.extractx.setIcon (QIcon(res.get('@icon/breeze-extract')))
+        self.extractx.triggered.connect(self.extract_act)
+        self.extractx.setFont(self.Env.font())
 
         self.exit = self.file.addAction(res.get('@string/exit'))
         self.exit.triggered.connect(self.Widget.Close)
         self.exit.setFont(self.Env.font())
-        self.exit.setIcon(QIcon(res.get(res.etc("roller","exit-icon"))))
+        self.exit.setShortcut('Alt+F4')
+        self.exit.setIcon(QIcon(res.get('@string/breeze-exit')))
+
+        self.open.setVisible(False)
+        self.openwith.setVisible(False)
+        self.execute.setVisible(False)
+        self.delete.setVisible(False)
+        self.copy.setVisible(False)
+        self.paste.setVisible(True)
+        self.cut.setVisible(False)
+        self.rename.setVisible(False)
+        self.extractx.setVisible(False)
+        self.archivex.setVisible(False)
 
         ## end File menu
 
@@ -427,8 +798,6 @@ class MainApp (QtWidgets.QMainWindow):
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
         self.Widget.SetWindowIcon (QtGui.QIcon(res.get(res.etc(self.AppName,"logo"))))
         self.Widget.Resize (self,int(res.etc(self.AppName,"width")),int(res.etc(self.AppName,"height")))
-
-        self.setCentralWidget(self.x)
 
     def New_Folder (self):
         app.switch('roller')
@@ -440,57 +809,8 @@ class MainApp (QtWidgets.QMainWindow):
         self.Env.RunApp('input',[res.get('@string/filename'),self.x.mkfile])
         app.switch('roller')
 
-    def New_C (self):
+    def New_Code (self):
+        files.write('/tmp/code.tmp','@temp/'+self.sender().objectName())
         app.switch('roller')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkc])
-        app.switch('roller')
-
-    def New_Cpp (self):
-        app.switch('roller')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkcpp])
-        app.switch('roller')
-
-    def New_Csharp (self):
-        app.switch('roller')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkcs])
-        app.switch('roller')
-
-    def New_Html (self):
-        app.switch('roller')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkhtml])
-        app.switch('roller')
-
-    def New_Java (self):
-        app.switch('roller')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkjava])
-        app.switch('roller')
-
-    def New_Js (self):
-        app.switch('roller')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkjs])
-        app.switch('roller')
-
-    def New_Php (self):
-        app.switch('roller')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkphp])
-        app.switch('roller')
-
-    def New_Py (self):
-        app.switch('roller')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkpy])
-        app.switch('roller')
-
-    def New_PyGui (self):
-        app.switch('roller')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkpygui])
-        app.switch('roller')
-
-    def New_PyWeb (self):
-        app.switch('roller')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkpyweb])
-        app.switch('roller')
-
-    def New_Sa (self):
-        app.switch('roller')
-        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mksa])
+        self.Env.RunApp('input', [res.get('@string/filename'), self.x.mkcode])
         app.switch('roller')

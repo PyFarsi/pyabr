@@ -1,5 +1,0 @@
-
-gunzip [src] [dest]
-
- <src>          <dest>      <job>
- a.tar.gz       a/          Extract 'a.tar.gz' in 'a/' directory

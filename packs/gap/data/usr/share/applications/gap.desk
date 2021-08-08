@@ -1,6 +1,6 @@
-name[en]: Gap
+name[en]: Gap Messenger
 name[fa]: پیام رسان گپ
-exec: gap
 logo: @icon/gap
+exec: gap
 application: Yes
 category: internet

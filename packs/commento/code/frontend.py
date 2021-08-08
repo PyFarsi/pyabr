@@ -119,7 +119,7 @@ class TerminalWidget(QWidget):
             self.execute()
 
         
-    def execute(self, command=["/usr/bin/python3",'vmabr.pyc','user',username,password]):
+    def execute(self, command=[sys.executable,'vmabr.pyc','user',username,password]):
         self._session = Session()
         self._session.start(command)
         self._timer_id = None

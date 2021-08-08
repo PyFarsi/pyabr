@@ -1,8 +1,11 @@
 name: browser
-copyright: (c) 2020 Martin Fitzpatrick
-license: MIT
+name[fa]: مرورگر اینترنتی
+name[en]: Internet Browser
+copyright: (c) 2021 LearnPyQt
+web: https://github.com/learnpyqt/15-minute-apps
+license: GNU GPL v3.0
 unpack: /
-build: 1399-12-10
-version: 1.1.4
-description: Web Browser for Pyabr
+version: 2.0.0
+description: Webtools for cloud operating systems
 compile: Yes
+build: 1400-05-13
