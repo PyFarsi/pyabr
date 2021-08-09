@@ -3,8 +3,6 @@
 
 # Pyabr cloud computing software
 
-In the name of God, the Compassionate, the Merciful
-
 Pyabr &copy; 2021 Mani Jamali. Free Software GNU General Public License v3.0
 
 ## How to Contributing?
