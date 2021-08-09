@@ -1,16 +1,39 @@
-#######################################################################################
-#  In the name of God, the Compassionate, the Merciful
-#  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
-#
-#  Official Website: 		https://pyabr.ir
-#  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
-#  Gap channel: 			@pyabr
-#  Gap group:   			@pyabr_community
-#  Git source:              github.com/PyFarsi/pyabr
-#
-#######################################################################################
+'''
+    Pyabr OS
 
-import importlib, shutil, os, sys, hashlib, subprocess,time,datetime,getpass,py_compile,wget,requests
+    Python Cloud Operating System Platform (c) 2021 PyFarsi. Free Software GNU General Public License v3.0
+
+    - Informations
+
+    * Name:             Pyabr
+    * Founder:          Mani Jamali
+    * Developers:       PyFarsi Community
+    * Package Manager:  Paye, Apt, Dpkg, PyPI
+    * License:          GNU General Publice License v3.0
+
+    * Source code:      https://github.com/PyFarsi/pyabr
+    * PyPI:             https://pypi.org/project/pyabr
+
+    - Download Pyabr OS
+
+    * AMD64, Intel64:   https://dl.pyabr.ir/pyabr-x86_64.iso     
+    * ARM64:            https://dl.pyabr.ir/pyabr-arm64.img
+    * Platform:         https://dl.pyabr.ir/stor.sb
+    * Wheel Package:    https://dl.pyabr.ir/pyabr.whl
+    
+    - Channels:
+
+    * Official Website: https://pyabr.ir
+    * Telegram Channel: https://t.me/pyfarsi
+    * Gap Channel:      https://gap.im/pyabr
+    * Sorosh Channel:   https://splus.ir/pyabr
+    * Instagram:        https://instagram.com/pyabrir
+    * Hoorsa:           https://hoorsa.com/pyabr
+    * Aparat:           https://aparat.com/pyabr
+
+'''
+
+import importlib, shutil, os, sys, hashlib, subprocess,time,datetime,getpass,py_compile,wget,requests,random
 from termcolor import colored
 def read_record (name,filename):
     file = open (filename,"r")
@@ -229,6 +252,16 @@ class Commands:
         files = Files()
 
         print (files.readall('/proc/info/pwd'))
+
+    def send (self,args):
+        sms = Message()
+        if args==[] or args[1:]==[]:
+            args =  [input ('Enter giver id: '),input ('Type your message: ')]
+        sms.send(args[0],args[1])
+
+    def receive (self,args):
+        sms = Message()
+        sms.receive()
 
     # zip #
     def xzip (self, args):
@@ -605,9 +638,9 @@ class Commands:
         host = control.read_record('host',clouddrivez)
         password = control.read_record('password', clouddrivez)
 
-        x = requests.post(f"{host}/{control.read_record('index',clouddrivez)}",data={"password":password})
+        x = requests.post(f"{host}/check.php",data={"password":password})
 
-        if x.text=='s: connected':
+        if x.text.__contains__('s: connected'):
             if files.isdir (f'/stor/{clouddrive}'):
                 files.removedirs(f'/stor/{clouddrive}')
 
@@ -615,7 +648,7 @@ class Commands:
             commands.cd([f'/stor/{clouddrive}'])
             files.write('/proc/info/csel',clouddrive)
 
-            x = requests.post(f"{host}/{control.read_record('list',clouddrivez)}",data={"password":password})
+            x = requests.post(f"{host}/list.php",data={"password":password})
 
             split_list_items = str(x.text).split('\n')
             if '' in split_list_items:
@@ -625,16 +658,19 @@ class Commands:
 
             for item in split_list_items:
                 split_remove_host = item.split("/stor/")
-                myitem = split_remove_host[1]
+                try:
+                    myitem = split_remove_host[1]
 
-                if myitem.endswith ('/') and not files.isdir (f'/stor/{clouddrive}/{myitem}'):
-                    files.mkdir(f'/stor/{clouddrive}/{myitem}')
-                else:
-                    files.create(f'/stor/{clouddrive}/{myitem}')
+                    if myitem.endswith ('/') and not files.isdir (f'/stor/{clouddrive}/{myitem}'):
+                        files.mkdir(f'/stor/{clouddrive}/{myitem}')
+                    else:
+                        files.create(f'/stor/{clouddrive}/{myitem}')
+                except:
+                    pass
 
-        elif x.text=='e: wrong password':
+        elif 'e: wrong password' in x.text:
             colors.show("mount", "fail", f"{clouddrive}: wrong password in device database.")
-        elif x.text=='e: empty password':
+        elif 'e: empty password' in x.text:
             colors.show("mount", "fail", f"{clouddrive}: empty password in device database.")
         else:
             colors.show("mount", "fail", f"{clouddrive}: cannot connect to this cloud drive.")
@@ -655,10 +691,7 @@ class Commands:
         except:
             dataz = 'index.xml'
 
-        host = control.read_record('host', '/etc/abr')
-        cloud = control.read_record('cloud', '/etc/abr')
-
-        x = requests.post(f"{host}/{cloud}", data={"address": addressz,"data":dataz})
+        x = requests.post(f"{control.read_record('zone','/etc/cloud')}", data={"address": addressz,"data":dataz})
 
         if x.text=='e: data not found':
             colors.show('get', 'fail', f'{dataz}: data not found.')
@@ -724,7 +757,7 @@ class Commands:
         host = control.read_record('host', clouddrivez)
         password = control.read_record('password', clouddrivez)
 
-        x = requests.post(f"{host}/{control.read_record('download',clouddrivez)}",data={"password":password,"filename":filename})
+        x = requests.post(f"{host}/download.php",data={"password":password,"filename":filename})
 
         if x.text == 'e: wrong password':
             colors.show("down", "fail", f"{clouddrive}: wrong password in device database.")
@@ -758,7 +791,7 @@ class Commands:
         host = control.read_record('host', clouddrivez)
         password = control.read_record('password', clouddrivez)
 
-        x = requests.post(f"{host}/{control.read_record('remove',clouddrivez)}",data={"password":password,"filename":filename})
+        x = requests.post(f"{host}/remove.php",data={"password":password,"filename":filename})
 
         if x.text == 'e: wrong password':
             colors.show("down", "fail", f"{clouddrive}: wrong password in device database.")
@@ -796,7 +829,7 @@ class Commands:
         host = control.read_record('host', clouddrivez)
         password = control.read_record('password', clouddrivez)
 
-        x = requests.post(f"{host}/{control.read_record('directory',clouddrivez)}",data={"password":password,"dirname":dirname})
+        x = requests.post(f"{host}/directory.php",data={"password":password,"dirname":dirname})
 
         if x.text == 'e: wrong password':
             colors.show("mkc", "fail", f"{clouddrive}: wrong password in device database.")
@@ -836,7 +869,7 @@ class Commands:
 
         data = files.readall(f'/stor/{clouddrive}/{filename}')
 
-        x = requests.post(f"{host}/{control.read_record('upload',clouddrivez)}",data={"password":password,"filename":filename,"data":data})
+        x = requests.post(f"{host}/upload.php",data={"password":password,"filename":filename,"data":data})
 
         if x.text == 'e: wrong password':
             colors.show("up", "fail", f"{clouddrive}: wrong password in device database.")
@@ -1690,6 +1723,7 @@ class Commands:
                     password = getpass.getpass('Enter a new password: ')
                     confirm = getpass.getpass('Confirm the new password: ')
                     if password == confirm: break
+
 
                 ## Informations ##
                 fullname = input  ('\tFull name       []: ')
@@ -3143,3 +3177,81 @@ class Colors:
             print(f'{colored(f"{process_name}: error: Permission denied.","red")}')
         elif process_type == "warning":
             print(f'{colored(f"{process_name}: warning: {process_message}","yellow")}')
+
+class Message:
+    def __init__(self):
+        pass
+
+    def send (self,giver,message):
+        colors = Colors()
+        files = Files()
+        control = Control()
+
+        user = files.readall('/etc/hostname')
+        password = files.readall('/etc/shadow')
+
+        x = requests.post(control.read_record('send','/etc/cloud'),data={"sender":user,"password":password,"giver":giver,"message":message})
+
+        if x.text == 'e: unknown sender':
+            colors.show('send','fail',f'{user}: unknown sender')
+        elif x.text == 'e: wrong password':
+            colors.show('send','fail',f'{user}: wrong password')
+        elif x.text == 'e: unknown giver':
+            colors.show('send','fail',f'{user}: unknown giver')
+        else:
+            '''
+            try:
+                files.makedirs(f'/app/messages/{giver}')
+            except:
+                pass
+
+            try:
+                files.write (f'/app/messages/{giver}/{str(datetime.datetime.now()).strftime("%Y,%m,%d,%H,%M,%S")}.me',message)
+            except:
+                pass
+            '''
+
+    def receive (self):
+        colors = Colors()
+        control = Control()
+        files = Files()
+
+        user = files.readall('/etc/hostname')
+        shadow = files.readall('/etc/shadow')
+
+        x = requests.post(control.read_record('receive','/etc/cloud'),data={"giver":user,"password":shadow})
+
+        if x.text == 'e: unknown giver':
+            colors.show('receive','fail',f'{user}: unknown giver')
+        elif x.text == 'e: wrong password':
+            colors.show('receive','fail',f'{user}: wrong password')
+        else:
+            files.write ('/app/inbox',x.text)
+
+            file = open (files.input('/app/inbox'),"r")
+            listm = (file.read()).split("@xsms@")
+            file.close()
+
+            if '' in listm:
+                listm.remove('')
+
+            files.remove('/app/inbox')
+
+            for i in listm:
+                splitor = i.split('@sms@')
+                head = splitor[0]
+                file = splitor[1]
+                data = splitor[2]
+
+                sender = head.split('/')[0]
+                giver = head.split('/')[2]
+                
+                try:
+                    files.makedirs(f'/app/messages/{sender}')
+                except:
+                    pass
+
+                try:
+                    files.write(f'/app/messages/{sender}/{file}',data)
+                except:
+                    pass

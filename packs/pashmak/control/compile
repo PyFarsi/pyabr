@@ -1,0 +1,13 @@
+pashmak_abr.py:usr/app/pashmak.pyc
+pashmak.py:usr/app/pashmak_core.pyc
+core/builtin_functions.py:usr/app/core/builtin_functions.pyc
+core/class_system.py:usr/app/core/class_system.pyc
+core/current_prog.py:usr/app/core/current_prog.pyc
+core/function.py:usr/app/core/function.pyc
+core/helpers.py:usr/app/core/helpers.pyc
+core/jit.py:usr/app/core/jit.pyc
+core/lexer.py:usr/app/core/lexer.pyc
+core/modules.py:usr/app/core/modules.pyc
+core/parser.py:usr/app/core/parser.pyc
+core/program.py:usr/app/core/program.pyc
+core/version.py:usr/app/core/version.pyc

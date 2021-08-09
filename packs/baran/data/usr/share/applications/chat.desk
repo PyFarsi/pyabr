@@ -1,0 +1,8 @@
+name[en]: Chat
+name[fa]: پیام رسانی
+exec: chat
+logo: @icon/breeze-chat
+application: Yes
+hidden: No
+category: internet
+external: Yes

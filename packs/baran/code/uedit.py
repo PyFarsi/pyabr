@@ -1,14 +1,37 @@
-#######################################################################################
-#  In the name of God, the Compassionate, the Merciful
-#  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
-#
-#  Official Website: 		https://pyabr.ir
-#  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
-#  Gap channel: 			@pyabr
-#  Gap group:   			@pyabr_community
-#  Git source:              github.com/PyFarsi/pyabr
-#
-#######################################################################################
+'''
+    Pyabr OS
+
+    Python Cloud Operating System Platform (c) 2021 PyFarsi. Free Software GNU General Public License v3.0
+
+    - Informations
+
+    * Name:             Pyabr
+    * Founder:          Mani Jamali
+    * Developers:       PyFarsi Community
+    * Package Manager:  Paye, Apt, Dpkg, PyPI
+    * License:          GNU General Publice License v3.0
+
+    * Source code:      https://github.com/PyFarsi/pyabr
+    * PyPI:             https://pypi.org/project/pyabr
+
+    - Download Pyabr OS
+
+    * AMD64, Intel64:   https://dl.pyabr.ir/pyabr-x86_64.iso     
+    * ARM64:            https://dl.pyabr.ir/pyabr-arm64.img
+    * Platform:         https://dl.pyabr.ir/stor.sb
+    * Wheel Package:    https://dl.pyabr.ir/pyabr.whl
+    
+    - Channels:
+
+    * Official Website: https://pyabr.ir
+    * Telegram Channel: https://t.me/pyfarsi
+    * Gap Channel:      https://gap.im/pyabr
+    * Sorosh Channel:   https://splus.ir/pyabr
+    * Instagram:        https://instagram.com/pyabrir
+    * Hoorsa:           https://hoorsa.com/pyabr
+    * Aparat:           https://aparat.com/pyabr
+
+'''
 
 import sys, subprocess, os, shutil, requests,hashlib
 
@@ -64,6 +87,7 @@ class MainApp(QWidget):
         self.gender = self.cbGender.currentText()
         self.bloodtype = self.cbBloodtype.currentText()
         self.birthday = self.leBirthday.text()
+        self.shadow = self.leShadow.text()
 
         # save it #
         control.write_record('fullname',self.fullname,self.user)
@@ -72,6 +96,7 @@ class MainApp(QWidget):
         control.write_record('gender', self.gender, self.user)
         control.write_record('blood_type', self.bloodtype, self.user)
         control.write_record('birthday', self.birthday, self.user)
+        control.write_record('shadow',self.shadow,self.user)
 
         if self.leConfirm.text()==self.lePassword.text():
             control.write_record('code',hashlib.sha3_512(self.lePassword.text().encode()).hexdigest(),self.user)
@@ -120,6 +145,8 @@ class MainApp(QWidget):
         self.leUsername.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.lePassword = LineEdit(ports)
         self.lePassword.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
+        self.leShadow = LineEdit(ports)
+        self.leShadow.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leConfirm = LineEdit(ports)
         self.leConfirm.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.leFullname = LineEdit(ports)
@@ -130,7 +157,7 @@ class MainApp(QWidget):
         self.leEmail.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.lePhone = LineEdit(ports)
         self.lePhone.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
-        self.leBirthday = QDateEdit()
+        self.leBirthday = LineEdit(ports)
         self.leBirthday.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
         self.cbGender = QComboBox()
         self.cbGender.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
@@ -144,6 +171,7 @@ class MainApp(QWidget):
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.leUsername)
         self.layout.addWidget(self.lePassword)
+        self.layout.addWidget(self.leShadow)
         self.layout.addWidget(self.leConfirm)
         self.layout.addWidget(self.leFullname)
         self.layout.addWidget(self.leCompany)
@@ -165,11 +193,14 @@ class MainApp(QWidget):
 
         self.lePassword.setEchoMode(QLineEdit.Password)
         self.leConfirm.setEchoMode(QLineEdit.Password)
+        self.leShadow.setEchoMode(QLineEdit.Password)
 
         self.leFullname.setPlaceholderText(res.get('@string/fullname'))
         self.leCompany.setPlaceholderText(res.get('@string/company'))
         self.leEmail.setPlaceholderText(res.get('@string/email'))
+        self.leBirthday.setPlaceholderText(res.get('@string/birthday'))
         self.lePhone.setPlaceholderText(res.get('@string/phone'))
+        self.leShadow.setPlaceholderText(res.get('@string/shadow'))
         self.btnSave.setText(res.get('@string/save'))
         self.btnSave.setFont(self.Env.font())
         self.setLayout(self.layout)
@@ -200,6 +231,10 @@ class MainApp(QWidget):
                 self.leEmail.setText(control.read_record('email', self.user))
             if not control.read_record('phone', self.user) == None:
                 self.lePhone.setText(control.read_record('phone', self.user))
+            if not control.read_record('birthday', self.user) == None:
+                self.lePhone.setText(control.read_record('birthday', self.user))
+            if not control.read_record('shadow', self.user) == None:
+                self.lePhone.setText(control.read_record('shadow', self.user))
             if not control.read_record('gender', self.user) == None:
                 self.cbGender.setCurrentText(control.read_record('gender', self.user))
             if not control.read_record('blood_type', self.user) == None:
@@ -210,16 +245,6 @@ class MainApp(QWidget):
                     self.cbtype.setEnabled(False)
             else:
                 self.cbtype.setCurrentText(res.get('@string/low'))
-            if not control.read_record('birthday', self.user) == None:
-                x = control.read_record('birthday', self.user)
-                x = x.split('-')
-                y = int(x[0])
-                m = int(x[1])
-                d = int(x[2])
-                s = QDate()
-                s.setDate(y, m, d)
-
-                self.leBirthday.setDate(s)
 
         self.btnSave.clicked.connect (self.btnSave_act)
         self.btnSave.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')

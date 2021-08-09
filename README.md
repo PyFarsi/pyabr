@@ -15,6 +15,13 @@ Pyabr is a small and lightweight platform and OS written in Python
 - **Official Website**: https://pyabr.ir
 - **Telegram Channel**: https://t.me/PyFarsi
 
+## Download Pyabr
+
+- **For Intel 64-bit, AMD 64-bit architectures:** https://dl.pyabr.ir/pyabr-x86_64.iso
+- **For ARM 64-bit Architecture:** https://dl.pyabr.ir/pyabr-arm64.img
+- Pyabr Squashfs Platform: https://dl.pyabr.ir/stor.sb
+- Pyabr Wheel/PyPI package: https://dl.pyabr.ir/pyabr.whl
+
 ## How to install Pyabr platform in Linux?
 
 ```bash
