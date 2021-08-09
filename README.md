@@ -1,11 +1,8 @@
 <img src="https://img.shields.io/github/license/PyFarsi/pyabr?style=flat-square" alt="License"/>
 <img src="https://img.shields.io/github/languages/code-size/PyFarsi/pyabr?style=flat-square" alt="Code Size"/>
 
-# Pyabr cloud computing software
-
-In the name of God, the Compassionate, the Merciful
-
-Pyabr &copy; 2021 Mani Jamali. Free Software GNU General Public License v3.0
+# Pyabr
+#### Python Cloud Operating System  Platform (c) 2021 PyFarsi. Free Software GNU General Public License v3.0
 
 ## How to Contributing?
 for contributing in pyabr please read [CONTRIBUTING.md](/CONTRIBUTING.md)
@@ -16,6 +13,13 @@ Pyabr is a small and lightweight platform and OS written in Python
 
 - **Official Website**: https://pyabr.ir
 - **Telegram Channel**: https://t.me/PyFarsi
+
+## Download Pyabr
+
+- **For Intel 64-bit, AMD 64-bit architectures:** https://dl.pyabr.ir/pyabr-x86_64.iso
+- **For ARM 64-bit Architecture:** https://dl.pyabr.ir/pyabr-arm64.img
+- Pyabr Squashfs Platform: https://dl.pyabr.ir/stor.sb
+- Pyabr Wheel/PyPI package: https://dl.pyabr.ir/pyabr.whl
 
 ## How to install Pyabr platform in Linux?
 
