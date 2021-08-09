@@ -32,4 +32,3 @@
     * Aparat:           https://aparat.com/pyabr
 
 '''
-from .frontend import TerminalWidget

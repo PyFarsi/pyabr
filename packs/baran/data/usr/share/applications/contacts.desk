@@ -1,0 +1,8 @@
+name[en]: Contacts
+name[fa]: مخاطبین
+exec: contacts
+logo: @icon/breeze-users
+application: Yes
+hidden: No
+category: internet
+external: No

@@ -573,10 +573,12 @@ users.removedm: This user successfully removed
 users.root: Super user
 users.rootm: Cannot remove super user account at all
 uedit.app_name: User editor
+uedit.shadow: Shadow Code
 uedit.fullname: Full name
 uedit.company: Company
 uedit.email: Email
 uedit.phone: Phone
+uedit.birthday: Birthday (Jalali)
 uedit.male: Male
 uedit.female: Female
 uedit.save: Save changes
@@ -627,7 +629,7 @@ connectcloud.remove: Remove backend
 connectcloud.upload: Upload backend
 connectcloud.download: Download backend
 connectcloud.password: Password
-connectcloud.value: Value name
+connectcloud.value: Drive name
 connectcloud.add: Add && Connect
 connectcloud.cm: Cannot add drive; there is some problems in fields or connection
 connectcloud.c: Problem adding

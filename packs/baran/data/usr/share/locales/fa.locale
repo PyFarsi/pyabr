@@ -570,8 +570,10 @@ uedit.fullname: نام و نام خانوادگی
 uedit.company: نام شرکت
 uedit.email: پست الکترونیکی
 uedit.phone: شماره تلفن
+uedit.shadow: کد مخفی
 uedit.male: مذکر
 uedit.female: مونث
+uedit.birthday: تاریخ تولد (شمسی)
 uedit.save: ذخیره سازی تغییرات
 desktop.vkey: کیبورد مجازی
 users.add: حساب جدید

@@ -1,14 +1,37 @@
-#######################################################################################
-#  In the name of God, the Compassionate, the Merciful
-#  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
-#
-#  Official Website: 		https://pyabr.ir
-#  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
-#  Gap channel: 			@pyabr
-#  Gap group:   			@pyabr_community
-#  Git source:              github.com/PyFarsi/pyabr
-#
-#######################################################################################
+'''
+    Pyabr OS
+
+    Python Cloud Operating System Platform (c) 2021 PyFarsi. Free Software GNU General Public License v3.0
+
+    - Informations
+
+    * Name:             Pyabr
+    * Founder:          Mani Jamali
+    * Developers:       PyFarsi Community
+    * Package Manager:  Paye, Apt, Dpkg, PyPI
+    * License:          GNU General Publice License v3.0
+
+    * Source code:      https://github.com/PyFarsi/pyabr
+    * PyPI:             https://pypi.org/project/pyabr
+
+    - Download Pyabr OS
+
+    * AMD64, Intel64:   https://dl.pyabr.ir/pyabr-x86_64.iso     
+    * ARM64:            https://dl.pyabr.ir/pyabr-arm64.img
+    * Platform:         https://dl.pyabr.ir/stor.sb
+    * Wheel Package:    https://dl.pyabr.ir/pyabr.whl
+    
+    - Channels:
+
+    * Official Website: https://pyabr.ir
+    * Telegram Channel: https://t.me/pyfarsi
+    * Gap Channel:      https://gap.im/pyabr
+    * Sorosh Channel:   https://splus.ir/pyabr
+    * Instagram:        https://instagram.com/pyabrir
+    * Hoorsa:           https://hoorsa.com/pyabr
+    * Aparat:           https://aparat.com/pyabr
+
+'''
 
 import sys , os
 from PyQt5 import QtWidgets, QtGui, QtCore
@@ -57,6 +80,8 @@ class MainApp (QtWidgets.QWidget):
         self.Widget.SetWindowTitle (res.get('@string/app_name'))
         self.Widget.SetWindowIcon (QIcon(res.get(res.etc('connectcloud','logo'))))
 
+        self.Widget.Resize (self,600,200)
+
         self.vbox = QVBoxLayout()
         self.setLayout(self.vbox)
 
@@ -66,24 +91,6 @@ class MainApp (QtWidgets.QWidget):
         self.lePassword = LineEdit(args)
         self.lePassword.setStyleSheet(
             f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
-        self.leCheck = LineEdit(args)
-        self.leCheck.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
-        self.leList = LineEdit(args)
-        self.leList.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
-        self.leDownload = LineEdit(args)
-        self.leDownload.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
-        self.leUpload = LineEdit(args)
-        self.leUpload.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
-        self.leRemove = LineEdit(args)
-        self.leRemove.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
-        self.leDirectory = LineEdit(args)
-        self.leDirectory.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
         self.leValue = LineEdit(args)
         self.leValue.setStyleSheet(
             f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-right: 5%;padding-left: 5%')
@@ -91,30 +98,12 @@ class MainApp (QtWidgets.QWidget):
 
         self.vbox.addWidget(self.leHost)
         self.vbox.addWidget(self.lePassword)
-        self.vbox.addWidget(self.leCheck)
-        self.vbox.addWidget(self.leList)
-        self.vbox.addWidget(self.leDownload)
-        self.vbox.addWidget(self.leUpload)
-        self.vbox.addWidget(self.leRemove)
-        self.vbox.addWidget(self.leDirectory)
         self.vbox.addWidget(self.leValue)
 
 
         self.leHost.setPlaceholderText (res.get('@string/host'))
         self.lePassword.setEchoMode (QLineEdit.Password)
         self.lePassword.setPlaceholderText (res.get('@string/password'))
-        self.leCheck.setText ("index.php")
-        self.leCheck.setPlaceholderText (res.get('@string/check'))
-        self.leList.setText ("list.php")
-        self.leList.setPlaceholderText (res.get('@string/list'))
-        self.leDownload.setText ("download.php")
-        self.leDownload.setPlaceholderText (res.get('@string/download'))
-        self.leUpload.setText ("upload.php")
-        self.leUpload.setPlaceholderText (res.get('@string/upload'))
-        self.leRemove.setText ("remove.php")
-        self.leRemove.setPlaceholderText (res.get('@string/remove'))
-        self.leDirectory.setText ("directory.php")
-        self.leDirectory.setPlaceholderText (res.get('@string/dir'))
         self.leValue.setPlaceholderText (res.get('@string/value'))
 
         self.btnConnect = QPushButton()
@@ -136,12 +125,6 @@ class MainApp (QtWidgets.QWidget):
         files.create(f'/dev/ic{str(maxed)}')
         control.write_record('host',self.leHost.text(),f'/dev/ic{str(maxed)}')
         control.write_record('password',self.lePassword.text(),f'/dev/ic{str(maxed)}')
-        control.write_record('index',self.leCheck.text(),f'/dev/ic{str(maxed)}')
-        control.write_record('list',self.leList.text(),f'/dev/ic{str(maxed)}')
-        control.write_record('download',self.leDownload.text(),f'/dev/ic{str(maxed)}')
-        control.write_record('upload',self.leUpload.text(),f'/dev/ic{str(maxed)}')
-        control.write_record('remove',self.leRemove.text(),f'/dev/ic{str(maxed)}')
-        control.write_record('directory',self.leDirectory.text(),f'/dev/ic{str(maxed)}')
         control.write_record('value',self.leValue.text(),f'/dev/ic{str(maxed)}')
 
         try:

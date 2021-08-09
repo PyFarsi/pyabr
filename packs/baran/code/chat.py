@@ -34,8 +34,9 @@
 '''
 
 import sys, subprocess,os,shutil,requests
+from typing import Text
 
-from libabr import Files, Control, Permissions, Colors, Process, Modules, Package, Commands, Res, System,App
+from libabr import Files, Control, Permissions, Colors, Process, Modules, Package, Commands, Res, System,App, Message
 
 modules = Modules()
 files = Files()
@@ -46,6 +47,7 @@ permissions = Permissions()
 pack = Package()
 commands = Commands()
 res = Res()
+sms = Message()
 app = App()
 
 from PyQt5.QtGui import *
@@ -54,17 +56,38 @@ from PyQt5.QtWidgets import *
 def getdata (name):
     return control.read_record (name,'/etc/gui')
 
-class MainApp (QMainWindow):
+class MainApp (QWidget):
 
     def onCloseProcess (self):
-        if not app.check('not'):
+        if not app.check('chat'):
             self.Widget.Close()
         else:
             QTimer.singleShot(1,self.onCloseProcess)
 
-    def opener (self):
-        self.Widget.Close()
-        self.Env.RunApp (self.External[0],[self.External[1]])
+    def lock (self):
+        self.leSend.setEnabled(False)
+        self.leSend.setText('Sending ...')
+        QTimer.singleShot(1000,self.unlock)
+
+    def unlock (self):
+        self.leSend.clear()
+        self.leSend.setEnabled(True)
+
+    def SendMessage (self):
+        sms.send (self.External[0],self.leSend.text())
+        self.txtChat.append(f'<p style="text-align: left">Me: {self.leSend.text()}</p>')
+        self.lock()
+
+        self.refresh()
+
+    def refresh (self):
+        sms.recive()
+
+        messages = files.readall (f'/app/messages/{self.External[0]}/'+max(files.list (f'/app/messages/{self.External[0]}')))
+        self.txtChat.append(f'<p style="text-align: right">{self.External[0]}: {messages}</p>')
+
+        #for i in files.list (f'/app/messages/{self.External[0]}'): files.remove (f'/app/messages/{self.External[0]}/{i}')
+        #QTimer.singleShot(100,self.refresh)
 
     def __init__(self,ports):
         super(MainApp, self).__init__()
@@ -75,22 +98,31 @@ class MainApp (QMainWindow):
         self.AppName = ports[3]
         self.External = ports[4]
 
+        self.Widget.SetWindowTitle ('Chat')
+
         self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
 
         self.onCloseProcess()
-        self.Widget.Resize (self,int(getdata('alert.width')),int(getdata('alert.height')))
-        self.Widget.DisableFloat()
+        #self.refresh()
 
-        self.btnView = QToolButton()
-        self.btnView.setText (self.External[2]) # External[0]
-        self.Widget.SetWindowTitle(res.etc(self.External[0],f"name[{getdata('locale')}]"))
-        #  External[1]
-        self.btnView.clicked.connect (self.opener)
-        self.btnView.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
-        self.setCentralWidget(self.btnView)
+        try:
+            self.giver = self.External[0]
 
-        self.Widget.SetWindowIcon (QIcon(res.get(res.etc(self.External[0],'logo'))))
-        # self.Env.RunApp ('not',['gap',None,'100 new messages']) // Run Notifications
+            self.lay = QVBoxLayout()
+            self.setLayout(self.lay)
 
-        QTimer.singleShot(3000,self.Widget.Close)
-        app.end('not')
+            self.txtChat = QTextBrowser()
+            self.txtChat.setFont(self.Env.font())
+            self.lay.addWidget(self.txtChat)
+
+            self.leSend = QLineEdit()
+            self.leSend.setFixedHeight(50)
+            self.leSend.setFont(self.Env.font())
+            self.leSend.setStyleSheet('padding-left: 5%;padding-right: 5%')
+            self.leSend.returnPressed.connect (self.SendMessage)
+            self.leSend.setPlaceholderText(f"Type a message")
+            self.Widget.SetWindowTitle (f"Message to {self.External[0]}")
+            self.lay.addWidget(self.leSend)
+        except:
+            self.Widget.Close()
+            app.end ('chat')
