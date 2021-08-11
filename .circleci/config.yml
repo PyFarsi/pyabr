@@ -4,12 +4,6 @@ workflows:
   build_pyabr: 
     jobs:
       - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
 
 jobs:
   build: 
