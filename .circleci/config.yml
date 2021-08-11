@@ -1,33 +1,25 @@
 version: 2.1
 
-orbs:
-  python: circleci/python@1.2
-
 workflows:
-  sample: 
+  build_pyabr: 
     jobs:
       - build
-
 
 jobs:
   build: 
     docker:
       - image: cimg/python:3.8
-    working_directory:  ~/project
+      
     steps:
-      - checkout
-      - python/install-packages:
-          pkg-manager: pip
-       
       - run:
           name: Download Deps
           command: |
             python3 -m venv venv
-            . venv/bin/activate
+            source venv/bin/activate
             pip install -r requirments.txt
             
       - run:
           name: Build test
           command: |
-            . venv/bin/activate
+            source venv/bin/activate
             python3 build.py
