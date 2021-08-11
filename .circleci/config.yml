@@ -11,15 +11,22 @@ jobs:
       - image: cimg/python:3.8
       
     steps:
+      - restore_cache:
+            key: deps-{{ checksum "requirements.txt" }}
       - run:
           name: Download Deps
           command: |
             python3 -m venv venv
-            source venv/bin/activate
-            pip install -r requirments.txt
+            . venv/bin/activate
+            pip install -r requirements.txt
+            
+      - save_cache:
+          key: deps-{{ checksum "requirements.txt" }}
+          paths:
+            - 'venv'
             
       - run:
           name: Build test
           command: |
-            source venv/bin/activate
+            . venv/bin/activate
             python3 build.py
