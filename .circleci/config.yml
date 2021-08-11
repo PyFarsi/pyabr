@@ -4,6 +4,12 @@ workflows:
   build_pyabr: 
     jobs:
       - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
 
 jobs:
   build: 
@@ -11,6 +17,7 @@ jobs:
       - image: cimg/python:3.8
       
     steps:
+      - checkout
       - restore_cache:
             key: deps-{{ checksum "requirements.txt" }}
       - run:
