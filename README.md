@@ -7,11 +7,11 @@
 Pyabr &copy; 2021 Mani Jamali. Free Software GNU General Public License v3.0
 
 ## How to Contributing?
-for contributing in pyabr please read [CONTRIBUTING.md](/CONTRIBUTING.md)
+For contributing in pyabr please read [CONTRIBUTING.md](/CONTRIBUTING.md)
 
 ## What is Pyabr?
 
-Pyabr is a small and lightweight platform and OS written in Python
+Pyabr is a small, lightweight platform and an OS written in Python.
 
 - **Official Website**: https://pyabr.ir
 - **Telegram Channel**: https://t.me/PyFarsi
