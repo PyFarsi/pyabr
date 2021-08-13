@@ -4,7 +4,7 @@
 
 # Pyabr cloud computing software
 
-Pyabr &copy; 2021 Mani Jamali. Free Software GNU General Public License v3.0
+Pyabr &copy; 2019 - 2021 Mani Jamali. Free Software GNU General Public License v3.0
 
 ## How to Contributing?
 For contributing in pyabr please read [CONTRIBUTING.md](/CONTRIBUTING.md)
@@ -33,3 +33,5 @@ sudo python3 -m pyabr
 ## How to run Pyabr?
 
 You can launch Pyabr on your desktop without command prompt or run `pyabr`
+
+[PyAbr first repository](https://github.com/manijamali2003/pyabr)
