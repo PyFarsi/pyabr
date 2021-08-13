@@ -1,6 +1,8 @@
 <img src="https://img.shields.io/github/license/PyFarsi/pyabr?style=flat-square" alt="License"/>
 <img src="https://img.shields.io/github/languages/code-size/PyFarsi/pyabr?style=flat-square" alt="Code Size"/>
 
+[![Repository Size](https://img.shields.io/github/repo-size/PyFarsi/pyabr?style=flat-square)](https://github.com/PyFarsi/pyabr)
+
 # Pyabr cloud computing software
 
 Pyabr &copy; 2021 Mani Jamali. Free Software GNU General Public License v3.0
