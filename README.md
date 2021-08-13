@@ -1,7 +1,5 @@
 [![License](https://img.shields.io/github/license/PyFarsi/pyabr?style=flat-square)](https://github.com/PyFarsi/pyabr)
-
 [![Code Size](https://img.shields.io/github/languages/code-size/PyFarsi/pyabr?style=flat-square)](https://github.com/PyFarsi/pyabr)
-
 [![Repository Size](https://img.shields.io/github/repo-size/PyFarsi/pyabr?style=flat-square)](https://github.com/PyFarsi/pyabr)
 
 # Pyabr cloud computing software
