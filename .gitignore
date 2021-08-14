@@ -44,8 +44,7 @@ pip-delete-this-directory.txt
 venv/
 # Unit test / coverage reports
 htmlcov/
-packs/splus/
-packs/splus/code/splus.py
+packs/splus/data/usr/app
 packs/iran-wallpaper/
 packs/shad/
 packs/bale/
