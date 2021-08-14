@@ -38,7 +38,7 @@
 # Virtual Memory Abr Kernel (vmabr)
 # (c) 2020 Mani Jamali All rights reserved.
 import subprocess,time
-import sys, platform, hashlib, os, getpass, subprocess as sub, importlib
+import sys, platform, hashlib, os, getpass, subprocess as sub, importlib,multiprocessing
 
 ## Configure kernel ###############################################################################
 
@@ -48,6 +48,8 @@ sys.path.append("usr/app")
 
 from libabr import Modules, Files, Control, Colors, Process, Permissions, System, App, Commands, Script
 from termcolor import colored
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
 
 ################## Interface configure ##########################
 
@@ -216,13 +218,11 @@ if sys.argv[1:][0] == "kernel":
     print(f'\nWelcome to {control.read_record("name", "/etc/distro")} {control.read_record("version", "/etc/distro")} ({control.read_record("code", "/etc/distro")}) cloud software.\n')
     print(f'\n{files.readall("/etc/issue")}\n')
 
+
 ## @core/gui ##
 
-if sys.argv[1:][0] == "gui":
+def gui():
     try:
-        from PyQt5.QtCore import *
-        from PyQt5.QtWidgets import *
-
         ## Main entry ##
         application = QApplication(sys.argv)
         app.start('desktop')
@@ -237,16 +237,25 @@ if sys.argv[1:][0] == "gui":
         sys.exit(application.exec_())
     except:
         pass
-    
+
+def windows_manager ():
+    try:
+        subprocess.call([control.read_record('external-windows-manager','/etc/gui')])
+    except:
+        pass
+
+if sys.argv[1:][0] == "gui":
+    p1 = multiprocessing.Process(target=windows_manager)
+    p2 = multiprocessing.Process(target=gui)
+
+    p1.start()
+    p2.start()
 
 ## @core/gui-splash ##
 
-if sys.argv[1:][0] == "gui-splash":
+def gui_splash ():
     try:
         control.write_record('params', 'splash', '/etc/gui')
-
-        from PyQt5.QtCore import *
-        from PyQt5.QtWidgets import *
 
         ## Main entry ##
         application = QApplication(sys.argv)
@@ -262,15 +271,18 @@ if sys.argv[1:][0] == "gui-splash":
     except:
         pass
 
+if sys.argv[1:][0] == "gui-splash":
+    p1 = multiprocessing.Process(target=windows_manager)
+    p2 = multiprocessing.Process(target=gui_splash)
+
+    p1.start()
+    p2.start()
+
 ## @core/gui-login ##
 
-if sys.argv[1:][0] == "gui-login":
+def gui_login():
     try:
         control.write_record('params', 'login', '/etc/gui')
-
-        from PyQt5.QtCore import *
-        from PyQt5.QtWidgets import *
-
         ## Main entry ##
         application = QApplication(sys.argv)
         app.start('desktop')
@@ -284,18 +296,18 @@ if sys.argv[1:][0] == "gui-login":
     except:
         pass
 
+if sys.argv[1:][0] == "gui-login":
+    p1 = multiprocessing.Process(target=windows_manager)
+    p2 = multiprocessing.Process(target=gui_login)
+
+    p1.start()
+    p2.start()
 ## @core/gui-enter ##
 
-if sys.argv[1:][0] == "gui-enter":
+def gui_enter():
     try:
         if sys.argv[1:][1:] == [] or sys.argv[1:][1] == 'guest' or not files.isfile(f'/etc/users/{sys.argv[1:][1]}'):
             sys.exit(0)
-
-
-        # do the job #
-
-        from PyQt5.QtCore import *
-        from PyQt5.QtWidgets import *
 
         ## Main entry ##
         application = QApplication(sys.argv)
@@ -312,16 +324,17 @@ if sys.argv[1:][0] == "gui-enter":
     except:
         pass
 
-if sys.argv[1:][0] == "gui-unlock":
+if sys.argv[1:][0] == "gui-enter":
+    p1 = multiprocessing.Process(target=windows_manager)
+    p2 = multiprocessing.Process(target=gui_enter)
+
+    p1.start()
+    p2.start()
+
+def gui_unlock():
     try:
         if sys.argv[1:][1:] == [] or sys.argv[1:][1] == 'guest' or not files.isfile(f'/etc/users/{sys.argv[1:][1]}'):
             sys.exit(0)
-
-
-        # do the job #
-
-        from PyQt5.QtCore import *
-        from PyQt5.QtWidgets import *
 
         ## Main entry ##
         application = QApplication(sys.argv)
@@ -339,9 +352,14 @@ if sys.argv[1:][0] == "gui-unlock":
     except:
         pass
 
-## @core/gui-desktop ##
+if sys.argv[1:][0] == "gui-unlock":
+    p1 = multiprocessing.Process(target=windows_manager)
+    p2 = multiprocessing.Process(target=gui_unlock)
 
-if sys.argv[1:][0] == "gui-desktop":
+    p1.start()
+    p2.start()
+
+def gui_desktop():
     try:
         if sys.argv[1:][1:] == [] or sys.argv[1:][2:] == [] or sys.argv[1:][1] == 'guest' or not files.isfile(f'/etc/users/{sys.argv[1:][1]}'):
             sys.exit(0)
@@ -350,9 +368,6 @@ if sys.argv[1:][0] == "gui-desktop":
         if not hashlib.sha3_512(sys.argv[1:][2].encode()).hexdigest() == control.read_record('code', f'/etc/users/{sys.argv[1:][1]}'):
             sys.exit(0)
 
-
-        from PyQt5.QtCore import *
-        from PyQt5.QtWidgets import *
 
         ## Main entry ##
         application = QApplication(sys.argv)
@@ -372,6 +387,15 @@ if sys.argv[1:][0] == "gui-desktop":
         sys.exit(application.exec_())
     except:
         pass
+
+## @core/gui-desktop ##
+
+if sys.argv[1:][0] == "gui-desktop":
+    p1 = multiprocessing.Process(target=windows_manager)
+    p2 = multiprocessing.Process(target=gui_desktop)
+
+    p1.start()
+    p2.start()
 
 ## @lib/shell ##
 

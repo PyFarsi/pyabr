@@ -35,6 +35,7 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+import multiprocessing
 
 import os
 import sys
@@ -46,9 +47,13 @@ control = Control()
 app = App()
 files = Files()
 
+def a ():
+    System('/usr/games/squares')  # Run CatBall Game
+
 class MainApp(QMainWindow):
     def Game (self):
-        System('/usr/games/squares')  # Run CatBall Game
+        p = multiprocessing.Process(target=a)
+        p.start()
 
     def onCloseProcess (self):
         if not app.check(self.AppName):
