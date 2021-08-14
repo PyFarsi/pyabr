@@ -118,5 +118,8 @@ for i in list:
     else:
         shutil.copyfile(i, 'sb/'+i)
 
+if os.path.isfile ('pyabr-amd64/pyabr/modules/stor.sb'): os.remove('pyabr-amd64/pyabr/modules/stor.sb')
 subprocess.call(['mksquashfs','sb','pyabr-amd64/pyabr/modules/stor.sb','-comp','xz'])
+subprocess.call(['sh','gen.sh'])
+subprocess.call()
 import clean
