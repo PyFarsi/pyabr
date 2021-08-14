@@ -22,5 +22,3 @@ wifi_shell.py:usr/app/wifi_shell.pyc
 wifi_gui.py:usr/app/wifi_gui.pyc
 sample.py:usr/app/sample.pyc
 codebox.py:usr/app/codebox.pyc
-chat.py:usr/app/chat.pyc
-contacts.py:usr/app/contacts.pyc

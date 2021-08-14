@@ -36,24 +36,31 @@
 import subprocess, os, sys, shutil
 
 list = os.listdir('.')
-list.remove('.git')
-list.remove('.idea')
-list.remove('wheel')
-list.remove('build.py')
-list.remove('pack-sb.py')
-list.remove('build-packs.py')
-list.remove('LICENSE')
-list.remove('upgrade.sa')
-list.remove('pack-wheel.py')
-list.remove('README.md')
-list.remove('clouddrive')
-list.remove('requirments.txt')
-list.remove('.gitignore')
-list.remove('mark_updates')
-list.remove('build-date.txt')
-list.remove('CONTRIBUTING.md')
-list.remove('debug_params')
-list.remove('debug_apps')
+try:
+    list.remove('.git')
+    list.remove('.idea')
+    list.remove('wheel')
+    list.remove('build.py')
+    list.remove('pack-sb.py')
+    list.remove('build-packs.py')
+    list.remove('LICENSE')
+    list.remove('upgrade.sa')
+    list.remove('pack-wheel.py')
+    list.remove('README.md')
+    list.remove('clouddrive')
+    list.remove('requirements.txt')
+    list.remove('.gitignore')
+    list.remove('pyabr-amd64')
+    list.remove('gen.sh')
+    list.remove('run.sh')
+    list.remove('pyabr-x86_64.iso')
+    list.remove('mark_updates')
+    list.remove('build-date.txt')
+    list.remove('CONTRIBUTING.md')
+    list.remove('debug_params')
+    list.remove('debug_apps')
+except:
+    pass
 
 if '__pycache__' in list:
     list.remove('__pycache__')
@@ -111,5 +118,5 @@ for i in list:
     else:
         shutil.copyfile(i, 'sb/'+i)
 
-subprocess.call(['mksquashfs','sb','stor.sb','-comp','xz'])
+subprocess.call(['mksquashfs','sb','pyabr-amd64/pyabr/modules/stor.sb','-comp','xz'])
 import clean

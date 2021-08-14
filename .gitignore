@@ -14,6 +14,7 @@ packs/pashmak/
 dist/
 downloads/
 eggs/
+venv/
 .eggs/
 lib/
 lib64/
@@ -23,9 +24,9 @@ var/
 wheels/
 pip-wheel-metadata/
 share/python-wheels/
+stor.sb
 *.egg-info/
 build-packs/
-app/
 .git/
 *.pa
 .installed.cfg
@@ -43,10 +44,18 @@ pip-delete-this-directory.txt
 venv/
 # Unit test / coverage reports
 htmlcov/
+packs/splus/
+packs/iran-wallpaper/
+packs/shad/
+packs/bale/
+run.sh
+gen.sh
+pyabr-amd64/
 .tox/
 .nox/
 .coverage
 .coverage.*
+pyabr-x86_64.iso
 .cache
 nosetests.xml
 coverage.xml
