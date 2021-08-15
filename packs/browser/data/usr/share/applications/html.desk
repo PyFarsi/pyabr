@@ -1,7 +1,0 @@
-name[en]: HTML Viewer
-name[fa]: نمایش دهنده ابرمتن
-exec: html_app
-logo: @icon/breeze-htmlv
-application: Yes
-category: tools
-external: Yes

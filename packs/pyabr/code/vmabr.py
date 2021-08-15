@@ -218,6 +218,13 @@ if sys.argv[1:][0] == "kernel":
     print(f'\nWelcome to {control.read_record("name", "/etc/distro")} {control.read_record("version", "/etc/distro")} ({control.read_record("code", "/etc/distro")}) cloud software.\n')
     print(f'\n{files.readall("/etc/issue")}\n')
 
+    if not files.isfile('/proc/info/sym'):
+        for j in control.read_list('/etc/symlinks'):
+
+            if not files.isdir(j) and not files.isfile(j):
+                subprocess.call(f'ln -sv {(j.split(":")[0])} /stor/{(j.split(":")[1])}', shell=True)
+
+        files.create('/proc/info/sym')
 
 ## @core/gui ##
 
