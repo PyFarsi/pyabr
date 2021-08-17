@@ -33,7 +33,7 @@
 
 '''
 
-import sys, subprocess,os,shutil,requests
+import sys, subprocess,os,shutil,requests,multiprocessing
 
 from libabr import Files, Control, Permissions, Colors, Process, Modules, Package, Commands, Res, System,App
 
@@ -54,6 +54,9 @@ from PyQt5.QtWidgets import *
 def getdata (name):
     return control.read_record (name,'/etc/gui')
 
+def a ():
+    subprocess.call(['mpv', files.readall('/tmp/mpv.tmp')])
+
 class MainApp (QMainWindow):
 
     def onCloseProcess (self):
@@ -63,7 +66,10 @@ class MainApp (QMainWindow):
             QTimer.singleShot(1,self.onCloseProcess)
 
     def RunMPV (self):
-        subprocess.call(['mpv',files.input(self.data)])
+        files.write('/tmp/mpv.tmp',files.input(self.data))
+
+        x = multiprocessing.Process(target=a)
+        x.start()
 
     def __init__(self,ports):
         super(MainApp, self).__init__()

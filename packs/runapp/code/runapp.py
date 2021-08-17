@@ -74,7 +74,7 @@ class MainApp(baran.BLineEdit):
             self.setEnabled(False)
 
         elif command[0].startswith ('http://') or command[0].startswith ('https://'):
-            self.Env.RunApp('wapp',[command[0]])
+            self.Env.RunApp(control.read_record('webapp','/etc/default/browser'),[command[0]])
 
         elif command[0].startswith ('abr://'):
             commands.cl([command[0]])

@@ -1,0 +1,2 @@
+browser: chromium
+webapp: chromium_webapp

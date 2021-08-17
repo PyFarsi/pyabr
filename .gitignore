@@ -47,6 +47,8 @@ htmlcov/
 packs/iran-wallpaper/
 packs/shad/
 packs/bale/
+packs/chromium/
+packs/gap/
 run.sh
 gen.sh
 pyabr-amd64/

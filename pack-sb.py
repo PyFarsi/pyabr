@@ -66,49 +66,7 @@ if '__pycache__' in list:
     list.remove('__pycache__')
 
 if not os.path.isdir('sb'):
-    os.mkdir('sb')
-    os.mkdir('sb/stor')
-    os.mkdir('sb/root')
-    os.mkdir('sb/etc')
-
-    f = open('sb/etc/issue.net', 'w')
-    f.write('Pyabr')
-    f.close()
-
-    f = open('sb/etc/issue', 'w')
-    f.write('Pyabr \\n \\l')
-    f.close()
-
-    f = open('sb/etc/os-release','w')
-    f.write('''PRETTY_NAME="Pyabr 2 (Aras)"
-NAME="Pyabr"
-VERSION_ID="2"
-VERSION="2 (Aras)"
-VERSION_CODENAME=aras
-ID=pyabr''')
-    f.close()
-
-    f = open('sb/root/.xinitrc','w')
-    f.write('pyabr')
-    f.close()
-
-    f = open('sb/etc/hosts','w')
-    f.write('''127.0.0.1	localhost
-127.0.1.1	pyabr
-
-# The following lines are desirable for IPv6 capable hosts
-::1     localhost ip6-localhost ip6-loopback
-ff02::1 ip6-allnodes
-ff02::2 ip6-allrouters''')
-    f.close()
-
-    f = open('sb/etc/hostname','w')
-    f.write('pyabr')
-    f.close()
-
-    f = open ('sb/etc/timezone','w')
-    f.write('Asia/Tehran')
-    f.close()
+    shutil.copytree('rootcopy','sb')
 else:
     list.remove('sb')
 
@@ -119,7 +77,7 @@ for i in list:
         shutil.copyfile(i, 'sb/'+i)
 
 if os.path.isfile ('pyabr-amd64/pyabr/modules/stor.sb'): os.remove('pyabr-amd64/pyabr/modules/stor.sb')
-subprocess.call(['mksquashfs','sb','pyabr-amd64/pyabr/modules/stor.sb','-comp','xz'])
+subprocess.call(['mksquashfs','rootcopy','pyabr-amd64/pyabr/modules/stor.sb','-comp','xz'])
 subprocess.call(['sh','gen.sh'])
-subprocess.call()
+subprocess.call(['sh','run.sh'])
 import clean

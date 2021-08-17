@@ -116,8 +116,8 @@ else:
 		subprocess.call('ln -s /usr/share/zoneinfo/Asia/Tehran /etc/localtime',shell=True)
 		f = open ('/etc/sysconfig/clock','w')
 		f.write('''ZONE="Asia/Tehran"
-	UTC=false
-	ARC=false''')
+UTC=false
+ARC=false''')
 		f.close()
 		subprocess.call('hwclock --systohc --localtime',shell=True)
 	except: pass
