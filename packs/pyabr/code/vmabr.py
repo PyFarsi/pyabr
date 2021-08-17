@@ -219,11 +219,21 @@ if sys.argv[1:][0] == "kernel":
     print(f'\n{files.readall("/etc/issue")}\n')
 
     if not files.isfile('/proc/info/sym'):
-        for j in control.read_list('/etc/symlinks'):
 
-            if not files.isdir(j) and not files.isfile(j):
-                subprocess.call(f'ln -si {(j.split(":")[0])} /stor/{(j.split(":")[1])}', shell=True)
+        ### Into storage ###
+        if not os.path.isfile('/stor/app/modules') and not os.path.isdir ('/stor/app/modules'):
+            subprocess.call(['ln','-si','/run/initramfs/memory/data/pyabr/modules','/stor/app/modules'])
+        if not os.path.isfile('/stor/boot') and not os.path.isdir('/stor/boot'):
+            subprocess.call(['ln', '-si','/run/initramfs/memory/data/pyabr/boot', '/stor/boot'])
 
+        ### Out of storage ##
+        if files.isfile('/etc/hostname'):
+            os.remove('/etc/hostname')
+            subprocess.call(['ln', '-si', '/stor/etc/hostname', '/etc/hostname'])
+
+        if files.isfile('/etc/hosts'):
+            os.remove('/etc/hosts')
+            subprocess.call(['ln', '-si', '/stor/etc/hosts', '/etc/hosts'])
         files.create('/proc/info/sym')
 
 ## @core/gui ##

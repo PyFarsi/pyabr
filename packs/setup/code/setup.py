@@ -103,6 +103,16 @@ ARC=false''')
             file.write(self.leHostname.text())
             file.close()
 
+            file = open('/stor/etc/hosts','w')
+            file.write(f'''127.0.0.1   localhost
+127.0.1.1   {self.leHostname.text()}
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters''')
+            file.close()
+
             ## Setting up Root user ##
             file = open("/stor/etc/users/root", "w")
             file.write(f"code: {hashlib.sha3_512(self.leRootCode.text().encode()).hexdigest()}\n")
@@ -123,7 +133,7 @@ ARC=false''')
 
             # sudoers #
             f = open('/stor/etc/sudoers', 'w')
-            f.write(f'{ self.leUsername.text()}\n')
+            f.write(f'{self.leUsername.text()}\n')
             f.close()
 
             ## Setting up Guest user ##

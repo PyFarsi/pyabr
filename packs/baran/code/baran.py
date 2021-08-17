@@ -2267,10 +2267,11 @@ class Desktop (QMainWindow):
             elif os.path.isfile(f'/root/{i}'): os.remove(f'/root/{i}')
 
             ## Symlinks to root ##
-            if self.username == 'root':
-                subprocess.call(['ln','-si',f'/stor/root/{i}',f'/root/{i}'])
-            else:
-                subprocess.call(['ln','-si',f'/stor/desk/{self.username}/{i}', f'/root/{i}'])
+            if not os.path.isdir(f'/root/{i}') and not os.path.isfile (f'/root/{i}'):
+                if self.username == 'root':
+                    subprocess.call(['ln','-si',f'/stor/root/{i}',f'/root/{i}'])
+                else:
+                    subprocess.call(['ln','-si',f'/stor/desk/{self.username}/{i}', f'/root/{i}'])
 
 
         ## Create pwd for this user

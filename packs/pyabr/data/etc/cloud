@@ -6,5 +6,5 @@ zone: https://cloud.pyabr.ir/zone.php
 # SMS Cloud sender
 send: https://sms.pyabr.ir/send.php
 
-# SMS‌ Cloud receiver
+# Cloud receiver
 receive: https://sms.pyabr.ir/receive.php

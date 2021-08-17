@@ -44,8 +44,16 @@ pip.perm: 1
 
 python: python3
 python.args: No
-python.perm: 3
+python.perm: 2
 
-bash: bash
-bash.args: No
-bash.perm: 1
+py: python3
+py.args: No
+py.perm: 2
+
+python3: python3
+python3.args: No
+python3.perm: 2
+
+ssh: ssh
+ssh.args: Yes
+ssh.perm: 3
