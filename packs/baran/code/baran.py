@@ -34,6 +34,8 @@
 '''
 
 ## Imports ##
+import shutil
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -2257,6 +2259,19 @@ class Desktop (QMainWindow):
             for i in control.read_list("/etc/deskdirs"):
                 if not files.isdir(f"/desk/{self.username}/{i}"):
                     files.mkdir(f"/desk/{self.username}/{i}")
+
+        for i in control.read_list('/etc/deskdirs'):
+
+            ## Removing old desk dirs ##
+            if os.path.isdir (f'/root/{i}'): shutil.rmtree(f'/root/{i}')
+            elif os.path.isfile(f'/root/{i}'): os.remove(f'/root/{i}')
+
+            ## Symlinks to root ##
+            if self.username == 'root':
+                subprocess.call(['ln','-si',f'/stor/root/{i}',f'/root/{i}'])
+            else:
+                subprocess.call(['ln','-si',f'/stor/desk/{self.username}/{i}', f'/root/{i}'])
+
 
         ## Create pwd for this user
         if self.username == "root":

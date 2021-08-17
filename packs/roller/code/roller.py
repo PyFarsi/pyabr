@@ -55,19 +55,22 @@ class FileListView (QtWidgets.QListView):
     AppName = "roller"
 
     def format(self, it, text):
-        if files.isdir(self.dir + '/' + text):
-            it.setIcon(QtGui.QIcon(res.get(res.etc("roller","folder-icon"))))
+        if text.startswith ('.') and not files.readall('/etc/default/hidden_files')=='Yes':
+            it.clearData()
         else:
-            format = it.whatsThis().split('.')
-            format = max(format)
-            if it.whatsThis().endswith(format):
-                logo = control.read_record(format + '.icon', '/etc/ext')
-                if not logo == None:
-                    it.setIcon(QtGui.QIcon(res.get(logo)))
+            if files.isdir(self.dir + '/' + text):
+                it.setIcon(QtGui.QIcon(res.get(res.etc("roller","folder-icon"))))
+            else:
+                format = it.whatsThis().split('.')
+                format = max(format)
+                if it.whatsThis().endswith(format):
+                    logo = control.read_record(format + '.icon', '/etc/ext')
+                    if not logo == None:
+                        it.setIcon(QtGui.QIcon(res.get(logo)))
+                    else:
+                        it.setIcon(QtGui.QIcon(res.get(res.etc("roller",'file-icon'))))
                 else:
                     it.setIcon(QtGui.QIcon(res.get(res.etc("roller",'file-icon'))))
-            else:
-                it.setIcon(QtGui.QIcon(res.get(res.etc("roller",'file-icon'))))
 
     def mkdir (self,dirname):
         if files.isfile(dirname):

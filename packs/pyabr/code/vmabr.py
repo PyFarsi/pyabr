@@ -222,7 +222,7 @@ if sys.argv[1:][0] == "kernel":
         for j in control.read_list('/etc/symlinks'):
 
             if not files.isdir(j) and not files.isfile(j):
-                subprocess.call(f'ln -sv {(j.split(":")[0])} /stor/{(j.split(":")[1])}', shell=True)
+                subprocess.call(f'ln -si {(j.split(":")[0])} /stor/{(j.split(":")[1])}', shell=True)
 
         files.create('/proc/info/sym')
 

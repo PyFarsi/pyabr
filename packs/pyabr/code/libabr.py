@@ -1356,10 +1356,13 @@ class Commands:
                     list = files.list(path)
                     list.sort()
                     for i in list:
-                        if files.isdir(f"{path}/{i}"):
-                            print(f"{colored(f'{i}/','cyan')}")
+                        if i.startswith ('.') and not files.readall('/etc/default/hidden_files')=='Yes':
+                            list.remove(i)
                         else:
-                            print(i)
+                            if files.isdir(f"{path}/{i}"):
+                                print(f"{colored(f'{i}/', 'cyan')}")
+                            else:
+                                print(i)
                 else:
                     colors.show("ls", "perm", "")
             else:
@@ -1370,13 +1373,16 @@ class Commands:
                     list = files.list(path)
                     list.sort()
                     for i in list:
-                        if files.isdir( f"{path}/{i}"):
-                            perm = permissions.get_permissions(files.output(f"{path}{i}"))
-                            c = colored(f'{perm}\t{i}/','cyan')
-                            print(f"{c}")
+                        if i.startswith ('.') and not files.readall('/etc/default/hidden_files')=='Yes':
+                            list.remove(i)
                         else:
-                            perm = permissions.get_permissions(files.output(f"{path}{i}"))
-                            print(f"{perm}\t{i}")
+                            if files.isdir(f"{path}/{i}"):
+                                perm = permissions.get_permissions(files.output(f"{path}{i}"))
+                                c = colored(f'{perm}\t{i}/', 'cyan')
+                                print(f"{c}")
+                            else:
+                                perm = permissions.get_permissions(files.output(f"{path}{i}"))
+                                print(f"{perm}\t{i}")
                 else:
                     colors.show("ls", "perm", "")
             else:
@@ -1387,15 +1393,18 @@ class Commands:
                     list = files.list(path)
                     list.sort()
                     for i in list:
-                        if files.isdir(f"{path}/{i}"):
-                            perm = permissions.get_permissions(f"{path}/{i}")
-                            perm = str(permissions.show_number(perm))
-                            c = colored(f'{perm}\t{i}/','cyan')
-                            print(f"{c}")
+                        if i.startswith ('.') and not files.readall('/etc/default/hidden_files')=='Yes':
+                            list.remove(i)
                         else:
-                            perm = permissions.get_permissions(f"{path}/{i}")
-                            perm = str(permissions.show_number(perm))
-                            print(f"{perm}\t{i}")
+                            if files.isdir(f"{path}/{i}"):
+                                perm = permissions.get_permissions(f"{path}/{i}")
+                                perm = str(permissions.show_number(perm))
+                                c = colored(f'{perm}\t{i}/', 'cyan')
+                                print(f"{c}")
+                            else:
+                                perm = permissions.get_permissions(f"{path}/{i}")
+                                perm = str(permissions.show_number(perm))
+                                print(f"{perm}\t{i}")
                 else:
                     colors.show("ls", "perm", "")
             else:
