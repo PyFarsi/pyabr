@@ -55,6 +55,8 @@ list.remove('LICENSE')
 list.remove('pack-wheel.py')
 list.remove('README.md')
 list.remove('requirments.txt')
+list.remove('rootcopy')
+list.remove('.circleci')
 if '__pycache__' in list:
     list.remove('__pycache__')
 for i in list:

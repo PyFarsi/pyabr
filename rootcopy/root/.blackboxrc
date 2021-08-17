@@ -1,0 +1,5 @@
+session.screen0.toolbar.widthPercent: 1
+session.screen0.strftimeFormat:
+session.edgeSnapThreshold:	10
+session.styleFile:	/stor/usr/share/themes/blackbox
+session.changeWorkspaceWithMouseWheel:	False

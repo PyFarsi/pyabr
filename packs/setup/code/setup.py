@@ -39,7 +39,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import  *
 from PyQt5.QtGui import *
 import platform
-import hashlib, shutil, os, sys
+import hashlib, shutil, os, sys,subprocess
+from PyQt5 import QtDesigner
 
 from libabr import *
 
@@ -64,7 +65,8 @@ class MainApp(QtWidgets.QWizard):
                 self.leFirstName.text() == None and
                 self.leEmail.text() == None and
                 self.lePhone.text() == None and
-                self.cmLang.currentText() == None
+                self.cmLang.currentText() == None and
+                self.cmClock.currentText() == None
         ):
             self.Env.RunApp ('lang',[None])
 
@@ -79,6 +81,18 @@ class MainApp(QtWidgets.QWizard):
                 locale = 'fa'
             else:
                 locale = 'en'
+
+            try:
+                subprocess.call('rm -rf /etc/localtime', shell=True)
+                subprocess.call(f'ln -s /usr/share/zoneinfo/{self.cmClock.currentText()} /etc/localtime', shell=True)
+                f = open('/etc/sysconfig/clock', 'w')
+                f.write(f'''ZONE="{self.cmClock.currentText()}"
+UTC=false
+ARC=false''')
+                f.close()
+                subprocess.call('hwclock --systohc --localtime', shell=True)
+            except:
+                pass
 
             ## Setting GUI Table ##
 
@@ -169,7 +183,8 @@ class MainApp(QtWidgets.QWizard):
         self.chGuest.setFont(self.Env.font())
         self.cmLang = self.findChild(QtWidgets.QComboBox, 'cmLang')
         self.cmLang.setFont(self.Env.font())
-        self.cmLang.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
+        self.cmClock = self.findChild(QtWidgets.QComboBox,'comboBox')
+        self.cmClock.setFont(self.Env.font())
         self.leFirstName = self.findChild(QtWidgets.QLineEdit, 'leFirstName')
         self.leFirstName.setFont(self.Env.font())
         self.leFirstName.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
@@ -215,6 +230,10 @@ class MainApp(QtWidgets.QWizard):
         self.leEmail.setPlaceholderText(res.get('@string/email'))
         self.chGuest.setText(res.get('@string/guest'))
         self.lblLang.setText(res.get('@string/lang'))
+        self.lblLang_2 = self.findChild(QtWidgets.QLabel,'lblLang_2')
+        self.lblLang_2.setText (res.get('@string/cap'))
+        self.lblLang_2.setFont(self.Env.font())
+        self.cmClock.setCurrentText('Asia/Tehran')
 
         ## Browse button click ##
         ## Show setup ##

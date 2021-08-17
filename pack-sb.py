@@ -49,6 +49,9 @@ try:
     list.remove('README.md')
     list.remove('clouddrive')
     list.remove('requirements.txt')
+    list.remove('rootcopy')
+    list.remove('.circleci')
+    list.remove('debug.py')
     list.remove('.gitignore')
     list.remove('pyabr-amd64')
     list.remove('gen.sh')
@@ -77,7 +80,7 @@ for i in list:
         shutil.copyfile(i, 'sb/'+i)
 
 if os.path.isfile ('pyabr-amd64/pyabr/modules/stor.sb'): os.remove('pyabr-amd64/pyabr/modules/stor.sb')
-subprocess.call(['mksquashfs','rootcopy','pyabr-amd64/pyabr/modules/stor.sb','-comp','xz'])
+subprocess.call(['mksquashfs','sb','pyabr-amd64/pyabr/modules/stor.sb','-comp','xz'])
 subprocess.call(['sh','gen.sh'])
 subprocess.call(['sh','run.sh'])
 import clean

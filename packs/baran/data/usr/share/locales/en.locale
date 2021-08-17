@@ -546,6 +546,7 @@ setup.rootcode: Choose a strong password for root user
 setup.username: Pick a username
 setup.password: Choose a password for your user
 setup.lang: Select your current language
+setup.cap: Select your timezone location
 setup.guest: Enable Guest user
 setup.fullname: Full name
 setup.email: Email address
