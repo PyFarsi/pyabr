@@ -23,6 +23,19 @@ Pyabr is a small, lightweight platform and an OS written in Python.
 - Pyabr Squashfs Platform: https://dl.pyabr.ir/stor.sb
 - Pyabr Wheel/PyPI package: https://dl.pyabr.ir/pyabr.whl
 
+## How to use Pyabr in USB?
+
+- Extract `pyabr` folder from **ISO**
+- Copy `pyabr` folder into your USB Flash
+- Goto this folder `pyabr/boot`
+- If you are using Windows Run `bootinst.bat` as Administrator or if you are using Linux Run `bootinst.sh` script as root:
+```shell
+chmod +x bootinst.sh
+sudo ./bootinst.sh
+```
+- Eject your usb
+- Now Pyabr is ready for boot
+
 ## How to install Pyabr platform in Linux?
 
 ```bash
