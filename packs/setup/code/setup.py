@@ -94,6 +94,8 @@ ARC=false''')
             except:
                 pass
 
+            control.write_record('format',self.cmClock.currentText(),'/stor/etc/time')
+
             ## Setting GUI Table ##
 
             open('/stor/etc/suapp', 'w')
