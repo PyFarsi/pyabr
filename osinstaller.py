@@ -92,7 +92,7 @@ else:
 
 	# debug app #
 	f = open('/stor/etc/suapp', 'w')
-	f.write('setup')
+	f.write('pysys')
 	f.close()
 
 	from PyQt5.QtCore import *

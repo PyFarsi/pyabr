@@ -33,35 +33,16 @@
 
 '''
 
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from libabr import *
+from pyabr.core import *
+from pyabr.quick import *
 
-app = App()
-commands = Commands()
-res = Res()
-control = Control()
+class MainApp (MainApp):
 
-def getdata (name):
-    return control.read_record (name,'/etc/gui')
-class MainApp (QWidget):
-
-    def onCloseProcess (self):
-        if not app.check(self.AppName):
-            self.Widget.Close()
-        else:
-            QTimer.singleShot(1,self.onCloseProcess)
-
-    def __init__(self,ports):
+    def __init__(self):
         super(MainApp, self).__init__()
 
-        self.Backend = ports[0]
-        self.Env = ports[1]
-        self.Widget = ports[2]
-        self.AppName = ports[3]
-        self.External = ports[4]
+        self.load (res.get('@layout/app'))
 
-        self.onCloseProcess()
-        self.setStyleSheet(
-            f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")}')
+application = QtGui.QGuiApplication([])
+w = MainApp()
+application.exec()

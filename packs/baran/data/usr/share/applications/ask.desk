@@ -1,0 +1,6 @@
+name[en]: Ask Box
+exec: askbox
+logo: @icon/breeze-app
+application: No
+hidden: Yes
+category: system

@@ -46,21 +46,14 @@ import sys, platform, hashlib, os, getpass, subprocess as sub, importlib,multipr
 
 sys.path.append("usr/app")
 
-from libabr import Modules, Files, Control, Colors, Process, Permissions, System, App, Commands, Script
+from pyabr.core import *
 from termcolor import colored
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QGuiApplication
+from PyQt5.QtQml import QQmlApplicationEngine
 
 ################## Interface configure ##########################
-
-modules = Modules()
-files = Files()
-control = Control()
-colors = Colors()
-process = Process()
-permissions = Permissions()
-app = App()
-commands = Commands()
 
 modules.get_modules()
 
@@ -218,42 +211,12 @@ if sys.argv[1:][0] == "kernel":
     print(f'\nWelcome to {control.read_record("name", "/etc/distro")} {control.read_record("version", "/etc/distro")} ({control.read_record("code", "/etc/distro")}) cloud software.\n')
     print(f'\n{files.readall("/etc/issue")}\n')
 
-    if not files.isfile('/proc/info/sym'):
-
-        ### Into storage ###
-        if not os.path.isfile('/stor/app/modules') and not os.path.isdir ('/stor/app/modules'):
-            subprocess.call(['ln','-si','/run/initramfs/memory/data/pyabr/modules','/stor/app/modules'])
-        if not os.path.isfile('/stor/boot') and not os.path.isdir('/stor/boot'):
-            subprocess.call(['ln', '-si','/run/initramfs/memory/data/pyabr/boot', '/stor/boot'])
-
-        ### Out of storage ##
-        if files.isfile('/etc/hostname'):
-            os.remove('/etc/hostname')
-            subprocess.call(['ln', '-si', '/stor/etc/hostname', '/etc/hostname'])
-
-        if files.isfile('/etc/hosts'):
-            os.remove('/etc/hosts')
-            subprocess.call(['ln', '-si', '/stor/etc/hosts', '/etc/hosts'])
-        files.create('/proc/info/sym')
-
 ## @core/gui ##
 
 def gui():
-    try:
-        ## Main entry ##
-        application = QApplication(sys.argv)
-        app.start('desktop')
-        ## https://www.cdog.pythonlibrary.org/2015/08/18/getting-your-screen-resolution-with-python/ Get screen model ##
-
-        files.write('/tmp/width', str((application.desktop().screenGeometry()).width()))
-        files.write('/tmp/height', str((application.desktop().screenGeometry()).height()))
-
-        if not control.read_record('desktop', '/etc/gui') == None:
-            w = importlib.import_module(control.read_record('desktop', '/etc/gui')).Backend()
-
-        sys.exit(application.exec_())
-    except:
-        pass
+    if not control.read_record('desktop', '/etc/gui') == None:
+        os.environ['QT_QUICK_CONTROLS_STYLE'] = control.read_record ("theme","/etc/gui")
+        System(control.read_record('desktop','/etc/gui'))
 
 def windows_manager ():
     try:
@@ -271,22 +234,11 @@ if sys.argv[1:][0] == "gui":
 ## @core/gui-splash ##
 
 def gui_splash ():
-    try:
-        control.write_record('params', 'splash', '/etc/gui')
+    control.write_record('params', 'splash', '/etc/gui')
 
-        ## Main entry ##
-        application = QApplication(sys.argv)
-        app.start('desktop')
-        ## https://www.cdog.pythonlibrary.org/2015/08/18/getting-your-screen-resolution-with-python/ Get screen model ##
-
-        files.write('/tmp/width', str((application.desktop().screenGeometry()).width()))
-        files.write('/tmp/height', str((application.desktop().screenGeometry()).height()))
-
-        if not control.read_record('desktop', '/etc/gui') == None:
-            w = importlib.import_module(control.read_record('desktop', '/etc/gui')).Backend()
-        sys.exit(application.exec_())
-    except:
-        pass
+    if not control.read_record('desktop', '/etc/gui') == None:
+        os.environ['QT_QUICK_CONTROLS_STYLE'] = control.read_record ("theme","/etc/gui")
+        System(control.read_record('desktop','/etc/gui'))
 
 if sys.argv[1:][0] == "gui-splash":
     p1 = multiprocessing.Process(target=windows_manager)
@@ -300,16 +252,10 @@ if sys.argv[1:][0] == "gui-splash":
 def gui_login():
     try:
         control.write_record('params', 'login', '/etc/gui')
-        ## Main entry ##
-        application = QApplication(sys.argv)
-        app.start('desktop')
-        ## https://www.cdog.pythonlibrary.org/2015/08/18/getting-your-screen-resolution-with-python/ Get screen model ##
-        files.write('/tmp/width', str((application.desktop().screenGeometry()).width()))
-        files.write('/tmp/height', str((application.desktop().screenGeometry()).height()))
 
         if not  control.read_record('desktop', '/etc/gui') == None:
-            w = importlib.import_module( control.read_record('desktop', '/etc/gui')).Backend()
-        sys.exit(application.exec_())
+            os.environ['QT_QUICK_CONTROLS_STYLE'] = control.read_record ("theme","/etc/gui")
+            System(control.read_record('desktop','/etc/gui'))
     except:
         pass
 
@@ -322,25 +268,13 @@ if sys.argv[1:][0] == "gui-login":
 ## @core/gui-enter ##
 
 def gui_enter():
-    try:
         if sys.argv[1:][1:] == [] or sys.argv[1:][1] == 'guest' or not files.isfile(f'/etc/users/{sys.argv[1:][1]}'):
             sys.exit(0)
-
-        ## Main entry ##
-        application = QApplication(sys.argv)
-        app.start('desktop')
-        ## https://www.cdog.pythonlibrary.org/2015/08/18/getting-your-screen-resolution-with-python/ Get screen model ##
-        files.write('/tmp/width', str((application.desktop().screenGeometry()).width()))
-        files.write('/tmp/height', str((application.desktop().screenGeometry()).height()))
-
         control.write_record('params', 'enter', '/etc/gui')
         control.write_record('username', sys.argv[1:][1], '/etc/gui')
         if not control.read_record('desktop', '/etc/gui') == None:
-            w = importlib.import_module(control.read_record('desktop', '/etc/gui')).Backend()
-        sys.exit(application.exec_())
-    except:
-        pass
-
+            os.environ['QT_QUICK_CONTROLS_STYLE'] = control.read_record ("theme","/etc/gui")
+            System(control.read_record('desktop','/etc/gui'))
 if sys.argv[1:][0] == "gui-enter":
     p1 = multiprocessing.Process(target=windows_manager)
     p2 = multiprocessing.Process(target=gui_enter)
@@ -349,25 +283,13 @@ if sys.argv[1:][0] == "gui-enter":
     p2.start()
 
 def gui_unlock():
-    try:
         if sys.argv[1:][1:] == [] or sys.argv[1:][1] == 'guest' or not files.isfile(f'/etc/users/{sys.argv[1:][1]}'):
             sys.exit(0)
-
-        ## Main entry ##
-        application = QApplication(sys.argv)
-        app.start('desktop')
-        ## https://www.cdog.pythonlibrary.org/2015/08/18/getting-your-screen-resolution-with-,thon/ Get screen model ##
-        files.write('/tmp/width', str((application.desktop().screenGeometry()).width()))
-        files.write('/tmp/height', str((application.desktop().screenGeometry()).height()))
-
         control.write_record('params', 'unlock', '/etc/gui')
         control.write_record('username', sys.argv[1:][1], '/etc/gui')
         if not control.read_record('desktop', '/etc/gui') == None:
-            w = importlib.import_module(control.read_record('desktop', '/etc/gui')).Backend()
-
-        sys.exit(application.exec_())
-    except:
-        pass
+            os.environ['QT_QUICK_CONTROLS_STYLE'] = control.read_record ("theme","/etc/gui")
+            System(control.read_record('desktop','/etc/gui'))
 
 if sys.argv[1:][0] == "gui-unlock":
     p1 = multiprocessing.Process(target=windows_manager)
@@ -377,21 +299,12 @@ if sys.argv[1:][0] == "gui-unlock":
     p2.start()
 
 def gui_desktop():
-    try:
         if sys.argv[1:][1:] == [] or sys.argv[1:][2:] == [] or sys.argv[1:][1] == 'guest' or not files.isfile(f'/etc/users/{sys.argv[1:][1]}'):
             sys.exit(0)
 
 
         if not hashlib.sha3_512(sys.argv[1:][2].encode()).hexdigest() == control.read_record('code', f'/etc/users/{sys.argv[1:][1]}'):
             sys.exit(0)
-
-
-        ## Main entry ##
-        application = QApplication(sys.argv)
-        app.start('desktop')
-        ## https://www.cdog.pythonlibrary.org/2015/08/18/getting-your-screen-resolution-with-python/ Get screen model ##
-        files.write('/tmp/width', str((application.desktop().screenGeometry()).width()))
-        files.write('/tmp/height', str((application.desktop().screenGeometry()).height()))
 
         control.write_record('params',
                             'desktop',
@@ -400,11 +313,8 @@ def gui_desktop():
         control.write_record('password', sys.argv[1:][2], '/etc/gui')
 
         if not control.read_record('desktop', '/etc/gui') == None:
-            w = importlib.import_module(control.read_record('desktop', '/etc/gui')).Backend()
-        sys.exit(application.exec_())
-    except:
-        pass
-
+            os.environ['QT_QUICK_CONTROLS_STYLE'] = control.read_record ("theme","/etc/gui")
+            System(control.read_record('desktop', '/etc/gui'))
 ## @core/gui-desktop ##
 
 if sys.argv[1:][0] == "gui-desktop":
@@ -450,10 +360,10 @@ def shell(user,code):
 
         if user=='root':
             prompt = '#'
-            col = ['white','white']
+            col = ['magenta','cyan']
         else:
             prompt = '>'
-            col = ['green','cyan']
+            col = ['magenta','cyan']
 
         hosti = colored(f"{user}@{hostname}",col[0])
         pathi = colored(f"{files.readall('/proc/info/pwd')}",col[1])

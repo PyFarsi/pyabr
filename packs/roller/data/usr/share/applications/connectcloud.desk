@@ -1,8 +1,0 @@
-name[en]: Connect Cloud
-name[fa]: اتصال به فضای ابری
-logo: @icon/breeze-disk
-exec: connectcloud
-application: No
-hidden: Yes
-category: tools
-pin: No

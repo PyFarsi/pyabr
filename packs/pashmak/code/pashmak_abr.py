@@ -33,7 +33,7 @@
 
 '''
 import sys, subprocess
-from libabr import *
+from pyabr.core import *
 
 files = Files()
 colors = Colors()

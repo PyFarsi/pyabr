@@ -1,0 +1,10 @@
+name: hello
+name[fa]: سلام
+name[en]: Hello
+copyright: (c) 2021 Mani Jamali
+license: CC0
+unpack: /
+version: 1.0.0
+description: Hello Example
+compile: Yes
+build: 1400-05-27

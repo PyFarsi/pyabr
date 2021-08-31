@@ -162,10 +162,10 @@ input.ok: تایید
 code.title: رمز را وارد کنید
 code.cancel: لغو
 code.ok: تایید
-bool.title: آیا می خواهید؟
-bool.cancel: خیر
-bool.ok: بله
-bool.text: آیا می خواهید همچین کاری را انجام دهید؟
+ask.title: آیا می خواهید؟
+ask.cancel: خیر
+ask.ok: بله
+ask.text: آیا می خواهید همچین کاری را انجام دهید؟
 select.dir: یک مسیر انتخاب کنید
 select.file: یک فایل انتخاب کنید
 select.choose: انتخاب
@@ -198,8 +198,10 @@ roller.foldername: برای پوشه خود نامی انتخاب کنید
 roller.filename: برای فایل خود نامی انتخاب کنید
 paint.app_name: نقاشی
 about.app_name: درباره سیستم
-perisa.foldername: برای پوشه خود نامی انتخاب کنید
+persia.foldername: برای پوشه خود نامی انتخاب کنید
 persia.filename: برای فایل خود نامی انتخاب کنید
+persia.ns: پروژه ای انتخاب نشده است
+persia.nsm: شما هنوز هیچ پروژه ای را انتخاب نکرده اید!
 mines.app_name: مین ها
 barge.c: سی
 barge.c++: سی پلاس پلاس
@@ -657,3 +659,4 @@ roller.archive: فشرده سازی
 roller.extract: استخراج از حالت فشرده سازی
 desktop.keyless: زبان کیبورد
 setup.cap: زمان محلی خود را انتخاب نمایید
+font.sel: یک فونت انتخاب نمایید

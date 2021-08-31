@@ -1,5 +1,0 @@
-project_name: hello
-project_pack: app.pa
-project_dir: app
-project_type: GUI
-project_entry: hello

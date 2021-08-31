@@ -115,8 +115,6 @@ def unpack (name):
 
 def install ():
     list = os.listdir('packs')
-    list.remove('baran')
-    list.remove('setup')
     for i in list:
         if os.path.isdir('packs/'+i):
             build(i)

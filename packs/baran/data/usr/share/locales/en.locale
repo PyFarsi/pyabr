@@ -147,6 +147,7 @@ calendar.app_name: Calendar
 calculator.app_name: Calculator
 runapp.app_name: App Runner
 runapp.app_not_found: Application not found
+runapp.btnrun: Run
 pysys.signout: Sign out
 pysys.switchuser: Switch user
 pysys.lock: Lock
@@ -162,10 +163,10 @@ input.ok: OK
 code.title: Enter the password
 code.cancel: Cancel
 code.ok: OK
-bool.title: Are you sure?
-bool.cancel: No
-bool.ok: Yes
-bool.text: Do you want to do this action?
+ask.title: Are you sure?
+ask.cancel: No
+ask.ok: Yes
+ask.text: Do you want to do this action?
 select.dir: Choose a directory
 select.file: Choose a file
 select.choose: Choose
@@ -202,8 +203,10 @@ mines.app_name: Mines
 barge.c: C
 barge.c++: C++
 barge.python: Python
-perisa.foldername: Enter your folder name
+persia.foldername: Enter your folder name
 persia.filename: Enter your file name
+persia.ns: Not selected
+persia.nsm: You was not selecting a project!
 barge.pythongui: Python GUI
 barge.saye: Saye
 barge.java: Java
@@ -657,3 +660,4 @@ mpv.open: Open
 roller.archive: Compress
 roller.extract: Extract
 desktop.keyless: Keyboard Layouts
+font.sel: Select a font

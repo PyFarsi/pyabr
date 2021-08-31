@@ -32,90 +32,70 @@
     * Aparat:           https://aparat.com/pyabr
 
 '''
+import sys
 
+from pyabr.core import *
+from pyabr.quick import *
+from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-import sys, importlib, baran
-from libabr import Files, Res, App, Control, Commands
-files = Files()
-res = Res()
-app = App()
-commands = Commands()
+from PyQt5 import uic
+from PyQt5.QtQml import *
+
 control = Control()
-def getdata (value):
-    return control.read_record(value,'/etc/gui')
-class MainApp(baran.BLineEdit):
+files = Files()
+colors = Colors()
+app = App()
+res = Res()
 
-    def onCloseProcess (self):
-        if not app.check(self.AppName):
-            self.Widget.Close()
-        else:
-            QTimer.singleShot(1,self.onCloseProcess)
+def getdata (name):
+    return control.read_record (name,'/etc/gui')
 
-    def correct (self):
-        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
+application = QGuiApplication(sys.argv)
+app.switch('about')
+application.setWindowIcon(QIcon(res.get('@icon/breeze-about')))
+
+class MainApp (MainApp):
+    def clean(self):
+        self.leRun.setProperty('placeholderText','')
+        self.leRun.setProperty('enabled',True)
+
+    def run_ (self):
         app.switch('runapp')
-        self.Widget.SetWindowTitle(res.get('@string/app_name'))
-        self.setEnabled(True)
-        self.clear()
+        cmdln = self.leRun.property('text').split(' ')
+        command = cmdln[0]
+        args = ''
+        for i in cmdln[1:]:
+            args+=" "+i
 
-    def RunApp (self):
-        command = self.text().split(' ')
+        if app.exists(command):
+            app.start(command, args)
+        elif not command=='':
+            self.leRun.setProperty('placeholderText',res.get('@string/app_not_found'))
+            self.leRun.setProperty('enabled',False)
 
-        ## Desktop based applications ##
-        if app.exists(command[0]):
-            try:
-                self.Env.RunApp(command[0],command[1:])
-            except:
-                commands.start([command[0]])
+            self.x = Font(self.x_)
 
-            app.switch('runapp')
-            self.setEnabled(False)
+            QTimer.singleShot(3000,self.clean)
 
-        elif command[0].startswith ('http://') or command[0].startswith ('https://'):
-            self.Env.RunApp(control.read_record('webapp','/etc/default/browser'),[command[0]])
+        self.leRun.setProperty('text','')
 
-        elif command[0].startswith ('abr://'):
-            commands.cl([command[0]])
+    def x_(self,font):
+        print(font)
 
-        ## Command based application ##
-        elif hasattr(commands,command[0]):
-            app.switch('runapp')
-            getattr(commands,command[0])(command[1:])
-            app.switch('runapp')
-
-        else:
-            app.switch('runapp')
-            self.Env.RunApp('text', [res.get('@string/not_found'), res.get('@string/not_found_msg').replace('{0}',command[0])])
-            app.switch('runapp')
-        QTimer.singleShot(1000, self.correct)
-
-    def __init__(self,args):
+    def __init__(self):
         super(MainApp, self).__init__()
 
-        self.Env = args[1]
-        self.Widget = args[2]
-        self.AppName = args[3]
-        self.External = args[4]
+        self.load(res.get('@layout/runapp'))
+        if not self.rootObjects():
+            sys.exit(-1)
 
-        self.onCloseProcess()
+        self.setProperty('title',res.get('@string/app_name'))
 
-        if not self.External==None:
-            if not self.External==[]:
-                if not self.External[0]==None:
-                    self.Widget.Close()
-                    desk = files.filename(self.External[0]).replace('.desk', '')
-                    if files.parentdir(self.External[0]).__contains__('/usr/share/applications'):
-                        self.Env.RunApp(desk,None)
-                    else:
-                        files.copy(self.External[0],f'/usr/share/applications/{desk}.desk')
-                        self.Env.RunApp(desk,None)
+        self.leRun = self.findChild('leRun')
+        self.btnRun = self.findChild('btnRun')
+        self.btnRun.setProperty('text',res.get('@string/btnrun'))
+        self.btnRun.clicked.connect (self.run_)
 
-        ## Widget configs ##
-        self.Widget.SetWindowTitle (res.get('@string/app_name'))
-        self.Widget.SetWindowIcon(QIcon(res.get(res.etc(self.AppName,"logo"))))
-        self.setStyleSheet(f'background-color: {getdata("appw.body.bgcolor")};color: {getdata("appw.body.fgcolor")};padding-left: 5%;padding-right: 5%')
-        self.Widget.Resize (self,int(res.etc(self.AppName,"width")),int(res.etc(self.AppName,"height")))
-        self.returnPressed.connect(self.RunApp)  # https://pythonbasics.org/pyqt/ learn it
-        self.setFont(self.Env.font())
+w = MainApp()
+application.exec()

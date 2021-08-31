@@ -1,3 +1,4 @@
-libabr.py:usr/app/libabr.pyc
+core.py:usr/app/pyabr/core.pyc
 vmabr.py:vmabr.pyc
 termcolor.py:usr/app/termcolor.pyc
+quick.py:usr/app/pyabr/quick.pyc

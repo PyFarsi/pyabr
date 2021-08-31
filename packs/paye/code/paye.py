@@ -35,7 +35,7 @@
 
 import sys, subprocess
 
-from libabr import *
+from pyabr.core import *
 
 modules = Modules()
 files = Files()
@@ -274,8 +274,6 @@ elif sys.argv[1]=='crt':
     try:
         if crtype == 'gui':
             files.copydir(res.get('@temp/simple-gui-project'), crname)
-        elif crtype == 'web':
-            files.copydir(res.get('@temp/simple-web-project'), crname)
         else:
             files.copydir(res.get('@temp/simple-project'), crtype)
     except:
