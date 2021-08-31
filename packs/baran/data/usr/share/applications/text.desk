@@ -1,6 +1,0 @@
-name[en]: Text Box
-exec: textbox
-hidden: Yes
-logo: @icon/breeze-app
-application: No
-category: system

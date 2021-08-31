@@ -10,7 +10,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-packs/pashmak/
+packs/io.github.pashmaklang/
 dist/
 downloads/
 eggs/
@@ -43,7 +43,7 @@ pip-delete-this-directory.txt
 venv/
 # Unit test / coverage reports
 htmlcov/
-packs/iran-wallpaper/
+packs/ir.pyabr.iran-wallpaper/
 packs/shad/
 packs/bale/
 packs/chromium/

@@ -1,0 +1,5 @@
+logo: @icon/breeze-qml
+name[en]: New QML Code
+name[fa]: یک کد کیوام ال
+connect: @temp/untitled.qml
+ext: qml

@@ -1,8 +1,0 @@
-name[en]: Debug Application
-name[fa]: برنامه آزمایشی
-logo: @icon/breeze-app
-exec: debug_app
-shortcut: Ctrl+Q
-application: No
-hidden: Yes
-category: system

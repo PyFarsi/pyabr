@@ -1,0 +1,23 @@
+    Pyabr OS
+
+    Python Cloud Operating System Platform (c) 2021 PyFarsi. Free Software GNU General Public License v3.0
+
+    - Informations
+
+    * Name:             Pyabr
+    * Founder:          Mani Jamali
+    * Developers:       PyFarsi Community
+    * Package Manager:  Paye, PyPI
+    * License:          GNU General Publice License v3.0
+
+    - Official Website
+
+    * Persian Page:     https://pyabr.ir
+    * English Page:     https://en.pyabr.ir
+
+    - Package Manager
+
+    * Install:          `sudo paye in [package-name]`   e.g.: `sudo paye in ir.pyabr`
+    * Remove:           `sudo paye rm [package-name]`
+    * Update Repo:      `sudo paye in ir.pyabr.updates`
+    * Update:           `sudo paye up`

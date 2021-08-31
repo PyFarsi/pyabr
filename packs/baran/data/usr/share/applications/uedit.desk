@@ -1,8 +1,0 @@
-name[en]: User Editor
-name[fa]: ویرایشگر حساب ها
-exec: uedit
-logo: @icon/breeze-users
-application: No
-hidden: Yes
-category: system
-sudoprocess: Yes

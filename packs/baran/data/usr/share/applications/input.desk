@@ -1,6 +1,0 @@
-name[en]: Input Box
-exec: inputbox
-logo: @icon/breeze-app
-application: No
-hidden: Yes
-category: system
