@@ -37,7 +37,7 @@ from PyQt5 import QtQml, QtGui, QtCore
 application = QGuiApplication(sys.argv)
 application.setWindowIcon(QIcon(res.get('@icon/breeze-cloud')))
 
-files.write('/proc/info/id','desktop')
+files.write('/proc/info/id','baran')
 
 ## Get data ##
 def getdata (name):
@@ -65,7 +65,7 @@ class Backend (MainApp):
     def __init__(self):
         super(Backend,self).__init__()
 
-        app.switch('desktop')
+        app.switch('baran')
         self.load (res.get('@layout/backend'))
         self.setProperty ('height',int(getdata("height")))
         self.setProperty ('width',int(getdata("width")))
@@ -102,7 +102,7 @@ class Splash (MainApp):
     def __init__(self,ports):
         super(Splash, self).__init__()
 
-        app.switch('desktop')
+        app.switch('baran')
         self.Backend = ports[0]
         self.load(res.get('@layout/splash'))
         self.setProperty('height', int(getdata("height")))
@@ -165,7 +165,7 @@ class Login (MainApp):
     def __init__(self,ports):
         super(Login, self).__init__()
 
-        app.switch('desktop')
+        app.switch('baran')
 
         self.Backend = ports[0]
 
@@ -214,7 +214,7 @@ class Sleep (MainApp):
     def __init__(self):
         super(Sleep, self).__init__()
 
-        app.switch('desktop')
+        app.switch('baran')
 
         self.load(res.get('@layout/sleep'))
         if not self.rootObjects():
@@ -305,7 +305,7 @@ class Enter (MainApp):
     def __init__(self, ports):
         super(Enter, self).__init__()
 
-        app.switch('desktop')
+        app.switch('baran')
 
         self.Backend = ports[0]
         self.username = ports[1]
@@ -401,7 +401,7 @@ class Unlock (MainApp):
     def __init__(self, ports):
         super(Unlock, self).__init__()
 
-        app.switch('desktop')
+        app.switch('baran')
 
         self.Backend = ports[0]
         self.Env = ports[1]
@@ -454,7 +454,7 @@ class Lock (MainApp):
     def __init__(self, ports):
         super(Lock, self).__init__()
 
-        app.switch('desktop')
+        app.switch('baran')
 
         self.Backend = ports[0]
         self.Env = ports[1]
@@ -483,14 +483,14 @@ class Shells:
     def __init__(self, ports):
         super(Shells, self).__init__()
 
-        app.switch('desktop')
+        app.switch('baran')
 
 class MenuApplications:
 
     def __init__(self, ports):
         super(MenuApplications, self).__init__()
 
-        app.switch('desktop')
+        app.switch('baran')
 
 class Desktop (MainApp):
     def shutdown_ (self):
@@ -546,6 +546,15 @@ class Desktop (MainApp):
                 it.setData('../../../'+res.get(control.read_record('logo',f'{dir_path}/{name}')),self.LogoRole)
                 model.appendRow(it)
         return model
+
+    def check_cat (self,dir_path,category):
+        i = 0
+        for name in files.list(dir_path):
+            categoryx = control.read_record('category',f'{dir_path}/{name}')
+            hidden = control.read_record('hidden',f'{dir_path}/{name}')
+            if categoryx==category and not hidden=='Yes':
+                i+=1
+        return i
 
     def create_model2(self):
         model = QtGui.QStandardItemModel()
@@ -647,9 +656,9 @@ class Desktop (MainApp):
         if not self._background_app.property('text')=='':
             self._menuApps.setProperty('visible', False)
             self.menuClicked = False
-            app.switch('desktop')
+            app.switch('baran')
             app.start(self._background_app.property('text').replace('.desk',''),'')
-            app.switch('desktop')
+            app.switch('baran')
 
         # Check signals #
         self.signal()
@@ -687,7 +696,7 @@ python3 vmabr.pyc user {self.username} {self.password}''')
 
     def __init__(self,ports):
         super(Desktop, self).__init__()
-        app.switch('desktop')
+        app.switch('baran')
         self.Backend = ports[0]
         self.username = ports[1]
         self.password = ports[2]
@@ -745,20 +754,34 @@ python3 vmabr.pyc user {self.username} {self.password}''')
         self._lock.setProperty('text',res.get('@string/lock'))
         self._developcat = self.findChild('developcat')
         self._developcat.setProperty('title',self.getnamex("/usr/share/categories/develop.cat"))
+        if self.check_cat('/usr/share/applications','develop')==0:
+            self._developcat.setProperty('enabled',False)
         self._gamescat = self.findChild( 'gamescat')
         self._gamescat.setProperty('title',self.getnamex('/usr/share/categories/games.cat'))
+        if self.check_cat('/usr/share/applications','games')==0:
+            self._gamescat.setProperty('enabled',False)
         self._internetcat = self.findChild( 'internetcat')
         self._internetcat.setProperty('title', self.getnamex('/usr/share/categories/internet.cat'))
+        if self.check_cat('/usr/share/applications','internet')==0:
+            self._internetcat.setProperty('enabled',False)
         self._multimediacat = self.findChild( 'multimediacat')
         self._multimediacat.setProperty('title', self.getnamex('/usr/share/categories/multimedia.cat'))
+        if self.check_cat('/usr/share/applications','multimedia')==0:
+            self._multimediacat.setProperty('enabled',False)
         self._otherscat = self.findChild( 'otherscat')
         self._otherscat.setProperty('title', self.getnamex('/usr/share/categories/others.cat'))
+        if self.check_cat('/usr/share/applications','others')==0:
+            self._otherscat.setProperty('enabled',False)
         self._systemcat = self.findChild( 'systemcat')
         self._virtualkeyboard = self.findChild('virtualkeyboard')
         self._virtualkeyboard.setProperty('text',res.get('@string/vkey'))
         self._systemcat.setProperty('title', self.getnamex('/usr/share/categories/system.cat'))
+        if self.check_cat('/usr/share/applications','system')==0:
+            self._systemcat.setProperty('enabled',False)
         self._toolscat = self.findChild( 'toolscat')
         self._toolscat.setProperty('title', self.getnamex('/usr/share/categories/tools.cat'))
+        if self.check_cat('/usr/share/applications','tools')==0:
+            self._toolscat.setProperty('enabled',False)
         self._background = self.findChild( 'background')
         self._background.setProperty('source', res.qmlget(self.getdata("desktop.background")))
         self._exit = self.findChild('exit')
@@ -777,6 +800,9 @@ python3 vmabr.pyc user {self.username} {self.password}''')
         self._btnMenu.clicked.connect (self.menuApps_)
         self._menuApps = self.findChild ('menuApps')
 
+        # check cats
+        
+
         # Start up applications
         self.startup()
         # Main Loop
@@ -786,7 +812,7 @@ class Application:
     def __init__(self, ports):
         super(Application, self).__init__()
 
-        app.switch('desktop')
+        app.switch('baran')
 
 desktop = Backend()
 sys.exit(application.exec())

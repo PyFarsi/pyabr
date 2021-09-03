@@ -11,9 +11,9 @@ logo: @icon/breeze-cloud
 params: gui
 external-windows-manager: blackbox
 visibility: FullScreen
-login.background: @background/Fog_forest_bluer
-enter.background: @background/Fog_forest_bluer
-desktop.background: @background/Fog_forest
-unlock.background: @background/Fog_forest_bluer
-lock.background: @background/Fog_forest_bluer
+login.background: @background/breeze-splash
+enter.background: @background/breeze-splash
+desktop.background: @background/breeze-next
+unlock.background: @background/breeze-splash
+lock.background: @background/breeze-splash
 theme: material

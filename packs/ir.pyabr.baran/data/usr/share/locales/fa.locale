@@ -123,25 +123,25 @@ September: سپتامبر
 October: اکتبر
 November: نوابر
 December: دسامبر
-desktop.username_placeholder: نام حساب کاربری را وارد کنید
-desktop.password_placeholder: رمز عبور را وارد کنید
-desktop.user_not_found: این حساب کاربری وجود ندارد
-desktop.wrong_password: رمز عبور نادرست می باشد؛ دوباره امتحان کنید
-desktop.next_text: بعدی
-desktop.enter_text: ورود
-desktop.unlock_text: بازکردن قفل
-desktop.appmenu: برنامه ها
-desktop.etcmenu: دیگر
-desktop.guest: حساب مهمان
-desktop.powermenu: تنظیمات روشن/خاموش کردن
-desktop.accountsettings: حساب ها
-desktop.signout: خروج از نشست
-desktop.switchuser: رفتن به نشست دیگر
-desktop.lock: قفل کردن
-desktop.escape: فرار کردن
-desktop.restart: راه اندازی مجدد
-desktop.unlock_hint: رمز عبور خود را وارد کنید
-desktop.sleep: حالت خواب
+baran.username_placeholder: نام حساب کاربری را وارد کنید
+baran.password_placeholder: رمز عبور را وارد کنید
+baran.user_not_found: این حساب کاربری وجود ندارد
+baran.wrong_password: رمز عبور نادرست می باشد؛ دوباره امتحان کنید
+baran.next_text: بعدی
+baran.enter_text: ورود
+baran.unlock_text: بازکردن قفل
+baran.appmenu: برنامه ها
+baran.etcmenu: دیگر
+baran.guest: حساب مهمان
+baran.powermenu: تنظیمات روشن/خاموش کردن
+baran.accountsettings: حساب ها
+baran.signout: خروج از نشست
+baran.switchuser: رفتن به نشست دیگر
+baran.lock: قفل کردن
+baran.escape: فرار کردن
+baran.restart: راه اندازی مجدد
+baran.unlock_hint: رمز عبور خود را وارد کنید
+baran.sleep: حالت خواب
 pyshell.app_name: مفسر پایتون
 calendar.app_name: تقویم
 calculator.app_name: ماشین حساب
@@ -416,16 +416,16 @@ barge.cem: ممکن است در روند کامپایل کردن خطاهایی 
 barge.con: خط فرمان برگه
 barge.cs: پشتیبانی نمی شود
 barge.csm: برگه این زبان یا این نگارش را پشتیبانی نمی کد.
-desktop.esc: فرار کردن
-desktop.rb: راه اندازی مجدد
-desktop.escm: آیا می خواهید از پای ابر فعلی خارج شوید؟
-desktop.rbm: آیا می خواهید پای ابر را راه اندازی مجدد کنید؟
-desktop.sg: خروج از نشست
-desktop.sgm: آیا می خواهید از نشست فعلی خارج شوید؟
-desktop.sau: رفتن به نشستی دیگر
-desktop.saum: آیا بدون بستن این نشست می خواهید به نشست دیگری بروید؟
-desktop.notf: برنامه وجود ندارد
-desktop.notfm: این برنامه وجود ندارد.
+baran.esc: فرار کردن
+baran.rb: راه اندازی مجدد
+baran.escm: آیا می خواهید از پای ابر فعلی خارج شوید؟
+baran.rbm: آیا می خواهید پای ابر را راه اندازی مجدد کنید؟
+baran.sg: خروج از نشست
+baran.sgm: آیا می خواهید از نشست فعلی خارج شوید؟
+baran.sau: رفتن به نشستی دیگر
+baran.saum: آیا بدون بستن این نشست می خواهید به نشست دیگری بروید؟
+baran.notf: برنامه وجود ندارد
+baran.notfm: این برنامه وجود ندارد.
 about.st: نام میزبان
 about.cs: نام پوسته نرم افزاری
 about.de: میزکار
@@ -477,29 +477,29 @@ paye.open: بازکردن
 paye.update: بروز رسانی
 paye.unxp: حذف
 paye.back: بازگشت
-desktop.apps: برنامه ها
-desktop.games: بازی ها
-desktop.themes: پوسته ها
-desktop.sessions: نشست ها
-desktop.perm: عدم دسترسی
-desktop.guestperm: با حساب کاربری مهمان نمی توان دسترسی داشت
+baran.apps: برنامه ها
+baran.games: بازی ها
+baran.themes: پوسته ها
+baran.sessions: نشست ها
+baran.perm: عدم دسترسی
+baran.guestperm: با حساب کاربری مهمان نمی توان دسترسی داشت
 desltop.selectedon: این پوسته از پیش تنظیم شده است
-desktop.reboott: جهت اعمال این پوسته باید راه اندازی مجدد کنید
+baran.reboott: جهت اعمال این پوسته باید راه اندازی مجدد کنید
 screen.app_name: تنظیم رزولوشن صفحه
 screen.savec: ذخیره تغییرات
 screen.reboot: برای اعمال تغییرات صفحه لطفا راه اندازی مجدد کنید
 squares.app_name: مربع ها
-desktop.audios: صداها
+baran.audios: صداها
 paye.installing: در حال نصب
-desktop.desktop: میزکار
-desktop.downloads: دانلودها
-desktop.documents: اسناد
-desktop.templates: الگوها
-desktop.pictures: تصاویر
+baran.desktop: میزکار
+baran.downloads: دانلودها
+baran.documents: اسناد
+baran.templates: الگوها
+baran.pictures: تصاویر
 paye.inmx: آیا می خواهید این بسته را نصب کنید؟
-desktop.projects: پروژه
-desktop.public: عمومی
-desktop.videos: ویدئو
+baran.projects: پروژه
+baran.public: عمومی
+baran.videos: ویدئو
 process.app_name: مدیریت فرایندها
 process.refresh: بروزرسانی
 process.kill: بستن
@@ -577,7 +577,7 @@ uedit.male: مذکر
 uedit.female: مونث
 uedit.birthday: تاریخ تولد (شمسی)
 uedit.save: ذخیره سازی تغییرات
-desktop.vkey: کیبورد مجازی
+baran.vkey: کیبورد مجازی
 users.add: حساب جدید
 uedit.username: شناسه کاربری
 uedit.password: رمزعبور
@@ -588,18 +588,18 @@ uedit.low: حساب معمولی
 uedit.cprofile: تغییر تصویر پروفایل
 nama.app_name: نمایشگر تصویر
 nama.open: بازکردن تصویر
-desktop.app_name: پروسه مجوز
-desktop.pnot: مجوز ندارد
-desktop.pnotm: نمی توان این پروسه را اجرا کرد؛ مجوز ندارد
-desktop.pass: رمز عبور را وارد کنید
-desktop.wrongp: نمی توان این پروسه را اجرا کرد؛ رمزعبور نادرست است
+baran.app_name: پروسه مجوز
+baran.pnot: مجوز ندارد
+baran.pnotm: نمی توان این پروسه را اجرا کرد؛ مجوز ندارد
+baran.pass: رمز عبور را وارد کنید
+baran.wrongp: نمی توان این پروسه را اجرا کرد؛ رمزعبور نادرست است
 uiv.pnot: صفحه یافت نشد
 uiv.pnotm: نمی توان بارگذاری کرد؛ صفحه مورد نظر یافت نشد
 uiv.dnot: دامنه موجود نیست
 uiv.dnotm: هیچ دامنه ای با این نام موجود نیست
 uiv.enet: خطا در اتصال
 uiv.enetm: نمی توان بارگذاری کرد؛ خطا در اتصال
-desktop.screenshot: تصویر بردای از میزکار
+baran.screenshot: تصویر بردای از میزکار
 roller.deletem: آیا می خواهید این پوشه را پاک کنید؟
 roller.deletemf: آیا می خواهید این فایل را پاک کنید؟
 roller.perm: مجوز ندارد
@@ -657,6 +657,6 @@ mpv.app_name: بخش کننده ویدئو
 mpv.open: بازکردن
 roller.archive: فشرده سازی
 roller.extract: استخراج از حالت فشرده سازی
-desktop.keyless: زبان کیبورد
+baran.keyless: زبان کیبورد
 setup.cap: زمان محلی خود را انتخاب نمایید
 font.sel: یک فونت انتخاب نمایید

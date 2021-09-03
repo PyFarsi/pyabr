@@ -123,25 +123,25 @@ September: September
 October: October
 November: November
 December: December
-desktop.username_placeholder: Enter an username
-desktop.password_placeholder: Enter your password
-desktop.user_not_found: This user not exists
-desktop.wrong_password: Password is not correct. Try again
-desktop.next_text: Next
-desktop.enter_text: Login
-desktop.unlock_text: Unlock
-desktop.appmenu: Applications
-desktop.etcmenu: Etcetra
-desktop.guest: Guest Account
-desktop.powermenu: Power Options
-desktop.accountsettings: Account Settings
-desktop.signout: Sign out
-desktop.switchuser: Switch user
-desktop.lock: Lock
-desktop.escape: Escape
-desktop.restart: Restart
-desktop.unlock_hint: Enter your password
-desktop.sleep: Sleep
+baran.username_placeholder: Enter an username
+baran.password_placeholder: Enter your password
+baran.user_not_found: This user not exists
+baran.wrong_password: Password is not correct. Try again
+baran.next_text: Next
+baran.enter_text: Login
+baran.unlock_text: Unlock
+baran.appmenu: Applications
+baran.etcmenu: Etcetra
+baran.guest: Guest Account
+baran.powermenu: Power Options
+baran.accountsettings: Account Settings
+baran.signout: Sign out
+baran.switchuser: Switch user
+baran.lock: Lock
+baran.escape: Escape
+baran.restart: Restart
+baran.unlock_hint: Enter your password
+baran.sleep: Sleep
 pyshell.app_name: PyShell
 calendar.app_name: Calendar
 calculator.app_name: Calculator
@@ -421,16 +421,16 @@ barge.cem: There is some problem with C/++ Compiler.
 barge.con: Barge Console
 barge.cs: Cannot support
 barge.csm: Barge cannot support this syntax or language.
-desktop.esc: Escape
-desktop.rb: Restart
-desktop.escm: Do you want to escape from Pyabr?
-desktop.rbm: Do you want to restart the Pyabr?
-desktop.sg: Sign Out
-desktop.sgm: Do you want to sign out from this session?
-desktop.sau: Switch another user
-desktop.saum: Do you want to switch another user?
-desktop.notf: Application not found
-desktop.notfm: Cannot run this application; because it was not found.
+baran.esc: Escape
+baran.rb: Restart
+baran.escm: Do you want to escape from Pyabr?
+baran.rbm: Do you want to restart the Pyabr?
+baran.sg: Sign Out
+baran.sgm: Do you want to sign out from this session?
+baran.sau: Switch another user
+baran.saum: Do you want to switch another user?
+baran.notf: Application not found
+baran.notfm: Cannot run this application; because it was not found.
 about.st: Static hostname
 about.cs: Cloud software
 about.de: Desktop Enviroment
@@ -482,27 +482,27 @@ paye.open: Open
 paye.update: Update
 paye.unxp: Uninstall
 paye.back: Back
-desktop.apps: Applications
-desktop.games: Games
-desktop.themes: Themes
-desktop.sessions: Sessions
-desktop.perm: Permission denied
-desktop.guestperm: Permission denied with guest account
-desktop.selectedon: This theme has already set it
-desktop.reboott: For setting this theme you should reboot
+baran.apps: Applications
+baran.games: Games
+baran.themes: Themes
+baran.sessions: Sessions
+baran.perm: Permission denied
+baran.guestperm: Permission denied with guest account
+baran.selectedon: This theme has already set it
+baran.reboott: For setting this theme you should reboot
 screen.app_name: Screen Resolution
 screen.savec: Save changes
 screen.reboot: For saving changes you should reboot
 squares.app_name: Squares
-desktop.audios: Audios
-desktop.desktop: Desktop
-desktop.downloads: Downloads
-desktop.documents: Documents
-desktop.templates: Templates
-desktop.pictures: Pictures
-desktop.projects: Projects
-desktop.public: Public
-desktop.videos: Videos
+baran.audios: Audios
+baran.desktop: Desktop
+baran.downloads: Downloads
+baran.documents: Documents
+baran.templates: Templates
+baran.pictures: Pictures
+baran.projects: Projects
+baran.public: Public
+baran.videos: Videos
 process.app_name: Process Manager
 process.refresh: Refresh
 process.tasks: Tasks
@@ -586,7 +586,7 @@ uedit.birthday: Birthday (Jalali)
 uedit.male: Male
 uedit.female: Female
 uedit.save: Save changes
-desktop.vkey: Virtual Keyboard
+baran.vkey: Virtual Keyboard
 users.add: Add user
 uedit.username: Username
 uedit.password: Password
@@ -597,18 +597,18 @@ uedit.low: Standard Account
 uedit.cprofile: Change profile image
 nama.app_name: Image Viewer
 nama.open: Open Image
-desktop.app_name: Sudo Process
-desktop.pnot: Permission denied
-desktop.pnotm: Cannot open this process, Permission denied
-desktop.pass: Enter password
-desktop.wrongp: Cannot open this process, Wrong password
+baran.app_name: Sudo Process
+baran.pnot: Permission denied
+baran.pnotm: Cannot open this process, Permission denied
+baran.pass: Enter password
+baran.wrongp: Cannot open this process, Wrong password
 uiv.pnot: Page not found
 uiv.pnotm: Cannot find this page; page not found
 uiv.dnot: Domain not exists
 uiv.dnotm: Cannot find this domain; domain not exists
 uiv.enet: Connection failed
 uiv.enetm: Cannot load this page; connection failed
-desktop.screenshot: Screenshot
+baran.screenshot: Screenshot
 wifi.app_name: WiFi Manager
 wifi.scan: Scan
 wifi.connect: Connect
@@ -659,5 +659,5 @@ mpv.app_name: Video Player
 mpv.open: Open
 roller.archive: Compress
 roller.extract: Extract
-desktop.keyless: Keyboard Layouts
+baran.keyless: Keyboard Layouts
 font.sel: Select a font

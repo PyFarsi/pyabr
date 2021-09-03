@@ -1,0 +1,8 @@
+name[en]: Baran desktop Enviroment
+name[fa]: میزکار باران
+logo: @icon/breeze-rain
+exec: baran
+shortcut: Ctrl+Alt+R
+application: No
+category: system
+pin: No

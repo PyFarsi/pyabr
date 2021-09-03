@@ -17,7 +17,7 @@
     * English Page:     https://en.pyabr.ir
 '''
 
-import os, shutil
+import os, shutil,sys
 from buildlibs import  control
 
 
@@ -34,4 +34,6 @@ def clean():
             os.remove (f'/stor/{i}')
         else:
             shutil.rmtree (f'/stor/{i}')
-clean()
+
+if sys.argv[0]=='clean.py':
+    clean()

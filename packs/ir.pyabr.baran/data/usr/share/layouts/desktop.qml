@@ -323,7 +323,7 @@ ApplicationWindow {
     }
 
     Rectangle {
-       color: "white"
+       color: "#A0FFFFFF"
        anchors.bottom: toolbar.top
        anchors.horizontalCenter: parent.horizontalCenter
        width: 560
@@ -359,7 +359,7 @@ ApplicationWindow {
 
                     width: parent.width
                     height: parent.width/8
-                    color: "white"
+                    color: "transparent"
 
                     Image {
                             source: model.logo
@@ -412,6 +412,8 @@ ApplicationWindow {
         anchors.bottomMargin: 20
         width: 560
         height: 70
+
+        color: "#A0FFFFFF"
         radius: 100
         objectName: "toolbar"
         id: toolbar

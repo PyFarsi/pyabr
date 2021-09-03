@@ -52,11 +52,9 @@ if not os.path.isdir('/stor/proc/id'): os.mkdir('/stor/proc/id')
 # debug app #
 shutil.copyfile('debug_apps','/stor/etc/suapp')
 file = open ('debug_params','r')
-os.system(f'cd stor && {sys.executable} vmabr.pyc {file.read()}')
+os.system(f'cd /stor && {sys.executable} vmabr.pyc {file.read()}')
 file.close()
 
 # clean #
-if os.path.isdir('app'): shutil.rmtree('app')
-if os.path.isdir('build-packs'): shutil.rmtree('build-packs')
-if os.path.isdir('/stor'):
-	shutil.rmtree('/stor')
+import clean
+clean.clean()

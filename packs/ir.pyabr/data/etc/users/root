@@ -2,8 +2,3 @@ code: 17bbd4bd5bcf969ab5874e84d389d9d28f511529c08fd55f6f733f3a43a9609759e6c955ef
 fullname: Super Account
 loginw.userlogo: @icon/breeze-root
 profile: @icon/breeze-root
-login.background: @background/Fog_forest_bluer
-enter.background: @background/Fog_forest_bluer
-desktop.background: @background/Fog_forest
-unlock.background: @background/Fog_forest_bluer
-lock.background: @background/Fog_forest_bluer
