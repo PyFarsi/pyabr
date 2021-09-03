@@ -20,9 +20,6 @@
 import sys, subprocess
 from pyabr.core import *
 
-files = Files()
-colors = Colors()
-
 if sys.argv[1:]==[]:
     subprocess.call([sys.executable,'usr/app/pashmak_core.pyc'])
 

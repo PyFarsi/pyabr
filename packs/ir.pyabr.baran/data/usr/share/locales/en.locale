@@ -160,9 +160,9 @@ roller.app_name: Files
 input.title: Enter a value
 input.cancel: Cancel
 input.ok: OK
-code.title: Enter the password
-code.cancel: Cancel
-code.ok: OK
+password.title: Enter the password
+password.cancel: Cancel
+password.ok: OK
 ask.title: Are you sure?
 ask.cancel: No
 ask.ok: Yes

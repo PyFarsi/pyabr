@@ -1,0 +1,5 @@
+logo: @icon/breeze-lua
+name[en]: New Lua Code
+name[fa]: یک کد Lua
+connect: @temp/sample.lua
+ext: lua

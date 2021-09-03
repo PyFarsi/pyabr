@@ -348,6 +348,7 @@ ApplicationWindow {
         height: parent.height-40
         clip: true
         id: scroll
+
         Column {
             anchors.fill: parent
             spacing: 2

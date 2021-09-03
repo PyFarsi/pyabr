@@ -17,11 +17,14 @@
     * English Page:     https://en.pyabr.ir
 '''
 
-# Support QML easy
-# Support Baran Desktop Enviroment
 import json
 
-from PyQt5 import QtQml, QtWidgets, QtCore, QtGui
+from PyQt5 import QtQml, QtWidgets, QtCore, QtGui, QtQuick
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtQml import *
+from PyQt5.QtQuick import *
 from pyabr.core import *
 import sys
 
@@ -138,6 +141,25 @@ class Input (MainApp):
         super(Input, self).__init__()
         files.write('/proc/info/id', 'input')
         self.load(res.get('@layout/input'))
+        self.setProperty('title', title)
+        self.function = function
+        self.leText = self.findChild('leText')
+        self.btnOK = self.findChild('btnOK')
+        self.btnOK.setProperty('text', res.get('@string/ok'))
+        self.btnOK.clicked.connect(self.ok_)
+        self.btnCancel = self.findChild('btnCancel')
+        self.btnCancel.setProperty('text', res.get('@string/cancel'))
+        self.btnCancel.clicked.connect(self.close)
+
+class Password (MainApp):
+    def ok_(self):
+        self.close()
+        self.function(self.leText.property('text'))
+
+    def __init__(self,title,function):
+        super(Password, self).__init__()
+        files.write('/proc/info/id', 'password')
+        self.load(res.get('@layout/password'))
         self.setProperty('title', title)
         self.function = function
         self.leText = self.findChild('leText')

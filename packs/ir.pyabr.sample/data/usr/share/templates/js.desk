@@ -1,0 +1,5 @@
+logo: @icon/breeze-js
+name[en]: New JavaScript Code
+name[fa]: یک کد جاوا اسکریپ
+connect: @temp/sample.cs
+ext: js

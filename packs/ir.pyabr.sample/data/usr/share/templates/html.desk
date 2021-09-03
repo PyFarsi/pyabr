@@ -1,0 +1,5 @@
+logo: @icon/breeze-html
+name[en]: New HTML Document
+name[fa]: یک سند ابرمتن
+connect: @temp/sample.html
+ext: html

@@ -1,0 +1,5 @@
+logo: @icon/breeze-js
+name[en]: New UI Document
+name[fa]: یک سند گرافیکی
+connect: @temp/sample.ui
+ext: ui
