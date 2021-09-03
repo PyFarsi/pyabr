@@ -35,10 +35,8 @@ if not os.path.isdir ("app"):
 	os.mkdir ("app/cache/archives/build")
 	os.mkdir ("app/cache/gets")
 
-if not os.path.isdir ("stor"):
-	os.mkdir ("stor")
-	os.mkdir ("stor/app")
-	os.mkdir ("stor/app/packages")
+if not os.path.isdir ("/stor/app"):	os.mkdir ("/stor/app")
+if not os.path.isdir ("/stor/app/packages"): os.mkdir ("/stor/app/packages")
 
 if not os.path.isdir ("build-packs"): os.mkdir ("build-packs")
 
@@ -47,12 +45,12 @@ if not os.path.isdir ("build-packs"): os.mkdir ("build-packs")
 pack.install()
 
 # run #
-if os.path.isfile ('stor/proc/0'):  os.remove ('stor/proc/0')
-if os.path.isfile ('stor/proc/id/desktop'): os.remove('stor/proc/id/desktop')
-if not os.path.isdir('stor/proc/id'): os.mkdir('stor/proc/id')
+if os.path.isfile ('/stor/proc/0'):  os.remove ('/stor/proc/0')
+if os.path.isfile ('/stor/proc/id/desktop'): os.remove('/stor/proc/id/desktop')
+if not os.path.isdir('/stor/proc/id'): os.mkdir('/stor/proc/id')
 
 # debug app #
-shutil.copyfile('debug_apps','stor/etc/suapp')
+shutil.copyfile('debug_apps','/stor/etc/suapp')
 file = open ('debug_params','r')
 os.system(f'cd stor && {sys.executable} vmabr.pyc {file.read()}')
 file.close()
@@ -60,5 +58,5 @@ file.close()
 # clean #
 if os.path.isdir('app'): shutil.rmtree('app')
 if os.path.isdir('build-packs'): shutil.rmtree('build-packs')
-if os.path.isdir('stor'):
-	shutil.rmtree('stor')
+if os.path.isdir('/stor'):
+	shutil.rmtree('/stor')

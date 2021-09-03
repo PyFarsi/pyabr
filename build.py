@@ -33,42 +33,21 @@ if not os.path.isdir ("app"):
 	os.mkdir ("app/cache/archives/build")
 	os.mkdir ("app/cache/gets")
 
-if not os.path.isdir ("stor"):
-	os.mkdir ("stor")
-	os.mkdir ("stor/app")
-	os.mkdir ("stor/app/packages")
+if not os.path.isdir ("/stor/app"):	os.mkdir ("/stor/app")
+if not os.path.isdir ("/stor/app/packages"): os.mkdir ("/stor/app/packages")
 
 if not os.path.isdir ("build-packs"): os.mkdir ("build-packs")
 
 # build #
 
 pack.install()
-pack.inst('baran')
 
 # run #
-if os.path.isfile ('stor/proc/0'):  os.remove ('stor/proc/0')
-if os.path.isfile ('stor/proc/id/desktop'): os.remove('stor/proc/id/desktop')
-if not os.path.isdir('stor/proc/id'): os.mkdir('stor/proc/id')
-if os.path.isdir('/stor'): shutil.rmtree('/stor')
-shutil.copytree('stor/','/stor')
+if os.path.isfile ('/stor/proc/0'):  os.remove ('/stor/proc/0')
+if os.path.isfile ('/stor/proc/id/desktop'): os.remove('/stor/proc/id/desktop')
+if not os.path.isdir('/stor/proc/id'): os.mkdir('/stor/proc/id')
 
-if platform.node()=='localhost':
-	auto = input ('Do you want to run Pyabr in Termux automatically? [Y/n]: ')
-
-	f = open ('pyabr.py','w')
-	f.write('''import subprocess,sys
-subprocess.call (f'cd stor && {sys.executable} vmabr.pyc login',shell=True)
-''')
-	f.close()
-
-	if auto.lower()=='y':
-		f.write('.bashrc','w')
-		f.write(f'{sys.executable} pyabr.py')
-		f.close()
-	else:
-		print ('For run Pyabr use `python pyabr.py`')
-
-elif platform.system()=='Linux':
+if platform.system()=='Linux':
 	f = open('/usr/bin/pyabr','w')
 	f.write('''#!/bin/bash
 cd /stor
@@ -89,10 +68,3 @@ Terminal=false
 TryExec=pyabr
 Name[fa_IR]=پای ابر''')
 	f.close()
-elif platform.system()=="Windows":
-	f = open(f'{str(Path.home())}/pyabr.bat','w')
-	f.write('''@echo off
-cd /stor
-python vmabr.pyc''')
-	f.close()
-import clean
