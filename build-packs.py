@@ -32,13 +32,19 @@ if not os.path.isdir ("app"):
 	os.mkdir ("app/cache/archives/build")
 	os.mkdir ("app/cache/gets")
 
-if not os.path.isdir ("/stor"):
-	os.mkdir ("/stor")
-	os.mkdir ("/stor/app")
-	os.mkdir ("/stor/app/packages")
+if not os.path.isdir ("/stor/app"):	os.mkdir ("/stor/app")
+if not os.path.isdir ("/stor/app/packages"): os.mkdir ("/stor/app/packages")
 
 if not os.path.isdir ("build-packs"): os.mkdir ("build-packs")
 
+def buildall():
+    for i in os.listdir('packs'):
+        pack.manifest(i)
+        pack.build(i)
+
 for i in control.read_list('mark_updates'):
-    pack.manifest(i)
-    pack.build(i)
+    try:
+        pack.manifest(i)
+        pack.build(i)
+    except:
+        buildall()

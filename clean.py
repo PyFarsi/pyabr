@@ -34,6 +34,3 @@ def clean():
             os.remove (f'/stor/{i}')
         else:
             shutil.rmtree (f'/stor/{i}')
-
-if sys.argv[0]=='clean.py':
-    clean()

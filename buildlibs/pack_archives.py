@@ -60,7 +60,11 @@ def manifest(name):
     f = open ('build-date.txt','r',encoding='utf-8')
     control.write_record('build',f.read(),f'packs/{name}/control/manifest')
     f.close()
-    shutil.copyfile('packs/'+name+'/control/manifest',f'packs/latest/data/app/mirrors/{name}.manifest')
+
+    f = open ('mirror.txt','r',encoding='utf-8')
+    control.write_record('mirror',f.read(),f'packs/{name}/control/manifest')
+    f.close()
+    shutil.copyfile('packs/'+name+'/control/manifest',f'packs/ir.pyabr.updates/data/{name}.manifest')
 
 ## Clean the cache ##
 def clean():
