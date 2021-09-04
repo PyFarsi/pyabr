@@ -102,7 +102,7 @@ class Text (MainApp):
         self.txtText = self.findChild('txtText')
         self.txtText.setProperty('text', text)
         self.btnOK = self.findChild('btnOK')
-        self.btnOK.setProperty('text', res.get('@string/ok'))
+        self.btnOK.setProperty('text', res.get('@string/baran.ok'))
         self.btnOK.clicked.connect(self.close)
 
 # Ask Dialog
@@ -125,10 +125,10 @@ class Ask (MainApp):
         self.txtText = self.findChild('txtText')
         self.txtText.setProperty('text', text)
         self.btnOK = self.findChild('btnOK')
-        self.btnOK.setProperty('text', res.get('@string/ok'))
+        self.btnOK.setProperty('text', res.get('@string/baran.ok'))
         self.btnOK.clicked.connect(self.ok_)
         self.btnCancel = self.findChild('btnCancel')
-        self.btnCancel.setProperty('text', res.get('@string/cancel'))
+        self.btnCancel.setProperty('text', res.get('@string/baran.cancel'))
         self.btnCancel.clicked.connect(self.no_)
 
 # Input Dialog
@@ -145,10 +145,10 @@ class Input (MainApp):
         self.function = function
         self.leText = self.findChild('leText')
         self.btnOK = self.findChild('btnOK')
-        self.btnOK.setProperty('text', res.get('@string/ok'))
+        self.btnOK.setProperty('text', res.get('@string/baran.ok'))
         self.btnOK.clicked.connect(self.ok_)
         self.btnCancel = self.findChild('btnCancel')
-        self.btnCancel.setProperty('text', res.get('@string/cancel'))
+        self.btnCancel.setProperty('text', res.get('@string/baran.cancel'))
         self.btnCancel.clicked.connect(self.close)
 
 class Password (MainApp):
@@ -164,10 +164,10 @@ class Password (MainApp):
         self.function = function
         self.leText = self.findChild('leText')
         self.btnOK = self.findChild('btnOK')
-        self.btnOK.setProperty('text', res.get('@string/ok'))
+        self.btnOK.setProperty('text', res.get('@string/baran.ok'))
         self.btnOK.clicked.connect(self.ok_)
         self.btnCancel = self.findChild('btnCancel')
-        self.btnCancel.setProperty('text', res.get('@string/cancel'))
+        self.btnCancel.setProperty('text', res.get('@string/baran.cancel'))
         self.btnCancel.clicked.connect(self.close)
 
 # Font Dilog
@@ -192,4 +192,4 @@ class Font (MainApp):
         self.btnCancel = self.findChild("btnCancel")
         self.btnCancel.clicked.connect(self.close)
         self.btnSelect.clicked.connect(self.ok_)
-        self.setProperty('title',res.get('@string/sel'))
+        self.setProperty('title',res.get('@string/baran.sel'))

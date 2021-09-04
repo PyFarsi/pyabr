@@ -198,7 +198,7 @@ roller.exit: Exit
 roller.foldername: Enter your folder name
 roller.filename: Enter your file name
 paint.app_name: Paint
-about.app_name: About System
+sysinfo.app_name: System Informations
 mines.app_name: Mines
 barge.c: C
 barge.c++: C++
@@ -431,14 +431,6 @@ baran.sau: Switch another user
 baran.saum: Do you want to switch another user?
 baran.notf: Application not found
 baran.notfm: Cannot run this application; because it was not found.
-about.st: Static hostname
-about.cs: Cloud software
-about.de: Desktop Enviroment
-about.krnl: Kernel
-about.bd: Build date
-about.os: Operating System
-about.su: Switched user
-about.intr: Interface
 edituser.savec: Save changes
 edituser.savecm: Do you want to save changes?
 edituser.firstname: First name
@@ -661,3 +653,12 @@ roller.archive: Compress
 roller.extract: Extract
 baran.keyless: Keyboard Layouts
 font.sel: Select a font
+sysinfo.host: Static hostname
+sysinfo.cs: Cloud distro
+sysinfo.bl: Build date
+sysinfo.os: Operating System
+sysinfo.kname: Kernel
+sysinfo.su: Switched user
+sysinfo.de: Desktop Enviroment
+sysinfo.gui: Graphical toolkit
+sysinfo.arch: Architecture

@@ -36,7 +36,6 @@ def getdata (name):
     return control.read_record (name,'/etc/gui')
 
 application = QGuiApplication(sys.argv)
-app.switch('about')
 application.setWindowIcon(QIcon(res.get('@icon/breeze-about')))
 
 class MainApp (MainApp):
@@ -55,7 +54,7 @@ class MainApp (MainApp):
         if app.exists(command):
             app.start(command, args)
         elif not command=='':
-            self.leRun.setProperty('placeholderText',res.get('@string/app_not_found'))
+            self.leRun.setProperty('placeholderText',res.get('@string/runapp.app_not_found'))
             self.leRun.setProperty('enabled',False)
 
             self.x = Font(self.x_)
@@ -74,11 +73,11 @@ class MainApp (MainApp):
         if not self.rootObjects():
             sys.exit(-1)
 
-        self.setProperty('title',res.get('@string/app_name'))
+        self.setProperty('title',res.get('@string/runapp.app_name'))
 
         self.leRun = self.findChild('leRun')
         self.btnRun = self.findChild('btnRun')
-        self.btnRun.setProperty('text',res.get('@string/btnrun'))
+        self.btnRun.setProperty('text',res.get('@string/runapp.btnrun'))
         self.btnRun.clicked.connect (self.run_)
 
 w = MainApp()

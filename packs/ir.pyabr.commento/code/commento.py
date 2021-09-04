@@ -18,5 +18,5 @@
 '''
 
 import subprocess
-
-subprocess.call('xterm -fa dejavu -fg white -bg black -title Commento -fs 12',shell=True)
+from pyabr.core import *
+subprocess.call(f'xterm -fa dejavu -fg white -bg black -title {res.get("@string/commento.app_name")} -fs 12',shell=True)

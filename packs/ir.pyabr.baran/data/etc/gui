@@ -1,4 +1,4 @@
-locale: fa
+locale: en
 layout: en
 width: 800
 height: 800
@@ -7,6 +7,7 @@ fontsize: 12
 username: guest
 password: *
 desktop: baran
+gui: Qt Framework
 logo: @icon/breeze-cloud
 params: gui
 external-windows-manager: blackbox

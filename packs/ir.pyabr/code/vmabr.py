@@ -159,8 +159,8 @@ files.write("/proc/info/ver",  control.read_record("version", "/etc/distro"))
 files.write("/proc/info/bl", control.read_record("build", "/etc/distro"))
 
 ## @core/mount ##
-files.write("/proc/info/kname", 'vmabr')
-files.write("/proc/info/kver", '2.0.0')
+files.write("/proc/info/kname", os.uname()[0])
+files.write("/proc/info/kver", os.uname()[2])
 
 if os.path.isfile('/etc/issue.net'):
     f = open('/etc/issue.net', 'r')
@@ -169,7 +169,7 @@ if os.path.isfile('/etc/issue.net'):
 else:
     files.write("/proc/info/os", platform.system())
 
-files.write("/proc/info/arch", platform.architecture()[0])
+files.write("/proc/info/arch", os.uname()[4])
 files.write("/proc/info/os_su", getpass.getuser())
 files.write("/proc/info/os_host", platform.node())
 files.write("/proc/info/inter", sys.argv[1:][0])
@@ -178,6 +178,8 @@ files.write("/proc/info/sweek", control.read_record("start-week", "/etc/time"))
 files.write("/proc/info/boot", 'vmabr.pyc')
 files.write('/proc/info/host',files.readall('/etc/hostname'))
 files.write('/proc/info/py', sys.executable)
+files.write('/proc/info/de',res.getdata('desktop'))
+files.write('/proc/info/gui',res.getdata('gui'))
 
 ## @core/dirs ##
 

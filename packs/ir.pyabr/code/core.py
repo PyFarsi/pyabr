@@ -2128,10 +2128,13 @@ class Package:
 
         if permissions.check_root(files.readall("/proc/info/su")):
             mirror = control.read_record('mirror',f'/app/mirrors/{packname}.manifest')+'.pa'
-
-            ## Download the file ##
-
-            wget.download(mirror,files.input(f'/app/cache/gets/{packname}.pa'))
+            try:
+                wget.download(mirror,files.input(f'/app/cache/gets/{packname}.pa'))
+            except:
+                try:
+                    wget.download(f"{files.readall('/etc/paye/sources')}/{packname}.pa",files.input(f'/app/cache/gets/{packname}.pa'))
+                except:
+                    colors.show("paye","fail",f"{packname}: package not found.")
             print()
 
         else:
@@ -2144,63 +2147,8 @@ class Package:
         colors = Colors()
         if permissions.check_root(files.readall("/proc/info/su")):
             files.create(f"/app/mirrors/{name}.manifest")
-            control.write_record('name',f'/app/mirrors/{name}.manifest')
-            control.write_record('mirror',f'/app/mirrors/{name}.manifest')
-        else:
-            colors.show("paye", "perm", "")
-
-    # update cloud software #
-    def upcloud (self):
-        permissions = Permissions()
-        files = Files()
-        control = Control()
-        colors = Colors()
-        if permissions.check_root(files.readall("/proc/info/su")):
-
-            # backup #
-            shutil.make_archive(files.input('/app/cache/backups/users.bak'),'zip',files.input('/etc/users'))
-            files.copy('/etc/commands','/app/cache/backups/commands.bak')
-            files.copy('/etc/guest','/app/cache/backups/guest.bak')
-            files.copy('/etc/gui','/app/cache/backups/gui.bak')
-            files.copy('/etc/hostname','/app/cache/backups/hostname.bak')
-            files.copy('/etc/interface','/app/cache/backups/interface.bak')
-            files.copy('/etc/modules', '/app/cache/backups/modules.bak')
-            files.copy('/etc/permtab','/app/cache/backups/permtab.bak')
-            files.copy('/etc/sudoers','/app/cache/backups/sudoers.bak')
-            files.copy('/etc/profile.sa','/app/cache/backups/profile.sa.bak')
-            files.copy('/etc/time', '/app/cache/backups/time.bak')
-
-            mode = control.read_record('mode','/etc/paye/sources')
-
-
-            self.download(mode)
-            self.unpack(f'/app/cache/gets/{mode}.pa')
-
-            for i in files.list ('/app/packages'):
-                if i.endswith ('.manifest') and files.isfile(f'/app/mirrors/{i.replace(".manifest","")}'):
-                    i = i.replace('.manifest','')
-
-                    # check version
-                    old = control.read_record('version',f'/app/packages/{i}.manifest')
-                    new = control.read_record('version',f'/app/mirrors/{i}.manifest')
-
-                    if not old==new and not i=='ir.pyabr.updates':
-                        self.download(i)
-                        self.unpack(f'/app/cache/gets/{i}.pa')
-
-            # backup #
-            shutil.unpack_archive(files.input('/app/cache/backups/users.bak.zip'), files.input('/etc/users'), 'zip')
-            files.remove('/app/cache/backups/users.bak.zip')
-            files.cut('/app/cache/backups/commands.bak', '/etc/commands')
-            files.cut('/app/cache/backups/guest.bak', '/etc/guest')
-            files.cut('/app/cache/backups/gui.bak', '/etc/gui')
-            files.cut('/app/cache/backups/hostname.bak', '/etc/hostname')
-            files.cut('/app/cache/backups/interface.bak', '/etc/interface')
-            files.cut('/app/cache/backups/modules.bak', '/etc/modules')
-            files.cut('/app/cache/backups/permtab.bak', '/etc/permtab')
-            files.cut('/app/cache/backups/sudoers.bak', '/etc/sudoers')
-            files.cut('/app/cache/backups/profile.sa.bak', '/etc/profile.sa')
-            files.cut('/app/cache/backups/time.bak', '/etc/time')
+            control.write_record('name',name,f'/app/mirrors/{name}.manifest')
+            control.write_record('mirror',mirror,f'/app/mirrors/{name}.manifest')
         else:
             colors.show("paye", "perm", "")
 
@@ -2210,7 +2158,7 @@ class Package:
         files = Files()
         colors = Colors()
         if permissions.check_root(files.readall("/proc/info/su")):
-            files.remove(f'/app/mirrors/{name}')
+            files.remove(f'/app/mirrors/{name}.manifest')
         else:
             colors.show("paye", "perm", "")
 
@@ -2425,6 +2373,9 @@ class Res:
             else:
                 return ''
 
+    def getdata (self,name):
+        return control.read_record(name,'/etc/gui')
+
     # get resource #
     def get(self,filename):
         control = Control()
@@ -2536,18 +2487,17 @@ class Res:
 
             elif share.startswith("@string"):
                 locale = control.read_record("locale", "/etc/gui")
-                id = files.readall("/proc/info/id")
 
                 ## Set default lang ##
                 if locale == None: locale = "en"
 
                 ## Get value from string ##
-                result = control.read_record(f'{id.replace(".desk", "")}.{name}',
+                result = control.read_record(f'{name}',
                                              f"/usr/share/locales/{locale}.locale")
 
                 ## Find default ##
                 if result == None:
-                    result = control.read_record(f'{id.replace(".desk", "")}.{name}',
+                    result = control.read_record(f'{name}',
                                                  f"/usr/share/locales/en.locale")
 
                 return result

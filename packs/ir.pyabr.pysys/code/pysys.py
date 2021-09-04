@@ -68,7 +68,7 @@ class MainApp (MainApp):
         super(MainApp, self).__init__()
 
         self.load(res.get('@layout/pysys'))
-        self.setProperty('title',res.get('@string/app_name'))
+        self.setProperty('title',res.get('@string/pysys.app_name'))
         self.background_text = self.findChild('background_text')
 
         self.loop()

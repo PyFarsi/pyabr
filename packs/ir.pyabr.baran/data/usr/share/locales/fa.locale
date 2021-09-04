@@ -197,7 +197,7 @@ roller.exit: خروج
 roller.foldername: برای پوشه خود نامی انتخاب کنید
 roller.filename: برای فایل خود نامی انتخاب کنید
 paint.app_name: نقاشی
-about.app_name: درباره سیستم
+sysinfo.app_name: اطلاعات سیستمی
 persia.foldername: برای پوشه خود نامی انتخاب کنید
 persia.filename: برای فایل خود نامی انتخاب کنید
 persia.ns: پروژه ای انتخاب نشده است
@@ -426,14 +426,6 @@ baran.sau: رفتن به نشستی دیگر
 baran.saum: آیا بدون بستن این نشست می خواهید به نشست دیگری بروید؟
 baran.notf: برنامه وجود ندارد
 baran.notfm: این برنامه وجود ندارد.
-about.st: نام میزبان
-about.cs: نام پوسته نرم افزاری
-about.de: میزکار
-about.krnl: هسته
-about.bd: تاریخ انتشار
-about.os: سیستم عامل
-about.su: حساب فعلی
-about.intr: رابط فعلی
 edituser.savec: ذخیره کردن تغییرات
 edituser.savecm: آیا می خواهید تغییرات فعلی را ذخیره کنید؟
 edituser.firstname: نام
@@ -660,3 +652,12 @@ roller.extract: استخراج از حالت فشرده سازی
 baran.keyless: زبان کیبورد
 setup.cap: زمان محلی خود را انتخاب نمایید
 font.sel: یک فونت انتخاب نمایید
+sysinfo.host: نام رایانه
+sysinfo.cs: نام توزیع
+sysinfo.bl: تاریخ ساخت
+sysinfo.os: سیستم عامل
+sysinfo.kname: هسته
+sysinfo.su: نشست فعلی
+sysinfo.de: میزکار
+sysinfo.gui: کتابخانه گرافیکی
+sysinfo.arch: معماری رایانه
