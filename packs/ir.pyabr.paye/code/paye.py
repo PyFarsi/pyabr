@@ -44,7 +44,7 @@ if sys.argv[1:]==[]:
 if sys.argv[1]=="cl":
     pack.clean()
 
-elif sys.argv[1]=="pak":
+elif sys.argv[1]=="pak" or sys.argv[1]=="pack":
     if files.isfile ("/app/cache/lock"):
         colors.show ("paye","fail","cache has already locked.")
         sys.exit(0)
@@ -63,7 +63,7 @@ elif sys.argv[1]=="pak":
     pack.clean()
 
 
-elif sys.argv[1]=="upak":
+elif sys.argv[1]=="upak" or sys.argv[1]=="unpack":
     if files.isfile ("/app/cache/lock"):
         colors.show ("paye","fail","cache has already locked.")
         sys.exit(0)
@@ -89,7 +89,7 @@ elif sys.argv[1]=="upak":
 
     pack.clean()
 
-elif sys.argv[1]=="rm":
+elif sys.argv[1]=="rm" or sys.argv[1]=="remove" or sys.argv[1]=="uninstall" or sys.argv[1]=="-r":
     if files.isfile ("/app/cache/lock"):
         colors.show ("paye","fail","cache has already locked.")
         sys.exit(0)
@@ -115,7 +115,7 @@ elif sys.argv[1]=="rm":
 
     pack.clean()
 
-elif sys.argv[1]=="get":
+elif sys.argv[1]=="get" or sys.argv[1]=="download" or sys.argv[1]=="-d":
 
     if sys.argv[2]==[]:
         colors.show("paye", "fail", "no inputs.")
@@ -129,7 +129,7 @@ elif sys.argv[1]=="get":
     for i in sys.argv[2:]:
         pack.download (i.lower())
 
-elif sys.argv[1]=="in":
+elif sys.argv[1]=="in" or sys.argv[1]=="it" or sys.argv[1]=="install" or sys.argv[1]=="-i":
     if files.isfile ("/app/cache/lock"):
         colors.show ("paye","fail","cache has already locked.")
         sys.exit(0)
@@ -170,7 +170,7 @@ elif sys.argv[1]=="in":
 
     pack.clean()
 
-elif sys.argv[1]=="info":
+elif sys.argv[1]=="info" or sys.argv[1]=="-v":
     if sys.argv[2:]==[]:
         colors.show ('paye','fail','no inputs.')
         sys.exit(0)
@@ -204,7 +204,7 @@ elif sys.argv[1]=="info":
     else:
         colors.show ("paye","fail",f"{sys.argv[2]}: package has not already installed.")
 
-elif sys.argv[1]=="ls":
+elif sys.argv[1]=="ls" or sys.argv[1]=="list" or sys.argv[1]=="-l":
     list = files.list ("/app/packages")
     list.sort()
     for i in list:
@@ -222,28 +222,21 @@ elif sys.argv[1]=='add':
 
     pack.add (sys.argv[2],sys.argv[3])
 
-elif sys.argv[1]=='del':
+elif sys.argv[1]=='del' or sys.argv[1]=="delete":
     if sys.argv[2:]==[]:
         colors.show ('paye','fail','no inputs.')
         sys.exit(0)
 
     pack.remove (sys.argv[2])
 
-elif sys.argv[1]=='git':
-    if sys.argv[2:]==[]:
-        colors.show ('paye','fail','no inputs.')
-        sys.exit(0)
-
-    pack.gitinstall (sys.argv[2])
-
-elif sys.argv[1]=='up':
+elif sys.argv[1]=='up' or sys.argv[1]=="update":
     pack.upcloud ()
 
 elif sys.argv[1]=='ir.pyabr.updates':
     pack.download('ir.pyabr.updates')
     pack.unpack('/app/cache/gets/ir.pyabr.updates.pa')
 
-elif sys.argv[1]=='crt':
+elif sys.argv[1]=='crt' or sys.argv[1]=="create":
     if sys.argv[2:]==[]:
         colors.show ('paye','fail','no inputs.')
         sys.exit(0)

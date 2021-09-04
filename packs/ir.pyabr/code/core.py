@@ -2127,7 +2127,7 @@ class Package:
         packname = packname.lower()
 
         if permissions.check_root(files.readall("/proc/info/su")):
-            mirror = files.readall(f'/app/mirrors/{packname}')
+            mirror = control.read_record('mirror',f'/app/mirrors/{packname}.manifest')+'.pa'
 
             ## Download the file ##
 
@@ -2143,9 +2143,9 @@ class Package:
         files = Files()
         colors = Colors()
         if permissions.check_root(files.readall("/proc/info/su")):
-            #endsplit = mirror.replace('https://', '').replace('http://', '')
-            #endsplit = mirror.split('/')
-            files.write(f"/app/mirrors/{name.replace('.pa','')}", mirror)
+            files.create(f"/app/mirrors/{name}.manifest")
+            control.write_record('name',f'/app/mirrors/{name}.manifest')
+            control.write_record('mirror',f'/app/mirrors/{name}.manifest')
         else:
             colors.show("paye", "perm", "")
 

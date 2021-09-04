@@ -27,22 +27,12 @@ shutil.unpack_archive('wheel/setup.zip','wheel/setup','zip') # Unpack setup whee
 ## Copy all files and dirs in wheel/setup/src ##
 
 list = os.listdir('.')
-list.remove('.git')
-list.remove('.idea')
-list.remove('wheel')
-list.remove('clouddrive')
-list.remove('build-packs.py')
-list.remove('debug.py')
-list.remove('debug_apps')
-list.remove('debug_params')
-list.remove('LICENSE')
-list.remove('pack-wheel.py')
-list.remove('README.md')
-list.remove('requirments.txt')
-list.remove('rootcopy')
-list.remove('.circleci')
-if '__pycache__' in list:
-    list.remove('__pycache__')
+for i in list:
+    if i=='packs' or i=='buildlibs' or i=='build.py' or i=='clean.py':
+        pass
+    else:
+        list.remove(i)
+
 for i in list:
     if os.path.isdir(i):
         shutil.copytree(i,'wheel/src/'+i)
@@ -66,3 +56,4 @@ os.system ("cd wheel/setup && \""+sys.executable+"\" setup.py bdist_wheel")
 C = input('Do you want to clean the cache? [Y/n]: ')
 if C.lower()=='y':
     import clean
+    clean.clean()

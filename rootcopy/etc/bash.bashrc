@@ -59,4 +59,3 @@ fi
 clear
 cd /stor
 python3 vmabr.pyc login
-exit

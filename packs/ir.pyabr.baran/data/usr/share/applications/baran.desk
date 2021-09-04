@@ -4,5 +4,6 @@ logo: @icon/breeze-rain
 exec: baran
 shortcut: Ctrl+Alt+R
 application: No
+hidden: Yes
 category: system
 pin: No

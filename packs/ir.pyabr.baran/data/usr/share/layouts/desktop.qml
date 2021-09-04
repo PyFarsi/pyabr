@@ -339,22 +339,22 @@ ApplicationWindow {
        id: rex
        }
 
-       ScrollView {
+        ScrollView{
         anchors.top: rex.bottom
         anchors.bottom: rex2.top
-        anchors.topMargin: 20
-        anchors.bottomMargin: 20
-        width: parent.width
-        height: parent.height-40
-        clip: true
+        width: 560
+        height: 560-40
+        //clip: true
         id: scroll
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
         Column {
-            anchors.fill: parent
+            width: 560
+            height: 560-40
             spacing: 2
             Repeater {
                 model: EntryAppApplications
-
+                anchors.fill: parent
                 Rectangle {
 
                     width: parent.width

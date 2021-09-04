@@ -29,8 +29,14 @@ def clean():
     if os.path.isfile('pyabr.zip'):                                     os.remove    ('pyabr.zip')
     if os.path.isdir('sb'): shutil.rmtree('sb')
 
-    for i in os.listdir ('/stor'):
-        if os.path.isfile (f'/stor/{i}'):
-            os.remove (f'/stor/{i}')
-        else:
-            shutil.rmtree (f'/stor/{i}')
+    try:
+        for i in os.listdir ('/stor'):
+            if os.path.isfile (f'/stor/{i}'):
+                os.remove (f'/stor/{i}')
+            else:
+                shutil.rmtree (f'/stor/{i}')
+    except:
+        pass
+    
+if sys.argv[0] in __file__:
+    clean()

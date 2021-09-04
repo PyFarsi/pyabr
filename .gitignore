@@ -17,6 +17,8 @@ downloads/
 eggs/
 venv/
 .eggs/
+sb/
+.qt_for_python/
 lib/
 lib64/
 parts/

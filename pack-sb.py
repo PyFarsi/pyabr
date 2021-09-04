@@ -20,37 +20,12 @@
 import subprocess, os, sys, shutil
 
 list = os.listdir('.')
-try:
-    list.remove('.git')
-    list.remove('.idea')
-    list.remove('wheel')
-    list.remove('build.py')
-    list.remove('pack-sb.py')
-    list.remove('build-packs.py')
-    list.remove('LICENSE')
-    list.remove('upgrade.sa')
-    list.remove('pack-wheel.py')
-    list.remove('README.md')
-    list.remove('clouddrive')
-    list.remove('requirements.txt')
-    list.remove('rootcopy')
-    list.remove('.circleci')
-    list.remove('debug.py')
-    list.remove('.gitignore')
-    list.remove('pyabr-amd64')
-    list.remove('gen.sh')
-    list.remove('run.sh')
-    list.remove('pyabr-x86_64.iso')
-    list.remove('mark_updates')
-    list.remove('build-date.txt')
-    list.remove('CONTRIBUTING.md')
-    list.remove('debug_params')
-    list.remove('debug_apps')
-except:
-    pass
 
-if '__pycache__' in list:
-    list.remove('__pycache__')
+for i in list:
+    if i=='packs' or i=='buildlibs' or i=='osinstaller.py' or i=='clean.py':
+        pass
+    else:
+        list.remove(i)
 
 if not os.path.isdir('sb'):
     shutil.copytree('rootcopy','sb')

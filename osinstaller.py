@@ -66,8 +66,6 @@ else:
 	# build #
 
 	pack.install()
-	pack.inst('baran')
-	pack.inst('setup')
 
 	# run #
 	if os.path.isfile('/stor/proc/0'):  os.remove('/stor/proc/0')
@@ -75,9 +73,8 @@ else:
 	if not os.path.isdir('/stor/proc/id'): os.mkdir('/stor/proc/id')
 
 	# debug app #
-	f = open('/stor/etc/suapp', 'w')
-	f.write('pysys')
-	f.close()
+	#f = open('/stor/etc/suapp', 'w')
+	#f.close()
 
 	from PyQt5.QtCore import *
 	from PyQt5.QtWidgets import *

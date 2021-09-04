@@ -668,9 +668,12 @@ class Desktop (MainApp):
 
     def startup (self):
         # Startup applications
-        lists = control.read_list('/etc/suapp')
-        for i in lists:
-            app.start(i, '')
+        try:
+            lists = control.read_list('/etc/suapp')
+            for i in lists:
+                app.start(i, '')
+        except:
+            pass
 
     def bashrc (self):
         if self.username=='guest':

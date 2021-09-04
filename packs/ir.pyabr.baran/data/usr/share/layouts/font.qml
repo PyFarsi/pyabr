@@ -27,7 +27,8 @@ ApplicationWindow {
         clip: true
         id: scroll
         Column {
-            anchors.fill: parent
+            width: font.width
+            height: font.height-font.height/12
             spacing: 2
             Repeater {
                 model: fontList
