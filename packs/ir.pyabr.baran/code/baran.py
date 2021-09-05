@@ -846,6 +846,7 @@ exit''')
         self._toolbar2 = self.findChild('toolbar2')
         self._toolbar3 = self.findChild('toolbar3')
         self._toolbar4 = self.findChild('toolbar4')
+        self._toolbar5 = self.findChild('toolbar5')
         self.toolbar_height = self._toolbar.property('height')
         self.toolbar_height2 = self._toolbar2.property('height')
         self.toolbar_width3 = self._toolbar3.property('width')
@@ -888,6 +889,14 @@ exit''')
             self._btnMenu.clicked.connect (self.menuApps_)
             self._menuApps = self.findChild ('menuApps4')
 
+        elif res.getdata ('dock')=='windows':
+            self._toolbar.setProperty('visible',False)
+            self._toolbar2.setProperty('visible',False)
+            self._toolbar3.setProperty('visible',False)
+            self._toolbar4.setProperty('visible',False)
+            self._btnMenu = self.findChild ('btnMenu5')
+            self._btnMenu.clicked.connect (self.menuApps_)
+            self._menuApps = self.findChild ('menuApps')
 
         # check cats
         self.bashrc()

@@ -872,4 +872,50 @@ ApplicationWindow {
             Item { Layout.fillWidth: true }
         }
     }
+
+    /* Windows 11 Dock */
+    Rectangle {
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottomMargin: 0
+        width: parent.width
+        height: 70
+        color: "#A0FFFFFF"
+        radius: 0
+        objectName: "toolbar5"
+        id: toolbar5
+        
+        RowLayout {
+            anchors.centerIn: parent
+            ToolButton {
+                width: toolbar5.height
+                height: toolbar5.height
+                objectName: "btnMenu5"
+                Image {
+                    fillMode: Image.PreserveAspectFit
+                    source: '../../../usr/share/icons/breeze-cloud.svg'
+                    anchors.fill: parent
+                    sourceSize: Qt.size( parent.width, parent.height )
+                }
+            }
+
+            Repeater {
+                model: EntryDockApplications
+
+                    ToolButton {
+                        width: toolbar5.height
+                        height: toolbar5.height
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            background_app.text = model.name
+                        }
+                    }
+            }
+            Item { Layout.fillWidth: true }
+        }
+    }
 }
