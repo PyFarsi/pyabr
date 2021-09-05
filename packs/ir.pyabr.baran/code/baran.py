@@ -128,7 +128,7 @@ class Login (MainApp):
 
     def clean(self):
         self._username.setProperty('enabled',True)
-        self._username.setProperty('placeholderText',res.get('@string/username_placeholder'))
+        self._username.setProperty('placeholderText',res.get('@string/baran.username_placeholder'))
 
     def next_(self):
         if self._username.property("text")=='':
@@ -141,7 +141,7 @@ class Login (MainApp):
             self.enter = Enter([self.Backend,self._username.property("text")])
         else:
             self._username.setProperty('text','')
-            self._username.setProperty("placeholderText",res.get('@string/user_not_found'))
+            self._username.setProperty("placeholderText",res.get('@string/baran.user_not_found'))
             self._username.setProperty('enabled',False)
             QTimer.singleShot(3000,self.clean)
 
@@ -154,6 +154,7 @@ class Login (MainApp):
         roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
         model.setItemRoleNames(roles)
         for name in files.list('/usr/share/locales'):
+            if control.read_record('keyless.enable',f'/usr/share/locales/{name}')=='Yes':
                 it = QtGui.QStandardItem(name)
                 it.setData(name, self.NameRole)
                 namex = control.read_record('name', f'/usr/share/locales/{name}')
@@ -161,6 +162,13 @@ class Login (MainApp):
                 it.setData('../../../'+res.get(control.read_record('logo', f'/usr/share/locales/{name}')), self.LogoRole)
                 model.appendRow(it)
         return model
+
+    def loop (self):
+        if not self._keyless.property('text')=='':
+            subprocess.call(control.read_record('keyless',f'/usr/share/locales/{self._keyless.property("text")}'),shell=True)
+
+        self._keyless.setProperty('text','')
+        QTimer.singleShot(10,self.loop)
 
     def __init__(self,ports):
         super(Login, self).__init__()
@@ -186,29 +194,33 @@ class Login (MainApp):
         # Connects
 
         self._submenu = self.findChild( 'submenu')
-        self._submenu.setProperty('title',res.get('@string/etcmenu'))
+        self._submenu.setProperty('title',res.get('@string/baran.etcmenu'))
         self._shutdown = self.findChild('shutdown')
-        self._shutdown.setProperty('text',res.get('@string/escape'))
+        self._shutdown.setProperty('text',res.get('@string/baran.escape'))
         self._shutdown.triggered.connect (self.shutdown_)
         self._restart = self.findChild( 'restart')
-        self._restart.setProperty('text', res.get('@string/restart'))
+        self._restart.setProperty('text', res.get('@string/baran.restart'))
         self._restart.triggered.connect(self.restart_)
         self._sleep = self.findChild( 'sleep')
-        self._sleep.setProperty('text', res.get('@string/sleep'))
+        self._sleep.setProperty('text', res.get('@string/baran.sleep'))
         self._sleep.triggered.connect(self.sleep_)
         self._next = self.findChild( 'next')
         self._username = self.findChild( 'username')
-        self._username.setProperty("placeholderText",res.get('@string/username_placeholder'))
+        self._username.setProperty("placeholderText",res.get('@string/baran.username_placeholder'))
         self._next.clicked.connect(self.next_)
-        self._next.setProperty('text',res.get('@string/next_text'))
+        self._next.setProperty('text',res.get('@string/baran.next_text'))
         self._lang = self.findChild( 'lang')
-        self._lang.setProperty('title', res.get('@string/keyless'))
+        self._lang.setProperty('title', res.get('@string/baran.keyless'))
         self._exit = self.findChild( 'exit')
-        self._exit.setProperty('title', res.get('@string/powermenu'))
+        self._exit.setProperty('title', res.get('@string/baran.powermenu'))
         self._background = self.findChild( 'background')
         self._background.setProperty('source', res.qmlget(getdata("login.background")))
         self._virtualkeyboard = self.findChild('virtualkeyboard')
-        self._virtualkeyboard.setProperty('text',res.get('@string/vkey'))
+        self._virtualkeyboard.setProperty('text',res.get('@string/baran.vkey'))
+        self._keyless = self.findChild('keyless')
+
+        self.loop()
+
 
 class Sleep (MainApp):
     def __init__(self):
@@ -248,7 +260,7 @@ class Enter (MainApp):
 
     def clean(self):
         self._password.setProperty('enabled',True)
-        self._password.setProperty('placeholderText', res.get('@string/password_placeholder'))
+        self._password.setProperty('placeholderText', res.get('@string/baran.password_placeholder'))
 
     def login_(self):
         if self._password.property("text")=='':
@@ -262,6 +274,13 @@ class Enter (MainApp):
             self._password.setProperty('enabled',False)
             QTimer.singleShot(3000,self.clean)
 
+    def loop (self):
+        if not self._keyless.property('text')=='':
+            subprocess.call(control.read_record('keyless',f'/usr/share/locales/{self._keyless.property("text")}'),shell=True)
+
+        self._keyless.setProperty('text','')
+        QTimer.singleShot(10,self.loop)
+
     NameRole = QtCore.Qt.UserRole + 1000
     LabelRole = QtCore.Qt.UserRole + 1001
     LogoRole = QtCore.Qt.UserRole + 1002
@@ -271,12 +290,13 @@ class Enter (MainApp):
         roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
         model.setItemRoleNames(roles)
         for name in files.list('/usr/share/locales'):
-            it = QtGui.QStandardItem(name)
-            it.setData(name, self.NameRole)
-            namex = control.read_record('name', f'/usr/share/locales/{name}')
-            it.setData(namex, self.LabelRole)
-            it.setData('../../../'+res.get(control.read_record('logo', f'/usr/share/locales/{name}')), self.LogoRole)
-            model.appendRow(it)
+            if control.read_record('keyless.enable',f'/usr/share/locales/{name}')=='Yes':
+                it = QtGui.QStandardItem(name)
+                it.setData(name, self.NameRole)
+                namex = control.read_record('name', f'/usr/share/locales/{name}')
+                it.setData(namex, self.LabelRole)
+                it.setData('../../../'+res.get(control.read_record('logo', f'/usr/share/locales/{name}')), self.LogoRole)
+                model.appendRow(it)
         return model
 
     def logout_(self):
@@ -328,28 +348,28 @@ class Enter (MainApp):
         # Connects
 
         self._submenu = self.findChild( 'submenu')
-        self._submenu.setProperty('title',res.get('@string/etcmenu'))
+        self._submenu.setProperty('title',res.get('@string/baran.etcmenu'))
         self._shutdown = self.findChild( 'shutdown')
-        self._shutdown.setProperty('text',res.get('@string/escape'))
+        self._shutdown.setProperty('text',res.get('@string/baran.escape'))
         self._shutdown.triggered.connect(self.shutdown_)
         self._restart = self.findChild( 'restart')
-        self._restart.setProperty('text', res.get('@string/restart'))
+        self._restart.setProperty('text', res.get('@string/baran.restart'))
         self._restart.triggered.connect(self.restart_)
         self._sleep = self.findChild( 'sleep')
-        self._sleep.setProperty('text', res.get('@string/sleep'))
+        self._sleep.setProperty('text', res.get('@string/baran.sleep'))
         self._sleep.triggered.connect(self.sleep_)
         self._login = self.findChild( 'login')
         self._password = self.findChild( 'password')
-        self._password.setProperty('placeholderText',res.get('@string/password_placeholder'))
+        self._password.setProperty('placeholderText',res.get('@string/baran.password_placeholder'))
         self._login.clicked.connect(self.login_)
-        self._login.setProperty('text',res.get('@string/enter_text'))
+        self._login.setProperty('text',res.get('@string/baran.enter_text'))
         self._lang = self.findChild( 'lang')
-        self._lang.setProperty('title', res.get('@string/keyless'))
+        self._lang.setProperty('title', res.get('@string/baran.keyless'))
         self._logout = self.findChild( 'logout')
-        self._logout.setProperty('text',res.get('@string/signout'))
+        self._logout.setProperty('text',res.get('@string/baran.signout'))
         self._logout.triggered.connect(self.logout_)
         self._exit = self.findChild( 'exit')
-        self._exit.setProperty('title', res.get('@string/powermenu'))
+        self._exit.setProperty('title', res.get('@string/baran.powermenu'))
         self._account = self.findChild('account')
         self._account.setProperty('title',self.getdata("fullname"))
         self._background = self.findChild( 'background')
@@ -357,7 +377,11 @@ class Enter (MainApp):
         self._profile = self.findChild('profile')
         self._profile.setProperty('source',res.qmlget(self.getdata("profile")))
         self._virtualkeyboard = self.findChild('virtualkeyboard')
-        self._virtualkeyboard.setProperty('text',res.get('@string/vkey'))
+        self._virtualkeyboard.setProperty('text',res.get('@string/baran.vkey'))
+        self._keyless = self.findChild('keyless')
+
+        self.loop()
+
 
 class Unlock (MainApp):
     def clean(self):
@@ -381,6 +405,13 @@ class Unlock (MainApp):
 
         return x
 
+    def loop (self):
+        if not self._keyless.property('text')=='':
+            subprocess.call(control.read_record('keyless',f'/usr/share/locales/{self._keyless.property("text")}'),shell=True)
+
+        self._keyless.setProperty('text','')
+        QTimer.singleShot(10,self.loop)
+
     NameRole = QtCore.Qt.UserRole + 1000
     LabelRole = QtCore.Qt.UserRole + 1001
     LogoRole = QtCore.Qt.UserRole + 1002
@@ -390,12 +421,13 @@ class Unlock (MainApp):
         roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
         model.setItemRoleNames(roles)
         for name in files.list('/usr/share/locales'):
-            it = QtGui.QStandardItem(name)
-            it.setData(name, self.NameRole)
-            namex = control.read_record('name', f'/usr/share/locales/{name}')
-            it.setData(namex, self.LabelRole)
-            it.setData('../../../'+res.get(control.read_record('logo', f'/usr/share/locales/{name}')), self.LogoRole)
-            model.appendRow(it)
+            if control.read_record('keyless.enable',f'/usr/share/locales/{name}')=='Yes':
+                it = QtGui.QStandardItem(name)
+                it.setData(name, self.NameRole)
+                namex = control.read_record('name', f'/usr/share/locales/{name}')
+                it.setData(namex, self.LabelRole)
+                it.setData('../../../'+res.get(control.read_record('logo', f'/usr/share/locales/{name}')), self.LogoRole)
+                model.appendRow(it)
         return model
 
     def __init__(self, ports):
@@ -423,20 +455,23 @@ class Unlock (MainApp):
 
         # Connects
         self._password = self.findChild( 'password')
-        self._password.setProperty('placeholderText',res.get('@string/password_placeholder'))
+        self._password.setProperty('placeholderText',res.get('@string/baran.password_placeholder'))
         self._unlock = self.findChild('login')
-        self._unlock.setProperty('text',res.get('@string/unlock_text'))
+        self._unlock.setProperty('text',res.get('@string/baran.unlock_text'))
         self._unlock.clicked.connect(self.unlock_)
         self._background = self.findChild( 'background')
         self._background.setProperty('source', res.qmlget(self.getdata("unlock.background")))
         self._profile = self.findChild( 'profile')
         self._profile.setProperty('source', res.qmlget(self.getdata("profile")))
         self._submenu = self.findChild('submenu')
-        self._submenu.setProperty('title',res.get('@string/etcmenu'))
+        self._submenu.setProperty('title',res.get('@string/baran.etcmenu'))
         self._virtualkeyboard = self.findChild( 'virtualkeyboard')
-        self._virtualkeyboard.setProperty('text', res.get('@string/vkey'))
+        self._virtualkeyboard.setProperty('text', res.get('@string/baran.vkey'))
         self._lang = self.findChild( 'lang')
-        self._lang.setProperty('title', res.get('@string/keyless'))
+        self._lang.setProperty('title', res.get('@string/baran.keyless'))
+        self._keyless = self.findChild ('keyless')
+
+        self.loop()
 
 class Lock (MainApp):
     def unlock_(self):
@@ -561,12 +596,13 @@ class Desktop (MainApp):
         roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
         model.setItemRoleNames(roles)
         for name in files.list('/usr/share/locales'):
-            it = QtGui.QStandardItem(name)
-            it.setData(name, self.NameRole)
-            namex = control.read_record('name', f'/usr/share/locales/{name}')
-            it.setData(namex, self.LabelRole)
-            it.setData('../../../'+res.get(control.read_record('logo', f'/usr/share/locales/{name}')), self.LogoRole)
-            model.appendRow(it)
+            if control.read_record('keyless.enable',f'/usr/share/locales/{name}')=='Yes':
+                it = QtGui.QStandardItem(name)
+                it.setData(name, self.NameRole)
+                namex = control.read_record('name', f'/usr/share/locales/{name}')
+                it.setData(namex, self.LabelRole)
+                it.setData('../../../'+res.get(control.read_record('logo', f'/usr/share/locales/{name}')), self.LogoRole)
+                model.appendRow(it)
         return model
 
 
@@ -610,7 +646,7 @@ class Desktop (MainApp):
             if x=='' or x==None:
                 x = getdata(name)
         except:
-            x = res.get('@string/guest')
+            x = res.get('@string/baran.guest')
 
         return x
 
@@ -663,6 +699,11 @@ class Desktop (MainApp):
         # Check signals #
         self.signal()
 
+        if not self._keyless.property('text')=='':
+            subprocess.call(control.read_record('keyless',f'/usr/share/locales/{self._keyless.property("text")}'),shell=True)
+
+        self._keyless.setProperty('text','')
+
         self._background_app.setProperty('text','')
         QTimer.singleShot(1,self.loop)
 
@@ -676,16 +717,19 @@ class Desktop (MainApp):
             pass
 
     def bashrc (self):
-        if self.username=='guest':
-            f = open('/root/.bashrc','w')
-            f.write('''cd /stor
+        try:
+            if self.username=='guest':
+                f = open('/etc/bash.bashrc','w')
+                f.write('''cd /stor
 python3 vmabr.pyc user guest''')
-            f.close()
-        else:
-            f = open('/root/.bashrc','w')
-            f.write(f'''cd /stor
+                f.close()
+            else:
+                f = open('/etc/bash.bashrc','w')
+                f.write(f'''cd /stor
 python3 vmabr.pyc user {self.username} {self.password}''')
-            f.close()
+                f.close()
+        except:
+            pass
 
     menuClicked = False
 
@@ -734,27 +778,27 @@ python3 vmabr.pyc user {self.username} {self.password}''')
         self.setProperty('font', QFont(getdata('font'), int(getdata('fontsize'))))
         self.setProperty('title','Pyabr OS')
         self._submenu = self.findChild('submenu')
-        self._submenu.setProperty('title',res.get('@string/etcmenu'))
+        self._submenu.setProperty('title',res.get('@string/baran.etcmenu'))
         self._shutdown = self.findChild( 'shutdown')
         self._shutdown.triggered.connect(self.shutdown_)
-        self._shutdown.setProperty('text',res.get('@string/escape'))
+        self._shutdown.setProperty('text',res.get('@string/baran.escape'))
         self._restart = self.findChild( 'restart')
         self._restart.triggered.connect(self.restart_)
-        self._restart.setProperty('text', res.get('@string/restart'))
+        self._restart.setProperty('text', res.get('@string/baran.restart'))
         self._sleep = self.findChild( 'sleep')
-        self._sleep.setProperty('text', res.get('@string/sleep'))
+        self._sleep.setProperty('text', res.get('@string/baran.sleep'))
         self._sleep.triggered.connect(self.sleep_)
         self._logout = self.findChild( 'logout')
         self._logout.triggered.connect(self.logout_)
-        self._logout.setProperty('text',res.get('@string/signout'))
+        self._logout.setProperty('text',res.get('@string/baran.signout'))
         self._switchuser = self.findChild( 'switchuser')
         self._switchuser.triggered.connect(self.switchuser_)
-        self._switchuser.setProperty('text',res.get('@string/switchuser'))
+        self._switchuser.setProperty('text',res.get('@string/baran.switchuser'))
         self._applications = self.findChild( 'applications')
-        self._applications.setProperty('title',res.get('@string/apps'))
+        self._applications.setProperty('title',res.get('@string/baran.apps'))
         self._lock = self.findChild('lock')
         self._lock.triggered.connect (self.lock_)
-        self._lock.setProperty('text',res.get('@string/lock'))
+        self._lock.setProperty('text',res.get('@string/baran.lock'))
         self._developcat = self.findChild('developcat')
         self._developcat.setProperty('title',self.getnamex("/usr/share/categories/develop.cat"))
         if self.check_cat('/usr/share/applications','develop')==0:
@@ -777,7 +821,7 @@ python3 vmabr.pyc user {self.username} {self.password}''')
             self._otherscat.setProperty('enabled',False)
         self._systemcat = self.findChild( 'systemcat')
         self._virtualkeyboard = self.findChild('virtualkeyboard')
-        self._virtualkeyboard.setProperty('text',res.get('@string/vkey'))
+        self._virtualkeyboard.setProperty('text',res.get('@string/baran.vkey'))
         self._systemcat.setProperty('title', self.getnamex('/usr/share/categories/system.cat'))
         if self.check_cat('/usr/share/applications','system')==0:
             self._systemcat.setProperty('enabled',False)
@@ -788,23 +832,39 @@ python3 vmabr.pyc user {self.username} {self.password}''')
         self._background = self.findChild( 'background')
         self._background.setProperty('source', res.qmlget(self.getdata("desktop.background")))
         self._exit = self.findChild('exit')
-        self._exit.setProperty('title', res.get('@string/powermenu'))
+        self._exit.setProperty('title', res.get('@string/baran.powermenu'))
         self._lang = self.findChild('lang')
-        self._lang.setProperty('title', res.get('@string/keyless'))
+        self._lang.setProperty('title', res.get('@string/baran.keyless'))
         self._account = self.findChild('account')
         self._account.setProperty('title',self.getdata("fullname"))
         self._account_setting = self.findChild('account_setting')
-        self._account_setting.setProperty('text',res.get('@string/accountsettings'))
+        self._account_setting.setProperty('text',res.get('@string/baran.accountsettings'))
         self._background_app = self.findChild('background_app')
         self._toolbar = self.findChild('toolbar')
+        self._toolbar2 = self.findChild('toolbar2')
         self.toolbar_height = self._toolbar.property('height')
+        self.toolbar_height2 = self._toolbar2.property('height')
         self._toolbar.setProperty('width',self.pins*self.toolbar_height)
-        self._btnMenu = self.findChild ('btnMenu')
-        self._btnMenu.clicked.connect (self.menuApps_)
-        self._menuApps = self.findChild ('menuApps')
+        self._toolbar2.setProperty('width',self.pins*self.toolbar_height2)
+        
+        
+        self._keyless = self.findChild('keyless')
+
+        if res.getdata ('dock')=='bottom':
+            self._toolbar2.setProperty('visible',False)
+            self._btnMenu = self.findChild ('btnMenu')
+            self._btnMenu.clicked.connect (self.menuApps_)
+            self._menuApps = self.findChild ('menuApps')
+        elif res.getdata ('dock')=='top':
+            self._toolbar.setProperty('visible',False)
+
+            self._btnMenu = self.findChild ('btnMenu2')
+            self._btnMenu.clicked.connect (self.menuApps_)
+            self._menuApps = self.findChild ('menuApps2')
+
 
         # check cats
-        
+        self.bashrc()
 
         # Start up applications
         self.startup()

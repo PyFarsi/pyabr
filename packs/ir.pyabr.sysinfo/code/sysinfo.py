@@ -48,7 +48,7 @@ class MainApp (MainApp):
 
         self.setProperty ('title',res.get('@string/sysinfo.app_name'))
 
-        
+
 
         # check direction
         if res.getdata ('locale')=='fa' or res.getdata('locale')=='ar':

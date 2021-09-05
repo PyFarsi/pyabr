@@ -1,3 +1,4 @@
+getv
 echo         Static hostname: $host
 echo          cloud Software: $cs $ver ( $cd )
 echo              Build date: $bl

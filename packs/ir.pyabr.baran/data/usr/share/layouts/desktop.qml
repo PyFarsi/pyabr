@@ -20,6 +20,13 @@ ApplicationWindow {
         visible: false
     }
 
+    Text {
+        objectName: "keyless"
+        id: keyless
+        visible: false
+        text: ''
+    }
+
 
     menuBar: MenuBar {
         Menu {
@@ -37,11 +44,11 @@ ApplicationWindow {
                     MenuItem {
                         objectName: model.name
                         Image {
-                                id: image
-                                source: model.logo
-                                width: parent.height
-                                sourceSize: Qt.size( parent.width, parent.height )
-                                height: parent.height
+                            id: image
+                            source: model.logo
+                            width: parent.height
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            height: parent.height
                         }
                         Text {
                             anchors.left: image.right
@@ -71,11 +78,11 @@ ApplicationWindow {
                             background_app.text = model.name
                         }
                         Image {
-                                id: image
-                                source: model.logo
-                                width: parent.height
-                                sourceSize: Qt.size( parent.width, parent.height )
-                                height: parent.height
+                            id: image
+                            source: model.logo
+                            width: parent.height
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            height: parent.height
                         }
                         Text {
                             anchors.left: image.right
@@ -102,11 +109,11 @@ ApplicationWindow {
                             background_app.text = model.name
                         }
                         Image {
-                                id: image
-                                source: model.logo
-                                width: parent.height
-                                sourceSize: Qt.size( parent.width, parent.height )
-                                height: parent.height
+                            id: image
+                            source: model.logo
+                            width: parent.height
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            height: parent.height
                         }
                         Text {
                             anchors.left: image.right
@@ -133,11 +140,11 @@ ApplicationWindow {
                             background_app.text = model.name
                         }
                         Image {
-                                id: image
-                                source: model.logo
-                                width: parent.height
-                                sourceSize: Qt.size( parent.width, parent.height )
-                                height: parent.height
+                            id: image
+                            source: model.logo
+                            width: parent.height
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            height: parent.height
                         }
                         Text {
                             anchors.left: image.right
@@ -303,6 +310,9 @@ ApplicationWindow {
                     MenuItem {
                         objectName: model.name
                         text: model.label
+                        onTriggered: {
+                            keyless.text = model.name
+                        }
                     }
                 }
             }
@@ -407,6 +417,90 @@ ApplicationWindow {
     }
 
     Rectangle {
+       color: "#A0FFFFFF"
+       anchors.top: toolbar2.bottom
+       anchors.horizontalCenter: parent.horizontalCenter
+       width: 560
+       height: 560
+       radius: 40
+       anchors.topMargin: 20
+       visible: false
+       objectName: "menuApps2"
+
+       Rectangle {
+        anchors.top: parent.top
+        height: 20
+        id: rex3
+       }
+
+        ScrollView{
+        anchors.top: rex3.bottom
+        anchors.bottom: rex4.top
+        width: 560
+        height: 560-40
+        //clip: true
+        id: scroll2
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+
+        Column {
+            width: 560
+            height: 560-40
+            spacing: 2
+            Repeater {
+                model: EntryAppApplications
+                anchors.fill: parent
+                Rectangle {
+
+                    width: parent.width
+                    height: parent.width/8
+                    color: "transparent"
+
+                    Image {
+                            source: model.logo
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            anchors.rightMargin: 20
+                            width: parent.height
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            height: parent.height
+                            id: imagex
+                    }
+
+                    Text {
+                        text: model.label
+                        font.family: "IRANSans"
+                        font.pixelSize: 18
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: imagex.right
+                        anchors.leftMargin: 20
+                        anchors.rightMargin: 20
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            background_app.text = model.name
+                        }
+                    }
+
+                    Rectangle {
+                        width: parent.width
+                        height: 1
+                        color: "silver"
+                        anchors.top: parent.bottom
+                    }
+                }
+            }
+        }
+    }
+    Rectangle {
+        anchors.bottom: parent.bottom
+       height: 20
+       id: rex4
+       }
+}
+
+    Rectangle {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottomMargin: 20
@@ -438,6 +532,52 @@ ApplicationWindow {
                     ToolButton {
                         width: toolbar.height
                         height: toolbar.height
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            background_app.text = model.name
+                        }
+                    }
+            }
+            Item { Layout.fillWidth: true }
+        }
+    }
+
+    Rectangle {
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: 20
+        width: 560
+        height: 70
+
+        color: "#A0FFFFFF"
+        radius: 100
+        objectName: "toolbar2"
+        id: toolbar2
+
+        RowLayout {
+            anchors.centerIn: parent
+            ToolButton {
+                width: toolbar2.height
+                height: toolbar2.height
+                objectName: "btnMenu2"
+                Image {
+                    fillMode: Image.PreserveAspectFit
+                    source: '../../../usr/share/icons/breeze-cloud.svg'
+                    anchors.fill: parent
+                    sourceSize: Qt.size( parent.width, parent.height )
+                }
+            }
+
+            Repeater {
+                model: EntryDockApplications
+
+                    ToolButton {
+                        width: toolbar2.height
+                        height: toolbar2.height
                         Image {
                             source: model.logo
                             sourceSize: Qt.size( parent.width, parent.height )

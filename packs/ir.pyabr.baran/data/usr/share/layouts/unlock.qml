@@ -10,6 +10,13 @@ ApplicationWindow {
     visible: true
     color: "purple"
 
+    Text {
+        objectName: "keyless"
+        id: keyless
+        visible: false
+        text: ''
+    }
+
     menuBar: MenuBar {
 
         Menu {
@@ -26,6 +33,10 @@ ApplicationWindow {
                     MenuItem {
                         objectName: model.name
                         text: model.label
+
+                        onTriggered: {
+                            keyless.text = model.name
+                        }
                     }
                 }
             }

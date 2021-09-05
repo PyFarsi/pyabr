@@ -400,8 +400,7 @@ def shell(user,code):
 
 if sys.argv[1:][0] == "user":
     if sys.argv[1:][1] == "guest":
-        enable_cli = control.read_record("enable_cli", "/etc/guest")
-        if enable_cli == "Yes":
+        if files.readall('/etc/guest') == "enable":
             ## Create info ##
             files.write("/proc/info/su", sys.argv[1:][1])
             shell('guest','*')
@@ -426,8 +425,7 @@ if sys.argv[1:][0] == "kernel" or sys.argv[1:][0] == "login":
         if input_username == "" or input_username == " ":
             continue
         elif input_username == "guest":
-            enable_cli = control.read_record("enable_cli", "/etc/guest")
-            if enable_cli == "Yes":
+            if files.readall('/etc/guest') == "Yes":
                 files.write("/proc/info/su", input_username)
                 shell('guest','*')
             else:

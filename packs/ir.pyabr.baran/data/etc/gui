@@ -1,8 +1,8 @@
-locale: en
+locale: fa
 layout: en
 width: 800
 height: 800
-font: Iran Sans
+font: IRANSans
 fontsize: 12
 username: guest
 password: *
@@ -18,3 +18,4 @@ desktop.background: @background/breeze-next
 unlock.background: @background/breeze-splash
 lock.background: @background/breeze-splash
 theme: material
+dock: top

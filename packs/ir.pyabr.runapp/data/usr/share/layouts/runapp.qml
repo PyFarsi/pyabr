@@ -13,7 +13,7 @@ ApplicationWindow {
     color: "white"
 
     width: 400
-    height: 80
+    height: 90
 
 
     TextField {

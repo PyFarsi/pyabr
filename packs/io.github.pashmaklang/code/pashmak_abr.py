@@ -23,7 +23,7 @@ from pyabr.core import *
 if sys.argv[1:]==[]:
     subprocess.call([sys.executable,'usr/app/pashmak_core.pyc'])
 
-elif sys.argv[1].startswith('-'):
+elif sys.argv[1].startswith('-') or sys.argv[1].startswith('@'):
     subprocess.call([sys.executable,'usr/app/pashmak_core.pyc',sys.argv[1]])
 else:
     subprocess.call([sys.executable,'usr/app/pashmak_core.pyc',files.input(sys.argv[1])])

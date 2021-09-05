@@ -1,0 +1,11 @@
+name: ir.pyabr.updates
+name[en]: updates
+name[fa]: بروزرسانی ها
+copyright: (c) 2021 Mani Jamali
+license: GNU GPL v3.0
+unpack: /app/mirrors/
+version: 2.0.1
+description: A software package used for checking packages for update
+compile: Yes
+build: 1400-06-12
+mirror: https://mirror.pyabr.ir/aras/
