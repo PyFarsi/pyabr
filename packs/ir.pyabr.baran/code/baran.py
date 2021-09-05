@@ -721,12 +721,14 @@ class Desktop (MainApp):
             if self.username=='guest':
                 f = open('/etc/bash.bashrc','w')
                 f.write('''cd /stor
-python3 vmabr.pyc user guest''')
+python3 vmabr.pyc user guest
+exit''')
                 f.close()
             else:
                 f = open('/etc/bash.bashrc','w')
                 f.write(f'''cd /stor
-python3 vmabr.pyc user {self.username} {self.password}''')
+python3 vmabr.pyc user {self.username} {self.password}
+exit''')
                 f.close()
         except:
             pass
@@ -842,25 +844,49 @@ python3 vmabr.pyc user {self.username} {self.password}''')
         self._background_app = self.findChild('background_app')
         self._toolbar = self.findChild('toolbar')
         self._toolbar2 = self.findChild('toolbar2')
+        self._toolbar3 = self.findChild('toolbar3')
+        self._toolbar4 = self.findChild('toolbar4')
         self.toolbar_height = self._toolbar.property('height')
         self.toolbar_height2 = self._toolbar2.property('height')
+        self.toolbar_width3 = self._toolbar3.property('width')
+        self.toolbar_width4 = self._toolbar4.property('width')
         self._toolbar.setProperty('width',self.pins*self.toolbar_height)
         self._toolbar2.setProperty('width',self.pins*self.toolbar_height2)
-        
-        
+        self._toolbar3.setProperty('height',self.pins*self.toolbar_width3)
+        self._toolbar4.setProperty('height',self.pins*self.toolbar_width4)
         self._keyless = self.findChild('keyless')
 
         if res.getdata ('dock')=='bottom':
             self._toolbar2.setProperty('visible',False)
+            self._toolbar3.setProperty('visible',False)
+            self._toolbar4.setProperty('visible',False)
             self._btnMenu = self.findChild ('btnMenu')
             self._btnMenu.clicked.connect (self.menuApps_)
             self._menuApps = self.findChild ('menuApps')
+
         elif res.getdata ('dock')=='top':
             self._toolbar.setProperty('visible',False)
-
+            self._toolbar3.setProperty('visible',False)
+            self._toolbar4.setProperty('visible',False)
             self._btnMenu = self.findChild ('btnMenu2')
             self._btnMenu.clicked.connect (self.menuApps_)
             self._menuApps = self.findChild ('menuApps2')
+
+        elif res.getdata ('dock')=='left':
+            self._toolbar.setProperty('visible',False)
+            self._toolbar2.setProperty('visible',False)
+            self._toolbar4.setProperty('visible',False)
+            self._btnMenu = self.findChild ('btnMenu3')
+            self._btnMenu.clicked.connect (self.menuApps_)
+            self._menuApps = self.findChild ('menuApps3')
+
+        elif res.getdata ('dock')=='right':
+            self._toolbar.setProperty('visible',False)
+            self._toolbar2.setProperty('visible',False)
+            self._toolbar3.setProperty('visible',False)
+            self._btnMenu = self.findChild ('btnMenu4')
+            self._btnMenu.clicked.connect (self.menuApps_)
+            self._menuApps = self.findChild ('menuApps4')
 
 
         # check cats

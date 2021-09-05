@@ -99,7 +99,7 @@ if sys.argv[1:][0] == 'exec':
 
         elif not control.read_record( sys.argv[1:][1], '/etc/commands') == None:
 
-            command = [sys.argv[1:][1]]
+            command = [control.read_record( sys.argv[1:][1], '/etc/commands')]
 
             args = control.read_record(f'{sys.argv[1:][1]}.args', '/etc/commands')
             perm = control.read_record(f'{sys.argv[1:][1]}.perm', '/etc/commands')
