@@ -885,6 +885,7 @@ ApplicationWindow {
         objectName: "toolbar5"
         id: toolbar5
         
+        
         RowLayout {
             anchors.centerIn: parent
             ToolButton {

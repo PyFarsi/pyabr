@@ -156,7 +156,7 @@ pysys.restart: Restart
 pysys.sleep: Sleep
 pysys.app_name: Power Options
 commento.app_name: Terminal
-roller.app_name: Files
+files.app_name: Files
 input.title: Enter a value
 input.cancel: Cancel
 input.ok: OK
@@ -189,14 +189,14 @@ barge.saveasfile: Save as file
 calculator.backspace: Backscape
 calculator.clear: Clear
 calculator.clearall: Clear All
-roller.file: File
-roller.newfile: New File
-roller.newfolder: New Folder
+files.file: File
+files.newfile: New File
+files.newfolder: New Folder
 persia.newfile: New File
 persia.newfolder: New Folder
-roller.exit: Exit
-roller.foldername: Enter your folder name
-roller.filename: Enter your file name
+files.exit: Exit
+files.foldername: Enter your folder name
+files.filename: Enter your file name
 paint.app_name: Paint
 sysinfo.app_name: System Informations
 mines.app_name: Mines
@@ -215,18 +215,18 @@ barge.css: CSS
 barge.javascript: Java Script
 barge.csharp: C#
 barge.php: PHP
-roller.newcode: New Code
-roller.c: New C file
-roller.c++: New C++ file
-roller.python: New Python script
-roller.pythongui: New Python GUI script
-roller.saye: New Saye script
-roller.java: New Java file
-roller.html: New HTML document
-roller.css: New CSS file
-roller.javascript: New Java Script file
-roller.csharp: New C# file
-roller.php: New PHP file
+files.newcode: New Code
+files.c: New C file
+files.c++: New C++ file
+files.python: New Python script
+files.pythongui: New Python GUI script
+files.saye: New Saye script
+files.java: New Java file
+files.html: New HTML document
+files.css: New CSS file
+files.javascript: New Java Script file
+files.csharp: New C# file
+files.php: New PHP file
 persia.c: C
 persia.c++: C++
 persia.python: Python
@@ -258,11 +258,11 @@ text.text: This is a simple text box
 text.ok: OK
 runapp.not_found: Application not found
 runapp.not_found_msg: Application not found.
-roller.isfile: Is a file
-roller.isdir: Is a directory
-roller.isfile_msg: Cannot create directory; because it is a file.
-roller.isdir_msg: Cannot create file; because it is a directory.
-roller.newpyweb: New Python Web Application file
+files.isfile: Is a file
+files.isdir: Is a directory
+files.isfile_msg: Cannot create directory; because it is a file.
+files.isdir_msg: Cannot create file; because it is a directory.
+files.newpyweb: New Python Web Application file
 persia.isfile: Is a file
 persia.isfile_msg: Cannot create directory; because it is a file.
 persia.isdir: Is a directory
@@ -501,18 +501,18 @@ process.tasks: Tasks
 process.end: End
 process.kill: Kill
 process.restart: Restart
-roller.cut: Cut
-roller.copy: Copy
-roller.paste: Paste
-roller.rename: Rename
-roller.execute: Execute
-roller.open: Open
-roller.openwith: Open With
-roller.delete: Delete
-roller.deletem: Do you want to delete this directory?
-roller.deletemf: Do you want to delete this file?
-roller.perm: Permission denied
-roller.permm: Cannot execute this file; Permission denied
+files.cut: Cut
+files.copy: Copy
+files.paste: Paste
+files.rename: Rename
+files.execute: Execute
+files.open: Open
+files.openwith: Open With
+files.delete: Delete
+files.deletem: Do you want to delete this directory?
+files.deletemf: Do you want to delete this file?
+files.perm: Permission denied
+files.permm: Cannot execute this file; Permission denied
 open.always: Always
 open.atonce: At once
 open.choose: Choose an application
@@ -528,7 +528,7 @@ open.isexem: Do you want to execute this file?
 open.unk: Unknown file
 open.unkm: Cannot open this file, because it's an unknown file.
 barge.uix: UI
-roller.uix: New UI file
+files.uix: New UI file
 key.select: Select
 key.cancel: Cancel
 key.choose: Choose a language
@@ -612,10 +612,10 @@ wifi.ssid: Enter SSID name
 wifi.wrongp: Wrong password
 assistant.app_name: Ava Assistant
 sms.enter: Enter your message
-cloudroller.app_name: Drives
-cloudroller.add: Add Drives
-cloudroller.e: Connection error
-cloudroller.em: Cannot connect to this cloud drive; connection failed
+cloudfiles.app_name: Drives
+cloudfiles.add: Add Drives
+cloudfiles.e: Connection error
+cloudfiles.em: Cannot connect to this cloud drive; connection failed
 connectcloud.app_name: Add drive
 connectcloud.host: Hostname URL
 connectcloud.check: Check backend
@@ -645,12 +645,12 @@ wifi.im: Your entered password is incorrect
 pyabrsite.app_name: Pyabr Website
 weather.app_name: Weather
 weather.city: Enter your city name
-cloudroller.master: Master Drives
-cloudroller.cloud: Cloud Drives
+cloudfiles.master: Master Drives
+cloudfiles.cloud: Cloud Drives
 mpv.app_name: Video Player
 mpv.open: Open
-roller.archive: Compress
-roller.extract: Extract
+files.archive: Compress
+files.extract: Extract
 baran.keyless: Keyboard Layouts
 font.sel: Select a font
 sysinfo.host: Static hostname

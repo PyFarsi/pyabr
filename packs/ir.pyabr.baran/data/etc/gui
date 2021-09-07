@@ -18,4 +18,4 @@ desktop.background: @background/breeze-next
 unlock.background: @background/breeze-splash
 lock.background: @background/breeze-splash
 theme: material
-dock: windows
+dock: bottom

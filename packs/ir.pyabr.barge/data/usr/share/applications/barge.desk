@@ -1,0 +1,9 @@
+name[en]: Text Editor
+name[fa]: برگه
+logo: @icon/breeze-barge
+exec: barge
+shortcut: Ctrl+Alt+B
+application: Yes
+hidden: No
+category: tools
+pin: No

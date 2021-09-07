@@ -3070,6 +3070,9 @@ class Files:
         if filename.startswith("/"):
             return f"file:///stor/{filename}"
 
+    def size (self,filename):
+        return os.stat(self.input(filename)).st_size
+
     def input(self, filename):
         f = open ('proc/info/pwd','r')
         pwd = f.read()

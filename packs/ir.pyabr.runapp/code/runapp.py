@@ -57,14 +57,9 @@ class MainApp (MainApp):
             self.leRun.setProperty('placeholderText',res.get('@string/runapp.app_not_found'))
             self.leRun.setProperty('enabled',False)
 
-            self.x = Font(self.x_)
-
             QTimer.singleShot(3000,self.clean)
 
         self.leRun.setProperty('text','')
-
-    def x_(self,font):
-        print(font)
 
     def __init__(self):
         super(MainApp, self).__init__()
