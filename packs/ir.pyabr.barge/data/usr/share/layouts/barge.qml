@@ -33,15 +33,23 @@ ApplicationWindow {
             ToolButton {
                 icon.source: 'file:///stor/usr/share/icons/breeze-redo.svg'
                 icon.color: "white"
-                id: redo
-                objectName: "redo"
+                id: redoz
+                objectName: "redoz"
+
+                onClicked: {
+                    textT.redo()
+                }
             }
 
             ToolButton {
                 icon.source: 'file:///stor/usr/share/icons/breeze-undo.svg'
                 icon.color: "white"
-                id: undo
-                objectName: "undo"
+                id: undoz
+                objectName: "undoz"
+
+                onClicked: {
+                    textT.undo()
+                }
             }
 
             ToolButton {
@@ -62,6 +70,7 @@ ApplicationWindow {
     }
     TextArea {
         anchors.top: toolbar.bottom
+        id: textT
         width: parent.width
         objectName: "text"
     }

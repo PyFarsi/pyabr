@@ -52,8 +52,8 @@ class MainApp (MainApp):
         self.load (res.get('@layout/barge'))
 
         self.open = self.findChild ('open')
-        self.redo = self.findChild ('redo')
-        self.undo = self.findChild ('undo')
+        self.redoz = self.findChild ('redoz')
+        self.undoz = self.findChild ('undoz')
         self.save = self.findChild ('save')
         self.saveas = self.findChild ('saveas')
         self.save = self.findChild ('save')
@@ -65,7 +65,6 @@ class MainApp (MainApp):
         self.open.clicked.connect(self.open_)
         self.saveas.clicked.connect(self.saveas_)
         self.save.clicked.connect (self.save_)
-
 
 application = QtGui.QGuiApplication([])
 w = MainApp()

@@ -1,0 +1,9 @@
+name[en]: Image Viewer
+name[fa]: نمایشگر تصویر
+logo: @icon/breeze-shotwell
+exec: nama
+shortcut: Ctrl+Alt+N
+application: Yes
+hidden: No
+category: tools
+pin: No

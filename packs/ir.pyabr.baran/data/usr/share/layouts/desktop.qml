@@ -363,7 +363,7 @@ ApplicationWindow {
         anchors.bottom: rex2.top
         width: 560
         height: 560-40
-        //clip: true
+        clip: true
         id: scroll
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
@@ -449,7 +449,7 @@ ApplicationWindow {
         anchors.bottom: rex4.top
         width: 560
         height: 560-40
-        //clip: true
+        clip: true
         id: scroll2
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
@@ -535,7 +535,7 @@ ApplicationWindow {
         anchors.bottom: rex6.top
         width: 560
         height: 560-40
-        //clip: true
+        clip: true
         id: scroll3
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
@@ -621,7 +621,7 @@ ApplicationWindow {
         anchors.bottom: rex8.top
         width: 560
         height: 560-40
-        //clip: true
+        clip: true
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
         Column {
