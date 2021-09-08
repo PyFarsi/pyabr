@@ -66,13 +66,28 @@ ApplicationWindow {
                 objectName: "saveas"
             }
 
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-run.svg'
+                icon.color: "white"
+                id: start
+                visible: false
+                objectName: "start"
+            }
+
         }
     }
-    TextArea {
+    ScrollView {
         anchors.top: toolbar.bottom
-        id: textT
         width: parent.width
-        objectName: "text"
+        height: parent.height-70
+        clip: true
+        TextArea {
+            anchors.top: toolbar.bottom
+            id: textT
+            width: parent.width
+            font.family: "IRANSans"
+            objectName: "text"
+        }
     }
     Text {
         visible: false

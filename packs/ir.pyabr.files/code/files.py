@@ -37,7 +37,7 @@ class MainApp (MainApp):
                 app.start ('commento','')
 
             elif self.fsel.property('text').endswith('.pashm'):
-                files.write ('/tmp/exec.sa','pashmak '+files.output(self.fsel.property('text'))+"\nrm /tmp/exec.sa\nshut")
+                files.write ('/tmp/exec.sa',f"pashmak {self.fsel.property('text')}\nrm /tmp/exec.sa\nshut")
                 app.start ('commento','')
 
 

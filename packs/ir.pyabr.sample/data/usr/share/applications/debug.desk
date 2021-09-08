@@ -1,0 +1,7 @@
+name[en]: Debug Application
+name[fa]: برنامه دیباگی
+logo: @icon/breeze-app
+exec: debug
+application: No
+hidden: Yes
+category: tools

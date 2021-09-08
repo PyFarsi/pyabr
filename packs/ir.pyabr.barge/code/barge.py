@@ -26,6 +26,9 @@ class MainApp (MainApp):
         self.setProperty ('title',files.filename(filename)+' - '+res.get('@string/barge.app_name'))
         self.path.setProperty ('text',filename)
 
+        if filename.endswith ('.py') or filename.endswith ('.sa') or filename.endswith ('.pashm') or filename.endswith('.qml'):
+            self.start.setProperty ('visible',True)
+
     def open__(self,filename):
         self.text.setProperty ('text',files.readall(filename))
         self.update_(filename)
@@ -45,6 +48,21 @@ class MainApp (MainApp):
             self.box = Save (self.saveas__)
         else:
             files.write (self.path.property('text'),self.text.property('text'))
+    
+    def start_(self):
+        if self.path.property('text').endswith ('.py'):
+            commands.cc ([self.path.property('text')])
+            files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.py','')}\nrm /tmp/exec.sa\nrm {self.path.property('text')}c\npause")
+            app.start ('commento','')
+        elif self.path.property('text').endswith ('.sa'):
+            files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.sa','')}\nrm /tmp/exec.sa\npause")
+            app.start ('commento','')
+        elif self.path.property('text').endswith ('.pashm'):
+            files.write ('/tmp/exec.sa',f"pashmak {self.path.property('text')}\nrm /tmp/exec.sa\npause")
+            app.start ('commento','')
+        elif self.path.property('text').endswith ('.qml'):
+            files.copy (self.path.property('text'),'/usr/share/layouts/debug.qml')
+            app.start ('debug','')
 
     def __init__(self):
         super(MainApp, self).__init__()
@@ -59,12 +77,14 @@ class MainApp (MainApp):
         self.save = self.findChild ('save')
         self.text = self.findChild ('text')
         self.path = self.findChild ('path')
+        self.start = self.findChild ('start')
 
         self.setProperty ('title',res.get('@string/barge.app_name'))
 
         self.open.clicked.connect(self.open_)
         self.saveas.clicked.connect(self.saveas_)
         self.save.clicked.connect (self.save_)
+        self.start.clicked.connect (self.start_)
 
 application = QtGui.QGuiApplication([])
 w = MainApp()
