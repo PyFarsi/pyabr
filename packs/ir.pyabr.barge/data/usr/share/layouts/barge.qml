@@ -24,6 +24,20 @@ ApplicationWindow {
                     anchors.verticalCenter: parent.verticalCenter
 
             ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-new.svg'
+                icon.color: "white"
+                id: add
+                objectName: "add"
+            }
+
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-newwindow.svg'
+                icon.color: "white"
+                id: addwin
+                objectName: "addwin"
+            }
+
+            ToolButton {
                 icon.source: 'file:///stor/usr/share/icons/breeze-open.svg'
                 icon.color: "white"
                 id: open

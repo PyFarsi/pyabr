@@ -64,6 +64,15 @@ class MainApp (MainApp):
             files.copy (self.path.property('text'),'/usr/share/layouts/debug.qml')
             app.start ('debug','')
 
+    def add_(self):
+        self.text.setProperty('text','')
+        self.setProperty('title',res.get('@string/barge.app_name'))
+        self.path.setProperty('text','')
+        self.start.setProperty('visible',False)
+
+    def addwin_(self):
+        app.start ('barge','')
+
     def __init__(self):
         super(MainApp, self).__init__()
 
@@ -78,6 +87,8 @@ class MainApp (MainApp):
         self.text = self.findChild ('text')
         self.path = self.findChild ('path')
         self.start = self.findChild ('start')
+        self.add = self.findChild ('add')
+        self.addwin = self.findChild ('addwin')
 
         self.setProperty ('title',res.get('@string/barge.app_name'))
 
@@ -85,6 +96,8 @@ class MainApp (MainApp):
         self.saveas.clicked.connect(self.saveas_)
         self.save.clicked.connect (self.save_)
         self.start.clicked.connect (self.start_)
+        self.add.clicked.connect (self.add_)
+        self.addwin.clicked.connect (self.addwin_)
 
 application = QtGui.QGuiApplication([])
 w = MainApp()

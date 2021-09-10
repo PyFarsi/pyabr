@@ -301,7 +301,7 @@ class Font (MainApp):
         self.btnCancel = self.findChild("btnCancel")
         self.btnCancel.clicked.connect(self.close)
         self.btnSelect.clicked.connect(self.ok_)
-        self.setProperty('title',res.get('@string/baran.sel'))
+        self.btnSelect.setProperty('title',res.get('@string/baran.sel'))
 
 class Select (MainApp):
 
@@ -334,12 +334,14 @@ class Select (MainApp):
 
         self.addFileModel('/')
         self.load (res.get('@layout/select'))
-        self.setProperty('title',res.get('@string/select.file'))
+        self.setProperty('title',res.get('@string/baran.file'))
         self.fsel = self.findChild ('fsel')
 
         self.btnCancel = self.findChild('btnCancel')
+        self.btnCancel.setProperty('text', res.get('@string/baran.cancel'))
         self.btnSelect = self.findChild('btnSelect')
         self.btnCancel.clicked.connect (self.close)
+        self.btnSelect.setProperty('text', res.get('@string/baran.sel'))
         self.btnSelect.clicked.connect (self.select_)
 
         self.loop()
@@ -374,12 +376,14 @@ class Open (MainApp):
 
         self.addFileModel('/')
         self.load (res.get('@layout/open'))
-        self.setProperty('title',res.get('@string/select.dir'))
+        self.setProperty('title',res.get('@string/baran.dir'))
         self.fsel = self.findChild ('fsel')
 
         self.btnCancel = self.findChild('btnCancel')
+        self.btnCancel.setProperty('text', res.get('@string/baran.cancel'))
         self.btnOpen = self.findChild('btnOpen')
         self.btnCancel.clicked.connect (self.close)
+        self.btnOpen.setProperty('text',res.get('@string/baran.open'))
         self.btnOpen.clicked.connect (self.open_)
 
         self.loop()
@@ -412,14 +416,17 @@ class Save (MainApp):
 
         self.addFileModel('/')
         self.load (res.get('@layout/save'))
-        self.setProperty('title',res.get('@string/select.save'))
+        self.setProperty('title',res.get('@string/baran.save'))
         self.fsel = self.findChild ('fsel')
 
         self.btnCancel = self.findChild('btnCancel')
+        self.btnCancel.setProperty('text',res.get('@string/baran.cancel'))
         self.btnSave = self.findChild('btnSave')
         self.btnCancel.clicked.connect (self.close)
         self.btnSave.clicked.connect (self.save_)
+        self.btnSave.setProperty('text',res.get('@string/baran.save'))
 
         self.leName = self.findChild('leName')
+        self.leName.setProperty('placeholderText',res.get('@string/baran.fn'))
 
         self.loop()

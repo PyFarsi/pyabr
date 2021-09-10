@@ -162,17 +162,17 @@ input.ok: تایید
 password.title: رمز را وارد کنید
 password.cancel: لغو
 password.ok: تایید
-ask.title: آیا می خواهید؟
-ask.cancel: خیر
-ask.ok: بله
-ask.text: آیا می خواهید همچین کاری را انجام دهید؟
-select.dir: یک مسیر انتخاب کنید
-select.file: یک فایل انتخاب کنید
-select.choose: انتخاب
-select.cancel: لغو
-select.open: بازکن
-select.save: ذخیره کن
-select.save-as: با یک عنوان دیگر ذخیرکن
+baran.title: آیا می خواهید؟
+baran.cancel: خیر
+baran.ok: بله
+baran.text: آیا می خواهید همچین کاری را انجام دهید؟
+baran.dir: یک مسیر انتخاب کنید
+baran.file: یک فایل انتخاب کنید
+baran.choose: انتخاب
+baran.cancel: لغو
+baran.open: بازکن
+baran.save: ذخیره کن
+baran.save-as: با یک عنوان دیگر ذخیرکن
 barge.app_name: ویرایشگر متنی برگه
 barge.file: فایل
 barge.open: بازکردن
@@ -435,7 +435,7 @@ edituser.email: آدرس پست الکترونیکی
 edituser.company: نام شرکت
 edituser.bloodtype: گروه خونی
 edituser.app_name: ویرایش حساب کاربری
-select.fn: یک نام برای فایل خود انتخاب کنید
+baran.fn: یک نام برای فایل خود انتخاب کنید
 usermanager.fullname: نام کامل
 usermanager.phone: شماره تلفن همراه
 usermanager.email: آدرس پست الکترونیکی
@@ -472,6 +472,7 @@ paye.back: بازگشت
 baran.apps: برنامه ها
 baran.games: بازی ها
 baran.themes: پوسته ها
+baran.sel: انتخاب
 baran.sessions: نشست ها
 baran.perm: عدم دسترسی
 baran.guestperm: با حساب کاربری مهمان نمی توان دسترسی داشت

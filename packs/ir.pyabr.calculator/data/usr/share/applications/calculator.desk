@@ -1,0 +1,6 @@
+name[en]: Calculator
+name[fa]: ماشین حساب
+logo: @icon/breeze-calculator
+exec: calculator
+application: Yes
+category: tools

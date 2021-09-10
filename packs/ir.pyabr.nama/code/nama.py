@@ -21,10 +21,9 @@ from pyabr.core import *
 from pyabr.quick import *
 
 class MainApp (MainApp):
-    index = 0
-    max = 0
     def update_(self,filename):
         self.setProperty ('title',files.filename(filename)+' - '+res.get('@string/nama.app_name'))
+        self.fullscreen.setProperty ('visible',True)
 
     def open__(self,filename):
         self.image.setProperty ('source',files.input_qml(filename))
@@ -33,6 +32,16 @@ class MainApp (MainApp):
     def open_(self):
         self.box = Select (self.open__)
 
+    fulls = False
+
+    def fullscreen_(self):
+        if self.fulls:
+            self.setProperty ('visibility','Windowed')  # https://stackoverflow.com/questions/9014298/full-screen-desktop-application-with-qml
+            self.fulls = False
+        elif self.fulls==False:
+            self.setProperty ('visibility','FullScreen')
+            self.fulls = True
+
     def __init__(self):
         super(MainApp, self).__init__()
 
@@ -40,8 +49,10 @@ class MainApp (MainApp):
 
         self.open = self.findChild ('open')
         self.image = self.findChild ('image')
+        self.fullscreen = self.findChild ('fullscreen')
         self.setProperty ('title',res.get('@string/nama.app_name'))
         self.open.clicked.connect(self.open_)
+        self.fullscreen.clicked.connect(self.fullscreen_)
 
 application = QtGui.QGuiApplication([])
 w = MainApp()

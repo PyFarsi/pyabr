@@ -10,7 +10,7 @@ import QtQuick.Controls.Styles 1.4
 ApplicationWindow {
     id: barge
     visible: true
-    color: "white"
+    color: "black"
     width: 1000
     height: 600
 
@@ -27,6 +27,13 @@ ApplicationWindow {
                 icon.source: 'file:///stor/usr/share/icons/breeze-open.svg'
                 icon.color: "white"
                 objectName: "open"
+            }
+
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-fullscreen.svg'
+                icon.color: "white"
+                objectName: "fullscreen"
+                visible: false
             }
         }
     }

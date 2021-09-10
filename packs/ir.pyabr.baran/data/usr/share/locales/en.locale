@@ -167,13 +167,12 @@ ask.title: Are you sure?
 ask.cancel: No
 ask.ok: Yes
 ask.text: Do you want to do this action?
-select.dir: Choose a directory
-select.file: Choose a file
-select.choose: Choose
-select.cancel: Cancel
-select.open: Open
-select.save: Save
-select.save-as: Save As
+baran.dir: Choose a directory
+baran.file: Choose a file
+baran.choose: Choose
+baran.cancel: Cancel
+baran.open: Open
+baran.save: Save
 barge.app_name: Barge Text Editor
 barge.file: File
 barge.open: Open
@@ -440,7 +439,7 @@ edituser.email: Email address
 edituser.company: Company name
 edituser.bloodtype: Blood type
 edituser.app_name: Edit Account
-select.fn: Enter a filename
+baran.fn: Enter a filename
 usermanager.fullname: Full name
 usermanager.phone: Phone number
 usermanager.email: Email address
@@ -487,6 +486,7 @@ screen.savec: Save changes
 screen.reboot: For saving changes you should reboot
 squares.app_name: Squares
 baran.audios: Audios
+baran.sel: Select
 baran.desktop: Desktop
 baran.downloads: Downloads
 baran.documents: Documents
