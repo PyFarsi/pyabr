@@ -1,0 +1,11 @@
+name: ir.pyabr.clock
+name[en]: Clock
+name[fa]: ساعت
+copyright: (c) 2021 Mani Jamali
+license: GNU GPL v3.0
+unpack: /
+version: 2.0.1
+description: Clock & Stopwatch
+compile: Yes
+build: 1400-06-12
+mirror: https://mirror.pyabr.ir/aras/
