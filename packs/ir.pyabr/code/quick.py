@@ -27,7 +27,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtQml import *
 from PyQt5.QtQuick import *
 from pyabr.core import *
-import sys,os
+import sys,os,shutil
 
 # Main Entry
 class MainApp (QtQml.QQmlApplicationEngine):
@@ -134,11 +134,28 @@ class MainApp (QtQml.QQmlApplicationEngine):
             # generate icon #
             if ext=='':
                 if files.isdir (f'{directory}/{i}'):
-                    it.setData(res.qmlget('@icon/breeze-folder'),self.FileLogo)
+                    if files.isfile (f'{directory}/{i}/.logo'):
+                        it.setData(res.qmlget(files.readall(f'{directory}/{i}/.logo')),self.FileLogo)
+                    else:
+                        it.setData(res.qmlget('@icon/breeze-folder'),self.FileLogo)
                 else:
-                    it.setData(res.qmlget('@icon/breeze-txt'),self.FileLogo)
+                    if i.startswith('ic') and 'dev' in directory:
+                        it.setData(res.qmlget('@icon/breeze-drive'),self.FileLogo)
+                    else:
+                        it.setData(res.qmlget('@icon/breeze-txt'),self.FileLogo)
             else:
-                it.setData(res.qmlget(control.read_record (f'{ext.replace(".","")}.icon','/etc/ext')),self.FileLogo)
+                if files.isfile(f'{directory}/{i}'):
+                    if i.endswith('.desk'):
+                        it.setData(res.qmlget(control.read_record (f'logo',f'{directory}/{i}')),self.FileLogo)
+                    elif i.endswith ('.png') or i.endswith ('.jpg') or i.endswith ('.jpeg') or i.endswith ('.bmp') or i.endswith ('.tiff') or i.endswith ('.gif'):
+                        it.setData(files.input_qml(f'{directory}/{i}'),self.FileLogo)
+                    else:
+                        it.setData(res.qmlget(control.read_record (f'{ext.replace(".","")}.icon','/etc/ext')),self.FileLogo)
+                else:
+                    if files.isfile (f'{directory}/{i}/.logo'):
+                        it.setData(res.qmlget(files.readall(f'{directory}/{i}/.logo')),self.FileLogo)
+                    else:
+                        it.setData(res.qmlget('@icon/breeze-folder'),self.FileLogo)
 
             # generate size of file #
             size = files.size(f'{directory}/{i}')
@@ -332,7 +349,7 @@ class Select (MainApp):
 
         self.function = function
 
-        self.addFileModel('/')
+        self.addFileModel(files.readall('/proc/info/pwd'))
         self.load (res.get('@layout/select'))
         self.setProperty('title',res.get('@string/baran.file'))
         self.fsel = self.findChild ('fsel')
@@ -374,7 +391,7 @@ class Open (MainApp):
 
         self.function = function
 
-        self.addFileModel('/')
+        self.addFileModel(files.readall('/proc/info/pwd'))
         self.load (res.get('@layout/open'))
         self.setProperty('title',res.get('@string/baran.dir'))
         self.fsel = self.findChild ('fsel')
@@ -414,7 +431,7 @@ class Save (MainApp):
 
         self.function = function
 
-        self.addFileModel('/')
+        self.addFileModel(files.readall('/proc/info/pwd'))
         self.load (res.get('@layout/save'))
         self.setProperty('title',res.get('@string/baran.save'))
         self.fsel = self.findChild ('fsel')
@@ -430,3 +447,39 @@ class Save (MainApp):
         self.leName.setProperty('placeholderText',res.get('@string/baran.fn'))
 
         self.loop()
+
+# Ask Dialog
+class Install (MainApp):
+
+    def install_(self):
+        System (f'paye upak {self.package}')
+        self.close()
+
+    def ok_(self):
+        self.pro.setProperty('visible',True)
+        QTimer.singleShot(3000,self.install_)
+
+    def no_(self):
+        self.close()
+
+    def __init__(self,package:str):
+        super(Install, self).__init__()
+        self.package = package
+        files.write('/proc/info/id','install')
+        self.load(res.get('@layout/install'))
+        self.setProperty('title',res.get('@string/baran.packtitle').replace('{0}',package).replace('/','') )
+        shutil.unpack_archive (files.input (package),files.input('/tmp/package-installer'),'zip')
+        shutil.unpack_archive (files.input('/tmp/package-installer/control.zip'),files.input('/tmp/package-installer.control'),'zip')
+        files.removedirs ('/tmp/package-installer')
+        
+        self.pro = self.findChild('pro')
+        self.name = self.findChild('name')
+        self.name.setProperty('text',control.read_record ('name','/tmp/package-installer.control/manifest'))
+        self.description = self.findChild('descriptionx')
+        self.description.setProperty('text',control.read_record ('description','/tmp/package-installer.control/manifest'))
+        self.btnOK = self.findChild('btnOK')
+        self.btnOK.setProperty('text', res.get('@string/baran.install'))
+        self.btnOK.clicked.connect(self.ok_)
+        self.btnCancel = self.findChild('btnCancel')
+        self.btnCancel.setProperty('text', res.get('@string/baran.cancel'))
+        self.btnCancel.clicked.connect(self.no_)

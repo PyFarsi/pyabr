@@ -1628,8 +1628,7 @@ class Commands:
         if user == input_username:
             colors.show("su", "warning", f"{user} has already switched.")
         elif input_username == "guest":
-            enable_cli = control.read_record("enable_cli", "/etc/guest")
-            if enable_cli == "Yes":
+            if files.readall('/etc/guest') == "enable":
                 subprocess.call ([sys.executable,'vmabr.pyc','user','guest'])
             else:
                 colors.show(input_username, "fail", "user not found.")
@@ -1758,7 +1757,7 @@ class Commands:
                     control.write_record("email", email, f'/etc/users/{input_username}')
 
                 control.write_record(f'/desk/{input_username}',f"drwxr-x---/{input_username}",'/etc/permtab')
-
+                control.write_record('profile','@icon/breeze-users',f'/etc/users/{input_username}')
         else:
             colors.show("uadd", "perm", "")
 
@@ -1804,8 +1803,7 @@ class Commands:
         else:
             input_username = args[0]
 
-        enable_cli = control.read_record("enable_cli", "/etc/guest")
-        if not (input_username == "guest" and enable_cli == "Yes"):
+        if not (input_username == "guest" and files.readall('/etc/guest') == "enable"):
             if files.isfile(f"/etc/users/{input_username}"):
                 ## Get information from user database ##
                 fullname = control.read_record("fullname", f"/etc/users/{input_username}")
@@ -2891,8 +2889,7 @@ class Permissions:
                 return False
 
         elif user == "guest":
-            enable_cli = control.read_record("enable_cli", "/etc/guest")
-            if enable_cli == "Yes":
+            if files.readall('/etc/guest') == "enable":
                 if owner == user:
                     if request == "r":
                         r = user_r
@@ -2999,8 +2996,7 @@ class Permissions:
 
         owner = self.get_owner(filename)
         if user == "guest":
-            enable_cli = control.read_record("enable_cli", "/etc/guest")
-            if enable_cli == "Yes":
+            if files.readall('/etc/guest') == "enable":
                 if owner == user:
                     return True
                 else:

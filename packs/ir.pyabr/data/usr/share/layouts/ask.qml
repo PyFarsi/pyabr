@@ -8,7 +8,7 @@ import QtQuick.Controls 2.3
 import QtQuick.Controls.Styles 1.4
 
 ApplicationWindow {
-    id: backend
+    id: ask
     visible: true
     color: "white"
 
@@ -30,10 +30,21 @@ ApplicationWindow {
         anchors.top: parent.top
     }
     Button {
-        text: "OK"
-        objectName: "btnOK"
-        width: parent.width
+        id: cancel
+        text: "No"
+        objectName: "btnCancel"
+        font.family: "IRANSans"
+        width: parent.width/2
         height: parent.height/2
+        anchors.top: txtText.bottom
+    }
+    Button {
+        text: "Yes"
+        objectName: "btnOK"
+        width: parent.width/2
+        font.family: "IRANSans"
+        height: parent.height/2
+        anchors.left: cancel.right
         anchors.top: txtText.bottom
     }
 }

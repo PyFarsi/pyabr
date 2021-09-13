@@ -300,6 +300,7 @@ class Enter (MainApp):
         return model
 
     def logout_(self):
+
         self.close()
 
         # Remove all tmp
@@ -316,8 +317,11 @@ class Enter (MainApp):
         System ("/vmabr gui-login")
 
     def getdata(self, name):
-        x = control.read_record(name, f'/etc/users/{self.username}')
-        if x == '' or x == None:
+        try:
+            x = control.read_record(name, f'/etc/users/{self.username}')
+            if x == '' or x == None:
+                x = getdata(name)
+        except:
             x = getdata(name)
 
         return x
@@ -539,6 +543,10 @@ class Desktop (MainApp):
 
     def logout_(self):
         self.close()
+        self.pwduser()
+
+        # Remove home logo
+        files.remove ('.logo')
 
         # Remove all tmp
         files.removedirs('/tmp')
@@ -733,6 +741,22 @@ exit''')
         except:
             pass
 
+    def pwduser (self):
+        if self.username=='root':
+            commands.cd (['/root'])
+        else:
+            commands.cd ([f'/desk/{self.username}'])
+
+    def deskdirs (self):
+        deskdirspath = files.readall('/etc/deskdirs')
+
+        for i in files.list (deskdirspath):
+            if files.isdir (f'{deskdirspath}/{i}'):
+                files.copydir (f'{deskdirspath}/{i}',f'{i}')
+
+    def homelogo (self):
+        files.write ('.logo','@icon/breeze-homes')
+
     menuClicked = False
 
     def menuApps_(self):
@@ -832,7 +856,10 @@ exit''')
         if self.check_cat('/usr/share/applications','tools')==0:
             self._toolscat.setProperty('enabled',False)
         self._background = self.findChild( 'background')
-        self._background.setProperty('source', res.qmlget(self.getdata("desktop.background")))
+        try:
+            self._background.setProperty('source', res.qmlget(self.getdata("desktop.background")))
+        except:
+            pass
         self._exit = self.findChild('exit')
         self._exit.setProperty('title', res.get('@string/baran.powermenu'))
         self._lang = self.findChild('lang')
@@ -903,6 +930,9 @@ exit''')
 
         # check cats
         self.bashrc()
+        self.pwduser()
+        self.deskdirs()
+        self.homelogo()
 
         # Start up applications
         self.startup()

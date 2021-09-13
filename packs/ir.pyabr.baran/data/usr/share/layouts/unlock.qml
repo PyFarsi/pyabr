@@ -21,6 +21,7 @@ ApplicationWindow {
 
         Menu {
             title: "منوی اصلی"
+            font.family: "IRANSans"
             id: submenu
             objectName: "submenu"
 
@@ -31,6 +32,7 @@ ApplicationWindow {
                 Repeater{
                     model: Lang
                     MenuItem {
+                        font.family: "IRANSans"
                         objectName: model.name
                         text: model.label
 
@@ -44,6 +46,7 @@ ApplicationWindow {
                 id: virtualkeyboard
                 objectName: "virtualkeyboard"
                 text: "کیبورد مجازی"
+                font.family: "IRANSans"
             }
         }
     }
@@ -76,12 +79,14 @@ ApplicationWindow {
             Layout.fillWidth: true
             echoMode: TextInput.Password
             placeholderText: "رمزعبور خود را وارد کنید"
+            font.family: "IRANSans"
         }
 
         Button {
             id: login
             objectName: "login"
             text: "بازکردن"
+            font.family: "IRANSans"
             Layout.fillWidth: true
         }
     }

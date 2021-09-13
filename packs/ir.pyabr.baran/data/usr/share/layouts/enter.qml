@@ -69,6 +69,7 @@ ApplicationWindow {
                         onTriggered: {
                             keyless.text = model.name
                         }
+                        font.family: "IRANSans"
                     }
                 }
             }
@@ -108,6 +109,7 @@ ApplicationWindow {
             Layout.fillWidth: true
             echoMode: TextInput.Password
             placeholderText: "رمزعبور خود را وارد کنید"
+            font.family: "IRANSans"
         }
 
         Button {
@@ -115,6 +117,7 @@ ApplicationWindow {
             objectName: "login"
             text: "ورود"
             Layout.fillWidth: true
+            font.family: "IRANSans"
         }
     }
 }

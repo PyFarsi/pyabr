@@ -466,6 +466,7 @@ browser.open: Open
 browser.openn: Open in a new tab
 browser.bookp: Bookmark page
 browser.dn: Done
+baran.ok: OK
 browser.name: Name
 browser.folder: Folder
 browser.booked: Page bookmarked
@@ -473,6 +474,7 @@ paye.open: Open
 paye.update: Update
 paye.unxp: Uninstall
 paye.back: Back
+baran.install: Install
 baran.apps: Applications
 baran.games: Games
 baran.themes: Themes
@@ -662,3 +664,4 @@ sysinfo.su: Switched user
 sysinfo.de: Desktop Enviroment
 sysinfo.gui: Graphical toolkit
 sysinfo.arch: Architecture
+baran.packtitle: Install {0}

@@ -69,12 +69,14 @@ ApplicationWindow {
         width: parent.width/2
         height: parent.height/12
         anchors.bottom: parent.bottom
+        font.family: "IRANSans"
     }
     Button {
         text: "Select"
         objectName: "btnSelect"
         anchors.bottom: parent.bottom
         width: parent.width/2
+        font.family: "IRANSans"
         height: parent.height/12
         anchors.left: cancel.right
     }

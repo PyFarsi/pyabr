@@ -40,6 +40,15 @@ class MainApp (MainApp):
                 files.write ('/tmp/exec.sa',f"pashmak {self.fsel.property('text')}\nrm /tmp/exec.sa\nshut")
                 app.start ('commento','')
 
+            elif self.fsel.property('text').endswith ('.desk'):
+                try:
+                    app.start (files.filename (self.fsel.property('text')).replace('.desk',''),'')
+                except:
+                    pass
+
+            elif self.fsel.property('text').endswith ('.pa'):
+                self.i = Install ( self.fsel.property('text'))
+
 
         self.fsel.setProperty('text','')
         QTimer.singleShot (10,self.loop)
@@ -47,7 +56,7 @@ class MainApp (MainApp):
     def __init__(self):
         super(MainApp, self).__init__()
 
-        self.addFileModel('/')
+        self.addFileModel(files.readall('/proc/info/pwd'))
         self.load (res.get('@layout/files'))
         try:
             self.setProperty('title',res.get('@string/files.app_name'))

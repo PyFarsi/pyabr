@@ -65,7 +65,7 @@ ApplicationWindow {
                 id: virtualkeyboard
                 objectName: "virtualkeyboard"
                 text: "کیبورد مجازی"
-
+                font.family: "IRANSans"
             }
         }
     }
@@ -96,12 +96,14 @@ ApplicationWindow {
             id: username
             objectName: "username"
             Layout.fillWidth: true
+            font.family: "IRANSans"
             placeholderText: "حساب کاربری"
         }
 
         Button {
             id: next
             objectName: "next"
+            font.family: "IRANSans"
             text: "بعدی"
             Layout.fillWidth: true
         }

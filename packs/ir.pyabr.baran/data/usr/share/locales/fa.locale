@@ -472,6 +472,8 @@ paye.back: بازگشت
 baran.apps: برنامه ها
 baran.games: بازی ها
 baran.themes: پوسته ها
+baran.ok: تایید
+baran.install: نصب
 baran.sel: انتخاب
 baran.sessions: نشست ها
 baran.perm: عدم دسترسی
@@ -662,3 +664,5 @@ sysinfo.su: نشست فعلی
 sysinfo.de: میزکار
 sysinfo.gui: کتابخانه گرافیکی
 sysinfo.arch: معماری رایانه
+baran.packtitle: نصب {0}
+baran.doinst: آیا می خواهید این بسته را نصب نمایید؟

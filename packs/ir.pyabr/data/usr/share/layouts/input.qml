@@ -21,7 +21,7 @@ ApplicationWindow {
         height: parent.height/2
         TextField {
             anchors.centerIn: parent
-            font.family: "Iran Sans"
+            font.family: "IRANSans"
             width: parent.width
             height: parent.height
             objectName: "leText"
@@ -36,6 +36,7 @@ ApplicationWindow {
         text: "Cancel"
         objectName: "btnCancel"
         width: parent.width/2
+        font.family: "IRANSans"
         height: parent.height/2
         anchors.top: txtText.bottom
     }
@@ -44,6 +45,7 @@ ApplicationWindow {
         objectName: "btnOK"
         width: parent.width/2
         height: parent.height/2
+        font.family: "IRANSans"
         anchors.left: cancel.right
         anchors.top: txtText.bottom
     }

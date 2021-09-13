@@ -41,14 +41,14 @@ ApplicationWindow {
 
     ScrollView {
         width: parent.width
-        height: parent.height-80-file.height/10
+        height: parent.height-80-(file.height/10)*2
         anchors.topMargin: 10
         anchors.top: toolbar.bottom
         clip: true
         id: scroll
         Column {
             width: file.width
-            height: file.height-70-file.height/10
+            height: file.height-70-(file.height/10)*2
             spacing: 2
             Repeater {
                 model: FileModel
@@ -119,6 +119,15 @@ ApplicationWindow {
             anchors.bottom: cancel.top
         }
     }
+    TextField {
+        placeholderText: "Filename"
+        objectName: "leName"
+        id: leName
+        width: parent.width
+        height: parent.height/10
+        font.family: "IRANSans"
+        anchors.bottom: cancel.top
+    }
     Button {
         id: cancel
         text: "Cancel"
@@ -127,15 +136,17 @@ ApplicationWindow {
         height: parent.height/10
         anchors.bottomMargin: 0
         anchors.bottom: parent.bottom
+        font.family: "IRANSans"
     }
     Button {
-        text: "Open"
-        objectName: "btnOpen"
+        text: "Save"
+        objectName: "btnSave"
         width: parent.width/2
         enabled: false
         height: parent.height/10
         anchors.bottomMargin: 0
         anchors.left: cancel.right
         anchors.bottom: parent.bottom
+        font.family: "IRANSans"
     }
 }

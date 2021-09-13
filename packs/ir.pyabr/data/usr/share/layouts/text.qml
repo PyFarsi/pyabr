@@ -8,24 +8,21 @@ import QtQuick.Controls 2.3
 import QtQuick.Controls.Styles 1.4
 
 ApplicationWindow {
-    id: password
+    id: backend
     visible: true
     color: "white"
 
-    width: 400
+    width: 500
     height: 90
 
     Rectangle {
         id: txtText
         width: parent.width
         height: parent.height/2
-        TextField {
+        Text {
             anchors.centerIn: parent
-            font.family: "Iran Sans"
-            width: parent.width
-            echoMode: TextInput.Password
-            height: parent.height
-            objectName: "leText"
+            font.family: "IRANSans"
+            objectName: "txtText"
         }
         anchors.topMargin: 5
         anchors.rightMargin: 5
@@ -33,19 +30,11 @@ ApplicationWindow {
         anchors.top: parent.top
     }
     Button {
-        id: cancel
-        text: "Cancel"
-        objectName: "btnCancel"
-        width: parent.width/2
-        height: parent.height/2
-        anchors.top: txtText.bottom
-    }
-    Button {
         text: "OK"
         objectName: "btnOK"
-        width: parent.width/2
+        width: parent.width
         height: parent.height/2
-        anchors.left: cancel.right
         anchors.top: txtText.bottom
+        font.family: "IRANSans"
     }
 }
