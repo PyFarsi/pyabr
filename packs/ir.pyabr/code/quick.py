@@ -147,7 +147,7 @@ class MainApp (QtQml.QQmlApplicationEngine):
                 if files.isfile(f'{directory}/{i}'):
                     if i.endswith('.desk'):
                         it.setData(res.qmlget(control.read_record (f'logo',f'{directory}/{i}')),self.FileLogo)
-                    elif i.endswith ('.png') or i.endswith ('.jpg') or i.endswith ('.jpeg') or i.endswith ('.bmp') or i.endswith ('.tiff') or i.endswith ('.gif'):
+                    elif i.endswith ('.png') or i.endswith ('.jpg') or i.endswith ('.jpeg') or i.endswith ('.bmp') or i.endswith ('.tiff') or i.endswith ('.tif') or i.endswith ('.gif') or i.endswith ('.svg'):
                         it.setData(files.input_qml(f'{directory}/{i}'),self.FileLogo)
                     else:
                         it.setData(res.qmlget(control.read_record (f'{ext.replace(".","")}.icon','/etc/ext')),self.FileLogo)

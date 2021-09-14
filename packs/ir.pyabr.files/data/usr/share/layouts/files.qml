@@ -21,6 +21,13 @@ ApplicationWindow {
         objectName: "fsel"
     }
 
+    Text {
+        visible: false
+        text: ''
+        id: act
+        objectName: "act"
+    }
+
     ToolBar {
         id: toolbar
         anchors.top: parent.top
@@ -38,6 +45,98 @@ ApplicationWindow {
             }
         }
     }
+
+    Menu {
+                      id: contextMenu
+                            objectName: "contextMenu"
+                            Action { 
+                                text: "Mani.py" 
+                                objectName: "filex"
+                                id: filex
+                                enabled: false
+                            }
+                            Action { 
+                                text: "Open" 
+                                objectName: "open"
+                                id: open
+                                icon.source: "file:///stor/usr/share/icons/breeze-open.svg"
+                                onTriggered: {
+                                    act.text = "open"
+                                }
+                            }
+                            Action { 
+                                text: "Open with..." 
+                                objectName: "openwith"
+                                id: openwith
+                                icon.source: "file:///stor/usr/share/icons/breeze-open.svg"
+                                onTriggered: {
+                                    act.text = "openwith"
+                                }
+                            }
+                            Action { 
+                                text: "Execute" 
+                                objectName: "execute"
+                                id: execute
+                                icon.source: "file:///stor/usr/share/icons/breeze-execute.svg"
+                                onTriggered: {
+                                    act.text = "execute"
+                                }
+                            }
+                            Action { 
+                                text: "Cut" 
+                                objectName: "cut"
+                                id: cut
+                                icon.source: "file:///stor/usr/share/icons/breeze-cut.svg"
+                                onTriggered: {
+                                    act.text = "cut"
+                                }
+                            }
+                            Action { 
+                                text: "Copy" 
+                                objectName: "copy"
+                                id: copy
+                                icon.source: "file:///stor/usr/share/icons/breeze-copy.svg"
+                                onTriggered: {
+                                    act.text = "copy"
+                                }
+                            }
+                            Action { 
+                                text: "Paste" 
+                                objectName: "paste"
+                                id: paste
+                                icon.source: "file:///stor/usr/share/icons/breeze-paste.svg"
+                                onTriggered: {
+                                    act.text = "paste"
+                                }
+                            }
+                            Action { 
+                                text: "Rename" 
+                                objectName: "rename"
+                                id: rename
+                                icon.source: "file:///stor/usr/share/icons/breeze-rename.svg"
+                                onTriggered: {
+                                    act.text = "rename"
+                                }
+                            }
+                            Action { 
+                                text: "Delete" 
+                                objectName: "delete"
+                                id: remove
+                                icon.source: "file:///stor/usr/share/icons/breeze-delete.svg"
+                                onTriggered: {
+                                    act.text = "delete"
+                                }
+                            }
+                            Action { 
+                                text: "Information" 
+                                objectName: "info"
+                                id: info
+                                icon.source: "file:///stor/usr/share/icons/breeze-information.svg"
+                                onTriggered: {
+                                    act.text = "info"
+                                }
+                            }
+                        }
 
     ScrollView {
         width: parent.width
@@ -61,8 +160,19 @@ ApplicationWindow {
 
                     MouseArea {
                         anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
                         onClicked: {
-                            fsel.text = model.path
+                            fsel.text = model.path;
+
+                            if (mouse.button === Qt.RightButton)
+                                contextMenu.popup()
+
+                            
+                        }
+
+                        onPressAndHold: {
+                            if (mouse.source === Qt.MouseEventNotSynthesized)
+                                contextMenu.popup()
                         }
                     }
 
