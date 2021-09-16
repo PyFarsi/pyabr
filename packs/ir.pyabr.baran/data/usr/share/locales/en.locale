@@ -189,7 +189,10 @@ calculator.backspace: Backscape
 calculator.clear: Clear
 calculator.clearall: Clear All
 files.file: File
+files.info: Informations
 files.newfile: New File
+files.exists: Exists
+files.existsm: Has already exists.
 files.newfolder: New Folder
 persia.newfile: New File
 persia.newfolder: New Folder

@@ -52,7 +52,7 @@ class MainApp (MainApp):
     def start_(self):
         if self.path.property('text').endswith ('.py'):
             commands.cc ([self.path.property('text')])
-            files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.py','')}\nrm /tmp/exec.sa\nrm {self.path.property('text')}c\npause")
+            files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.py','')}\nrm /tmp/exec.sa\nrm {self.path.property('text')}c\nrm __pycache__\npause")
             app.start ('commento','')
         elif self.path.property('text').endswith ('.sa'):
             files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.sa','')}\nrm /tmp/exec.sa\npause")

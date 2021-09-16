@@ -155,7 +155,7 @@ pysys.restart: راه اندازی مجدد
 pysys.sleep: حالت خواب
 pysys.app_name: تنظیمات روشن/خاموش کردن
 commento.app_name: پایانه
-roller.app_name: فایل ها
+files.app_name: فایل ها
 input.title: یک مقدار وارد کنید
 input.cancel: لغو
 input.ok: تایید
@@ -163,7 +163,7 @@ password.title: رمز را وارد کنید
 password.cancel: لغو
 password.ok: تایید
 baran.title: آیا می خواهید؟
-baran.ok: بله
+baran.ok: تایید
 baran.text: آیا می خواهید همچین کاری را انجام دهید؟
 baran.dir: یک مسیر انتخاب کنید
 baran.file: یک فایل انتخاب کنید
@@ -187,14 +187,14 @@ barge.saveasfile: ذخیره کردن فایل با یک عنوان دیگر
 calculator.backspace: Backscape
 calculator.clear: پاک کردن
 calculator.clearall: پاک کردن همه
-roller.file: فایل
-roller.newfile: یک فایل جدید
-roller.newfolder: یک پوشه جدید
+files.file: فایل
+files.newfile: یک فایل جدید
+files.newfolder: یک پوشه جدید
 persia.newfile: یک فایل جدید
 persia.newfolder: یک پوشه جدید
-roller.exit: خروج
-roller.foldername: برای پوشه خود نامی انتخاب کنید
-roller.filename: برای فایل خود نامی انتخاب کنید
+files.exit: خروج
+files.foldername: برای پوشه خود نامی انتخاب کنید
+files.filename: برای فایل خود نامی انتخاب کنید
 paint.app_name: نقاشی
 sysinfo.app_name: اطلاعات سیستمی
 persia.foldername: برای پوشه خود نامی انتخاب کنید
@@ -213,18 +213,18 @@ barge.css: استایل
 barge.javascript: جاوا اسکریپت
 barge.csharp: سی شارپ
 barge.php: پی اچ پی
-roller.newcode: کد جدید
-roller.c: یک فایل سی
-roller.c++: یک فایل سی پلاس پلاس
-roller.python: یک اسکریپت پایتونی
-roller.pythongui: یک اسکریپت پایتون گرافیکی
-roller.saye: یک اسکریپت سایه
-roller.java: یک فایل جاوا
-roller.html: یک صفحه ابرمتن
-roller.css: یک فایل استایلی
-roller.javascript: یک فایل جاوا اسکریپت
-roller.csharp: یک فایل سی شارپی
-roller.php: یک فایل پی اچ پی
+files.newcode: کد جدید
+files.c: یک فایل سی
+files.c++: یک فایل سی پلاس پلاس
+files.python: یک اسکریپت پایتونی
+files.pythongui: یک اسکریپت پایتون گرافیکی
+files.saye: یک اسکریپت سایه
+files.java: یک فایل جاوا
+files.html: یک صفحه ابرمتن
+files.css: یک فایل استایلی
+files.javascript: یک فایل جاوا اسکریپت
+files.csharp: یک فایل سی شارپی
+files.php: یک فایل پی اچ پی
 persia.c: سی
 persia.c++: سی پلاس پلاس
 persia.python: پایتون
@@ -256,11 +256,11 @@ text.text: این یک متنی آزمایشی است
 text.ok: تایید
 runapp.not_found: برنامه وجود ندارد
 runapp.not_found_msg: این برنامه وجود ندارد
-roller.isfile: یک فایل است
-roller.isdir: یک پوشه است
-roller.isfile_msg: نمی توان پوشه ای با این عنوان ایجاد کرد چون یک فایل است.
-roller.isdir_msg: نمی توان فایلی با این عنوان ایجاد کرد چون یک پوشه است.
-roller.newpyweb: یک فایل پایتون تحت وب
+files.isfile: یک فایل است
+files.isdir: یک پوشه است
+files.isfile_msg: نمی توان پوشه ای با این عنوان ایجاد کرد چون یک فایل است.
+files.isdir_msg: نمی توان فایلی با این عنوان ایجاد کرد چون یک پوشه است.
+files.newpyweb: یک فایل پایتون تحت وب
 persia.isfile: یک فایل است
 persia.isfile_msg: نمی توان پوشه ای با این عنوان ایجاد کرد چون یک فایل است.
 persia.isdir: یک پوشه است
@@ -498,15 +498,18 @@ process.app_name: مدیریت فرایندها
 process.refresh: بروزرسانی
 process.kill: بستن
 process.restart: بازکردن
-roller.cut: برش
-roller.copy: کپی
-roller.paste: جای گذاری
-roller.rename: تغییر نام
-roller.execute: اجرا
-roller.open: بازکردن
-roller.openwith: بازکردن با
-roller.delete: حذف کردن
-roller.deletemf: آیا مایلید این فایل را حذف کنید؟
+files.cut: برش
+files.copy: کپی
+files.paste: جای گذاری
+files.rename: تغییر نام
+files.info: اطلاعات
+files.execute: اجرا
+files.exists: از قبل ایجاد شده است
+files.existsm: از قبل ایجاد شده است.
+files.open: بازکردن
+files.openwith: بازکردن با
+files.delete: حذف کردن
+files.deletemf: آیا مایلید این فایل را حذف کنید؟
 open.always: همیشه
 open.atonce: فقط یک بار
 open.choose: یک برنامه را انتخاب کنید
@@ -522,7 +525,7 @@ open.isexem: آیا می خواهید این فایل را اجرا کنید؟
 open.unk: فایل ناشناخته
 open.unkm: نمی توان این فایل را اجرا کرد چون ناشناخته است
 barge.uix: پوسته گرافیکی
-roller.uix: یک فایل پوسته گرافیکی
+files.uix: یک فایل پوسته گرافیکی
 key.select: انتخاب
 key.cancel: لغو
 key.choose: یک زبان انتخاب کنید
@@ -594,10 +597,10 @@ uiv.dnotm: هیچ دامنه ای با این نام موجود نیست
 uiv.enet: خطا در اتصال
 uiv.enetm: نمی توان بارگذاری کرد؛ خطا در اتصال
 baran.screenshot: تصویر بردای از میزکار
-roller.deletem: آیا می خواهید این پوشه را پاک کنید؟
-roller.deletemf: آیا می خواهید این فایل را پاک کنید؟
-roller.perm: مجوز ندارد
-roller.permm: نمی توان این فایل را اجرا کرد؛ مجوز ندارد
+files.deletem: آیا می خواهید این پوشه را پاک کنید؟
+files.deletemf: آیا می خواهید این فایل را پاک کنید؟
+files.perm: مجوز ندارد
+files.permm: نمی توان این فایل را اجرا کرد؛ مجوز ندارد
 wifi.app_name: شبکه بی سیم
 wifi.scan: برسی
 wifi.connect: اتصال
@@ -609,10 +612,10 @@ wifi.ssid: نام این شبکه بی سیم را وارد کنید
 wifi.wrongp: رمز عبور اشتباه است
 sms.app_name: پیامک
 sms.enter: پیام خود را بنویسید
-cloudroller.app_name: درایوها
-cloudroller.add: افزودن درایو
-cloudroller.e: خطا در اتصال
-cloudroller.em: در حال حاضر امکان اتصال به این دیسک ابری ممکن نیست
+cloudfiles.app_name: درایوها
+cloudfiles.add: افزودن درایو
+cloudfiles.e: خطا در اتصال
+cloudfiles.em: در حال حاضر امکان اتصال به این دیسک ابری ممکن نیست
 connectcloud.app_name: افزودن درایو
 connectcloud.host: آدرس هاست ابری
 connectcloud.check: بکند برسی کننده
@@ -645,12 +648,12 @@ wifi.i: رمزعبور اشتباه می باشد
 wifi.im: رمزعبور وارد شده توسط شما اشتباه می باشد
 weather.app_name: آب و هوا
 weather.city: نام شهر خود را وارد کنید
-cloudroller.master: درایوهای اصلی
-cloudroller.cloud: درایوهای ابری
+cloudfiles.master: درایوهای اصلی
+cloudfiles.cloud: درایوهای ابری
 mpv.app_name: بخش کننده ویدئو
 mpv.open: بازکردن
-roller.archive: فشرده سازی
-roller.extract: استخراج از حالت فشرده سازی
+files.archive: فشرده سازی
+files.extract: استخراج از حالت فشرده سازی
 baran.keyless: زبان کیبورد
 setup.cap: زمان محلی خود را انتخاب نمایید
 font.sel: یک فونت انتخاب نمایید

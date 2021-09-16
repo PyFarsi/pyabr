@@ -28,32 +28,78 @@ ApplicationWindow {
         objectName: "act"
     }
 
+    Text {
+        visible: false
+        id: fsela
+        text: ''
+        objectName: 'fsela'
+    }
+
     ToolBar {
         id: toolbar
         anchors.top: parent.top
         width: parent.width
         height: 70
-        
-        ToolButton {
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.leftMargin: 20
-            anchors.rightMargin: 20
-            icon.source: 'file:///stor/usr/share/icons/breeze-back.svg'
-            icon.color: "white"
-            onClicked: {
-                fsel.text = '..'
+
+        RowLayout {
+                        anchors.verticalCenter: parent.verticalCenter
+
+            ToolButton {
+                anchors.leftMargin: 20
+                anchors.rightMargin: 20
+                icon.source: 'file:///stor/usr/share/icons/breeze-back.svg'
+                icon.color: "white"
+                onClicked: {
+                    fsel.text = '..'
+                }
+            }
+            ToolButton {
+                anchors.leftMargin: 20
+                anchors.rightMargin: 20
+                icon.source: 'file:///stor/usr/share/icons/breeze-new.svg'
+                icon.color: "white"
+                onClicked: {
+                    act.text = 'newfile'
+                }
+            }
+            ToolButton {
+                anchors.leftMargin: 20
+                anchors.rightMargin: 20
+                icon.source: 'file:///stor/usr/share/icons/breeze-newfolder.svg'
+                icon.color: "white"
+                onClicked: {
+                    act.text = 'newfolder'
+                }
             }
         }
     }
 
     Menu {
                       id: contextMenu
+                      font.family: "IRANSans"
                             objectName: "contextMenu"
                             Action { 
-                                text: "Mani.py" 
-                                objectName: "filex"
                                 id: filex
+                                objectName: "filex"
                                 enabled: false
+                            }
+                            Action { 
+                                text: "New File" 
+                                objectName: "newfile"
+                                id: newfile
+                                icon.source: "file:///stor/usr/share/icons/breeze-new.svg"
+                                onTriggered: {
+                                    act.text = "newfile"
+                                }
+                            }
+                            Action { 
+                                text: "New Folder" 
+                                objectName: "newfolder"
+                                id: newfolder
+                                icon.source: "file:///stor/usr/share/icons/breeze-newfolder.svg"
+                                onTriggered: {
+                                    act.text = "newfolder"
+                                }
                             }
                             Action { 
                                 text: "Open" 
@@ -161,13 +207,15 @@ ApplicationWindow {
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
+                        onDoubleClicked: {
+                            fsel.text = model.path
+                        }
                         onClicked: {
-                            fsel.text = model.path;
+                            fsela.text = model.path
 
                             if (mouse.button === Qt.RightButton)
                                 contextMenu.popup()
 
-                            
                         }
 
                         onPressAndHold: {

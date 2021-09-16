@@ -107,9 +107,14 @@ class MainApp (QtQml.QQmlApplicationEngine):
 
         listx.sort()
 
+        hidden_files = files.readall('/etc/default/hidden_files')
+
         for i in files.list(directory):
             if files.isfile(f'{directory}/{i}'):
-                listy.append(i)
+                if (i.startswith('.') or i=='__pycache__') and not hidden_files=='Yes':
+                    pass
+                else:
+                    listy.append(i)
 
         listy.sort()
 

@@ -1348,7 +1348,7 @@ class Commands:
                     list = files.list(path)
                     list.sort()
                     for i in list:
-                        if i.startswith ('.') and not files.readall('/etc/default/hidden_files')=='Yes':
+                        if (i.startswith ('.') or i=='__pycache__') and not files.readall('/etc/default/hidden_files')=='Yes':
                             list.remove(i)
                         else:
                             if files.isdir(f"{path}/{i}"):
