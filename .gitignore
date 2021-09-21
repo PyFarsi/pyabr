@@ -13,6 +13,7 @@ build/
 develop-eggs/
 packs/io.github.pashmaklang/
 dist/
+packs/ir.projop/
 downloads/
 eggs/
 venv/

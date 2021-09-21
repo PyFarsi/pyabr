@@ -65,7 +65,7 @@ class Backend (MainApp):
     def __init__(self):
         super(Backend,self).__init__()
 
-        app.switch('baran')
+        
         self.load (res.get('@layout/backend'))
         self.setProperty ('height',int(getdata("height")))
         self.setProperty ('width',int(getdata("width")))
@@ -102,7 +102,7 @@ class Splash (MainApp):
     def __init__(self,ports):
         super(Splash, self).__init__()
 
-        app.switch('baran')
+        
         self.Backend = ports[0]
         self.load(res.get('@layout/splash'))
         self.setProperty('height', int(getdata("height")))
@@ -173,7 +173,7 @@ class Login (MainApp):
     def __init__(self,ports):
         super(Login, self).__init__()
 
-        app.switch('baran')
+        
 
         self.Backend = ports[0]
 
@@ -214,7 +214,12 @@ class Login (MainApp):
         self._exit = self.findChild( 'exit')
         self._exit.setProperty('title', res.get('@string/baran.powermenu'))
         self._background = self.findChild( 'background')
-        self._background.setProperty('source', res.qmlget(getdata("login.background")))
+
+        if getdata("login.background").startswith('@background/'):
+            self._background.setProperty('source', res.qmlget(getdata("login.background")))
+        else:
+            self._background.setProperty('source', files.input_qml(getdata("login.background")))
+
         self._virtualkeyboard = self.findChild('virtualkeyboard')
         self._virtualkeyboard.setProperty('text',res.get('@string/baran.vkey'))
         self._keyless = self.findChild('keyless')
@@ -226,7 +231,7 @@ class Sleep (MainApp):
     def __init__(self):
         super(Sleep, self).__init__()
 
-        app.switch('baran')
+        
 
         self.load(res.get('@layout/sleep'))
         if not self.rootObjects():
@@ -329,7 +334,7 @@ class Enter (MainApp):
     def __init__(self, ports):
         super(Enter, self).__init__()
 
-        app.switch('baran')
+        
 
         self.Backend = ports[0]
         self.username = ports[1]
@@ -377,9 +382,18 @@ class Enter (MainApp):
         self._account = self.findChild('account')
         self._account.setProperty('title',self.getdata("fullname"))
         self._background = self.findChild( 'background')
-        self._background.setProperty('source', res.qmlget(self.getdata("enter.background")))
+
+        if self.getdata("enter.background").startswith('@background/'):        
+            self._background.setProperty('source', res.qmlget(self.getdata("enter.background")))
+        else:
+            self._background.setProperty('source', files.input_qml(self.getdata("enter.background")))
         self._profile = self.findChild('profile')
-        self._profile.setProperty('source',res.qmlget(self.getdata("profile")))
+
+        if self.getdata("profile").startswith('@icon/'):
+            self._profile.setProperty('source',res.qmlget(self.getdata("profile")))
+        else:
+            self._profile.setProperty('source',files.input_qml(self.getdata("profile")))
+
         self._virtualkeyboard = self.findChild('virtualkeyboard')
         self._virtualkeyboard.setProperty('text',res.get('@string/baran.vkey'))
         self._keyless = self.findChild('keyless')
@@ -437,7 +451,7 @@ class Unlock (MainApp):
     def __init__(self, ports):
         super(Unlock, self).__init__()
 
-        app.switch('baran')
+        
 
         self.Backend = ports[0]
         self.Env = ports[1]
@@ -463,10 +477,20 @@ class Unlock (MainApp):
         self._unlock = self.findChild('login')
         self._unlock.setProperty('text',res.get('@string/baran.unlock_text'))
         self._unlock.clicked.connect(self.unlock_)
+
+
         self._background = self.findChild( 'background')
-        self._background.setProperty('source', res.qmlget(self.getdata("unlock.background")))
+
+        if  self.getdata("unlock.background").startswith('@background/'):     
+            self._background.setProperty('source', res.qmlget(self.getdata("unlock.background")))
+        else:
+            self._background.setProperty('source', files.input_qml(self.getdata("unlock.background")))
         self._profile = self.findChild( 'profile')
-        self._profile.setProperty('source', res.qmlget(self.getdata("profile")))
+
+        if self.getdata("profile").startswith('@icon/'):
+            self._profile.setProperty('source', res.qmlget(self.getdata("profile")))
+        else:
+            self._profile.setProperty('source', files.input_qml(self.getdata("profile")))
         self._submenu = self.findChild('submenu')
         self._submenu.setProperty('title',res.get('@string/baran.etcmenu'))
         self._virtualkeyboard = self.findChild( 'virtualkeyboard')
@@ -493,7 +517,7 @@ class Lock (MainApp):
     def __init__(self, ports):
         super(Lock, self).__init__()
 
-        app.switch('baran')
+        
 
         self.Backend = ports[0]
         self.Env = ports[1]
@@ -514,22 +538,27 @@ class Lock (MainApp):
         self._unlock = self.findChild('unlock')
         self._unlock.clicked.connect (self.unlock_)
 
+
         self._background = self.findChild( 'background')
-        self._background.setProperty('source', res.qmlget(self.getdata("lock.background")))
+
+        if self.getdata("lock.background").startswith('@background/'):
+            self._background.setProperty('source', res.qmlget(self.getdata("lock.background")))
+        else:
+            self._background.setProperty('source', files.input_qml(self.getdata("lock.background")))
 
 
 class Shells:
     def __init__(self, ports):
         super(Shells, self).__init__()
 
-        app.switch('baran')
+        
 
 class MenuApplications:
 
     def __init__(self, ports):
         super(MenuApplications, self).__init__()
 
-        app.switch('baran')
+        
 
 class Desktop (MainApp):
     def shutdown_ (self):
@@ -695,14 +724,75 @@ class Desktop (MainApp):
             files.create('/proc/info/sig')
             self.switchuser_()
 
+        elif files.readall('/proc/info/sig')=='background':
+            try:
+                if self.getdata('desktop.background').startswith('@background/'):
+                    self._background.setProperty('source', res.qmlget(self.getdata("desktop.background")))
+                else:
+                    self._background.setProperty('source', files.input_qml(self.getdata("desktop.background")))
+            except:
+                pass
+
+        elif files.readall('/proc/info/sig')=='dock':
+            if self.getdata ('dock')=='bottom':
+                self._toolbar.setProperty('visible',True)
+                self._toolbar2.setProperty('visible',False)
+                self._toolbar3.setProperty('visible',False)
+                self._toolbar4.setProperty('visible',False)
+                self._toolbar5.setProperty('visible',False)
+                self._btnMenu = self.findChild ('btnMenu')
+                self._btnMenu.clicked.connect (self.menuApps_)
+                self._menuApps = self.findChild ('menuApps')
+
+            elif self.getdata ('dock')=='top':
+                self._toolbar.setProperty('visible',False)
+                self._toolbar2.setProperty('visible',True)
+                self._toolbar3.setProperty('visible',False)
+                self._toolbar5.setProperty('visible',False)
+                self._toolbar4.setProperty('visible',False)
+                self._toolbar5.setProperty('visible',False)
+                self._btnMenu = self.findChild ('btnMenu2')
+                self._btnMenu.clicked.connect (self.menuApps_)
+                self._menuApps = self.findChild ('menuApps2')
+
+            elif self.getdata ('dock')=='left':
+                self._toolbar.setProperty('visible',False)
+                self._toolbar2.setProperty('visible',False)
+                self._toolbar3.setProperty('visible',True)
+                self._toolbar4.setProperty('visible',False)
+                self._btnMenu = self.findChild ('btnMenu3')
+                self._toolbar5.setProperty('visible',False)
+                self._btnMenu.clicked.connect (self.menuApps_)
+                self._menuApps = self.findChild ('menuApps3')
+
+            elif self.getdata ('dock')=='right':
+                self._toolbar.setProperty('visible',False)
+                self._toolbar2.setProperty('visible',False)
+                self._toolbar3.setProperty('visible',False)
+                self._toolbar4.setProperty('visible',True)
+                self._toolbar5.setProperty('visible',False)
+                self._btnMenu = self.findChild ('btnMenu4')
+                self._btnMenu.clicked.connect (self.menuApps_)
+                self._menuApps = self.findChild ('menuApps4')
+
+            elif self.getdata ('dock')=='windows':
+                self._toolbar.setProperty('visible',False)
+                self._toolbar2.setProperty('visible',False)
+                self._toolbar3.setProperty('visible',False)
+                self._toolbar4.setProperty('visible',False)
+                self._toolbar5.setProperty('visible',True)
+                self._btnMenu = self.findChild ('btnMenu5')
+                self._btnMenu.clicked.connect (self.menuApps_)
+                self._menuApps = self.findChild ('menuApps')
+
     def loop (self):
         # Applications starts in background
         if not self._background_app.property('text')=='':
             self._menuApps.setProperty('visible', False)
             self.menuClicked = False
-            app.switch('baran')
+            
             app.start(self._background_app.property('text').replace('.desk',''),'')
-            app.switch('baran')
+            
 
         # Check signals #
         self.signal()
@@ -713,7 +803,7 @@ class Desktop (MainApp):
         self._keyless.setProperty('text','')
 
         self._background_app.setProperty('text','')
-        QTimer.singleShot(1,self.loop)
+        QTimer.singleShot(10,self.loop)
 
     def startup (self):
         # Startup applications
@@ -752,7 +842,10 @@ exit''')
 
         for i in files.list (deskdirspath):
             if files.isdir (f'{deskdirspath}/{i}'):
-                files.copydir (f'{deskdirspath}/{i}',f'{i}')
+                try:
+                    files.copydir (f'{deskdirspath}/{i}',f'{i}')
+                except:
+                    pass
 
     def homelogo (self):
         files.write ('.logo','@icon/breeze-homes')
@@ -769,7 +862,7 @@ exit''')
 
     def __init__(self,ports):
         super(Desktop, self).__init__()
-        app.switch('baran')
+        
         self.Backend = ports[0]
         self.username = ports[1]
         self.password = ports[2]
@@ -857,9 +950,13 @@ exit''')
             self._toolscat.setProperty('enabled',False)
         self._background = self.findChild( 'background')
         try:
-            self._background.setProperty('source', res.qmlget(self.getdata("desktop.background")))
+            if self.getdata('desktop.background').startswith('@background/'):
+                self._background.setProperty('source', res.qmlget(self.getdata("desktop.background")))
+            else:
+                self._background.setProperty('source', files.input_qml(self.getdata("desktop.background")))
         except:
             pass
+
         self._exit = self.findChild('exit')
         self._exit.setProperty('title', res.get('@string/baran.powermenu'))
         self._lang = self.findChild('lang')
@@ -943,7 +1040,7 @@ class Application:
     def __init__(self, ports):
         super(Application, self).__init__()
 
-        app.switch('baran')
+        
 
 desktop = Backend()
 sys.exit(application.exec())

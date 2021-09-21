@@ -1,0 +1,6 @@
+name[en]: Controls
+name[fa]: تنظیمات
+logo: @icon/breeze-setting
+exec: controls
+application: Yes
+category: system

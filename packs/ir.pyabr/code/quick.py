@@ -32,6 +32,7 @@ import sys,os,shutil
 # Main Entry
 class MainApp (QtQml.QQmlApplicationEngine):
 
+    # Default
     ObjectNameRole = QtCore.Qt.UserRole+1000
     TextRole = QtCore.Qt.UserRole + 1001
     IconRole = QtCore.Qt.UserRole + 1002
@@ -41,6 +42,7 @@ class MainApp (QtQml.QQmlApplicationEngine):
     EnabledRole = QtCore.Qt.UserRole + 1006
     VisibleRole = QtCore.Qt.UserRole + 1007
 
+    # File
     FileName = QtCore.Qt.UserRole+1000
     FileExt = QtCore.Qt.UserRole+1001
     FileSize = QtCore.Qt.UserRole+1002

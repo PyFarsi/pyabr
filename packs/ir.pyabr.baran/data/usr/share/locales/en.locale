@@ -555,7 +555,7 @@ setup.next: Next
 setup.install: Install
 setup.cancel: Cancel
 setup.back: Back
-setting.app_name: Settings
+controls.app_name: Controls
 wallpaper.app_name: Wallpapers
 wallpaper.desktop: Desktop
 wallpaper.enter: Enter
@@ -668,3 +668,13 @@ sysinfo.de: Desktop Enviroment
 sysinfo.gui: Graphical toolkit
 sysinfo.arch: Architecture
 baran.packtitle: Install {0}
+controls.apper: Appearance
+controls.cancel: Cancel
+controls.apply: Apply
+controls.dock.left: Left
+controls.dock.right: Right
+controls.dock.bottom: Bottom (default)
+controls.dock.top: Top
+controls.dock.win11: Windows 11
+controls.change_wallpaper: Change wallpaper
+controls.dock_location: Dock location

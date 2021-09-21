@@ -546,7 +546,7 @@ setup.next: بعدی
 setup.install: نصب
 setup.cancel: لغو
 setup.back: قبلی
-setting.app_name: تنظیمات
+controls.app_name: تنظیمات
 wallpaper.app_name: تصویر پس زمینه
 wallpaper.desktop: میزکار
 wallpaper.enter: صفحه رمزعبور
@@ -668,3 +668,13 @@ sysinfo.gui: کتابخانه گرافیکی
 sysinfo.arch: معماری رایانه
 baran.packtitle: نصب {0}
 baran.doinst: آیا می خواهید این بسته را نصب نمایید؟
+controls.apper: ظاهر میزکار
+controls.cancel: لغو
+controls.apply: تنظیم
+controls.dock.left: چپ
+controls.dock.right: راست
+controls.dock.bottom: پایین (پیش فرض)
+controls.dock.top: بالا
+controls.dock.win11: ویندوز ۱۱
+controls.change_wallpaper: تغییر پس زمینه
+controls.dock_location: موقعیت نوار برنامه ها
