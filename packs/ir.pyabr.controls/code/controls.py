@@ -22,24 +22,6 @@ from pyabr.quick import *
 
 
 class MainApp (MainApp):
-    DockName = QtCore.Qt.UserRole+1000
-
-    def Model (self,list):
-        model = QtGui.QStandardItemModel()
-        roles = {
-                self.DockName:b'text',
-        }
-        model.setItemRoleNames(roles)
-
-        for i in list:
-            it = QtGui.QStandardItem(i)
-            it.setData (i,self.DockName)
-            model.appendRow(it)
-        return model
-
-    def addModel (self,list):
-        self.newmodel = self.Model(list)
-        self.rootContext().setContextProperty('DockModel', self.newmodel)
 
     def sysinfo_ (self):
         self.host = self.findChild ('host')
@@ -119,11 +101,17 @@ class MainApp (MainApp):
                 self.back.setProperty('visible',True)
                 self.title.setProperty('text',res.get('@string/controls.apper'))
 
+            elif self.fsel.property('text')=='users':
+                self.controlview.setProperty('visible',False)
+                self.users_exec.setProperty('visible',True)
+                self.back.setProperty('visible',True)
+                self.title.setProperty('text',res.get('@string/users.app_name'))
 
             elif self.fsel.property('text')=='..':
                 self.controlview.setProperty('visible',True)
                 self.sysinfo_exec.setProperty('visible',False)
                 self.apper_exec.setProperty('visible',False)
+                self.users_exec.setProperty('visible',False)
                 self.back.setProperty('visible',False)
                 self.title.setProperty('text',res.get('@string/controls.app_name'))
 
@@ -212,7 +200,7 @@ class MainApp (MainApp):
 
     def __init__(self):
         super(MainApp, self).__init__()
-        self.addModel([self.getdata("controls.dock.bottom"),self.getdata("controls.dock.top"),self.getdata("controls.dock.left"),self.getdata("controls.dock.right"),self.getdata("controls.dock.win11")])
+        self.addUserModel()
         self.load (res.get('@layout/controls'))
         self.setProperty('title',res.get('@string/controls.app_name'))
         self.fsel = self.findChild('fsel')
@@ -228,6 +216,10 @@ class MainApp (MainApp):
         self.apper = self.findChild ('apper')
         self.apper_exec = self.findChild ('apper_exec')
         self.apper.setProperty('text',res.get('@string/controls.apper'))
+
+        self.users = self.findChild ('users')
+        self.users_exec = self.findChild ('users_exec')
+        self.users.setProperty('text',res.get('@string/users.app_name'))
 
         self.btnChange_desktop = self.findChild('btnChange_desktop')
         self.btnChange_desktop.setProperty('text',res.get('@string/wallpaper.desktop'))

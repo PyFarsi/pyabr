@@ -268,6 +268,68 @@ ApplicationWindow {
             }
         }
 
+        /* Users */
+        Rectangle {
+            objectName: "users_exec"
+            id: users_exec
+            visible: false
+            width: file.width
+            height: file.height-70
+
+            Column {
+                spacing: 2
+                width: users_exec.width
+                height: users_exec.height
+
+
+                Repeater {
+                    model: UserModel
+
+                    Rectangle {
+                        visible: true
+
+                        width: parent.width
+                        height: parent.width/10
+                        color: "transparent"
+
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton | Qt.RightButton
+                            onDoubleClicked: {
+                            }
+                        }
+
+                        Image {
+                                source: model.profile
+                                anchors.left: parent.left
+                                anchors.leftMargin: 20
+                                anchors.rightMargin: 20
+                                width: parent.height
+                                sourceSize: Qt.size( parent.width, parent.height )
+                                height: parent.height
+                                id: imagexx
+                        }
+
+                        Text {
+                            text: model.fullname
+                            font.family: "IRANSans"
+                            font.pixelSize: 18
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.left: imagexx.right
+                            anchors.leftMargin: 20
+                            anchors.rightMargin: 20
+                        }
+
+                        Rectangle {
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                            anchors.top: parent.bottom
+                        }
+                    }
+                }
+            }
+        }
         /* System Informations */
         Rectangle {
             objectName: "sysinfo_exec"
@@ -441,6 +503,7 @@ ApplicationWindow {
             height: file.height-70
             objectName: "controlview"
             spacing: 2
+
                 /* Appearance */
                 Rectangle {
                     id: apper
@@ -474,6 +537,50 @@ ApplicationWindow {
                         font.pixelSize: 18
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: imagex1.right
+                        anchors.leftMargin: 20
+                        anchors.rightMargin: 20
+                    }
+
+                    Rectangle {
+                        width: parent.width
+                        height: 1
+                        color: "silver"
+                        anchors.top: parent.bottom
+                    }
+                }
+                /* Users */
+                Rectangle {
+                    id: users
+                    width: parent.width
+                    height: parent.width/10
+                    color: "transparent"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                        onDoubleClicked: {
+                            fsel.text = 'users'
+                        }
+                    }
+
+                    Image {
+                            source: 'file:///stor/usr/share/icons/breeze-users.svg'
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            anchors.rightMargin: 20
+                            width: parent.height
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            height: parent.height
+                            id: imagex2
+                    }
+
+                    Text {
+                        text: 'Users'
+                        font.family: "IRANSans"
+                        objectName: 'users'
+                        font.pixelSize: 18
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: imagex2.right
                         anchors.leftMargin: 20
                         anchors.rightMargin: 20
                     }

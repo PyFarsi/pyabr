@@ -51,6 +51,11 @@ class MainApp (QtQml.QQmlApplicationEngine):
     FilePermission = QtCore.Qt.UserRole+1005
     FilePath = QtCore.Qt.UserRole+1006
 
+    # User
+    Username = QtCore.Qt.UserRole+1001
+    Profile = QtCore.Qt.UserRole+1002
+    FullName = QtCore.Qt.UserRole+1003
+
     def ItemModel (self,listRow):
         model = QtGui.QStandardItemModel()
         roles = {
@@ -82,6 +87,29 @@ class MainApp (QtQml.QQmlApplicationEngine):
             if 'visible' in i:
                 it.setData(i['visible'], self.VisibleRole)
             model.appendRow(it)
+        return model
+
+    def UserModel (self):
+        model = QtGui.QStandardItemModel()
+        roles = {
+            self.Username:b'username',
+            self.Profile:b'profile',
+            self.FullName:b'fullname',
+        }
+        model.setItemRoleNames(roles)
+
+        listusers = files.list('/etc/users')
+
+        for i in listusers:
+            it = QtGui.QStandardItem(i)
+            it.setData(i,self.Username)
+            it.setData(control.read_record('fullname',f'/etc/users/{i}'),self.FullName)
+            if control.read_record('profile',f'/etc/users/{i}').startswith('@icon/'):
+                it.setData(res.qmlget(control.read_record('profile',f'/etc/users/{i}')),self.Profile)
+            else:
+                it.setData(files.input_qml(control.read_record('profile',f'/etc/users/{i}')),self.Profile)
+            model.appendRow(it)
+
         return model
 
     def FileModel (self,d):
@@ -209,6 +237,10 @@ class MainApp (QtQml.QQmlApplicationEngine):
     def addFileModel (self,directory):
         self.newmodelx = self.FileModel(directory)
         self.rootContext().setContextProperty('FileModel', self.newmodelx)
+
+    def addUserModel (self):
+        self.newmodelx1 = self.UserModel()
+        self.rootContext().setContextProperty('UserModel', self.newmodelx1)
 
     def setProperty(self,name,value):
         self.rootObjects()[0].setProperty(name,value)

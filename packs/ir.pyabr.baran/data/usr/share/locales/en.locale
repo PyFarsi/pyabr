@@ -671,10 +671,5 @@ baran.packtitle: Install {0}
 controls.apper: Appearance
 controls.cancel: Cancel
 controls.apply: Apply
-controls.dock.left: Left
-controls.dock.right: Right
-controls.dock.bottom: Bottom (default)
-controls.dock.top: Top
-controls.dock.win11: Windows 11
 controls.change_wallpaper: Change wallpaper
 controls.dock_location: Dock location
