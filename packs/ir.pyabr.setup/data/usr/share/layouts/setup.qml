@@ -53,6 +53,7 @@ ApplicationWindow {
             TextField {
                 placeholderText: "Enter a new root password"
                 width: parent.width
+                echoMode: TextInput.Password
                 objectName: "leRootCode"
                 font.family: "IRANSans"
             }
@@ -67,6 +68,7 @@ ApplicationWindow {
             TextField {
                 placeholderText: "Enter a new password"
                 width: parent.width
+                echoMode: TextInput.Password
                 objectName: "lePassword"
                 font.family: "IRANSans"
             }

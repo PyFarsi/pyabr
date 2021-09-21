@@ -19,7 +19,7 @@
 
 from pyabr.core import *
 from pyabr.quick import *
-
+import hashlib
 
 class MainApp (MainApp):
 
@@ -104,14 +104,21 @@ class MainApp (MainApp):
             elif self.fsel.property('text')=='users':
                 self.controlview.setProperty('visible',False)
                 self.users_exec.setProperty('visible',True)
+                self.adduser_exec.setProperty('visible',False)
                 self.back.setProperty('visible',True)
+                self.adduser.setProperty('visible',True)
+                self.back_users.setProperty('visible',False)
                 self.title.setProperty('text',res.get('@string/users.app_name'))
+                self.apply2.clicked.connect (self.apply_adduser_)
 
             elif self.fsel.property('text')=='..':
                 self.controlview.setProperty('visible',True)
                 self.sysinfo_exec.setProperty('visible',False)
                 self.apper_exec.setProperty('visible',False)
+                self.adduser.setProperty('visible',False)
+                self.back_users.setProperty('visible',False)
                 self.users_exec.setProperty('visible',False)
+                self.adduser_exec.setProperty('visible',False)
                 self.back.setProperty('visible',False)
                 self.title.setProperty('text',res.get('@string/controls.app_name'))
 
@@ -189,7 +196,26 @@ class MainApp (MainApp):
         app.signal ('dock')
 
         self.fsel.setProperty('text','..')
-        
+
+    
+    def apply_adduser_(self):   
+        if not files.isfile(f"/etc/users/{self.leUsername.property('text')}"):
+            files.create (f"/etc/users/{self.leUsername.property('text')}")
+            files.mkdir (f"/desk/{self.leUsername.property('text')}")
+            control.write_record ('code',hashlib.sha3_512(self.lePassword.property('text').encode()).hexdigest(),f"/etc/users/{self.leUsername.property('text')}")
+            control.write_record ('fullname',self.leFullName.property('text'),f"/etc/users/{self.leUsername.property('text')}")
+            control.write_record ('profile','@icon/breeze-users',f"/etc/users/{self.leUsername.property('text')}")
+            control.write_record ('email',self.leEmail.property('text'),f"/etc/users/{self.leUsername.property('text')}")
+            control.write_record ('phone',self.lePhone.property('text'),f"/etc/users/{self.leUsername.property('text')}")
+            control.write_record ('birthday',self.leBirthday.property('text'),f"/etc/users/{self.leUsername.property('text')}")
+            control.write_record ('blood_type',self.cbBloodtype.property('currentValue'),f"/etc/users/{self.leUsername.property('text')}")
+            control.write_record ('gender',self.cbGender.property('currentValue'),f"/etc/users/{self.leUsername.property('text')}")
+
+            if self.cbSudoers.property('checked'):
+                files.write ('/etc/sudoers',f"{self.leUsername.property('text')}\n")
+
+            self.addUserModel()
+            self.fsel.setProperty('text','..')
 
     def getdata (self,name):
         x = control.read_record(name,f'/etc/users/{self.username}')
@@ -197,6 +223,13 @@ class MainApp (MainApp):
             x = res.getdata(name)
 
         return x
+
+    def adduser_(self):
+        self.adduser_exec.setProperty('visible',True)
+        self.users_exec.setProperty('visible',False)
+        self.back.setProperty('visible',False)
+        self.back_users.setProperty('visible',True)
+        self.adduser.setProperty('visible',False)
 
     def __init__(self):
         super(MainApp, self).__init__()
@@ -220,6 +253,7 @@ class MainApp (MainApp):
         self.users = self.findChild ('users')
         self.users_exec = self.findChild ('users_exec')
         self.users.setProperty('text',res.get('@string/users.app_name'))
+        self.adduser_exec = self.findChild('adduser_exec')
 
         self.btnChange_desktop = self.findChild('btnChange_desktop')
         self.btnChange_desktop.setProperty('text',res.get('@string/wallpaper.desktop'))
@@ -239,6 +273,9 @@ class MainApp (MainApp):
         self.imgChange_unlock = self.findChild('imgChange_unlock')
         self.imgChange_enter = self.findChild('imgChange_enter')
 
+        self.adduser = self.findChild('adduser')
+        self.back_users = self.findChild('back_users')
+
         self.cbDock = self.findChild ('cbDock')
         self.apply = self.findChild('apply')
         self.cancel = self.findChild('cancel')
@@ -250,6 +287,18 @@ class MainApp (MainApp):
         self.txtDock.setProperty('text',res.get('@string/controls.dock_location'))
         self.txtWallpapers = self.findChild ('txtWallpapers')
         self.txtWallpapers.setProperty('text',res.get('@string/controls.change_wallpaper'))
+
+        # add user objects #
+        self.leUsername = self.findChild('leUsername')
+        self.lePassword = self.findChild('lePassword')
+        self.leEmail = self.findChild('leEmail')
+        self.lePhone = self.findChild('lePhone')
+        self.leBirthday = self.findChild('leBirthday')
+        self.cbBloodtype = self.findChild('cbBloodtype')
+        self.cbGender = self.findChild('cbGender')
+        self.cbSudoers = self.findChild('cbSudoers')
+        self.leFullName = self.findChild('leFullName')
+        self.apply2 = self.findChild('apply2')
 
         # Get backgrounds #
         self.desktop_bg = self.getdata("desktop.background")
@@ -292,6 +341,8 @@ class MainApp (MainApp):
         elif self.getdata('dock')=='windows': 
             self.dock_location = 4
             self.cbDock.setProperty('currentIndex',4)
+
+        self.adduser.clicked.connect (self.adduser_)
 
         self.loop()
 

@@ -42,7 +42,7 @@ ApplicationWindow {
         height: 70
 
         RowLayout {
-                        anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenter: parent.verticalCenter
 
             ToolButton {
                 anchors.leftMargin: 20
@@ -54,6 +54,26 @@ ApplicationWindow {
                 onClicked: {
                     fsel.text = '..'
                 }
+            }
+
+            ToolButton {
+                anchors.leftMargin: 20
+                anchors.rightMargin: 20
+                icon.source: 'file:///stor/usr/share/icons/breeze-back.svg'
+                icon.color: "white"
+                objectName: "back_users"
+                visible: false
+                onClicked: {
+                    fsel.text = 'users'
+                }
+            }
+            ToolButton {
+                anchors.leftMargin: 20
+                anchors.rightMargin: 20
+                icon.source: 'file:///stor/usr/share/icons/breeze-new.svg'
+                icon.color: "white"
+                objectName: "adduser"
+                visible: false
             }
         }
         Text {
@@ -263,6 +283,99 @@ ApplicationWindow {
                 objectName: "cancel"
                 onClicked: {
                     fsel.text = '..'
+                }
+                anchors.bottomMargin: 20
+            }
+        }
+
+        /* Add User */
+        Rectangle {
+            objectName: "adduser_exec"
+            id: adduser_exec
+            visible: false
+            width: file.width
+            height: file.height-70
+
+            Column {
+                anchors.centerIn: parent
+                width: parent.width/2
+
+                TextField {
+                    placeholderText: "Username"
+                    width: parent.width
+                    font.family: "IRANSans"
+                    id: leUsername
+                    objectName: "leUsername"
+                }
+                TextField {
+                    placeholderText: "Password"
+                    width: parent.width
+                    font.family: "IRANSans"
+                    id: lePassword
+                    objectName: "lePassword"
+                    echoMode: TextInput.Password
+                }
+                TextField {
+                    placeholderText: "Full name"
+                    width: parent.width
+                    font.family: "IRANSans"
+                    id: leFullName
+                    objectName: "leFullName"
+                }
+                TextField {
+                    placeholderText: "Email"
+                    width: parent.width
+                    font.family: "IRANSans"
+                    id: leEmail
+                    objectName: "leEmail"
+                }
+                TextField {
+                    placeholderText: "Phone"
+                    width: parent.width
+                    font.family: "IRANSans"
+                    id: lePhone
+                    objectName: "lePhone"
+                }
+                TextField {
+                    placeholderText: "Birthday"
+                    width: parent.width
+                    font.family: "IRANSans"
+                    id: leBirthday
+                    objectName: "leBirthday"
+                }
+                ComboBox {
+                    model: ["Male","Female"]
+                    objectName: "cbGender"
+                }
+                ComboBox {
+                    model: ["O+","A+","B+","AB+","O-","A-","B-","AB-"]
+                    objectName: "cbBloodtype"
+                }
+                CheckBox {
+                    text: "Sudoers"
+                    objectName: "cbSudoers"
+                }
+            }
+            Button {
+                text: "Apply"
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                font.family: "IRANSans"
+                id: apply2
+                objectName: "apply2"
+                anchors.bottomMargin: 20
+            }
+            Button {
+                text: "Cancel"
+                anchors.bottom: parent.bottom
+                font.family: "IRANSans"
+                anchors.right: apply2.left
+                anchors.rightMargin: 20
+                id: cancel2
+                objectName: "cancel2"
+                onClicked: {
+                    fsel.text = 'users'
                 }
                 anchors.bottomMargin: 20
             }
