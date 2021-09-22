@@ -35,6 +35,12 @@ ApplicationWindow {
         objectName: 'fsela'
     }
 
+    Text {
+        visible: false
+        id: usel
+        objectName: "usel"
+    }
+
     ToolBar {
         id: toolbar
         anchors.top: parent.top
@@ -288,6 +294,117 @@ ApplicationWindow {
             }
         }
 
+        /* Show User */
+        Rectangle {
+            objectName: "showuser_exec"
+            id: showuser_exec
+            visible: false
+            width: file.width
+            height: file.height-70
+
+            Column {
+                anchors.centerIn: parent
+                width: parent.width/2
+
+                
+
+                ToolButton {
+                    anchors.horizontalCenter: parent.horizontalCenter   
+                    width: parent.width/3
+                    height: parent.width/3    
+                    background: Image {
+                        source: "file:///stor/usr/share/icons/breeze-users.svg"
+                        objectName: "imgProfile_show"
+                        width: parent.width
+                        height: parent.height
+                        id: imgProfile_show
+                        sourceSize: Qt.size( imgProfile_show.width, imgProfile_show.height )
+                    }
+                    objectName: "btnProfile_show"
+                }
+
+
+                TextField {
+                    placeholderText: "Username"
+                    width: parent.width
+                    enabled: false
+                    font.family: "IRANSans"
+                    id: leUsername_show
+                    objectName: "leUsername_show"
+                }
+                TextField {
+                    placeholderText: "Full name"
+                    width: parent.width
+                    font.family: "IRANSans"
+                    id: leFullName_show
+                    objectName: "leFullName_show"
+                }
+                TextField {
+                    placeholderText: "Email"
+                    width: parent.width
+                    font.family: "IRANSans"
+                    id: leEmail_show
+                    objectName: "leEmail_show"
+                }
+                TextField {
+                    placeholderText: "Phone"
+                    width: parent.width
+                    font.family: "IRANSans"
+                    id: lePhone_show
+                    objectName: "lePhone_show"
+                }
+                TextField {
+                    placeholderText: "Birthday"
+                    width: parent.width
+                    font.family: "IRANSans"
+                    id: leBirthday_show
+                    objectName: "leBirthday_show"
+                }
+                ComboBox {
+                    model: ["Male","Female"]
+                    objectName: "cbGender_show"
+                }
+                ComboBox {
+                    model: ["O+","A+","B+","AB+","O-","A-","B-","AB-"]
+                    objectName: "cbBloodtype_show"
+                }
+                CheckBox {
+                    text: "Sudoers"
+                    objectName: "cbSudoers_show"
+                }
+            }
+            Button {
+                text: "Save changes"
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                font.family: "IRANSans"
+                id: savechanges
+                objectName: "savechanges"
+                anchors.bottomMargin: 20
+            }
+            Button {
+                text: "Change password"
+                anchors.bottom: parent.bottom
+                anchors.rightMargin: 20
+                font.family: "IRANSans"
+                anchors.right: savechanges.left
+                id: changepassword
+                objectName: "changepassword"
+                anchors.bottomMargin: 20
+            }
+            Button {
+                text: "Remove"
+                anchors.bottom: parent.bottom
+                anchors.rightMargin: 20
+                font.family: "IRANSans"
+                anchors.right: changepassword.left
+                id: removeuser
+                objectName: "removeuser"
+                anchors.bottomMargin: 20
+            }
+        }
+
         /* Add User */
         Rectangle {
             objectName: "adduser_exec"
@@ -357,7 +474,7 @@ ApplicationWindow {
                 }
             }
             Button {
-                text: "Apply"
+                text: "Add"
                 anchors.bottom: parent.bottom
                 anchors.right: parent.right
                 anchors.rightMargin: 20
@@ -409,6 +526,8 @@ ApplicationWindow {
                             anchors.fill: parent
                             acceptedButtons: Qt.LeftButton | Qt.RightButton
                             onDoubleClicked: {
+                                usel.text = model.username
+                                fsel.text = "showuser"
                             }
                         }
 

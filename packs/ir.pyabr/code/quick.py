@@ -103,7 +103,10 @@ class MainApp (QtQml.QQmlApplicationEngine):
         for i in listusers:
             it = QtGui.QStandardItem(i)
             it.setData(i,self.Username)
-            it.setData(control.read_record('fullname',f'/etc/users/{i}'),self.FullName)
+            if control.read_record('fullname',f'/etc/users/{i}')=='':
+                it.setData(i,self.FullName)
+            else:
+                it.setData(control.read_record('fullname',f'/etc/users/{i}'),self.FullName)
             if control.read_record('profile',f'/etc/users/{i}').startswith('@icon/'):
                 it.setData(res.qmlget(control.read_record('profile',f'/etc/users/{i}')),self.Profile)
             else:

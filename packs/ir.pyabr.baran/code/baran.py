@@ -268,9 +268,8 @@ class Enter (MainApp):
         self._password.setProperty('placeholderText', res.get('@string/baran.password_placeholder'))
 
     def login_(self):
-        if self._password.property("text")=='':
-            pass
-        elif control.read_record('code',f'/etc/users/{self.username}')==hashlib.sha3_512(self._password.property("text").encode()).hexdigest():
+
+        if control.read_record('code',f'/etc/users/{self.username}')==hashlib.sha3_512(self._password.property("text").encode()).hexdigest():
             self.close()
             self.desktop = Desktop([self.Backend,self.username,self._password.property("text")])
         else:
@@ -380,7 +379,10 @@ class Enter (MainApp):
         self._exit = self.findChild( 'exit')
         self._exit.setProperty('title', res.get('@string/baran.powermenu'))
         self._account = self.findChild('account')
-        self._account.setProperty('title',self.getdata("fullname"))
+        if self.getdata("fullname")=='':
+            self._account.setProperty('title',self.username)
+        else:   
+            self._account.setProperty('title',self.getdata("fullname"))
         self._background = self.findChild( 'background')
 
         if self.getdata("enter.background").startswith('@background/'):        
@@ -406,9 +408,8 @@ class Unlock (MainApp):
         self._password.setProperty('enabled',True)
 
     def unlock_(self):
-        if self._password.property("text")=='':
-            pass
-        elif control.read_record('code',f'/etc/users/{self.Env.username}')==hashlib.sha3_512(self._password.property("text").encode()).hexdigest():
+
+        if control.read_record('code',f'/etc/users/{self.Env.username}')==hashlib.sha3_512(self._password.property("text").encode()).hexdigest():
             self.close()
         else:
             self._password.setProperty('text','')
@@ -724,6 +725,12 @@ class Desktop (MainApp):
             files.create('/proc/info/sig')
             self.switchuser_()
 
+        elif files.readall('/proc/info/sig')=='username':
+            if self.getdata("fullname")=='':
+                self._account.setProperty('title',self.username)
+            else:   
+                self._account.setProperty('title',self.getdata("fullname"))
+
         elif files.readall('/proc/info/sig')=='background':
             try:
                 if self.getdata('desktop.background').startswith('@background/'):
@@ -962,7 +969,10 @@ exit''')
         self._lang = self.findChild('lang')
         self._lang.setProperty('title', res.get('@string/baran.keyless'))
         self._account = self.findChild('account')
-        self._account.setProperty('title',self.getdata("fullname"))
+        if self.getdata("fullname")=='':
+            self._account.setProperty('title',self.username)
+        else:   
+            self._account.setProperty('title',self.getdata("fullname"))
         self._account_setting = self.findChild('account_setting')
         self._account_setting.setProperty('text',res.get('@string/baran.accountsettings'))
         self._background_app = self.findChild('background_app')

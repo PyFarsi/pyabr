@@ -111,6 +111,53 @@ class MainApp (MainApp):
                 self.title.setProperty('text',res.get('@string/users.app_name'))
                 self.apply2.clicked.connect (self.apply_adduser_)
 
+            elif self.fsel.property('text')=='showuser':
+                self.showuser_exec.setProperty('visible',True)
+                self.users_exec.setProperty('visible',False)
+                self.back.setProperty('visible',False)
+                self.back_users.setProperty('visible',True)
+                self.adduser.setProperty('visible',False)
+                userdb = f'/etc/users/{self.usel.property("text")}'
+                fullname = control.read_record ('fullname',userdb)
+                email = control.read_record ('email',userdb)
+                phone = control.read_record ('phone',userdb)
+                gender = control.read_record ('gender',userdb)
+                blood_type = control.read_record ('blood_type',userdb)
+                birthday = control.read_record ('birthday',userdb)
+                profile = control.read_record ('profile',userdb)
+
+                if fullname=='':
+                    self.title.setProperty('text',self.usel.property("text"))
+                    
+                else:
+                    self.title.setProperty('text',fullname)
+
+                self.leUsername_show.setProperty('text',self.usel.property("text"))
+                self.leFullName_show.setProperty('text',fullname)
+                self.leEmail_show.setProperty('text',email)
+                self.lePhone_show.setProperty('text',phone)
+                self.cbGender_show.setProperty('currentValue',gender)
+                self.cbBloodtype_show.setProperty('currentValue',blood_type)
+                self.leBirthday_show.setProperty('text',birthday)
+
+                if self.usel.property('text')=='root':
+                    self.cbSudoers_show.setProperty('visible',False)
+                    self.removeuser.setProperty('visible',False)
+                else:
+                    if self.usel.property('text') in files.readall('/etc/sudoers'):
+                        self.cbSudoers_show.setProperty('checked',True)
+                    else:
+                        self.cbSudoers_show.setProperty('checked',False)
+
+
+                if profile.startswith('@icon/'):
+                    self.imgProfile_show.setProperty('source',res.qmlget(profile))
+                else:
+                    self.imgProfile_show.setProperty('source',files.input_qml(profile))
+                self.btnProfile_show.clicked.connect (self.change_profile_img_)
+                self.savechanges.clicked.connect (self.savechanges_)
+                self.removeuser.clicked.connect (self.removeuser_)
+
             elif self.fsel.property('text')=='..':
                 self.controlview.setProperty('visible',True)
                 self.sysinfo_exec.setProperty('visible',False)
@@ -118,6 +165,7 @@ class MainApp (MainApp):
                 self.adduser.setProperty('visible',False)
                 self.back_users.setProperty('visible',False)
                 self.users_exec.setProperty('visible',False)
+                self.showuser_exec.setProperty('visible',False)
                 self.adduser_exec.setProperty('visible',False)
                 self.back.setProperty('visible',False)
                 self.title.setProperty('text',res.get('@string/controls.app_name'))
@@ -197,9 +245,15 @@ class MainApp (MainApp):
 
         self.fsel.setProperty('text','..')
 
+    def clean_(self):
+        self.apply2.setProperty('enabled',True)
+        self.leUsername.setProperty('placeholderText','Username')
+        self.leUsername.setProperty('enabled',True)
     
     def apply_adduser_(self):   
-        if not files.isfile(f"/etc/users/{self.leUsername.property('text')}"):
+        if not files.isfile(f"/etc/users/{self.leUsername.property('text')}") and not self.leUsername.property('text')=='guest':
+            self.apply2.setProperty('enabled',True)
+            
             files.create (f"/etc/users/{self.leUsername.property('text')}")
             files.mkdir (f"/desk/{self.leUsername.property('text')}")
             control.write_record ('code',hashlib.sha3_512(self.lePassword.property('text').encode()).hexdigest(),f"/etc/users/{self.leUsername.property('text')}")
@@ -215,7 +269,13 @@ class MainApp (MainApp):
                 files.write ('/etc/sudoers',f"{self.leUsername.property('text')}\n")
 
             self.addUserModel()
-            self.fsel.setProperty('text','..')
+            self.fsel.setProperty('text','users')
+        else:
+            self.apply2.setProperty('enabled',False)
+            #self.leUsername.setProperty('text','')
+            self.leUsername.setProperty('enabled',False)
+            self.leUsername.setProperty('placeholderText','This user is already exists')
+            QTimer.singleShot(3000,self.clean_)
 
     def getdata (self,name):
         x = control.read_record(name,f'/etc/users/{self.username}')
@@ -226,11 +286,55 @@ class MainApp (MainApp):
 
     def adduser_(self):
         self.adduser_exec.setProperty('visible',True)
+        self.title.setProperty('text',res.get('@string/users.add'))
         self.users_exec.setProperty('visible',False)
         self.back.setProperty('visible',False)
         self.back_users.setProperty('visible',True)
         self.adduser.setProperty('visible',False)
 
+    profile_show = '@icon/breeze-users'
+
+    def change_profile_img_(self):
+        self.x = Select (self.change_profile_img__)
+
+    def change_profile_img__(self,filename):
+        self.imgProfile_show.setProperty('source',files.input_qml(filename))
+        self.profile_show = filename
+
+    def savechanges_(self):
+        userdb = f"/etc/users/{self.usel.property('text')}"
+
+        control.write_record('fullname',self.leFullName_show.property('text'),userdb)
+        control.write_record('email',self.leEmail_show.property('text'),userdb)
+        control.write_record('phone',self.lePhone_show.property('text'),userdb)
+        control.write_record('birthday',self.leBirthday_show.property('text'),userdb)
+        control.write_record('gender',self.cbSudoers_show.property('currentValue'),userdb)
+        control.write_record('blood_type',self.cbBloodtype_show.property('currentValue'),userdb)
+        control.write_record('profile',self.profile_show,userdb)   
+
+        app.signal('username')
+
+        if self.cbSudoers_show.property('checked'):
+            files.write ('/etc/sudoers',self.usel.property('text')+"\n")
+        else:
+            x = files.readall('/etc/sudoers').replace(self.usel.property('text'),'')
+            files.write('/etc/sudoers',x)
+
+        self.addUserModel()
+        self.fsel.setProperty('text','users')
+
+    def removeuser_(self):
+        self.x = Ask(f'Remove {self.usel.property("text")}',f'Do you want to remove {self.usel.property("text")}? this means lost all data in selected user.',self.removeuser__)
+
+    def removeuser__(self,yes):
+        if yes:
+            try:
+                files.remove (f'/etc/users/{self.usel.property("text")}')
+                files.removedirs (f'/desk/{self.usel.property("text")}')
+                self.addUserModel()
+                self.fsel.setProperty('text','users')
+            except:
+                pass
     def __init__(self):
         super(MainApp, self).__init__()
         self.addUserModel()
@@ -299,6 +403,24 @@ class MainApp (MainApp):
         self.cbSudoers = self.findChild('cbSudoers')
         self.leFullName = self.findChild('leFullName')
         self.apply2 = self.findChild('apply2')
+        self.showuser_exec = self.findChild ('showuser_exec')
+        self.usel = self.findChild ('usel')
+
+        self.leUsername_show = self.findChild('leUsername_show')
+        self.lePassword_show = self.findChild('lePassword_show')
+        self.leEmail_show = self.findChild('leEmail_show')
+        self.lePhone_show = self.findChild('lePhone_show')
+        self.leBirthday_show = self.findChild('leBirthday_show')
+        self.cbBloodtype_show = self.findChild('cbBloodtype_show')
+        self.cbGender_show = self.findChild('cbGender_show')
+        self.cbSudoers_show = self.findChild('cbSudoers_show')
+        self.leFullName_show = self.findChild('leFullName_show')
+        self.imgProfile_show = self.findChild('imgProfile_show')
+        self.btnProfile_show = self.findChild('btnProfile_show')
+        self.savechanges = self.findChild('savechanges')
+        self.changepassword = self.findChild('changepassword')
+        self.removeuser = self.findChild('removeuser')
+
 
         # Get backgrounds #
         self.desktop_bg = self.getdata("desktop.background")
