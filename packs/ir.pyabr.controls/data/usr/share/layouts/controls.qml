@@ -294,6 +294,68 @@ ApplicationWindow {
             }
         }
 
+        /* Change password */
+        Rectangle {
+            objectName: "changepassword_exec"
+            id: changepassword_exec
+            visible: false
+            width: file.width
+            height: file.height-70
+
+             Column {
+                anchors.centerIn: parent
+                width: parent.width/2
+
+                TextField {
+                    placeholderText: "Old Password"
+                    width: parent.width
+                    font.family: "IRANSans"
+                    id: leoldPassword_change
+                    objectName: "leoldPassword_change"
+                    echoMode: TextInput.Password
+                }
+                TextField {
+                    placeholderText: "New Password"
+                    width: parent.width
+                    font.family: "IRANSans"
+                    id: leNewPassword_change
+                    objectName: "leNewPassword_change"
+                    echoMode: TextInput.Password
+                }
+                TextField {
+                    placeholderText: "Confirm the new password"
+                    width: parent.width
+                    font.family: "IRANSans"
+                    id: leConfirmPassword_change
+                    echoMode: TextInput.Password
+                    objectName: "leConfirmPassword_change"
+                }
+            }
+            Button {
+                text: "Change"
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                font.family: "IRANSans"
+                id: savechanges2
+                objectName: "savechanges2"
+                anchors.bottomMargin: 20
+            }
+            Button {
+                text: "Cancel"
+                anchors.bottom: parent.bottom
+                anchors.rightMargin: 20
+                font.family: "IRANSans"
+                anchors.right: savechanges2.left
+                id: cancel3
+                objectName: "cancel3"
+                onClicked: {
+                    fsel.text = "showuser"
+                }
+                anchors.bottomMargin: 20
+            }
+        }
+
         /* Show User */
         Rectangle {
             objectName: "showuser_exec"

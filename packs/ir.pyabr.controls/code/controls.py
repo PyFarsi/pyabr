@@ -156,6 +156,7 @@ class MainApp (MainApp):
                     self.imgProfile_show.setProperty('source',files.input_qml(profile))
                 self.btnProfile_show.clicked.connect (self.change_profile_img_)
                 self.savechanges.clicked.connect (self.savechanges_)
+                self.changepassword.clicked.connect (self.changepassword_show)
                 self.removeuser.clicked.connect (self.removeuser_)
 
             elif self.fsel.property('text')=='..':
@@ -247,8 +248,7 @@ class MainApp (MainApp):
 
     def clean_(self):
         self.apply2.setProperty('enabled',True)
-        self.leUsername.setProperty('placeholderText','Username')
-        self.leUsername.setProperty('enabled',True)
+        self.title.setProperty('text',res.get('@string/users.add'))
     
     def apply_adduser_(self):   
         if not files.isfile(f"/etc/users/{self.leUsername.property('text')}") and not self.leUsername.property('text')=='guest':
@@ -273,8 +273,7 @@ class MainApp (MainApp):
         else:
             self.apply2.setProperty('enabled',False)
             #self.leUsername.setProperty('text','')
-            self.leUsername.setProperty('enabled',False)
-            self.leUsername.setProperty('placeholderText','This user is already exists')
+            self.title.setProperty('text','This user is already exists')
             QTimer.singleShot(3000,self.clean_)
 
     def getdata (self,name):
@@ -322,6 +321,39 @@ class MainApp (MainApp):
 
         self.addUserModel()
         self.fsel.setProperty('text','users')
+
+    def changepassword_show(self):
+        self.changepassword_exec.setProperty('visible',True)
+        self.title.setProperty('text',f'Change {self.usel.property("text")} password')
+        self.showuser_exec.setProperty('visible',False)
+        self.back.setProperty('visible',False)
+        self.back_users.setProperty('visible',True)
+        self.adduser.setProperty('visible',False)
+
+
+        self.savechanges2.clicked.connect (self.savechanges2_)
+
+    def clean2_(self):
+        self.title.setProperty('text',f'Change {self.usel.property("text")} password')
+        self.savechanges2.setProperty('enabled',True)
+
+    def savechanges2_(self):
+        userdb = f"/etc/users/{self.usel.property('text')}"
+
+        if control.read_record('code',userdb)==hashlib.sha3_512(self.leoldPassword_change.property('text').encode()).hexdigest():
+            if self.leNewPassword_change.property('text')==self.leCofirmPassword_change.property('text'):
+                control.remove_record('code',userdb)
+                control.write_record ('code',hashlib.sha3_512(self.leNewPassword_change.property('text').encode()).hexdigest(),userdb)
+                self.addUserModel()
+                self.fsel.setProperty('text','showuser')
+            else:
+                self.title.setProperty('text','Passwords mot matched')
+                self.savechanges2.setProperty('enabled',False)
+                QTimer.singleShot(3000,self.clean2_)
+        else:
+            self.title.setProperty('text','Wrong password! try again')
+            self.savechanges2.setProperty('enabled',False)
+            QTimer.singleShot(3000,self.clean2_)
 
     def removeuser_(self):
         self.x = Ask(f'Remove {self.usel.property("text")}',f'Do you want to remove {self.usel.property("text")}? this means lost all data in selected user.',self.removeuser__)
@@ -421,6 +453,13 @@ class MainApp (MainApp):
         self.changepassword = self.findChild('changepassword')
         self.removeuser = self.findChild('removeuser')
 
+
+        self.leoldPassword_change = self.findChild('leoldPassword_change')
+        self.leNewPassword_change = self.findChild('leNewPassword_change')
+        self.leCofirmPassword_change = self.findChild('leConfirmPassword_change')
+        self.savechanges2 = self.findChild('savechanges2')
+        self.changepassword_exec = self.findChild('changepassword_exec')
+        self.cancel3 = self.findChild('cancel3')
 
         # Get backgrounds #
         self.desktop_bg = self.getdata("desktop.background")
