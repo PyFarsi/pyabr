@@ -56,6 +56,20 @@ class MainApp (QtQml.QQmlApplicationEngine):
     Profile = QtCore.Qt.UserRole+1002
     FullName = QtCore.Qt.UserRole+1003
 
+    # Package
+
+    PKG_NAME = QtCore.Qt.UserRole+1000
+    PKG_NAMEX = QtCore.Qt.UserRole+1001
+    PKG_COPYRIGHT =QtCore.Qt.UserRole+1002
+    PKG_LICENSE = QtCore.Qt.UserRole+1003
+    PKG_UNPACK = QtCore.Qt.UserRole+1004
+    PKG_VERSION =QtCore.Qt.UserRole+1005
+    PKG_BUILD = QtCore.Qt.UserRole+1006
+    PKG_MIRROR = QtCore.Qt.UserRole+1007
+    PKG_DESCRIPTION = QtCore.Qt.UserRole+1008
+    PKG_TYPE = QtCore.Qt.UserRole+1009
+    PKG_INSTALLED = QtCore.Qt.UserRole+1010
+
     def ItemModel (self,listRow):
         model = QtGui.QStandardItemModel()
         roles = {
@@ -232,6 +246,57 @@ class MainApp (QtQml.QQmlApplicationEngine):
             model.appendRow(it)
 
         return model
+
+    def PackageModel(self):
+        model = QtGui.QStandardItemModel()
+        roles = {
+            self.PKG_NAME:b'name',
+            self.PKG_NAMEX:b'namex',
+            self.PKG_BUILD:b'build',
+            self.PKG_COPYRIGHT:b'copyright',
+            self.PKG_LICENSE:b'license',
+            self.PKG_DESCRIPTION:b'description',
+            self.PKG_MIRROR:b'mirror',
+            self.PKG_UNPACK:b'unpack',
+            self.PKG_TYPE:b'type',
+            self.PKG_INSTALLED:b'installed',
+            self.PKG_VERSION:b'version'
+        }
+        model.setItemRoleNames(roles)
+
+        packages = files.list('/app/mirrors')
+        packages.sort()
+
+        for i in packages:
+            it = QtGui.QStandardItem(i)
+            if files.isfile (f'/app/packages/{i}'):
+                it.setData(True,self.PKG_INSTALLED)
+            else:
+                it.setData(False,self.PKG_INSTALLED)
+            it.setData(control.read_record('build',f'/app/mirrors/{i}'),self.PKG_BUILD)
+            it.setData(control.read_record('name',f'/app/mirrors/{i}'),self.PKG_NAME)
+            it.setData(control.read_record('license',f'/app/mirrors/{i}'),self.PKG_LICENSE)
+            it.setData(control.read_record('copyright',f'/app/mirrors/{i}'),self.PKG_COPYRIGHT)
+            it.setData(control.read_record('unpack',f'/app/mirrors/{i}'),self.PKG_UNPACK)
+            it.setData(control.read_record('mirror',f'/app/mirrors/{i}'),self.PKG_MIRROR)
+            it.setData(control.read_record('description',f'/app/mirrors/{i}'),self.PKG_DESCRIPTION)
+            it.setData(control.read_record('version',f'/app/mirrors/{i}'),self.PKG_VERSION)
+            
+            if files.isfile (f'/usr/share/applications/{control.read_record("name",f"/app/mirrors/{i}")}.desk'):
+                it.setData('application',self.PKG_TYPE)
+            else:
+                it.setData('package',self.PKG_TYPE)
+
+            locale = res.getdata ('locale')
+            
+            if control.read_record (f'name[{locale}]',f'/app/mirrors/{i}')=='':
+                it.setData( control.read_record ('name[en]',f'/app/mirrors/{i}'),self.PKG_NAMEX)
+            else:
+                it.setData( control.read_record (f'name[{locale}]',f'/app/mirrors/{i}'),self.PKG_NAMEX)
+                
+            model.appendRow(it)
+        return model
+
 
     def addItemModel (self,nameModel,listModel):
         self.newmodel = self.ItemModel(listModel)

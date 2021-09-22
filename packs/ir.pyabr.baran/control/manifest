@@ -7,5 +7,5 @@ unpack: /
 version: 2.0.1
 description: Baran Desktop Enviroment is the default desktop enviroment.
 compile: Yes
-build: 1400-06-12
+build: 1400-06-14
 mirror: https://mirror.pyabr.ir/aras/
