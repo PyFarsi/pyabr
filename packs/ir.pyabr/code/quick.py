@@ -17,6 +17,7 @@
     * English Page:     https://en.pyabr.ir
 '''
 
+from _typeshed import Self
 import json
 from typing import Container
 
@@ -69,6 +70,7 @@ class MainApp (QtQml.QQmlApplicationEngine):
     PKG_DESCRIPTION = QtCore.Qt.UserRole+1008
     PKG_TYPE = QtCore.Qt.UserRole+1009
     PKG_INSTALLED = QtCore.Qt.UserRole+1010
+    PKG_LOGO = QtCore.Qt.UserRole+1011
 
     def ItemModel (self,listRow):
         model = QtGui.QStandardItemModel()
@@ -260,7 +262,8 @@ class MainApp (QtQml.QQmlApplicationEngine):
             self.PKG_UNPACK:b'unpack',
             self.PKG_TYPE:b'type',
             self.PKG_INSTALLED:b'installed',
-            self.PKG_VERSION:b'version'
+            self.PKG_VERSION:b'version',
+            self.PKG_LOGO:b'logo'
         }
         model.setItemRoleNames(roles)
 
@@ -293,6 +296,24 @@ class MainApp (QtQml.QQmlApplicationEngine):
                 it.setData( control.read_record ('name[en]',f'/app/mirrors/{i}'),self.PKG_NAMEX)
             else:
                 it.setData( control.read_record (f'name[{locale}]',f'/app/mirrors/{i}'),self.PKG_NAMEX)
+
+            logo = control.read_record('logo',f'/app/mirrors/{i}')
+
+            if logo.startswith('http://') or logo.startswith('https://'):
+                it.setData(logo,self.PKG_LOGO)
+            elif logo.startswith('@icon/'):
+                it.setData(res.qmlget(logo),self.PKG_LOGO)
+            elif logo=='':
+                # find in application mode
+                xlogo = control.read_record('logo',f'/usr/share/applications/{control.read_record("name",f"/app/mirrors/{i}")}.desk')
+                if xlogo=='':
+                    it.setData(res.qmlget('@icon/breeze-archive'),self.PKG_LOGO)
+                elif xlogo.startswith('@icon/'):
+                    it.setData(res.qmlget(xlogo),self.PKG_LOGO)
+                else:
+                    it.setData(files.input_qml(xlogo),self.PKG_LOGO)
+            else:
+                it.setData(files.input_qml(logo),self.PKG_LOGO)
                 
             model.appendRow(it)
         return model
@@ -309,6 +330,10 @@ class MainApp (QtQml.QQmlApplicationEngine):
     def addUserModel (self):
         self.newmodelx1 = self.UserModel()
         self.rootContext().setContextProperty('UserModel', self.newmodelx1)
+
+    def addPackageModel (self):
+        self.pkgmodel = self.PackageModel()
+        self.rootContext().setContextProperty('PackageModel', self.pkgmodel)
 
     def setProperty(self,name,value):
         self.rootObjects()[0].setProperty(name,value)
