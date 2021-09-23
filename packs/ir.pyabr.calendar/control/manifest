@@ -1,0 +1,12 @@
+name: ir.pyabr.calendar
+name[en]: Calendar
+name[fa]: تقویم
+copyright: (c) 2021 Mani Jamali
+license: GNU GPL v3.0
+unpack: /
+version: 2.0.1
+description: Simple Calendar
+compile: Yes
+entry: calendar_app
+build: 1400-07-01
+mirror: https://mirror.pyabr.ir/aras/

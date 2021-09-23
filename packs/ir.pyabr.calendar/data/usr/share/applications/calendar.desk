@@ -1,0 +1,6 @@
+name[en]: Calendar
+name[fa]: تقویم
+logo: @icon/breeze-calendar
+exec: calendar_app
+application: Yes
+category: tools

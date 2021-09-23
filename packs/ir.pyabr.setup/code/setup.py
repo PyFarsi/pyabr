@@ -17,7 +17,6 @@
     * English Page:     https://en.pyabr.ir
 '''
 
-from typing import Container
 from pyabr.core import *
 from pyabr.quick import *
 import hashlib
@@ -128,6 +127,7 @@ class MainApp (MainApp):
             print ( self.cmLang.property('index'))
 
             self.close()
+            System ('paye rm setup')
             app.signal('logout')
 
     def __init__(self):

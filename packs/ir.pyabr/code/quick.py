@@ -277,6 +277,7 @@ class MainApp (QtQml.QQmlApplicationEngine):
                 it.setData(True,self.PKG_INSTALLED)
             else:
                 it.setData(False,self.PKG_INSTALLED)
+                
             it.setData(control.read_record('build',f'/app/mirrors/{i}'),self.PKG_BUILD)
             it.setData(control.read_record('name',f'/app/mirrors/{i}'),self.PKG_NAME)
             it.setData(control.read_record('license',f'/app/mirrors/{i}'),self.PKG_LICENSE)
@@ -297,8 +298,6 @@ class MainApp (QtQml.QQmlApplicationEngine):
                 it.setData( control.read_record ('name[en]',f'/app/mirrors/{i}'),self.PKG_NAMEX)
             else:
                 it.setData( control.read_record (f'name[{locale}]',f'/app/mirrors/{i}'),self.PKG_NAMEX)
-
-            logo = control.read_record('logo',f'/app/mirrors/{i}')
 
             i = i.replace('.manifest','')
 

@@ -2165,6 +2165,16 @@ package = Package()
 class Res:
     def __init__(self):
         pass
+
+    def getuserdata (self,name):
+        try:
+            x = control.read_record(name,f'/etc/users/{files.readall("/proc/info/su")}')
+            if x=='' or x==None:
+                x = self.getdata(name)
+        except:
+            x = self.getdata(name)
+
+        return x
     # get app data #
     def etc (self,app,name):
         control = Control()
