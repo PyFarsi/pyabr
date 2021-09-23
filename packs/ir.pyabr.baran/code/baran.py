@@ -802,6 +802,7 @@ class Desktop (MainApp):
             
 
         # Check signals #
+        files.write('/proc/info/su',self.username)
         self.signal()
 
         if not self._keyless.property('text')=='':
