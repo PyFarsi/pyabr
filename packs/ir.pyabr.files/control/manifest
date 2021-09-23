@@ -7,5 +7,6 @@ unpack: /
 version: 2.0.0
 description: Cloud & NonCloud File manager for Pyabr
 compile: Yes
-build: 1400-06-14
+entry: files
+build: 1400-07-01
 mirror: https://mirror.pyabr.ir/aras/

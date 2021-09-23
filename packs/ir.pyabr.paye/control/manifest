@@ -7,5 +7,6 @@ unpack: /
 version: 2.0.1
 description: Paye package manager as a default package manager that can control the system
 compile: Yes
-build: 1400-06-14
+entry: paye
+build: 1400-07-01
 mirror: https://mirror.pyabr.ir/aras/

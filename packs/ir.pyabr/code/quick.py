@@ -17,10 +17,7 @@
     * English Page:     https://en.pyabr.ir
 '''
 
-from _typeshed import Self
 import json
-from typing import Container
-
 from PyQt5 import QtQml, QtWidgets, QtCore, QtGui, QtQuick
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -270,6 +267,10 @@ class MainApp (QtQml.QQmlApplicationEngine):
         packages = files.list('/app/mirrors')
         packages.sort()
 
+        for j in packages:
+            if not j.endswith('.manifest'):
+                packages.remove(j)
+
         for i in packages:
             it = QtGui.QStandardItem(i)
             if files.isfile (f'/app/packages/{i}'):
@@ -299,22 +300,20 @@ class MainApp (QtQml.QQmlApplicationEngine):
 
             logo = control.read_record('logo',f'/app/mirrors/{i}')
 
-            if logo.startswith('http://') or logo.startswith('https://'):
-                it.setData(logo,self.PKG_LOGO)
-            elif logo.startswith('@icon/'):
-                it.setData(res.qmlget(logo),self.PKG_LOGO)
-            elif logo=='':
-                # find in application mode
-                xlogo = control.read_record('logo',f'/usr/share/applications/{control.read_record("name",f"/app/mirrors/{i}")}.desk')
-                if xlogo=='':
-                    it.setData(res.qmlget('@icon/breeze-archive'),self.PKG_LOGO)
-                elif xlogo.startswith('@icon/'):
-                    it.setData(res.qmlget(xlogo),self.PKG_LOGO)
-                else:
-                    it.setData(files.input_qml(xlogo),self.PKG_LOGO)
+            i = i.replace('.manifest','')
+
+            if files.isfile (f'/app/mirrors/{i}.svg'):
+                it.setData(files.input_qml(f'/app/mirrors/{i}.svg'),self.PKG_LOGO)
+            elif files.isfile (f'/app/mirrors/{i}.png'):
+                it.setData(files.input_qml(f'/app/mirrors/{i}.png'),self.PKG_LOGO)
+            elif files.isfile (f'/app/mirrors/{i}.jpg'):
+                it.setData(files.input_qml(f'/app/mirrors/{i}.jpg'),self.PKG_LOGO)
+            elif files.isfile (f'/app/mirrors/{i}.jpeg'):
+                it.setData(files.input_qml(f'/app/mirrors/{i}.jpeg'),self.PKG_LOGO)
+            elif files.isfile (f'/app/mirrors/{i}.gif'):
+                it.setData(files.input_qml(f'/app/mirrors/{i}.gif'),self.PKG_LOGO)
             else:
-                it.setData(files.input_qml(logo),self.PKG_LOGO)
-                
+                it.setData(res.qmlget('@icon/breeze-archive'),self.PKG_LOGO)
             model.appendRow(it)
         return model
 
