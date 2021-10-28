@@ -1,9 +1,8 @@
-import QtQuick 2.0
-import QtQuick.Window 2.3
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.0
-import QtQuick.Controls 2.3
-
+import QtQuick
+import QtQuick.Window
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Controls.Material
 
 ApplicationWindow {
     id: enter
@@ -82,7 +81,9 @@ ApplicationWindow {
     }
 
     background: Rectangle {
+        anchors.fill: parent
         Image {
+            anchors.fill: parent
             source: "../../../usr/share/backgrounds/breeze-splash.jpg"
             id: background
             objectName: "background"

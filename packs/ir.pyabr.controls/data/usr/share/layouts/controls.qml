@@ -1,11 +1,8 @@
-import QtQuick 2.0
-import QtQuick.Window 2.3
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.0
-import QtQuick.Controls 1.4
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.3
-import QtQuick.Controls.Styles 1.4
+import QtQuick
+import QtQuick.Window
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Controls.Material
 
 ApplicationWindow {
     id: file
@@ -19,6 +16,20 @@ ApplicationWindow {
         text: ''
         id: fsel
         objectName: "fsel"
+    }
+
+    Text {
+        visible: false
+        text: ''
+        id: rsel
+        objectName: 'rsel'
+    }
+
+    Text {
+        visible: false
+        text: ''
+        id: wsel
+        objectName: 'wsel'
     }
 
     Text {
@@ -39,6 +50,12 @@ ApplicationWindow {
         visible: false
         id: usel
         objectName: "usel"
+    }
+
+    Text {
+        visible: false
+        id: lsel
+        objectName: "lsel"
     }
 
     ToolBar {
@@ -93,19 +110,12 @@ ApplicationWindow {
         }
     }
 
-    ScrollView {
-        width: parent.width
-        height: parent.height-80
-        anchors.topMargin: 10
-        anchors.top: toolbar.bottom
-        clip: true
-        id: scroll
-
-        /* Appearanc */
+    /* Appearanc */
         Rectangle {
             objectName: "apper_exec"
             visible: false
             width: file.width
+            anchors.top: toolbar.bottom
             height: file.height-70
             
 
@@ -294,10 +304,60 @@ ApplicationWindow {
             }
         }
 
+        /* Network */
+        Rectangle {
+            objectName: "network_exec"
+            visible: false
+            id: network_exec
+            anchors.top: toolbar.bottom
+            width: file.width
+            height: file.height-70
+
+            ControlNetwork {}
+        }
+
+        /* Appearanc */
+        Rectangle {
+            objectName: "display_exec"
+            visible: false
+            id: display_exec
+            anchors.top: toolbar.bottom
+            width: file.width
+            height: file.height-70
+            
+            ControlDisplayManager {}
+
+            Button {
+                text: "Change"
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                font.family: "IRANSans"
+                id: change_reso
+                objectName: "change_reso"
+                anchors.bottomMargin: 20
+            }
+            Button {
+                text: "Cancel"
+                anchors.bottom: parent.bottom
+                anchors.rightMargin: 20
+                font.family: "IRANSans"
+                anchors.right: change_reso.left
+                id: cancel_reso
+                objectName: "cancel_reso"
+                onClicked: {
+                    fsel.text = ".."
+                }
+                anchors.bottomMargin: 20
+            }
+
+        }
+
         /* Change password */
         Rectangle {
             objectName: "changepassword_exec"
             id: changepassword_exec
+            anchors.top: toolbar.bottom
             visible: false
             width: file.width
             height: file.height-70
@@ -362,6 +422,7 @@ ApplicationWindow {
             id: showuser_exec
             visible: false
             width: file.width
+            anchors.top: toolbar.bottom
             height: file.height-70
 
             Column {
@@ -400,35 +461,6 @@ ApplicationWindow {
                     font.family: "IRANSans"
                     id: leFullName_show
                     objectName: "leFullName_show"
-                }
-                TextField {
-                    placeholderText: "Email"
-                    width: parent.width
-                    font.family: "IRANSans"
-                    id: leEmail_show
-                    objectName: "leEmail_show"
-                }
-                TextField {
-                    placeholderText: "Phone"
-                    width: parent.width
-                    font.family: "IRANSans"
-                    id: lePhone_show
-                    objectName: "lePhone_show"
-                }
-                TextField {
-                    placeholderText: "Birthday"
-                    width: parent.width
-                    font.family: "IRANSans"
-                    id: leBirthday_show
-                    objectName: "leBirthday_show"
-                }
-                ComboBox {
-                    model: ["Male","Female"]
-                    objectName: "cbGender_show"
-                }
-                ComboBox {
-                    model: ["O+","A+","B+","AB+","O-","A-","B-","AB-"]
-                    objectName: "cbBloodtype_show"
                 }
                 CheckBox {
                     text: "Sudoers"
@@ -471,6 +503,7 @@ ApplicationWindow {
         Rectangle {
             objectName: "adduser_exec"
             id: adduser_exec
+            anchors.top: toolbar.bottom
             visible: false
             width: file.width
             height: file.height-70
@@ -500,35 +533,6 @@ ApplicationWindow {
                     font.family: "IRANSans"
                     id: leFullName
                     objectName: "leFullName"
-                }
-                TextField {
-                    placeholderText: "Email"
-                    width: parent.width
-                    font.family: "IRANSans"
-                    id: leEmail
-                    objectName: "leEmail"
-                }
-                TextField {
-                    placeholderText: "Phone"
-                    width: parent.width
-                    font.family: "IRANSans"
-                    id: lePhone
-                    objectName: "lePhone"
-                }
-                TextField {
-                    placeholderText: "Birthday"
-                    width: parent.width
-                    font.family: "IRANSans"
-                    id: leBirthday
-                    objectName: "leBirthday"
-                }
-                ComboBox {
-                    model: ["Male","Female"]
-                    objectName: "cbGender"
-                }
-                ComboBox {
-                    model: ["O+","A+","B+","AB+","O-","A-","B-","AB-"]
-                    objectName: "cbBloodtype"
                 }
                 CheckBox {
                     text: "Sudoers"
@@ -565,63 +569,46 @@ ApplicationWindow {
             objectName: "users_exec"
             id: users_exec
             visible: false
+            anchors.top: toolbar.bottom
             width: file.width
             height: file.height-70
 
-            Column {
-                spacing: 2
-                width: users_exec.width
-                height: users_exec.height
+            ControlUsers {}
+            
+        }
+        /* Languages */
+        Rectangle {
+            objectName: "languages_exec"
+            id: languages_exec
+            visible: false
+            anchors.top: toolbar.bottom
+            width: file.width
+            height: file.height-70
 
-
-                Repeater {
-                    model: UserModel
-
-                    Rectangle {
-                        visible: true
-
-                        width: parent.width
-                        height: parent.width/10
-                        color: "transparent"
-
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton | Qt.RightButton
-                            onDoubleClicked: {
-                                usel.text = model.username
-                                fsel.text = "showuser"
-                            }
-                        }
-
-                        Image {
-                                source: model.profile
-                                anchors.left: parent.left
-                                anchors.leftMargin: 20
-                                anchors.rightMargin: 20
-                                width: parent.height
-                                sourceSize: Qt.size( parent.width, parent.height )
-                                height: parent.height
-                                id: imagexx
-                        }
-
-                        Text {
-                            text: model.fullname
-                            font.family: "IRANSans"
-                            font.pixelSize: 18
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.left: imagexx.right
-                            anchors.leftMargin: 20
-                            anchors.rightMargin: 20
-                        }
-
-                        Rectangle {
-                            width: parent.width
-                            height: 1
-                            color: "silver"
-                            anchors.top: parent.bottom
-                        }
-                    }
+            Languages {}
+            
+            Button {
+                text: "Apply"
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                font.family: "IRANSans"
+                id: apply3
+                objectName: "apply3"
+                anchors.bottomMargin: 20
+            }
+            Button {
+                text: "Cancel"
+                anchors.bottom: parent.bottom
+                font.family: "IRANSans"
+                anchors.right: apply3.left
+                anchors.rightMargin: 20
+                id: cancel4
+                objectName: "cancel4"
+                onClicked: {
+                    fsel.text = '..'
                 }
+                anchors.bottomMargin: 20
             }
         }
         /* System Informations */
@@ -630,6 +617,7 @@ ApplicationWindow {
             visible: false
             width: file.width
             height: file.height-70
+            anchors.top: toolbar.bottom
             Image {
                 source: 'file:///stor/usr/share/icons/breeze-cloud.svg'
                 anchors.top: parent.top
@@ -791,13 +779,73 @@ ApplicationWindow {
             }
         }
 
+
+    ScrollView {
+        width: parent.width
+        height: parent.height-80
+        anchors.topMargin: 10
+        anchors.top: toolbar.bottom
+        clip: true
+        objectName: "scroll"
+        id: scroll
+
+
         /* Control View */
         Column {
             width: file.width
             height: file.height-70
             objectName: "controlview"
             spacing: 2
+                /* WiFi */
+                Rectangle {
+                    id: wifi
+                    width: parent.width
+                    height: parent.width/10
+                    color: "transparent"
 
+                    MouseArea {
+                        anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                        onClicked: {
+                            fsel.text = 'network'
+                        }
+                    }
+
+                    Image {
+                            source: 'file:///stor/usr/share/icons/breeze-w100.svg'
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            anchors.rightMargin: 20
+                            width: parent.height
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            height: parent.height
+                            id: imagex5
+                    }
+
+                    Text {
+                        text: 'WiFi'
+                        font.family: "IRANSans"
+                        objectName: 'network'
+                        font.pixelSize: 18
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: imagex5.right
+                        anchors.leftMargin: 20
+                        anchors.rightMargin: 20
+                    }
+
+                    Switch {
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        objectName: "stWifi"
+                    }
+
+                    Rectangle {
+                        width: parent.width
+                        height: 1
+                        color: "silver"
+                        anchors.top: parent.bottom
+                    }
+                }
                 /* Appearance */
                 Rectangle {
                     id: apper
@@ -808,7 +856,7 @@ ApplicationWindow {
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
-                        onDoubleClicked: {
+                        onClicked: {
                             fsel.text = 'apper'
                         }
                     }
@@ -842,6 +890,94 @@ ApplicationWindow {
                         anchors.top: parent.bottom
                     }
                 }
+                /* Languages */
+                Rectangle {
+                    id: languages
+                    width: parent.width
+                    height: parent.width/10
+                    color: "transparent"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                        onClicked: {
+                            fsel.text = 'languages'
+                        }
+                    }
+
+                    Image {
+                            source: 'file:///stor/usr/share/icons/breeze-lang.svg'
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            anchors.rightMargin: 20
+                            width: parent.height
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            height: parent.height
+                            id: imagex6
+                    }
+
+                    Text {
+                        text: 'Languages'
+                        font.family: "IRANSans"
+                        objectName: 'languages'
+                        font.pixelSize: 18
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: imagex6.right
+                        anchors.leftMargin: 20
+                        anchors.rightMargin: 20
+                    }
+
+                    Rectangle {
+                        width: parent.width
+                        height: 1
+                        color: "silver"
+                        anchors.top: parent.bottom
+                    }
+                }
+                /* Display */
+                Rectangle {
+                    id: display
+                    width: parent.width
+                    height: parent.width/10
+                    color: "transparent"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                        onClicked: {
+                            fsel.text = 'display'
+                        }
+                    }
+
+                    Image {
+                            source: 'file:///stor/usr/share/icons/breeze-display.svg'
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            anchors.rightMargin: 20
+                            width: parent.height
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            height: parent.height
+                            id: imagex4
+                    }
+
+                    Text {
+                        text: 'Display'
+                        font.family: "IRANSans"
+                        objectName: 'display'
+                        font.pixelSize: 18
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: imagex4.right
+                        anchors.leftMargin: 20
+                        anchors.rightMargin: 20
+                    }
+
+                    Rectangle {
+                        width: parent.width
+                        height: 1
+                        color: "silver"
+                        anchors.top: parent.bottom
+                    }
+                }
                 /* Users */
                 Rectangle {
                     id: users
@@ -852,7 +988,7 @@ ApplicationWindow {
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
-                        onDoubleClicked: {
+                        onClicked: {
                             fsel.text = 'users'
                         }
                     }
@@ -896,7 +1032,7 @@ ApplicationWindow {
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
-                        onDoubleClicked: {
+                        onClicked: {
                             fsel.text = 'sysinfo'
                         }
                     }

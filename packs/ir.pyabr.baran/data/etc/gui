@@ -1,4 +1,4 @@
-locale: fa
+locale: en
 layout: en
 width: 800
 height: 800
@@ -10,12 +10,11 @@ desktop: baran
 gui: Qt Framework
 logo: @icon/breeze-cloud
 params: gui
-external-windows-manager: blackbox
+external-windows-manager: openbox
 visibility: FullScreen
-login.background: @background/breeze-splash
-enter.background: @background/breeze-splash
-desktop.background: @background/breeze-next
-unlock.background: @background/breeze-splash
-lock.background: @background/breeze-splash
-theme: material
+login.background: @background/Rock_and_sea_blur
+enter.background: @background/Rock_and_sea
+desktop.background: @background/Rock_and_sea
+unlock.background: @background/Rock_and_sea_blur
+lock.background: @background/Rock_and_sea_blur
 dock: bottom

@@ -1,0 +1,7 @@
+name[en]: Chat
+name[fa]: پیام رسان
+name[ar]: دردشة
+logo: @icon/breeze-chat
+exec: chat
+application: Yes
+category: internet

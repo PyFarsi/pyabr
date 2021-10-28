@@ -1,5 +1,6 @@
-import QtQuick 2.0
-import QtQuick.Window 2.3
+import QtQuick
+import QtQuick.Window
+import QtQuick.Controls.Material
 
 Window {
     id: backend

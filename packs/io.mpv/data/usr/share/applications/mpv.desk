@@ -1,0 +1,9 @@
+name[en]: MPV video player
+name[fa]: پخش کننده ویدئو
+name[ar]: مشغل الفيلم
+logo: @icon/breeze-mpv
+exec: mpv
+application: Yes
+hidden: No
+category: multimedia
+pin: No

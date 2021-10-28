@@ -253,6 +253,10 @@ gz.icon: @icon/breeze-gz
 gz.text: Gnu Zipped Archive
 img.icon: @icon/breeze-iso
 img.text: Disc Image Data File
+sb.icon: @icon/breeze-iso
+sb.text: Squashfs Image File
+squashfs.icon: @icon/breeze-iso
+squashfs.text: Squashfs Image File
 jar.icon: @icon/breeze-jar
 jar.text: Java Archive File
 m4.icon: @icon/breeze-m4

@@ -1,6 +1,7 @@
 name: ir.pyabr.sysinfo
 name[en]: System Informations
 name[fa]: اطلاعات سیستمی
+name[ar]: معلومات النظام
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /

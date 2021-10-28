@@ -19,7 +19,8 @@
 
 from pyabr.core import *
 from pyabr.quick import *
-import hashlib
+from pyabr.key import *
+import hashlib,subprocess
 
 class MainApp (MainApp):
 
@@ -104,21 +105,26 @@ class MainApp (MainApp):
             if not self.leUsername.property('text')=='':
                 files.create (f'/etc/users/{self.leUsername.property("text")}')
                 files.mkdir (f'/desk/{self.leUsername.property("text")}')
+
+                if not files.isdir (f'/etc/key/{self.leUsername.property("text")}'):
+                    files.mkdir (f'/etc/key/{self.leUsername.property("text")}')
+
+                if not files.isdir (f'/etc/chat/{self.leUsername.property("text")}'):
+                    files.mkdir (f'/etc/chat/{self.leUsername.property("text")}')
+
+                if not files.isdir (f'/etc/cloud/{self.leUsername.property("text")}'):
+                    files.mkdir (f'/etc/cloud/{self.leUsername.property("text")}')
                 
                 control.write_record ('code',hashlib.sha3_512(self.lePassword.property('text').encode()).hexdigest(),f'/etc/users/{self.leUsername.property("text")}')
                 control.write_record (f'/desk/{self.leUsername.property("text")}',f'drwxr-----/{self.leUsername.property("text")}','/etc/permtab')
                 
                 if not self.leFullName.property('text')=='':
                     control.write_record ('fullname',self.leFullName.property('text'),f'/etc/users/{self.leUsername.property("text")}')
-
-                if not self.leEmail.property('text')=='':
-                    control.write_record ('email',self.leEmail.property('text'),f'/etc/users/{self.leUsername.property("text")}')
-
-                if not self.lePhone.property('text')=='':
-                    control.write_record ('phone',self.lePhone.property('text'),f'/etc/users/{self.leUsername.property("text")}')
-
+                    
                 files.write ('/etc/sudoers',self.leUsername.property("text"))
                 control.write_record('profile','@icon/breeze-users',f'/etc/users/{self.leUsername.property("text")}')
+
+                k = Key(self.leUsername.property('text')) # create public key and private key for created user
 
             # Guest user #
             if self.chGuest.property('checked'):
@@ -134,7 +140,7 @@ class MainApp (MainApp):
         super(MainApp, self).__init__()
 
         self.load (res.get('@layout/setup'))
-        self.setProperty('title',res.get('@string/setup.app_name'))
+        self.setProperty('title',res.get('@string/setup'))
 
         self.next = self.findChild ('next')
         self.next.clicked.connect (self.next_)
@@ -147,19 +153,30 @@ class MainApp (MainApp):
         self.page3 = self.findChild ('page3')
         self.page4 = self.findChild ('page4')
         self.leHostname = self.findChild ('leHostname')
+        self.leHostname.setProperty('placeholderText',res.get('@string/enter_hostname'))
         self.leRootCode = self.findChild ('leRootCode')
+        self.leRootCode.setProperty('placeholderText',res.get('@string/choose_root_password'))
         self.leUsername = self.findChild ('leUsername')
+        self.leUsername.setProperty('placeholderText',res.get('@string/pick_username'))
         self.lePassword = self.findChild ('lePassword')
+        self.lePassword.setProperty('placeholderText',res.get('@string/choose_password'))
         self.chGuest = self.findChild ('chGuest')
         self.cmLang = self.findChild ('cmLang')
-        self.cmLocale = self.findChild ('cmLocale')
         self.leFullName = self.findChild ('leFullName')
+        self.leFullName.setProperty('placeholderText',res.get('@string/fullname'))
         self.lePhone = self.findChild ('lePhone')
+        self.lePhone.setProperty('placeholderText',res.get('@string/phone'))
         self.leEmail = self.findChild ('leEmail')
-
+        self.leEmail.setProperty('placeholderText',res.get('@string/email'))
+        self.setup_message = self.findChild('setup_message')
+        self.setup_message.setProperty('text',res.get('@string/setup_message'))
         self.back.setProperty('visible',False)
+
+        self.setProperty('title',res.get('@string/baad'))
 
 
 application = QtGui.QGuiApplication([])
+application.setWindowIcon (QIcon(res.get(res.etc('setup','logo'))))
+
 w = MainApp()
 application.exec()

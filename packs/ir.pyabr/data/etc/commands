@@ -57,3 +57,7 @@ python3.perm: 2
 ssh: ssh
 ssh.args: Yes
 ssh.perm: 3
+
+gparted: gparted
+gparted.args: No
+gparted.perm: 3

@@ -1,0 +1,7 @@
+name[en]: Downloads
+name[fa]: دانلودها
+name[ar]: التحميل
+logo: @icon/breeze-dmgr
+exec: dmgr
+application: Yes
+category: internet

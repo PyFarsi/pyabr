@@ -1,11 +1,8 @@
-import QtQuick 2.0
-import QtQuick.Window 2.3
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.0
-import QtQuick.Controls 1.4
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.3
-import QtQuick.Controls.Styles 1.4
+import QtQuick
+import QtQuick.Window
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Controls.Material
 
 ApplicationWindow {
     id: file
@@ -71,6 +68,15 @@ ApplicationWindow {
                     act.text = 'newfolder'
                 }
             }
+            ToolButton {
+                anchors.leftMargin: 20
+                anchors.rightMargin: 20
+                icon.source: 'file:///stor/usr/share/icons/breeze-cloud-light.svg'
+                icon.color: "white"
+                onClicked: {
+                    act.text = 'connectcloud'
+                }
+            }
         }
     }
 
@@ -99,6 +105,46 @@ ApplicationWindow {
                                 icon.source: "file:///stor/usr/share/icons/breeze-newfolder.svg"
                                 onTriggered: {
                                     act.text = "newfolder"
+                                }
+                            }
+                            Menu {
+                                title: "Cloud Options"
+                                Action { 
+                                    text: "Upload" 
+                                    objectName: "upcloud"
+                                    id: upcloud
+                                    icon.source: "file:///stor/usr/share/icons/breeze-save.svg"
+                                    onTriggered: {
+                                        act.text = "up"
+                                    }
+                                }
+                                Action { 
+                                    text: "Download" 
+                                    objectName: "downcloud"
+                                    id: downcloud
+                                    icon.source: "file:///stor/usr/share/icons/breeze-downcloud.svg"
+                                    onTriggered: {
+                                        act.text = "down"
+                                    }
+                                }
+                                Action {
+                                    text: "Ziro"
+                                    objectName: "ziro"
+                                    id: ziro
+                                    
+                                    icon.source: "file:///stor/usr/share/icons/breeze-delete.svg"
+                                    onTriggered: {
+                                        act.text = "ziro"
+                                    }
+                                }
+                                Action {
+                                    text: "Share link"
+                                    objectName: "link"
+                                    id: link
+                                    icon.source: "file:///stor/usr/share/icons/breeze-sharelink.svg"
+                                    onTriggered: {
+                                        act.text = "link"
+                                    }
                                 }
                             }
                             Action { 

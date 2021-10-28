@@ -27,11 +27,11 @@ import sys, platform, hashlib, os, getpass, subprocess as sub, importlib,multipr
 sys.path.append("usr/app")
 
 from pyabr.core import *
+from pyabr.quick import *
+from pyabr.cloud import *
+from pyabr.chat import *
+
 from termcolor import colored
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QGuiApplication
-from PyQt5.QtQml import QQmlApplicationEngine
 
 ################## Interface configure ##########################
 
@@ -96,39 +96,6 @@ if sys.argv[1:][0] == 'exec':
                 Script(f'/usr/app/{sys.argv[1:][1]}')
             else:
                 colors.show(sys.argv[1:][1], "perm", "")
-
-        elif not control.read_record( sys.argv[1:][1], '/etc/commands') == None:
-
-            command = [control.read_record( sys.argv[1:][1], '/etc/commands')]
-
-            args = control.read_record(f'{sys.argv[1:][1]}.args', '/etc/commands')
-            perm = control.read_record(f'{sys.argv[1:][1]}.perm', '/etc/commands')
-
-            # args check #
-            if not args == None:
-                if args == 'Yes':
-                    args = True
-                else:
-                    args = False
-            else:
-                args = True
-
-            # perm check #
-            if perm == None:
-                perm = 3
-
-            if files.readall('/proc/info/su') == 'guest' and int(perm) < 3:
-                colors.show(sys.argv[1:][1], 'perm', '')
-                sys.exit(0)
-            elif not files.readall('/proc/info/su') == 'root' and int(perm) < 2:
-                colors.show(sys.argv[1:][1], 'perm', '')
-                sys.exit(0)
-
-            if args:
-                for i in sys.argv[1:][2:]:
-                    command.append(i)
-
-            sub.call(command)
         else:
             colors.show(sys.argv[1:][1], "fail", "command not found.")
 
@@ -197,7 +164,6 @@ if sys.argv[1:][0] == "kernel":
 
 def gui():
     if not control.read_record('desktop', '/etc/gui') == None:
-        os.environ['QT_QUICK_CONTROLS_STYLE'] = control.read_record ("theme","/etc/gui")
         System(control.read_record('desktop','/etc/gui'))
 
 def windows_manager ():
@@ -219,7 +185,6 @@ def gui_splash ():
     control.write_record('params', 'splash', '/etc/gui')
 
     if not control.read_record('desktop', '/etc/gui') == None:
-        os.environ['QT_QUICK_CONTROLS_STYLE'] = control.read_record ("theme","/etc/gui")
         System(control.read_record('desktop','/etc/gui'))
 
 if sys.argv[1:][0] == "gui-splash":
@@ -236,7 +201,6 @@ def gui_login():
         control.write_record('params', 'login', '/etc/gui')
 
         if not  control.read_record('desktop', '/etc/gui') == None:
-            os.environ['QT_QUICK_CONTROLS_STYLE'] = control.read_record ("theme","/etc/gui")
             System(control.read_record('desktop','/etc/gui'))
     except:
         pass
@@ -255,7 +219,6 @@ def gui_enter():
         control.write_record('params', 'enter', '/etc/gui')
         control.write_record('username', sys.argv[1:][1], '/etc/gui')
         if not control.read_record('desktop', '/etc/gui') == None:
-            os.environ['QT_QUICK_CONTROLS_STYLE'] = control.read_record ("theme","/etc/gui")
             System(control.read_record('desktop','/etc/gui'))
 if sys.argv[1:][0] == "gui-enter":
     p1 = multiprocessing.Process(target=windows_manager)
@@ -270,7 +233,6 @@ def gui_unlock():
         control.write_record('params', 'unlock', '/etc/gui')
         control.write_record('username', sys.argv[1:][1], '/etc/gui')
         if not control.read_record('desktop', '/etc/gui') == None:
-            os.environ['QT_QUICK_CONTROLS_STYLE'] = control.read_record ("theme","/etc/gui")
             System(control.read_record('desktop','/etc/gui'))
 
 if sys.argv[1:][0] == "gui-unlock":
@@ -295,7 +257,6 @@ def gui_desktop():
         control.write_record('password', sys.argv[1:][2], '/etc/gui')
 
         if not control.read_record('desktop', '/etc/gui') == None:
-            os.environ['QT_QUICK_CONTROLS_STYLE'] = control.read_record ("theme","/etc/gui")
             System(control.read_record('desktop', '/etc/gui'))
 ## @core/gui-desktop ##
 
@@ -356,8 +317,8 @@ def shell(user,code):
         strcmdln = ""
 
         for i in cmdln:
-            if str(i).startswith("$"):
-                var = control.read_record(str(i).replace("$", ""), files.readall("/proc/info/sel"))
+            if str(i).startswith(":"):
+                var = control.read_record(str(i).replace(":", ""), files.readall("/proc/info/sel"))
                 if var == None:
                     strcmdln += f" {i}"
                 else:
@@ -371,12 +332,6 @@ def shell(user,code):
 
         ## All commands run in here ##
 
-        ## New command ##
-        if cmdln[0] == "new":
-            files.create("/tmp/su.tmp")
-            control.write_record("username", user, "/tmp/su.tmp")
-            control.write_record("code", code, "/tmp/su.tmp")
-
         ## Other commands ##
         if (cmdln == [] or
                 cmdln[0] == "" or
@@ -384,16 +339,29 @@ def shell(user,code):
                 cmd.startswith("#")
         ):
             continue
+        elif cmdln[0]=='>' or cmdln[0]=='>>' or cmdln[0]=='>>>':
+            cmdln.pop(0)
+            scmd = ''
+            for i in cmdln:
+                if scmd=='':
+                    scmd+=i
+                else:
+                    scmd+=f' {i}'
+
+            strcmd = f"{sys.executable} -c \""
+            strcmd2 = scmd.replace('"','\\"')
+            strcmd = f"{strcmd}{strcmd2}\""
+            subprocess.call(strcmd,shell=True)
         else:
             ## Prompt ##
-            prompt = [sys.executable,'vmabr.pyc','exec',cmdln[0]]
+            prompt = f'{sys.executable} vmabr.pyc exec'
 
             ## Arguments ##
-            for i in cmdln[1:]:
-                prompt.append(i)
+            for i in cmdln[0:]:
+                prompt+=f" {i}"
 
             ## Call the kernel ##
-            sub.call(prompt)
+            sub.call(prompt,shell=True)
 
 
 ## @core/user ##

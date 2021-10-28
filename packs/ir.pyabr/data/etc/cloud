@@ -1,10 +1,5 @@
-# all this source on github.com/PyFarsi/pyabr
-
-# All domains based on cloud on:
-zone: https://cloud.pyabr.ir/zone.php
-
-# SMS Cloud sender
-send: https://sms.pyabr.ir/send.php
-
-# Cloud receiver
-receive: https://sms.pyabr.ir/receive.php
+host: https://cloud.pyabr.ir
+connect: connect.php
+upload: upload.php
+accept: accept.php
+link: link.php

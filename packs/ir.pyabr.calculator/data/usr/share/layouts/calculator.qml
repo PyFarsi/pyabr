@@ -1,11 +1,8 @@
-import QtQuick 2.0
-import QtQuick.Window 2.3
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.0
-import QtQuick.Controls 1.4
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.3
-import QtQuick.Controls.Styles 1.4
+import QtQuick
+import QtQuick.Window
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Controls.Material
 
 ApplicationWindow {
     id: calculator
@@ -21,7 +18,7 @@ ApplicationWindow {
         id: field
         objectName: "o1"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: field.bottom
         height: parent.height/6
@@ -30,7 +27,7 @@ ApplicationWindow {
         enabled: false
         objectName: "o2"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: field.bottom
         height: parent.height/6
@@ -40,7 +37,7 @@ ApplicationWindow {
         objectName: "o3"
         enabled: false
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: field.bottom
         height: parent.height/6
@@ -50,7 +47,7 @@ ApplicationWindow {
         id: zarb
         objectName: "o4"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: field.bottom
         height: parent.height/6
@@ -60,7 +57,7 @@ ApplicationWindow {
         objectName: "o5"
         enabled: false
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: baqi.bottom
         height: parent.height/6
@@ -69,7 +66,7 @@ ApplicationWindow {
         id: seven
         objectName: "o7"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: taqsim.bottom
         height: parent.height/6
@@ -78,7 +75,7 @@ ApplicationWindow {
         id: eight
         objectName: "o8"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: zarb.bottom
         height: parent.height/6
@@ -87,7 +84,7 @@ ApplicationWindow {
         id: nine
         objectName: "o9"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: minus.bottom
         height: (parent.height/6)*2
@@ -97,7 +94,7 @@ ApplicationWindow {
         objectName: "o10"
         enabled: false
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: field.bottom
         height: (parent.height/6)*2
@@ -106,7 +103,7 @@ ApplicationWindow {
         id: ac
         objectName: "o11"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: seven.bottom
         height: parent.height/6
@@ -115,7 +112,7 @@ ApplicationWindow {
         id: forz
         objectName: "o12"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: eight.bottom
         height: parent.height/6
@@ -124,7 +121,7 @@ ApplicationWindow {
         id: five
         objectName: "o13"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: nine.bottom
         height: parent.height/6
@@ -133,7 +130,7 @@ ApplicationWindow {
         id: six
         objectName: "o14"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: ac.bottom
         height: parent.height/6
@@ -142,7 +139,7 @@ ApplicationWindow {
         id: baz
         objectName: "o15"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: forz.bottom
         height: parent.height/6
@@ -151,7 +148,7 @@ ApplicationWindow {
         id: one
         objectName: "o16"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: five.bottom
         height: parent.height/6
@@ -160,7 +157,7 @@ ApplicationWindow {
         id: two
         objectName: "o17"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: six.bottom
         height: parent.height/6
@@ -169,7 +166,7 @@ ApplicationWindow {
         id: three
         objectName: "o18"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: add.bottom
         height: (parent.height/6)*2
@@ -179,7 +176,7 @@ ApplicationWindow {
         objectName: "o19"
         enabled: false
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: baz.bottom
         height: parent.height/6
@@ -188,7 +185,7 @@ ApplicationWindow {
         id: baste
         objectName: "o20"
     }
-    Button {
+    ToolButton {
         width: (parent.width/5)*2
         anchors.top: one.bottom
         height: parent.height/6
@@ -198,7 +195,7 @@ ApplicationWindow {
         enabled: false
         objectName: "o21"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: three.bottom
         height: parent.height/6
@@ -207,7 +204,7 @@ ApplicationWindow {
         id: dot
         objectName: "o22"
     }
-    Button {
+    ToolButton {
         width: parent.width/5
         anchors.top: baste.bottom
         height: parent.height/6

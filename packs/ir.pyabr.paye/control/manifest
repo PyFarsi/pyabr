@@ -1,6 +1,7 @@
 name: ir.pyabr.paye
 name[fa]: مدیریت بسته پایه
 name[en]: Paye Package Manager
+name[ar]: بایه مدير مجموعة
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /

@@ -19,26 +19,33 @@
 
 from pyabr.core import *
 from pyabr.quick import *
+import sys
 
 class MainApp (MainApp):
 
     def update_(self,filename):
-        self.setProperty ('title',files.filename(filename)+' - '+res.get('@string/barge.app_name'))
+        self.setProperty ('title',files.filename(filename)+' - '+res.get('@string/barge'))
         self.path.setProperty ('text',filename)
 
         if filename.endswith ('.py') or filename.endswith ('.sa') or filename.endswith ('.pashm') or filename.endswith('.qml'):
             self.start.setProperty ('visible',True)
 
     def open__(self,filename):
-        self.text.setProperty ('text',files.readall(filename))
-        self.update_(filename)
+        if permissions.check(files.output(filename), "r", files.readall("/proc/info/su")):
+            self.text.setProperty ('text',files.readall(filename))
+            self.update_(filename)
+        else:
+            self.e = Perm()
 
     def open_(self):
         self.box = Select (self.open__)
 
     def saveas__(self,filename):
-        files.write (filename,self.text.property('text'))
-        self.update_(filename)
+        if permissions.check(files.output(filename), "w", files.readall("/proc/info/su")):
+            files.write (filename,self.text.property('text'))
+            self.update_(filename)
+        else:
+            self.e = Perm()
 
     def saveas_(self):
         self.box = Save (self.saveas__)
@@ -47,26 +54,32 @@ class MainApp (MainApp):
         if self.path.property ('text')=='':
             self.box = Save (self.saveas__)
         else:
-            files.write (self.path.property('text'),self.text.property('text'))
+            if permissions.check(files.output(self.path.property('text')), "w", files.readall("/proc/info/su")):
+                files.write (self.path.property('text'),self.text.property('text'))
+            else:
+                self.e = Perm()
     
     def start_(self):
-        if self.path.property('text').endswith ('.py'):
-            commands.cc ([self.path.property('text')])
-            files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.py','')}\nrm /tmp/exec.sa\nrm {self.path.property('text')}c\nrm __pycache__\npause")
-            app.start ('commento','')
-        elif self.path.property('text').endswith ('.sa'):
-            files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.sa','')}\nrm /tmp/exec.sa\npause")
-            app.start ('commento','')
-        elif self.path.property('text').endswith ('.pashm'):
-            files.write ('/tmp/exec.sa',f"pashmak {self.path.property('text')}\nrm /tmp/exec.sa\npause")
-            app.start ('commento','')
-        elif self.path.property('text').endswith ('.qml'):
-            files.copy (self.path.property('text'),'/usr/share/layouts/debug.qml')
-            app.start ('debug','')
+        if permissions.check(files.output(self.path.property('text')), "x", files.readall("/proc/info/su")):
+            if self.path.property('text').endswith ('.py'):
+                commands.cc ([self.path.property('text')])
+                files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.py','')}\nrm /tmp/exec.sa\nrm {self.path.property('text')}c\nrm __pycache__\npause")
+                app.start ('commento','')
+            elif self.path.property('text').endswith ('.sa'):
+                files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.sa','')}\nrm /tmp/exec.sa\npause")
+                app.start ('commento','')
+            elif self.path.property('text').endswith ('.pashm'):
+                files.write ('/tmp/exec.sa',f"pashmak {self.path.property('text')}\nrm /tmp/exec.sa\npause")
+                app.start ('commento','')
+            elif self.path.property('text').endswith ('.qml'):
+                files.copy (self.path.property('text'),'/usr/share/layouts/debug.qml')
+                app.start ('debug','')
+        else:
+            self.e = Perm()
 
     def add_(self):
         self.text.setProperty('text','')
-        self.setProperty('title',res.get('@string/barge.app_name'))
+        self.setProperty('title',res.get('@string/barge'))
         self.path.setProperty('text','')
         self.start.setProperty('visible',False)
 
@@ -90,7 +103,7 @@ class MainApp (MainApp):
         self.add = self.findChild ('add')
         self.addwin = self.findChild ('addwin')
 
-        self.setProperty ('title',res.get('@string/barge.app_name'))
+        self.setProperty ('title',res.get('@string/barge'))
 
         self.open.clicked.connect(self.open_)
         self.saveas.clicked.connect(self.saveas_)
@@ -99,6 +112,10 @@ class MainApp (MainApp):
         self.add.clicked.connect (self.add_)
         self.addwin.clicked.connect (self.addwin_)
 
+        if not sys.argv[1:]==[]:
+            self.open__(sys.argv[1])
+
 application = QtGui.QGuiApplication([])
+application.setWindowIcon (QIcon(res.get(res.etc('barge','logo'))))
 w = MainApp()
 application.exec()

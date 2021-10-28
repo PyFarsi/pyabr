@@ -18,16 +18,20 @@
 '''
 
 from pyabr.core import *
+import sys
 from pyabr.quick import *
 
 class MainApp (MainApp):
     def update_(self,filename):
-        self.setProperty ('title',files.filename(filename)+' - '+res.get('@string/nama.app_name'))
+        self.setProperty ('title',files.filename(filename)+' - '+res.get('@string/nama'))
         self.fullscreen.setProperty ('visible',True)
 
     def open__(self,filename):
-        self.image.setProperty ('source',files.input_qml(filename))
-        self.update_(filename)
+        if permissions.check(files.output(filename), "r", files.readall("/proc/info/su")):
+            self.image.setProperty ('source',files.input_qml(filename))
+            self.update_(filename)
+        else:
+            self.e = Perm()
 
     def open_(self):
         self.box = Select (self.open__)
@@ -50,10 +54,15 @@ class MainApp (MainApp):
         self.open = self.findChild ('open')
         self.image = self.findChild ('image')
         self.fullscreen = self.findChild ('fullscreen')
-        self.setProperty ('title',res.get('@string/nama.app_name'))
+        self.setProperty ('title',res.get('@string/nama'))
         self.open.clicked.connect(self.open_)
         self.fullscreen.clicked.connect(self.fullscreen_)
 
+        if not sys.argv[1:]==[]:
+            self.open__(sys.argv[1])
+
 application = QtGui.QGuiApplication([])
+application.setWindowIcon (QIcon(res.get(res.etc('nama','logo'))))
+
 w = MainApp()
 application.exec()

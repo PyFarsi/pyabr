@@ -20,16 +20,7 @@
 import sys, subprocess
 
 from pyabr.core import *
-
-modules = Modules()
-files = Files()
-control = Control()
-colors = Colors()
-process = Process()
-permissions = Permissions()
-pack = Package()
-cmd = Commands()
-res = Res()
+from termcolor import colored
 
 ## Check root ##
 if not permissions.check_root (files.readall("/proc/info/su")):
@@ -141,6 +132,8 @@ elif sys.argv[1]=="in" or sys.argv[1]=="it" or sys.argv[1]=="install" or sys.arg
         sys.exit(0)
 
 
+    source = files.readall('/etc/paye/sources')
+
     if not (sys.argv[2:])[1:]==[]:
         strv = ''
         for i in sys.argv[2:]:
@@ -150,7 +143,7 @@ elif sys.argv[1]=="in" or sys.argv[1]=="it" or sys.argv[1]=="install" or sys.arg
         if files.isfile(f'/app/packages/{i.lower()}.manifest'):
             old = control.read_record('version', f'/app/packages/{i}.manifest')
             new = control.read_record('version', f'/app/mirrors/{i}.manifest')
-            if not i=='latest' and old == new:
+            if not i==source and old == new:
                 colors.show('paye','warning',f'{i}: package is up to date.')
             else:
                 pack.download(i.lower())
@@ -161,7 +154,7 @@ elif sys.argv[1]=="in" or sys.argv[1]=="it" or sys.argv[1]=="install" or sys.arg
         if files.isfile(f'/app/packages/{j.lower()}.manifest'):
             old = control.read_record('version', f'/app/packages/{j}.manifest')
             new = control.read_record('version', f'/app/mirrors/{j}.manifest')
-            if not i=='latest' and old == new:
+            if not i==source and old == new:
                 pass
             else:
                 pack.unpack(f"/app/cache/gets/{j.lower()}.pa")
@@ -196,7 +189,7 @@ elif sys.argv[1]=="info" or sys.argv[1]=="-v":
         if not (copyright == None or copyright == ""):  print(
             f"\t         Copyright: {copyright}"   )
         if not (license == None or license == ""):  print(
-            f"\t          Licensce: {license}"   )
+            f"\t          License: {license}"   )
         if not (description == None or description == ""):  print(
             f"\t       Description: {description}"   )
         if not (unpack == None or unpack == ""):  print(
@@ -205,14 +198,20 @@ elif sys.argv[1]=="info" or sys.argv[1]=="-v":
         colors.show ("paye","fail",f"{sys.argv[2]}: package has not already installed.")
 
 elif sys.argv[1]=="ls" or sys.argv[1]=="list" or sys.argv[1]=="-l":
-    list = files.list ("/app/packages")
+    list = files.list ("/app/mirrors")
     list.sort()
     for i in list:
         if i.endswith (".manifest"):
-            name = control.read_record("name", f"/app/packages/{i}")
-            build = control.read_record("build", f"/app/packages/{i}")
-            version = control.read_record("version", f"/app/packages/{i}")
-            print (f"{name}/{version}/{build}")
+            try:
+                name = control.read_record("name", f"/app/mirrors/{i}")
+                build = control.read_record("build", f"/app/mirrors/{i}")
+                version = control.read_record("version", f"/app/mirrors/{i}")
+                if files.isfile (f'/app/packages/{i}'):
+                    print (f"{colored(name,'green')}/{colored(version,'cyan')}/{colored(build,'cyan')} (installed)")
+                else:
+                    print (f"{colored(name,'green')}/{colored(version,'cyan')}/{colored(build,'cyan')}")
+            except:
+                pass
     print()
 
 elif sys.argv[1]=='add':

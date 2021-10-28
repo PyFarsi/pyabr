@@ -8,5 +8,7 @@
 /tmp: drwxrwxrwx/root
 /srv: drwxr-xr-x/root
 /etc/profile.sa: -rwxr-xr-x/root
-/etc/shadow: -rwx------/root
 /etc/hostname: -rwx------/root
+/etc/key: d---------/root
+/etc/chat: d---------/root
+/etc/drive: d---------/root

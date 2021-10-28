@@ -1,0 +1,10 @@
+name: org.python
+name[fa]: پایتون
+name[en]: Python
+copyright: (c) 2021 PSF
+license: PSF
+unpack: /
+version: 3.9.2
+description: Python tools for Pyabr
+compile: Yes
+build: 1400-05-27

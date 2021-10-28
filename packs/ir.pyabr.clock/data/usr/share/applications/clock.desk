@@ -1,5 +1,6 @@
 name[en]: Clock
 name[fa]: ساعت
+name[ar]: ساعة
 logo: @icon/breeze-clock
 exec: clock
 application: Yes

@@ -1,5 +1,6 @@
 name[en]: Terminal
 name[fa]: پایانه
+name[ar]: طرفية
 logo: @icon/breeze-commento
 exec: commento
 shortcut: Ctrl+Alt+C

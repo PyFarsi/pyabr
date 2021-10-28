@@ -17,57 +17,265 @@
     * English Page:     https://en.pyabr.ir
 '''
 
-import json
-from PyQt5 import QtQml, QtWidgets, QtCore, QtGui, QtQuick
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtQml import *
-from PyQt5.QtQuick import *
+import json,time
+import subprocess
 from pyabr.core import *
-import sys,os,shutil
+
+from PyQt6 import QtQml, QtWidgets, QtCore, QtGui, QtQuick
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
+from PyQt6.QtQml import *
+from PyQt6.QtQuick import *
+
+from pyabr.cloud import *
+
+import sys,os,shutil,hashlib
 
 # Main Entry
 class MainApp (QtQml.QQmlApplicationEngine):
 
     # Default
-    ObjectNameRole = QtCore.Qt.UserRole+1000
-    TextRole = QtCore.Qt.UserRole + 1001
-    IconRole = QtCore.Qt.UserRole + 1002
-    FontRole = QtCore.Qt.UserRole + 1003
-    FontSizeRole = QtCore.Qt.UserRole + 1004
-    ColorRole = QtCore.Qt.UserRole + 1005
-    EnabledRole = QtCore.Qt.UserRole + 1006
-    VisibleRole = QtCore.Qt.UserRole + 1007
+    ObjectNameRole = QtCore.Qt.ItemDataRole.UserRole+1000
+    TextRole = QtCore.Qt.ItemDataRole.UserRole + 1001
+    IconRole = QtCore.Qt.ItemDataRole.UserRole + 1002
+    FontRole = QtCore.Qt.ItemDataRole.UserRole + 1003
+    FontSizeRole = QtCore.Qt.ItemDataRole.UserRole + 1004
+    ColorRole = QtCore.Qt.ItemDataRole.UserRole + 1005
+    EnabledRole = QtCore.Qt.ItemDataRole.UserRole + 1006
+    VisibleRole = QtCore.Qt.ItemDataRole.UserRole + 1007
 
     # File
-    FileName = QtCore.Qt.UserRole+1000
-    FileExt = QtCore.Qt.UserRole+1001
-    FileSize = QtCore.Qt.UserRole+1002
-    FileMimeType = QtCore.Qt.UserRole+1003
-    FileLogo = QtCore.Qt.UserRole+1004
-    FilePermission = QtCore.Qt.UserRole+1005
-    FilePath = QtCore.Qt.UserRole+1006
+    FileName = QtCore.Qt.ItemDataRole.UserRole+1000
+    FileExt = QtCore.Qt.ItemDataRole.UserRole+1001
+    FileSize = QtCore.Qt.ItemDataRole.UserRole+1002
+    FileMimeType = QtCore.Qt.ItemDataRole.UserRole+1003
+    FileLogo = QtCore.Qt.ItemDataRole.UserRole+1004
+    FilePermission = QtCore.Qt.ItemDataRole.UserRole+1005
+    FilePath = QtCore.Qt.ItemDataRole.UserRole+1006
 
     # User
-    Username = QtCore.Qt.UserRole+1001
-    Profile = QtCore.Qt.UserRole+1002
-    FullName = QtCore.Qt.UserRole+1003
+    Username = QtCore.Qt.ItemDataRole.UserRole+1001
+    Profile = QtCore.Qt.ItemDataRole.UserRole+1002
+    FullName = QtCore.Qt.ItemDataRole.UserRole+1003
 
     # Package
 
-    PKG_NAME = QtCore.Qt.UserRole+1000
-    PKG_NAMEX = QtCore.Qt.UserRole+1001
-    PKG_COPYRIGHT =QtCore.Qt.UserRole+1002
-    PKG_LICENSE = QtCore.Qt.UserRole+1003
-    PKG_UNPACK = QtCore.Qt.UserRole+1004
-    PKG_VERSION =QtCore.Qt.UserRole+1005
-    PKG_BUILD = QtCore.Qt.UserRole+1006
-    PKG_MIRROR = QtCore.Qt.UserRole+1007
-    PKG_DESCRIPTION = QtCore.Qt.UserRole+1008
-    PKG_TYPE = QtCore.Qt.UserRole+1009
-    PKG_INSTALLED = QtCore.Qt.UserRole+1010
-    PKG_LOGO = QtCore.Qt.UserRole+1011
+    PKG_NAME = QtCore.Qt.ItemDataRole.UserRole+1000
+    PKG_NAMEX = QtCore.Qt.ItemDataRole.UserRole+1001
+    PKG_COPYRIGHT =QtCore.Qt.ItemDataRole.UserRole+1002
+    PKG_LICENSE = QtCore.Qt.ItemDataRole.UserRole+1003
+    PKG_UNPACK = QtCore.Qt.ItemDataRole.UserRole+1004
+    PKG_VERSION =QtCore.Qt.ItemDataRole.UserRole+1005
+    PKG_BUILD = QtCore.Qt.ItemDataRole.UserRole+1006
+    PKG_MIRROR = QtCore.Qt.ItemDataRole.UserRole+1007
+    PKG_DESCRIPTION = QtCore.Qt.ItemDataRole.UserRole+1008
+    PKG_TYPE = QtCore.Qt.ItemDataRole.UserRole+1009
+    PKG_INSTALLED = QtCore.Qt.ItemDataRole.UserRole+1010
+    PKG_LOGO = QtCore.Qt.ItemDataRole.UserRole+1011
+
+    # Display
+    DISPLAY = QtCore.Qt.ItemDataRole.UserRole+1000
+
+    # Wifi
+    BSSID = QtCore.Qt.ItemDataRole.UserRole+1002
+    SSID = QtCore.Qt.ItemDataRole.UserRole+1000
+    MODE = QtCore.Qt.ItemDataRole.UserRole+1003
+    CHAN = QtCore.Qt.ItemDataRole.UserRole+1004
+    RATE = QtCore.Qt.ItemDataRole.UserRole+1005
+    SIGNAL = QtCore.Qt.ItemDataRole.UserRole+1006
+    SECURITY = QtCore.Qt.ItemDataRole.UserRole+1007
+    NETLOGO = QtCore.Qt.ItemDataRole.UserRole+1008
+
+    NameRole = QtCore.Qt.ItemDataRole.UserRole+1001
+    LabelRole = QtCore.Qt.ItemDataRole.UserRole+1002
+    LogoRole = QtCore.Qt.ItemDataRole.UserRole+1003
+
+    # User
+    CName = QtCore.Qt.ItemDataRole.UserRole+1001
+    CFullName = QtCore.Qt.ItemDataRole.UserRole+1003
+    CProfile = QtCore.Qt.ItemDataRole.UserRole+1000
+
+    # Chat
+    CID = QtCore.Qt.ItemDataRole.UserRole+1000
+    CSender = QtCore.Qt.ItemDataRole.UserRole+1001
+    CGiver = QtCore.Qt.ItemDataRole.UserRole+1002
+    CData = QtCore.Qt.ItemDataRole.UserRole+1003
+    CME = QtCore.Qt.ItemDataRole.UserRole+1004
+
+    def LanguageModel (self):
+        model = QtGui.QStandardItemModel()
+        roles = {self.NameRole: b"name", self.LabelRole: b'label'}
+        model.setItemRoleNames(roles)
+        for name in files.list('/usr/share/locales'):
+            it = QtGui.QStandardItem(name)
+            it.setData(name,self.NameRole)
+            it.setData(control.read_record('name',f'/usr/share/locales/{name}'), self.LabelRole)
+            model.appendRow(it)
+        return model
+
+    def ChatModel (self,listx):
+        if listx==None:
+            listx = []
+        model = QtGui.QStandardItemModel()
+        roles = {self.CSender: b"sender", self.CGiver: b'giver',self.CData:b'data',self.CID:b'id',self.CME:b'me'}
+        model.setItemRoleNames(roles)
+
+        su = files.readall('/proc/info/su')
+
+        for i in listx:
+            it = QtGui.QStandardItem(i['id'])
+            it.setData(i['sender'],self.CSender)
+            it.setData(i['giver'],self.CGiver)
+            it.setData(i['data'],self.CData)
+            it.setData(i['id'],self.CID)
+
+            if i['sender']==files.readall(f'/etc/chat/{su}/user'):
+                it.setData(True,self.CME)
+            else:
+                it.setData(False,self.CME)
+
+            model.appendRow(it)
+        return model
+
+    def ApplicationModel(self,ext):
+        model = QtGui.QStandardItemModel()
+        roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
+        model.setItemRoleNames(roles)
+        for name in files.list('/usr/share/applications'):
+            extx = os.path.splitext(ext)[1].replace('.','')
+            if control.read_record (f'{extx}.external.{name.replace(".desk","")}','/etc/ext')=='Yes':
+                it = QtGui.QStandardItem(name)
+                it.setData(name, self.NameRole)
+                namex = control.read_record(f'name[{res.getdata("locale")}]', f'/usr/share/applications/{name}')
+                if namex == '' or namex == None:
+                    namex = control.read_record(f'name[en]', f'/usr/share/applications/{name}')
+                it.setData(namex, self.LabelRole)
+                it.setData(res.qmlget(control.read_record('logo', f'/usr/share/applications/{name}')), self.LogoRole)
+                model.appendRow(it)
+        return model
+
+    def ContactModel (self,list):
+        model = QtGui.QStandardItemModel()
+        roles = {
+            self.CName:b'username',
+            self.CFullName:b'fullname',
+            self.CProfile:b'profile'
+        }
+        model.setItemRoleNames(roles)
+
+        for i in list:
+            it = QtGui.QStandardItem(i['username'])
+            it.setData(i['username'],self.CName)
+            
+            if i['fullname']=='' or i['fullname']==None:
+                it.setData(i['username'],self.CName)
+            else:
+                it.setData(i['fullname'],self.CFullName)
+
+            it.setData(i['profile'],self.CProfile)
+            model.appendRow(it)
+        return model
+
+    def NetworkModel (self):
+        model = QtGui.QStandardItemModel()
+        roles = {
+            self.BSSID:b"bssid",
+            self.SSID:b"ssid",
+            self.SIGNAL:b"signal",
+            self.MODE:b'mode',
+            self.CHAN:b'chan',
+            self.RATE:b'rate',
+            self.SECURITY:b'security',
+            self.NETLOGO:b'netlogo'
+        }
+        model.setItemRoleNames(roles)
+
+        # list of wifi informations
+
+        subprocess.call('nmcli -t -f BSSID dev wifi list > /stor/etc/network/bssid.list',shell=True)
+        subprocess.call('nmcli -t -f SSID dev wifi list > /stor/etc/network/ssid.list',shell=True)
+        subprocess.call('nmcli -t -f SIGNAL dev wifi list > /stor/etc/network/signal.list',shell=True)
+        subprocess.call('nmcli -t -f MODE dev wifi list > /stor/etc/network/mode.list',shell=True)
+        subprocess.call('nmcli -t -f CHAN dev wifi list > /stor/etc/network/chan.list',shell=True)
+        subprocess.call('nmcli -t -f RATE dev wifi list > /stor/etc/network/rate.list',shell=True)
+        subprocess.call('nmcli -t -f SECURITY dev wifi list > /stor/etc/network/security.list',shell=True)
+
+        # get lists
+        bssid = control.read_list('/etc/network/bssid.list')
+        ssid = control.read_list('/etc/network/ssid.list')
+        signal = control.read_list('/etc/network/signal.list')
+        mode = control.read_list('/etc/network/mode.list')
+        rate = control.read_list('/etc/network/rate.list')
+        security = control.read_list('/etc/network/security.list')
+
+        if '' in bssid:
+            bssid.remove('')
+
+        if '' in ssid:
+            ssid.remove('')
+
+        if '' in signal:
+            signal.remove('')
+
+        if '' in mode:
+            mode.remove('')
+
+        if '' in rate:
+            rate.remove('')
+
+        if '' in security:
+            security.remove('')
+
+        j = 0
+        for i in ssid:
+            it = QtGui.QStandardItem(i)
+            it.setData(i,self.SSID)
+            it.setData(bssid[j],self.BSSID)
+            it.setData(signal[j],self.SIGNAL)
+            try:
+                if int(signal[j])<=20:
+                    it.setData(res.qmlget('@icon/breeze-w020'),self.NETLOGO)
+                elif int(signal[j])<=40:
+                    it.setData(res.qmlget('@icon/breeze-w040'),self.NETLOGO)
+                elif int(signal[j])<=80:
+                    it.setData(res.qmlget('@icon/breeze-w080'),self.NETLOGO)
+                elif int(signal[j])<=10:
+                    it.setData(res.qmlget('@icon/breeze-w100'),self.NETLOGO)
+            except:
+                it.setData(res.qmlget('@icon/breeze-w020'),self.NETLOGO)
+            it.setData(mode[j],self.MODE)
+            it.setData(rate[j],self.RATE)
+            it.setData(security[j],self.SECURITY)
+            model.appendRow(it)
+            j+=1
+        return model
+
+    def DisplayModel (self):
+        model = QtGui.QStandardItemModel()
+        roles = {
+            self.DISPLAY:b"display",
+        }
+        model.setItemRoleNames(roles)
+
+        os.system("xrandr | awk '{print $1}' > /stor/tmp/display.list")
+        displaylist = control.read_list('/tmp/display.list')
+        displaylist.pop(0)
+        displaylist.pop(1)
+        try:
+            if '' in displaylist:
+                displaylist.remove ('')
+            if 'Virtual-1':
+                displaylist.remove ('Virtual-1')
+        except:
+            pass
+        displaylist.sort()
+
+        for i in displaylist:
+            it = QtGui.QStandardItem(i)
+            it.setData(i,self.DISPLAY)
+            model.appendRow(it)
+        return model
 
     def ItemModel (self,listRow):
         model = QtGui.QStandardItemModel()
@@ -267,11 +475,14 @@ class MainApp (QtQml.QQmlApplicationEngine):
         packages = files.list('/app/mirrors')
         packages.sort()
 
-        for j in packages:
-            if not j.endswith('.manifest'):
-                packages.remove(j)
+        packagesx = []
 
-        for i in packages:
+        for j in packages:
+            if j.endswith('.manifest'):
+                packagesx.append(j)
+        packagesx.sort()
+
+        for i in packagesx:
             it = QtGui.QStandardItem(i)
             if files.isfile (f'/app/packages/{i}'):
                 it.setData(True,self.PKG_INSTALLED)
@@ -287,14 +498,14 @@ class MainApp (QtQml.QQmlApplicationEngine):
             it.setData(control.read_record('description',f'/app/mirrors/{i}'),self.PKG_DESCRIPTION)
             it.setData(control.read_record('version',f'/app/mirrors/{i}'),self.PKG_VERSION)
             
-            if files.isfile (f'/usr/share/applications/{control.read_record("name",f"/app/mirrors/{i}")}.desk'):
+            if files.isfile (f'/usr/share/applications/{control.read_record("entry",f"/app/mirrors/{i}")}.desk'):
                 it.setData('application',self.PKG_TYPE)
             else:
                 it.setData('package',self.PKG_TYPE)
 
             locale = res.getdata ('locale')
             
-            if control.read_record (f'name[{locale}]',f'/app/mirrors/{i}')=='':
+            if control.read_record (f'name[{locale}]',f'/app/mirrors/{i}')=='' or control.read_record (f'name[{locale}]',f'/app/mirrors/{i}')==None:
                 it.setData( control.read_record ('name[en]',f'/app/mirrors/{i}'),self.PKG_NAMEX)
             else:
                 it.setData( control.read_record (f'name[{locale}]',f'/app/mirrors/{i}'),self.PKG_NAMEX)
@@ -333,6 +544,30 @@ class MainApp (QtQml.QQmlApplicationEngine):
         self.pkgmodel = self.PackageModel()
         self.rootContext().setContextProperty('PackageModel', self.pkgmodel)
 
+    def addDisplayModel (self):
+        self.displaymodel = self.DisplayModel()
+        self.rootContext().setContextProperty('DisplayModel', self.displaymodel)
+
+    def addNetworkModel (self):
+        self.networkmdl = self.NetworkModel()
+        self.rootContext().setContextProperty('NetworkModel', self.networkmdl)
+
+    def addApplicationModel (self,ext):
+        self.appmdl = self.ApplicationModel(ext)
+        self.rootContext().setContextProperty('ApplicationModel', self.appmdl)
+
+    def addLanguageModel (self):
+        self.langmdl = self.LanguageModel()
+        self.rootContext().setContextProperty('LanguageModel', self.langmdl)
+
+    def addChatModel (self,listx):
+        self.chatmdl = self.ChatModel(listx)
+        self.rootContext().setContextProperty('ChatModel', self.chatmdl)
+
+    def addContactModel (self,listx):
+        self.cntmdl = self.ContactModel(listx)
+        self.rootContext().setContextProperty('ContactModel', self.cntmdl)
+
     def setProperty(self,name,value):
         self.rootObjects()[0].setProperty(name,value)
 
@@ -358,8 +593,22 @@ class Text (MainApp):
         self.txtText = self.findChild('txtText')
         self.txtText.setProperty('text', text)
         self.btnOK = self.findChild('btnOK')
-        self.btnOK.setProperty('text', res.get('@string/baran.ok'))
+        self.btnOK.setProperty('text', res.get('@string/ok'))
         self.btnOK.clicked.connect(self.close)
+
+# Sharelink Dialog
+class Sharelink (MainApp):
+    def __init__(self,title:str,text:str):
+        super(Sharelink, self).__init__()
+        files.write('/proc/info/id','sharelink')
+        self.load(res.get('@layout/sharelink'))
+        self.setProperty('title', title)
+        self.leText = self.findChild('txtText')
+        self.leText.setProperty('text', text)
+        self.btnCopy = self.findChild('btnCopy')
+        self.btnCopy.setProperty('text', res.get('@string/copy'))
+        self.btnCopy.clicked.connect(self.close)
+
 
 # Ask Dialog
 class Ask (MainApp):
@@ -381,10 +630,10 @@ class Ask (MainApp):
         self.txtText = self.findChild('txtText')
         self.txtText.setProperty('text', text)
         self.btnOK = self.findChild('btnOK')
-        self.btnOK.setProperty('text', res.get('@string/baran.ok'))
+        self.btnOK.setProperty('text', res.get('@string/ok'))
         self.btnOK.clicked.connect(self.ok_)
         self.btnCancel = self.findChild('btnCancel')
-        self.btnCancel.setProperty('text', res.get('@string/baran.cancel'))
+        self.btnCancel.setProperty('text', res.get('@string/cancel'))
         self.btnCancel.clicked.connect(self.no_)
 
 # Input Dialog
@@ -401,10 +650,10 @@ class Input (MainApp):
         self.function = function
         self.leText = self.findChild('leText')
         self.btnOK = self.findChild('btnOK')
-        self.btnOK.setProperty('text', res.get('@string/baran.ok'))
+        self.btnOK.setProperty('text', res.get('@string/ok'))
         self.btnOK.clicked.connect(self.ok_)
         self.btnCancel = self.findChild('btnCancel')
-        self.btnCancel.setProperty('text', res.get('@string/baran.cancel'))
+        self.btnCancel.setProperty('text', res.get('@string/cancel'))
         self.btnCancel.clicked.connect(self.close)
 
 class Password (MainApp):
@@ -420,11 +669,40 @@ class Password (MainApp):
         self.function = function
         self.leText = self.findChild('leText')
         self.btnOK = self.findChild('btnOK')
-        self.btnOK.setProperty('text', res.get('@string/baran.ok'))
+        self.btnOK.setProperty('text', res.get('@string/ok'))
         self.btnOK.clicked.connect(self.ok_)
         self.btnCancel = self.findChild('btnCancel')
-        self.btnCancel.setProperty('text', res.get('@string/baran.cancel'))
+        self.btnCancel.setProperty('text', res.get('@string/cancel'))
         self.btnCancel.clicked.connect(self.close)
+
+class Perm:
+    def __init__(self):
+        super(Perm, self).__init__()
+
+        self.w = Text (res.get('@string/perm'),res.get('@string/perm_message'))
+
+class Sudo:
+    def done_(self,password):
+        if hashlib.sha3_512(password.encode()).hexdigest()==control.read_record ('code',f'/etc/users/{self.su}'):
+            self.x = self.app()
+        else:
+            self.x = Perm()
+
+    def __init__(self, app):
+        super(Sudo, self).__init__()
+
+        su = files.readall('/proc/info/su')
+        self.su = su
+        self.app = app
+
+        if su=='root':
+            self.x = self.app()
+        elif su=='guest':
+            self.x = Perm()
+        elif not su in files.readall('/etc/sudoers'):
+            self.x = Perm()
+        else:
+            self.w = Password(res.get('@string/password_placeholder').replace('{0}',su),self.done_)
 
 # Font Dilog
 class Font (MainApp):
@@ -448,7 +726,7 @@ class Font (MainApp):
         self.btnCancel = self.findChild("btnCancel")
         self.btnCancel.clicked.connect(self.close)
         self.btnSelect.clicked.connect(self.ok_)
-        self.btnSelect.setProperty('title',res.get('@string/baran.sel'))
+        self.btnSelect.setProperty('title',res.get('@string/select'))
 
 class Select (MainApp):
 
@@ -481,14 +759,14 @@ class Select (MainApp):
 
         self.addFileModel(files.readall('/proc/info/pwd'))
         self.load (res.get('@layout/select'))
-        self.setProperty('title',res.get('@string/baran.file'))
+        self.setProperty('title',res.get('@string/select_file'))
         self.fsel = self.findChild ('fsel')
 
         self.btnCancel = self.findChild('btnCancel')
-        self.btnCancel.setProperty('text', res.get('@string/baran.cancel'))
+        self.btnCancel.setProperty('text', res.get('@string/cancel'))
         self.btnSelect = self.findChild('btnSelect')
         self.btnCancel.clicked.connect (self.close)
-        self.btnSelect.setProperty('text', res.get('@string/baran.sel'))
+        self.btnSelect.setProperty('text', res.get('@string/select'))
         self.btnSelect.clicked.connect (self.select_)
 
         self.loop()
@@ -523,14 +801,14 @@ class Open (MainApp):
 
         self.addFileModel(files.readall('/proc/info/pwd'))
         self.load (res.get('@layout/open'))
-        self.setProperty('title',res.get('@string/baran.dir'))
+        self.setProperty('title',res.get('@string/select_folder'))
         self.fsel = self.findChild ('fsel')
 
         self.btnCancel = self.findChild('btnCancel')
-        self.btnCancel.setProperty('text', res.get('@string/baran.cancel'))
+        self.btnCancel.setProperty('text', res.get('@string/cancel'))
         self.btnOpen = self.findChild('btnOpen')
         self.btnCancel.clicked.connect (self.close)
-        self.btnOpen.setProperty('text',res.get('@string/baran.open'))
+        self.btnOpen.setProperty('text',res.get('@string/open'))
         self.btnOpen.clicked.connect (self.open_)
 
         self.loop()
@@ -563,18 +841,18 @@ class Save (MainApp):
 
         self.addFileModel(files.readall('/proc/info/pwd'))
         self.load (res.get('@layout/save'))
-        self.setProperty('title',res.get('@string/baran.save'))
+        self.setProperty('title',res.get('@string/save'))
         self.fsel = self.findChild ('fsel')
 
         self.btnCancel = self.findChild('btnCancel')
-        self.btnCancel.setProperty('text',res.get('@string/baran.cancel'))
+        self.btnCancel.setProperty('text',res.get('@string/cancel'))
         self.btnSave = self.findChild('btnSave')
         self.btnCancel.clicked.connect (self.close)
         self.btnSave.clicked.connect (self.save_)
-        self.btnSave.setProperty('text',res.get('@string/baran.save'))
+        self.btnSave.setProperty('text',res.get('@string/save'))
 
         self.leName = self.findChild('leName')
-        self.leName.setProperty('placeholderText',res.get('@string/baran.fn'))
+        self.leName.setProperty('placeholderText',res.get('@string/fullname'))
 
         self.loop()
 
@@ -597,7 +875,7 @@ class Install (MainApp):
         self.package = package
         files.write('/proc/info/id','install')
         self.load(res.get('@layout/install'))
-        self.setProperty('title',res.get('@string/baran.packtitle').replace('{0}',package).replace('/','') )
+        self.setProperty('title',res.get('@string/install_package').replace('{0}',package).replace('/','') )
         shutil.unpack_archive (files.input (package),files.input('/tmp/package-installer'),'zip')
         shutil.unpack_archive (files.input('/tmp/package-installer/control.zip'),files.input('/tmp/package-installer.control'),'zip')
         files.removedirs ('/tmp/package-installer')
@@ -608,8 +886,305 @@ class Install (MainApp):
         self.description = self.findChild('descriptionx')
         self.description.setProperty('text',control.read_record ('description','/tmp/package-installer.control/manifest'))
         self.btnOK = self.findChild('btnOK')
-        self.btnOK.setProperty('text', res.get('@string/baran.install'))
+        self.btnOK.setProperty('text', res.get('@string/install'))
         self.btnOK.clicked.connect(self.ok_)
         self.btnCancel = self.findChild('btnCancel')
-        self.btnCancel.setProperty('text', res.get('@string/baran.cancel'))
+        self.btnCancel.setProperty('text', res.get('@string/cancel'))
         self.btnCancel.clicked.connect(self.no_)
+
+class Download (MainApp):
+    def save_(self,filename):
+        commands.mv (['/tmp/download.tmp',filename])
+
+    def set_progressbar_value (self,value):
+        self.pro.setProperty('value',value)
+        if value == 100:
+            self.close()
+            self.x = Save (self.save_)
+            return
+
+    def download_(self):
+        the_filesize = requests.get(self.leDownload.property('text'), stream=True).headers['Content-Length']
+        the_fileobj = open(files.input('/tmp/download.tmp'), 'wb')
+        self.downloadThread = DownloadThread(self.leDownload.property('text'), the_filesize, the_fileobj, buffer=10240)
+        self.downloadThread.download_proess_signal.connect(self.set_progressbar_value)
+        self.downloadThread.start()
+    def __init__(self):
+        super(MainApp, self).__init__()
+
+        self.load(res.get('@layout/download'))
+        self.pro = self.findChild('pro')
+        self.setProperty('title',res.get('@string/download'))
+        self.btnDownload = self.findChild('btnDownload')
+        self.btnDownload.setProperty('text',res.get('@string/download'))
+        self.leDownload = self.findChild('leDownload')
+        self.leDownload.setProperty('placeholderText',res.get('@string/url'))
+
+        self.btnDownload.clicked.connect (self.download_)
+
+class DownloadThread(QThread):
+    download_proess_signal = pyqtSignal(int)                        #Create signal
+
+    def __init__(self, url, filesize, fileobj, buffer):
+        super(DownloadThread, self).__init__()
+        self.url = url
+        self.filesize = filesize
+        self.fileobj = fileobj
+        self.buffer = buffer
+
+    def run(self):
+        try:
+            rsp = requests.get(self.url, stream=True)                #Streaming download mode
+            offset = 0
+            for chunk in rsp.iter_content(chunk_size=self.buffer):
+                if not chunk: break
+                self.fileobj.seek(offset)                            #Setting Pointer Position
+                self.fileobj.write(chunk)                            #write file
+                offset = offset + len(chunk)
+                proess = offset / int(self.filesize) * 100
+                self.download_proess_signal.emit(int(proess))        #Sending signal
+            #######################################################################
+            self.fileobj.close()    #Close file
+            self.exit(0)            #Close thread
+
+
+        except Exception as e:
+            print(e)
+
+class OpenWith(MainApp):
+    def atonce_(self):
+        app.start (self.asel.property('text').replace('.desk',''),f'"{self.filename}"')
+        self.close()
+
+    def always_ (self):
+        ext = os.path.splitext(self.filename)[1].replace('.','')
+        control.write_record (f'{ext}.always',self.asel.property('text').replace('.desk',''),'/etc/ext')
+        self.atonce_()
+
+    def __init__(self,filename):
+        super(OpenWith, self).__init__()
+        self.addApplicationModel(filename)
+        self.load(res.get('@layout/openwith'))
+
+        self.filename = filename
+
+        self.asel = self.findChild('asel')
+
+        self.atonce = self.findChild('atOnce')
+        self.atonce.clicked.connect (self.atonce_)
+        self.always = self.findChild('always')
+        self.always.clicked.connect (self.always_)
+
+
+class FileInfo (MainApp):
+    def access_show (self,perm,type):
+        if type=='owner':
+            if perm[1]=='r' and perm[2]=='w' and perm[3]=='x':
+                return 'Can view, Modify & Execute'
+            elif perm[1]=='r' and perm[2]=='w' and perm[3]=='-':
+                return 'Can view & Modify'
+            elif perm[1]=='r' and perm[2]=='-' and perm[3]=='-':
+                return 'Can view only'
+            elif perm[1]=='-' and perm[2]=='-' and perm[3]=='x':
+                return 'No access'
+            elif perm[1]=='-' and perm[2]=='w' and perm[3]=='x':
+                return 'Modify & Execute'
+            elif perm[1]=='-' and perm[2]=='-' and perm[3]=='x':
+                return 'Execute only'
+            elif perm[1]=='-' and perm[2]=='w' and perm[3]=='-':
+                return 'Modify only'
+            else:
+                return 'No access'
+
+        elif type=='users':
+            if perm[4]=='r' and perm[5]=='w' and perm[6]=='x':
+                return 'Can view, Modify & Execute'
+            elif perm[4]=='r' and perm[5]=='w' and perm[6]=='-':
+                return 'Can view & Modify'
+            elif perm[4]=='r' and perm[5]=='-' and perm[6]=='-':
+                return 'Can view only'
+            elif perm[4]=='-' and perm[5]=='-' and perm[6]=='x':
+                return 'No access'
+            elif perm[4]=='-' and perm[5]=='w' and perm[6]=='x':
+                return 'Modify & Execute'
+            elif perm[4]=='-' and perm[5]=='-' and perm[6]=='x':
+                return 'Execute only'
+            elif perm[4]=='-' and perm[5]=='w' and perm[6]=='-':
+                return 'Modify only'
+            else:
+                return 'No access'
+
+        elif type=='guest':
+            if perm[7]=='r' and perm[8]=='w' and perm[9]=='x':
+                return 'Can view, Modify & Execute'
+            elif perm[7]=='r' and perm[8]=='w' and perm[9]=='-':
+                return 'Can view & Modify'
+            elif perm[7]=='r' and perm[8]=='-' and perm[9]=='-':
+                return 'Can view only'
+            elif perm[7]=='-' and perm[8]=='-' and perm[9]=='x':
+                return 'No access'
+            elif perm[7]=='-' and perm[8]=='w' and perm[9]=='x':
+                return 'Modify & Execute'
+            elif perm[7]=='-' and perm[8]=='-' and perm[9]=='x':
+                return 'Execute only'
+            elif perm[7]=='-' and perm[8]=='w' and perm[9]=='-':
+                return 'Modify only'
+            else:
+                return 'No access'
+        else:
+            return 'No access'
+
+    def __init__(self,filename):
+        super(FileInfo, self).__init__()
+
+        self.load(res.get('@layout/fileinfo'))
+
+        self.setProperty('title','Information')
+
+        self.name = self.findChild('name')
+        self.type = self.findChild('type')
+        self.location = self.findChild('location')
+        self.size = self.findChild('size')
+        self.created = self.findChild('created')
+        self.modified = self.findChild('modified')
+        self.owership = self.findChild('owership')
+        self.perma = self.findChild('perma')
+        self.permb = self.findChild('permb')
+        self.permc = self.findChild('permc')
+
+        self.name1 = self.findChild('name1')
+        self.type1 = self.findChild('type1')
+        self.location1 = self.findChild('location1')
+        self.size1 = self.findChild('size1')
+        self.created1 = self.findChild('created1')
+        self.modified1 = self.findChild('modified1')
+        self.owership1 = self.findChild('owership1')
+        self.perma1 = self.findChild('perma1')
+        self.permb1 = self.findChild('permb1')
+        self.permc1 = self.findChild('permc1')
+
+        self._name = files.filename (filename)
+
+        if '.' in filename and files.isfile (filename):
+            ext =os.path.splitext(filename)[1]
+            try:
+                self._type = control.read_record (f'{ext.replace(".","")}.text','/etc/ext')
+            except:
+                self._type = 'Unknown'
+        else:
+            if files.isdir (filename):
+                self._type = 'Folder'
+            else:
+                self._type = 'Unknown'
+
+        #if not '/' in files.output(files.parentdir(filename)).replace('/.//',''):
+        #    self._location = '/'
+        #else:
+        self._location = files.output(files.parentdir(filename)).replace('/.//','')
+
+        size = files.size(filename)
+
+        kB = 1024
+        MB = kB*kB
+        GB = MB*MB
+        TB = GB*GB
+
+        if size<kB:
+            self._size = f'{str(size)} B'
+
+        elif size>=kB and size<MB:
+            self._size = f'{str(int(size/kB))} kB'
+
+        elif size>=MB and size<GB:
+            self._size = f'{str(int(size/MB))} MB'
+
+        elif size>=GB and size<TB:
+            self._size = f'{str(int(size/GB))} TB'
+
+        else:
+            self._size = f'{str(int(size/TB))} TB'
+
+        perm = permissions.get_permissions(files.output(filename))
+
+        self._created = time.ctime (os.path.getctime(files.input(filename)))
+        self._modified = time.ctime (os.path.getctime(files.input(filename)))
+        self._owership = perm.split('/')[1]
+        self._perma = self.access_show(perm,'owner')
+        self._permb = self.access_show(perm,'users')
+        self._permc = self.access_show(perm,'guest')
+
+        if not (res.getuserdata ('locale')=='fa' or res.getuserdata ('locale')=='ar'):
+            self.name1.setProperty('text',self._name)
+            self.type1.setProperty('text',self._type)
+            self.location1.setProperty('text',self._location)
+            self.size1.setProperty('text',self._size)
+            self.created1.setProperty('text',self._created)
+            self.modified1.setProperty('text',self._modified)
+            self.owership1.setProperty('text',self._owership)
+            self.perma1.setProperty('text',self._perma)
+            self.permb1.setProperty('text',self._permb)
+            self.permc1.setProperty('text',self._permc)
+
+            self.name.setProperty('text',res.get('@string/filename')+": ")
+            self.type.setProperty('text',res.get('@string/type')+": ")
+            self.location.setProperty('text',res.get('@string/location')+": ")
+            self.size.setProperty('text',res.get('@string/size')+": ")
+            self.created.setProperty('text',res.get('@string/created')+": ")
+            self.modified.setProperty('text',res.get('@string/modified')+": ")
+            self.owership.setProperty('text',res.get('@string/ownership')+": ")
+            self.perma.setProperty('text',res.get('@string/access_owner')+": ")
+            self.permb.setProperty('text',res.get('@string/access_users')+": ")
+            self.permc.setProperty('text',res.get('@string/access_guest')+": ")
+        else:
+            self.name.setProperty('text',self._name)
+            self.type.setProperty('text',self._type)
+            self.location.setProperty('text',self._location)
+            self.size.setProperty('text',self._size)
+            self.created.setProperty('text',self._created)
+            self.modified.setProperty('text',self._modified)
+            self.owership.setProperty('text',self._owership)
+            self.perma.setProperty('text',self._perma)
+            self.permb.setProperty('text',self._permb)
+            self.permc.setProperty('text',self._permc)
+
+            self.name1.setProperty('text',res.get('@string/filename')+": ")
+            self.type1.setProperty('text',res.get('@string/type')+": ")
+            self.location1.setProperty('text',res.get('@string/location')+": ")
+            self.size1.setProperty('text',res.get('@string/size')+": ")
+            self.created1.setProperty('text',res.get('@string/created')+": ")
+            self.modified1.setProperty('text',res.get('@string/modified')+": ")
+            self.owership1.setProperty('text',res.get('@string/ownership')+": ")
+            self.perma1.setProperty('text',res.get('@string/access_owner')+": ")
+            self.permb1.setProperty('text',res.get('@string/access_users')+": ")
+            self.permc1.setProperty('text',res.get('@string/access_guest')+": ")
+
+class CloudConnector (MainApp):
+    def connect_(self):
+
+        su = files.readall('/proc/info/su')
+
+        if self.leCloud.property('text')=='':
+            pass
+        else:
+            control.write_record ('host',self.leCloud.property('text'),'/etc/cloud')
+
+        d = Drive()
+        d.Connect (self.leUsername.property('text'),self.lePassword.property('text'))
+
+        self.close()
+
+        if not files.isfile (f'/etc/drive/{su}/user'):
+            self.e = Text('Connection failed','Cannot connect to this cloud')
+
+    def __init__(self):
+        super(CloudConnector, self).__init__()
+
+        self.load (res.get('@layout/CloudConnector'))
+
+        self.setProperty('title','Connect to cloud')
+
+        self.leCloud = self.findChild('leCloud')
+        self.leUsername = self.findChild('leUsername')
+        self.lePassword = self.findChild('lePassword')
+        self.btnConnect = self.findChild('btnConnect')
+        self.btnConnect.clicked.connect (self.connect_)

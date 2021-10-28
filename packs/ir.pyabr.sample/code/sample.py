@@ -26,7 +26,10 @@ class MainApp (MainApp):
         super(MainApp, self).__init__()
 
         self.load (res.get('@layout/app'))
+        self.setProperty('title',res.get('@string/sample'))
 
 application = QtGui.QGuiApplication([])
+application.setWindowIcon (QIcon(res.get(res.etc('sample','logo'))))
+
 w = MainApp()
 application.exec()

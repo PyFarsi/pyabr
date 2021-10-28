@@ -1,5 +1,6 @@
 name[en]: System Informations
 name[fa]: اطلاعات سیستمی
+name[ar]: معلومات النظام
 logo: @icon/breeze-info
 exec: sysinfo
 application: Yes

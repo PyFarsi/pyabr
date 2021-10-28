@@ -1,6 +1,7 @@
 name[en]: Pyket
 name[fa]: پایکت
+name[ar]: بایکت
 logo: @icon/breeze-paye
 exec: pyket
 application: No
-category: tools
+category: internet

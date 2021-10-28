@@ -51,7 +51,7 @@ class MainApp (MainApp):
         super(MainApp, self).__init__()
 
         self.load (res.get('@layout/clock'))
-        self.setProperty('title',res.get('@string/clock.app_name'))
+        self.setProperty('title',res.get('@string/clock'))
 
         timer = QTimer(self)
         timer.timeout.connect(self.showTime)
@@ -129,5 +129,7 @@ class MainApp (MainApp):
         self.startWatch = False
 
 application = QtGui.QGuiApplication([])
+application.setWindowIcon (QIcon(res.get(res.etc('clock','logo'))))
+
 w = MainApp()
 application.exec()

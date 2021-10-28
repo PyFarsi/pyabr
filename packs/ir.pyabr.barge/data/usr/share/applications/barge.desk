@@ -1,5 +1,6 @@
 name[en]: Text Editor
 name[fa]: برگه
+name[ar]: محرر النص
 logo: @icon/breeze-barge
 exec: barge
 shortcut: Ctrl+Alt+B

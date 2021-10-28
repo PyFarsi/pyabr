@@ -1,0 +1,13 @@
+name: ir.pyabr.baad
+name[en]: BaaD
+name[fa]: باد
+name[ar]: ريح
+copyright: (c) 2021 Abolfazl Deymekar
+license: GNU GPL v3.0
+unpack: /
+version: 2.0.1
+description: BaaD is a weather checker
+compile: Yes
+entry: baad
+build: 1400-07-01
+mirror: https://mirror.pyabr.ir/aras/

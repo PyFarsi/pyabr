@@ -90,7 +90,7 @@ except:
         super(MainApp, self).__init__()
 
         self.load (res.get('@layout/calculator'))
-        self.setProperty ('title',res.get('@string/calculator.app_name'))
+        self.setProperty ('title',res.get('@string/calculator'))
 
         self.o1 = self.findChild('o1')
         self.o2 = self.findChild('o2')
@@ -137,5 +137,7 @@ except:
         self.o23.clicked.connect (self.calc_)
 
 application = QtGui.QGuiApplication([])
+application.setWindowIcon (QIcon(res.get(res.etc('calculator','logo'))))
+
 w = MainApp()
 application.exec()

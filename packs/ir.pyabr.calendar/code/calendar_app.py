@@ -26,6 +26,7 @@ class MainApp (MainApp):
         super(MainApp, self).__init__()
 
         self.load (res.get('@layout/calendar'))
+        self.setProperty('title',res.get('@string/calendar'))
 
         self.Jalali = self.findChild('Jalali')
         self.Gregorian = self.findChild('Gregorian')
@@ -42,5 +43,7 @@ class MainApp (MainApp):
 
 
 application = QtGui.QGuiApplication([])
+application.setWindowIcon (QIcon(res.get(res.etc('calendar','logo'))))
+
 w = MainApp()
 application.exec()

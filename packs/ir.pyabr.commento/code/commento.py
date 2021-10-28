@@ -19,4 +19,4 @@
 
 import subprocess
 from pyabr.core import *
-subprocess.call(f'xterm -fa dejavu -fg white -bg black -title {res.get("@string/commento.app_name")} -fs 12',shell=True)
+subprocess.call(f'xterm -fa dejavu -fg white -bg black -title "{res.get("@string/terminal")}" -fs 12',shell=True)

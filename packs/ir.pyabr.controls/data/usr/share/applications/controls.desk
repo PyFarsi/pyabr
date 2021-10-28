@@ -1,5 +1,6 @@
 name[en]: Controls
 name[fa]: تنظیمات
+name[ar]: ضوابط
 logo: @icon/breeze-setting
 exec: controls
 application: Yes

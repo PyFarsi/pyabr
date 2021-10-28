@@ -1,0 +1,13 @@
+name: io.mpv
+name[fa]: پخش کنند ویدئو
+name[en]: MPV movie player
+name[ar]: مشغل الفيلم
+copyright: (c) 2021 MPV
+license: GNU LGPL v2.1
+unpack: /
+version: 2.0.0
+description: MPV movie player
+compile: Yes
+entry: mpv
+build: 1400-07-01
+mirror: https://mirror.pyabr.ir/aras/

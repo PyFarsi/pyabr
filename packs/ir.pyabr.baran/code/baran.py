@@ -20,7 +20,6 @@ import os,multiprocessing
 import subprocess
 import sys, hashlib
 
-import PyQt5.QtCore
 from pyabr.core import *
 from pyabr.quick import *
 
@@ -29,10 +28,6 @@ control = Control()
 files = Files()
 app = App()
 process = Process()
-from PyQt5.QtGui import *
-from PyQt5.QtQml import *
-from PyQt5.QtCore import *
-from PyQt5 import QtQml, QtGui, QtCore
 
 application = QGuiApplication(sys.argv)
 application.setWindowIcon(QIcon(res.get('@icon/breeze-cloud')))
@@ -128,7 +123,7 @@ class Login (MainApp):
 
     def clean(self):
         self._username.setProperty('enabled',True)
-        self._username.setProperty('placeholderText',res.get('@string/baran.username_placeholder'))
+        self._username.setProperty('placeholderText',res.get('@string/username_placeholder'))
 
     def next_(self):
         if self._username.property("text")=='':
@@ -140,14 +135,15 @@ class Login (MainApp):
             self.close()
             self.enter = Enter([self.Backend,self._username.property("text")])
         else:
+            self.usernamet = self._username.property('text')
             self._username.setProperty('text','')
-            self._username.setProperty("placeholderText",res.get('@string/baran.user_not_found'))
+            self._username.setProperty("placeholderText",res.get('@string/user_not_found').replace('{0}',self.usernamet))
             self._username.setProperty('enabled',False)
             QTimer.singleShot(3000,self.clean)
 
-    NameRole = QtCore.Qt.UserRole + 1000
-    LabelRole = QtCore.Qt.UserRole + 1001
-    LogoRole = QtCore.Qt.UserRole + 1002
+    NameRole = QtCore.Qt.ItemDataRole.UserRole + 1000
+    LabelRole = QtCore.Qt.ItemDataRole.UserRole + 1001
+    LogoRole = QtCore.Qt.ItemDataRole.UserRole + 1002
 
     def create_model(self):
         model = QtGui.QStandardItemModel()
@@ -194,25 +190,25 @@ class Login (MainApp):
         # Connects
 
         self._submenu = self.findChild( 'submenu')
-        self._submenu.setProperty('title',res.get('@string/baran.etcmenu'))
+        self._submenu.setProperty('title',res.get('@string/etcetra'))
         self._shutdown = self.findChild('shutdown')
-        self._shutdown.setProperty('text',res.get('@string/baran.escape'))
+        self._shutdown.setProperty('text',res.get('@string/escape'))
         self._shutdown.triggered.connect (self.shutdown_)
         self._restart = self.findChild( 'restart')
-        self._restart.setProperty('text', res.get('@string/baran.restart'))
+        self._restart.setProperty('text', res.get('@string/restart'))
         self._restart.triggered.connect(self.restart_)
         self._sleep = self.findChild( 'sleep')
-        self._sleep.setProperty('text', res.get('@string/baran.sleep'))
+        self._sleep.setProperty('text', res.get('@string/sleep'))
         self._sleep.triggered.connect(self.sleep_)
         self._next = self.findChild( 'next')
         self._username = self.findChild( 'username')
-        self._username.setProperty("placeholderText",res.get('@string/baran.username_placeholder'))
+        self._username.setProperty("placeholderText",res.get('@string/username_placeholder'))
         self._next.clicked.connect(self.next_)
-        self._next.setProperty('text',res.get('@string/baran.next_text'))
+        self._next.setProperty('text',res.get('@string/next'))
         self._lang = self.findChild( 'lang')
-        self._lang.setProperty('title', res.get('@string/baran.keyless'))
+        self._lang.setProperty('title', res.get('@string/keyboard_languages'))
         self._exit = self.findChild( 'exit')
-        self._exit.setProperty('title', res.get('@string/baran.powermenu'))
+        self._exit.setProperty('title', res.get('@string/power_options'))
         self._background = self.findChild( 'background')
 
         if getdata("login.background").startswith('@background/'):
@@ -221,7 +217,7 @@ class Login (MainApp):
             self._background.setProperty('source', files.input_qml(getdata("login.background")))
 
         self._virtualkeyboard = self.findChild('virtualkeyboard')
-        self._virtualkeyboard.setProperty('text',res.get('@string/baran.vkey'))
+        self._virtualkeyboard.setProperty('text',res.get('@string/virtualkeyboard'))
         self._keyless = self.findChild('keyless')
 
         self.loop()
@@ -265,7 +261,7 @@ class Enter (MainApp):
 
     def clean(self):
         self._password.setProperty('enabled',True)
-        self._password.setProperty('placeholderText', res.get('@string/baran.password_placeholder'))
+        self._password.setProperty('placeholderText', res.get('@string/password_placeholder').replace('{0}',self.username))
 
     def login_(self):
 
@@ -274,7 +270,7 @@ class Enter (MainApp):
             self.desktop = Desktop([self.Backend,self.username,self._password.property("text")])
         else:
             self._password.setProperty('text','')
-            self._password.setProperty("placeholderText","رمزعبور نادرست می باشد")
+            self._password.setProperty('placeholderText', res.get('@string/wrong_password'))
             self._password.setProperty('enabled',False)
             QTimer.singleShot(3000,self.clean)
 
@@ -285,9 +281,9 @@ class Enter (MainApp):
         self._keyless.setProperty('text','')
         QTimer.singleShot(10,self.loop)
 
-    NameRole = QtCore.Qt.UserRole + 1000
-    LabelRole = QtCore.Qt.UserRole + 1001
-    LogoRole = QtCore.Qt.UserRole + 1002
+    NameRole = QtCore.Qt.ItemDataRole.UserRole + 1000
+    LabelRole = QtCore.Qt.ItemDataRole.UserRole + 1001
+    LogoRole = QtCore.Qt.ItemDataRole.UserRole + 1002
 
     def create_model(self):
         model = QtGui.QStandardItemModel()
@@ -318,6 +314,7 @@ class Enter (MainApp):
         process.endall()
 
         # Logout
+        files.create ('/proc/info/pause')
         System ("/vmabr gui-login")
 
     def getdata(self, name):
@@ -356,28 +353,28 @@ class Enter (MainApp):
         # Connects
 
         self._submenu = self.findChild( 'submenu')
-        self._submenu.setProperty('title',res.get('@string/baran.etcmenu'))
+        self._submenu.setProperty('title',res.get('@string/etcetra'))
         self._shutdown = self.findChild( 'shutdown')
-        self._shutdown.setProperty('text',res.get('@string/baran.escape'))
+        self._shutdown.setProperty('text',res.get('@string/escape'))
         self._shutdown.triggered.connect(self.shutdown_)
         self._restart = self.findChild( 'restart')
-        self._restart.setProperty('text', res.get('@string/baran.restart'))
+        self._restart.setProperty('text', res.get('@string/restart'))
         self._restart.triggered.connect(self.restart_)
         self._sleep = self.findChild( 'sleep')
-        self._sleep.setProperty('text', res.get('@string/baran.sleep'))
+        self._sleep.setProperty('text', res.get('@string/sleep'))
         self._sleep.triggered.connect(self.sleep_)
         self._login = self.findChild( 'login')
         self._password = self.findChild( 'password')
-        self._password.setProperty('placeholderText',res.get('@string/baran.password_placeholder'))
+        self._password.setProperty('placeholderText',res.get('@string/password_placeholder').replace('{0}',self.username))
         self._login.clicked.connect(self.login_)
-        self._login.setProperty('text',res.get('@string/baran.enter_text'))
+        self._login.setProperty('text',res.get('@string/login'))
         self._lang = self.findChild( 'lang')
-        self._lang.setProperty('title', res.get('@string/baran.keyless'))
+        self._lang.setProperty('title', res.get('@string/keyboard_languages'))
         self._logout = self.findChild( 'logout')
-        self._logout.setProperty('text',res.get('@string/baran.signout'))
+        self._logout.setProperty('text',res.get('@string/logout'))
         self._logout.triggered.connect(self.logout_)
         self._exit = self.findChild( 'exit')
-        self._exit.setProperty('title', res.get('@string/baran.powermenu'))
+        self._exit.setProperty('title', res.get('@string/power_options'))
         self._account = self.findChild('account')
         if self.getdata("fullname")=='':
             self._account.setProperty('title',self.username)
@@ -397,7 +394,7 @@ class Enter (MainApp):
             self._profile.setProperty('source',files.input_qml(self.getdata("profile")))
 
         self._virtualkeyboard = self.findChild('virtualkeyboard')
-        self._virtualkeyboard.setProperty('text',res.get('@string/baran.vkey'))
+        self._virtualkeyboard.setProperty('text',res.get('@string/virtualkeyboard'))
         self._keyless = self.findChild('keyless')
 
         self.loop()
@@ -406,6 +403,7 @@ class Enter (MainApp):
 class Unlock (MainApp):
     def clean(self):
         self._password.setProperty('enabled',True)
+        self._password.setProperty('placeholderText',res.get('@string/password_placeholder').replace('{0}',self.Env.username))
 
     def unlock_(self):
 
@@ -413,7 +411,7 @@ class Unlock (MainApp):
             self.close()
         else:
             self._password.setProperty('text','')
-            self._password.setProperty("placeholderText","رمزعبور نادرست می باشد")
+            self._password.setProperty("placeholderText",res.get('@string/wrong_password'))
             self._password.setProperty('enabled',False)
             QTimer.singleShot(3000,self.clean)
 
@@ -431,9 +429,9 @@ class Unlock (MainApp):
         self._keyless.setProperty('text','')
         QTimer.singleShot(10,self.loop)
 
-    NameRole = QtCore.Qt.UserRole + 1000
-    LabelRole = QtCore.Qt.UserRole + 1001
-    LogoRole = QtCore.Qt.UserRole + 1002
+    NameRole = QtCore.Qt.ItemDataRole.UserRole + 1000
+    LabelRole = QtCore.Qt.ItemDataRole.UserRole + 1001
+    LogoRole = QtCore.Qt.ItemDataRole.UserRole + 1002
 
     def create_model(self):
         model = QtGui.QStandardItemModel()
@@ -474,9 +472,9 @@ class Unlock (MainApp):
 
         # Connects
         self._password = self.findChild( 'password')
-        self._password.setProperty('placeholderText',res.get('@string/baran.password_placeholder'))
+        self._password.setProperty('placeholderText',res.get('@string/password_placeholder').replace('{0}',self.Env.username))
         self._unlock = self.findChild('login')
-        self._unlock.setProperty('text',res.get('@string/baran.unlock_text'))
+        self._unlock.setProperty('text',res.get('@string/unlock'))
         self._unlock.clicked.connect(self.unlock_)
 
 
@@ -493,11 +491,11 @@ class Unlock (MainApp):
         else:
             self._profile.setProperty('source', files.input_qml(self.getdata("profile")))
         self._submenu = self.findChild('submenu')
-        self._submenu.setProperty('title',res.get('@string/baran.etcmenu'))
+        self._submenu.setProperty('title',res.get('@string/etcetra'))
         self._virtualkeyboard = self.findChild( 'virtualkeyboard')
-        self._virtualkeyboard.setProperty('text', res.get('@string/baran.vkey'))
+        self._virtualkeyboard.setProperty('text', res.get('@string/virtualkeyboard'))
         self._lang = self.findChild( 'lang')
-        self._lang.setProperty('title', res.get('@string/baran.keyless'))
+        self._lang.setProperty('title', res.get('@string/keyboard_languages'))
         self._keyless = self.findChild ('keyless')
 
         self.loop()
@@ -515,6 +513,13 @@ class Lock (MainApp):
 
         return x
 
+    def showTime (self):
+        current_time = QTime.currentTime()
+  
+        # converting QTime object to string
+        label_time = current_time.toString('hh:mm:ss')
+        self.txtClock.setProperty('text',res.num(label_time))
+
     def __init__(self, ports):
         super(Lock, self).__init__()
 
@@ -526,6 +531,10 @@ class Lock (MainApp):
         self.load(res.get('@layout/lock'))
         if not self.rootObjects():
             sys.exit(-1)
+
+        timer = QTimer(self)
+        timer.timeout.connect(self.showTime)
+        timer.start(1000)
 
         # Get data
 
@@ -541,6 +550,7 @@ class Lock (MainApp):
 
 
         self._background = self.findChild( 'background')
+        self.txtClock = self.findChild('txtClock')
 
         if self.getdata("lock.background").startswith('@background/'):
             self._background.setProperty('source', res.qmlget(self.getdata("lock.background")))
@@ -573,10 +583,12 @@ class Desktop (MainApp):
 
     def logout_(self):
         self.close()
-        self.pwduser()
-
-        # Remove home logo
-        files.remove ('.logo')
+        
+        try:
+            self.pwduser()
+            files.remove ('.logo')
+        except:
+            pass
 
         # Remove all tmp
         files.removedirs('/tmp')
@@ -589,17 +601,19 @@ class Desktop (MainApp):
         process.endall()
 
         # Logout
+        files.create ('/proc/info/pause')
         System ("/vmabr gui-login")
 
     def switchuser_(self):
+        files.create ('/proc/info/pause')
         System("/vmabr gui-login")
 
     def lock_(self):
         self.lock = Lock([self.Backend,self])
 
-    NameRole = QtCore.Qt.UserRole + 1000
-    LabelRole = QtCore.Qt.UserRole + 1001
-    LogoRole = QtCore.Qt.UserRole + 1002
+    NameRole = QtCore.Qt.ItemDataRole.UserRole + 1000
+    LabelRole = QtCore.Qt.ItemDataRole.UserRole + 1001
+    LogoRole = QtCore.Qt.ItemDataRole.UserRole + 1002
     pins = 0
 
     def create_model(self,dir_path,category):
@@ -684,7 +698,7 @@ class Desktop (MainApp):
             if x=='' or x==None:
                 x = getdata(name)
         except:
-            x = res.get('@string/baran.guest')
+            x = res.get('@string/guest')
 
         return x
 
@@ -802,7 +816,9 @@ class Desktop (MainApp):
             
 
         # Check signals #
-        files.write('/proc/info/su',self.username)
+        if not files.isfile('/proc/info/pause'):
+            files.write('/proc/info/su',self.username)
+
         self.signal()
 
         if not self._keyless.property('text')=='':
@@ -868,8 +884,12 @@ exit''')
             self._menuApps.setProperty('visible', True)
             self.menuClicked = True
 
+    def account_setting_(self):
+        app.start ('controls','users')
+
     def __init__(self,ports):
         super(Desktop, self).__init__()
+
         
         self.Backend = ports[0]
         self.username = ports[1]
@@ -905,27 +925,27 @@ exit''')
         self.setProperty('font', QFont(getdata('font'), int(getdata('fontsize'))))
         self.setProperty('title','Pyabr OS')
         self._submenu = self.findChild('submenu')
-        self._submenu.setProperty('title',res.get('@string/baran.etcmenu'))
+        self._submenu.setProperty('title',res.get('@string/etcetra'))
         self._shutdown = self.findChild( 'shutdown')
         self._shutdown.triggered.connect(self.shutdown_)
-        self._shutdown.setProperty('text',res.get('@string/baran.escape'))
+        self._shutdown.setProperty('text',res.get('@string/escape'))
         self._restart = self.findChild( 'restart')
         self._restart.triggered.connect(self.restart_)
-        self._restart.setProperty('text', res.get('@string/baran.restart'))
+        self._restart.setProperty('text', res.get('@string/restart'))
         self._sleep = self.findChild( 'sleep')
-        self._sleep.setProperty('text', res.get('@string/baran.sleep'))
+        self._sleep.setProperty('text', res.get('@string/sleep'))
         self._sleep.triggered.connect(self.sleep_)
         self._logout = self.findChild( 'logout')
         self._logout.triggered.connect(self.logout_)
-        self._logout.setProperty('text',res.get('@string/baran.signout'))
+        self._logout.setProperty('text',res.get('@string/logout'))
         self._switchuser = self.findChild( 'switchuser')
         self._switchuser.triggered.connect(self.switchuser_)
-        self._switchuser.setProperty('text',res.get('@string/baran.switchuser'))
+        self._switchuser.setProperty('text',res.get('@string/switchuser'))
         self._applications = self.findChild( 'applications')
-        self._applications.setProperty('title',res.get('@string/baran.apps'))
+        self._applications.setProperty('title',res.get('@string/applications'))
         self._lock = self.findChild('lock')
         self._lock.triggered.connect (self.lock_)
-        self._lock.setProperty('text',res.get('@string/baran.lock'))
+        self._lock.setProperty('text',res.get('@string/lock'))
         self._developcat = self.findChild('developcat')
         self._developcat.setProperty('title',self.getnamex("/usr/share/categories/develop.cat"))
         if self.check_cat('/usr/share/applications','develop')==0:
@@ -948,7 +968,7 @@ exit''')
             self._otherscat.setProperty('enabled',False)
         self._systemcat = self.findChild( 'systemcat')
         self._virtualkeyboard = self.findChild('virtualkeyboard')
-        self._virtualkeyboard.setProperty('text',res.get('@string/baran.vkey'))
+        self._virtualkeyboard.setProperty('text',res.get('@string/virtualkeyboard'))
         self._systemcat.setProperty('title', self.getnamex('/usr/share/categories/system.cat'))
         if self.check_cat('/usr/share/applications','system')==0:
             self._systemcat.setProperty('enabled',False)
@@ -966,16 +986,17 @@ exit''')
             pass
 
         self._exit = self.findChild('exit')
-        self._exit.setProperty('title', res.get('@string/baran.powermenu'))
+        self._exit.setProperty('title', res.get('@string/power_options'))
         self._lang = self.findChild('lang')
-        self._lang.setProperty('title', res.get('@string/baran.keyless'))
+        self._lang.setProperty('title', res.get('@string/keyboard_languages'))
         self._account = self.findChild('account')
         if self.getdata("fullname")=='':
             self._account.setProperty('title',self.username)
         else:   
             self._account.setProperty('title',self.getdata("fullname"))
         self._account_setting = self.findChild('account_setting')
-        self._account_setting.setProperty('text',res.get('@string/baran.accountsettings'))
+        self._account_setting.triggered.connect (self.account_setting_)
+        self._account_setting.setProperty('text',res.get('@string/accounts'))
         self._background_app = self.findChild('background_app')
         self._toolbar = self.findChild('toolbar')
         self._toolbar2 = self.findChild('toolbar2')
@@ -1041,6 +1062,9 @@ exit''')
         self.pwduser()
         self.deskdirs()
         self.homelogo()
+
+        # remove pause
+        if files.isfile ('/proc/info/pause'): files.remove ('/proc/info/pause')
 
         # Start up applications
         self.startup()

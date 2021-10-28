@@ -1,0 +1,7 @@
+name[en]: Python Shell
+name[fa]: مفسر پایتون
+name[ar]: مفسر بایثون
+logo: @icon/breeze-pyshell
+exec: python
+application: Yes
+category: tools

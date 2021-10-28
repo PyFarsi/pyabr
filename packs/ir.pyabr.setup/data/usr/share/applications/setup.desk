@@ -1,5 +1,6 @@
 name[en]: Pyabr installer
 name[fa]: نصاب پای ابر
+name[ar]: مثبت بای ابر
 logo: @icon/breeze-setup
 exec: setup
 application: No

@@ -20,11 +20,6 @@ import sys
 
 from pyabr.core import *
 from pyabr.quick import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5 import uic
-from PyQt5.QtQml import *
 
 control = Control()
 files = Files()
@@ -37,7 +32,7 @@ def getdata (name):
 
 application = QGuiApplication(sys.argv)
 app.switch('pysys')
-application.setWindowIcon(QIcon(res.get('@icon/breeze-about')))
+application.setWindowIcon (QIcon(res.get(res.etc('pysys','logo'))))
 
 class MainApp (MainApp):
 
@@ -68,7 +63,7 @@ class MainApp (MainApp):
         super(MainApp, self).__init__()
 
         self.load(res.get('@layout/pysys'))
-        self.setProperty('title',res.get('@string/pysys.app_name'))
+        self.setProperty('title',res.get('@string/power_options'))
         self.background_text = self.findChild('background_text')
 
         self.loop()

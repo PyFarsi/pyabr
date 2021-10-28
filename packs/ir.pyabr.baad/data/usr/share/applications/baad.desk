@@ -1,0 +1,7 @@
+name[en]: BaaD
+name[fa]: باد
+name[ar]: ريح
+logo: @icon/breeze-weather-clouds
+exec: baad
+application: Yes
+category: tools

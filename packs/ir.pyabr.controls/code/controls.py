@@ -17,9 +17,10 @@
     * English Page:     https://en.pyabr.ir
 '''
 
+from os import SEEK_HOLE
 from pyabr.core import *
 from pyabr.quick import *
-import hashlib
+import hashlib,subprocess,sys
 
 class MainApp (MainApp):
 
@@ -46,15 +47,15 @@ class MainApp (MainApp):
 
         # check direction
         if res.getdata ('locale')=='fa' or res.getdata('locale')=='ar':
-            self.host1.setProperty ('text',res.get('@string/sysinfo.host')+":  ")
-            self.cs1.setProperty ('text',res.get('@string/sysinfo.cs')+":  ")
-            self.bl1.setProperty ('text',res.get('@string/sysinfo.bl')+":  ")
-            self.os1.setProperty ('text',res.get('@string/sysinfo.os')+":  ")
-            self.kname1.setProperty ('text',res.get('@string/sysinfo.kname')+":  ")
-            self.su1.setProperty ('text',res.get('@string/sysinfo.su')+":  ")
-            self.de1.setProperty ('text',res.get('@string/sysinfo.de')+":  ")
-            self.gui1.setProperty ('text',res.get('@string/sysinfo.gui')+":  ")
-            self.arch1.setProperty ('text',res.get('@string/sysinfo.arch')+":  ")
+            self.host1.setProperty ('text',res.get('@string/host')+":  ")
+            self.cs1.setProperty ('text',res.get('@string/cs')+":  ")
+            self.bl1.setProperty ('text',res.get('@string/bl')+":  ")
+            self.os1.setProperty ('text',res.get('@string/os')+":  ")
+            self.kname1.setProperty ('text',res.get('@string/kname')+":  ")
+            self.su1.setProperty ('text',res.get('@string/su')+":  ")
+            self.de1.setProperty ('text',res.get('@string/de')+":  ")
+            self.gui1.setProperty ('text',res.get('@string/gui')+":  ")
+            self.arch1.setProperty ('text',res.get('@string/arch')+":  ")
 
             self.host.setProperty ('text',files.readall('/proc/info/host'))
             self.cs.setProperty ('text',files.readall('/proc/info/cs'))
@@ -66,15 +67,15 @@ class MainApp (MainApp):
             self.gui.setProperty ('text',files.readall('/proc/info/gui'))
             self.arch.setProperty ('text',files.readall('/proc/info/arch'))
         else:
-            self.host.setProperty ('text',res.get('@string/sysinfo.host')+":  ")
-            self.cs.setProperty ('text',res.get('@string/sysinfo.cs')+":  ")
-            self.bl.setProperty ('text',res.get('@string/sysinfo.bl')+":  ")
-            self.os.setProperty ('text',res.get('@string/sysinfo.os')+":  ")
-            self.kname.setProperty ('text',res.get('@string/sysinfo.kname')+":  ")
-            self.su.setProperty ('text',res.get('@string/sysinfo.su')+":  ")
-            self.de.setProperty ('text',res.get('@string/sysinfo.de')+":  ")
-            self.gui.setProperty ('text',res.get('@string/sysinfo.gui')+":  ")
-            self.arch.setProperty ('text',res.get('@string/sysinfo.arch')+":  ")
+            self.host.setProperty ('text',res.get('@string/host')+":  ")
+            self.cs.setProperty ('text',res.get('@string/cs')+":  ")
+            self.bl.setProperty ('text',res.get('@string/bl')+":  ")
+            self.os.setProperty ('text',res.get('@string/os')+":  ")
+            self.kname.setProperty ('text',res.get('@string/kname')+":  ")
+            self.su.setProperty ('text',res.get('@string/su')+":  ")
+            self.de.setProperty ('text',res.get('@string/de')+":  ")
+            self.gui.setProperty ('text',res.get('@string/gui')+":  ")
+            self.arch.setProperty ('text',res.get('@string/arch')+":  ")
 
             self.host1.setProperty ('text',files.readall('/proc/info/host'))
             self.cs1.setProperty ('text',files.readall('/proc/info/cs'))
@@ -86,20 +87,26 @@ class MainApp (MainApp):
             self.gui1.setProperty ('text',files.readall('/proc/info/gui'))
             self.arch1.setProperty ('text',files.readall('/proc/info/arch'))
 
+    wselp = ''
+
     def loop (self):
         if not self.fsel.property('text')=='':
             if self.fsel.property('text')=='sysinfo':
                 self.controlview.setProperty('visible',False)
                 self.sysinfo_exec.setProperty('visible',True)
                 self.back.setProperty('visible',True)
-                self.title.setProperty('text',res.get('@string/sysinfo.app_name'))
+                self.scroll.setProperty('enabled',False)
+                self.scroll.setProperty('visible',False)
+                self.title.setProperty('text',res.get('@string/controls'))
                 self.sysinfo_()
 
             elif self.fsel.property('text')=='apper':
                 self.controlview.setProperty('visible',False)
                 self.apper_exec.setProperty('visible',True)
+                self.scroll.setProperty('enabled',False)
+                self.scroll.setProperty('visible',False)
                 self.back.setProperty('visible',True)
-                self.title.setProperty('text',res.get('@string/controls.apper'))
+                self.title.setProperty('text',res.get('@string/appearance'))
 
             elif self.fsel.property('text')=='users':
                 self.controlview.setProperty('visible',False)
@@ -108,7 +115,9 @@ class MainApp (MainApp):
                 self.back.setProperty('visible',True)
                 self.adduser.setProperty('visible',True)
                 self.back_users.setProperty('visible',False)
-                self.title.setProperty('text',res.get('@string/users.app_name'))
+                self.title.setProperty('text',res.get('@string/controls'))
+                self.scroll.setProperty('enabled',False)
+                self.scroll.setProperty('visible',False)
                 self.apply2.clicked.connect (self.apply_adduser_)
 
             elif self.fsel.property('text')=='showuser':
@@ -119,27 +128,15 @@ class MainApp (MainApp):
                 self.adduser.setProperty('visible',False)
                 userdb = f'/etc/users/{self.usel.property("text")}'
                 fullname = control.read_record ('fullname',userdb)
-                email = control.read_record ('email',userdb)
-                phone = control.read_record ('phone',userdb)
-                gender = control.read_record ('gender',userdb)
-                blood_type = control.read_record ('blood_type',userdb)
-                birthday = control.read_record ('birthday',userdb)
                 profile = control.read_record ('profile',userdb)
 
                 if fullname=='':
                     self.title.setProperty('text',self.usel.property("text"))
-                    
                 else:
                     self.title.setProperty('text',fullname)
 
                 self.leUsername_show.setProperty('text',self.usel.property("text"))
                 self.leFullName_show.setProperty('text',fullname)
-                self.leEmail_show.setProperty('text',email)
-                self.lePhone_show.setProperty('text',phone)
-                self.cbGender_show.setProperty('currentValue',gender)
-                self.cbBloodtype_show.setProperty('currentValue',blood_type)
-                self.leBirthday_show.setProperty('text',birthday)
-
                 if self.usel.property('text')=='root':
                     self.cbSudoers_show.setProperty('visible',False)
                     self.removeuser.setProperty('visible',False)
@@ -158,26 +155,106 @@ class MainApp (MainApp):
                 self.savechanges.clicked.connect (self.savechanges_)
                 self.changepassword.clicked.connect (self.changepassword_show)
                 self.removeuser.clicked.connect (self.removeuser_)
+                self.scroll.setProperty('enabled',False)
+                self.scroll.setProperty('visible',False)
+
+            elif self.fsel.property('text')=='display':
+                self.controlview.setProperty('visible',False)
+                self.display_exec.setProperty('visible',True)
+                self.back.setProperty('visible',True)
+                self.title.setProperty('text',res.get('@string/display'))
+                self.change_reso.clicked.connect (self.change_reso_)
+                self.scroll.setProperty('enabled',False)
+                self.scroll.setProperty('visible',False)
+
+            elif self.fsel.property('text')=='network':
+                self.controlview.setProperty('visible',False)
+                self.network_exec.setProperty('visible',True)
+                self.back.setProperty('visible',True)
+                self.title.setProperty('text',res.get('@string/wifi'))
+                self.scroll.setProperty('enabled',False)
+                self.scroll.setProperty('visible',False)
+
+            elif self.fsel.property('text')=='languages':
+                self.controlview.setProperty('visible',False)
+                self.languages_exec.setProperty('visible',True)
+                self.back.setProperty('visible',True)
+                self.title.setProperty('text',res.get('@string/languages'))
+                self.scroll.setProperty('enabled',False)
+                self.scroll.setProperty('visible',False)
+                self.apply3.clicked.connect (self.languages__)
 
             elif self.fsel.property('text')=='..':
                 self.controlview.setProperty('visible',True)
+                self.network_exec.setProperty('visible',False)
+                self.languages_exec.setProperty('visible',False)
                 self.sysinfo_exec.setProperty('visible',False)
                 self.apper_exec.setProperty('visible',False)
+                self.scroll.setProperty('enabled',True)
+                self.scroll.setProperty('visible',True)
+                self.display_exec.setProperty('visible',False)
                 self.adduser.setProperty('visible',False)
+                self.changepassword_exec.setProperty('visible',False)
                 self.back_users.setProperty('visible',False)
                 self.users_exec.setProperty('visible',False)
                 self.showuser_exec.setProperty('visible',False)
                 self.adduser_exec.setProperty('visible',False)
                 self.back.setProperty('visible',False)
-                self.title.setProperty('text',res.get('@string/controls.app_name'))
+                self.title.setProperty('text',res.get('@string/controls'))
+
+                if self.stWifi.property('checked'):
+                    subprocess.call('nmcli radio wifi on',shell=True)
+                    subprocess.call('nmcli radio wifi > /stor/etc/network/radio',shell=True)
+                else:
+                    subprocess.call('nmcli radio wifi off',shell=True)
+                    subprocess.call('nmcli radio wifi > /stor/etc/network/radio',shell=True)
 
         try:
             self.dock_location = self.cbDock.property('currentValue')
         except:
             pass
 
+        if not self.wsel.property('text')=='':
+            self.wselp = self.wsel.property('text')
+            self.x = Ask ('Connect to {0}'.replace('{0}',self.wselp),'Do you want to connect to {0} network?'.replace('{0}',self.wselp),self.wifi_connect_)
+        self.wsel.setProperty('text','')
         self.fsel.setProperty ('text','')
         QTimer.singleShot (100,self.loop)
+
+    def wifi_connect_(self,yes):
+        if yes:
+            status = subprocess.check_output(f'nmcli device wifi connect "{self.wselp}"',shell=True).decode()
+            files.write('/etc/network/status',status)
+
+            QTimer.singleShot(500,self.check_connection_)
+
+    def check_connection_(self):
+        status = control.read_list('/etc/network/status')[1]
+
+        if status.startswith ('D'):
+            self.x = Text ('{0} Connected'.replace('{0}',self.wselp),'{0} successfully connected'.replace('{0}',self.wselp))
+        else:
+            QTimer.singleShot(100,self.enter_password_)
+
+    def enter_password_(self):
+        self.x = Password ('Enter {0} password'.replace('{0}',self.wselp),self._enter_password_)
+
+    def _enter_password_ (self,password):
+        status = subprocess.check_output(f'nmcli device wifi connect "{self.wselp}" password "{password}"', shell=True).decode()
+        files.write('/etc/network/status', status)
+        self.password = password
+
+        QTimer.singleShot(500, self.check_password_)
+
+    def check_password_(self):
+        status = control.read_list('/etc/network/status')[1]
+
+        if status.startswith('D'):
+            self.x = Text ('{0} Connected'.replace('{0}',self.wselp),'{0} successfully connected'.replace('{0}',self.wselp))
+
+            files.write('/etc/network/init.sa',f'nmcli device wifi connect "{self.wselp}" password "{self.password}"')
+        else:
+            self.x = Text ('{0} Not connected'.replace('{0}',self.wselp),'{0} not connected'.replace('{0}',self.wselp))
 
     desktop_bg = '/usr/share/backgrounds/breeze-next.png'
     lock_bg = '/usr/share/backgrounds/breeze-splash.jpg'
@@ -185,6 +262,7 @@ class MainApp (MainApp):
     enter_bg = '/usr/share/backgrounds/breeze-splash.jpg'
     dock_location = 0
     username = files.readall('/proc/info/su')
+
 
     def set_desktop_bg_(self,filename):
         self.imgChange_desktop.setProperty('source',files.input_qml(filename))
@@ -248,7 +326,7 @@ class MainApp (MainApp):
 
     def clean_(self):
         self.apply2.setProperty('enabled',True)
-        self.title.setProperty('text',res.get('@string/users.add'))
+        self.title.setProperty('text',res.get('@string/adduser'))
     
     def apply_adduser_(self):   
         if not files.isfile(f"/etc/users/{self.leUsername.property('text')}") and not self.leUsername.property('text')=='guest':
@@ -256,24 +334,30 @@ class MainApp (MainApp):
             
             files.create (f"/etc/users/{self.leUsername.property('text')}")
             files.mkdir (f"/desk/{self.leUsername.property('text')}")
+            if not files.isdir (f'/etc/key/{self.leUsername.property("text")}'):
+                files.mkdir(f'/etc/key/{self.leUsername.property("text")}')
+
+            if not files.isdir (f'/etc/chat/{self.leUsername.property("text")}'):
+                files.mkdir(f'/etc/chat/{self.leUsername.property("text")}')
+
+            if not files.isdir (f'/etc/drive/{self.leUsername.property("text")}'):
+                files.mkdir(f'/etc/drive/{self.leUsername.property("text")}')
+
+            control.write_record(f'/desk/{self.leUsername.property("text")}',f"drwxr-x---/{self.leUsername.property('text')}",'/etc/permtab')
             control.write_record ('code',hashlib.sha3_512(self.lePassword.property('text').encode()).hexdigest(),f"/etc/users/{self.leUsername.property('text')}")
             control.write_record ('fullname',self.leFullName.property('text'),f"/etc/users/{self.leUsername.property('text')}")
             control.write_record ('profile','@icon/breeze-users',f"/etc/users/{self.leUsername.property('text')}")
-            control.write_record ('email',self.leEmail.property('text'),f"/etc/users/{self.leUsername.property('text')}")
-            control.write_record ('phone',self.lePhone.property('text'),f"/etc/users/{self.leUsername.property('text')}")
-            control.write_record ('birthday',self.leBirthday.property('text'),f"/etc/users/{self.leUsername.property('text')}")
-            control.write_record ('blood_type',self.cbBloodtype.property('currentValue'),f"/etc/users/{self.leUsername.property('text')}")
-            control.write_record ('gender',self.cbGender.property('currentValue'),f"/etc/users/{self.leUsername.property('text')}")
-
             if self.cbSudoers.property('checked'):
                 files.write ('/etc/sudoers',f"{self.leUsername.property('text')}\n")
+
+            k = Key(self.leUsername.property('text')) # create public key and private key for created user
 
             self.addUserModel()
             self.fsel.setProperty('text','users')
         else:
             self.apply2.setProperty('enabled',False)
             #self.leUsername.setProperty('text','')
-            self.title.setProperty('text','This user is already exists')
+            self.title.setProperty('text',res.get('@string/exists_message').replace('{0}',self.leUsername.property('text')))
             QTimer.singleShot(3000,self.clean_)
 
     def getdata (self,name):
@@ -285,7 +369,7 @@ class MainApp (MainApp):
 
     def adduser_(self):
         self.adduser_exec.setProperty('visible',True)
-        self.title.setProperty('text',res.get('@string/users.add'))
+        self.title.setProperty('text',res.get('@string/adduser'))
         self.users_exec.setProperty('visible',False)
         self.back.setProperty('visible',False)
         self.back_users.setProperty('visible',True)
@@ -300,15 +384,14 @@ class MainApp (MainApp):
         self.imgProfile_show.setProperty('source',files.input_qml(filename))
         self.profile_show = filename
 
+    def change_reso_(self):
+        subprocess.call(['xrandr','-s',self.rsel.property('text')])
+        self.fsel.setProperty('text','..')
+
     def savechanges_(self):
         userdb = f"/etc/users/{self.usel.property('text')}"
 
         control.write_record('fullname',self.leFullName_show.property('text'),userdb)
-        control.write_record('email',self.leEmail_show.property('text'),userdb)
-        control.write_record('phone',self.lePhone_show.property('text'),userdb)
-        control.write_record('birthday',self.leBirthday_show.property('text'),userdb)
-        control.write_record('gender',self.cbSudoers_show.property('currentValue'),userdb)
-        control.write_record('blood_type',self.cbBloodtype_show.property('currentValue'),userdb)
         control.write_record('profile',self.profile_show,userdb)   
 
         app.signal('username')
@@ -330,8 +413,13 @@ class MainApp (MainApp):
         self.back_users.setProperty('visible',True)
         self.adduser.setProperty('visible',False)
 
-
         self.savechanges2.clicked.connect (self.savechanges2_)
+
+    def languages__(self):
+        lang = self.lsel.property('text').split('.')[0]
+        control.remove_record('locale','/etc/gui')
+        control.write_record ('locale',lang,'/etc/gui')
+        self.fsel.setProperty('text','..')
 
     def clean2_(self):
         self.title.setProperty('text',f'Change {self.usel.property("text")} password')
@@ -347,16 +435,16 @@ class MainApp (MainApp):
                 self.addUserModel()
                 self.fsel.setProperty('text','showuser')
             else:
-                self.title.setProperty('text','Passwords mot matched')
+                self.title.setProperty('text',res.get('@string/not_matched'))
                 self.savechanges2.setProperty('enabled',False)
                 QTimer.singleShot(3000,self.clean2_)
         else:
-            self.title.setProperty('text','Wrong password! try again')
+            self.title.setProperty('text',res.get('@string/wrong_password'))
             self.savechanges2.setProperty('enabled',False)
             QTimer.singleShot(3000,self.clean2_)
 
     def removeuser_(self):
-        self.x = Ask(f'Remove {self.usel.property("text")}',f'Do you want to remove {self.usel.property("text")}? this means lost all data in selected user.',self.removeuser__)
+        self.x = Ask(f'{res.get("@string/remove")} {self.usel.property("text")}',res.get('@string/remove_user_message').replace('{0}',self.usel.property('text')),self.removeuser__)
 
     def removeuser__(self,yes):
         if yes:
@@ -367,105 +455,129 @@ class MainApp (MainApp):
                 self.fsel.setProperty('text','users')
             except:
                 pass
+
     def __init__(self):
         super(MainApp, self).__init__()
         self.addUserModel()
+        self.addNetworkModel()
+        self.addDisplayModel()
+        self.addLanguageModel()
         self.load (res.get('@layout/controls'))
-        self.setProperty('title',res.get('@string/controls.app_name'))
+        self.setProperty('title',res.get('@string/controls'))
         self.fsel = self.findChild('fsel')
+        self.lsel = self.findChild('lsel')
         self.controlview = self.findChild ('controlview')
         self.back = self.findChild('back')
 
         self.sysinfo = self.findChild ('sysinfo')
         self.sysinfo_exec = self.findChild ('sysinfo_exec')
-        self.sysinfo.setProperty('text',res.get('@string/sysinfo.app_name'))
+        self.sysinfo.setProperty('text',res.get('@string/sysinfo'))
+        self.setProperty('text',res.get('@string/controls'))
         self.title = self.findChild('title')
-        self.title.setProperty('text',res.get('@string/controls.app_name'))
+        self.title.setProperty('text',res.get('@string/controls'))
 
         self.apper = self.findChild ('apper')
         self.apper_exec = self.findChild ('apper_exec')
-        self.apper.setProperty('text',res.get('@string/controls.apper'))
+        self.apper.setProperty('text',res.get('@string/appearance'))
+
+        self.display = self.findChild ('display')
+        self.display.setProperty('text',res.get('@string/display'))
+        self.display_exec = self.findChild ('display_exec')
 
         self.users = self.findChild ('users')
         self.users_exec = self.findChild ('users_exec')
-        self.users.setProperty('text',res.get('@string/users.app_name'))
+        self.languages = self.findChild ('languages')
+        self.languages.setProperty('text',res.get('@string/languages'))
+        self.languages_exec = self.findChild ('languages_exec')
+        self.users.setProperty('text',res.get('@string/accounts'))
         self.adduser_exec = self.findChild('adduser_exec')
-
+        self.network_exec = self.findChild('network_exec')
+        self.network = self.findChild('network')
+        self.network.setProperty('text',res.get('@string/wifi'))
         self.btnChange_desktop = self.findChild('btnChange_desktop')
-        self.btnChange_desktop.setProperty('text',res.get('@string/wallpaper.desktop'))
+        self.btnChange_desktop.setProperty('text',res.get('@string/desktop'))
         self.btnChange_desktop.clicked.connect (self.set_desktop_bg)
         self.btnChange_lock = self.findChild('btnChange_lock')
-        self.btnChange_lock.setProperty('text',res.get('@string/wallpaper.lock'))
+        self.btnChange_lock.setProperty('text',res.get('@string/lock'))
         self.btnChange_lock.clicked.connect (self.set_lock_bg)
         self.btnChange_unlock = self.findChild('btnChange_unlock')
-        self.btnChange_unlock.setProperty('text',res.get('@string/wallpaper.unlock'))
+        self.btnChange_unlock.setProperty('text',res.get('@string/unlock'))
         self.btnChange_unlock.clicked.connect (self.set_unlock_bg)
         self.btnChange_enter = self.findChild('btnChange_enter')
-        self.btnChange_enter.setProperty('text',res.get('@string/wallpaper.enter'))
+        self.btnChange_enter.setProperty('text',res.get('@string/login'))
         self.btnChange_enter.clicked.connect (self.set_enter_bg)
-
         self.imgChange_desktop = self.findChild('imgChange_desktop')
         self.imgChange_lock = self.findChild('imgChange_lock')
         self.imgChange_unlock = self.findChild('imgChange_unlock')
         self.imgChange_enter = self.findChild('imgChange_enter')
-
         self.adduser = self.findChild('adduser')
         self.back_users = self.findChild('back_users')
-
         self.cbDock = self.findChild ('cbDock')
         self.apply = self.findChild('apply')
         self.cancel = self.findChild('cancel')
-        self.cancel.setProperty('text',res.get('@string/controls.cancel'))
-        self.apply.setProperty('text',res.get('@string/controls.apply'))
+        self.cancel.setProperty('text',res.get('@string/cancel'))
+        self.apply.setProperty('text',res.get('@string/apply'))
         self.apply.clicked.connect (self.apply_)
-
         self.txtDock = self.findChild ('txtDock')
-        self.txtDock.setProperty('text',res.get('@string/controls.dock_location'))
+        self.txtDock.setProperty('text',res.get('@string/dock_location'))
         self.txtWallpapers = self.findChild ('txtWallpapers')
-        self.txtWallpapers.setProperty('text',res.get('@string/controls.change_wallpaper'))
-
+        self.txtWallpapers.setProperty('text',res.get('@string/change_wallpaper'))
         # add user objects #
         self.leUsername = self.findChild('leUsername')
+        self.leUsername.setProperty('placeholderText',res.get('@string/e_username'))
         self.lePassword = self.findChild('lePassword')
-        self.leEmail = self.findChild('leEmail')
-        self.lePhone = self.findChild('lePhone')
-        self.leBirthday = self.findChild('leBirthday')
-        self.cbBloodtype = self.findChild('cbBloodtype')
-        self.cbGender = self.findChild('cbGender')
+        self.lePassword.setProperty('placeholderText',res.get('@string/e_password'))
+       
         self.cbSudoers = self.findChild('cbSudoers')
+        self.cbSudoers.setProperty('text',res.get('@string/sudoers'))
+        self.stWifi = self.findChild('stWifi')
         self.leFullName = self.findChild('leFullName')
+        self.leFullName.setProperty('placeholderText',res.get('@string/fullname'))
         self.apply2 = self.findChild('apply2')
+        self.apply2.setProperty('text',res.get('@string/apply'))
         self.showuser_exec = self.findChild ('showuser_exec')
         self.usel = self.findChild ('usel')
-
         self.leUsername_show = self.findChild('leUsername_show')
-        self.lePassword_show = self.findChild('lePassword_show')
-        self.leEmail_show = self.findChild('leEmail_show')
-        self.lePhone_show = self.findChild('lePhone_show')
-        self.leBirthday_show = self.findChild('leBirthday_show')
-        self.cbBloodtype_show = self.findChild('cbBloodtype_show')
-        self.cbGender_show = self.findChild('cbGender_show')
+        self.leUsername_show.setProperty('placeholderText',res.get('@string/e_username'))
+        #self.lePassword_show = self.findChild('lePassword_show')
+        #self.lePassword_show.setProperty('placeholderText',res.get('@string/e_password'))
+    
+        self.rsel = self.findChild('rsel')
         self.cbSudoers_show = self.findChild('cbSudoers_show')
+        self.cbSudoers_show.setProperty('text',res.get('@string/sudoers'))
         self.leFullName_show = self.findChild('leFullName_show')
+        self.leFullName_show.setProperty('placeholderText',res.get('@string/fullname'))
         self.imgProfile_show = self.findChild('imgProfile_show')
         self.btnProfile_show = self.findChild('btnProfile_show')
         self.savechanges = self.findChild('savechanges')
+        self.savechanges.setProperty('text',res.get('@string/savechanges'))
         self.changepassword = self.findChild('changepassword')
+        self.changepassword.setProperty('text',res.get('@string/change_password'))
         self.removeuser = self.findChild('removeuser')
-
-
         self.leoldPassword_change = self.findChild('leoldPassword_change')
+        self.leoldPassword_change.setProperty('placeholderText',res.get('@string/oldpass'))
         self.leNewPassword_change = self.findChild('leNewPassword_change')
+        self.leNewPassword_change.setProperty('placeholderText',res.get('@string/newpass'))
         self.leCofirmPassword_change = self.findChild('leConfirmPassword_change')
+        self.leCofirmPassword_change.setProperty('placeholderText',res.get('@string/confirmpass'))
         self.savechanges2 = self.findChild('savechanges2')
+        self.savechanges2.setProperty('text',res.get('@string/savechanges'))
         self.changepassword_exec = self.findChild('changepassword_exec')
+        self.wsel = self.findChild('wsel')
         self.cancel3 = self.findChild('cancel3')
-
+        self.cancel3.setProperty('text',res.get('@string/cancel'))
+        self.cancel2 = self.findChild('cancel2')
+        self.cancel2.setProperty('text',res.get('@string/cancel'))
+        self.cancel_reso =  self.findChild('cancel_reso')
+        self.cancel_reso.setProperty('text',res.get('@string/cancel'))
+        self.change_reso = self.findChild('change_reso')
+        self.scroll = self.findChild('scroll')
         # Get backgrounds #
         self.desktop_bg = self.getdata("desktop.background")
         self.lock_bg = self.getdata("lock.background")
         self.unlock_bg = self.getdata("unlock.background")
         self.enter_bg = self.getdata("enter.background")
+        
 
         if self.desktop_bg.startswith('@background/'):
             self.imgChange_desktop.setProperty('source',res.qmlget(self.desktop_bg))
@@ -487,6 +599,11 @@ class MainApp (MainApp):
         else:
             self.imgChange_enter.setProperty('source',files.input_qml(self.enter_bg))
 
+        self.apply3 = self.findChild('apply3')
+        self.apply3.setProperty('text',res.get('@string/apply'))
+        self.cancel4 = self.findChild('cancel4')
+        self.cancel4.setProperty('text',res.get('@string/cancel'))
+
         if self.getdata('dock')=='bottom': 
             self.dock_location = 0
             self.cbDock.setProperty('currentIndex',0)
@@ -503,10 +620,27 @@ class MainApp (MainApp):
             self.dock_location = 4
             self.cbDock.setProperty('currentIndex',4)
 
+
         self.adduser.clicked.connect (self.adduser_)
+
+        # Get Wifi on or off
+        subprocess.call('nmcli radio wifi > /stor/etc/network/radio',shell=True)
+
+        if 'enabled' in files.readall('/etc/network/radio'):
+            self.stWifi.setProperty('checked',True)
+        else:
+            self.stWifi.setProperty('checked',False)
+
+        # args #
+        if not sys.argv[1:]==[]:
+            try:
+                self.fsel.setProperty('text',sys.argv[1])
+            except:
+                pass
 
         self.loop()
 
 application = QtGui.QGuiApplication([])
-w = MainApp()
+application.setWindowIcon (QIcon(res.get(res.etc('controls','logo'))))
+w = Sudo(MainApp)
 application.exec()

@@ -1,5 +1,6 @@
 name[en]: Debug Application
 name[fa]: برنامه دیباگی
+name[ar]: تطبيق التصحيح
 logo: @icon/breeze-app
 exec: debug
 application: No

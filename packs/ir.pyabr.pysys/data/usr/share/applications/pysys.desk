@@ -1,5 +1,6 @@
 name[en]: Power Options
 name[fa]: تنظیمات خاموش/روشن
+name[ar]: خيارات الطاقة
 logo: @icon/breeze-pysys
 exec: pysys
 shortcut: Esc

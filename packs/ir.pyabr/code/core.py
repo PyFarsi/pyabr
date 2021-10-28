@@ -17,7 +17,16 @@
     * English Page:     https://en.pyabr.ir
 '''
 import importlib, shutil, os, sys, hashlib, subprocess,time,datetime,getpass,py_compile,wget,requests,random,multiprocessing
+from requests.models import requote_uri
 from termcolor import colored
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+
 def read_record (name,filename):
     file = open (filename,"r")
     strv = (file.read()).split("\n")
@@ -79,9 +88,9 @@ class Script:
             strcmdln = ""
 
             for i in cmdln:
-                if str(i).startswith("$"):
+                if str(i).startswith(":"):
                     select = files.readall("/proc/info/sel")
-                    var = control.read_record(str(i).replace("$", ""), select)
+                    var = control.read_record(str(i).replace(":", ""), select)
                     if var == None:
                         strcmdln  += f" {i}"
                     else:
@@ -98,6 +107,19 @@ class Script:
 
             if (cmdln == [] or cmdln[0].startswith("#")):
                 continue
+            elif cmdln[0]=='>' or cmdln[0]=='>>' or cmdln[0]=='>>>':
+                cmdln.pop(0)
+                scmd = ''
+                for i in cmdln:
+                    if scmd=='':
+                        scmd+=i
+                    else:
+                        scmd+=f' {i}'
+
+                strcmd = f"{sys.executable} -c \""
+                strcmd2 = scmd.replace('"','\\"')
+                strcmd = f"{strcmd}{strcmd2}\""
+                subprocess.call(strcmd,shell=True)
             elif hasattr(Commands, cmdln[0]):
                 cmd = Commands()
                 getattr(cmd, cmdln[0])(cmdln[1:])
@@ -108,29 +130,6 @@ class Script:
 class Commands:
     def __init__(self):
         pass
-
-    # start #
-    
-    def start (self,args):
-        files = Files()
-        colors = Colors()
-        if args==[]:
-            colors.show ('start','fail','no inputs.')
-            sys.exit(0)
-        if files.isfile (f'/usr/share/applications/{args[0]}.desk'):
-            files.write('/tmp/start.tmp',args[0])
-        else:
-            colors.show('start', 'fail', f'{args[0]}: application not found.')
-
-    def cl (self,args):
-        files = Files()
-        colors = Colors()
-
-        if args==[]:
-            colors.show ('cl','fail','no inputs.')
-            sys.exit(0)
-
-        files.write('/tmp/cloud.tmp',args[0])
 
     # kill process #
     def kill (self,args):
@@ -244,16 +243,6 @@ class Commands:
         files = Files()
 
         print (files.readall('/proc/info/pwd'))
-
-    def send (self,args):
-        sms = Message()
-        if args==[] or args[1:]==[]:
-            args =  [input ('Enter giver id: '),input ('Type your message: ')]
-        sms.send(args[0],args[1])
-
-    def receive (self,args):
-        sms = Message()
-        sms.receive()
 
     # zip #
     def xzip (self, args):
@@ -566,19 +555,19 @@ class Commands:
         print(f"     Permission: {perm}" )
         print(f" Permission Num: {str(numperm)}" )
         if r == True:
-            print("           Read: Yes")
+            print(f"           Read: {colored('Yes','green')}")
         else:
-            print("           Read: No" )
+            print(f"           Read: {colored('No','red')}" )
 
         if w == True:
-            print("          Write: Yes" )
+            print(f"          Write: {colored('Yes','green')}" )
         else:
-            print("          Write: No")
+            print(f"          Write: {colored('No','red')}")
 
         if x == True:
-            print("        Execute: Yes")
+            print(f"        Execute: {colored('Yes','green')}")
         else:
-            print("        Execute: No")
+            print(f"        Execute: {colored('No','red')}")
 
     # chmod command #
     def chmod (self,args):
@@ -601,274 +590,6 @@ class Commands:
             permissions.create(files.output(filename), perm_user, perm_others, perm_guest, owner)
         else:
             colors.show("chmod", "perm", "")
-
-    def mount (self,args):
-        files = Files()
-        colors = Colors()
-        control = Control()
-        permissions = Permissions()
-        commands = Commands()
-
-        if not permissions.check_root(files.readall('/proc/info/su')):
-            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
-                colors.show("mount", "perm", "")
-                sys.exit(0)
-
-        if args==[]:
-            colors.show("mount", "fail", "no inputs.")
-            sys.exit(0)
-
-        clouddrive = args[0]
-
-        if not files.isfile(f'/dev/{clouddrive}'):
-            colors.show("mount", "fail", f"{clouddrive}: cloud drive not exists.")
-            sys.exit(0)
-
-        clouddrivez = f'/dev/{clouddrive}'
-
-
-        host = control.read_record('host',clouddrivez)
-        password = control.read_record('password', clouddrivez)
-
-        x = requests.post(f"{host}/check.php",data={"password":password})
-
-        if x.text.__contains__('s: connected'):
-            if files.isdir (f'/stor/{clouddrive}'):
-                files.removedirs(f'/stor/{clouddrive}')
-
-            files.mkdir(f'/stor/{clouddrive}')
-            commands.cd([f'/stor/{clouddrive}'])
-            files.write('/proc/info/csel',clouddrive)
-
-            x = requests.post(f"{host}/list.php",data={"password":password})
-
-            split_list_items = str(x.text).split('\n')
-            if '' in split_list_items:
-                split_list_items.remove('')
-
-            split_list_items.reverse()
-
-            for item in split_list_items:
-                split_remove_host = item.split("/stor/")
-                try:
-                    myitem = split_remove_host[1]
-
-                    if myitem.endswith ('/') and not files.isdir (f'/stor/{clouddrive}/{myitem}'):
-                        files.mkdir(f'/stor/{clouddrive}/{myitem}')
-                    else:
-                        files.create(f'/stor/{clouddrive}/{myitem}')
-                except:
-                    pass
-
-        elif 'e: wrong password' in x.text:
-            colors.show("mount", "fail", f"{clouddrive}: wrong password in device database.")
-        elif 'e: empty password' in x.text:
-            colors.show("mount", "fail", f"{clouddrive}: empty password in device database.")
-        else:
-            colors.show("mount", "fail", f"{clouddrive}: cannot connect to this cloud drive.")
-
-    def get (self,args):
-        files = Files()
-        colors = Colors()
-        control = Control()
-
-        if args==[]:
-            colors.show("get", "fail", "no inputs.")
-            sys.exit(0)
-
-        url = args[0].split('/')
-        addressz = url[0]
-        try:
-            dataz = url[1]
-        except:
-            dataz = 'index.xml'
-
-        x = requests.post(f"{control.read_record('zone','/etc/cloud')}", data={"address": addressz,"data":dataz})
-
-        if x.text=='e: data not found':
-            colors.show('get', 'fail', f'{dataz}: data not found.')
-        elif x.text=='e: address not found':
-            colors.show('get', 'fail', f'{addressz}: address not found.')
-        else:
-            if not files.isdir(f'/srv/{addressz}'):
-                files.mkdir(f'/srv/{addressz}')
-
-            try:
-                files.write(f'/srv/{addressz}/{dataz}',x.text)
-            except:
-                pass
-
-    def umount (self,args):
-        files = Files()
-        colors = Colors()
-        permissions = Permissions()
-        commands = Commands()
-
-
-        if not permissions.check_root(files.readall('/proc/info/su')):
-            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
-                colors.show("umount", "perm", "")
-                sys.exit(0)
-
-        if args == []:
-            colors.show("umount", "fail", "no inputs.")
-            sys.exit(0)
-
-        clouddrive = args[0]
-
-        if not files.isfile(f'/dev/{clouddrive}'):
-            colors.show("umount", "fail", f"{clouddrive}: cloud drive not exists.")
-            sys.exit(0)
-
-        commands.cd (['/'])
-        files.removedirs(f'/stor/{clouddrive}')
-
-    # down mani:/Files/mani
-
-    def down (self,args):
-        files = Files()
-        colors = Colors()
-        control = Control()
-        permissions = Permissions()
-
-
-        if not permissions.check_root(files.readall('/proc/info/su')):
-            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
-                colors.show("down", "perm", "")
-                sys.exit(0)
-
-        if args == []:
-            colors.show("down", "fail", "no inputs.")
-            sys.exit(0)
-
-        filename = args[0]
-
-        clouddrive = files.readall('/proc/info/csel')
-        clouddrivez = f'/dev/{clouddrive}'
-
-        host = control.read_record('host', clouddrivez)
-        password = control.read_record('password', clouddrivez)
-
-        x = requests.post(f"{host}/download.php",data={"password":password,"filename":filename})
-
-        if x.text == 'e: wrong password':
-            colors.show("down", "fail", f"{clouddrive}: wrong password in device database.")
-        elif x.text == 'e: empty password':
-            colors.show("down", "fail", f"{clouddrive}: empty password in device database.")
-        elif x.text == 'e: file not found':
-            colors.show("down", "fail", f"{clouddrive}: {filename}: file not file in cloud drive.")
-        else:
-            files.write(f'/stor/{clouddrive}/{filename}',x.text)
-
-    def rem (self,args):
-        files = Files()
-        colors = Colors()
-        control = Control()
-        permissions = Permissions()
-
-        if not permissions.check_root(files.readall('/proc/info/su')):
-            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
-                colors.show("rem", "perm", "")
-                sys.exit(0)
-
-        if args == []:
-            colors.show("rem", "fail", "no inputs.")
-            sys.exit(0)
-
-        filename = args[0]
-
-        clouddrive = files.readall('/proc/info/csel')
-        clouddrivez = f'/dev/{clouddrive}'
-
-        host = control.read_record('host', clouddrivez)
-        password = control.read_record('password', clouddrivez)
-
-        x = requests.post(f"{host}/remove.php",data={"password":password,"filename":filename})
-
-        if x.text == 'e: wrong password':
-            colors.show("down", "fail", f"{clouddrive}: wrong password in device database.")
-        elif x.text == 'e: empty password':
-            colors.show("down", "fail", f"{clouddrive}: empty password in device database.")
-        elif x.text == 'e: file not found':
-            colors.show("down", "fail", f"{clouddrive}: {filename}: file not file in cloud drive.")
-        else:
-            if files.isfile (f'/stor/{clouddrive}/{filename}'):
-                files.remove(f'/stor/{clouddrive}/{filename}')
-            elif files.isdir(f'/stor/{clouddrive}/{filename}'):
-                files.removedirs(f'/stor/{clouddrive}/{filename}')
-
-    def mkc (self,args):
-        files = Files()
-        colors = Colors()
-        control = Control()
-        permissions = Permissions()
-
-
-        if not permissions.check_root(files.readall('/proc/info/su')):
-            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
-                colors.show("mkc", "perm", "")
-                sys.exit(0)
-
-        if args == []:
-            colors.show("mkc", "fail", "no inputs.")
-            sys.exit(0)
-
-        dirname = args[0]
-
-        clouddrive = files.readall('/proc/info/csel')
-        clouddrivez = f'/dev/{clouddrive}'
-
-        host = control.read_record('host', clouddrivez)
-        password = control.read_record('password', clouddrivez)
-
-        x = requests.post(f"{host}/directory.php",data={"password":password,"dirname":dirname})
-
-        if x.text == 'e: wrong password':
-            colors.show("mkc", "fail", f"{clouddrive}: wrong password in device database.")
-        elif x.text == 'e: empty password':
-            colors.show("mkc", "fail", f"{clouddrive}: empty password in device database.")
-        elif x.text == 'e: is a file':
-            colors.show("mkc", "fail", f"{clouddrive}: {dirname}: cannot create directory; is a file.")
-        else:
-            x = f'/stor/{clouddrive}/{dirname}'
-            if files.isfile (x):
-                colors.show("mkc", "fail", f"{clouddrive}: {dirname}: cannot create directory; is a file.")
-            elif not files.isdir (x):
-                files.mkdir(x)
-
-    def up (self,args):
-        files = Files()
-        colors = Colors()
-        control = Control()
-        permissions = Permissions()
-
-        if not permissions.check_root(files.readall('/proc/info/su')):
-            if not files.readall('/proc/info/su') in files.readall('/etc/sudoers'):
-                colors.show("up", "perm", "")
-                sys.exit(0)
-
-        if args == []:
-            colors.show("up", "fail", "no inputs.")
-            sys.exit(0)
-
-        clouddrive = files.readall('/proc/info/csel')
-        filename = args[0]
-
-        clouddrivez = f'/dev/{clouddrive}'
-
-        host = control.read_record('host', clouddrivez)
-        password = control.read_record('password', clouddrivez)
-
-        data = files.readall(f'/stor/{clouddrive}/{filename}')
-
-        x = requests.post(f"{host}/upload.php",data={"password":password,"filename":filename,"data":data})
-
-        if x.text == 'e: wrong password':
-            colors.show("up", "fail", f"{clouddrive}: wrong password in device database.")
-        elif x.text == 'e: empty password':
-            colors.show("up", "fail", f"{clouddrive}: empty password in device database.")
-        elif x.text == 'e: is a directory':
-            colors.show("up", "fail", f"{clouddrive}: {filename}: cannot create file; is a directory in cloud drive.")
 
     # chown #
     def chown (self,args):
@@ -912,17 +633,7 @@ class Commands:
 
     # new #
     def new (self,args):
-        files = Files()
-        control = Control()
-
-        user = control.read_record("username", "/tmp/su.tmp")
-        code = control.read_record ("code","/tmp/su.tmp")
-
-        if files.isfile("/proc/selected"): files.remove("/proc/selected")
-        if user == "guest":
-            subprocess.call([sys.executable,'vmabr.pyc', 'user', 'guest'])
-        else:
-            subprocess.call([sys.executable,'vmabr.pyc', 'user', user, code])
+        app.start('commento','')
 
     # det Delete Text from a line
     def det (self,args):
@@ -931,7 +642,7 @@ class Commands:
         control = Control()
         files = Files()
         for i in args:
-            control.remove_item(i,files.readall('/proc/info/sel'))
+            control.remove_record(i,files.readall('/proc/info/sel'))
 
     # reboot #
     def reboot (self,args):
@@ -959,10 +670,7 @@ class Commands:
 
         process.endall()
 
-        if files.readall('/proc/info/os')=='Pyabr' and not files.isfile ('/.unlocked'):
-            subprocess.call(['reboot'])
-        else:
-            subprocess.call([sys.executable,'vmabr.pyc'])
+        subprocess.call(['reboot'])
 
     # shut command #
     def shut (self,args):
@@ -981,8 +689,7 @@ class Commands:
             if files.isfile("/proc/selected"): files.remove("/proc/selected")
             process.endall()
 
-            if files.readall('/proc/info/os') == 'Pyabr' and not files.isfile('/.unlocked'):
-                subprocess.call(['poweroff'])
+            subprocess.call(['poweroff'])
 
     # shutdown command #
     def shutdown (self,args):
@@ -1007,8 +714,7 @@ class Commands:
 
         process.endall()
 
-        if files.readall('/proc/info/os') == 'Pyabr' and not files.isfile('/.unlocked'):
-            subprocess.call(['poweroff'])
+        subprocess.call(['poweroff'])
 
 
     # touch #
@@ -1171,7 +877,7 @@ class Commands:
                     strv = strv.replace('//','/')
 
                 pwd = files.output(strv)
-                files.write("/proc/info/pwd", pwd)
+                files.write("/proc/info/pwd", files.output(pwd))
 
             elif files.isdir(path):
                 files.write("/proc/info/pwd", files.output(path))
@@ -1597,10 +1303,12 @@ class Commands:
         select = files.readall("/proc/info/sel")
         if not select.startswith("/proc/"):
             if permissions.check(files.output(select), "w", files.readall("/proc/info/su")):
+                control.remove_record(name,select)
                 control.write_record(name, value, select)
             else:
                 colors.show("set", "perm", "")
         else:
+            control.remove_record(name,select)
             control.write_record(name, value, select)
 
     # sleep command #
@@ -1676,13 +1384,16 @@ class Commands:
             ## Send /etc/users/root to /proc/info/su username ##
 
             files.write("/proc/info/su", 'root')
+            files.create("/proc/info/sudo")
 
-            prompt = [sys.executable,'vmabr.pyc', 'exec']
+            #prompt = [sys.executable,'vmabr.pyc', 'exec']
+            prompt = f'{sys.executable} vmabr.pyc exec '
 
             for i in args:
-                prompt.append(i)
+                prompt+=f" {i}"
 
-            subprocess.call(prompt)
+            files.remove ('/proc/info/sudo')
+            subprocess.call(prompt,shell=True)
 
             files.write("/proc/info/su", thisuser)
         elif args[0] == '-a':
@@ -1727,13 +1438,6 @@ class Commands:
 
                 ## Informations ##
                 fullname = input  ('\tFull name       []: ')
-                company =    input('\tCompany name    []: ')
-                birthday =   input('\tBirthday        []: ')
-                gender =     input('\tGender          [Male/Female]: ')
-                blood_type = input('\tBlood type      [O/A/B/AB]: ')
-                phone =      input('\tPhone number    []: ')
-                website =    input('\tWebsite address []: ')
-                email =      input('\tEmail address   []: ')
 
                 files.create(f"/etc/users/{input_username}")
                 control.write_record("code", hashlib.sha3_512(str(password).encode()).hexdigest(), f'/etc/users/{input_username}')
@@ -1741,20 +1445,20 @@ class Commands:
                 ## Add informations ##
                 if not (fullname == None or fullname == ""):
                     control.write_record("fullname", fullname,f'/etc/users/{input_username}')
-                if not (company == None or company == ""):
-                    control.write_record("company", company, f'/etc/users/{input_username}')
-                if not (birthday == None or birthday == ""):
-                    control.write_record("birthday", birthday, f'/etc/users/{input_username}')
-                if not (gender == None or gender == ""):
-                    control.write_record("gender", gender, f'/etc/users/{input_username}')
-                if not (blood_type == None or blood_type == ""):
-                    control.write_record("blood_type", blood_type, f'/etc/users/{input_username}')
-                if not (phone == None or phone == ""):
-                    control.write_record("phone", phone, f'/etc/users/{input_username}')
-                if not (website == None or website == ""):
-                    control.write_record("website", website, f'/etc/users/{input_username}')
-                if not (email == None or email == ""):
-                    control.write_record("email", email, f'/etc/users/{input_username}')
+                
+                if not files.isdir (f'/desk/{input_username}'):
+                    files.mkdir(f'/desk/{input_username}')
+
+                if not files.isdir (f'/etc/key/{input_username}'):
+                    files.mkdir(f'/etc/key/{input_username}')
+
+                if not files.isdir (f'/etc/chat/{input_username}'):
+                    files.mkdir(f'/etc/chat/{input_username}')
+
+                if not files.isdir (f'/etc/drive/{input_username}'):
+                    files.mkdir(f'/etc/drive/{input_username}')
+
+                k = Key(input_username) # create public key and private key for created user
 
                 control.write_record(f'/desk/{input_username}',f"drwxr-x---/{input_username}",'/etc/permtab')
                 control.write_record('profile','@icon/breeze-users',f'/etc/users/{input_username}')
@@ -2092,10 +1796,10 @@ class Package:
             filelist = control.read_list(list)
 
             for i in filelist:
-                if files.isdir("{unpack}/{i}"):
-                    files.removedirs("{unpack}/{i}")
-                elif files.isfile("{unpack}/{i}"):
-                    files.remove("{unpack}/{i}")
+                if files.isdir(f"{unpack}/{i}"):
+                    files.removedirs(f"{unpack}/{i}")
+                elif files.isfile(f"{unpack}/{i}"):
+                    files.remove(f"{unpack}/{i}")
 
 
             ## Database removal ##
@@ -2125,14 +1829,15 @@ class Package:
         packname = packname.lower()
 
         if permissions.check_root(files.readall("/proc/info/su")):
-            mirror = control.read_record('mirror',f'/app/mirrors/{packname}.manifest')+'.pa'
-            try:
-                wget.download(mirror,files.input(f'/app/cache/gets/{packname}.pa'))
-            except:
+            mirror = control.read_record('mirror',f'/app/mirrors/{packname}.manifest')+'/'+packname+'.pa'
+            #try:
+            wget.download(mirror,files.input(f'/app/cache/gets/{packname}.pa'))
+            
+            '''except:
                 try:
                     wget.download(f"{files.readall('/etc/paye/sources')}/{packname}.pa",files.input(f'/app/cache/gets/{packname}.pa'))
                 except:
-                    colors.show("paye","fail",f"{packname}: package not found.")
+                    colors.show("paye","fail",f"{packname}: package not found.")'''
             print()
 
         else:
@@ -2515,20 +2220,22 @@ class Res:
                 return ''
         else:
             return ''
+
+
 res = Res()
 # system #
 class System:
     def __init__(self,cmd):
-        prompt = [sys.executable,'vmabr.pyc', 'exec']
+        prompt = f'{sys.executable} vmabr.pyc exec '
         cmdln = cmd.split(" ")
 
         if '' in cmdln:
             cmdln.remove('')
 
         for i in cmdln:
-            prompt.append(i)
+            prompt+=f" {i}"
 
-        subprocess.call(prompt)
+        subprocess.call(prompt,shell=True)
 # app #
 class App:
     ## Start ID Process ##
@@ -2557,6 +2264,7 @@ class App:
 
         if not (external=='' or external==None): files.write('/proc/info/ext',external)
 
+
         proc = multiprocessing.Process(target=startId)
         proc.start()
 
@@ -2574,8 +2282,7 @@ class App:
 
         if files.isfile(f'/proc/id/{id}') and files.isfile(f'/proc/id/{id}.pid'):
             subprocess.call(['kill', files.readall(f'/proc/id/{id}.pid')])
-            files.remove(f"/proc/id/{id}.pid")
-            files.remove(f"/proc/id/{id}")
+            #files.remove(f"/proc/id/{id}")
 
     ## Endall id ##
     def endall(self):
@@ -2846,15 +2553,18 @@ class Permissions:
                 dirfile = "-"
 
             ## The most important part of father permtab ##
-            names = name.split("/")
+            try:
+                names = name.split("/")
 
-            while not self.exists(name):
-                l = len(names) - 1
-                names.pop(l)
-                name = ""
-                for i in names:
-                    name += f"/{i}"
-                name = name.replace("//", "/")
+                while not self.exists(name):
+                    l = len(names) - 1
+                    names.pop(l)
+                    name = ""
+                    for i in names:
+                        name += f"/{i}"
+                    name = name.replace("//", "/")
+            except:
+                name = '/'
 
             perm = (control.read_record(name, "/etc/permtab")).split("/")
             owner = perm[1]
@@ -3098,25 +2808,11 @@ class Files:
         return x
 
     def output(self,filename):
-        if filename.startswith ('/'):
-            return filename
+        x = subprocess.check_output(f'readlink -f {self.input(filename)}',shell=True).decode('utf-8').replace('\n','').replace('/stor','')
+        if x=='':
+            return '/'
         else:
-            x = self.input(filename)
-
-            if x.startswith ('./'):
-                x = x.replace ('./','/')
-
-            if x.startswith ('////'):
-                x = x.replace ('////','/')
-            elif x.startswith ('///'):
-                x = x.replace ('///','/')
-            elif x.startswith ('//'):
-                x = x.replace ('//','/')
-            elif x.startswith ('/'):
-                x = x.replace ('/','/')
-                
             return x
-
 
     def create(self,filename):
         open(self.input(filename), "w")
@@ -3263,82 +2959,32 @@ class Colors:
         elif process_type == "warning":
             print(f'{colored(f"{process_name}: warning: {process_message}","yellow")}')
 colors = Colors()
-class Message:
-    def __init__(self):
-        pass
 
-    def send (self,giver,message):
-        colors = Colors()
-        files = Files()
-        control = Control()
+class Key:
+    # create keys for wallet or bank
+    def __init__(self,su):
+        private_key = rsa.generate_private_key(
+            public_exponent=65537,
+            key_size=2048,
+            backend=default_backend()
+        )
+        public_key = private_key.public_key()
 
-        user = files.readall('/etc/hostname')
-        password = files.readall('/etc/shadow')
+        private = private_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.NoEncryption()
+        )
+        
+        f = open(files.input(f'/etc/key/{su}/Private Key.pem'), 'wb')
+        f.write(private)
+        f.close()
 
-        x = requests.post(control.read_record('send','/etc/cloud'),data={"sender":user,"password":password,"giver":giver,"message":message})
+        public = public_key.public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo
+        )
 
-        if x.text == 'e: unknown sender':
-            colors.show('send','fail',f'{user}: unknown sender')
-        elif x.text == 'e: wrong password':
-            colors.show('send','fail',f'{user}: wrong password')
-        elif x.text == 'e: unknown giver':
-            colors.show('send','fail',f'{user}: unknown giver')
-        else:
-            '''
-            try:
-                files.makedirs(f'/app/messages/{giver}')
-            except:
-                pass
-
-            try:
-                files.write (f'/app/messages/{giver}/{str(datetime.datetime.now()).strftime("%Y,%m,%d,%H,%M,%S")}.me',message)
-            except:
-                pass
-            '''
-
-    def receive (self):
-        colors = Colors()
-        control = Control()
-        files = Files()
-
-        user = files.readall('/etc/hostname')
-        shadow = files.readall('/etc/shadow')
-
-        x = requests.post(control.read_record('receive','/etc/cloud'),data={"giver":user,"password":shadow})
-
-        if x.text == 'e: unknown giver':
-            colors.show('receive','fail',f'{user}: unknown giver')
-        elif x.text == 'e: wrong password':
-            colors.show('receive','fail',f'{user}: wrong password')
-        else:
-            files.write ('/app/inbox',x.text)
-
-            file = open (files.input('/app/inbox'),"r")
-            listm = (file.read()).split("@xsms@")
-            file.close()
-
-            if '' in listm:
-                listm.remove('')
-
-            files.remove('/app/inbox')
-
-            for i in listm:
-                splitor = i.split('@sms@')
-                head = splitor[0]
-                file = splitor[1]
-                data = splitor[2]
-
-                sender = head.split('/')[0]
-                giver = head.split('/')[2]
-                
-                try:
-                    files.makedirs(f'/app/messages/{sender}')
-                except:
-                    pass
-
-                try:
-                    files.write(f'/app/messages/{sender}/{file}',data)
-                except:
-                    pass
-
-message = Message()
+        f = open(files.input(f'/etc/key/{su}/Public Key.pem'),'wb')
+        f.write(public)
+        f.close()

@@ -1,11 +1,8 @@
-import QtQuick 2.0
-import QtQuick.Window 2.3
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.0
-import QtQuick.Controls 1.4
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.3
-import QtQuick.Controls.Styles 1.4
+import QtQuick
+import QtQuick.Window
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Controls.Material
 
 ApplicationWindow {
     id: app
@@ -106,18 +103,6 @@ ApplicationWindow {
                 objectName: "cmLang"
                 font.family: "IRANSans"
             }
-
-            Label {
-                text: "Choose your clock time"
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-
-            ComboBox {
-                model: ["Iran", "Amercia"]
-                objectName: "cmLocale"
-                width: parent.width
-                font.family: "IRANSans"
-            }
         }
     }
 
@@ -140,20 +125,6 @@ ApplicationWindow {
                 objectName: "leFullName"
                 font.family: "IRANSans"
             }
-
-            TextField {
-                placeholderText: "Enter your phone number"
-                width: parent.width
-                objectName: "lePhone"
-                font.family: "IRANSans"
-            }
-
-            TextField {
-                placeholderText: "Enter your email address"
-                objectName: "leEmail"
-                width: parent.width
-                font.family: "IRANSans"
-            }
         }
     }
 
@@ -171,6 +142,7 @@ ApplicationWindow {
             text: "Setup is already complete;\n that you can signout and use your Pyabr is your Portable USB/SD"
             font.pixelSize: 15
             font.family: "IRANSans"
+            objectName: "setup_message"
         }
     }
 

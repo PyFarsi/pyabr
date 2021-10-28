@@ -20,23 +20,13 @@ import sys
 
 from pyabr.core import *
 from pyabr.quick import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5 import uic
-from PyQt5.QtQml import *
-
-control = Control()
-files = Files()
-colors = Colors()
-app = App()
-res = Res()
+from pyabr.cloud import *
 
 def getdata (name):
     return control.read_record (name,'/etc/gui')
 
 application = QGuiApplication(sys.argv)
-application.setWindowIcon(QIcon(res.get('@icon/breeze-about')))
+application.setWindowIcon(QIcon(res.get('@icon/breeze-runapp')))
 
 class MainApp (MainApp):
     def clean(self):
@@ -53,8 +43,10 @@ class MainApp (MainApp):
 
         if app.exists(command):
             app.start(command, args)
+        elif self.leRun.property('text').startswith ('abr://'):
+            self.d = Domain (self.leRun.property('text'))
         elif not command=='':
-            self.leRun.setProperty('placeholderText',res.get('@string/runapp.app_not_found'))
+            self.leRun.setProperty('placeholderText',res.get('@string/application_not_found').replace('{0}',command))
             self.leRun.setProperty('enabled',False)
 
             QTimer.singleShot(3000,self.clean)
@@ -68,11 +60,11 @@ class MainApp (MainApp):
         if not self.rootObjects():
             sys.exit(-1)
 
-        self.setProperty('title',res.get('@string/runapp.app_name'))
+        self.setProperty('title',res.get('@string/runner'))
 
         self.leRun = self.findChild('leRun')
         self.btnRun = self.findChild('btnRun')
-        self.btnRun.setProperty('text',res.get('@string/runapp.btnrun'))
+        self.btnRun.setProperty('text',res.get('@string/run'))
         self.btnRun.clicked.connect (self.run_)
 
 w = MainApp()
