@@ -1385,6 +1385,7 @@ class Commands:
 
             files.write("/proc/info/su", 'root')
             files.create("/proc/info/sudo")
+            files.create("/proc/info/pause")
 
             #prompt = [sys.executable,'vmabr.pyc', 'exec']
             prompt = f'{sys.executable} vmabr.pyc exec '
@@ -1396,6 +1397,8 @@ class Commands:
             subprocess.call(prompt,shell=True)
 
             files.write("/proc/info/su", thisuser)
+
+            files.remove ("/proc/info/pause")
         elif args[0] == '-a':
             ## Check root ##
             if not permissions.check_root(files.readall("/proc/info/su")):
@@ -2808,7 +2811,7 @@ class Files:
         return x
 
     def output(self,filename):
-        x = subprocess.check_output(f'readlink -f {self.input(filename)}',shell=True).decode('utf-8').replace('\n','').replace('/stor','')
+        x = subprocess.check_output(f'readlink -f {self.input(filename)}',shell=True).decode('utf-8').replace('\n','').replace('/stor','').replace('/run/initramfs/memory/data','')
         if x=='':
             return '/'
         else:
