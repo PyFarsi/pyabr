@@ -75,6 +75,7 @@ ApplicationWindow {
             CheckBox {
                 id: virtualkeyboard
                 objectName: "virtualkeyboard"
+                 visible: false
                 text: "کیبورد مجازی"
             }
         }

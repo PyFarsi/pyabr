@@ -56,10 +56,13 @@ else:
 		os.mkdir("/stor/app")
 		os.mkdir("/stor/app/packages")
 	else:
-		shutil.rmtree('/stor')
-		os.mkdir("/stor")
-		os.mkdir("/stor/app")
-		os.mkdir("/stor/app/packages")
+		try:
+			shutil.rmtree('/stor')
+			os.mkdir("/stor")
+		except:
+			pass
+		if not os.path.isdir("/stor/app"): os.mkdir("/stor/app")
+		if not os.path.isdir("/stor/app/packages"): os.mkdir("/stor/app/packages")
 
 	if not os.path.isdir("/build-packs"): os.mkdir("/build-packs")
 
@@ -67,39 +70,19 @@ else:
 
 	pack.install()
 
-	# run #
-	if os.path.isfile('/stor/proc/0'):  os.remove('/stor/proc/0')
-	if os.path.isfile('/stor/proc/id/desktop'): os.remove('/stor/proc/id/desktop')
-	if not os.path.isdir('/stor/proc/id'): os.mkdir('/stor/proc/id')
 
-	# debug app #
-	#f = open('/stor/etc/suapp', 'w')
-	#f.close()
-
-	from PyQt5.QtCore import *
-	from PyQt5.QtWidgets import *
-
-	## Main entry ##
-	application = QApplication(sys.argv)
-	## https://www.cdog.pythonlibrary.org/2015/08/18/getting-your-screen-resolution-with-python/ Get screen model ##
-	screen_resolution = application.desktop().screenGeometry()
-	width, height = screen_resolution.width(), screen_resolution.height()
-
-	f = open('/stor/proc/info/scn','w')
-	f.write(str(width)+'x'+str(height))
+	f = open('/stor/etc/suapp', 'w')
+	f.write ('setup')
 	f.close()
 
-	control.write_record('width',str(width),'/stor/etc/gui')
-	control.write_record('height', str(height), '/stor/etc/gui')
+	from PyQt6.QtCore import *
+	from PyQt6.QtWidgets import *
+
+	control.write_record('width','1920','/stor/etc/gui')
+	control.write_record('height','1080', '/stor/etc/gui')
 
 	try:
-		subprocess.call('rm -rf /etc/localtime',shell=True)
-		subprocess.call('ln -s /usr/share/zoneinfo/Asia/Tehran /etc/localtime',shell=True)
-		f = open ('/etc/sysconfig/clock','w')
-		f.write('''ZONE="Asia/Tehran"
-UTC=false
-ARC=false''')
-		f.close()
+		subprocess.call('ln -sf /usr/share/zoneinfo/Asia/Tehran /etc/localtime',shell=True)
 		subprocess.call('hwclock --systohc --localtime',shell=True)
 	except: pass
 

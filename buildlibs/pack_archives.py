@@ -127,3 +127,14 @@ def install ():
 def inst (pack):
     build(pack)
     unpack(pack)
+
+def buildpacks ():
+    list = os.listdir('packs')
+    list.remove('ir.pyabr.updates')
+    for i in list:
+        if os.path.isdir('packs/'+i):
+            manifest(i)
+            build(i)
+    
+    manifest('ir.pyabr.updates')
+    build('ir.pyabr.updates')

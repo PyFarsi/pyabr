@@ -19,7 +19,6 @@
 
 from pyabr.core import *
 from pyabr.quick import *
-from pyabr.key import *
 import hashlib,subprocess
 
 class MainApp (MainApp):
@@ -99,6 +98,7 @@ class MainApp (MainApp):
                 files.write ("/etc/hostname",self.leHostname.property('text'))
 
             # Root #
+            control.remove_record ('code','/etc/users/root')
             control.write_record ('code',hashlib.sha3_512(self.leRootCode.property('text').encode()).hexdigest(),'/etc/users/root')
 
             # Main User #
@@ -112,8 +112,8 @@ class MainApp (MainApp):
                 if not files.isdir (f'/etc/chat/{self.leUsername.property("text")}'):
                     files.mkdir (f'/etc/chat/{self.leUsername.property("text")}')
 
-                if not files.isdir (f'/etc/cloud/{self.leUsername.property("text")}'):
-                    files.mkdir (f'/etc/cloud/{self.leUsername.property("text")}')
+                if not files.isdir (f'/etc/drive/{self.leUsername.property("text")}'):
+                    files.mkdir (f'/etc/drive/{self.leUsername.property("text")}')
                 
                 control.write_record ('code',hashlib.sha3_512(self.lePassword.property('text').encode()).hexdigest(),f'/etc/users/{self.leUsername.property("text")}')
                 control.write_record (f'/desk/{self.leUsername.property("text")}',f'drwxr-----/{self.leUsername.property("text")}','/etc/permtab')
@@ -130,10 +130,18 @@ class MainApp (MainApp):
             if self.chGuest.property('checked'):
                 files.write ('/etc/guest','enable')
 
-            print ( self.cmLang.property('index'))
+            control.remove_record ('locale','/etc/gui')
+
+            if self.cmLang.property('currentIndex')==0:
+                control.write_record ('locale','en','/etc/gui')
+            elif self.cmLang.property('currentIndex')==1:
+                control.write_record ('locale','fa','/etc/gui')
+            else:
+                control.write_record ('locale','en','/etc/gui')
 
             self.close()
-            System ('paye rm setup')
+            System ('paye rm ir.pyabr.setup')
+            files.create ('/etc/suapp')
             app.signal('logout')
 
     def __init__(self):
@@ -164,15 +172,11 @@ class MainApp (MainApp):
         self.cmLang = self.findChild ('cmLang')
         self.leFullName = self.findChild ('leFullName')
         self.leFullName.setProperty('placeholderText',res.get('@string/fullname'))
-        self.lePhone = self.findChild ('lePhone')
-        self.lePhone.setProperty('placeholderText',res.get('@string/phone'))
-        self.leEmail = self.findChild ('leEmail')
-        self.leEmail.setProperty('placeholderText',res.get('@string/email'))
         self.setup_message = self.findChild('setup_message')
         self.setup_message.setProperty('text',res.get('@string/setup_message'))
         self.back.setProperty('visible',False)
 
-        self.setProperty('title',res.get('@string/baad'))
+        self.setProperty('title',res.get('@string/setup'))
 
 
 application = QtGui.QGuiApplication([])

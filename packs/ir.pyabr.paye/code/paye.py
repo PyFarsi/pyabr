@@ -33,7 +33,7 @@ if sys.argv[1:]==[]:
     sys.exit(0)
 
 if sys.argv[1]=="cl":
-    pack.clean()
+    package.clean()
 
 elif sys.argv[1]=="pak" or sys.argv[1]=="pack":
     if files.isfile ("/app/cache/lock"):
@@ -49,9 +49,10 @@ elif sys.argv[1]=="pak" or sys.argv[1]=="pack":
     dir = sys.argv[2:]
 
     for i in dir:
-        pack.build(i)
+        print(f"Building {i.lower()} ...")
+        package.build(i)
 
-    pack.clean()
+    package.clean()
 
 
 elif sys.argv[1]=="upak" or sys.argv[1]=="unpack":
@@ -74,11 +75,12 @@ elif sys.argv[1]=="upak" or sys.argv[1]=="unpack":
 
     for i in archive:
         if files.isfile(i):
-            pack.unpack(i)
+            print(f"Unpacking {i.lower()} ...")
+            package.unpack(i)
         else:
             colors.show("paye", "fail",  f"{i}: archive not found.")
 
-    pack.clean()
+    package.clean()
 
 elif sys.argv[1]=="rm" or sys.argv[1]=="remove" or sys.argv[1]=="uninstall" or sys.argv[1]=="-r":
     if files.isfile ("/app/cache/lock"):
@@ -100,11 +102,12 @@ elif sys.argv[1]=="rm" or sys.argv[1]=="remove" or sys.argv[1]=="uninstall" or s
 
     for i in (sys.argv[2:]):
         if not i in list:
-            pack.uninstall(i.lower())
+            print(f"Uninstalling {i.lower()} ...")
+            package.uninstall(i.lower())
         else:
             colors.show ('paye','fail',f"{i}: is a permanetly application that cannot be removed.")
 
-    pack.clean()
+    package.clean()
 
 elif sys.argv[1]=="get" or sys.argv[1]=="download" or sys.argv[1]=="-d":
 
@@ -118,7 +121,8 @@ elif sys.argv[1]=="get" or sys.argv[1]=="download" or sys.argv[1]=="-d":
         for i in sys.argv[2:]:
             strv += f',{i}'
     for i in sys.argv[2:]:
-        pack.download (i.lower())
+        print(f"Downloading {i.lower()} ...")
+        package.download (i.lower())
 
 elif sys.argv[1]=="in" or sys.argv[1]=="it" or sys.argv[1]=="install" or sys.argv[1]=="-i":
     if files.isfile ("/app/cache/lock"):
@@ -146,9 +150,11 @@ elif sys.argv[1]=="in" or sys.argv[1]=="it" or sys.argv[1]=="install" or sys.arg
             if not i==source and old == new:
                 colors.show('paye','warning',f'{i}: package is up to date.')
             else:
-                pack.download(i.lower())
+                print(f"Downloading {i.lower()} ...")
+                package.download(i.lower())
         else:
-            pack.download(i.lower())
+            print(f"Downloading {i.lower()} ...")
+            package.download(i.lower())
 
     for j in sys.argv[2:]:
         if files.isfile(f'/app/packages/{j.lower()}.manifest'):
@@ -157,11 +163,11 @@ elif sys.argv[1]=="in" or sys.argv[1]=="it" or sys.argv[1]=="install" or sys.arg
             if not i==source and old == new:
                 pass
             else:
-                pack.unpack(f"/app/cache/gets/{j.lower()}.pa")
+                package.unpack(f"/app/cache/gets/{j.lower()}.pa")
         else:
-            pack.unpack(f"/app/cache/gets/{j.lower()}.pa")
+            package.unpack(f"/app/cache/gets/{j.lower()}.pa")
 
-    pack.clean()
+    package.clean()
 
 elif sys.argv[1]=="info" or sys.argv[1]=="-v":
     if sys.argv[2:]==[]:
@@ -219,21 +225,28 @@ elif sys.argv[1]=='add':
         colors.show ('paye','fail','no inputs.')
         sys.exit(0)
 
-    pack.add (sys.argv[2],sys.argv[3])
+    package.add (sys.argv[2],sys.argv[3])
 
 elif sys.argv[1]=='del' or sys.argv[1]=="delete":
     if sys.argv[2:]==[]:
         colors.show ('paye','fail','no inputs.')
         sys.exit(0)
 
-    pack.remove (sys.argv[2])
+    package.remove (sys.argv[2])
 
 elif sys.argv[1]=='up' or sys.argv[1]=="update":
-    pack.upcloud ()
+    System ("sudo paye cl")
+    System ("sudo paye in ir.pyabr.updates")
+    for i in files.list('/app/packages'):
+        if i.endswith ('.manifest'):
+            System (f'sudo paye cl')
+            System (f'sudo paye in {i.replace(".manifest","")}')
 
 elif sys.argv[1]=='ir.pyabr.updates':
-    pack.download('ir.pyabr.updates')
-    pack.unpack('/app/cache/gets/ir.pyabr.updates.pa')
+    print(f"Downloading Pyabr updates ...")
+    package.download('ir.pyabr.updates')
+    print(f"Unpacking Pyabr updates ...")
+    package.unpack('/app/cache/gets/ir.pyabr.updates.pa')
 
 elif sys.argv[1]=='crt' or sys.argv[1]=="create":
     if sys.argv[2:]==[]:

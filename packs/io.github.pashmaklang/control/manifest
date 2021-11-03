@@ -1,12 +1,13 @@
 name: io.github.pashmaklang
-name[fa]: زبان برنامه نویسی پشمک
-name[en]: Pashmak Programming Language
-name[ar]: لغة برمجة الباشمك
-copyright: Copyright 2020-2021 Parsa Shahmaleki <parsampsh@gmail.com>
-license: GPL v3
+name[fa]: پشمک
+name[en]: Pashmak
+name[ar]: بشمک
+copyright: (c) 2021 Parsa Shahmaleki
+license: GNU LGPL v2.1
 unpack: /
 version: 0.9
-description: Pashmak Programming Language
+description: Pashmak programming language
 compile: Yes
-build: 1400-07-01
-mirror: https://mirror.pyabr.ir/aras/
+entry: pashmak
+build: 1400-08-12
+mirror: https://mirror.pyabr.ir/zayanderoad/

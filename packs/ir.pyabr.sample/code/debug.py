@@ -26,7 +26,6 @@ class MainApp (MainApp):
         super(MainApp, self).__init__()
 
         self.load (res.get('@layout/debug'))
-        self.setProperty ('title',res.get('@string/debug'))
 application = QtGui.QGuiApplication([])
 application.setWindowIcon (QIcon(res.get(res.etc('debug','logo'))))
 

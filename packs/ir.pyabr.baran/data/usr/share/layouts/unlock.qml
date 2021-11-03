@@ -45,6 +45,7 @@ ApplicationWindow {
                 id: virtualkeyboard
                 objectName: "virtualkeyboard"
                 text: "کیبورد مجازی"
+                 visible: false
                 font.family: "IRANSans"
             }
         }

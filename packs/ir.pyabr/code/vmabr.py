@@ -129,6 +129,8 @@ files.write("/proc/info/bl", control.read_record("build", "/etc/distro"))
 files.write("/proc/info/kname", os.uname()[0])
 files.write("/proc/info/kver", os.uname()[2])
 
+## @core/tz ##
+
 if os.path.isfile('/etc/issue.net'):
     f = open('/etc/issue.net', 'r')
     s = f.read();f.close()
@@ -147,6 +149,8 @@ files.write('/proc/info/host',files.readall('/etc/hostname'))
 files.write('/proc/info/py', sys.executable)
 files.write('/proc/info/de',res.getdata('desktop'))
 files.write('/proc/info/gui',res.getdata('gui'))
+
+subprocess.call(f'ln -sf /usr/share/zoneinfo/{files.readall("/proc/info/tz")} /etc/localtime',shell=True)
 
 ## @core/dirs ##
 

@@ -17,7 +17,6 @@
 
     - Package Manager
 
-    * Install:          `sudo paye in [package-name]`   e.g.: `sudo paye in ir.pyabr`
+    * Install:          `sudo paye in [package-name]`   
     * Remove:           `sudo paye rm [package-name]`
-    * Update Repo:      `sudo paye in ir.pyabr.updates`
     * Update:           `sudo paye up`

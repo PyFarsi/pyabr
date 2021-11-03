@@ -1,10 +1,12 @@
 name: org.python
-name[fa]: پایتون
 name[en]: Python
-copyright: (c) 2021 PSF
+name[fa]: پایتون
+name[ar]: بایثون
+copyright: (c) 2021 Python
 license: PSF
 unpack: /
 version: 3.9.2
-description: Python tools for Pyabr
+description: Python programming language
 compile: Yes
-build: 1400-05-27
+build: 1400-08-12
+mirror: https://mirror.pyabr.ir/zayanderoad/

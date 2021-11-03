@@ -1,14 +1,22 @@
-from pyabr.core import *
-from pyabr.quick import *
-from threading import Thread
-from pyqtconsole.console import PythonConsole
+'''
+    Pyabr OS
 
-class MainApp(PythonConsole):
-    def __init__(self):
-        super(MainApp, self).__init__()
-        self.show()
-        self.eval_in_thread()
-        
-application = QtGui.QGuiApplication([])
-w = MainApp()
-application.exec()
+    Python Cloud Operating System Platform (c) 2021 PyFarsi. Free Software GNU General Public License v3.0
+
+    - Informations
+
+    * Name:             Pyabr
+    * Founder:          Mani Jamali
+    * Developers:       PyFarsi Community
+    * Package Manager:  Paye, PyPI
+    * License:          GNU General Publice License v3.0
+
+    - Official Website
+
+    * Persian Page:     https://pyabr.ir
+    * English Page:     https://en.pyabr.ir
+'''
+
+import subprocess
+from pyabr.core import *
+subprocess.call(f'xterm -fa dejavu -fg white -bg black -title "{res.get("@string/terminal")}" -fs 12 python3',shell=True)

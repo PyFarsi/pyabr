@@ -61,6 +61,6 @@ def write_record(name, value, filename):
     os.remove(filename)
     if not (record == None):
         all = all.replace("\n"+name + ": " + record, "")
-    file = open(filename,'w')
+    file = open(filename,'w',encoding='utf-8')
     file.write(all + "\n" + name + ": " + value)
     file.close()

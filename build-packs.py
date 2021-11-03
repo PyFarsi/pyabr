@@ -17,34 +17,8 @@
     * English Page:     https://en.pyabr.ir
 '''
 
-from buildlibs import pack_archives as pack, control
+from buildlibs import pack_archives as pack
 import os
 
-## pre build ##
-
-if not os.path.isdir ("app"):
-	os.mkdir ("app")
-	os.mkdir ("app/cache")
-	os.mkdir ("app/cache/archives")
-	os.mkdir ("app/cache/archives/data")
-	os.mkdir ("app/cache/archives/control")
-	os.mkdir ("app/cache/archives/code")
-	os.mkdir ("app/cache/archives/build")
-	os.mkdir ("app/cache/gets")
-
-if not os.path.isdir ("/stor/app"):	os.mkdir ("/stor/app")
-if not os.path.isdir ("/stor/app/packages"): os.mkdir ("/stor/app/packages")
-
-if not os.path.isdir ("build-packs"): os.mkdir ("build-packs")
-
-def buildall():
-    for i in os.listdir('packs'):
-        pack.manifest(i)
-        pack.build(i)
-
-for i in control.read_list('mark_updates'):
-    try:
-        pack.manifest(i)
-        pack.build(i)
-    except:
-        buildall()
+if not os.path.isdir ('build-packs'): os.mkdir('build-packs')
+pack.buildpacks()
