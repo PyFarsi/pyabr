@@ -59,10 +59,10 @@ php.external.barge: Yes
 php.external.persia: Yes
 sln.external.barge: Yes
 sln.external.persia: Yes
-html.external.html: Yes
+html.external.chromium: Yes
 html.external.barge: Yes
-html.external.persia: Yes
-html.external.lightword: Yes
+htm.external.chromium: Yes
+htm.external.barge: Yes
 cgm.icon: @icon/breeze-png
 cgm.text: Computer Graphics Metafile
 svg.external.paint: Yes
@@ -127,17 +127,19 @@ r.external.barge: Yes
 r.external.persia: Yes
 sass.external.barge: Yes
 sass.external.persia: Yes
-xhtml.external.html: Yes
+xhtml.external.chromium: Yes
 xhtml.external.barge: Yes
 xhtml.external.persia: Yes
 xml.external.barge: Yes
 xml.external.persia: Yes
 xml.external.uiv: Yes
+xml.external.chromium: Yes
 pot.icon: @icon/breeze-pot
 pot.text: Microsoft PowerPoint Template (Legacy)
 wps.icon: @icon/breeze-wps
 wps.text: Microsoft Works Word Processor Document
 xlt.icon: @icon/breeze-xlt
+xlt.external.libreofficecalc: Yes
 xlt.text: Microsoft Excel Spreadsheet Template (Legacy)
 url.external.barge: Yes
 url.external.persia: Yes
@@ -210,8 +212,10 @@ rss.icon: @icon/breeze-rss
 rss.text: Rich Site Summary
 rtf.icon: @icon/breeze-rtf
 rtf.text: Rich Text Format File
+rtf.external.libreofficewriter: Yes
 txt.icon: @icon/breeze-txt
 txt.text: Plain Text File
+txt.external.libreofficewriter: Yes
 cfg.icon: @icon/breeze-txt
 cfg.text: Configuration File
 conf.icon: @icon/breeze-txt
@@ -230,8 +234,10 @@ compile.icon: @icon/breeze-txt
 compile.text: Compile File
 doc.icon: @icon/breeze-doc
 doc.text: Microsoft Word Document (Legacy)
+doc.external.libreofficewriter: Yes
 docx.icon: @icon/breeze-doc
 docx.text: Microsoft Word Document
+docx.external.libreofficewriter: Yes
 acad.icon: @icon/breeze-3d
 ace.icon: @icon/breeze-archive
 ace.text: WinAce Compressed File
@@ -337,7 +343,9 @@ otf.text: OpenType Font
 woff.icon: @icon/breeze-otf
 woff.text: Web Open Font Format File
 html.icon: @icon/breeze-html
+htm.text: Hypertext Markup Language File
 html.text: Hypertext Markup Language File
+html.external.libreofficecalc: Yes
 emf.icon: @icon/breeze-cmf
 emf.text: Enhanced Windows Metafile
 svg.icon: @icon/breeze-svg
@@ -354,15 +362,24 @@ exr.icon: @icon/breeze-image
 exr.text: OpenEXR Image
 odb.icon: @icon/breeze-database
 odb.text: OpenDocument Database
+odb.external.libreofficebase: Yes
 odg.icon: @icon/breeze-odg
 odg.text: OpenDocument Graphic File
+odg.external.libreofficedraw: Yes
+odg.external.libreofficeimpress: Yes
 odf.icon: @icon/breeze-odf
 odf.text: OpenDocument Formula
+odf.external.libreofficemath: Yes
+odt.icon: @icon/breeze-odt
+odt.text: OpenDocument Text
+odt.external.libreofficewriter: Yes
 odp.icon: @icon/breeze-odp
 odp.text: OpenDocument Presentation
+odp.external.libreofficeimpress: Yes
 oth.icon: @icon/breeze-oth
 oth.text: OpenDocument HTML Template
 ods.icon: @icon/breeze-ods
+ods.external.libreofficecalc: Yes
 pa.icon: @icon/breeze-archive
 pa.text: Pyabr Archive
 sh.icon: @icon/breeze-shell
@@ -435,6 +452,7 @@ xhtml.icon: @icon/breeze-xhtml
 xhtml.text: Extensible Hypertext Markup Language File
 xml.icon: @icon/breeze-xml
 xml.text: XML File
+xml.external.libreofficewriter: Yes
 mp4.icon: @icon/breeze-mp4
 mp4.external.mpv: Yes
 mp4.text: MPEG-4 Video File
@@ -490,12 +508,16 @@ vhd.text: Virtual PC Virtual Hard Disk
 vmdk.icon: @icon/breeze-vmdk
 vmdk.text: Virtual Machine Disk File
 ppt.icon: @icon/breeze-ppt
+ppt.external.libreofficeimpress: Yes
 ppt.text: Microsoft PowerPoint Presentation (Legacy)
 pptx.icon: @icon/breeze-ppt
+pptx.external.libreofficeimpress: Yes
 pptx.text: Microsoft PowerPoint Presentation
 xls.icon: @icon/breeze-xls
+xls.external.libreofficecalc: Yes
 xls.text: Microsoft Excel Spreadsheet (Legacy)
 xlsx.icon: @icon/breeze-xls
 xlsx.text: Microsoft Excel Spreadsheet
+xlsx.external.libreofficecalc: Yes
 url.icon: @icon/breeze-html
 url.text: Internet Shortcut

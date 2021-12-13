@@ -1,13 +1,15 @@
 name: ir.pyabr.setup
-name[en]: Pyabr Installer
+name[en]: Pyabr Setup
 name[fa]: نصاب پای ابر
 name[ar]: مثبت بای ابر
+name[tr]: pyabr kurmak
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.1
+version: current
 description: Setup installer for Pyabr
 compile: Yes
 entry: setup
-build: 1400-08-12
+logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.setup.svg
+build: 1400-09-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

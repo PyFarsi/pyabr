@@ -1,0 +1,5 @@
+name[en]: LibreOffice
+logo: @icon/breeze-libreoffice
+exec: libreoffice
+application: Yes
+category: tools

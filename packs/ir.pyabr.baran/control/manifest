@@ -1,12 +1,14 @@
 name: ir.pyabr.baran
-name[en]: Baran Desktop Enviroment
+name[en]: Baran Desktop Environment
 name[fa]: میزکار باران
 name[ar]: بيئة سطح المكتب باران
+name[tr]: baran masaüstü ortamı
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.1
-description: Baran Desktop Enviroment is the default desktop enviroment.
+version: 2.0.14
+description: Baran Desktop Environment is the default desktop enviroment.
 compile: Yes
-build: 1400-08-12
+logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.baran.svg
+build: 1400-09-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

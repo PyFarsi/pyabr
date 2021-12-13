@@ -18,10 +18,23 @@
 '''
 
 import os,shutil,subprocess,sys,platform
+from buildlibs import pack_archives as pack
 
-if platform.system()=='Linux':
-    subprocess.call('cp -i pyabr-x86_64.iso vm/Linux/opt/pyabr/image.iso',shell=True)
-    subprocess.call('cp -i packs/ir.pyabr.breeze-theme/data/usr/share/icons/breeze-cloud.svg vm/Linux/opt/pyabr/logo.svg',shell=True)
-    subprocess.call('cp -r vm/Linux/* /',shell=True)
-    subprocess.call('chmod 777 -R /opt/pyabr',shell=True)
-    subprocess.call('chmod +x /usr/bin/pyabr',shell=True)
+if not os.path.isdir ("app"):
+	os.mkdir ("app")
+	os.mkdir ("app/cache")
+	os.mkdir ("app/cache/archives")
+	os.mkdir ("app/cache/archives/data")
+	os.mkdir ("app/cache/archives/control")
+	os.mkdir ("app/cache/archives/code")
+	os.mkdir ("app/cache/archives/build")
+	os.mkdir ("app/cache/gets")
+
+if not os.path.isdir ('stor'):		os.mkdir ('stor')
+if not os.path.isdir ("stor/app"):	os.mkdir ("stor/app")
+if not os.path.isdir ("stor/app/packages"): os.mkdir ("stor/app/packages")
+if not os.path.isdir ('build-packs'): os.mkdir('build-packs')
+pack.genisoinstall()
+
+subprocess.call(['sudo','cp','-rf','stor','/'])
+subprocess.call(['sudo','chmod','777','/stor'])

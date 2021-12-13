@@ -1,6 +1,7 @@
 name[en]: Calculator
 name[fa]: ماشین حساب
 name[ar]: آلة حاسبة
+name[tr]: hesap makinesi
 logo: @icon/breeze-calculator
 exec: calculator
 application: Yes

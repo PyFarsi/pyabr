@@ -1,7 +1,23 @@
 name[en]: Controls
 name[fa]: تنظیمات
 name[ar]: ضوابط
+name[tr]: kontroller
 logo: @icon/breeze-setting
 exec: controls
 application: Yes
 category: system
+users: @icon/breeze-users
+# cannot add:
+back: @icon/breeze-back
+adduser: @icon/breeze-new
+# can add:
+imgChange_desktop: @background/breeze-next
+imgChange_lock: @background/breeze-splash
+imgChange_unlock: @background/breeze-splash
+imgChange_enter: @background/breeze-splash
+w100: @icon/breeze-w100
+wallpaper: @icon/breeze-wallpaper
+lang: @icon/breeze-lang
+display: @icon/breeze-display
+info: @icon/breeze-display
+cloud: @icon/breeze-cloud

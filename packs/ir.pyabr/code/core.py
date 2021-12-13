@@ -1054,7 +1054,7 @@ class Commands:
                     list = files.list(path)
                     list.sort()
                     for i in list:
-                        if (i.startswith ('.') or i=='__pycache__') and not files.readall('/etc/default/hidden_files')=='Yes':
+                        if (i.startswith ('.') or i=='__pycache__') and not files.readall('/etc/default/hidden_files')=='No':
                             list.remove(i)
                         else:
                             if files.isdir(f"{path}/{i}"):
@@ -1698,7 +1698,7 @@ class Package:
             ## Run preinstall script ##
 
             if files.isfile('/app/cache/archives/control/preinstall.sa'):
-                System('/app/cache/archives/preinstall')  # Run it
+                System('/app/cache/archives/control/preinstall')  # Run it
 
                 ## Copy preinstall script ##
 
@@ -1833,14 +1833,11 @@ class Package:
 
         if permissions.check_root(files.readall("/proc/info/su")):
             mirror = control.read_record('mirror',f'/app/mirrors/{packname}.manifest')+'/'+packname+'.pa'
-            #try:
-            wget.download(mirror,files.input(f'/app/cache/gets/{packname}.pa'))
-            
-            '''except:
-                try:
-                    wget.download(f"{files.readall('/etc/paye/sources')}/{packname}.pa",files.input(f'/app/cache/gets/{packname}.pa'))
-                except:
-                    colors.show("paye","fail",f"{packname}: package not found.")'''
+            try:
+                wget.download(mirror,files.input(f'/app/cache/gets/{packname}.pa'))
+            except:
+                colors.show("paye","fail",f"{packname}: package not found.")
+                
             print()
 
         else:
@@ -1864,7 +1861,10 @@ class Package:
         files = Files()
         colors = Colors()
         if permissions.check_root(files.readall("/proc/info/su")):
-            files.remove(f'/app/mirrors/{name}.manifest')
+            try:
+                files.remove(f'/app/mirrors/{name}.manifest')
+            except:
+                pass
         else:
             colors.show("paye", "perm", "")
 
@@ -2193,11 +2193,11 @@ class Res:
                 else:
                     return ''
 
-            elif share.startswith('@temp'):
-                if files.isfile(f"/usr/share/templates/{name}" ):
-                    return f"/usr/share/templates/{name}"
-                elif files.isdir(f"/usr/share/templates/{name}" ):
-                    return f"/usr/share/templates/{name}"
+            elif share.startswith('@sample'):
+                if files.isfile(f"/usr/share/samples/{name}" ):
+                    return f"/usr/share/samples/{name}"
+                elif files.isdir(f"/usr/share/samples/{name}" ):
+                    return f"/usr/share/samples/{name}"
                 else:
                     return ''
 
@@ -2244,6 +2244,9 @@ class App:
     ## Start ID Process ##
     def __init__(self):
         pass
+
+    def terminal (self,title,icon,command):
+        subprocess.call(f'''{files.readall(f"/etc/default/terminals/{control.read_record('external-terminal','/etc/gui')}")} {command}'''.replace('{0}',title).replace('{1}',icon),shell=True)
 
     # start app
     def start(self,id,external):
@@ -2309,7 +2312,6 @@ class App:
         files = Files()
 
         return files.isfile(f'/usr/share/applications/{app}.desk')
-
 
     ## Signal ##
     def signal (self,sig):
@@ -2785,7 +2787,6 @@ class Files:
         pass
 
     def input_qml (self,filename):
-
         if filename.startswith("/"):
             return f"file:///stor/{filename}"
 
@@ -2811,7 +2812,7 @@ class Files:
         return x
 
     def output(self,filename):
-        x = subprocess.check_output(f'readlink -f {self.input(filename)}',shell=True).decode('utf-8').replace('\n','').replace('/stor','').replace('/run/initramfs/memory/data','')
+        x = subprocess.check_output(f'readlink -f "{self.input(filename)}"',shell=True).decode('utf-8').replace('\n','').replace('/stor','')
         if x=='':
             return '/'
         else:

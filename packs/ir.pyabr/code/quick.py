@@ -17,16 +17,16 @@
     * English Page:     https://en.pyabr.ir
 '''
 
-import json,time
+import json,time,requests
 import subprocess
 from pyabr.core import *
 
-from PyQt6 import QtQml, QtWidgets, QtCore, QtGui, QtQuick
-from PyQt6.QtWidgets import *
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from PyQt6.QtQml import *
-from PyQt6.QtQuick import *
+from PyQt5 import QtQml, QtWidgets, QtCore, QtGui, QtQuick
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtQml import *
+from PyQt5.QtQuick import *
 
 from pyabr.cloud import *
 
@@ -103,6 +103,60 @@ class MainApp (QtQml.QQmlApplicationEngine):
     CData = QtCore.Qt.ItemDataRole.UserRole+1003
     CME = QtCore.Qt.ItemDataRole.UserRole+1004
 
+    # Drives 
+    DEV = QtCore.Qt.ItemDataRole.UserRole+1000 # /dev/sda1
+    DEV_TITLE = QtCore.Qt.ItemDataRole.UserRole+1001 # Partition 1 (SDA1:)
+    DEV_LOGO = QtCore.Qt.ItemDataRole.UserRole+1002
+
+    def CopyDiskModel (self):
+        model = QtGui.QStandardItemModel()
+        roles = {self.DEV: b"dev", self.DEV_TITLE: b'title'}
+        model.setItemRoleNames(roles)
+        z = os.listdir('/dev')
+        z.sort()
+
+        for name in z:
+            if name.startswith('sd'):
+                it = QtGui.QStandardItem(name)
+                it.setData(f'/dev/{name}',self.DEV)
+                try:
+                    it.setData(f'{res.get("@string/part")} {name[3]} ({name[0]}{name[1]}{name[2]}:)',self.DEV_TITLE)
+                except:
+                    it.setData(f'{res.get("@string/disk")} ({name}:)',self.DEV_TITLE)
+                model.appendRow(it)
+        return model
+
+    def ql (self,name):
+        return control.read_record (name,'/etc/default/quicklogo')
+
+    def DrivesModel (self):
+        model = QtGui.QStandardItemModel()
+        roles = {self.DEV: b"dev", self.DEV_TITLE: b'title',self.DEV_LOGO:b'logo'}
+        model.setItemRoleNames(roles)
+        z = os.listdir('/dev')
+        z.sort()
+
+        for name in z:
+            if name.startswith('sd'):
+                it = QtGui.QStandardItem(name)
+                it.setData(f'/dev/{name}',self.DEV)
+                try:
+                    it.setData(f'{res.get("@string/drive")} {name[3]} ({name[0]}{name[1]}{name[2]}:)',self.DEV_TITLE)
+                except:
+                    it.setData(f'{res.get("@string/disk")} ({name}:)',self.DEV_TITLE)
+                it.setData(res.qmlget(self.ql('harddisk')),self.DEV_LOGO)
+                model.appendRow(it)
+            elif name.startswith('sr'):
+                it = QtGui.QStandardItem(name)
+                it.setData(f'/dev/{name}',self.DEV)
+                try:
+                    it.setData(f'{res.get("@string/sr")} {name[3]} ({name[0]}{name[1]}{name[2]}:)',self.DEV_TITLE)
+                except:
+                    it.setData(f'{res.get("@string/srp")} ({name}:)',self.DEV_TITLE)
+                it.setData(res.qmlget(self.ql('cdrom')),self.DEV_LOGO)
+                model.appendRow(it)
+        return model
+
     def LanguageModel (self):
         model = QtGui.QStandardItemModel()
         roles = {self.NameRole: b"name", self.LabelRole: b'label'}
@@ -117,6 +171,7 @@ class MainApp (QtQml.QQmlApplicationEngine):
     def ChatModel (self,listx):
         if listx==None:
             listx = []
+            
         model = QtGui.QStandardItemModel()
         roles = {self.CSender: b"sender", self.CGiver: b'giver',self.CData:b'data',self.CID:b'id',self.CME:b'me'}
         model.setItemRoleNames(roles)
@@ -160,7 +215,6 @@ class MainApp (QtQml.QQmlApplicationEngine):
         roles = {
             self.CName:b'username',
             self.CFullName:b'fullname',
-            self.CProfile:b'profile'
         }
         model.setItemRoleNames(roles)
 
@@ -172,8 +226,6 @@ class MainApp (QtQml.QQmlApplicationEngine):
                 it.setData(i['username'],self.CName)
             else:
                 it.setData(i['fullname'],self.CFullName)
-
-            it.setData(i['profile'],self.CProfile)
             model.appendRow(it)
         return model
 
@@ -235,15 +287,15 @@ class MainApp (QtQml.QQmlApplicationEngine):
             it.setData(signal[j],self.SIGNAL)
             try:
                 if int(signal[j])<=20:
-                    it.setData(res.qmlget('@icon/breeze-w020'),self.NETLOGO)
+                    it.setData(res.qmlget(self.ql('w020')),self.NETLOGO)
                 elif int(signal[j])<=40:
-                    it.setData(res.qmlget('@icon/breeze-w040'),self.NETLOGO)
+                    it.setData(res.qmlget(self.ql('w040')),self.NETLOGO)
                 elif int(signal[j])<=80:
-                    it.setData(res.qmlget('@icon/breeze-w080'),self.NETLOGO)
+                    it.setData(res.qmlget(self.ql('w080')),self.NETLOGO)
                 elif int(signal[j])<=10:
-                    it.setData(res.qmlget('@icon/breeze-w100'),self.NETLOGO)
+                    it.setData(res.qmlget(self.ql('w100')),self.NETLOGO)
             except:
-                it.setData(res.qmlget('@icon/breeze-w020'),self.NETLOGO)
+                it.setData(res.qmlget(self.ql('w020')),self.NETLOGO)
             it.setData(mode[j],self.MODE)
             it.setData(rate[j],self.RATE)
             it.setData(security[j],self.SECURITY)
@@ -355,21 +407,23 @@ class MainApp (QtQml.QQmlApplicationEngine):
         listy = []
         lista = []
 
-        for i in files.list(directory):
-            if files.isdir(f'{directory}/{i}'):
-                listx.append(i)
-
-        listx.sort()
-
         hidden_files = files.readall('/etc/default/hidden_files')
 
         for i in files.list(directory):
+            if files.isdir(f'{directory}/{i}'):
+                if (i.startswith('.') or (i.startswith ('__') and i.endswith ('__'))) and hidden_files=='Yes':
+                    pass
+                else:
+                    listx.append(i)
+
+        listx.sort()
+
+        for i in files.list(directory):
             if files.isfile(f'{directory}/{i}'):
-                if (i.startswith('.') or i=='__pycache__') and not hidden_files=='Yes':
+                if (i.startswith('.') or (i.startswith ('__') and i.endswith ('__'))) and hidden_files=='Yes':
                     pass
                 else:
                     listy.append(i)
-
         listy.sort()
 
         for i in listx:
@@ -396,12 +450,9 @@ class MainApp (QtQml.QQmlApplicationEngine):
                     if files.isfile (f'{directory}/{i}/.logo'):
                         it.setData(res.qmlget(files.readall(f'{directory}/{i}/.logo')),self.FileLogo)
                     else:
-                        it.setData(res.qmlget('@icon/breeze-folder'),self.FileLogo)
+                        it.setData(res.qmlget(self.ql('folder')),self.FileLogo)
                 else:
-                    if i.startswith('ic') and 'dev' in directory:
-                        it.setData(res.qmlget('@icon/breeze-drive'),self.FileLogo)
-                    else:
-                        it.setData(res.qmlget('@icon/breeze-txt'),self.FileLogo)
+                    it.setData(res.qmlget(self.ql('text')),self.FileLogo)
             else:
                 if files.isfile(f'{directory}/{i}'):
                     if i.endswith('.desk'):
@@ -409,12 +460,15 @@ class MainApp (QtQml.QQmlApplicationEngine):
                     elif i.endswith ('.png') or i.endswith ('.jpg') or i.endswith ('.jpeg') or i.endswith ('.bmp') or i.endswith ('.tiff') or i.endswith ('.tif') or i.endswith ('.gif') or i.endswith ('.svg'):
                         it.setData(files.input_qml(f'{directory}/{i}'),self.FileLogo)
                     else:
-                        it.setData(res.qmlget(control.read_record (f'{ext.replace(".","")}.icon','/etc/ext')),self.FileLogo)
+                        if control.read_record (f'{ext.replace(".","")}.icon','/etc/ext')==None:
+                            it.setData(res.qmlget(self.ql('text')),self.FileLogo)
+                        else:
+                            it.setData(res.qmlget(control.read_record (f'{ext.replace(".","")}.icon','/etc/ext')),self.FileLogo)
                 else:
                     if files.isfile (f'{directory}/{i}/.logo'):
                         it.setData(res.qmlget(files.readall(f'{directory}/{i}/.logo')),self.FileLogo)
                     else:
-                        it.setData(res.qmlget('@icon/breeze-folder'),self.FileLogo)
+                        it.setData(res.qmlget(self.ql('folder')),self.FileLogo)
 
             # generate size of file #
             size = files.size(f'{directory}/{i}')
@@ -510,20 +564,12 @@ class MainApp (QtQml.QQmlApplicationEngine):
             else:
                 it.setData( control.read_record (f'name[{locale}]',f'/app/mirrors/{i}'),self.PKG_NAMEX)
 
-            i = i.replace('.manifest','')
+            #i = i.replace('.manifest','')
 
-            if files.isfile (f'/app/mirrors/{i}.svg'):
-                it.setData(files.input_qml(f'/app/mirrors/{i}.svg'),self.PKG_LOGO)
-            elif files.isfile (f'/app/mirrors/{i}.png'):
-                it.setData(files.input_qml(f'/app/mirrors/{i}.png'),self.PKG_LOGO)
-            elif files.isfile (f'/app/mirrors/{i}.jpg'):
-                it.setData(files.input_qml(f'/app/mirrors/{i}.jpg'),self.PKG_LOGO)
-            elif files.isfile (f'/app/mirrors/{i}.jpeg'):
-                it.setData(files.input_qml(f'/app/mirrors/{i}.jpeg'),self.PKG_LOGO)
-            elif files.isfile (f'/app/mirrors/{i}.gif'):
-                it.setData(files.input_qml(f'/app/mirrors/{i}.gif'),self.PKG_LOGO)
+            if not control.read_record (f'logo',f'/app/mirrors/{i}')==None:
+                it.setData(control.read_record (f'logo',f'/app/mirrors/{i}'),self.PKG_LOGO)
             else:
-                it.setData(res.qmlget('@icon/breeze-archive'),self.PKG_LOGO)
+                it.setData(res.qmlget(self.ql('archive')),self.PKG_LOGO)
             model.appendRow(it)
         return model
 
@@ -568,6 +614,14 @@ class MainApp (QtQml.QQmlApplicationEngine):
         self.cntmdl = self.ContactModel(listx)
         self.rootContext().setContextProperty('ContactModel', self.cntmdl)
 
+    def addCopyDiskModel (self):
+        self.xdcopydiskmdl = self.CopyDiskModel()
+        self.rootContext().setContextProperty('CopyDiskModel', self.xdcopydiskmdl)
+
+    def addDrivesModel (self):
+        self.xddrivesmodel = self.DrivesModel()
+        self.rootContext().setContextProperty('DrivesModel', self.xddrivesmodel)
+
     def setProperty(self,name,value):
         self.rootObjects()[0].setProperty(name,value)
 
@@ -607,8 +661,6 @@ class Sharelink (MainApp):
         self.leText.setProperty('text', text)
         self.btnCopy = self.findChild('btnCopy')
         self.btnCopy.setProperty('text', res.get('@string/copy'))
-        self.btnCopy.clicked.connect(self.close)
-
 
 # Ask Dialog
 class Ask (MainApp):
@@ -720,6 +772,7 @@ class Font (MainApp):
             fonts.append(json.loads(files.readall(f"/usr/share/fonts/{i}")))
         self.addItemModel("fontList",fonts)
         self.load(res.get('@layout/font'))
+        self.setProperty('title',res.get('@string/fonts'))
         self.function = function
         self.bt = self.findChild("bt")
         self.btnSelect = self.findChild("btnSelect")
@@ -731,8 +784,10 @@ class Font (MainApp):
 class Select (MainApp):
 
     file = ''
+    isdetail = False
 
     def loop (self):
+        
         if not self.fsel.property('text')=='':
 
             if files.isdir (self.fsel.property('text')) or self.fsel.property('text')=='..':
@@ -752,6 +807,16 @@ class Select (MainApp):
             self.function (f"{self.file}")
             self.close()
 
+    def MakeDetail (self):
+        if self.isdetail:
+            self.ListView.setProperty('visible',True)
+            self.Details.setProperty('visible',False)
+            self.isdetail = False
+        else:
+            self.ListView.setProperty('visible',False)
+            self.Details.setProperty('visible',True)
+            self.isdetail = True
+
     def __init__(self,function):
         super(MainApp, self).__init__()
 
@@ -765,14 +830,21 @@ class Select (MainApp):
         self.btnCancel = self.findChild('btnCancel')
         self.btnCancel.setProperty('text', res.get('@string/cancel'))
         self.btnSelect = self.findChild('btnSelect')
+        self.ListView = self.findChild('ListView')
+        self.Details = self.findChild('Details')
         self.btnCancel.clicked.connect (self.close)
         self.btnSelect.setProperty('text', res.get('@string/select'))
         self.btnSelect.clicked.connect (self.select_)
+
+        self.btnDetail = self.findChild('btnDetail')
+        self.btnDetail.clicked.connect (self.MakeDetail)
 
         self.loop()
 
 
 class Open (MainApp):
+
+    isdetail = False
 
     def loop (self):
         if not self.fsel.property('text')=='':
@@ -794,6 +866,16 @@ class Open (MainApp):
             self.function (f"{files.readall('/proc/info/pwd')}/{self.fsel.property('text')}")
             self.close()
 
+    def MakeDetail (self):
+        if self.isdetail:
+            self.ListView.setProperty('visible',True)
+            self.Details.setProperty('visible',False)
+            self.isdetail = False
+        else:
+            self.ListView.setProperty('visible',False)
+            self.Details.setProperty('visible',True)
+            self.isdetail = True
+
     def __init__(self,function):
         super(MainApp, self).__init__()
 
@@ -805,8 +887,12 @@ class Open (MainApp):
         self.fsel = self.findChild ('fsel')
 
         self.btnCancel = self.findChild('btnCancel')
+        self.ListView = self.findChild('ListView')
+        self.Details = self.findChild('Details')
         self.btnCancel.setProperty('text', res.get('@string/cancel'))
         self.btnOpen = self.findChild('btnOpen')
+        self.btnDetail = self.findChild('btnDetail')
+        self.btnDetail.clicked.connect (self.MakeDetail)
         self.btnCancel.clicked.connect (self.close)
         self.btnOpen.setProperty('text',res.get('@string/open'))
         self.btnOpen.clicked.connect (self.open_)
@@ -815,7 +901,7 @@ class Open (MainApp):
 
 
 class Save (MainApp):
-
+    isdetail = False
     def loop (self):
         if not self.fsel.property('text')=='':
 
@@ -834,6 +920,16 @@ class Save (MainApp):
         self.function (f"{files.readall('/proc/info/pwd')}/{self.leName.property('text')}")
         self.close()
 
+    def MakeDetail (self):
+        if self.isdetail:
+            self.ListView.setProperty('visible',True)
+            self.Details.setProperty('visible',False)
+            self.isdetail = False
+        else:
+            self.ListView.setProperty('visible',False)
+            self.Details.setProperty('visible',True)
+            self.isdetail = True
+
     def __init__(self,function):
         super(MainApp, self).__init__()
 
@@ -849,6 +945,10 @@ class Save (MainApp):
         self.btnSave = self.findChild('btnSave')
         self.btnCancel.clicked.connect (self.close)
         self.btnSave.clicked.connect (self.save_)
+        self.ListView = self.findChild('ListView')
+        self.btnDetail = self.findChild('btnDetail')
+        self.btnDetail.clicked.connect (self.MakeDetail)
+        self.Details = self.findChild('Details')
         self.btnSave.setProperty('text',res.get('@string/save'))
 
         self.leName = self.findChild('leName')
@@ -860,7 +960,8 @@ class Save (MainApp):
 class Install (MainApp):
 
     def install_(self):
-        System (f'paye upak {self.package}')
+        System ('sudo paye cl')
+        System (f'sudo paye upak {self.package}')
         self.close()
 
     def ok_(self):
@@ -881,6 +982,8 @@ class Install (MainApp):
         files.removedirs ('/tmp/package-installer')
         
         self.pro = self.findChild('pro')
+        self.logo = self.findChild('logo')
+        self.logo.setProperty('source',res.qmlget(self.ql('archive')))
         self.name = self.findChild('name')
         self.name.setProperty('text',control.read_record ('name','/tmp/package-installer.control/manifest'))
         self.description = self.findChild('descriptionx')
@@ -897,7 +1000,7 @@ class Download (MainApp):
         commands.mv (['/tmp/download.tmp',filename])
 
     def set_progressbar_value (self,value):
-        self.pro.setProperty('value',value)
+        self.pro.setProperty('value',value/100)
         if value == 100:
             self.close()
             self.x = Save (self.save_)
@@ -953,7 +1056,11 @@ class DownloadThread(QThread):
 
 class OpenWith(MainApp):
     def atonce_(self):
-        app.start (self.asel.property('text').replace('.desk',''),f'"{self.filename}"')
+        ext = os.path.splitext(self.filename)[1].replace('.','')
+        if ext=='html' or ext=='htm':
+            app.start (self.asel.property('text').replace('.desk',''),f'"file:///stor/{self.filename}"')
+        else:
+            app.start (self.asel.property('text').replace('.desk',''),f'"{self.filename}"')
         self.close()
 
     def always_ (self):
@@ -965,6 +1072,7 @@ class OpenWith(MainApp):
         super(OpenWith, self).__init__()
         self.addApplicationModel(filename)
         self.load(res.get('@layout/openwith'))
+        self.setProperty('title',res.get('@string/openwith'))
 
         self.filename = filename
 
@@ -972,74 +1080,76 @@ class OpenWith(MainApp):
 
         self.atonce = self.findChild('atOnce')
         self.atonce.clicked.connect (self.atonce_)
+        self.atonce.setProperty('text',res.get('@string/atonce'))
         self.always = self.findChild('always')
         self.always.clicked.connect (self.always_)
+        self.always.setProperty('text',res.get('@string/always'))
 
 
 class FileInfo (MainApp):
     def access_show (self,perm,type):
         if type=='owner':
             if perm[1]=='r' and perm[2]=='w' and perm[3]=='x':
-                return 'Can view, Modify & Execute'
+                return res.get('@string/rwx')
             elif perm[1]=='r' and perm[2]=='w' and perm[3]=='-':
-                return 'Can view & Modify'
+                return res.get('@string/rw-')
             elif perm[1]=='r' and perm[2]=='-' and perm[3]=='-':
-                return 'Can view only'
-            elif perm[1]=='-' and perm[2]=='-' and perm[3]=='x':
-                return 'No access'
+                return res.get('@string/r--')
+            elif perm[1]=='-' and perm[2]=='-' and perm[3]=='-':
+                return res.get('@string/---')
             elif perm[1]=='-' and perm[2]=='w' and perm[3]=='x':
-                return 'Modify & Execute'
+                return res.get('@string/-wx')
             elif perm[1]=='-' and perm[2]=='-' and perm[3]=='x':
-                return 'Execute only'
+                return res.get('@string/--x')
             elif perm[1]=='-' and perm[2]=='w' and perm[3]=='-':
-                return 'Modify only'
+                return res.get('@string/-w-')
             else:
-                return 'No access'
+                return res.get('@string/---')
 
         elif type=='users':
             if perm[4]=='r' and perm[5]=='w' and perm[6]=='x':
-                return 'Can view, Modify & Execute'
+                return res.get('@string/rwx')
             elif perm[4]=='r' and perm[5]=='w' and perm[6]=='-':
-                return 'Can view & Modify'
+                return res.get('@string/rw-')
             elif perm[4]=='r' and perm[5]=='-' and perm[6]=='-':
-                return 'Can view only'
-            elif perm[4]=='-' and perm[5]=='-' and perm[6]=='x':
-                return 'No access'
+                return res.get('@string/r--')
+            elif perm[4]=='-' and perm[5]=='-' and perm[6]=='-':
+                return res.get('@string/---')
             elif perm[4]=='-' and perm[5]=='w' and perm[6]=='x':
-                return 'Modify & Execute'
+                return res.get('@string/-wx')
             elif perm[4]=='-' and perm[5]=='-' and perm[6]=='x':
-                return 'Execute only'
+                return res.get('@string/--x')
             elif perm[4]=='-' and perm[5]=='w' and perm[6]=='-':
-                return 'Modify only'
+                return res.get('@string/-w-')
             else:
-                return 'No access'
+                return res.get('@string/---')
 
         elif type=='guest':
             if perm[7]=='r' and perm[8]=='w' and perm[9]=='x':
-                return 'Can view, Modify & Execute'
+                return res.get('@string/rwx')
             elif perm[7]=='r' and perm[8]=='w' and perm[9]=='-':
-                return 'Can view & Modify'
+                return res.get('@string/rw-')
             elif perm[7]=='r' and perm[8]=='-' and perm[9]=='-':
-                return 'Can view only'
-            elif perm[7]=='-' and perm[8]=='-' and perm[9]=='x':
-                return 'No access'
+                return res.get('@string/r--')
+            elif perm[7]=='-' and perm[8]=='-' and perm[9]=='-':
+                return res.get('@string/---')
             elif perm[7]=='-' and perm[8]=='w' and perm[9]=='x':
-                return 'Modify & Execute'
+                return res.get('@string/-wx')
             elif perm[7]=='-' and perm[8]=='-' and perm[9]=='x':
-                return 'Execute only'
+                return res.get('@string/--x')
             elif perm[7]=='-' and perm[8]=='w' and perm[9]=='-':
-                return 'Modify only'
+                return res.get('@string/-w-')
             else:
-                return 'No access'
+                return res.get('@string/---')
         else:
-            return 'No access'
+            return res.get('@string/---')
 
     def __init__(self,filename):
         super(FileInfo, self).__init__()
 
         self.load(res.get('@layout/fileinfo'))
 
-        self.setProperty('title','Information')
+        self.setProperty('title',res.get('@string/info'))
 
         self.name = self.findChild('name')
         self.type = self.findChild('type')
@@ -1070,12 +1180,12 @@ class FileInfo (MainApp):
             try:
                 self._type = control.read_record (f'{ext.replace(".","")}.text','/etc/ext')
             except:
-                self._type = 'Unknown'
+                self._type = res.get('@string/unknown')
         else:
             if files.isdir (filename):
-                self._type = 'Folder'
+                self._type = res.get('@string/folder')
             else:
-                self._type = 'Unknown'
+                self._type = res.get('@string/unknown')
 
         #if not '/' in files.output(files.parentdir(filename)).replace('/.//',''):
         #    self._location = '/'
@@ -1174,17 +1284,69 @@ class CloudConnector (MainApp):
         self.close()
 
         if not files.isfile (f'/etc/drive/{su}/user'):
-            self.e = Text('Connection failed','Cannot connect to this cloud')
+            self.e = Text(res.get('@string/connection_fail'),res.get('@string/connection_failmc'))
 
     def __init__(self):
         super(CloudConnector, self).__init__()
 
         self.load (res.get('@layout/CloudConnector'))
 
-        self.setProperty('title','Connect to cloud')
+        self.setProperty('title',res.get('@string/c_cloud'))
 
         self.leCloud = self.findChild('leCloud')
+        self.leCloud.setProperty('placeholderText',res.get('@string/e_cloud'))
         self.leUsername = self.findChild('leUsername')
+        self.leUsername.setProperty('placeholderText',res.get('@string/e_username'))
         self.lePassword = self.findChild('lePassword')
+        self.lePassword.setProperty('placeholderText',res.get('@string/e_password'))
         self.btnConnect = self.findChild('btnConnect')
+        self.btnConnect.setProperty('text',res.get('@string/connect'))
         self.btnConnect.clicked.connect (self.connect_)
+
+class DataInstaller (MainApp):
+    namex = ''
+    link = ''
+    dest = ''
+    def restart_(self,yes):
+        if yes:
+            subprocess.call(['reboot'])
+
+    def set_progressbar_value (self,value):
+        self.pro.setProperty('value',value/100)
+        if value == 100:
+            self.close()
+            self.b = Ask (res.get('@string/restart'),res.get('@string/need_restart').replace('{0}',self.namex),self.restart_)
+            return
+
+    def install_(self):
+        the_url = self.link
+        the_filesize = requests.get(the_url, stream=True).headers['Content-Length']
+        the_filepath = f'/run/initramfs/memory/data/pyabr/modules/{self.dest}'
+        the_fileobj = open(the_filepath, 'wb')
+        self.downloadThread = DownloadThread(the_url, the_filesize, the_fileobj, buffer=10240)
+        self.downloadThread.download_proess_signal.connect(self.set_progressbar_value)
+        self.downloadThread.start()        
+
+    def __init__(self,appname,link,dest):
+        super(MainApp, self).__init__()
+
+        self.load (res.get('@layout/datainstaller'))
+        self.setProperty('title',res.get('@string/datainstaller'))
+
+        self.namex = res.etc (appname,f'name[en]')
+        self.logo = res.qmlget(res.etc (appname,'logo'))
+        self.link = link
+        self.dest = dest
+
+        self.btnInstall = self.findChild ('btnInstall')
+        self.pro = self.findChild ('pro')
+        self.logox = self.findChild('logo')
+        self.logox.setProperty('source',self.logo)
+        self.name = self.findChild('name')
+        self.name.setProperty('text',f"{self.namex} Data Installer")
+        self.btnInstall.clicked.connect (self.install_)
+        self.btnInstall.setProperty('text',res.get('@string/install'))
+        self.btnCancel = self.findChild('btnCancel')
+        self.btnCancel.setProperty('text',res.get('@string/cancel'))
+        self.btnCancel.clicked.connect (self.close)
+

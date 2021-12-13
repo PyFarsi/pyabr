@@ -52,9 +52,6 @@ class MainApp (MainApp):
         elif self.background_text.property('text')=='suspend':
             self.close()
             app.signal('sleep')
-        elif self.background_text.property('text')=='switchuser':
-            self.close()
-            app.signal('switchuser')
 
         self.background_text.setProperty('text','')
         QTimer.singleShot(10,self.loop)
@@ -65,6 +62,21 @@ class MainApp (MainApp):
         self.load(res.get('@layout/pysys'))
         self.setProperty('title',res.get('@string/power_options'))
         self.background_text = self.findChild('background_text')
+
+        self.shutdown = self.findChild ('shutdown')
+        self.shutdown.setProperty('source',res.qmlget(res.etc('pysys','shutdown')))
+
+        self.lock = self.findChild ('lock')
+        self.lock.setProperty('source',res.qmlget(res.etc('pysys','lock')))
+
+        self.logout = self.findChild ('logout')
+        self.logout.setProperty('source',res.qmlget(res.etc('pysys','logout')))
+
+        self.reboot = self.findChild ('reboot')
+        self.reboot.setProperty('source',res.qmlget(res.etc('pysys','reboot')))
+
+        self.suspend = self.findChild ('suspend')
+        self.suspend.setProperty('source',res.qmlget(res.etc('pysys','suspend')))
 
         self.loop()
 

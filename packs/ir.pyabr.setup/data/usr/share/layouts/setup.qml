@@ -1,8 +1,12 @@
-import QtQuick
-import QtQuick.Window
-import QtQuick.Controls
-import QtQuick.Layouts
-import QtQuick.Controls.Material
+import QtQuick 2.0
+import QtQuick.Window 2.3
+import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.0
+import QtQuick.Controls 1.4
+import QtQuick.Controls 1.2
+import QtQuick.Controls 2.3
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
     id: app
@@ -10,6 +14,12 @@ ApplicationWindow {
     color: "white"
     width: 600
     height: 472
+
+    maximumWidth: 600
+    maximumHeight: 472
+
+    minimumWidth: 600
+    minimumHeight: 472
 
     Column {
         anchors.bottom: toolbar.top
@@ -20,11 +30,9 @@ ApplicationWindow {
         objectName: "page0"
 
         Image {
-            source: "file:///stor/usr/share/images/setup.png"
-            //fillMode: Image.PreserveAspectFit
-            //anchors.fill: parent
             id: img0
             sourceSize: Qt.size( img0.width, img0.height )
+            objectName: "img0"
         }
     }
 
@@ -45,6 +53,12 @@ ApplicationWindow {
                 width: parent.width
                 objectName: "leHostname"
                 font.family: "IRANSans"
+                selectByMouse: true
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.IBeamCursor
+                        acceptedButtons: Qt.NoButton
+                    }
             }
 
             TextField {
@@ -53,6 +67,12 @@ ApplicationWindow {
                 echoMode: TextInput.Password
                 objectName: "leRootCode"
                 font.family: "IRANSans"
+                selectByMouse: true
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.IBeamCursor
+                        acceptedButtons: Qt.NoButton
+                    }
             }
 
             TextField {
@@ -60,6 +80,12 @@ ApplicationWindow {
                 objectName: "leUsername"
                 width: parent.width
                 font.family: "IRANSans"
+                selectByMouse: true
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.IBeamCursor
+                        acceptedButtons: Qt.NoButton
+                    }
             }
 
             TextField {
@@ -98,7 +124,7 @@ ApplicationWindow {
             }
 
             ComboBox {
-                model: ["English", "فارسی"]
+                model: ["English", "فارسی","Türk","عربی"]
                 width: parent.width
                 objectName: "cmLang"
                 font.family: "IRANSans"
@@ -124,6 +150,12 @@ ApplicationWindow {
                 width: parent.width
                 objectName: "leFullName"
                 font.family: "IRANSans"
+                selectByMouse: true
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.IBeamCursor
+                        acceptedButtons: Qt.NoButton
+                    }
             }
         }
     }

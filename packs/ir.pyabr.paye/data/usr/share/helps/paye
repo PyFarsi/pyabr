@@ -7,10 +7,20 @@ paye [options] [package] ...
  pak            com.example                              Build 'app' project
  in             com.example                              Install 'app' package
  rm             com.example                              Remove 'app' package
- add            https://example.com/mirror com.example   Add 'app' mirror
+ add            https://eg.com/mirror com.example        Add 'app' mirror
  del            com.example                              Remove 'app' mirror
  info           com.example                              Show informations about 'app'
  get            com.example                              Download 'app' archive package
  ls                                                      List all installed packages
  up                                                      Update cloud software
  crt            com.example                              Create 'app' project
+
+
+ crt - Create Projects:
+
+ * paye crt pashmak-console example    | Create 'example' Pashmak console project
+ * paye crt python-console  example    | Create 'example' Python console project
+ * paye crt python-qt       example    | Create 'example' Python Qt5 project
+ * paye crt python-quick    example    | Create 'example' Python Qt5 with QML project
+ * paye crt python-webapp   example    | Create 'example' Webapp project
+ * paye crt saye-console    example    | Create 'example' Saye project

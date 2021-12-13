@@ -1,2 +1,2 @@
 add config
-paye pak $project_dir
+paye pak :project_dir

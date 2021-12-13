@@ -17,7 +17,7 @@
     * English Page:     https://en.pyabr.ir
 '''
 
-import sys, subprocess
+import sys, subprocess, os
 
 from pyabr.core import *
 from termcolor import colored
@@ -107,6 +107,9 @@ elif sys.argv[1]=="rm" or sys.argv[1]=="remove" or sys.argv[1]=="uninstall" or s
         else:
             colors.show ('paye','fail',f"{i}: is a permanetly application that cannot be removed.")
 
+    app.signal ('dock')
+    app.signal ('apps')
+
     package.clean()
 
 elif sys.argv[1]=="get" or sys.argv[1]=="download" or sys.argv[1]=="-d":
@@ -147,7 +150,7 @@ elif sys.argv[1]=="in" or sys.argv[1]=="it" or sys.argv[1]=="install" or sys.arg
         if files.isfile(f'/app/packages/{i.lower()}.manifest'):
             old = control.read_record('version', f'/app/packages/{i}.manifest')
             new = control.read_record('version', f'/app/mirrors/{i}.manifest')
-            if not i==source and old == new:
+            if not i==source and old == new and not old=='current':
                 colors.show('paye','warning',f'{i}: package is up to date.')
             else:
                 print(f"Downloading {i.lower()} ...")
@@ -160,12 +163,17 @@ elif sys.argv[1]=="in" or sys.argv[1]=="it" or sys.argv[1]=="install" or sys.arg
         if files.isfile(f'/app/packages/{j.lower()}.manifest'):
             old = control.read_record('version', f'/app/packages/{j}.manifest')
             new = control.read_record('version', f'/app/mirrors/{j}.manifest')
-            if not i==source and old == new:
+            if not i==source and old == new and not old=='current':
                 pass
             else:
                 package.unpack(f"/app/cache/gets/{j.lower()}.pa")
         else:
             package.unpack(f"/app/cache/gets/{j.lower()}.pa")
+
+    # update desktop signals
+
+    app.signal ('dock')
+    app.signal ('apps')
 
     package.clean()
 
@@ -235,18 +243,39 @@ elif sys.argv[1]=='del' or sys.argv[1]=="delete":
     package.remove (sys.argv[2])
 
 elif sys.argv[1]=='up' or sys.argv[1]=="update":
-    System ("sudo paye cl")
-    System ("sudo paye in ir.pyabr.updates")
-    for i in files.list('/app/packages'):
+    System (f'sudo paye cl')
+    System (f'sudo paye in ir.pyabr.updates')
+
+    # backup files
+
+    files.copy ('/etc/gui','/tmp/gui')
+    files.copy ('/etc/hostname','/tmp/hostname')
+    files.copy ('/etc/users/root','/tmp/root')
+    files.copy ('/etc/time','/tmp/time')
+    files.copy ('/etc/sudoers','/tmp/sudoers')
+    files.copy ('/etc/permtab','/tmp/permtab')
+    files.copy ('/etc/profile.sa','/tmp/profile.sa')
+    files.copy ('/etc/cloud','/tmp/cloud')
+    files.copy ('/etc/channel','/tmp/channel')
+    files.copy ('/etc/default/hidden_files','/tmp/hidden_files')
+
+    packages = files.list('/app/packages')
+    
+    for i in packages:
         if i.endswith ('.manifest'):
             System (f'sudo paye cl')
             System (f'sudo paye in {i.replace(".manifest","")}')
-
-elif sys.argv[1]=='ir.pyabr.updates':
-    print(f"Downloading Pyabr updates ...")
-    package.download('ir.pyabr.updates')
-    print(f"Unpacking Pyabr updates ...")
-    package.unpack('/app/cache/gets/ir.pyabr.updates.pa')
+    
+    files.cut ('/tmp/gui','/etc/gui')
+    files.cut ('/tmp/hostname','/etc/hostname')
+    files.cut ('/tmp/root','/etc/users/root')
+    files.cut ('/tmp/time','/etc/time')
+    files.cut ('/tmp/sudoers','/etc/sudoers')
+    files.cut ('/tmp/permtab','/etc/permtab')
+    files.cut ('/tmp/profile.sa','/etc/profile.sa')
+    files.cut ('/tmp/cloud','/etc/cloud')
+    files.cut ('/tmp/channel','/etc/channel')
+    files.cut ('/tmp/hidden_files','/etc/default/hidden_files')
 
 elif sys.argv[1]=='crt' or sys.argv[1]=="create":
     if sys.argv[2:]==[]:
@@ -262,13 +291,19 @@ elif sys.argv[1]=='crt' or sys.argv[1]=="create":
 
     try:
         if crtype == 'python-console':
-            files.copydir(res.get('@temp/python-console'), crname)
+            files.copydir(res.get('@sample/python-console'), crname)
         elif crtype == 'python-qt':
-            files.copydir(res.get('@temp/python-qt'), crname)
+            files.copydir(res.get('@sample/python-qt'), crname)
         elif crtype == 'python-quick':
-            files.copydir(res.get('@temp/python-console'), crname)
+            files.copydir(res.get('@sample/python-quick'), crname)
+        elif crtype == 'python-webapp':
+            files.copydir(res.get('@sample/python-webapp'), crname)
+        elif crtype == 'pashmak-console':
+            files.copydir(res.get('@sample/pashmak-console'), crname)
+        elif crtype == 'saye-console':
+            files.copydir(res.get('@sample/saye-console'), crname)
         else:
-            files.copydir(res.get('@temp/python-console'), crtype)
+            files.copydir(res.get('@sample/python-console'), crtype)
     except:
         colors.show('paye','fail',f'cannot create project with {crname} name.')
 else:

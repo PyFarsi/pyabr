@@ -122,13 +122,15 @@ class MainApp (MainApp):
                     control.write_record ('fullname',self.leFullName.property('text'),f'/etc/users/{self.leUsername.property("text")}')
                     
                 files.write ('/etc/sudoers',self.leUsername.property("text"))
-                control.write_record('profile','@icon/breeze-users',f'/etc/users/{self.leUsername.property("text")}')
+                control.write_record('profile',res.etc('setup','users'),f'/etc/users/{self.leUsername.property("text")}')
 
                 k = Key(self.leUsername.property('text')) # create public key and private key for created user
 
             # Guest user #
             if self.chGuest.property('checked'):
                 files.write ('/etc/guest','enable')
+            else:
+                files.write ('/etc/guest','disable')
 
             control.remove_record ('locale','/etc/gui')
 
@@ -136,6 +138,10 @@ class MainApp (MainApp):
                 control.write_record ('locale','en','/etc/gui')
             elif self.cmLang.property('currentIndex')==1:
                 control.write_record ('locale','fa','/etc/gui')
+            elif self.cmLang.property('currentIndex')==2:
+                control.write_record ('locale','tr','/etc/gui')
+            elif self.cmLang.property('currentIndex')==3:
+                control.write_record ('locale','ar','/etc/gui')
             else:
                 control.write_record ('locale','en','/etc/gui')
 
@@ -175,7 +181,8 @@ class MainApp (MainApp):
         self.setup_message = self.findChild('setup_message')
         self.setup_message.setProperty('text',res.get('@string/setup_message'))
         self.back.setProperty('visible',False)
-
+        self.img0 = self.findChild('img0')
+        self.img0.setProperty ('source',res.qmlget(res.etc('setup','img0')))
         self.setProperty('title',res.get('@string/setup'))
 
 

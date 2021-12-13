@@ -1,0 +1,5 @@
+name[en]: LibreOffice Math
+logo: @icon/breeze-libreoffice-math
+exec: libreofficemath
+application: Yes
+category: tools

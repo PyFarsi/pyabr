@@ -1,5 +1,0 @@
-logo: @icon/breeze-py
-name[en]: New Python Script
-name[fa]: یک اسکریپت پایتون
-connect: @temp/sample.py
-ext: py

@@ -1,0 +1,7 @@
+name[en]: Hello
+name[fa]: سلام
+name[ar]: سلام
+logo: @icon/breeze-app
+exec: hello
+application: Yes
+category: tools

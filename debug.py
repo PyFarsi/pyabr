@@ -18,29 +18,35 @@
 '''
 
 import subprocess, os, sys, shutil,clean
-
+from buildlibs import pack_archives as pack
 # configure #
 
 RAM = 4000
 Name = "Pyabr"
 ISO = "pyabr-x86_64.iso"
-genisoimage = " C:\\cygwin64\\bin\\genisoimage"
-SB = "C:\\cygwin64\\squashfs\\mksquashfs"
-USB = "C:\\cygwin64\\squashfs\\unsquashfs"
-# Remove unused files #
-list = ['packs','buildlibs','osinstaller.py','clean.py']
+genisoimage = " genisoimage"
+QEMU = "qemu-system-x86_64"
+SB = "mksquashfs"
+USB = "unsquashfs"
 
-# Root copy #
-if not os.path.isdir('sb'):
-    shutil.copytree('rootcopy','sb')
-else:
-    list.remove('sb')
+if not os.path.isdir ("app"):
+	os.mkdir ("app")
+	os.mkdir ("app/cache")
+	os.mkdir ("app/cache/archives")
+	os.mkdir ("app/cache/archives/data")
+	os.mkdir ("app/cache/archives/control")
+	os.mkdir ("app/cache/archives/code")
+	os.mkdir ("app/cache/archives/build")
+	os.mkdir ("app/cache/gets")
 
-for i in list:
-    if os.path.isdir(i):
-        shutil.copytree(i,'sb/'+i)
-    else:
-        shutil.copyfile(i, 'sb/'+i)
+if not os.path.isdir ('stor'):		os.mkdir ('stor')
+if not os.path.isdir ("stor/app"):	os.mkdir ("stor/app")
+if not os.path.isdir ("stor/app/packages"): os.mkdir ("stor/app/packages")
+if not os.path.isdir ('build-packs'): os.mkdir('build-packs')
+pack.install()
+
+if not os.path.isdir ('sb'): os.mkdir ('sb')
+shutil.copytree ('stor','sb/stor')
 
 # Create ISO #
 
@@ -48,3 +54,4 @@ if os.path.isfile ('pyabr-amd64/pyabr/modules/stor.sb'): os.remove('pyabr-amd64/
 subprocess.call([SB,'sb','pyabr-amd64/pyabr/modules/stor.sb','-comp','xz'])
 clean.clean()
 subprocess.call(f'cd pyabr-amd64 && {genisoimage} -o ../{ISO} -v -J -R -D -A pyabr -V pyabr -no-emul-boot -boot-info-table -boot-load-size 4 -b pyabr/boot/isolinux.bin -c pyabr/boot/isolinux.boot .',shell=True)
+subprocess.call(f'"{QEMU}" -m {str(RAM)} -enable-kvm -cdrom {ISO} -name {Name}',shell=True)

@@ -1,0 +1,9 @@
+name[en]: Wine
+name[fa]: واین
+name[ar]: واین
+name[tr]: wine
+logo: @icon/breeze-wine
+exec: wine
+application: No
+hidden: Yes
+category: tools

@@ -2,11 +2,13 @@ name: org.python
 name[en]: Python
 name[fa]: پایتون
 name[ar]: بایثون
+name[tr]: piton
 copyright: (c) 2021 Python
 license: PSF
 unpack: /
-version: 3.9.2
+version: current
 description: Python programming language
 compile: Yes
-build: 1400-08-12
+logo: https://mirror.pyabr.ir/zayanderoad/org.python.svg
+build: 1400-09-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

@@ -1,0 +1,6 @@
+name[en]: Display Manager
+logo: @icon/breeze-setting
+exec: displaymanager
+application: No
+hidden: Yes
+category: tools

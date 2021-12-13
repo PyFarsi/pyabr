@@ -1,0 +1,14 @@
+name: org.chromium
+name[en]: Chromium
+name[fa]: کرومیوم
+name[ar]: کرومیوم
+name[tr]: Krom
+copyright: (c) 2021 Google
+license: BSD
+unpack: /
+version: current
+description: Chromium Web Browser
+compile: Yes
+logo: https://mirror.pyabr.ir/zayanderoad/org.chromium.png
+build: 1400-09-12
+mirror: https://mirror.pyabr.ir/zayanderoad/

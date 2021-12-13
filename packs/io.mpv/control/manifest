@@ -1,0 +1,15 @@
+name: io.mpv
+name[fa]: پخش کنند ویدئو
+name[en]: MPV movie player
+name[ar]: مشغل الفيلم
+name[tr]: mpv film oynatıcı
+copyright: (c) 2021 MPV
+license: GNU LGPL v2.1
+unpack: /
+version: current
+description: MPV movie player
+compile: Yes
+entry: mpv
+logo: https://mirror.pyabr.ir/zayanderoad/io.mpv.svg
+build: 1400-09-12
+mirror: https://mirror.pyabr.ir/zayanderoad/

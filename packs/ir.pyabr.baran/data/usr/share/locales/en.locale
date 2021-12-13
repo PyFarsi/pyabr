@@ -1,5 +1,5 @@
 name: English
-keyless: setxkbmap us
+keyless: us
 keyless.enable: Yes
 0: 0
 1: 1
@@ -13,7 +13,7 @@ keyless.enable: Yes
 9: 9
 username_placeholder: Enter your username
 user_not_found: {0} user not found
-etcetra: Etcetra
+etcetra: Etcetera
 escape: Escape
 restart: Restart
 sleep: Sleep
@@ -39,7 +39,7 @@ bl: Build date
 os: Operating System
 kname: Kernel name
 su: Switched user
-de: Desktop Enviroment
+de: Desktop Environment
 gui: Gui toolkit
 arch: Architecture
 controls: Controls
@@ -136,3 +136,56 @@ access_guest: Access for guest
 location: Location
 ownership: Ownership
 chat: Chat
+datainstaller: Data Installer
+need_restart: Installation of {0} need to restart, Do you want to restart?
+connect: Connect
+e_cloud: Cloud hostname (optional)
+c_cloud: Connect to Cloud
+connection_fail: Connection failed
+connection_failmc: Cannot connect to this cloud
+unknown: Unknown
+folder: Folder
+---: No access
+rwx: Can view, Modify & Execute
+rw-: Can view & Modify
+r--: Can view only
+-wx: Modify & Execute
+--x: Execute only
+-w-: Modify only
+always: Always
+atonce: At once
+fonts: Fonts
+sr: CD/DVD ROM
+srp: CD/DVD Drive
+drive: Drive
+disk: Disk
+part: Partition
+e_city: Enter your current city (in English)
+e_contact: Enter your contact username
+e_channel: Channel hostname (optional)
+c_channel: Connect to channel
+e_send: Send a message
+n_connected: {0} not connected
+connected: {0} connected
+connectedm: {0} successfully connected
+connect_to: Connect to {0}
+connect_tom: Do you want to connect to {0} network?
+fcopy: Format and Copy
+copydisk: Copydisk
+format: Format
+formatm: Do you want to format this disk/partition?
+e_mount: Cannot mount
+e_mountm: Cannot mount this drive
+extract: Extract
+cloud_o: Cloud options
+compress: Compress to
+upload: Upload
+ziro: Upload and Ziro
+sharelink: Share this link
+rma: Restore Apps
+bash: Bash
+python: Python
+upstor: Upgrade
+upstorum: Your Pyabr is the newest version
+upstoru: Up to date
+upstort: Upgrade to

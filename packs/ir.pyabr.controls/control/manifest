@@ -2,12 +2,14 @@ name: ir.pyabr.controls
 name[en]: Controls
 name[fa]: تنظیمات
 name[ar]: ضوابط
+name[tr]: kontroller
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.1
+version: 2.0.4
 description: General control application
 compile: Yes
 entry: controls
-build: 1400-08-12
+logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.controls.svg
+build: 1400-09-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

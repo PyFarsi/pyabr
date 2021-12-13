@@ -1,0 +1,7 @@
+libreoffice.py:usr/app/libreoffice.pyc
+libreofficebase.py:usr/app/libreofficebase.pyc
+libreofficecalc.py:usr/app/libreofficecalc.pyc
+libreofficedraw.py:usr/app/libreofficedraw.pyc
+libreofficeimpress.py:usr/app/libreofficeimpress.pyc
+libreofficemath.py:usr/app/libreofficemath.pyc
+libreofficewriter.py:usr/app/libreofficewriter.pyc

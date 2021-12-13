@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="128.0px"
+   height="128.0px"
+   viewBox="0 0 128.0 128.0"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="gmail.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview838"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="true"
+     inkscape:zoom="2.7865881"
+     inkscape:cx="77.693578"
+     inkscape:cy="97.610407"
+     inkscape:window-width="1551"
+     inkscape:window-height="991"
+     inkscape:window-x="26"
+     inkscape:window-y="23"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid901" />
+  </sodipodi:namedview>
+  <defs
+     id="defs833" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g931"
+       transform="matrix(1.1931818,0,0,1.1643487,-52.045454,-21.161804)">
+      <path
+         fill="#4285f4"
+         d="M 58,108 H 72 V 74 L 52,59 v 43 c 0,3.32 2.69,6 6,6"
+         id="path2" />
+      <path
+         fill="#34a853"
+         d="m 120,108 h 14 c 3.32,0 6,-2.69 6,-6 V 59 l -20,15"
+         id="path4" />
+      <path
+         fill="#fbbc04"
+         d="m 120,48 v 26 l 20,-15 v -8 c 0,-7.42 -8.47,-11.65 -14.4,-7.2"
+         id="path6" />
+      <path
+         fill="#ea4335"
+         d="M 72,74 V 48 L 96,66 120,48 V 74 L 96,92"
+         id="path8" />
+      <path
+         fill="#c5221f"
+         d="m 52,51 v 8 L 72,74 V 48 L 66.4,43.8 C 60.46,39.35 52,43.58 52,51"
+         id="path10" />
+    </g>
+  </g>
+</svg>

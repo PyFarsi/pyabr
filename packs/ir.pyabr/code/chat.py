@@ -1,184 +1,79 @@
 import os
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.asymmetric import padding
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import serialization
-import requests,json,wget,hashlib,datetime
+import requests,json,hashlib,datetime
 from requests.api import get
 from pyabr.core import *
 
-class Message:
-    text = ''
-    def __init__(self):
-        pass
-
-    def Write (self,text):
-        self.text+=f"{text}\n"
-
-    def Save (self):
-        message = self.text.encode()
-
-        su = files.readall('/proc/info/su')
-
-        with open(files.input(f'/etc/external-key/Public Key.pem'), "rb") as key_file:
-            public_key = serialization.load_pem_public_key(
-                key_file.read(),
-                backend=default_backend()
-            )
-
-        encrypted = public_key.encrypt(
-            message,
-            padding.OAEP(
-                mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                algorithm=hashes.SHA256(),
-                label=None
-            )
-        )
-
-        files.write (f'/etc/chat/{su}/Message.txt',self.text)
-
-        f = open(files.input(f'/etc/chat/{su}/Message.bin'), 'wb')
-        f.write(encrypted)
-        f.close()
-
-    def Read (self):
-        su = files.readall('/proc/info/su')
-        with open(files.input(f'/etc/key/{su}/Private Key.pem'), "rb") as key_file:
-            private_key = serialization.load_pem_private_key(
-                key_file.read(),
-                password=None,
-                backend=default_backend()
-            )
-
-        f = open(files.input(f'/etc/chat/{su}/Message.bin'), 'rb')
-        encrypted = f.read()
-        f.close()
-
-        original_message = private_key.decrypt(
-            encrypted,
-            padding.OAEP(
-                mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                algorithm=hashes.SHA256(),
-                label=None
-            )
-        )
-
-        return original_message.decode('utf-8')
-
 class Channel:
-    host = control.read_record ("host","/etc/channel")
-    upload = f'{host}/{control.read_record ("upload","/etc/channel")}'
-    connect = f'{host}/{control.read_record ("connect","/etc/channel")}'
-    give = f'{host}/{control.read_record ("give","/etc/channel")}'
-    send = f'{host}/{control.read_record ("send","/etc/channel")}'
-    public = f'{host}/{control.read_record ("public","/etc/channel")}'
-    uploadprofile = f'{host}/{control.read_record ("uploadprofile","/etc/channel")}'
-    update = f'{host}/{control.read_record ("update","/etc/channel")}'
-    addcontact = f'{host}/{control.read_record ("addcontact","/etc/channel")}'
-    contact = f'{host}/{control.read_record ("contact","/etc/channel")}'
-    uploadfile =  f'{host}/{control.read_record ("uploadfile","/etc/channel")}'
+    host = control.read_record('host','/etc/channel')
+    send = control.read_record('send','/etc/channel')
+    get = control.read_record('get','/etc/channel')
+    connect = control.read_record('connect','/etc/channel')
+    addcontact = control.read_record('addcontact','/etc/channel')
+    contact = control.read_record('contact','/etc/channel')
+    clear = control.read_record('clear','/etc/channel')
+    delete = control.read_record('del','/etc/channel')
+    delchat = control.read_record('delchat','/etc/channel')
+
+    username = ''
+    password = ''
 
     def __init__(self):
-        pass
+        super(Channel,self).__init__()
+        su = files.readall ('/proc/info/su')
 
-    fullname = ""
-    profile = ""
-
-    def GetUserData (self):
-        if not res.getuserdata ('fullname')==None:
-            self.fullname = res.getuserdata ('fullname')
-        if not res.getuserdata ('profile')==None:
-            self.profile = res.getuserdata ('profile')
+        try:
+            self.username = files.readall (f'/etc/chat/{su}/user')
+            self.password = files.readall (f'/etc/chat/{su}/pass')
+        except:
+            pass
 
     def Connect (self,username,password):
-        su = files.readall('/proc/info/su')
-        self.GetUserData()
+        # fullname
+        su = files.readall ('/proc/info/su')
+        fullname = control.read_record ('fullname',f'/etc/users/{su}')
+        if fullname == None: fullname = username
 
-        if not self.profile=='':
-            try:
-                if self.profile.startswith('@icon/'):
-                    self.plink = requests.post(self.uploadprofile, files={'profile':open(res.get(self.profile),'rb')})
-                else:
-                    self.plink = requests.post(self.uploadprofile, files={'profile':open(files.input(self.profile),'rb')})
-                self.plink = self.plink.text
+        # save username & password
+        files.write (f'/etc/chat/{su}/user',username)
+        files.write (f'/etc/chat/{su}/pass',password)
 
-            except:
-                self.plink = ''
+        self.username = username
+        self.password = password
 
-        x = requests.post(self.upload,files = {'message': open(f'/stor/etc/key/{su}/Public Key.pem', 'rb')})
-        if x.text=='1':
-            print(self.fullname)
-            x = requests.post(self.connect,data={'username':username,'password':password,"fullname":self.fullname,"profile":self.plink})
-            if x.text=='1':
-                files.create ('/tmp/chat-success.tmp')
-                files.write (f'/etc/chat/{su}/user',username)
-                files.write (f'/etc/chat/{su}/pass',password)
-            else:
-                colors.show ('chat','fail',f'{username}: something went wrong.')
-        else:
-            colors.show ('chat','fail',f'error while uploading public key.')
+        # connect
+        x = requests.post (f'{self.host}/{self.connect}',data={"username":username,"password":password,"fullname":fullname})
+        return x.text
 
-    def Key (self,username):
-        x = requests.post(f'{self.public}',data={'username':username})
-        wget.download(f'{self.host}/{x.text}',files.input(f'/etc/external-key/Public Key.pem'))
+    def Send (self,giver,data):
+        x = requests.post(f'{self.host}/{self.send}',data={"sender":self.username,"giver":giver,"password":self.password,"data":data})
+        return x.text
 
     def AddContact (self,username):
-        su = files.readall('/proc/info/su')
-        requests.post(f'{self.addcontact}',data={'username':username,'me':files.readall(f'/etc/chat/{su}/user'),'password':files.readall(f'/etc/chat/{su}/pass')})
+        x = requests.post(f'{self.host}/{self.addcontact}',data={"me":self.username,"username":username,"password":self.password})
+        return x.text
 
-    def Send (self,giver):
-        su = files.readall('/proc/info/su')
-        x = requests.post(self.upload,files = {'message': open(files.input(f'/etc/chat/{su}/Message.bin'), 'rb')})
-        if not x.text=='0':
-            x = requests.post(self.send,data={'sender':files.readall(f'/etc/chat/{su}/user'),'giver':giver,'password':files.readall(f'/etc/chat/{su}/pass')})
-            if not x.text=='0':
-                files.copy (f'/etc/chat/{su}/Message.txt',f'/etc/chat/{su}/{x.text.replace("chats/","")}')
-            else:
-                colors.show ('chat','fail',f'error while error.')
-        else:
-            colors.show ('chat','fail',f'error while uploading.')
-
-    def Give (self,giver):
-        su = files.readall('/proc/info/su')
-        x = requests.post(self.give,data={'sender':files.readall(f'/etc/chat/{su}/user'),'giver':giver,'password':files.readall(f'/etc/chat/{su}/pass')})
-        x = json.loads(x.text)
-
-        m = Message()
-
-        for i in x:
-            if not i['sender']==files.readall(f'/etc/chat/{su}/user'):
-                try:
-                    os.remove(files.input(f'/etc/chat/{su}/Message.bin'))
-                except:
-                    pass
-                wget.download(f'{self.host}/{i["data"]}',files.input(f'/etc/chat/{su}/Message.bin'))
-                i['data']=m.Read()
-            else:
-                i['data']=files.readall(f'/etc/chat/{su}/{i["data"].replace("chats/","")}')
-
-        return x
-
-    def Contacts (self):
-        su = files.readall('/proc/info/su')
-
-        x = requests.post(self.contact,data={'username':files.readall(f'/etc/chat/{su}/user'),'password':files.readall(f'/etc/chat/{su}/pass')})
-
+    def Get (self,giver):
+        x = requests.post(f'{self.host}/{self.get}',data={"sender":self.username,"giver":giver,"password":self.password})
         try:
             return json.loads(x.text)
         except:
             return []
 
-    def File (self,filename,giver):
-        self.x = requests.post(self.uploadfile, files={'file':open(files.input(filename),'rb')})
+    def Contacts (self):
+        x = requests.post(f'{self.host}/{self.contact}',data={"username":self.username,"password":self.password})
+        try:
+            return json.loads(x.text)
+        except:
+            return []
 
-        if not self.x.text == '0':
-            m = Message()
-            m.Write(filename)
-            m.Save()
+    def Clear (self,giver):
+        x = requests.post(f'{self.host}/{self.clear}',data={"sender":self.username,"password":self.password,"giver":giver})
+        return x.text
 
-            self.Send(giver)
-        else:
-            colors.show ('chat','fail',f'error while uploading.')
+    def DeleteChat (self,giver):
+        x = requests.post(f'{self.host}/{self.delchat}',data={"sender":self.username,"password":self.password,"giver":giver})
+        return x.text
+
+    def Delete (self,id):
+        x = requests.post(f'{self.host}/{self.delete}',data={"username":self.username,"password":self.password,"id":str(id)})
+        return x.text

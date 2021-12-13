@@ -1,0 +1,1 @@
+konsole --hide-tabbar --hide-menubar --title {0} --qwindowicon {1} -e

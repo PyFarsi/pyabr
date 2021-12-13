@@ -1,7 +1,17 @@
 name[en]: BaaD
 name[fa]: باد
 name[ar]: ريح
+name[tr]: hava Durumu
 logo: @icon/breeze-weather-clouds
 exec: baad
 application: Yes
 category: tools
+BaaD_FewClouds: @backgrounds/BaaD_FewClouds
+BaaD_Clear: @backgrounds/BaaD_Clear
+BaaD_Snow: @backgrounds/BaaD_Snow
+Baad_Rain: @backgrounds/Baad_Rain
+BaaD_Clouds: @backgrounds/BaaD_Clouds
+BaaD_Frozen: @backgrounds/BaaD_Frozen
+BaaD_Fog: @backgrounds/BaaD_Fog
+BaaD_Hails: @backgrounds/BaaD_Hails
+BaaD_BlackClouds: @backgrounds/BaaD_BlackClouds

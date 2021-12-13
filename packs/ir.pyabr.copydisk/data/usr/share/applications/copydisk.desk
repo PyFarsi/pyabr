@@ -1,0 +1,8 @@
+name[en]: Copydisk
+name[fa]: کپی دیسک
+name[ar]: نسخ
+name[tr]: kopyalama diski
+logo: @icon/breeze-harddisk
+exec: copydisk
+application: Yes
+category: tools

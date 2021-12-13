@@ -1,8 +1,12 @@
-import QtQuick
-import QtQuick.Window
-import QtQuick.Controls
-import QtQuick.Layouts
-import QtQuick.Controls.Material
+import QtQuick 2.0
+import QtQuick.Window 2.3
+import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.0
+import QtQuick.Controls 1.4
+import QtQuick.Controls 1.2
+import QtQuick.Controls 2.3
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
     id: backend
@@ -24,9 +28,9 @@ ApplicationWindow {
         spacing: 2
         Image {
             id: shutdown
-            source: "../../../usr/share/icons/breeze-shutdown.svg"
             fillMode: Image.PreserveAspectFit
             width: parent.height/2
+            objectName: "shutdown"
             height: parent.height/2
             sourceSize: Qt.size( shutdown.width, shutdown.height )
 
@@ -39,8 +43,8 @@ ApplicationWindow {
         }
         Image {
             id: lock
-            source: "../../../usr/share/icons/breeze-lock.svg"
             fillMode: Image.PreserveAspectFit
+            objectName: "lock"
             width: parent.height/2
             height: parent.height/2
             sourceSize: Qt.size( lock.width, lock.height )
@@ -54,8 +58,8 @@ ApplicationWindow {
         }
         Image {
             id: logout
-            source: "../../../usr/share/icons/breeze-logout.svg"
             fillMode: Image.PreserveAspectFit
+            objectName: "logout"
             width: parent.height/2
             height: parent.height/2
             sourceSize: Qt.size( logout.width, logout.height )
@@ -68,8 +72,8 @@ ApplicationWindow {
         }
         Image {
             id: reboot
-            source: "../../../usr/share/icons/breeze-reboot.svg"
             fillMode: Image.PreserveAspectFit
+            objectName: "reboot"
             width: parent.height/2
             height: parent.height/2
             sourceSize: Qt.size( reboot.width, reboot.height )
@@ -82,8 +86,8 @@ ApplicationWindow {
         }
         Image {
             id: suspend
-            source: "../../../usr/share/icons/breeze-suspend.svg"
             fillMode: Image.PreserveAspectFit
+            objectName: "suspend"
             width: parent.height/2
             height: parent.height/2
             sourceSize: Qt.size( suspend.width, suspend.height )
@@ -91,20 +95,6 @@ ApplicationWindow {
                 anchors.fill: parent
                 onClicked: {
                     background_text.text = "suspend"
-                }
-            }
-        }
-        Image {
-            id: switchuser
-            source: "../../../usr/share/icons/breeze-switchuser.svg"
-            fillMode: Image.PreserveAspectFit
-            width: parent.height/2
-            height: parent.height/2
-            sourceSize: Qt.size( switchuser.width, switchuser.height )
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    background_text.text = "switchuser"
                 }
             }
         }

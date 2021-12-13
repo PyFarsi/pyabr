@@ -1,0 +1,14 @@
+name: org.gnu.bash
+name[en]: Bash
+name[fa]: بش
+name[ar]: بش
+name[tr]: bash
+copyright: (c) 2021 GNU
+license: GNU General Public v3.+
+unpack: /
+version: current
+description: Bash Default Linux shell
+logo: https://mirror.pyabr.ir/zayanderoad/org.gnu.bash.svg
+compile: Yes
+build: 1400-09-12
+mirror: https://mirror.pyabr.ir/zayanderoad/

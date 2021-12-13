@@ -1,0 +1,15 @@
+name: com.google.meet
+name[en]: Google Meet
+name[fa]: قرار گوگل
+name[ar]: جوجل يجتمع
+name[tr]: Google buluşması
+copyright: (c) 2021 Google
+license: Free software
+unpack: /
+version: current
+description: Google meet web application
+compile: Yes
+entry: googlemeet
+logo: https://mirror.pyabr.ir/zayanderoad/com.google.meet.png
+build: 1400-09-12
+mirror: https://mirror.pyabr.ir/zayanderoad/

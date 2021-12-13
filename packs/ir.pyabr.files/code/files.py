@@ -19,11 +19,37 @@
 
 from pyabr.core import *
 from pyabr.quick import *
-import multiprocessing,subprocess,sys
+import multiprocessing,subprocess,sys,random,shutil
 
 class MainApp (MainApp):
     fselp = ''
     i = 0
+    isdetail = False
+
+    def addapp_(self,title):
+        winappid = f"win{str(random.randint(1000,9999))}"
+        desktopfile = f'/usr/share/applications/{winappid}.desk'
+        executefile = f'/usr/app/{winappid}'
+
+        files.create (desktopfile)
+        control.write_record ('name[en]',title,desktopfile)
+        control.write_record ('application','Yes',desktopfile)
+        control.write_record ('category','tools',desktopfile)
+        control.write_record ('hidden','No',desktopfile)
+        control.write_record ('logo',f'@icon/{winappid}',desktopfile)
+        control.write_record ('exec',winappid,desktopfile)
+
+        files.write (f'{executefile}.sa',f'wine "{self.fselp}"')
+
+        findlogo = subprocess.check_output(f'cd / && find -iname *{title}*.png',shell=True).decode ('utf-8').split('\n')
+
+        for i in findlogo:
+            if '128x128' in i and i.startswith('./root/.local'):
+                shutil.copyfile (i.replace('./root','/root'),f'/stor/usr/share/icons/{winappid}.png')
+                break
+
+        app.signal ('apps')
+        app.signal ('dock')
 
     def rename_(self,name):
         try:
@@ -60,8 +86,10 @@ class MainApp (MainApp):
 
             if files.isdir (self.fsel.property('text')) or self.fsel.property('text')=='..':
                 if permissions.check(f'{files.output(files.parentdir(self.fsel.property("text")))}', "r", files.readall("/proc/info/su")):
-                    commands.cd ([self.fsel.property('text')])
+                    print(self.fsel.property('text'))
+                    System (f'cd "{self.fsel.property("text")}"')
                     self.addFileModel(files.readall('/proc/info/pwd'))
+                    self.title.setProperty('text',files.readall('/proc/info/pwd'))
                 else:
                     self.e = Perm()
 
@@ -89,8 +117,7 @@ class MainApp (MainApp):
 
             elif self.fsel.property('text').endswith('.exe'):
                 if permissions.check(f'{files.output(self.fsel.property("text"))}', "x", files.readall("/proc/info/su")):
-                    files.write ('/tmp/exec.sa',f"wine {self.fsel.property('text')}\nrm /tmp/exec.sa\nshut")
-                    app.start ('commento','')
+                    app.start ('wine',self.fsel.property('text'))
                 else:
                     self.e = Perm()
 
@@ -142,10 +169,24 @@ class MainApp (MainApp):
             self._openwith.setProperty('enabled',False)
             self._execute.setProperty('enabled',False)
             self._filex.setProperty('text',files.filename(self.fselp))
+            self.compressto.setProperty('enabled',True)
+            self.cloudops.setProperty('enabled',False)
+            self.extract.setProperty('enabled',False)
+            self.shortcut.setProperty ('enabled',False)
 
         elif files.isfile (self.fselp):
+            self.compressto.setProperty('enabled',False)
+            self.cloudops.setProperty('enabled',True)
             self._open.setProperty('enabled',True)
             self._openwith.setProperty('enabled',True)
+            if self.fselp.endswith('.exe'):
+                self.shortcut.setProperty ('enabled',True)
+            else:
+                self.shortcut.setProperty ('enabled',False)
+            if self.fselp.endswith('.zip') or self.fselp.endswith('.tar.xz') or self.fselp.endswith('.tar.gz') or self.fselp.endswith('.tar.bz2') or self.fselp.endswith('.tar'):
+                self.extract.setProperty('enabled',True)
+            else:
+                self.extract.setProperty('enabled',False)
             if self.fselp.endswith('.pyc') or self.fselp.endswith('.pashm') or self.fselp.endswith('.pa') or self.fselp.endswith('.qml') or self.fselp.endswith('.py') or self.fselp.endswith('.sa') or self.fselp.endswith('.exe'):
                 self._execute.setProperty('enabled',True)
             else:
@@ -247,8 +288,7 @@ class MainApp (MainApp):
                         app.start ('commento','')
 
                     elif self.fselp.endswith('.exe'):
-                        files.write ('/tmp/exec.sa',f"wine {self.fselp}\nrm /tmp/exec.sa\nshut")
-                        app.start ('commento','')
+                        app.start ('wine',f"wine '{self.fselp}'")
 
                     elif self.fselp.endswith('.jar'):
                         files.write ('/tmp/exec.sa',f"java -jar {self.fselp}\nrm /tmp/exec.sa\nshut")
@@ -301,11 +341,56 @@ class MainApp (MainApp):
 
             elif self.act.property('text')=='link':
                 d = Drive()
-                self.x = Sharelink('Share a link',d.Link(self.fselp))
-
+                self.x = Sharelink(res.get('@string/sharelink'),d.Link(self.fselp))
 
             elif self.act.property('text')=='info':
                 self.x = FileInfo (self.fselp)
+
+            elif self.act.property('text')=='zipc':
+                commands.zip ([self.fselp])
+                self.addFileModel(files.readall('/proc/info/pwd'))
+
+            elif self.act.property('text')=='xzc':
+                commands.xzip ([self.fselp])
+                self.addFileModel(files.readall('/proc/info/pwd'))
+
+            elif self.act.property('text')=='gzc':
+                commands.gzip ([self.fselp])
+                self.addFileModel(files.readall('/proc/info/pwd'))
+
+            elif self.act.property('text')=='tarc':
+                commands.tar ([self.fselp])
+                self.addFileModel(files.readall('/proc/info/pwd'))
+
+            elif self.act.property('text')=='bzc':
+                commands.bzip ([self.fselp])
+                self.addFileModel(files.readall('/proc/info/pwd'))
+
+            elif self.act.property('text')=='shortcut':
+                self.s = Input ("Choose name",self.addapp_)
+
+            elif self.act.property('text')=='extract':
+                if self.fselp.endswith('.zip'):
+                    commands.unzip ([self.fselp,self.fselp.replace('.zip','')])
+                elif self.fselp.endswith('.tar.xz'):
+                    commands.xunzip ([self.fselp,self.fselp.replace('.tar.xz','')])
+                elif self.fselp.endswith('.tar.bz2'):
+                    commands.bunzip ([self.fselp,self.fselp.replace('.tar.bz2','')])
+                elif self.fselp.endswith('.tar.gz'):
+                    commands.gunzip ([self.fselp,self.fselp.replace('.tar.gz','')])
+                elif self.fselp.endswith('.tar'):
+                    commands.untar ([self.fselp,self.fselp.replace('.tar','')])
+                self.addFileModel(files.readall('/proc/info/pwd'))
+
+            elif self.act.property('text')=='details':
+                if self.isdetail:
+                    self.ListView.setProperty('visible',True)
+                    self.Details.setProperty('visible',False)
+                    self.isdetail = False
+                else:
+                    self.ListView.setProperty('visible',False)
+                    self.Details.setProperty('visible',True)
+                    self.isdetail = True
 
             self.act.setProperty('text','')
             
@@ -319,6 +404,7 @@ class MainApp (MainApp):
             self.addFileModel(sys.argv[1])
         else:
             self.addFileModel(files.readall('/proc/info/pwd'))
+
             
         self.load (res.get('@layout/files'))
         try:
@@ -327,7 +413,13 @@ class MainApp (MainApp):
             pass
         self.fsel = self.findChild ('fsel')
         self.fsela = self.findChild('fsela')
+        self.title =self.findChild('title')
 
+        if not sys.argv[1:]==[]:
+            self.title.setProperty('text',sys.argv[1])
+        else:
+            self.title.setProperty('text',files.readall('/proc/info/pwd'))
+            
         self.contextMenu = self.findChild('contextMenu')
         self._open = self.findChild('open')
         self._open.setProperty('text',res.get('@string/open'))
@@ -353,13 +445,29 @@ class MainApp (MainApp):
         self._info = self.findChild('info')
         self._info.setProperty('text',res.get('@string/info'))
         self._upcloud = self.findChild('upcloud')
+        self._upcloud.setProperty('text',res.get('@string/upload'))
         self._downcloud = self.findChild('downcloud')
+        self._downcloud.setProperty('text',res.get('@string/download'))
         self._ziro = self.findChild('ziro')
+        self._ziro.setProperty('text',res.get('@string/ziro'))
         self.act = self.findChild('act')
 
+        self.zipc = self.findChild('zipc')
+        self.xzc = self.findChild('xzc')
+        self.gzc = self.findChild('gzc')
+        self.bzc = self.findChild('bzc')
+        self.tarc = self.findChild('tarc')
+        self.compressto = self.findChild('compressto')
+        self.compressto.setProperty('text',res.get('@string/compress'))
+        self.cloudops = self.findChild('cloudops')
+        self.cloudops.setProperty('text',res.get('@string/cloud_o'))
+        self.extract = self.findChild('extract')
+        self.extract.setProperty('text',res.get('@string/extract'))
+        self.ListView = self.findChild ('ListView')
+        self.shortcut = self.findChild ('shortcut')
+        self.Details = self.findChild ('Details')
+
         self.loop()
-
-
 
 application = QtGui.QGuiApplication([])
 application.setWindowIcon (QIcon(res.get(res.etc('files','logo'))))

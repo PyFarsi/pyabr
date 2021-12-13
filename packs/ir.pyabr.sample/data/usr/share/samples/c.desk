@@ -1,5 +1,0 @@
-logo: @icon/breeze-c
-name[en]: New C Code
-name[fa]: یک کد سی
-connect: @temp/sample.c
-ext: c

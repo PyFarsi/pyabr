@@ -52,6 +52,7 @@ class MainApp (MainApp):
         self.load (res.get('@layout/nama'))
 
         self.open = self.findChild ('open')
+        self.open.setProperty('text',res.get('@string/open'))
         self.image = self.findChild ('image')
         self.fullscreen = self.findChild ('fullscreen')
         self.setProperty ('title',res.get('@string/nama'))

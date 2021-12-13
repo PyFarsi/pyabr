@@ -26,12 +26,7 @@ shutil.unpack_archive('wheel/setup.zip','wheel/setup','zip') # Unpack setup whee
 
 ## Copy all files and dirs in wheel/setup/src ##
 
-list = os.listdir('.')
-for i in list:
-    if i=='packs' or i=='buildlibs' or i=='build.py' or i=='clean.py':
-        pass
-    else:
-        list.remove(i)
+list = ['packs','buildlibs','clean.py','install.py']
 
 for i in list:
     if os.path.isdir(i):
@@ -52,8 +47,3 @@ shutil.make_archive('wheel/setup/pyabr/pyabr','zip','wheel/src')
 ## Build wheel package and save it to build-packs ##
 
 os.system ("cd wheel/setup && \""+sys.executable+"\" setup.py bdist_wheel")
-
-C = input('Do you want to clean the cache? [Y/n]: ')
-if C.lower()=='y':
-    import clean
-    clean.clean()

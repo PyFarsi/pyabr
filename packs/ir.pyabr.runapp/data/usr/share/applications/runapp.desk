@@ -1,6 +1,7 @@
 name[en]: Runner
 name[fa]: بارگذار
 name[ar]: عداء
+name[tr]: koşucu
 logo: @icon/breeze-runapp
 exec: runapp
 shortcut: Ctrl+Alt+R

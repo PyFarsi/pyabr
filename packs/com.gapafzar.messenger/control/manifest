@@ -1,0 +1,15 @@
+name: com.gapafzar.messenger
+name[en]: Gap Messenger
+name[fa]: پیام رسان گپ
+name[ar]: کب
+name[tr]: açıklık
+copyright: (c) 2021 Gap
+license: GNU GPL v3.0
+unpack: /
+version: current
+description: Iranian Gap Messenger for Pyabr
+compile: Yes
+entry: gap
+logo: https://mirror.pyabr.ir/zayanderoad/com.gapafzar.messenger.svg
+build: 1400-09-12
+mirror: https://mirror.pyabr.ir/zayanderoad/

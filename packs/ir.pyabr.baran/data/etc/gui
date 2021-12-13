@@ -2,19 +2,17 @@ locale: en
 layout: en
 width: 800
 height: 800
-font: IRANSans
-fontsize: 12
 username: guest
 password: *
 desktop: baran
 gui: Qt Framework
-logo: @icon/breeze-cloud
 params: gui
 external-windows-manager: openbox
+external-terminal: xterm
 visibility: FullScreen
-login.background: @background/Rock_and_sea_blur
-enter.background: @background/Rock_and_sea
-desktop.background: @background/Rock_and_sea
-unlock.background: @background/Rock_and_sea_blur
-lock.background: @background/Rock_and_sea_blur
+login.background: @background/Sunset_and_sea_blur
+enter.background: @background/Sunset_and_sea_blur
+desktop.background: @background/Sunset_and_sea
+unlock.background: @background/Sunset_and_sea_blur
+lock.background: @background/Sunset_and_sea_blur
 dock: bottom

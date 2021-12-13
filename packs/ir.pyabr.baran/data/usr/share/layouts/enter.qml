@@ -1,8 +1,12 @@
-import QtQuick
-import QtQuick.Window
-import QtQuick.Controls
-import QtQuick.Layouts
-import QtQuick.Controls.Material
+import QtQuick 2.0
+import QtQuick.Window 2.3
+import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.0
+import QtQuick.Controls 1.4
+import QtQuick.Controls 1.2
+import QtQuick.Controls 2.3
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
     id: enter
@@ -22,11 +26,13 @@ ApplicationWindow {
             title: "منوی اصلی"
             id: submenu
             objectName: "submenu"
+            font.family: "IRANSans"
 
             Menu {
                 title: "حساب کاربری"
                 id: account
                 objectName: "account"
+                font.family: "IRANSans"
 
                 Action {
                     text: "خروج از نشست"
@@ -39,6 +45,7 @@ ApplicationWindow {
                 title: "خروج"
                 id: exit
                 objectName: "exit"
+                font.family: "IRANSans"
 
                 Action {
                     text: "خاموش کردن"
@@ -59,6 +66,7 @@ ApplicationWindow {
             Menu {
                 title: "زبان ها"
                 id: lang
+                font.family: "IRANSans"
                 objectName: "lang"
                 Repeater{
                     model: Lang
@@ -77,6 +85,7 @@ ApplicationWindow {
                 objectName: "virtualkeyboard"
                  visible: false
                 text: "کیبورد مجازی"
+                font.family: "IRANSans"
             }
         }
     }
@@ -85,7 +94,6 @@ ApplicationWindow {
         anchors.fill: parent
         Image {
             anchors.fill: parent
-            source: "../../../usr/share/backgrounds/breeze-splash.jpg"
             id: background
             objectName: "background"
         }
@@ -97,7 +105,6 @@ ApplicationWindow {
         Image {
             id: profile
             objectName: "profile"
-            source: "../../../usr/share/icons/breeze-users.svg"
             fillMode: Image.PreserveAspectFit
             width: enter.width/6
             Layout.alignment: Qt.AlignCenter

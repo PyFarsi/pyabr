@@ -8,29 +8,13 @@
     * Name:             Pyabr
     * Founder:          Mani Jamali
     * Developers:       PyFarsi Community
-    * Package Manager:  Paye, Apt, Dpkg, PyPI
+    * Package Manager:  Paye, PyPI
     * License:          GNU General Publice License v3.0
 
-    * Source code:      https://github.com/PyFarsi/pyabr
-    * PyPI:             https://pypi.org/project/pyabr
+    - Official Website
 
-    - Download Pyabr OS
-
-    * AMD64, Intel64:   https://dl.pyabr.ir/pyabr-x86_64.iso     
-    * ARM64:            https://dl.pyabr.ir/pyabr-arm64.img
-    * Platform:         https://dl.pyabr.ir/stor.sb
-    * Wheel Package:    https://dl.pyabr.ir/pyabr.whl
-    
-    - Channels:
-
-    * Official Website: https://pyabr.ir
-    * Telegram Channel: https://t.me/pyfarsi
-    * Gap Channel:      https://gap.im/pyabr
-    * Sorosh Channel:   https://splus.ir/pyabr
-    * Instagram:        https://instagram.com/pyabrir
-    * Hoorsa:           https://hoorsa.com/pyabr
-    * Aparat:           https://aparat.com/pyabr
-
+    * Persian Page:     https://pyabr.ir
+    * English Page:     https://en.pyabr.ir
 '''
 
 import shutil, os, sys,glob, platform,py_compile,hashlib
@@ -90,17 +74,17 @@ def unpack (name):
 
     ## Setting up ##
 
-    if os.path.isfile ("app/cache/archives/control/manifest"): shutil.copyfile("app/cache/archives/control/manifest","/stor/app/packages/"+name+".manifest")
-    if os.path.isfile("app/cache/archives/control/list"): shutil.copyfile("app/cache/archives/control/list","/stor/app/packages/" + name + ".list")
-    if os.path.isfile("app/cache/archives/control/compile"): shutil.copyfile("app/cache/archives/control/compile","/stor/app/packages/" + name + ".compile")
+    if os.path.isfile ("app/cache/archives/control/manifest"): shutil.copyfile("app/cache/archives/control/manifest","stor/app/packages/"+name+".manifest")
+    if os.path.isfile("app/cache/archives/control/list"): shutil.copyfile("app/cache/archives/control/list","stor/app/packages/" + name + ".list")
+    if os.path.isfile("app/cache/archives/control/compile"): shutil.copyfile("app/cache/archives/control/compile","stor/app/packages/" + name + ".compile")
     if os.path.isfile("app/cache/archives/control/preremove.sa"): shutil.copyfile("app/cache/archives/control/preremove.sa",
-                                                                             "/stor/app/packages/" + name + ".preremove")
+                                                                             "stor/app/packages/" + name + ".preremove")
     if os.path.isfile("app/cache/archives/control/postremove.sa"): shutil.copyfile("app/cache/archives/control/postremove.sa",
-                                                                             "/stor/app/packages/" + name + ".postremove")
+                                                                             "stor/app/packages/" + name + ".postremove")
     if os.path.isfile("app/cache/archives/control/preinstall.sa"): shutil.copyfile("app/cache/archives/control/preinstall.sa",
-                                                                             "/stor/app/packages/" + name + ".preinstall")
+                                                                             "stor/app/packages/" + name + ".preinstall")
     if os.path.isfile("app/cache/archives/control/postinstall.sa"): shutil.copyfile("app/cache/archives/control/postinstall.sa",
-                                                                             "/stor/app/packages/" + name + ".postinstall.sa")
+                                                                             "stor/app/packages/" + name + ".postinstall.sa")
 
     ## Compile codes ##
     if os.path.isfile ("app/cache/archives/control/compile"):
@@ -115,10 +99,49 @@ def unpack (name):
     shutil.make_archive("app/cache/archives/build/data","zip","app/cache/archives/data")
 
     ## Unpack data again ##
-    shutil.unpack_archive("app/cache/archives/build/data.zip","/stor/"+unpack,"zip")
+    shutil.unpack_archive("app/cache/archives/build/data.zip","stor/"+unpack,"zip")
 
 def install ():
     list = os.listdir('packs')
+    for i in list:
+        if os.path.isdir('packs/'+i):
+            build(i)
+            unpack(i)
+
+def genisoinstall ():
+    list = [
+        'io.github.pashmak',
+        'io.mpv',
+        'ir.pyabr',
+        'ir.pyabr.baad',
+        'ir.pyabr.barf',
+        'ir.pyabr.barge',
+        'ir.pyabr.calculator',
+        'ir.pyabr.calendar',
+        'ir.pyabr.chat',
+        'ir.pyabr.clock',
+        'ir.pyabr.commento',
+        'ir.pyabr.controls',
+        'ir.pyabr.copydisk',
+        'ir.pyabr.dmgr',
+        'ir.pyabr.files',
+        'ir.pyabr.runapp',
+        'ir.pyabr.help',
+        'ir.pyabr.iran-wallpaper',
+        'ir.pyabr.nama',
+        'ir.pyabr.paye',
+        'ir.pyabr.pyket',
+        'ir.pyabr.pysys',
+        'ir.pyabr.sample',
+        'ir.pyabr.setup',
+        'ir.pyabr.sysinfo',
+        'ir.pyabr.updates',
+        'ir.pyabr.upstor',
+        'org.chromium',
+        'org.gnu.bash',
+        'org.python',
+        'ir.pyabr.baran',
+    ]
     for i in list:
         if os.path.isdir('packs/'+i):
             build(i)

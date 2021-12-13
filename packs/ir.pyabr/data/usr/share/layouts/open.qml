@@ -1,8 +1,12 @@
-import QtQuick
-import QtQuick.Window
-import QtQuick.Controls
-import QtQuick.Layouts
-import QtQuick.Controls.Material
+import QtQuick 2.0
+import QtQuick.Window 2.3
+import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.0
+import QtQuick.Controls 1.4
+import QtQuick.Controls 1.2
+import QtQuick.Controls 2.3
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
     id: file
@@ -24,8 +28,9 @@ ApplicationWindow {
         width: parent.width
         height: 70
         
-        ToolButton {
-            anchors.verticalCenter: parent.verticalCenter
+        RowLayout {
+                        anchors.verticalCenter: parent.verticalCenter
+                        ToolButton {
             anchors.leftMargin: 20
             anchors.rightMargin: 20
             icon.source: 'file:///stor/usr/share/icons/breeze-back.svg'
@@ -33,6 +38,99 @@ ApplicationWindow {
             onClicked: {
                 fsel.text = '..'
             }
+        }
+
+        ToolButton {
+                anchors.leftMargin: 20
+                anchors.rightMargin: 20
+                icon.source: 'file:///stor/usr/share/icons/breeze-details.svg'
+                icon.color: "white"
+                objectName: "btnDetail"
+            }
+         }
+    }
+
+    ScrollView {
+        width: parent.width
+        height: parent.height-80-file.height/10
+        anchors.topMargin: 10
+        objectName: "Details"
+        anchors.top: toolbar.bottom
+        clip: true
+        visible: false
+        id: scroll2
+
+        Column {
+            width: file.width
+            height: file.height-70-file.height/10
+            spacing: 2
+
+            GridView {
+                model: FileModel
+                cellWidth: 128; cellHeight: 150
+                highlight: highlight
+                width: parent.width
+                height: parent.height
+                highlightFollowsCurrentItem: false
+                focus: true
+
+                delegate: Column {
+                    Image { 
+                        source: model.logo
+                        width: 128
+                        height: 128
+                        sourceSize: Qt.size( parent.width, parent.height )
+                         anchors.horizontalCenter: parent.horizontalCenter
+                        NumberAnimation on opacity {
+                                id: file_anim2
+                                from: 0
+                                to: 1
+                                duration: 100
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton | Qt.RightButton
+                            onDoubleClicked: {
+                                file_anim2.start();
+                                fsel.text = model.path
+                            }
+                            onClicked: {
+                                file_anim2.start();
+                                fsela.text = model.path;
+
+                                if (mouse.button === Qt.RightButton)
+                                    contextMenu.popup()
+
+                            }
+
+                            onPressAndHold: {
+                                file_anim2.start();
+                                if (mouse.source === Qt.MouseEventNotSynthesized)
+                                    contextMenu.popup()
+                            }
+                        }   
+                    }
+                    Text { 
+                        text: model.name
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        font.family: "IRANSans"
+    
+                       
+                    }
+                }
+            }
+        }
+    }
+
+    Component {
+        id: highlight
+        Rectangle {
+            width: view.cellWidth; height: view.cellHeight
+            color: "lightsteelblue"; radius: 5
+            x: view.currentItem.x
+            y: view.currentItem.y
+            Behavior on x { SpringAnimation { spring: 3; damping: 0.2 } }
+            Behavior on y { SpringAnimation { spring: 3; damping: 0.2 } }
         }
     }
 
@@ -42,6 +140,7 @@ ApplicationWindow {
         anchors.topMargin: 10
         anchors.top: toolbar.bottom
         clip: true
+        objectName: "ListView"
         id: scroll
         Column {
             width: file.width
@@ -59,6 +158,7 @@ ApplicationWindow {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
+                            file_anim.start();
                             fsel.text = model.path
                         }
                     }
@@ -72,6 +172,12 @@ ApplicationWindow {
                             sourceSize: Qt.size( parent.width, parent.height )
                             height: parent.height
                             id: imagex
+                            NumberAnimation on opacity {
+                                id: file_anim
+                                from: 0
+                                to: 1
+                                duration: 100
+                            }
                     }
 
                     Text {

@@ -1,7 +1,12 @@
-name[en]: Pyabr installer
+name[en]: Pyabr setup
 name[fa]: نصاب پای ابر
 name[ar]: مثبت بای ابر
+name[tr]: pyabr kurmak
 logo: @icon/breeze-setup
 exec: setup
 application: No
 category: system
+users: @icon/breeze-users
+img0: @image/setup
+back: @icon/breeze-back
+next: @icon/breeze-next

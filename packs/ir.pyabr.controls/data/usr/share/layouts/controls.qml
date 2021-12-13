@@ -1,9 +1,12 @@
-import QtQuick
-import QtQuick.Window
-import QtQuick.Controls
-import QtQuick.Layouts
-import QtQuick.Controls.Material
-
+import QtQuick 2.0
+import QtQuick.Window 2.3
+import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.0
+import QtQuick.Controls 1.4
+import QtQuick.Controls 1.2
+import QtQuick.Controls 2.3
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: file
     visible: true
@@ -145,7 +148,6 @@ ApplicationWindow {
                     anchors.top: parent.top
                     width: parent.width
                     height: parent.height/1.2
-                    source: "file:///stor/usr/share/backgrounds/breeze-next.png"
                     objectName: "imgChange_desktop"
                 }
 
@@ -174,7 +176,6 @@ ApplicationWindow {
                     anchors.top: parent.top
                     width: parent.width
                     height: parent.height/1.2
-                    source: "file:///stor/usr/share/backgrounds/breeze-splash.jpg"
                     objectName: "imgChange_lock"
                 }
 
@@ -203,7 +204,6 @@ ApplicationWindow {
                     anchors.top: parent.top
                     width: parent.width
                     height: parent.height/1.2
-                    source: "file:///stor/usr/share/backgrounds/breeze-splash.jpg"
                     objectName: "imgChange_unlock"
                 }
 
@@ -232,7 +232,6 @@ ApplicationWindow {
                     anchors.top: parent.top
                     width: parent.width
                     height: parent.height/1.2
-                    source: "file:///stor/usr/share/backgrounds/breeze-splash.jpg"
                     objectName: "imgChange_enter"
                 }
 
@@ -266,7 +265,7 @@ ApplicationWindow {
             /* Change Dock */
             ComboBox {
                 anchors.top: txtDock.bottom
-                model: ['Bottom (default)','Top','Left','Right','Windows 11 mode']
+                model: ['Bottom (default)','Top','Left','Right','Windows 11 (Bottom)','Windows 11 (Top)','Windows 11 (Left)','Windows 11 (Right)']
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width/2
                 id: dockLocation
@@ -373,6 +372,7 @@ ApplicationWindow {
                     id: leoldPassword_change
                     objectName: "leoldPassword_change"
                     echoMode: TextInput.Password
+
                 }
                 TextField {
                     placeholderText: "New Password"
@@ -436,7 +436,6 @@ ApplicationWindow {
                     width: parent.width/3
                     height: parent.width/3    
                     background: Image {
-                        source: "file:///stor/usr/share/icons/breeze-users.svg"
                         objectName: "imgProfile_show"
                         width: parent.width
                         height: parent.height
@@ -454,6 +453,12 @@ ApplicationWindow {
                     font.family: "IRANSans"
                     id: leUsername_show
                     objectName: "leUsername_show"
+                    selectByMouse: true
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.IBeamCursor
+                        acceptedButtons: Qt.NoButton
+                    }
                 }
                 TextField {
                     placeholderText: "Full name"
@@ -461,6 +466,12 @@ ApplicationWindow {
                     font.family: "IRANSans"
                     id: leFullName_show
                     objectName: "leFullName_show"
+                    selectByMouse: true
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.IBeamCursor
+                        acceptedButtons: Qt.NoButton
+                    }
                 }
                 CheckBox {
                     text: "Sudoers"
@@ -518,6 +529,12 @@ ApplicationWindow {
                     font.family: "IRANSans"
                     id: leUsername
                     objectName: "leUsername"
+                    selectByMouse: true
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.IBeamCursor
+                        acceptedButtons: Qt.NoButton
+                    }
                 }
                 TextField {
                     placeholderText: "Password"
@@ -533,6 +550,12 @@ ApplicationWindow {
                     font.family: "IRANSans"
                     id: leFullName
                     objectName: "leFullName"
+                    selectByMouse: true
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.IBeamCursor
+                        acceptedButtons: Qt.NoButton
+                    }
                 }
                 CheckBox {
                     text: "Sudoers"
@@ -619,8 +642,8 @@ ApplicationWindow {
             height: file.height-70
             anchors.top: toolbar.bottom
             Image {
-                source: 'file:///stor/usr/share/icons/breeze-cloud.svg'
                 anchors.top: parent.top
+                objectName: "logo"
                 anchors.topMargin: 20
                 width: parent.height
                 sourceSize: Qt.size( parent.width, parent.height )
@@ -812,7 +835,6 @@ ApplicationWindow {
                     }
 
                     Image {
-                            source: 'file:///stor/usr/share/icons/breeze-w100.svg'
                             anchors.left: parent.left
                             anchors.leftMargin: 20
                             anchors.rightMargin: 20
@@ -820,6 +842,7 @@ ApplicationWindow {
                             sourceSize: Qt.size( parent.width, parent.height )
                             height: parent.height
                             id: imagex5
+                            objectName: "w100"
                     }
 
                     Text {
@@ -862,7 +885,6 @@ ApplicationWindow {
                     }
 
                     Image {
-                            source: 'file:///stor/usr/share/icons/breeze-wallpaper.svg'
                             anchors.left: parent.left
                             anchors.leftMargin: 20
                             anchors.rightMargin: 20
@@ -870,6 +892,7 @@ ApplicationWindow {
                             sourceSize: Qt.size( parent.width, parent.height )
                             height: parent.height
                             id: imagex1
+                            objectName: "wallpaper"
                     }
 
                     Text {
@@ -906,9 +929,9 @@ ApplicationWindow {
                     }
 
                     Image {
-                            source: 'file:///stor/usr/share/icons/breeze-lang.svg'
                             anchors.left: parent.left
                             anchors.leftMargin: 20
+                            objectName: "lang"
                             anchors.rightMargin: 20
                             width: parent.height
                             sourceSize: Qt.size( parent.width, parent.height )
@@ -950,10 +973,10 @@ ApplicationWindow {
                     }
 
                     Image {
-                            source: 'file:///stor/usr/share/icons/breeze-display.svg'
                             anchors.left: parent.left
                             anchors.leftMargin: 20
                             anchors.rightMargin: 20
+                            objectName: "displayimg"
                             width: parent.height
                             sourceSize: Qt.size( parent.width, parent.height )
                             height: parent.height
@@ -994,11 +1017,11 @@ ApplicationWindow {
                     }
 
                     Image {
-                            source: 'file:///stor/usr/share/icons/breeze-users.svg'
                             anchors.left: parent.left
                             anchors.leftMargin: 20
                             anchors.rightMargin: 20
                             width: parent.height
+                            objectName: "usersimg"
                             sourceSize: Qt.size( parent.width, parent.height )
                             height: parent.height
                             id: imagex2
@@ -1038,9 +1061,9 @@ ApplicationWindow {
                     }
 
                     Image {
-                            source: 'file:///stor/usr/share/icons/breeze-info.svg'
                             anchors.left: parent.left
                             anchors.leftMargin: 20
+                            objectName: "info"
                             anchors.rightMargin: 20
                             width: parent.height
                             sourceSize: Qt.size( parent.width, parent.height )

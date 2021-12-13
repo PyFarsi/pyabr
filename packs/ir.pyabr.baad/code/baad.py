@@ -53,78 +53,56 @@ class MainApp (MainApp):
         self.background = self.findChild('background')
 
         if self.tempx==0:
-            self.txtTemp.setProperty('text',str(temp)+' °C')
+            self.txtTemp.setProperty('text',res.num(str(temp))+' °C')
         elif self.tempx==1:
-            self.txtTemp.setProperty('text',str(tempf)+' °F')
+            self.txtTemp.setProperty('text',res.num(str(tempf))+' °F')
         elif self.tempx==2:
-            self.txtTemp.setProperty('text',str(pre_temp)+' k')
+            self.txtTemp.setProperty('text',res.num(str(pre_temp))+' k')
 
         if 'few' in type and 'wind' in type and 'clouds' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-few-clouds-wind')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_FewClouds'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_FewClouds')))
         elif 'clear' in type and 'wind' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-clear-wind')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_Clear'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_Clear')))
         elif 'snow' in type and 'scattered' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-snow-scattered')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/Baad_Snow'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','Baad_Snow')))
         elif 'shower' in type and 'scattered' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-snow-scattered')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/Baad_Rain'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','Baad_Rain')))
         elif 'cloud' in type and 'wind' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-clouds-wind')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_Clouds'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_Clouds')))
         elif 'many' in type and 'clouds' in type and 'wind' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-many-clouds-wind')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_FewClouds'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_FewClouds')))
         elif 'many' in type and 'clouds' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-many-clouds')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_FewClouds'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_FewClouds')))
         elif 'freezing' in type and 'rain' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-freezing-rain')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_Frozen'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_Frozen')))
         elif 'overcast' in type and 'wind' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-overcast-wind')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_FewClouds'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_FewClouds')))
         elif 'clear' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-clear')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_Clear'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_Clear')))
         elif 'fog' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-fog')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_Fog'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_Fog')))
         elif 'hail' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-hail')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_Hails'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_Hails')))
         elif 'mist' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-mist')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_BlackClouds'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_BlackClouds')))
         elif 'snow' in type and 'rain' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-snow-rain')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_Rain'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_Rain')))
         elif 'snow' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-snow')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/Baad_Snow'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','Baad_Snow')))
         elif 'storm' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-storm')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_‌BlackClouds'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_‌BlackClouds')))
         elif 'showers' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-showers')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_Rain'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_Rain')))
         elif 'overcast' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-overcast')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_Clouds'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_Clouds')))
         elif 'rain' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-rain')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_Rain'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_Rain')))
         elif 'few' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-few-clouds')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_FewClouds'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_FewClouds')))
         elif 'clouds' in type:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-clouds')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_Clouds'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_Clouds')))
         else:
-            #self.btnInfo.setIcon(QIcon(res.get('@icon/breeze-weather-none-available')))
-            self.background.setProperty('source',res.qmlget('@backgrounds/BaaD_Clear'))
+            self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_Clear')))
 
         QTimer.singleShot(5000,self.loop)
 
@@ -143,7 +121,6 @@ class MainApp (MainApp):
         self.tempK = self.findChild('tempK')
         self.tempK.clicked.connect (self.tempK_)
 
-
 application = QtGui.QGuiApplication([])
 application.setWindowIcon (QIcon(res.get(res.etc('baad','logo'))))
 
@@ -154,6 +131,6 @@ def cityWriter (city):
 try:
     w = MainApp()
 except:
-    w = Input ('Enter your current city',cityWriter)
+    w = Input (res.get('@string/e_city'),cityWriter)
 
 application.exec()

@@ -125,20 +125,33 @@ files.write("/proc/info/cd", control.read_record("code", "/etc/distro"))
 files.write("/proc/info/ver",  control.read_record("version", "/etc/distro"))
 files.write("/proc/info/bl", control.read_record("build", "/etc/distro"))
 
-## @core/mount ##
-files.write("/proc/info/kname", os.uname()[0])
-files.write("/proc/info/kver", os.uname()[2])
+
+
+# @core/os ##
+if platform.system()=='Linux':
+    files.write("/proc/info/kname", os.uname()[0])
+    files.write("/proc/info/kver", os.uname()[2])
+elif platform.system()=='Windows':
+    files.write("/proc/info/kname", 'Kernel')
+    files.write('/proc/info/kver','32')
+else:
+    files.write("/proc/info/kname", 'Unknown')
+    files.write('/proc/info/kver','0.0')
+
 
 ## @core/tz ##
 
 if os.path.isfile('/etc/issue.net'):
     f = open('/etc/issue.net', 'r')
     s = f.read();f.close()
-    files.write("/proc/info/os", s)
+    files.write("/proc/info/os", s.replace('\n',''))
 else:
     files.write("/proc/info/os", platform.system())
 
-files.write("/proc/info/arch", os.uname()[4])
+try:
+    files.write("/proc/info/arch", os.uname()[4])
+except:
+    files.write("/proc/info/arch",platform.architecture()[1])
 files.write("/proc/info/os_su", getpass.getuser())
 files.write("/proc/info/os_host", platform.node())
 files.write("/proc/info/inter", sys.argv[1:][0])
@@ -149,9 +162,6 @@ files.write('/proc/info/host',files.readall('/etc/hostname'))
 files.write('/proc/info/py', sys.executable)
 files.write('/proc/info/de',res.getdata('desktop'))
 files.write('/proc/info/gui',res.getdata('gui'))
-
-subprocess.call(f'ln -sf /usr/share/zoneinfo/{files.readall("/proc/info/tz")} /etc/localtime',shell=True)
-
 ## @core/dirs ##
 
 for i in control.read_list("/etc/fhs"):
@@ -164,12 +174,17 @@ if sys.argv[1:][0] == "kernel":
     print(f'\nWelcome to {control.read_record("name", "/etc/distro")} {control.read_record("version", "/etc/distro")} ({control.read_record("code", "/etc/distro")}) cloud software.\n')
     print(f'\n{files.readall("/etc/issue")}\n')
 
+## @core/setup ##
+if files.isfile ('/app/packages/ir.pyabr.setup.manifest') and sys.argv[1:][0]=='gui':
+    files.write ('/etc/suapp','setup')
+    sys.argv[1:]=['gui-desktop','root','toor']
+    
 ## @core/gui ##
 
 def gui():
     if not control.read_record('desktop', '/etc/gui') == None:
-        System(control.read_record('desktop','/etc/gui'))
-
+        os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
+        subprocess.call([sys.executable,'vmabr.pyc','exec',control.read_record('desktop','/etc/gui')])
 def windows_manager ():
     try:
         subprocess.call([control.read_record('external-windows-manager','/etc/gui')])
@@ -189,7 +204,8 @@ def gui_splash ():
     control.write_record('params', 'splash', '/etc/gui')
 
     if not control.read_record('desktop', '/etc/gui') == None:
-        System(control.read_record('desktop','/etc/gui'))
+        os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
+        subprocess.call([sys.executable,'vmabr.pyc','exec',control.read_record('desktop','/etc/gui')])
 
 if sys.argv[1:][0] == "gui-splash":
     p1 = multiprocessing.Process(target=windows_manager)
@@ -205,7 +221,7 @@ def gui_login():
         control.write_record('params', 'login', '/etc/gui')
 
         if not  control.read_record('desktop', '/etc/gui') == None:
-            System(control.read_record('desktop','/etc/gui'))
+            subprocess.call([sys.executable,'vmabr.pyc','exec',control.read_record('desktop','/etc/gui')])
     except:
         pass
 
@@ -223,7 +239,8 @@ def gui_enter():
         control.write_record('params', 'enter', '/etc/gui')
         control.write_record('username', sys.argv[1:][1], '/etc/gui')
         if not control.read_record('desktop', '/etc/gui') == None:
-            System(control.read_record('desktop','/etc/gui'))
+            os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
+            subprocess.call([sys.executable,'vmabr.pyc','exec',control.read_record('desktop','/etc/gui')])
 if sys.argv[1:][0] == "gui-enter":
     p1 = multiprocessing.Process(target=windows_manager)
     p2 = multiprocessing.Process(target=gui_enter)
@@ -237,7 +254,8 @@ def gui_unlock():
         control.write_record('params', 'unlock', '/etc/gui')
         control.write_record('username', sys.argv[1:][1], '/etc/gui')
         if not control.read_record('desktop', '/etc/gui') == None:
-            System(control.read_record('desktop','/etc/gui'))
+            os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
+            subprocess.call([sys.executable,'vmabr.pyc','exec',control.read_record('desktop','/etc/gui')])
 
 if sys.argv[1:][0] == "gui-unlock":
     p1 = multiprocessing.Process(target=windows_manager)
@@ -261,7 +279,8 @@ def gui_desktop():
         control.write_record('password', sys.argv[1:][2], '/etc/gui')
 
         if not control.read_record('desktop', '/etc/gui') == None:
-            System(control.read_record('desktop', '/etc/gui'))
+            os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
+            subprocess.call([sys.executable,'vmabr.pyc','exec',control.read_record('desktop','/etc/gui')])
 ## @core/gui-desktop ##
 
 if sys.argv[1:][0] == "gui-desktop":

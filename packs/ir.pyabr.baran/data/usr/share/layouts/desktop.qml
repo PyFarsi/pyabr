@@ -1,8 +1,13 @@
-import QtQuick
-import QtQuick.Window
-import QtQuick.Controls
-import QtQuick.Layouts
-import QtQuick.Controls.Material
+import QtQuick 2.0
+import QtQuick.Window 2.3
+import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.0
+import QtQuick.Controls 1.4
+import QtQuick 2.15
+import QtQuick.Controls 1.2
+import QtQuick.Controls 2.3
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
     id: desktop
@@ -12,11 +17,18 @@ ApplicationWindow {
 
     /* Application Background */
 
+    
+    
     Text {
         id: background_app
         objectName: "background_app"
         text: ""
         visible: false
+    }
+
+    Text {
+        id: act
+        objectName: "act"
     }
 
     /* Keyless keyboard layer Background */
@@ -26,6 +38,27 @@ ApplicationWindow {
         id: keyless
         visible: false
         text: ''
+    }
+
+    Shortcut {
+        sequence: "Esc"
+        onActivated: {
+            background_app.text = 'pysys';
+        }
+    }
+
+    Shortcut {
+        sequence: "Alt+F4"
+        onActivated: {
+            background_app.text = 'pysys';
+        }
+    }
+
+    Shortcut {
+        sequence: "Ctrl+A"
+        onActivated: {
+            background_app.text = 'rma';
+        }
     }
 
     /* Submenu */
@@ -271,11 +304,6 @@ ApplicationWindow {
                     objectName: "logout"
                 }
                 Action {
-                    text: "رفتن به نشستی دیگر"
-                    id: switchuser
-                    objectName: "switchuser"
-                }
-                Action {
                     text: "قفل میزکار"
                     id: lock
                     objectName: "lock"
@@ -291,6 +319,7 @@ ApplicationWindow {
                     text: "خاموش کردن"
                     id: shutdown
                     objectName: "shutdown"
+                    shortcut: "Ctrl+C"
                 }
                 Action {
                     text: "راه اندازی مجدد"
@@ -307,13 +336,15 @@ ApplicationWindow {
                 title: "زبان ها"
                 id: lang
                 objectName: "lang"
+                
                 Repeater{
                     model: Lang
                     MenuItem {
                         objectName: model.name
                         text: model.label
+                        
                         onTriggered: {
-                            keyless.text = model.name
+                            keyless.text = model.name;
                         }
                     }
                 }
@@ -322,7 +353,7 @@ ApplicationWindow {
                 id: virtualkeyboard
                 objectName: "virtualkeyboard"
                 text: "کیبورد مجازی"
-                 visible: false
+                visible: false
             }
         }
     }
@@ -333,7 +364,6 @@ ApplicationWindow {
         anchors.fill: parent
         Image {
             anchors.fill: parent
-            source: "../../../usr/share/backgrounds/breeze-next.png"
             id: background
             objectName: "background"
         }
@@ -350,6 +380,7 @@ ApplicationWindow {
        radius: 40
        anchors.bottomMargin: 20
        visible: false
+       //visible: true
        objectName: "menuApps"
 
        Rectangle {
@@ -389,6 +420,12 @@ ApplicationWindow {
                             sourceSize: Qt.size( parent.width, parent.height )
                             height: parent.height
                             id: imagex
+                            NumberAnimation on opacity {
+                                id: menu_anim
+                                from: 0
+                                to: 1
+                                duration: 100
+                            }
                     }
 
                     Text {
@@ -404,7 +441,8 @@ ApplicationWindow {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            background_app.text = model.name
+                            menu_anim.start();
+                            background_app.text = model.name;
                         }
                     }
 
@@ -423,6 +461,15 @@ ApplicationWindow {
        height: 20
        id: rex2
        }
+
+       NumberAnimation on height {
+            id: menuApps_anim
+            objectName: "menuApps_anim"
+            from: 0
+            to: 560
+            duration: 100
+        }
+
     }
 
     /* Menu applications for top Dock */
@@ -475,6 +522,13 @@ ApplicationWindow {
                             sourceSize: Qt.size( parent.width, parent.height )
                             height: parent.height
                             id: imagex
+
+                            NumberAnimation on opacity {
+                                id: menu2_anim
+                                from: 0
+                                to: 1
+                                duration: 100
+                            }
                     }
 
                     Text {
@@ -490,7 +544,8 @@ ApplicationWindow {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            background_app.text = model.name
+                            menu2_anim.start();
+                            background_app.text = model.name;
                         }
                     }
 
@@ -509,6 +564,13 @@ ApplicationWindow {
        height: 20
        id: rex4
        }
+       NumberAnimation on height {
+            id: menuApps2_anim
+            objectName: "menuApps2_anim"
+            from: 0
+            to: 560
+            duration: 100
+        }
     }
 
     /* Menu applications for left Dock */
@@ -561,6 +623,13 @@ ApplicationWindow {
                             sourceSize: Qt.size( parent.width, parent.height )
                             height: parent.height
                             id: imagex
+
+                            NumberAnimation on opacity {
+                                id: menu3_anim
+                                from: 0
+                                to: 1
+                                duration: 100
+                            }
                     }
 
                     Text {
@@ -576,7 +645,8 @@ ApplicationWindow {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            background_app.text = model.name
+                            menu3_anim.start();
+                            background_app.text = model.name;
                         }
                     }
 
@@ -595,6 +665,13 @@ ApplicationWindow {
        height: 20
        id: rex6
        }
+       NumberAnimation on height {
+            id: menuApps3_anim
+            objectName: "menuApps3_anim"
+            from: 0
+            to: 560
+            duration: 100
+        }
     }
 
     /* Menu applications for right Dock */
@@ -646,6 +723,13 @@ ApplicationWindow {
                             sourceSize: Qt.size( parent.width, parent.height )
                             height: parent.height
                             id: imagex
+
+                            NumberAnimation on opacity {
+                                id: menu4_anim
+                                from: 0
+                                to: 1
+                                duration: 100
+                            }
                     }
 
                     Text {
@@ -661,7 +745,8 @@ ApplicationWindow {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            background_app.text = model.name
+                            menu4_anim.start();
+                            background_app.text = model.name;
                         }
                     }
 
@@ -680,6 +765,13 @@ ApplicationWindow {
        height: 20
        id: rex8
        }
+       NumberAnimation on height {
+            id: menuApps4_anim
+            objectName: "menuApps4_anim"
+            from: 0
+            to: 560
+            duration: 100
+        }
     }
 
     /* Bottom Dock (Default dock) */
@@ -704,9 +796,16 @@ ApplicationWindow {
                 objectName: "btnMenu"
                 Image {
                     fillMode: Image.PreserveAspectFit
-                    source: '../../../usr/share/icons/breeze-cloud.svg'
+                    objectName: "imgMenu"
                     anchors.fill: parent
                     sourceSize: Qt.size( parent.width, parent.height )
+                    NumberAnimation on opacity {
+                        id: btnMenu_anim
+                        objectName: "btnMenu_anim"
+                        from: 0
+                        to: 1
+                        duration: 100
+                    }
                 }
             }
 
@@ -722,7 +821,14 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            background_app.text = model.name
+                            app_anim.start();
+                            background_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app_anim
+                            from: 0
+                            to: 1
+                            duration: 100
                         }
                     }
             }
@@ -752,9 +858,16 @@ ApplicationWindow {
                 objectName: "btnMenu2"
                 Image {
                     fillMode: Image.PreserveAspectFit
-                    source: '../../../usr/share/icons/breeze-cloud.svg'
+                    objectName: "imgMenu2"
                     anchors.fill: parent
                     sourceSize: Qt.size( parent.width, parent.height )
+                    NumberAnimation on opacity {
+                        id: btnMenu2_anim
+                        objectName: "btnMenu2_anim"
+                        from: 0
+                        to: 1
+                        duration: 100
+                    }
                 }
             }
 
@@ -770,7 +883,14 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            background_app.text = model.name
+                            app2_anim.start();
+                            background_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app2_anim
+                            from: 0
+                            to: 1
+                            duration: 100
                         }
                     }
             }
@@ -800,9 +920,16 @@ ApplicationWindow {
                 objectName: "btnMenu3"
                 Image {
                     fillMode: Image.PreserveAspectFit
-                    source: '../../../usr/share/icons/breeze-cloud.svg'
                     anchors.fill: parent
+                    objectName: "imgMenu3"
                     sourceSize: Qt.size( parent.width, parent.height )
+                    NumberAnimation on opacity {
+                        id: btnMenu3_anim
+                        objectName: "btnMenu3_anim"
+                        from: 0
+                        to: 1
+                        duration: 100
+                    }
                 }
             }
 
@@ -818,7 +945,14 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            background_app.text = model.name
+                            app3_anim.start();
+                            background_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app3_anim
+                            from: 0
+                            to: 1
+                            duration: 100
                         }
                     }
             }
@@ -847,9 +981,16 @@ ApplicationWindow {
                 objectName: "btnMenu4"
                 Image {
                     fillMode: Image.PreserveAspectFit
-                    source: '../../../usr/share/icons/breeze-cloud.svg'
                     anchors.fill: parent
+                    objectName: "imgMenu4"
                     sourceSize: Qt.size( parent.width, parent.height )
+                    NumberAnimation on opacity {
+                        id: btnMenu4_anim
+                        objectName: "btnMenu4_anim"
+                        from: 0
+                        to: 1
+                        duration: 100
+                    }
                 }
             }
 
@@ -865,7 +1006,14 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            background_app.text = model.name
+                            app4_anim.start();
+                            background_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app4_anim
+                            from: 0
+                            to: 1
+                            duration: 100
                         }
                     }
             }
@@ -894,9 +1042,16 @@ ApplicationWindow {
                 objectName: "btnMenu5"
                 Image {
                     fillMode: Image.PreserveAspectFit
-                    source: '../../../usr/share/icons/breeze-cloud.svg'
                     anchors.fill: parent
+                    objectName: "imgMenu5"
                     sourceSize: Qt.size( parent.width, parent.height )
+                    NumberAnimation on opacity {
+                        id: btnMenu5_anim
+                        objectName: "btnMenu5_anim"
+                        from: 0
+                        to: 1
+                        duration: 100
+                    }
                 }
             }
 
@@ -912,11 +1067,307 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            background_app.text = model.name
+                            app5_anim.start();
+                            background_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app5_anim
+                            from: 0
+                            to: 1
+                            duration: 100
                         }
                     }
             }
             Item { Layout.fillWidth: true }
         }
     }
+
+    /* Windows 11 Dock - top */
+    Rectangle {
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: 0
+        width: parent.width
+        height: 70
+        color: "#A0FFFFFF"
+        radius: 0
+        objectName: "toolbar6"
+        id: toolbar6
+        
+        
+        RowLayout {
+            anchors.centerIn: parent
+            ToolButton {
+                width: toolbar6.height
+                height: toolbar6.height
+                objectName: "btnMenu6"
+                Image {
+                    fillMode: Image.PreserveAspectFit
+                    anchors.fill: parent
+                    objectName: "imgMenu6"
+                    sourceSize: Qt.size( parent.width, parent.height )
+                    NumberAnimation on opacity {
+                        id: btnMenu6_anim
+                        objectName: "btnMenu6_anim"
+                        from: 0
+                        to: 1
+                        duration: 100
+                    }
+                }
+            }
+
+            Repeater {
+                model: EntryDockApplications
+
+                    ToolButton {
+                        width: toolbar6.height
+                        height: toolbar6.height
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app6_anim.start();
+                            background_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app6_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                    }
+            }
+            Item { Layout.fillWidth: true }
+        }
+    }
+
+    /* Windows 11 dock - left */
+
+    Rectangle {
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.leftMargin: 0
+        width: 70
+        height: parent.height
+
+        color: "#A0FFFFFF"
+        radius: 0
+        objectName: "toolbar7"
+        id: toolbar7
+
+        ColumnLayout {
+            anchors.centerIn: parent
+            ToolButton {
+                width: toolbar7.width
+                height: toolbar7.width
+                objectName: "btnMenu7"
+                Image {
+                    fillMode: Image.PreserveAspectFit
+                    anchors.fill: parent
+                    objectName: "imgMenu7"
+                    sourceSize: Qt.size( parent.width, parent.height )
+                    NumberAnimation on opacity {
+                        id: btnMenu7_anim
+                        objectName: "btnMenu7_anim"
+                        from: 0
+                        to: 1
+                        duration: 100
+                    }
+                }
+            }
+
+            Repeater {
+                model: EntryDockApplications
+
+                    ToolButton {
+                        width: toolbar7.width
+                        height: toolbar7.width
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app7_anim.start();
+                            background_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app7_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                    }
+            }
+            Item { Layout.fillWidth: true }
+        }
+    }
+
+    /* Windows 11 dock - right */
+    Rectangle {
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.rightMargin: 0
+        width: 70
+        height: parent.height
+
+        color: "#A0FFFFFF"
+        radius: 0
+        objectName: "toolbar8"
+        id: toolbar8
+
+        ColumnLayout {
+            anchors.centerIn: parent
+            ToolButton {
+                width: toolbar8.width
+                height: toolbar8.width
+                objectName: "btnMenu8"
+                Image {
+                    fillMode: Image.PreserveAspectFit
+                    anchors.fill: parent
+                    objectName: "imgMenu8"
+                    sourceSize: Qt.size( parent.width, parent.height )
+                    NumberAnimation on opacity {
+                        id: btnMenu8_anim
+                        objectName: "btnMenu8_anim"
+                        from: 0
+                        to: 1
+                        duration: 100
+                    }
+                }
+            }
+
+            Repeater {
+                model: EntryDockApplications
+
+                    ToolButton {
+                        width: toolbar8.width
+                        height: toolbar8.width
+                        
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app8_anim.start();
+                            background_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app8_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                    }
+            }
+            Item { Layout.fillWidth: true }
+        }
+    }
+
+
+    Menu {
+        id: contextMenu
+        font.family: "IRANSans"
+        objectName: "contextMenu"
+
+        Action {
+            text: "Appearanc"
+            id: appc
+            objectName: "appc"
+            onTriggered: {
+                background_app.text = 'appearanc'
+            }
+        }
+        Action {
+            text: "Display Settings"
+            id: displayc
+            objectName: "displayc"
+            onTriggered: {
+                background_app.text = 'displaymanager'
+            }
+        }
+        Action {
+            text: "Restore minimized apps"
+            id: rma
+            objectName: "rmac"
+            onTriggered: {
+                background_app.text = 'rma'
+            }
+        }
+        Action {
+            text: "Run"
+            id: runc
+            objectName: "runc"
+            onTriggered: {
+                background_app.text = 'runapp'
+            }
+        }
+    }
+
+    MouseArea {
+        anchors.centerIn: parent
+        width: parent.width/2
+        height: parent.height/2
+        id: msaDesktop
+        objectName: "msaDesktop"
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: {
+
+            if (mouse.button === Qt.RightButton)
+                contextMenu.popup()
+
+        }
+
+        onPressAndHold: {
+            if (mouse.source === Qt.MouseEventNotSynthesized)
+                contextMenu.popup()
+        }
+    }
+    /*
+    GridView {
+        model: FileModel
+        cellWidth: 64; cellHeight: 80
+        highlight: highlight
+        anchors.top: parent.top
+        anchors.bottom: toolbar.top
+        highlightFollowsCurrentItem: false
+        focus: true
+
+        delegate: Column {
+            Image { 
+                source: model.logo
+                width: 64
+                height: 70
+                sourceSize: Qt.size( parent.width, parent.height )
+                anchors.horizontalCenter: parent.horizontalCenter
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    onDoubleClicked: {
+                        fsel.text = model.path
+                    }
+                    onClicked: {
+                        if (mouse.button === Qt.RightButton)
+                            contextMenu.popup()
+
+                    }
+
+                    onPressAndHold: {
+                        if (mouse.source === Qt.MouseEventNotSynthesized)
+                            contextMenu.popup()
+                    }
+                }   
+            }
+            Text { 
+                text: model.name
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.family: "IRANSans"
+                color: "white"
+            }
+        }
+    }*/
+
 }

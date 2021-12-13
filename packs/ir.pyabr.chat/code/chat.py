@@ -32,23 +32,24 @@ class ChannelConnector (MainApp):
         c = Channel()
         c.Connect (self.leUsername.property('text'),self.lePassword.property('text'))
 
-        if not files.isfile ('/tmp/chat-success.tmp'):
-            self.w = Text (res.get("@string/exists").replace('{0}',self.leUsername.property("text")),f'{self.leUsername.property("text")} {res.get("@string/exists_message")}')
-        else:
-            self.close()
-            app.start('chat','')
+        self.close()
+        app.start ('chat','')
 
     def __init__(self):
         super(ChannelConnector, self).__init__()
 
         self.load (res.get('@layout/ChannelConnector'))
 
-        self.setProperty('title','Connect to channel')
+        self.setProperty('title',res.get('@string/c_channel'))
 
         self.leChannel = self.findChild('leChannel')
+        self.leChannel.setProperty('placeholderText',res.get('@string/e_channel'))
         self.leUsername = self.findChild('leUsername')
+        self.leUsername.setProperty('placeholderText',res.get('@string/e_username'))
         self.lePassword = self.findChild('lePassword')
+        self.lePassword.setProperty('placeholderText',res.get('@string/e_password'))
         self.btnConnect = self.findChild('btnConnect')
+        self.btnConnect.setProperty('text',res.get('@string/connect'))
         self.btnConnect.clicked.connect (self.connect_)
 
 class MainApp (MainApp):
@@ -62,21 +63,14 @@ class MainApp (MainApp):
     cselp = ''
 
     def sendMessage_(self):
-        #if not (self.leSend.property('text')==''):
         c = Channel()
-        m = Message()
-        m.Write (files.readall (f'/etc/chat/{su}/user')+": "+self.leSend.property('text'))
-        m.Save()
-        c.Send (self.cselp)
+        if not self.leSend.property('text')=='' or self.leSend.property('text')==' ' or self.leSend.property('text')=='  ':
+            c.Send (self.cselp,self.leSend.property('text'))
 
         self.leSend.setProperty('text','')
+        self.addChatModel (c.Get(self.cselp))
 
-    def openfile__(self,filename):
-        c = Channel()
-        c.File (filename,self.cselp)
-
-    def openfile_(self):
-        self.x = Select (self.openfile__)
+    timeloop = 100
 
     def loop(self):
         if not self.csel.property("text")=='' and not self.csel.property("text")=='..':
@@ -85,19 +79,15 @@ class MainApp (MainApp):
             self.title.setProperty('visible',True)
             self.addcontact.setProperty('visible',False)
             self.add.setProperty('visible',False)
-            self.profimg.setProperty('visible',True)
-            self.profimg2.setProperty('visible',True)
             self.cselp = self.csel.property('text')
             self.back.setProperty('visible',True)
             self.leSend.setProperty('visible',True)
             self.place.setProperty('visible',True)
             self.btnSend.setProperty('visible',True)
-            self.profimg2.setProperty('source',self.xprofile.property('text'))
             self.title.setProperty('title',self.xfullname.property('text'))
             self.btnSend.clicked.connect (self.sendMessage_)
-            self.btnFile.clicked.connect (self.openfile_)
-            c = Channel()
-            c.Key(self.cselp)
+
+            self.timeloop = 6000
 
         elif self.csel.property("text")=='..':
             self.recontact.setProperty('visible',True)
@@ -105,34 +95,48 @@ class MainApp (MainApp):
             self.title.setProperty('visible',False)
             self.addcontact.setProperty('visible',True)
             self.add.setProperty('visible',True)
-            self.profimg.setProperty('visible',False)
             self.back.setProperty('visible',False)
-            self.profimg2.setProperty('visible',False)
             self.leSend.setProperty('visible',False)
             self.place.setProperty('visible',False)
             self.btnSend.setProperty('visible',False)
 
-        if not self.cselp=='':
-            try:
-                c = Channel()
-                self.addChatModel(c.Give(self.cselp))
-            except:
-                pass
+            self.timeloop = 100
+
+        
+        if self.act.property('text')=='delete':
+            c = Channel()
+            c.Delete (self.cid.property('text'))
+            self.addChatModel (c.Get(self.cselp))
+
+        elif self.act.property('text')=='delchat':
+            c = Channel()
+            c.DeleteChat (self.cselp)
+            self.close()
+            app.start ('chat','')
+            
+        elif self.act.property('text')=='clear':
+            c = Channel()
+            c.Clear (self.cselp)
+            self.addChatModel (c.Get(self.cselp))
+
+        c = Channel()
+        try:
+            self.addChatModel (c.Get(self.cselp))
+        except:
+            pass
+
+        self.addContactModel (c.Contacts())
 
         self.csel.setProperty('text','')
 
-        QTimer.singleShot(2000,self.loop)
+        QTimer.singleShot(self.timeloop,self.loop)
 
     def addcontact_(self):
-        self.x = Input('Enter your contact username',self.addcontact__)
+        self.x = Input(res.get('@string/e_contact'),self.addcontact__)
 
     def addcontact__(self,username):
-        try:
-            c = Channel()
-            c.AddContact (username)
-            self.addContactModel (c.Contacts())
-        except:
-            pass
+        c = Channel()
+        c.AddContact (username)
 
     def __init__(self):
         super(MainApp, self).__init__()
@@ -148,22 +152,24 @@ class MainApp (MainApp):
         self.rechat = self.findChild('rechat')
         self.recontact = self.findChild('recontact')
         self.title = self.findChild('title')
-        self.profimg = self.findChild('profimg')
-        self.profimg2 = self.findChild('profimg2')
 
         self.xfullname = self.findChild('xfullname')
-        self.xprofile = self.findChild('xprofile')
         self.back = self.findChild('back')
         self.leSend = self.findChild('leSend')
+        self.leSend.setProperty('placeholderText',res.get('@string/e_send'))
         self.place = self.findChild('place')
         self.btnSend = self.findChild('btnSend')
         self.cid = self.findChild('cid')
         self.csender = self.findChild('csender')
         self.cgiver = self.findChild('cgiver')
         self.cdata = self.findChild('cdata')
+        self.act = self.findChild('act')
+        self.delete_c = self.findChild('delete_c')
+        self.delete_m = self.findChild('delete_m')
+        self.history_m= self.findChild('history_m')
+        self.profimg2 = self.findChild('profimg2')
+        self.profimg2.setProperty('source',res.qmlget(res.etc('chat','profimg2')))
 
-        self.btnFile = self.findChild('btnFile')
-        self.btnStickers = self.findChild('btnStickers')
         self.loop()
 
 application = QtGui.QGuiApplication([])
@@ -174,4 +180,5 @@ if files.isfile (f'/etc/chat/{su}/pass') and files.isfile (f'/etc/chat/{su}/user
     w = MainApp()
 else:
     w = ChannelConnector()
+
 application.exec()

@@ -1,6 +1,7 @@
 name[en]: Image Viewer
 name[fa]: نمایشگر تصویر
 name[ar]: عارض الصور
+name[tr]: resim görüntüleyici
 logo: @icon/breeze-shotwell
 exec: nama
 shortcut: Ctrl+Alt+N
@@ -8,3 +9,5 @@ application: Yes
 hidden: No
 category: multimedia
 pin: No
+open: @icon/breeze-open
+fullscreen: @icon/breeze-fullscreen

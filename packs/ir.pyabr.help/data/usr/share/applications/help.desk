@@ -1,0 +1,9 @@
+name[en]: Online support
+name[fa]: پشتیبانی آنلاین
+name[ar]: الدعم عبر الإنترنت
+name[tr]: Çevrimiçi destek
+logo: @icon/breeze-help
+exec: onlinesupport
+application: Yes
+category: internet
+pin: Yes

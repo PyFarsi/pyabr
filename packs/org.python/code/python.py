@@ -19,4 +19,5 @@
 
 import subprocess
 from pyabr.core import *
-subprocess.call(f'xterm -fa dejavu -fg white -bg black -title "{res.get("@string/terminal")}" -fs 12 python3',shell=True)
+
+app.terminal (res.get('@string/python'),'/stor/usr/share/icons/python.svg','/usr/bin/python3')

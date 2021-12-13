@@ -1,0 +1,5 @@
+name[en]: LibreOffice Impress
+logo: @icon/breeze-libreoffice-impress
+exec: libreofficeimpress
+application: Yes
+category: tools

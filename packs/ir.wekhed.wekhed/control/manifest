@@ -1,0 +1,15 @@
+name: ir.wekhed.wekhed
+name[en]: Wekhed
+name[fa]: ویک هد
+name[ar]: ویک هد
+name[tr]: wekhed
+copyright: 2021 (c) Noavaran Mahbad Sharif Emrooz
+license: Free software
+unpack: /
+version: current
+description: from Troup
+compile: Yes
+entry: wekhed
+logo: https://mirror.pyabr.ir/zayanderoad/ir.wekhed.wekhed.svg
+build: 1400-09-12
+mirror: https://mirror.pyabr.ir/zayanderoad/

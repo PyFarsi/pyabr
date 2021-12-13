@@ -1,6 +1,7 @@
 name[en]: Files
 name[fa]: فایل ها
 name[ar]: الملفات
+name[tr]: Dosyalar
 logo: @icon/breeze-roller
 exec: files
 application: Yes

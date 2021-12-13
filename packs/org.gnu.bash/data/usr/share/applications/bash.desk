@@ -1,0 +1,8 @@
+name[en]: Bash
+name[fa]: بش
+name[ar]: بش
+name[tr]: bash
+logo: @icon/breeze-commento
+exec: bash
+application: Yes
+category: tools

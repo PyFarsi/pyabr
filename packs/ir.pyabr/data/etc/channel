@@ -1,11 +1,9 @@
 host: https://sms.pyabr.ir
-upload: upload.php
-uploadprofile: uploadprofile.php
-connect: connect.php
-give: give.php
 send: send.php
-public: public.php
+get: get.php
+connect: connect.php
 contact: contact.php
-update: update.php
+clear: clear.php
 addcontact: addcontact.php
-uploadfile: uploadfile.php
+del: del.php
+delchat: delchat.php

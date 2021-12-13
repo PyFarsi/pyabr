@@ -18,7 +18,8 @@
 '''
 import os,multiprocessing
 import subprocess
-import sys, hashlib
+import sys, hashlib,shutil
+from typing import Text
 
 from pyabr.core import *
 from pyabr.quick import *
@@ -29,8 +30,28 @@ files = Files()
 app = App()
 process = Process()
 
+def ql (name):
+    return control.read_record (name,'/etc/default/quicklogo')
+
 application = QGuiApplication(sys.argv)
-application.setWindowIcon(QIcon(res.get('@icon/breeze-cloud')))
+application.setWindowIcon(QIcon(res.get(ql('pyabr'))))
+
+
+shutil.copyfile('/stor/etc/default/openbox.xml','/root/.config/openbox/rc.xml')
+subprocess.call(['sudo','openbox','--reconfigure'])
+
+keylessx = ''
+for i in files.list ('/usr/share/locales'):
+    if i.endswith('.locale'):
+        ic = control.read_record ('keyless',f'/usr/share/locales/{i}')
+        if keylessx=='':
+            keylessx+=ic
+        else:
+            keylessx+=f',{ic}'
+
+subprocess.call(f'setxkbmap -layout "{keylessx}" -option "grp:alt_shift_toggle"',shell=True)
+
+if files.isfile ('/proc/info/randr'): subprocess.call(['xrandr','-s',files.readall('/proc/info/randr')])
 
 files.write('/proc/info/id','baran')
 
@@ -66,7 +87,6 @@ class Backend (MainApp):
         self.setProperty ('width',int(getdata("width")))
         self.setProperty ('title','Pyabr OS')
         self.setProperty ('visibility',getdata("visibility"))
-        self.setProperty('font', QFont(getdata('font'), int(getdata('fontsize'))))
 
         # Actions
 
@@ -100,11 +120,12 @@ class Splash (MainApp):
         
         self.Backend = ports[0]
         self.load(res.get('@layout/splash'))
+        self.logo = self.findChild ('logo')
+        self.logo.setProperty('source',res.qmlget(ql('pyabr')))
         self.setProperty('height', int(getdata("height")))
         self.setProperty('width', int(getdata("width")))
         self.setProperty('title', 'Pyabr OS')
         self.setProperty('visibility', getdata("visibility"))
-        self.setProperty('font', QFont(getdata('font'), int(getdata('fontsize'))))
 
         QTimer.singleShot(3000, self.runLogin)  ## Run login
 
@@ -128,7 +149,7 @@ class Login (MainApp):
     def next_(self):
         if self._username.property("text")=='':
             pass
-        elif self._username.property("text")=='guest' and files.readall('/etc/guest'):
+        elif self._username.property("text")=='guest' and files.readall('/etc/guest')=='enable':
             self.close()
             self.desktop = Desktop([self.Backend, self._username.property("text"),'*'])
         elif files.isfile(f'/etc/users/{self._username.property("text")}'):
@@ -144,10 +165,11 @@ class Login (MainApp):
     NameRole = QtCore.Qt.ItemDataRole.UserRole + 1000
     LabelRole = QtCore.Qt.ItemDataRole.UserRole + 1001
     LogoRole = QtCore.Qt.ItemDataRole.UserRole + 1002
+    ShortcutRole = QtCore.Qt.ItemDataRole.UserRole + 1003
 
     def create_model(self):
         model = QtGui.QStandardItemModel()
-        roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
+        roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo',self.ShortcutRole:b'shortcut'}
         model.setItemRoleNames(roles)
         for name in files.list('/usr/share/locales'):
             if control.read_record('keyless.enable',f'/usr/share/locales/{name}')=='Yes':
@@ -155,6 +177,7 @@ class Login (MainApp):
                 it.setData(name, self.NameRole)
                 namex = control.read_record('name', f'/usr/share/locales/{name}')
                 it.setData(namex, self.LabelRole)
+                it.setData(control.read_record ('keyless.shortcut',f'/usr/share/locales/{name}'),self.ShortcutRole)
                 it.setData('../../../'+res.get(control.read_record('logo', f'/usr/share/locales/{name}')), self.LogoRole)
                 model.appendRow(it)
         return model
@@ -181,10 +204,12 @@ class Login (MainApp):
         if not self.rootObjects():
             sys.exit(-1)
 
+        self.profile = self.findChild('profile')
+        self.profile.setProperty('source',res.qmlget(ql('users')))
+
         self.setProperty('height', int(getdata("height")))
         self.setProperty('width', int(getdata("width")))
         self.setProperty('visibility', getdata("visibility"))
-        self.setProperty('font', QFont(getdata('font'), int(getdata('fontsize'))))
         self.setProperty('title', 'Pyabr OS')
 
         # Connects
@@ -238,7 +263,6 @@ class Sleep (MainApp):
         self.setProperty('height', int(getdata("height")))
         self.setProperty('width', int(getdata("width")))
         self.setProperty('visibility', getdata("visibility"))
-        self.setProperty('font', QFont(getdata('font'), int(getdata('fontsize'))))
         self.setProperty('title', 'Pyabr OS')
 
 
@@ -303,19 +327,11 @@ class Enter (MainApp):
 
         self.close()
 
-        # Remove all tmp
-        files.removedirs('/tmp')
-        files.mkdir('/tmp')
-
-        # Remove all ids
-        app.endall()
-
-        # Remove all switchs
-        process.endall()
+        System ("kma")
 
         # Logout
         files.create ('/proc/info/pause')
-        System ("/vmabr gui-login")
+        subprocess.call([sys.executable,'vmabr.pyc','gui-login'])
 
     def getdata(self, name):
         try:
@@ -347,7 +363,6 @@ class Enter (MainApp):
         self.setProperty('height', int(getdata("height")))
         self.setProperty('width', int(getdata("width")))
         self.setProperty('visibility', getdata("visibility"))
-        self.setProperty('font', QFont(getdata('font'), int(getdata('fontsize'))))
         self.setProperty('title', 'Pyabr OS')
 
         # Connects
@@ -467,7 +482,6 @@ class Unlock (MainApp):
         self.setProperty('height', int(getdata("height")))
         self.setProperty('width', int(getdata("width")))
         self.setProperty('visibility', getdata("visibility"))
-        self.setProperty('font', QFont(getdata('font'), int(getdata('fontsize'))))
         self.setProperty('title', 'Pyabr OS')
 
         # Connects
@@ -541,7 +555,6 @@ class Lock (MainApp):
         self.setProperty('height', int(getdata("height")))
         self.setProperty('width', int(getdata("width")))
         self.setProperty('visibility', getdata("visibility"))
-        self.setProperty('font', QFont(getdata('font'), int(getdata('fontsize'))))
         self.setProperty('title', 'Pyabr OS')
 
         # Connects
@@ -555,23 +568,18 @@ class Lock (MainApp):
         if self.getdata("lock.background").startswith('@background/'):
             self._background.setProperty('source', res.qmlget(self.getdata("lock.background")))
         else:
-            self._background.setProperty('source', files.input_qml(self.getdata("lock.background")))
-
-
-class Shells:
-    def __init__(self, ports):
-        super(Shells, self).__init__()
-
-        
-
-class MenuApplications:
-
-    def __init__(self, ports):
-        super(MenuApplications, self).__init__()
-
-        
+            self._background.setProperty('source', files.input_qml(self.getdata("lock.background")))        
 
 class Desktop (MainApp):
+    AUDIOS = ''
+    DESKTOP = ''
+    DOCUMENTS = ''
+    DOWNLOADS = ''
+    PICTURES = ''
+    PROJECTS = ''
+    SAMPLES = ''
+    VIDEOS = ''
+    
     def shutdown_ (self):
         subprocess.call(['poweroff'])
 
@@ -584,29 +592,11 @@ class Desktop (MainApp):
     def logout_(self):
         self.close()
         
-        try:
-            self.pwduser()
-            files.remove ('.logo')
-        except:
-            pass
-
-        # Remove all tmp
-        files.removedirs('/tmp')
-        files.mkdir('/tmp')
-
-        # Remove all ids
-        app.endall()
-
-        # Remove all switchs
-        process.endall()
+        System ("kma")
 
         # Logout
         files.create ('/proc/info/pause')
-        System ("/vmabr gui-login")
-
-    def switchuser_(self):
-        files.create ('/proc/info/pause')
-        System("/vmabr gui-login")
+        subprocess.call([sys.executable,'vmabr.pyc','gui-login'])
 
     def lock_(self):
         self.lock = Lock([self.Backend,self])
@@ -692,6 +682,21 @@ class Desktop (MainApp):
                 model.appendRow(it)
         return model
 
+    def create_model5(self):
+        #model = QtGui.QStandardItemModel()
+        #roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
+        #model.setItemRoleNames(roles)
+
+        lista = subprocess.check_output ("wmctrl -l | awk '{print $4}'",shell=True).decode ('utf-8').split('\n')
+        lista.pop(0)
+
+        if '' in lista:
+            lista.remove('')
+
+        
+        listb = files.list ('/proc/id')
+        #return model
+
     def getdata (self,name):
         try:
             x = control.read_record(name,f'/etc/users/{self.username}')
@@ -715,6 +720,11 @@ class Desktop (MainApp):
         if not files.isfile('/proc/info/sig'):
             files.create('/proc/info/sig')
 
+        if files.readall('/proc/info/sig')=='apps':
+            files.create('/proc/info/sig')
+            self.modelAllApplications = self.create_model4('/usr/share/applications')
+            self.rootContext().setContextProperty('EntryAppApplications', self.modelAllApplications)
+
         if files.readall('/proc/info/sig')=='sleep':
             files.create('/proc/info/sig')
             self.sleep_()
@@ -735,10 +745,6 @@ class Desktop (MainApp):
             files.create('/proc/info/sig')
             self.logout_()
 
-        elif files.readall('/proc/info/sig')=='switchuser':
-            files.create('/proc/info/sig')
-            self.switchuser_()
-
         elif files.readall('/proc/info/sig')=='username':
             if self.getdata("fullname")=='':
                 self._account.setProperty('title',self.username)
@@ -755,56 +761,117 @@ class Desktop (MainApp):
                 pass
 
         elif files.readall('/proc/info/sig')=='dock':
-            if self.getdata ('dock')=='bottom':
-                self._toolbar.setProperty('visible',True)
+            if self.getdata  ('dock')=='bottom':
+                self._toolbar.setProperty ('visible',True)
                 self._toolbar2.setProperty('visible',False)
                 self._toolbar3.setProperty('visible',False)
                 self._toolbar4.setProperty('visible',False)
                 self._toolbar5.setProperty('visible',False)
+                self._toolbar6.setProperty('visible',False)
+                self._toolbar7.setProperty('visible',False)
+                self._toolbar8.setProperty('visible',False)
                 self._btnMenu = self.findChild ('btnMenu')
                 self._btnMenu.clicked.connect (self.menuApps_)
                 self._menuApps = self.findChild ('menuApps')
+                self.menuApps_anim = self.findChild('menuApps_anim')
 
             elif self.getdata ('dock')=='top':
-                self._toolbar.setProperty('visible',False)
+                self._toolbar.setProperty ('visible',False)
                 self._toolbar2.setProperty('visible',True)
                 self._toolbar3.setProperty('visible',False)
-                self._toolbar5.setProperty('visible',False)
                 self._toolbar4.setProperty('visible',False)
                 self._toolbar5.setProperty('visible',False)
+                self._toolbar6.setProperty('visible',False)
+                self._toolbar7.setProperty('visible',False)
+                self._toolbar8.setProperty('visible',False)
                 self._btnMenu = self.findChild ('btnMenu2')
                 self._btnMenu.clicked.connect (self.menuApps_)
                 self._menuApps = self.findChild ('menuApps2')
+                self.menuApps_anim = self.findChild('menuApps2_anim')
 
-            elif self.getdata ('dock')=='left':
-                self._toolbar.setProperty('visible',False)
+            elif self.getdata  ('dock')=='left':
+                self._toolbar.setProperty ('visible',False)
                 self._toolbar2.setProperty('visible',False)
                 self._toolbar3.setProperty('visible',True)
                 self._toolbar4.setProperty('visible',False)
-                self._btnMenu = self.findChild ('btnMenu3')
                 self._toolbar5.setProperty('visible',False)
+                self._toolbar6.setProperty('visible',False)
+                self._toolbar7.setProperty('visible',False)
+                self._toolbar8.setProperty('visible',False)
+                self._btnMenu = self.findChild ('btnMenu3')
                 self._btnMenu.clicked.connect (self.menuApps_)
                 self._menuApps = self.findChild ('menuApps3')
+                self.menuApps_anim = self.findChild('menuApps3_anim')
 
-            elif self.getdata ('dock')=='right':
-                self._toolbar.setProperty('visible',False)
+            elif self.getdata  ('dock')=='right':
+                self._toolbar.setProperty ('visible',False)
                 self._toolbar2.setProperty('visible',False)
                 self._toolbar3.setProperty('visible',False)
                 self._toolbar4.setProperty('visible',True)
                 self._toolbar5.setProperty('visible',False)
+                self._toolbar6.setProperty('visible',False)
+                self._toolbar7.setProperty('visible',False)
+                self._toolbar8.setProperty('visible',False)
                 self._btnMenu = self.findChild ('btnMenu4')
                 self._btnMenu.clicked.connect (self.menuApps_)
                 self._menuApps = self.findChild ('menuApps4')
+                self.menuApps_anim = self.findChild('menuApps4_anim')
 
-            elif self.getdata ('dock')=='windows':
-                self._toolbar.setProperty('visible',False)
+            elif self.getdata  ('dock')=='windows' or self.getdata  ('dock')=='windows-bottom':
+                self._toolbar.setProperty ('visible',False)
                 self._toolbar2.setProperty('visible',False)
                 self._toolbar3.setProperty('visible',False)
                 self._toolbar4.setProperty('visible',False)
                 self._toolbar5.setProperty('visible',True)
+                self._toolbar6.setProperty('visible',False)
+                self._toolbar7.setProperty('visible',False)
+                self._toolbar8.setProperty('visible',False)
                 self._btnMenu = self.findChild ('btnMenu5')
                 self._btnMenu.clicked.connect (self.menuApps_)
                 self._menuApps = self.findChild ('menuApps')
+                self.menuApps_anim = self.findChild('menuApps_anim')
+
+            elif self.getdata ('dock')=='windows-top':
+                self._toolbar.setProperty ('visible',False)
+                self._toolbar2.setProperty('visible',False)
+                self._toolbar3.setProperty('visible',False)
+                self._toolbar4.setProperty('visible',False)
+                self._toolbar5.setProperty('visible',False)
+                self._toolbar6.setProperty('visible',True)
+                self._toolbar7.setProperty('visible',False)
+                self._toolbar8.setProperty('visible',False)
+                self._btnMenu = self.findChild ('btnMenu6')
+                self._btnMenu.clicked.connect (self.menuApps_)
+                self._menuApps = self.findChild ('menuApps2')
+                self.menuApps_anim = self.findChild('menuApps2_anim')
+
+            elif self.getdata ('dock')=='windows-left':
+                self._toolbar.setProperty ('visible',False)
+                self._toolbar2.setProperty('visible',False)
+                self._toolbar3.setProperty('visible',False)
+                self._toolbar4.setProperty('visible',False)
+                self._toolbar5.setProperty('visible',False)
+                self._toolbar6.setProperty('visible',False)
+                self._toolbar7.setProperty('visible',True)
+                self._toolbar8.setProperty('visible',False)
+                self._btnMenu = self.findChild ('btnMenu7')
+                self._btnMenu.clicked.connect (self.menuApps_)
+                self._menuApps = self.findChild ('menuApps3')
+                self.menuApps_anim = self.findChild('menuApps3_anim')
+
+            elif self.getdata ('dock')=='windows-right':
+                self._toolbar.setProperty ('visible',False)
+                self._toolbar2.setProperty('visible',False)
+                self._toolbar3.setProperty('visible',False)
+                self._toolbar4.setProperty('visible',False)
+                self._toolbar5.setProperty('visible',False)
+                self._toolbar6.setProperty('visible',False)
+                self._toolbar7.setProperty('visible',False)
+                self._toolbar8.setProperty('visible',True)
+                self._btnMenu = self.findChild ('btnMenu8')
+                self._btnMenu.clicked.connect (self.menuApps_)
+                self._menuApps = self.findChild ('menuApps4')
+                self.menuApps_anim = self.findChild('menuApps4_anim')
 
     def loop (self):
         # Applications starts in background
@@ -812,8 +879,11 @@ class Desktop (MainApp):
             self._menuApps.setProperty('visible', False)
             self.menuClicked = False
             
+            if files.isfile ('/proc/info/ext'): files.remove ('/proc/info/ext')
+
+            System ('rma')
+
             app.start(self._background_app.property('text').replace('.desk',''),'')
-            
 
         # Check signals #
         if not files.isfile('/proc/info/pause'):
@@ -827,7 +897,17 @@ class Desktop (MainApp):
         self._keyless.setProperty('text','')
 
         self._background_app.setProperty('text','')
-        QTimer.singleShot(10,self.loop)
+
+        # scrot
+
+        try:
+            subprocess.call(f'mv /root/*scrot* /stor/{self.PICTURES}',shell=True)
+        except:
+            pass
+
+        self.addFileModel('/root/Desktop')
+
+        QTimer.singleShot(200,self.loop)
 
     def startup (self):
         # Startup applications
@@ -842,15 +922,11 @@ class Desktop (MainApp):
         try:
             if self.username=='guest':
                 f = open('/etc/bash.bashrc','w')
-                f.write('''cd /stor
-python3 vmabr.pyc user guest
-exit''')
+                f.write(f'cd /stor\npython3 vmabr.pyc user guest\nexit')
                 f.close()
             else:
                 f = open('/etc/bash.bashrc','w')
-                f.write(f'''cd /stor
-python3 vmabr.pyc user {self.username} {self.password}
-exit''')
+                f.write(f'cd /stor\npython3 vmabr.pyc user {self.username} {self.password}\nexit')
                 f.close()
         except:
             pass
@@ -871,17 +947,40 @@ exit''')
                 except:
                     pass
 
+        if self.username == 'root':
+            self.AUDIOS = '/root/Audios'
+            self.DESKTOP = '/root/Desktop'
+            self.DOCUMENTS = '/root/Documents'
+            self.DOWNLOADS = '/root/Downloads'
+            self.PICTURES = '/root/Pictures'
+            self.PROJECTS = '/root/Projects'
+            self.SAMPLES = '/root/Samples'
+            self.VIDEOS = '/root/Videos'
+        else:
+            self.AUDIOS = f'/desk/{self.username}/Audios'
+            self.DESKTOP = f'/desk/{self.username}/Desktop'
+            self.DOCUMENTS = f'/desk/{self.username}/Documents'
+            self.DOWNLOADS = f'/desk/{self.username}/Downloads'
+            self.PICTURES = f'/desk/{self.username}/Pictures'
+            self.PROJECTS = f'/desk/{self.username}/Projects'
+            self.SAMPLES = f'/desk/{self.username}/Samples'
+            self.VIDEOS = f'/desk/{self.username}/Videos'
+
     def homelogo (self):
-        files.write ('.logo','@icon/breeze-homes')
+        files.write ('.logo',ql('homes'))
 
     menuClicked = False
 
     def menuApps_(self):
+        self.btnMenu_anim.start()
         if self.menuClicked:
             self._menuApps.setProperty('visible',False)
+            self.msaDesktop.setProperty('visible',True)
             self.menuClicked = False
         else:
+            self.menuApps_anim.start()
             self._menuApps.setProperty('visible', True)
+            self.msaDesktop.setProperty('visible',False)
             self.menuClicked = True
 
     def account_setting_(self):
@@ -890,6 +989,7 @@ exit''')
     def __init__(self,ports):
         super(Desktop, self).__init__()
 
+        self.addFileModel('/usr/share/samples/deskdirs')
         
         self.Backend = ports[0]
         self.username = ports[1]
@@ -913,6 +1013,8 @@ exit''')
         self.modelLang = self.create_model2()
         self.rootContext().setContextProperty("Lang", self.modelLang)
 
+        self.create_model5()
+
         self.modelAllApplications = self.create_model4('/usr/share/applications')
         self.rootContext().setContextProperty('EntryAppApplications', self.modelAllApplications)
 
@@ -922,9 +1024,24 @@ exit''')
         self.setProperty('height',int(getdata("height")))
         self.setProperty('width', int(getdata("width")))
         self.setProperty('visibility', getdata("visibility"))
-        self.setProperty('font', QFont(getdata('font'), int(getdata('fontsize'))))
         self.setProperty('title','Pyabr OS')
         self._submenu = self.findChild('submenu')
+        self.imgMenu = self.findChild('imgMenu')
+        self.imgMenu.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu2 = self.findChild('imgMenu2')
+        self.imgMenu2.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu3 = self.findChild('imgMenu3')
+        self.imgMenu3.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu4 = self.findChild('imgMenu4')
+        self.imgMenu4.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu5 = self.findChild('imgMenu5')
+        self.imgMenu5.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu6 = self.findChild('imgMenu6')
+        self.imgMenu6.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu7 = self.findChild('imgMenu7')
+        self.imgMenu7.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu8 = self.findChild('imgMenu8')
+        self.imgMenu8.setProperty('source',res.qmlget(ql('pyabr')))
         self._submenu.setProperty('title',res.get('@string/etcetra'))
         self._shutdown = self.findChild( 'shutdown')
         self._shutdown.triggered.connect(self.shutdown_)
@@ -938,9 +1055,14 @@ exit''')
         self._logout = self.findChild( 'logout')
         self._logout.triggered.connect(self.logout_)
         self._logout.setProperty('text',res.get('@string/logout'))
-        self._switchuser = self.findChild( 'switchuser')
-        self._switchuser.triggered.connect(self.switchuser_)
-        self._switchuser.setProperty('text',res.get('@string/switchuser'))
+        self.appc = self.findChild( 'appc')
+        self.appc.setProperty('text',res.get('@string/appearance'))
+        self.displayc = self.findChild( 'displayc')
+        self.displayc.setProperty('text',res.get('@string/display'))
+        self.rmac = self.findChild( 'rmac')
+        self.rmac.setProperty('text',res.get('@string/rma'))
+        self.runc = self.findChild( 'runc')
+        self.runc.setProperty('text',res.get('@string/runner'))
         self._applications = self.findChild( 'applications')
         self._applications.setProperty('title',res.get('@string/applications'))
         self._lock = self.findChild('lock')
@@ -1003,6 +1125,9 @@ exit''')
         self._toolbar3 = self.findChild('toolbar3')
         self._toolbar4 = self.findChild('toolbar4')
         self._toolbar5 = self.findChild('toolbar5')
+        self._toolbar6 = self.findChild('toolbar6')
+        self._toolbar7 = self.findChild('toolbar7')
+        self._toolbar8 = self.findChild('toolbar8')
         self.toolbar_height = self._toolbar.property('height')
         self.toolbar_height2 = self._toolbar2.property('height')
         self.toolbar_width3 = self._toolbar3.property('width')
@@ -1011,51 +1136,129 @@ exit''')
         self._toolbar2.setProperty('width',self.pins*self.toolbar_height2)
         self._toolbar3.setProperty('height',self.pins*self.toolbar_width3)
         self._toolbar4.setProperty('height',self.pins*self.toolbar_width4)
+        self.msaDesktop = self.findChild('msaDesktop')
         self._keyless = self.findChild('keyless')
+        
 
-        if res.getdata ('dock')=='bottom':
+        if self.getdata  ('dock')=='bottom':
+            self._toolbar.setProperty ('visible',True)
             self._toolbar2.setProperty('visible',False)
             self._toolbar3.setProperty('visible',False)
             self._toolbar4.setProperty('visible',False)
             self._toolbar5.setProperty('visible',False)
+            self._toolbar6.setProperty('visible',False)
+            self._toolbar7.setProperty('visible',False)
+            self._toolbar8.setProperty('visible',False)
             self._btnMenu = self.findChild ('btnMenu')
+            self.btnMenu_anim = self.findChild ('btnMenu_anim')
             self._btnMenu.clicked.connect (self.menuApps_)
             self._menuApps = self.findChild ('menuApps')
+            self.menuApps_anim = self.findChild('menuApps_anim')
 
-        elif res.getdata ('dock')=='top':
-            self._toolbar.setProperty('visible',False)
+        elif self.getdata ('dock')=='top':
+            self._toolbar.setProperty ('visible',False)
+            self._toolbar2.setProperty('visible',True)
             self._toolbar3.setProperty('visible',False)
-            self._toolbar5.setProperty('visible',False)
             self._toolbar4.setProperty('visible',False)
+            self._toolbar5.setProperty('visible',False)
+            self._toolbar6.setProperty('visible',False)
+            self._toolbar7.setProperty('visible',False)
+            self._toolbar8.setProperty('visible',False)
             self._btnMenu = self.findChild ('btnMenu2')
+            self.btnMenu_anim = self.findChild ('btnMenu2_anim')
             self._btnMenu.clicked.connect (self.menuApps_)
             self._menuApps = self.findChild ('menuApps2')
+            self.menuApps_anim = self.findChild('menuApps2_anim')
 
-        elif res.getdata ('dock')=='left':
-            self._toolbar.setProperty('visible',False)
+        elif self.getdata  ('dock')=='left':
+            self._toolbar.setProperty ('visible',False)
             self._toolbar2.setProperty('visible',False)
+            self._toolbar3.setProperty('visible',True)
             self._toolbar4.setProperty('visible',False)
-            self._btnMenu = self.findChild ('btnMenu3')
             self._toolbar5.setProperty('visible',False)
+            self._toolbar6.setProperty('visible',False)
+            self._toolbar7.setProperty('visible',False)
+            self._toolbar8.setProperty('visible',False)
+            self._btnMenu = self.findChild ('btnMenu3')
+            self.btnMenu_anim = self.findChild ('btnMenu3_anim')
             self._btnMenu.clicked.connect (self.menuApps_)
             self._menuApps = self.findChild ('menuApps3')
+            self.menuApps_anim = self.findChild('menuApps3_anim')
 
-        elif res.getdata ('dock')=='right':
-            self._toolbar.setProperty('visible',False)
+        elif self.getdata  ('dock')=='right':
+            self._toolbar.setProperty ('visible',False)
             self._toolbar2.setProperty('visible',False)
             self._toolbar3.setProperty('visible',False)
+            self._toolbar4.setProperty('visible',True)
+            self._toolbar5.setProperty('visible',False)
+            self._toolbar6.setProperty('visible',False)
+            self._toolbar7.setProperty('visible',False)
+            self._toolbar8.setProperty('visible',False)
             self._btnMenu = self.findChild ('btnMenu4')
+            self.btnMenu_anim = self.findChild ('btnMenu4_anim')
             self._btnMenu.clicked.connect (self.menuApps_)
             self._menuApps = self.findChild ('menuApps4')
+            self.menuApps_anim = self.findChild('menuApps4_anim')
 
-        elif res.getdata ('dock')=='windows':
-            self._toolbar.setProperty('visible',False)
+        elif self.getdata  ('dock')=='windows' or self.getdata  ('dock')=='windows-bottom':
+            self._toolbar.setProperty ('visible',False)
             self._toolbar2.setProperty('visible',False)
             self._toolbar3.setProperty('visible',False)
             self._toolbar4.setProperty('visible',False)
+            self._toolbar5.setProperty('visible',True)
+            self._toolbar6.setProperty('visible',False)
+            self._toolbar7.setProperty('visible',False)
+            self._toolbar8.setProperty('visible',False)
             self._btnMenu = self.findChild ('btnMenu5')
+            self.btnMenu_anim = self.findChild ('btnMenu5_anim')
             self._btnMenu.clicked.connect (self.menuApps_)
             self._menuApps = self.findChild ('menuApps')
+            self.menuApps_anim = self.findChild('menuApps_anim')
+
+        elif self.getdata ('dock')=='windows-top':
+            self._toolbar.setProperty ('visible',False)
+            self._toolbar2.setProperty('visible',False)
+            self._toolbar3.setProperty('visible',False)
+            self._toolbar4.setProperty('visible',False)
+            self._toolbar5.setProperty('visible',False)
+            self._toolbar6.setProperty('visible',True)
+            self._toolbar7.setProperty('visible',False)
+            self._toolbar8.setProperty('visible',False)
+            self._btnMenu = self.findChild ('btnMenu6')
+            self.btnMenu_anim = self.findChild ('btnMenu6_anim')
+            self._btnMenu.clicked.connect (self.menuApps_)
+            self._menuApps = self.findChild ('menuApps2')
+            self.menuApps_anim = self.findChild('menuApps2_anim')
+
+        elif self.getdata ('dock')=='windows-left':
+            self._toolbar.setProperty ('visible',False)
+            self._toolbar2.setProperty('visible',False)
+            self._toolbar3.setProperty('visible',False)
+            self._toolbar4.setProperty('visible',False)
+            self._toolbar5.setProperty('visible',False)
+            self._toolbar6.setProperty('visible',False)
+            self._toolbar7.setProperty('visible',True)
+            self._toolbar8.setProperty('visible',False)
+            self._btnMenu = self.findChild ('btnMenu7')
+            self.btnMenu_anim = self.findChild ('btnMenu7_anim')
+            self._btnMenu.clicked.connect (self.menuApps_)
+            self._menuApps = self.findChild ('menuApps3')
+            self.menuApps_anim = self.findChild('menuApps3_anim')
+
+        elif self.getdata ('dock')=='windows-right':
+            self._toolbar.setProperty ('visible',False)
+            self._toolbar2.setProperty('visible',False)
+            self._toolbar3.setProperty('visible',False)
+            self._toolbar4.setProperty('visible',False)
+            self._toolbar5.setProperty('visible',False)
+            self._toolbar6.setProperty('visible',False)
+            self._toolbar7.setProperty('visible',False)
+            self._toolbar8.setProperty('visible',True)
+            self._btnMenu = self.findChild ('btnMenu8')
+            self.btnMenu_anim = self.findChild ('btnMenu8_anim')
+            self._btnMenu.clicked.connect (self.menuApps_)
+            self._menuApps = self.findChild ('menuApps4')
+            self.menuApps_anim = self.findChild('menuApps4_anim')
 
         # check cats
         self.bashrc()

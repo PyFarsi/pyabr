@@ -1,0 +1,15 @@
+name: ir.pyabr.calendar
+name[en]: Calendar
+name[fa]: تقویم
+name[ar]: التقويم
+name[tr]: takvim
+copyright: (c) 2021 Mani Jamali
+license: GNU GPL v3.0
+unpack: /
+version: 2.0.2
+description: Simple Calendar
+compile: Yes
+entry: calendar_app
+logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.calendar.svg
+build: 1400-09-12
+mirror: https://mirror.pyabr.ir/zayanderoad/

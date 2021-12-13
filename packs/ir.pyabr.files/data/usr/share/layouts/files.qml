@@ -1,15 +1,19 @@
-import QtQuick
-import QtQuick.Window
-import QtQuick.Controls
-import QtQuick.Layouts
-import QtQuick.Controls.Material
+import QtQuick 2.0
+import QtQuick.Window 2.3
+import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.0
+import QtQuick.Controls 1.4
+import QtQuick.Controls 1.2
+import QtQuick.Controls 2.3
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
     id: file
     visible: true
     color: "white"
-    width: 900
-    height: 700
+    width: 1000
+    height: 720
 
     Text {
         visible: false
@@ -77,6 +81,23 @@ ApplicationWindow {
                     act.text = 'connectcloud'
                 }
             }
+            ToolButton {
+                anchors.leftMargin: 20
+                anchors.rightMargin: 20
+                icon.source: 'file:///stor/usr/share/icons/breeze-details.svg'
+                icon.color: "white"
+                onClicked: {
+                    act.text = 'details'
+                }
+            }
+        }
+        Text {
+            color: "white"
+            id: title
+            objectName: "title"
+            font.family: "IRANSans"
+            font.pixelSize: 18
+            anchors.centerIn: parent
         }
     }
 
@@ -89,26 +110,68 @@ ApplicationWindow {
                                 objectName: "filex"
                                 enabled: false
                             }
-                            Action { 
-                                text: "New File" 
-                                objectName: "newfile"
-                                id: newfile
-                                icon.source: "file:///stor/usr/share/icons/breeze-new.svg"
-                                onTriggered: {
-                                    act.text = "newfile"
+                            Menu {
+                                title: "File"
+                                Action { 
+                                    text: "New File" 
+                                    objectName: "newfile"
+                                    id: newfile
+                                    icon.source: "file:///stor/usr/share/icons/breeze-new.svg"
+                                    onTriggered: {
+                                        act.text = "newfile"
+                                    }
+                                }
+                                Action { 
+                                    text: "New Folder" 
+                                    objectName: "newfolder"
+                                    id: newfolder
+                                    icon.source: "file:///stor/usr/share/icons/breeze-newfolder.svg"
+                                    onTriggered: {
+                                        act.text = "newfolder"
+                                    }
+                                }
+                                Action { 
+                                    text: "Open" 
+                                    objectName: "open"
+                                    id: open
+                                    icon.source: "file:///stor/usr/share/icons/breeze-open.svg"
+                                    onTriggered: {
+                                        act.text = "open"
+                                    }
+                                }
+                                Action { 
+                                    text: "Open with..." 
+                                    objectName: "openwith"
+                                    id: openwith
+                                    icon.source: "file:///stor/usr/share/icons/breeze-open.svg"
+                                    onTriggered: {
+                                        act.text = "openwith"
+                                    }
+                                }
+                                Action { 
+                                    text: "Execute" 
+                                    objectName: "execute"
+                                    id: execute
+                                    icon.source: "file:///stor/usr/share/icons/breeze-execute.svg"
+                                    onTriggered: {
+                                        act.text = "execute"
+                                    }
+                                }
+                                Action { 
+                                    text: "Add to Desktop" 
+                                    objectName: "shortcut"
+                                    id: shortcut
+                                    icon.source: "file:///stor/usr/share/icons/breeze-install.svg"
+                                    onTriggered: {
+                                        act.text = "shortcut"
+                                    }
                                 }
                             }
-                            Action { 
-                                text: "New Folder" 
-                                objectName: "newfolder"
-                                id: newfolder
-                                icon.source: "file:///stor/usr/share/icons/breeze-newfolder.svg"
-                                onTriggered: {
-                                    act.text = "newfolder"
-                                }
-                            }
+                           
                             Menu {
                                 title: "Cloud Options"
+                                objectName: "cloudops"
+                                id: cloudops
                                 Action { 
                                     text: "Upload" 
                                     objectName: "upcloud"
@@ -147,76 +210,114 @@ ApplicationWindow {
                                     }
                                 }
                             }
-                            Action { 
-                                text: "Open" 
-                                objectName: "open"
-                                id: open
-                                icon.source: "file:///stor/usr/share/icons/breeze-open.svg"
-                                onTriggered: {
-                                    act.text = "open"
+                            Menu {
+                                title: "Edit"
+                                    Action { 
+                                    text: "Cut" 
+                                    objectName: "cut"
+                                    id: cut
+                                    icon.source: "file:///stor/usr/share/icons/breeze-cut.svg"
+                                    onTriggered: {
+                                        act.text = "cut"
+                                    }
+                                }
+                                Action { 
+                                    text: "Copy" 
+                                    objectName: "copy"
+                                    id: copy
+                                    icon.source: "file:///stor/usr/share/icons/breeze-copy.svg"
+                                    onTriggered: {
+                                        act.text = "copy"
+                                    }
+                                }
+                                Action { 
+                                    text: "Paste" 
+                                    objectName: "paste"
+                                    id: paste
+                                    icon.source: "file:///stor/usr/share/icons/breeze-paste.svg"
+                                    onTriggered: {
+                                        act.text = "paste"
+                                    }
+                                }
+                                Action { 
+                                    text: "Rename" 
+                                    objectName: "rename"
+                                    id: rename
+                                    icon.source: "file:///stor/usr/share/icons/breeze-rename.svg"
+                                    onTriggered: {
+                                        act.text = "rename"
+                                    }
+                                }
+                                Action { 
+                                    text: "Delete" 
+                                    objectName: "delete"
+                                    id: remove
+                                    icon.source: "file:///stor/usr/share/icons/breeze-delete.svg"
+                                    onTriggered: {
+                                        act.text = "delete"
+                                    }
                                 }
                             }
-                            Action { 
-                                text: "Open with..." 
-                                objectName: "openwith"
-                                id: openwith
-                                icon.source: "file:///stor/usr/share/icons/breeze-open.svg"
-                                onTriggered: {
-                                    act.text = "openwith"
+                            
+                            Menu {
+                                title: "Compress to"
+                                id: compressto
+                                objectName: "compressto"
+
+                                Action {
+                                    text: ".zip archive"
+                                    id: zipc
+                                    objectName: "zipc"
+                                    icon.source: "file:///stor/usr/share/icons/breeze-compress.svg"
+                                    onTriggered: {
+                                        act.text = "zipc"
+                                    }
                                 }
-                            }
-                            Action { 
-                                text: "Execute" 
-                                objectName: "execute"
-                                id: execute
-                                icon.source: "file:///stor/usr/share/icons/breeze-execute.svg"
-                                onTriggered: {
-                                    act.text = "execute"
+                                Action {
+                                    text: ".tar archive"
+                                    id: tarc
+                                    objectName: "tarc"
+                                    icon.source: "file:///stor/usr/share/icons/breeze-compress.svg"
+                                    onTriggered: {
+                                        act.text = "tarc"
+                                    }
                                 }
-                            }
-                            Action { 
-                                text: "Cut" 
-                                objectName: "cut"
-                                id: cut
-                                icon.source: "file:///stor/usr/share/icons/breeze-cut.svg"
-                                onTriggered: {
-                                    act.text = "cut"
+                                Action {
+                                    text: ".tar.bz2 archive"
+                                    id: bzc
+                                    objectName: "bzc"
+                                    icon.source: "file:///stor/usr/share/icons/breeze-compress.svg"
+                                    onTriggered: {
+                                        act.text = "bzc"
+                                    }
                                 }
-                            }
-                            Action { 
-                                text: "Copy" 
-                                objectName: "copy"
-                                id: copy
-                                icon.source: "file:///stor/usr/share/icons/breeze-copy.svg"
-                                onTriggered: {
-                                    act.text = "copy"
+                                Action {
+                                    text: ".tar.xz archive"
+                                    id: xzc
+                                    objectName: "xzc"
+                                    icon.source: "file:///stor/usr/share/icons/breeze-compress.svg"
+                                    onTriggered: {
+                                        act.text = "xzc"
+                                    }
                                 }
-                            }
-                            Action { 
-                                text: "Paste" 
-                                objectName: "paste"
-                                id: paste
-                                icon.source: "file:///stor/usr/share/icons/breeze-paste.svg"
-                                onTriggered: {
-                                    act.text = "paste"
+                                Action {
+                                    text: ".tar.gz archive"
+                                    id: gzc
+                                    objectName: "gzc"
+                                    icon.source: "file:///stor/usr/share/icons/breeze-compress.svg"
+                                    onTriggered: {
+                                        act.text = "gzc"
+                                    }
                                 }
+
                             }
-                            Action { 
-                                text: "Rename" 
-                                objectName: "rename"
-                                id: rename
-                                icon.source: "file:///stor/usr/share/icons/breeze-rename.svg"
+                            Action {
+                                text: "Extract"
+                                icon.source: "file:///stor/usr/share/icons/breeze-extract.svg"
+                                id: extract
+                                objectName: "extract"
                                 onTriggered: {
-                                    act.text = "rename"
-                                }
-                            }
-                            Action { 
-                                text: "Delete" 
-                                objectName: "delete"
-                                id: remove
-                                icon.source: "file:///stor/usr/share/icons/breeze-delete.svg"
-                                onTriggered: {
-                                    act.text = "delete"
+                                    act.text = 'extract'
                                 }
                             }
                             Action { 
@@ -234,8 +335,93 @@ ApplicationWindow {
         width: parent.width
         height: parent.height-80
         anchors.topMargin: 10
+        objectName: "Details"
         anchors.top: toolbar.bottom
         clip: true
+        visible: false
+        id: scroll2
+
+        Column {
+            width: file.width
+            height: file.height-70
+            spacing: 2
+
+            GridView {
+                model: FileModel
+                cellWidth: 128; cellHeight: 150
+                highlight: highlight
+                width: parent.width
+                height: parent.height
+                highlightFollowsCurrentItem: false
+                focus: true
+
+                delegate: Column {
+                    Image { 
+                        source: model.logo
+                        width: 128
+                        height: 128
+                        NumberAnimation on opacity {
+                                id: file_anim2
+                                from: 0
+                                to: 1
+                                duration: 100
+                        }
+                        sourceSize: Qt.size( parent.width, parent.height )
+                         anchors.horizontalCenter: parent.horizontalCenter
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton | Qt.RightButton
+                            onDoubleClicked: {
+                                file_anim2.start();
+                                fsel.text = model.path
+                            }
+                            onClicked: {
+                                file_anim2.start();
+                                fsela.text = model.path;
+
+                                if (mouse.button === Qt.RightButton)
+                                    contextMenu.popup()
+
+                            }
+
+                            onPressAndHold: {
+                                file_anim2.start();
+                                if (mouse.source === Qt.MouseEventNotSynthesized)
+                                    contextMenu.popup()
+                            }
+                        }   
+                    }
+                    Text { 
+                        text: model.name
+                         anchors.horizontalCenter: parent.horizontalCenter
+                          font.family: "IRANSans"
+    
+                    }
+                }
+            }
+        }
+    }
+
+    Component {
+        id: highlight
+        Rectangle {
+            width: view.cellWidth; height: view.cellHeight
+            color: "lightsteelblue"; radius: 5
+            x: view.currentItem.x
+            y: view.currentItem.y
+            Behavior on x { SpringAnimation { spring: 3; damping: 0.2 } }
+            Behavior on y { SpringAnimation { spring: 3; damping: 0.2 } }
+        }
+    }
+
+    ScrollView {
+        width: parent.width
+        height: parent.height-80
+        anchors.topMargin: 10
+        objectName: "ListView"
+        anchors.top: toolbar.bottom
+        clip: true
+        visible: true
         id: scroll
         Column {
             width: file.width
@@ -254,10 +440,12 @@ ApplicationWindow {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
                         onDoubleClicked: {
-                            fsel.text = model.path
+                            fsel.text = model.path;
+                            file_anim.start();
                         }
                         onClicked: {
-                            fsela.text = model.path
+                            fsela.text = model.path;
+                            file_anim.start();
 
                             if (mouse.button === Qt.RightButton)
                                 contextMenu.popup()
@@ -265,6 +453,7 @@ ApplicationWindow {
                         }
 
                         onPressAndHold: {
+                            file_anim.start();
                             if (mouse.source === Qt.MouseEventNotSynthesized)
                                 contextMenu.popup()
                         }
@@ -279,6 +468,12 @@ ApplicationWindow {
                             sourceSize: Qt.size( parent.width, parent.height )
                             height: parent.height
                             id: imagex
+                            NumberAnimation on opacity {
+                                id: file_anim
+                                from: 0
+                                to: 1
+                                duration: 100
+                            }
                     }
 
                     Text {

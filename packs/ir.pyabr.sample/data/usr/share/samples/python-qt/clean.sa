@@ -1,2 +1,2 @@
 add config
-rm $project_pack
+rm :project_pack

@@ -1,5 +1,5 @@
 name: عربی
-keyless: setxkbmap ar
+keyless: ar
 keyless.enable: No
 0: ۰
 1: ۱
@@ -135,3 +135,56 @@ access_guest: دخول الضيف
 location: موقع
 ownership: ملكية
 chat: دردشة
+datainstaller: مثبت البيانات
+need_restart: تثبيت {0} بحاجة إلى إعادة التشغيل ، هل تريد إعادة التشغيل؟
+connect: الاتصال
+e_cloud: اسم مضيف السحابة (اختياري)
+c_cloud: اتصل بـ سحاب
+connection_fail: فشل الاتصال
+connection_failmc: لا يمكن الاتصال بهذه السحابة
+unknown: مجهول
+folder: مجلد
+---: ممنوع الدخول
+rwx: يمكن عرض وتعديل وتنفيذ
+rw-: يمكن عرض وتعديل
+r--: يمكن العرض فقط
+-wx: تعديل وتنفيذ
+--x: نفذ فقط
+-w-: تعديل فقط
+always: دائما
+atonce: ذات مرة
+fonts: الخطوط
+sr: الأقراص الضوئية
+srp: محرك الأقراص الضوئية
+drive: قيادة
+disk: القرص
+part: تقسيم
+e_city: أدخل مدينتك الحالية (باللغة الإنجليزية)
+e_contact: أدخل اسم المستخدم للاتصال بك
+e_channel: اسم مضيف القناة (اختياري)
+c_channel: قم بالاتصال بالقناة
+e_send: ارسل رسالة
+n_connected: {0} غير متصل
+connected: {0} متصل
+connectedm: تم توصيل {0} بنجاح
+connect_to: اتصال بـ {0}
+connect_tom: هل تريد الاتصال بشبكة {0}؟
+fcopy: تنسيق ونسخ
+copydisk: نسخ
+format: صيغة
+formatm: هل تريد تهيئة هذا القرص / القسم؟
+e_mount: لا يمكن تركيبها
+e_mountm: لا يمكن تحميل محرك الأقراص هذا
+extract: استخراج
+cloud_o: خيارات السحابة
+compress: اضغط إلى
+upload: تحميل
+ziro: تحميل وزيرو
+sharelink: شارك هذا الرابط
+rma: استعاده التطبيقات
+bash: بش
+python: بایثون
+upstor: تطوير
+upstorum: بای ابر الخاص بك هو الإصدار الأحدث
+upstoru: حتى الآن
+upstort: ترقية الى

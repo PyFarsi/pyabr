@@ -58,7 +58,7 @@ class MainApp (MainApp):
             self.arch1.setProperty ('text',res.get('@string/arch')+":  ")
 
             self.host.setProperty ('text',files.readall('/proc/info/host'))
-            self.cs.setProperty ('text',files.readall('/proc/info/cs'))
+            self.cs.setProperty ('text',f"{files.readall('/proc/info/cs')} {files.readall('/proc/info/ver')} ({files.readall('/proc/info/cd')})")
             self.bl.setProperty ('text',files.readall('/proc/info/bl'))
             self.os.setProperty ('text',files.readall('/proc/info/os'))
             self.kname.setProperty ('text',files.readall('/proc/info/kname'))
@@ -78,7 +78,7 @@ class MainApp (MainApp):
             self.arch.setProperty ('text',res.get('@string/arch')+":  ")
 
             self.host1.setProperty ('text',files.readall('/proc/info/host'))
-            self.cs1.setProperty ('text',files.readall('/proc/info/cs'))
+            self.cs1.setProperty ('text',f"{files.readall('/proc/info/cs')} {files.readall('/proc/info/ver')} ({files.readall('/proc/info/cd')})")
             self.bl1.setProperty ('text',files.readall('/proc/info/bl'))
             self.os1.setProperty ('text',files.readall('/proc/info/os'))
             self.kname1.setProperty ('text',files.readall('/proc/info/kname'))
@@ -216,7 +216,7 @@ class MainApp (MainApp):
 
         if not self.wsel.property('text')=='':
             self.wselp = self.wsel.property('text')
-            self.x = Ask ('Connect to {0}'.replace('{0}',self.wselp),'Do you want to connect to {0} network?'.replace('{0}',self.wselp),self.wifi_connect_)
+            self.x = Ask (res.get('@string/connect_to').replace('{0}',self.wselp),res.get('@string/connect_tom').replace('{0}',self.wselp),self.wifi_connect_)
         self.wsel.setProperty('text','')
         self.fsel.setProperty ('text','')
         QTimer.singleShot (100,self.loop)
@@ -232,12 +232,12 @@ class MainApp (MainApp):
         status = control.read_list('/etc/network/status')[1]
 
         if status.startswith ('D'):
-            self.x = Text ('{0} Connected'.replace('{0}',self.wselp),'{0} successfully connected'.replace('{0}',self.wselp))
+            self.x = Text (res.get('@string/connected').replace('{0}',self.wselp),res.get('@string/connectedm').replace('{0}',self.wselp))
         else:
             QTimer.singleShot(100,self.enter_password_)
 
     def enter_password_(self):
-        self.x = Password ('Enter {0} password'.replace('{0}',self.wselp),self._enter_password_)
+        self.x = Password (res.get('@string/password_placeholder').replace('{0}',self.wselp),self._enter_password_)
 
     def _enter_password_ (self,password):
         status = subprocess.check_output(f'nmcli device wifi connect "{self.wselp}" password "{password}"', shell=True).decode()
@@ -250,11 +250,11 @@ class MainApp (MainApp):
         status = control.read_list('/etc/network/status')[1]
 
         if status.startswith('D'):
-            self.x = Text ('{0} Connected'.replace('{0}',self.wselp),'{0} successfully connected'.replace('{0}',self.wselp))
+            self.x = Text (res.get('@string/connected').replace('{0}',self.wselp),res.get('@string/connectedm').replace('{0}',self.wselp))
 
             files.write('/etc/network/init.sa',f'nmcli device wifi connect "{self.wselp}" password "{self.password}"')
         else:
-            self.x = Text ('{0} Not connected'.replace('{0}',self.wselp),'{0} not connected'.replace('{0}',self.wselp))
+            self.x = Text (res.get('@string/n_connected').replace('{0}',self.wselp),res.get('@string/n_connected').replace('{0}',self.wselp))
 
     desktop_bg = '/usr/share/backgrounds/breeze-next.png'
     lock_bg = '/usr/share/backgrounds/breeze-splash.jpg'
@@ -304,6 +304,8 @@ class MainApp (MainApp):
 
     def apply2_(self):
         currentIndex = self.cbDock.property('currentIndex')
+
+        control.remove_record ('dock',f'/etc/users/{self.username}')
         
         if currentIndex==0:
             control.write_record ('dock','bottom',f'/etc/users/{self.username}')
@@ -319,6 +321,15 @@ class MainApp (MainApp):
 
         elif currentIndex==4:
             control.write_record ('dock','windows',f'/etc/users/{self.username}')
+
+        elif currentIndex==5:
+            control.write_record ('dock','windows-top',f'/etc/users/{self.username}')
+
+        elif currentIndex==6:
+            control.write_record ('dock','windows-left',f'/etc/users/{self.username}')
+
+        elif currentIndex==7:
+            control.write_record ('dock','windows-right',f'/etc/users/{self.username}')
 
         app.signal ('dock')
 
@@ -346,7 +357,7 @@ class MainApp (MainApp):
             control.write_record(f'/desk/{self.leUsername.property("text")}',f"drwxr-x---/{self.leUsername.property('text')}",'/etc/permtab')
             control.write_record ('code',hashlib.sha3_512(self.lePassword.property('text').encode()).hexdigest(),f"/etc/users/{self.leUsername.property('text')}")
             control.write_record ('fullname',self.leFullName.property('text'),f"/etc/users/{self.leUsername.property('text')}")
-            control.write_record ('profile','@icon/breeze-users',f"/etc/users/{self.leUsername.property('text')}")
+            control.write_record ('profile',res.etc('controls','users'),f"/etc/users/{self.leUsername.property('text')}")
             if self.cbSudoers.property('checked'):
                 files.write ('/etc/sudoers',f"{self.leUsername.property('text')}\n")
 
@@ -356,7 +367,6 @@ class MainApp (MainApp):
             self.fsel.setProperty('text','users')
         else:
             self.apply2.setProperty('enabled',False)
-            #self.leUsername.setProperty('text','')
             self.title.setProperty('text',res.get('@string/exists_message').replace('{0}',self.leUsername.property('text')))
             QTimer.singleShot(3000,self.clean_)
 
@@ -375,7 +385,7 @@ class MainApp (MainApp):
         self.back_users.setProperty('visible',True)
         self.adduser.setProperty('visible',False)
 
-    profile_show = '@icon/breeze-users'
+    profile_show = res.etc('controls','users')
 
     def change_profile_img_(self):
         self.x = Select (self.change_profile_img__)
@@ -386,6 +396,7 @@ class MainApp (MainApp):
 
     def change_reso_(self):
         subprocess.call(['xrandr','-s',self.rsel.property('text')])
+        files.write ('/proc/info/randr',self.rsel.property('text'))
         self.fsel.setProperty('text','..')
 
     def savechanges_(self):
@@ -468,10 +479,15 @@ class MainApp (MainApp):
         self.lsel = self.findChild('lsel')
         self.controlview = self.findChild ('controlview')
         self.back = self.findChild('back')
-
+        self.logo = self.findChild ('logo')
+        self.logo.setProperty('source',res.qmlget(res.etc('controls','cloud')))
         self.sysinfo = self.findChild ('sysinfo')
         self.sysinfo_exec = self.findChild ('sysinfo_exec')
         self.sysinfo.setProperty('text',res.get('@string/sysinfo'))
+        self.info = self.findChild('info')
+        self.info.setProperty('source',res.qmlget(res.etc('controls','info')))
+        self.usersimg = self.findChild ('usersimg')
+        self.usersimg.setProperty('source',res.qmlget(res.etc('controls','users')))
         self.setProperty('text',res.get('@string/controls'))
         self.title = self.findChild('title')
         self.title.setProperty('text',res.get('@string/controls'))
@@ -481,6 +497,8 @@ class MainApp (MainApp):
         self.apper.setProperty('text',res.get('@string/appearance'))
 
         self.display = self.findChild ('display')
+        self.displayimg = self.findChild ('displayimg')
+        self.displayimg.setProperty('source',res.qmlget(res.etc('controls','display')))
         self.display.setProperty('text',res.get('@string/display'))
         self.display_exec = self.findChild ('display_exec')
 
@@ -507,9 +525,13 @@ class MainApp (MainApp):
         self.btnChange_enter.setProperty('text',res.get('@string/login'))
         self.btnChange_enter.clicked.connect (self.set_enter_bg)
         self.imgChange_desktop = self.findChild('imgChange_desktop')
+        self.imgChange_desktop.setProperty('source',res.qmlget(res.etc('controls','imgChange_desktop')))
         self.imgChange_lock = self.findChild('imgChange_lock')
+        self.imgChange_lock.setProperty('source',res.qmlget(res.etc('controls','imgChange_lock')))
         self.imgChange_unlock = self.findChild('imgChange_unlock')
+        self.imgChange_unlock.setProperty('source',res.qmlget(res.etc('controls','imgChange_unlock')))
         self.imgChange_enter = self.findChild('imgChange_enter')
+        self.imgChange_enter.setProperty('source',res.qmlget(res.etc('controls','imgChange_enter')))
         self.adduser = self.findChild('adduser')
         self.back_users = self.findChild('back_users')
         self.cbDock = self.findChild ('cbDock')
@@ -527,7 +549,8 @@ class MainApp (MainApp):
         self.leUsername.setProperty('placeholderText',res.get('@string/e_username'))
         self.lePassword = self.findChild('lePassword')
         self.lePassword.setProperty('placeholderText',res.get('@string/e_password'))
-       
+        self.w100 = self.findChild ('w100')
+        self.w100.setProperty('source',res.qmlget(res.etc('controls','w100')))
         self.cbSudoers = self.findChild('cbSudoers')
         self.cbSudoers.setProperty('text',res.get('@string/sudoers'))
         self.stWifi = self.findChild('stWifi')
@@ -538,16 +561,16 @@ class MainApp (MainApp):
         self.showuser_exec = self.findChild ('showuser_exec')
         self.usel = self.findChild ('usel')
         self.leUsername_show = self.findChild('leUsername_show')
-        self.leUsername_show.setProperty('placeholderText',res.get('@string/e_username'))
-        #self.lePassword_show = self.findChild('lePassword_show')
-        #self.lePassword_show.setProperty('placeholderText',res.get('@string/e_password'))
-    
+        self.lang = self.findChild ('lang')
+        self.lang.setProperty('source',res.qmlget(res.etc('controls','lang')))
+        self.leUsername_show.setProperty('placeholderText',res.get('@string/e_username'))    
         self.rsel = self.findChild('rsel')
         self.cbSudoers_show = self.findChild('cbSudoers_show')
         self.cbSudoers_show.setProperty('text',res.get('@string/sudoers'))
         self.leFullName_show = self.findChild('leFullName_show')
         self.leFullName_show.setProperty('placeholderText',res.get('@string/fullname'))
         self.imgProfile_show = self.findChild('imgProfile_show')
+        self.imgProfile_show.setProperty('source',res.qmlget(res.etc('controls','users')))
         self.btnProfile_show = self.findChild('btnProfile_show')
         self.savechanges = self.findChild('savechanges')
         self.savechanges.setProperty('text',res.get('@string/savechanges'))
@@ -564,6 +587,8 @@ class MainApp (MainApp):
         self.savechanges2.setProperty('text',res.get('@string/savechanges'))
         self.changepassword_exec = self.findChild('changepassword_exec')
         self.wsel = self.findChild('wsel')
+        self.wallpaper = self.findChild('wallpaper')
+        self.wallpaper.setProperty('source',res.qmlget(res.etc('controls','wallpaper')))
         self.cancel3 = self.findChild('cancel3')
         self.cancel3.setProperty('text',res.get('@string/cancel'))
         self.cancel2 = self.findChild('cancel2')
@@ -616,9 +641,18 @@ class MainApp (MainApp):
         elif self.getdata('dock')=='right': 
             self.dock_location = 3
             self.cbDock.setProperty('currentIndex',3)
-        elif self.getdata('dock')=='windows': 
+        elif self.getdata('dock')=='windows' or self.getdata('dock')=='windows-bottom': 
             self.dock_location = 4
             self.cbDock.setProperty('currentIndex',4)
+        elif self.getdata('dock')=='windows-top': 
+            self.dock_location = 5
+            self.cbDock.setProperty('currentIndex',5)
+        elif self.getdata('dock')=='windows-left': 
+            self.dock_location = 6
+            self.cbDock.setProperty('currentIndex',6)
+        elif self.getdata('dock')=='windows-right': 
+            self.dock_location = 7
+            self.cbDock.setProperty('currentIndex',7)
 
 
         self.adduser.clicked.connect (self.adduser_)

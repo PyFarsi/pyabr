@@ -1,0 +1,14 @@
+usr/app/libreoffice.pyc
+usr/app/libreofficebase.pyc
+usr/app/libreofficecalc.pyc
+usr/app/libreofficedraw.pyc
+usr/app/libreofficeimpress.pyc
+usr/app/libreofficemath.pyc
+usr/app/libreofficewriter.pyc
+usr/share/applications/libreoffice.desk
+usr/share/applications/libreofficebase.desk
+usr/share/applications/libreofficecalc.desk
+usr/share/applications/libreofficedraw.desk
+usr/share/applications/libreofficeimpress.desk
+usr/share/applications/libreofficemath.desk
+usr/share/applications/libreofficewriter.desk

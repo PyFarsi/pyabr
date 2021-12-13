@@ -2,12 +2,14 @@ name: ir.pyabr.sample
 name[en]: Sample software
 name[fa]: نمونه
 name[ar]: برنامج عينة
+name[tr]: örneklem
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.1
+version: 2.0.2
 description: Sample software and files for Pyabr
 compile: Yes
+logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.sample.svg
 entry: sample
-build: 1400-08-12
+build: 1400-09-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

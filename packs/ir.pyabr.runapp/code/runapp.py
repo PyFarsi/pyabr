@@ -26,7 +26,7 @@ def getdata (name):
     return control.read_record (name,'/etc/gui')
 
 application = QGuiApplication(sys.argv)
-application.setWindowIcon(QIcon(res.get('@icon/breeze-runapp')))
+application.setWindowIcon(QIcon(res.get(res.etc('runapp','logo'))))
 
 class MainApp (MainApp):
     def clean(self):
@@ -45,6 +45,8 @@ class MainApp (MainApp):
             app.start(command, args)
         elif self.leRun.property('text').startswith ('abr://'):
             self.d = Domain (self.leRun.property('text'))
+        elif self.leRun.property('text').startswith ('https://') or self.leRun.property('text').startswith ('http://'):
+            app.start ('chromium',self.leRun.property('text'))
         elif not command=='':
             self.leRun.setProperty('placeholderText',res.get('@string/application_not_found').replace('{0}',command))
             self.leRun.setProperty('enabled',False)

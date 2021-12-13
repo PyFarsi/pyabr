@@ -1,14 +1,18 @@
-import QtQuick
-import QtQuick.Window
-import QtQuick.Controls
-import QtQuick.Layouts
-import QtQuick.Controls.Material
+import QtQuick 2.0
+import QtQuick.Window 2.3
+import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.0
+import QtQuick.Controls 1.4
+import QtQuick.Controls 1.2
+import QtQuick.Controls 2.3
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
     id: app
     visible: true
-    color: "white"
-    width: 600
+    color: "#ABCDEF"
+    width: 700
     height: 500
 
     Text {
@@ -23,13 +27,6 @@ ApplicationWindow {
         text: ''
         objectName: 'xfullname'
         id: xfullname
-    }
-
-    Text {
-        visible: false
-        text: ''
-        objectName: 'xprofile'
-        id: xprofile
     }
 
     Text {
@@ -60,6 +57,13 @@ ApplicationWindow {
         id: cdata
     }
 
+    Text {
+        visible: false
+        text: ''
+        objectName: 'act'
+        id: act
+    }
+
     ToolBar {
         id: toolbar
         anchors.top: parent.top
@@ -87,7 +91,7 @@ ApplicationWindow {
                 Image {
                     anchors.fill: parent
                     objectName: "profimg2"
-                    source: xprofile.text
+                    source: 'file:///usr/share/icons/breeze-users.svg'
                     sourceSize: Qt.size( parent.width, parent.height )
                 }
             }
@@ -133,6 +137,7 @@ ApplicationWindow {
         height: parent.height-80-70
         anchors.top: toolbar.bottom
         id: rechat
+        color: "#ABCDEF"
         objectName: "rechat"
 
         Chats {}
@@ -144,48 +149,35 @@ ApplicationWindow {
         width: parent.width
         visible: false
         color: "white"
+        radius: 200
         objectName: "place"
         id: place
 
         TextField {
             anchors.verticalCenter: parent.verticalCenter
-            width: parent.width-70*3
+            width: parent.width-70*2
             height: parent.height
             placeholderText: "Enter your message"
             objectName: "leSend"
             id: leSend
-            anchors.left: parent.left
+            font.family: "IRANSans"
+            anchors.right: btnSend.left
+            selectByMouse: true
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.IBeamCursor
+                        acceptedButtons: Qt.NoButton
+                    }
         }
 
         ToolButton {
             anchors.verticalCenter: parent.verticalCenter
             width: 70
-            anchors.left: leSend.right
-            height: 70
-            icon.source: 'file:///stor/usr/share/icons/breeze-open.svg'
-            icon.color: "gray"
-            objectName: "btnFile"
-            id: btnFile
-        }
-
-        ToolButton {
-            anchors.verticalCenter: parent.verticalCenter
-            width: 70
-            anchors.left: btnFile.right
-            height: 70
-            icon.source: 'file:///stor/usr/share/icons/breeze-stickers.svg'
-            icon.color: "gray"
-            objectName: "btnStickers"
-            id: btnStickers
-        }
-
-        ToolButton {
-            anchors.verticalCenter: parent.verticalCenter
-            width: 70
-            anchors.left: btnStickers.right
+            anchors.right: parent.right
             height: 70
             icon.source: 'file:///stor/usr/share/icons/breeze-next.svg'
             icon.color: "gray"
+            id: btnSend
             objectName: "btnSend"
         }
     }

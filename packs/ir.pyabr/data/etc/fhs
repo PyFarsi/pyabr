@@ -21,6 +21,7 @@
 /proc/info
 /root
 /srv
+/media
 /tmp
 /usr
 /usr/app

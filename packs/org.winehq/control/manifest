@@ -1,0 +1,14 @@
+name: org.winehq
+name[en]: Wine
+name[fa]: واین
+name[ar]: واین
+name[tr]: wine
+copyright: (c) 2021 WineHQ
+license: LGPL
+unpack: /
+version: current
+description: Wine is not emulator
+compile: Yes
+logo: https://mirror.pyabr.ir/zayanderoad/org.winehq.svg
+build: 1400-09-12
+mirror: https://mirror.pyabr.ir/zayanderoad/

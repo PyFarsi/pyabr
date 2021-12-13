@@ -2,12 +2,14 @@ name: ir.pyabr.chat
 name[en]: Chat
 name[fa]: پیام رسان
 name[ar]: دردشة
+name[tr]: sohbet etmek
 copyright: (c) 2021 Mani Jamali
 license: ANL, GPL v3
 unpack: /
-version: 2.0.1
+version: 2.0.4
 description: Chat message
 compile: Yes
 entry: chat
-build: 1400-08-12
+logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.chat.svg
+build: 1400-09-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

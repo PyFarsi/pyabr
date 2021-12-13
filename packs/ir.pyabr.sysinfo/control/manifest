@@ -2,12 +2,14 @@ name: ir.pyabr.sysinfo
 name[en]: System Informations
 name[fa]: اطلاعات سیستمی
 name[ar]: معلومات النظام
+name[tr]: sistem bilgisi
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.1
+version: 2.0.2
 description: System informations software
 compile: Yes
 entry: sysinfo
-build: 1400-08-12
+logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.sysinfo.svg
+build: 1400-09-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

@@ -1,6 +1,7 @@
 name[en]: Python Shell
 name[fa]: مفسر پایتون
 name[ar]: مفسر بایثون
+name[tr]: piton
 logo: @icon/python
 exec: python
 application: Yes

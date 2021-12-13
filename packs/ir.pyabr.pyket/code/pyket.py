@@ -106,16 +106,14 @@ class MainApp (MainApp):
 
     def uninstall__(self,yes):
         if yes:
-            System ('sudo paye cl')
             System (f'sudo paye rm {self.psel.property("text")}')
             self.addPackageModel()
             self.psel.setProperty('text','')
         self.psel.setProperty('text','')
 
     def set_progressbar_value (self,value):
-        self.pro.setProperty('value',value)
+        self.pro.setProperty('value',value/100)
         if value == 100:
-            System ('sudo paye cl')
             System (f'sudo paye upak /app/cache/gets/{self.psel.property("text")}.pa')
             self.addPackageModel()
             self.psel.setProperty('text','')
@@ -171,13 +169,13 @@ class MainApp (MainApp):
 
     def __init__(self):
         super(MainApp, self).__init__()
-        System ('sudo paye cl')
         System (f'sudo paye in {files.readall("/etc/paye/sources")}')
         self.addPackageModel()
         self.load (res.get('@layout/pyket'))
         self.psel = self.findChild('psel')
         self.pselnamex = self.findChild('pselnamex')
         self.pkgImage = self.findChild('pkgImage')
+        self.pkgImage.setProperty('source',res.qmlget(res.etc('pyket','pkgImage')))
         self.pkgTitle = self.findChild('pkgTitle')
         self.pselcopyright = self.findChild('pselcopyright')
         self.psellicense = self.findChild('psellicense')

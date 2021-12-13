@@ -1,0 +1,5 @@
+name[en]: LibreOffice Writer
+logo: @icon/breeze-libreoffice-writer
+exec: libreofficewriter
+application: Yes
+category: tools

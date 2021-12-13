@@ -1,6 +1,7 @@
 name[en]: Sample Application
 name[fa]: برنامه نمونه
 name[ar]: تطبيق العينة
+name[tr]: örneklem
 logo: @icon/breeze-app
 exec: sample
 application: No

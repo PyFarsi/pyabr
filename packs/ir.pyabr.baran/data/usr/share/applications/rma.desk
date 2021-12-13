@@ -1,0 +1,7 @@
+name[en]: Restore Windows
+logo: @icon/breeze-app
+exec: rma
+application: No
+hidden: Yes
+category: tools
+pin: No

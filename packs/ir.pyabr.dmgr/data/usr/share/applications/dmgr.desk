@@ -1,7 +1,9 @@
 name[en]: Downloads
 name[fa]: دانلودها
 name[ar]: التحميل
+name[tr]: İndirilenler
 logo: @icon/breeze-dmgr
 exec: dmgr
 application: Yes
 category: internet
+add: @icon/breeze-new

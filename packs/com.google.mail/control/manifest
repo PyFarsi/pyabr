@@ -1,0 +1,15 @@
+name: com.google.mail
+name[en]: Gmail
+name[fa]: جیمیل
+name[ar]: بريد جوجل
+name[tr]: Gmail
+copyright: (c) 2021 Google
+license: Free software
+unpack: /
+version: current
+description: Google mail client service web application
+compile: Yes
+entry: gmail
+logo: https://mirror.pyabr.ir/zayanderoad/com.google.mail.svg
+build: 1400-09-12
+mirror: https://mirror.pyabr.ir/zayanderoad/

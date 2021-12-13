@@ -47,6 +47,8 @@ class MainApp (MainApp):
         self.arch1 = self.findChild ('arch1')
 
         self.setProperty ('title',res.get('@string/sysinfo'))
+        self.logo = self.findChild ('logo')
+        self.logo.setProperty('source',res.qmlget(res.etc('sysinfo','cloud')))
 
 
 
@@ -63,7 +65,7 @@ class MainApp (MainApp):
             self.arch1.setProperty ('text',res.get('@string/arch')+":  ")
 
             self.host.setProperty ('text',files.readall('/proc/info/host'))
-            self.cs.setProperty ('text',files.readall('/proc/info/cs'))
+            self.cs.setProperty ('text',f"{files.readall('/proc/info/cs')} {files.readall('/proc/info/ver')} ({files.readall('/proc/info/cd')})")
             self.bl.setProperty ('text',files.readall('/proc/info/bl'))
             self.os.setProperty ('text',files.readall('/proc/info/os'))
             self.kname.setProperty ('text',files.readall('/proc/info/kname'))
@@ -83,7 +85,7 @@ class MainApp (MainApp):
             self.arch.setProperty ('text',res.get('@string/arch')+":  ")
 
             self.host1.setProperty ('text',files.readall('/proc/info/host'))
-            self.cs1.setProperty ('text',files.readall('/proc/info/cs'))
+            self.cs1.setProperty ('text',f"{files.readall('/proc/info/cs')} {files.readall('/proc/info/ver')} ({files.readall('/proc/info/cd')})")
             self.bl1.setProperty ('text',files.readall('/proc/info/bl'))
             self.os1.setProperty ('text',files.readall('/proc/info/os'))
             self.kname1.setProperty ('text',files.readall('/proc/info/kname'))

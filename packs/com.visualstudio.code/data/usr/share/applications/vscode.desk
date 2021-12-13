@@ -1,0 +1,8 @@
+name[en]: VSCode
+name[fa]: وی اس کد
+name[ar]: فی اس کد
+name[tr]: vs kodu
+logo: @icon/vscode
+exec: vscode
+application: Yes
+category: develop

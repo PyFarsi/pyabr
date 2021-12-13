@@ -8,29 +8,13 @@
     * Name:             Pyabr
     * Founder:          Mani Jamali
     * Developers:       PyFarsi Community
-    * Package Manager:  Paye, Apt, Dpkg, PyPI
+    * Package Manager:  Paye, PyPI
     * License:          GNU General Publice License v3.0
 
-    * Source code:      https://github.com/PyFarsi/pyabr
-    * PyPI:             https://pypi.org/project/pyabr
+    - Official Website
 
-    - Download Pyabr OS
-
-    * AMD64, Intel64:   https://dl.pyabr.ir/pyabr-x86_64.iso     
-    * ARM64:            https://dl.pyabr.ir/pyabr-arm64.img
-    * Platform:         https://dl.pyabr.ir/stor.sb
-    * Wheel Package:    https://dl.pyabr.ir/pyabr.whl
-    
-    - Channels:
-
-    * Official Website: https://pyabr.ir
-    * Telegram Channel: https://t.me/pyfarsi
-    * Gap Channel:      https://gap.im/pyabr
-    * Sorosh Channel:   https://splus.ir/pyabr
-    * Instagram:        https://instagram.com/pyabrir
-    * Hoorsa:           https://hoorsa.com/pyabr
-    * Aparat:           https://aparat.com/pyabr
-
+    * Persian Page:     https://pyabr.ir
+    * English Page:     https://en.pyabr.ir
 '''
 import os
 

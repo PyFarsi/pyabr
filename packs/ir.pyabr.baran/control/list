@@ -4,7 +4,10 @@
 /etc/interface
 /etc/suapp
 /usr/app/baran.pyc
+/usr/app/rma.pyc
+/usr/app/kma.pyc
 /usr/share/applications/baran.desk
+/usr/share/applications/rma.desk
 /usr/share/categories/develop.cat
 /usr/share/categories/games.cat
 /usr/share/categories/internet.cat

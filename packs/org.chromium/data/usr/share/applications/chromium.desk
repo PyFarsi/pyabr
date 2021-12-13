@@ -1,0 +1,9 @@
+name[en]: Web Browser
+name[fa]: مرورگر اینترنتی
+name[ar]: متصفح الإنترنت
+name[tr]: İnternet tarayıcısı
+logo: @icon/chromium
+exec: chromium
+application: Yes
+category: internet
+pin: Yes

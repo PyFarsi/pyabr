@@ -15,6 +15,9 @@ packs/io.github.pashmaklang/
 dist/
 packs/ir.projop/
 downloads/
+.squashfs
+initrd.img*
+vmlinuz*
 eggs/
 venv/
 .eggs/

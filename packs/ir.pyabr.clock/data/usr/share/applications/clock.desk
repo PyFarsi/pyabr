@@ -1,7 +1,14 @@
 name[en]: Clock
 name[fa]: ساعت
 name[ar]: ساعة
+name[tr]: saat
 logo: @icon/breeze-clock
 exec: clock
 application: Yes
 category: tools
+# cannot add:
+time: @icon/breeze-time
+stopwatch: @icon/breeze-chronometer
+start: @icon/breeze-time-start
+pause: @icon/breeze-time-pause
+restart: @icon/breeze-reboot

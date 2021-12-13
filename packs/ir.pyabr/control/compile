@@ -1,6 +1,5 @@
 core.py:usr/app/pyabr/core.pyc
 vmabr.py:vmabr.pyc
-termcolor.py:usr/app/termcolor.pyc
 quick.py:usr/app/pyabr/quick.pyc
 chat.py:usr/app/pyabr/chat.pyc
 cloud.py:usr/app/pyabr/cloud.pyc
