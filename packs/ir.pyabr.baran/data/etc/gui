@@ -8,7 +8,7 @@ desktop: baran
 gui: Qt Framework
 params: gui
 external-windows-manager: openbox
-external-terminal: xterm
+external-terminal: konsole
 visibility: FullScreen
 login.background: @background/Sunset_and_sea_blur
 enter.background: @background/Sunset_and_sea_blur
