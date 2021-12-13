@@ -17,18 +17,10 @@
     * English Page:     https://en.pyabr.ir
 '''
 
-import subprocess, os, sys, shutil,clean
+import subprocess, os, shutil,clean
 from buildlibs import pack_archives as pack
+
 # configure #
-
-RAM = 4000
-Name = "Pyabr"
-ISO = "pyabr-x86_64.iso"
-genisoimage = " genisoimage"
-QEMU = "qemu-system-x86_64"
-SB = "mksquashfs"
-USB = "unsquashfs"
-
 if not os.path.isdir ("app"):
 	os.mkdir ("app")
 	os.mkdir ("app/cache")
@@ -50,6 +42,15 @@ shutil.copytree ('stor','sb/stor')
 
 # Create ISO #
 
-subprocess.call([SB,'sb','os/stor.squashfs','-comp','xz'])
+subprocess.call(['mksquashfs','sb','os/stor.squashfs','-comp','xz'])
+shutil.copyfile ('os/stor.squashfs','os/amd64/live-cd/live/stor.squashfs')
+shutil.copyfile ('os/stor.squashfs','os/arm/live-cd/live/stor.squashfs')
+shutil.copyfile ('os/stor.squashfs','os/arm64/live-cd/live/stor.squashfs')
+shutil.copyfile ('os/stor.squashfs','os/i386/live-cd/live/stor.squashfs')
+os.remove('os/stor.squashfs')
+
+subprocess.call('cd os/amd64 && sh 09-generate-iso.sh',shell=True)
+#subprocess.call('cd os/arm && sh 09-generate-iso.sh',shell=True)
+#subprocess.call('cd os/arm64 && sh 09-generate-iso.sh',shell=True)
+subprocess.call('cd os/i386 && sh 09-generate-iso.sh',shell=True)
 clean.clean()
-subprocess.call(f'cd pyabr-amd64 && {genisoimage} -o ../{ISO} -v -J -R -D -A pyabr -V pyabr -no-emul-boot -boot-info-table -boot-load-size 4 -b pyabr/boot/isolinux.bin -c pyabr/boot/isolinux.boot .',shell=True)
