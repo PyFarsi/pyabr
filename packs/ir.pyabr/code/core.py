@@ -149,6 +149,28 @@ class Commands:
 
         subprocess.call(cmd, shell=True)
 
+    def bash (self,args):
+        if not permissions.check_root(files.readall("/proc/info/su")):
+            subprocess.call('runuser -S pyabr -e sh', shell=True)
+        else:
+            subprocess.call('sh', shell=True)
+
+    def python (self,args):
+        cmd = 'python3 '
+        for i in args:
+            if i.startswith('/') or i.endswith('/') or i.startswith('./') or '/' in i:
+                i = files.input(i)
+
+            if cmd == '':
+                cmd = i
+            else:
+                cmd = f"{cmd} {i}"
+
+        if not permissions.check_root(files.readall("/proc/info/su")):
+            subprocess.call(f'runuser -S pyabr -e {cmd}', shell=True)
+        else:
+            subprocess.call(cmd, shell=True)
+
     # pip #
     def pip (self,args):
         if not permissions.check_root(files.readall("/proc/info/su")):

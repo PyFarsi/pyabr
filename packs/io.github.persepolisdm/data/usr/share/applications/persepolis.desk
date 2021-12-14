@@ -1,0 +1,9 @@
+name[fa]: پرسپولیس
+name[en]: Persepolis
+name[ar]: برسبولیس
+name[tr]: persepolis
+exec: persepolisdm
+applications: Yes
+cateogory: tools
+hidden: No
+logo: @icon/persepolis
