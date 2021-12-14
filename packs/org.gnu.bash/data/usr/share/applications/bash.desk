@@ -3,6 +3,6 @@ name[fa]: بش
 name[ar]: بش
 name[tr]: bash
 logo: @icon/breeze-commento
-exec: bash
+exec: bash_app
 application: Yes
 category: tools
