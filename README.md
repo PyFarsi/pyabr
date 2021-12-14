@@ -22,8 +22,6 @@ Pyabr is a small, lightweight platform and an OS written in Python.
 
   - [ARM64](https://dl.pyabr.ir/pyabr-arm64.tar.xz)
   - [AMD/Intel 64](https://dl.pyabr.ir/pyabr-x86_64.iso)
-  - ARM - in develop
-  - AMD/Intel 32 - in develop
 
 ## Installing with PyPI
 
@@ -31,9 +29,5 @@ Pyabr is a small, lightweight platform and an OS written in Python.
 sudo python3 -m pip install pyabr
 sudo python3 -m pyabr
 ```
-
-### How to building Pyabr from scratch?
-
- - Use `os` directory for building and generating your fresh Pyabr, click [here](https://github.com/PyFarsi/pyabr/tree/main/os/).
 
 [PyAbr first repository](https://github.com/manijamali2003/pyabr)
