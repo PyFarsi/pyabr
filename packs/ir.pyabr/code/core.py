@@ -131,6 +131,60 @@ class Commands:
     def __init__(self):
         pass
 
+    # apt debian #
+    def apt (self,args):
+        if not permissions.check_root(files.readall("/proc/info/su")):
+            colors.show("apt", "perm", "")
+            sys.exit(0)
+
+        cmd = 'apt '
+        for i in args:
+            if i.startswith('/') or i.endswith('/') or i.startswith('./') or '/' in i:
+                i = files.input(i)
+
+            if cmd == '':
+                cmd = i
+            else:
+                cmd = f"{cmd} {i}"
+
+        subprocess.call(cmd, shell=True)
+
+    # pip #
+    def pip (self,args):
+        if not permissions.check_root(files.readall("/proc/info/su")):
+            colors.show("pip", "perm", "")
+            sys.exit(0)
+
+        cmd = 'pip '
+        for i in args:
+            if i.startswith('/') or i.endswith('/') or i.startswith('./') or '/' in i:
+                i = files.input(i)
+
+            if cmd == '':
+                cmd = i
+            else:
+                cmd = f"{cmd} {i}"
+
+        subprocess.call(cmd, shell=True)
+
+    # dpkg command #
+    def dpkg (self, args):
+        if not permissions.check_root(files.readall("/proc/info/su")):
+            colors.show("dpkg", "perm", "")
+            sys.exit(0)
+
+        cmd = 'dpkg '
+        for i in args:
+            if i.startswith('/') or i.endswith('/') or i.startswith('./') or '/' in i:
+                i = files.input(i)
+
+            if cmd == '':
+                cmd = i
+            else:
+                cmd = f"{cmd} {i}"
+
+        subprocess.call(cmd, shell=True)
+
     # kill process #
     def kill (self,args):
         colors = Colors()
@@ -1590,9 +1644,11 @@ class Commands:
 
         ## Check params ##
 
-        if args == [] and args[1:]:
+        if args == []:
             colors.show('wget', 'fail', 'no inputs.')
             sys.exit(0)
+        elif args[1:]==[]:
+            args [1] = max(args[0].split('.'))
 
         ## Download ##
 

@@ -331,6 +331,18 @@ class MainApp (MainApp):
         elif currentIndex==7:
             control.write_record ('dock','windows-right',f'/etc/users/{self.username}')
 
+        elif currentIndex==8:
+            control.write_record ('dock','unity',f'/etc/users/{self.username}')
+
+        elif currentIndex==9:
+            control.write_record ('dock','unity-top',f'/etc/users/{self.username}')
+
+        elif currentIndex==10:
+            control.write_record ('dock','unity-left',f'/etc/users/{self.username}')
+
+        elif currentIndex==11:
+            control.write_record ('dock','unity-right',f'/etc/users/{self.username}')
+
         app.signal ('dock')
 
         self.fsel.setProperty('text','..')
@@ -653,6 +665,18 @@ class MainApp (MainApp):
         elif self.getdata('dock')=='windows-right': 
             self.dock_location = 7
             self.cbDock.setProperty('currentIndex',7)
+        elif self.getdata('dock')=='unity' or self.getdata('dock')=='unity-bottom':
+            self.dock_location = 8
+            self.cbDock.setProperty('currentIndex',8)
+        elif self.getdata('dock')=='unity-top':
+            self.dock_location = 9
+            self.cbDock.setProperty('currentIndex',9)
+        elif self.getdata('dock')=='unity-left':
+            self.dock_location = 10
+            self.cbDock.setProperty('currentIndex',10)
+        elif self.getdata('dock')=='unity-right':
+            self.dock_location = 11
+            self.cbDock.setProperty('currentIndex',11)
 
 
         self.adduser.clicked.connect (self.adduser_)

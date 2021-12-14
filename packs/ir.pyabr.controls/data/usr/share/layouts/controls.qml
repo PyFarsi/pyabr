@@ -265,7 +265,7 @@ ApplicationWindow {
             /* Change Dock */
             ComboBox {
                 anchors.top: txtDock.bottom
-                model: ['Bottom (default)','Top','Left','Right','Windows 11 (Bottom)','Windows 11 (Top)','Windows 11 (Left)','Windows 11 (Right)']
+                model: ['Bottom (default)','Top','Left','Right','Windows 11 (Bottom)','Windows 11 (Top)','Windows 11 (Left)','Windows 11 (Right)','Unity (bottom)','Unity (top)','Unity (left)','Unity (right)']
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width/2
                 id: dockLocation

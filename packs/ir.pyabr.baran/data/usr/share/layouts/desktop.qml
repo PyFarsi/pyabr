@@ -61,302 +61,6 @@ ApplicationWindow {
         }
     }
 
-    /* Submenu */
-
-    menuBar: MenuBar {
-        Menu {
-            title: "برنامه ها"
-            id: applications
-            objectName: "applications"
-
-            Menu {
-                title: "توسعه"
-                id: developcat
-                objectName: "developcat"
-
-                Repeater{
-                    model: EntryDevelop
-                    MenuItem {
-                        objectName: model.name
-                        Image {
-                            id: image
-                            source: model.logo
-                            width: parent.height
-                            sourceSize: Qt.size( parent.width, parent.height )
-                            height: parent.height
-                        }
-                        Text {
-                            anchors.left: image.right
-                            anchors.verticalCenter: image.verticalCenter
-                            anchors.leftMargin: 5
-                            anchors.rightMargin: 5
-                            text: model.label
-                            font.family: "IRANSans"
-                        }
-                        onTriggered: {
-                            background_app.text = model.name
-                        }
-                    }
-                }
-            }
-
-            Menu {
-                title: "بازی ها"
-                id: gamescat
-                objectName: "gamescat"
-
-                Repeater{
-                    model: EntryGames
-                    MenuItem {
-                        objectName: model.name
-                        onTriggered: {
-                            background_app.text = model.name
-                        }
-                        Image {
-                            id: image
-                            source: model.logo
-                            width: parent.height
-                            sourceSize: Qt.size( parent.width, parent.height )
-                            height: parent.height
-                        }
-                        Text {
-                            anchors.left: image.right
-                            anchors.verticalCenter: image.verticalCenter
-                            anchors.leftMargin: 5
-                            anchors.rightMargin: 5
-                            text: model.label
-                            font.family: "IRANSans"
-                        }
-                    }
-                }
-            }
-
-            Menu {
-                title: "اینترنت"
-                id: internetcat
-                objectName: "internetcat"
-
-                Repeater{
-                    model: EntryInternet
-                    MenuItem {
-                        objectName: model.name
-                        onTriggered: {
-                            background_app.text = model.name
-                        }
-                        Image {
-                            id: image
-                            source: model.logo
-                            width: parent.height
-                            sourceSize: Qt.size( parent.width, parent.height )
-                            height: parent.height
-                        }
-                        Text {
-                            anchors.left: image.right
-                            anchors.verticalCenter: image.verticalCenter
-                            anchors.leftMargin: 5
-                            anchors.rightMargin: 5
-                            text: model.label
-                            font.family: "IRANSans"
-                        }
-                    }
-                }
-            }
-
-            Menu {
-                title: "چندرسانه ای"
-                id: multimediacat
-                objectName: "multimediacat"
-
-                Repeater{
-                    model: EntryMultimedia
-                    MenuItem {
-                        objectName: model.name
-                        onTriggered: {
-                            background_app.text = model.name
-                        }
-                        Image {
-                            id: image
-                            source: model.logo
-                            width: parent.height
-                            sourceSize: Qt.size( parent.width, parent.height )
-                            height: parent.height
-                        }
-                        Text {
-                            anchors.left: image.right
-                            anchors.verticalCenter: image.verticalCenter
-                            anchors.leftMargin: 5
-                            anchors.rightMargin: 5
-                            text: model.label
-                            font.family: "IRANSans"
-                        }
-                    }
-                }
-            }
-            Menu {
-                title: "سیستمی"
-                id: systemcat
-                objectName: "systemcat"
-
-                Repeater{
-                    model: EntrySystem
-                    MenuItem {
-                        objectName: model.name
-                        onTriggered: {
-                            background_app.text = model.name
-                        }
-                        Image {
-                                id: image
-                                source: model.logo
-                                width: parent.height
-                                sourceSize: Qt.size( parent.width, parent.height )
-                                height: parent.height
-                        }
-                        Text {
-                            anchors.left: image.right
-                            anchors.verticalCenter: image.verticalCenter
-                            anchors.leftMargin: 5
-                            anchors.rightMargin: 5
-                            text: model.label
-                            font.family: "IRANSans"
-                        }
-                    }
-                }
-            }
-            Menu {
-                title: "ابزارها"
-                id: toolscat
-                objectName: "toolscat"
-
-                Repeater{
-                    model: EntryTools
-                    MenuItem {
-                        objectName: model.name
-                        onTriggered: {
-                            background_app.text = model.name
-                        }
-                        Image {
-                                id: image
-                                source: model.logo
-                                width: parent.height
-                                height: parent.height
-                                sourceSize: Qt.size( parent.width, parent.height )
-                        }
-                        Text {
-                            anchors.left: image.right
-                            anchors.verticalCenter: image.verticalCenter
-                            anchors.leftMargin: 5
-                            anchors.rightMargin: 5
-                            text: model.label
-                            font.family: "IRANSans"
-                        }
-                    }
-                }
-            }
-            Menu {
-                title: "سایر"
-                id: otherscat
-                objectName: "otherscat"
-
-                Repeater{
-                    model: EntryOthers
-                    MenuItem {
-                        objectName: model.name
-                        onTriggered: {
-                            background_app.text = model.name
-                        }
-                        Image {
-                                id: image
-                                source: model.logo
-                                width: parent.height
-                                height: parent.height
-                                sourceSize: Qt.size( parent.width, parent.height )
-                        }
-                        Text {
-                            anchors.left: image.right
-                            anchors.verticalCenter: image.verticalCenter
-                            anchors.leftMargin: 5
-                            anchors.rightMargin: 5
-                            text: model.label
-                            font.family: "IRANSans"
-                        }
-                    }
-                }
-            }
-        }
-        Menu {
-            title: "منوی اصلی"
-            id: submenu
-            objectName: "submenu"
-
-            Menu {
-                title: "حساب کاربری"
-                id: account
-                objectName: "account"
-
-                Action {
-                    text: "تنظیمات حساب کاربری"
-                    id: account_setting
-                    objectName: "account_setting"
-                }
-                Action {
-                    text: "خروج از نشست"
-                    id: logout
-                    objectName: "logout"
-                }
-                Action {
-                    text: "قفل میزکار"
-                    id: lock
-                    objectName: "lock"
-                }
-            }
-
-            Menu {
-                title: "خروج"
-                id: exit
-                objectName: "exit"
-
-                Action {
-                    text: "خاموش کردن"
-                    id: shutdown
-                    objectName: "shutdown"
-                    shortcut: "Ctrl+C"
-                }
-                Action {
-                    text: "راه اندازی مجدد"
-                    id: restart
-                    objectName: "restart"
-                }
-                Action {
-                    text: "حالت خواب"
-                    id: sleep
-                    objectName: "sleep"
-                }
-            }
-            Menu {
-                title: "زبان ها"
-                id: lang
-                objectName: "lang"
-                
-                Repeater{
-                    model: Lang
-                    MenuItem {
-                        objectName: model.name
-                        text: model.label
-                        
-                        onTriggered: {
-                            keyless.text = model.name;
-                        }
-                    }
-                }
-            }
-            CheckBox {
-                id: virtualkeyboard
-                objectName: "virtualkeyboard"
-                text: "کیبورد مجازی"
-                visible: false
-            }
-        }
-    }
 
     /* Background Image */
 
@@ -368,6 +72,16 @@ ApplicationWindow {
             objectName: "background"
         }
     }
+
+    /* Topbar */
+    Rectangle {
+        color: "#A0FFFFFF"
+        anchors.top: parent.top
+        width: parent.width
+        height: 30
+        id: topbar
+    }
+
 
     /* Menu applications for bottom Dock */
 
@@ -839,7 +553,7 @@ ApplicationWindow {
     /* Top Dock */
 
     Rectangle {
-        anchors.top: parent.top
+        anchors.top: topbar.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: 20
         width: 560
@@ -1084,7 +798,7 @@ ApplicationWindow {
 
     /* Windows 11 Dock - top */
     Rectangle {
-        anchors.top: parent.top
+        anchors.top: topbar.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: 0
         width: parent.width
@@ -1147,6 +861,8 @@ ApplicationWindow {
 
     Rectangle {
         anchors.left: parent.left
+        anchors.top: topbar.bottom
+        anchors.bottom: parent.bottom
         anchors.verticalCenter: parent.verticalCenter
         anchors.leftMargin: 0
         width: 70
@@ -1208,6 +924,8 @@ ApplicationWindow {
     /* Windows 11 dock - right */
     Rectangle {
         anchors.right: parent.right
+        anchors.top: topbar.bottom
+        anchors.bottom: parent.bottom
         anchors.verticalCenter: parent.verticalCenter
         anchors.rightMargin: 0
         width: 70
@@ -1267,6 +985,261 @@ ApplicationWindow {
         }
     }
 
+    /* Unity Dock */
+    Rectangle {
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottomMargin: 0
+        width: parent.width
+        height: 70
+        color: "#A0FFFFFF"
+        radius: 0
+        objectName: "toolbar9"
+        id: toolbar9
+
+        RowLayout {
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.leftMargin: 20
+            ToolButton {
+                width: toolbar9.height
+                height: toolbar9.height
+                objectName: "btnMenu9"
+                Image {
+                    fillMode: Image.PreserveAspectFit
+                    anchors.fill: parent
+                    objectName: "imgMenu9"
+                    sourceSize: Qt.size( parent.width, parent.height )
+                    NumberAnimation on opacity {
+                        id: btnMenu9_anim
+                        objectName: "btnMenu9_anim"
+                        from: 0
+                        to: 1
+                        duration: 100
+                    }
+                }
+            }
+
+            Repeater {
+                model: EntryDockApplications
+
+                    ToolButton {
+                        width: toolbar9.height
+                        height: toolbar9.height
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app9_anim.start();
+                            background_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app9_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                    }
+            }
+            Item { Layout.fillWidth: true }
+        }
+    }
+
+    /* Unity Dock - top */
+    Rectangle {
+        anchors.top: topbar.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: 0
+        width: parent.width
+        height: 70
+        color: "#A0FFFFFF"
+        radius: 0
+        objectName: "toolbar10"
+        id: toolbar10
+
+        RowLayout {
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.leftMargin: 20
+            ToolButton {
+                width: toolbar10.height
+                height: toolbar10.height
+                objectName: "btnMenu10"
+                Image {
+                    fillMode: Image.PreserveAspectFit
+                    anchors.fill: parent
+                    objectName: "imgMenu10"
+                    sourceSize: Qt.size( parent.width, parent.height )
+                    NumberAnimation on opacity {
+                        id: btnMenu10_anim
+                        objectName: "btnMenu10_anim"
+                        from: 0
+                        to: 1
+                        duration: 100
+                    }
+                }
+            }
+
+            Repeater {
+                model: EntryDockApplications
+
+                    ToolButton {
+                        width: toolbar10.height
+                        height: toolbar10.height
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app10_anim.start();
+                            background_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app10_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                    }
+            }
+            Item { Layout.fillWidth: true }
+        }
+    }
+
+    /* Unity dock - left */
+
+    Rectangle {
+        anchors.left: parent.left
+        anchors.top: topbar.bottom
+        anchors.bottom: parent.bottom
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.leftMargin: 0
+        width: 70
+        height: parent.height
+
+        color: "#A0FFFFFF"
+        radius: 0
+        objectName: "toolbar11"
+        id: toolbar11
+
+        ColumnLayout {
+            anchors.top: parent.top
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.topMargin: 20
+            ToolButton {
+                width: toolbar11.width
+                height: toolbar11.width
+                objectName: "btnMenu11"
+                Image {
+                    fillMode: Image.PreserveAspectFit
+                    anchors.fill: parent
+                    objectName: "imgMenu11"
+                    sourceSize: Qt.size( parent.width, parent.height )
+                    NumberAnimation on opacity {
+                        id: btnMenu11_anim
+                        objectName: "btnMenu11_anim"
+                        from: 0
+                        to: 1
+                        duration: 100
+                    }
+                }
+            }
+
+            Repeater {
+                model: EntryDockApplications
+
+                    ToolButton {
+                        width: toolbar11.width
+                        height: toolbar11.width
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app11_anim.start();
+                            background_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app11_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                    }
+            }
+            Item { Layout.fillWidth: true }
+        }
+    }
+
+    /* Unity dock - right */
+    Rectangle {
+        anchors.right: parent.right
+        anchors.top: topbar.bottom
+        anchors.bottom: parent.bottom
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.rightMargin: 0
+        width: 70
+        height: parent.height
+
+        color: "#A0FFFFFF"
+        radius: 0
+        objectName: "toolbar12"
+        id: toolbar12
+
+        ColumnLayout {
+            anchors.top: parent.top
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.topMargin: 20
+            ToolButton {
+                width: toolbar12.width
+                height: toolbar12.width
+                objectName: "btnMenu12"
+                Image {
+                    fillMode: Image.PreserveAspectFit
+                    anchors.fill: parent
+                    objectName: "imgMenu12"
+                    sourceSize: Qt.size( parent.width, parent.height )
+                    NumberAnimation on opacity {
+                        id: btnMenu12_anim
+                        objectName: "btnMenu12_anim"
+                        from: 0
+                        to: 1
+                        duration: 100
+                    }
+                }
+            }
+
+            Repeater {
+                model: EntryDockApplications
+
+                    ToolButton {
+                        width: toolbar12.width
+                        height: toolbar12.width
+
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app12_anim.start();
+                            background_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app12_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                    }
+            }
+            Item { Layout.fillWidth: true }
+        }
+    }
 
     Menu {
         id: contextMenu
@@ -1309,8 +1282,8 @@ ApplicationWindow {
 
     MouseArea {
         anchors.centerIn: parent
-        width: parent.width/2
-        height: parent.height/2
+        width: parent.width/3
+        height: parent.height/3
         id: msaDesktop
         objectName: "msaDesktop"
         acceptedButtons: Qt.LeftButton | Qt.RightButton

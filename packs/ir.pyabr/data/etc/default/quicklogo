@@ -11,3 +11,4 @@ pyabr: @icon/breeze-pyabr
 homes: @icon/breeze-homes
 harddisk: @icon/breeze-harddisk
 cdrom: @icon/breeze-cdrom
+users: @icon/breeze-users

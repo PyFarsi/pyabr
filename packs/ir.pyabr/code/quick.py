@@ -380,10 +380,14 @@ class MainApp (QtQml.QQmlApplicationEngine):
                 it.setData(i,self.FullName)
             else:
                 it.setData(control.read_record('fullname',f'/etc/users/{i}'),self.FullName)
-            if control.read_record('profile',f'/etc/users/{i}').startswith('@icon/'):
-                it.setData(res.qmlget(control.read_record('profile',f'/etc/users/{i}')),self.Profile)
-            else:
-                it.setData(files.input_qml(control.read_record('profile',f'/etc/users/{i}')),self.Profile)
+
+            try:
+                if control.read_record('profile',f'/etc/users/{i}').startswith('@icon/'):
+                    it.setData(res.qmlget(control.read_record('profile',f'/etc/users/{i}')),self.Profile)
+                else:
+                    it.setData(files.input_qml(control.read_record('profile',f'/etc/users/{i}')),self.Profile)
+            except:
+                it.setData(files.input_qml(self.ql('users')), self.Profile)
             model.appendRow(it)
 
         return model
