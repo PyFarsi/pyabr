@@ -36,6 +36,7 @@ stor.sb
 build-packs/
 .git/
 *.pa
+*.c32
 .installed.cfg
 *.iso
 *.img
