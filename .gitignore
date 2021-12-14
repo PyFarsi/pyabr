@@ -31,7 +31,7 @@ var/
 wheels/
 pip-wheel-metadata/
 share/python-wheels/
-stor.sb
+*.sb
 *.egg-info/
 build-packs/
 .git/
