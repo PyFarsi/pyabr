@@ -36,21 +36,7 @@ from copy import deepcopy
 import sys
 import os
 
-# finding os platform
-os_type, desktop_env = osAndDesktopEnvironment()
-
-# Don't run persepolis as root!
-if os_type in (OS.UNIX_LIKE + [OS.OSX]):
-    uid = os.getuid()
-    if uid == 0:
-        print('Do not run persepolis as root.')
-        sys.exit(1)
-
-
-# initialization
-
 # find home address
-home_address = os.path.expanduser("~")
 
 # persepolis config_folder
 config_folder = determineConfigFolder()
@@ -63,51 +49,13 @@ persepolis_tmp = os.path.join(config_folder, 'persepolis_tmp')
 # else >> another instance of persepolis is running now.
 global lock_file_validation
 
-if os_type != OS.WINDOWS:
-    import fcntl
-    user_name_split = home_address.split('/')
-    user_name = user_name_split[2]
-# persepolis lock file
-    lock_file = '/tmp/persepolis_exec_' + user_name + '.lock'
-
-# create lock file
-    fp = open(lock_file, 'w')
-
-    try:
-        fcntl.lockf(fp, fcntl.LOCK_EX | fcntl.LOCK_NB)
-
-        lock_file_validation = True  # Lock file created successfully!
-    except IOError:
-        lock_file_validation = False  # creating lock_file was unsuccessful! So persepolis is still running
-
-else:  # for windows
-    # pypiwin32 must be installed by pip
-    from win32event import CreateMutex
-    from win32api import GetLastError
-    from winerror import ERROR_ALREADY_EXISTS
-    from sys import exit
-
-    handle = CreateMutex(None, 1, 'persepolis_download_manager')
-
-    if GetLastError() == ERROR_ALREADY_EXISTS:
-        lock_file_validation = False
-    else:
-        lock_file_validation = True
+lock_file_validation = True
 
 # run persepolis mainwindow
-if lock_file_validation:
-    from persepolis.scripts import initialization
-    from persepolis.scripts.mainwindow import MainWindow
+from persepolis.scripts import initialization
+from persepolis.scripts.mainwindow import MainWindow
 
 # set "persepolis" name for this process in linux and bsd
-    if os_type in OS.UNIX_LIKE:
-        try:
-            from setproctitle import setproctitle
-            setproctitle("persepolis")
-        except:
-            from persepolis.scripts import logger
-            logger.sendToLog('setproctitle is not installed!', "ERROR")
-
 
 # load persepolis_settings
 persepolis_setting = QSettings('persepolis_download_manager', 'persepolis')

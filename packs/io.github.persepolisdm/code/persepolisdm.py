@@ -6,4 +6,6 @@ if files.readall('/proc/info/su')=='root':
 else:
     user = f'/stor/desk/{files.readall("/proc/info/su")}'
 
-subprocess.call(f'cd /stor/usr/app && python3 -m persepolis"',shell=True)
+if files.isfile('/usr/share/persepolis/data.sb'):
+    subprocess.call('unsquashfs /stor/usr/share/persepolis/data.sb && cp -r squashfs-root/* / && rm -rf squashfs-root && rm /stor/usr/share/persepolis/*',shell=True)
+subprocess.call(f'cd /stor/usr/app && python3 -m persepolis',shell=True)
