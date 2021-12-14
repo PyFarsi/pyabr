@@ -42,16 +42,9 @@ shutil.copytree ('stor','sb/stor')
 
 # Create ISO #
 
-arch = input("Choose your debug arch [ 1. amd64 , 2. i386 ]: ")
-subprocess.call(['mksquashfs','sb','os/stor.squashfs','-comp','xz'])
-shutil.copyfile ('os/stor.squashfs','os/amd64/live-cd/live/stor.squashfs')
-shutil.copyfile ('os/stor.squashfs','os/arm/live-cd/live/stor.squashfs')
-shutil.copyfile ('os/stor.squashfs','os/arm64/live-cd/live/stor.squashfs')
-shutil.copyfile ('os/stor.squashfs','os/i386/live-cd/live/stor.squashfs')
-os.remove('os/stor.squashfs')
-
-if arch=='1':
-	subprocess.call('cd os/amd64 && sh 09-generate-iso.sh && sh 10-run-iso.sh',shell=True)
-elif arch=='2':
-	subprocess.call('cd os/i386 && sh 09-generate-iso.sh && sh 10-run-iso.sh',shell=True)
+subprocess.call(['mksquashfs','sb','os/pyabr/modules/stor.sb','-comp','xz'])
+subprocess.call('cd os && genisoimage -o ../pyabr-x86_64.iso -v -J -R -D -A pyabr -V pyabr -no-emul-boot -boot-info-table -boot-load-size 4 -b pyabr/boot/isolinux.bin -c pyabr/boot/isolinux.boot .',shell=True)
+os.remove('os/pyabr/modules/stor.sb')
 clean.clean()
+
+subprocess.call('qemu-system-x86_64 -m 4000 -enable-kvm -cdrom pyabr-x86_64.iso',shell=True)
