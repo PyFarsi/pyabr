@@ -11,6 +11,7 @@ __pycache__/
 build/
 .vscode/
 develop-eggs/
+packs-extra/
 packs/io.github.pashmaklang/
 dist/
 packs/ir.projop/
