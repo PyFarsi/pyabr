@@ -1,8 +1,0 @@
-name[en]: Google Maps
-name[fa]: نقشه های گوگل
-name[ar]: خرائط جوجل
-name[tr]: Google haritaları
-logo: @icon/googlemaps
-exec: googlemaps
-application: Yes
-category: internet

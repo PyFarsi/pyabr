@@ -36,6 +36,18 @@ def build(name):
     os.rename (name+".zip","build-packs/"+name+".pa")
     clean()
 
+def build_extra(name):
+    if not ("packs-extra/"+name + "/code") and ("packs-extra/"+name + "/data") and (
+            "packs-extra/"+name + "/control") and ("packs-extra/"+name + "/control/manifest"):
+        exit(0)
+
+    shutil.make_archive("app/cache/archives/build/data", "zip",    "packs-extra/"+name + "/data")
+    shutil.make_archive("app/cache/archives/build/code", "zip",    "packs-extra/"+name + "/code")
+    shutil.make_archive("app/cache/archives/build/control", "zip", "packs-extra/"+ name + "/control")
+    shutil.make_archive(name, "zip", "app/cache/archives/build")
+    os.rename (name+".zip","build-packs/"+name+".pa")
+    clean()
+
 def manifest(name):
     if not ("packs/"+name + "/code") and ("packs/"+name + "/data") and (
             "packs/"+name + "/control") and ("packs/"+name + "/control/manifest"):
@@ -49,6 +61,20 @@ def manifest(name):
     control.write_record('mirror',f.read(),f'packs/{name}/control/manifest')
     f.close()
     shutil.copyfile('packs/'+name+'/control/manifest',f'packs/ir.pyabr.updates/data/{name}.manifest')
+
+def manifest_extra(name):
+    if not ("packs-extra/"+name + "/code") and ("packs-extra/"+name + "/data") and (
+            "packsextra/"+name + "/control") and ("packs-extra/"+name + "/control/manifest"):
+        exit(0)
+
+    f = open ('build-date.txt','r',encoding='utf-8')
+    control.write_record('build',f.read(),f'packs-extra/{name}/control/manifest')
+    f.close()
+
+    f = open ('mirror.txt','r',encoding='utf-8')
+    control.write_record('mirror',f.read(),f'packs-extra/{name}/control/manifest')
+    f.close()
+    shutil.copyfile('packs-extra/'+name+'/control/manifest',f'packs/ir.pyabr.updates/data/{name}.manifest')
 
 ## Clean the cache ##
 def clean():
@@ -108,40 +134,17 @@ def install ():
             build(i)
             unpack(i)
 
+    try:
+        list = os.listdir('packs-extra')
+        for i in list:
+            if os.path.isdir('packs-extra/' + i):
+                build_extra(i)
+                unpack(i)
+    except:
+        pass
+
 def genisoinstall ():
-    list = [
-        'io.github.pashmak',
-        'io.mpv',
-        'ir.pyabr',
-        'ir.pyabr.baad',
-        'ir.pyabr.barf',
-        'ir.pyabr.barge',
-        'ir.pyabr.calculator',
-        'ir.pyabr.calendar',
-        'ir.pyabr.chat',
-        'ir.pyabr.clock',
-        'ir.pyabr.commento',
-        'ir.pyabr.controls',
-        'ir.pyabr.copydisk',
-        'ir.pyabr.dmgr',
-        'ir.pyabr.files',
-        'ir.pyabr.runapp',
-        'ir.pyabr.help',
-        'ir.pyabr.iran-wallpaper',
-        'ir.pyabr.nama',
-        'ir.pyabr.paye',
-        'ir.pyabr.pyket',
-        'ir.pyabr.pysys',
-        'ir.pyabr.sample',
-        'ir.pyabr.setup',
-        'ir.pyabr.sysinfo',
-        'ir.pyabr.updates',
-        'ir.pyabr.upstor',
-        'org.chromium',
-        'org.gnu.bash',
-        'org.python',
-        'ir.pyabr.baran',
-    ]
+    list = os.listdir('packs')
     for i in list:
         if os.path.isdir('packs/'+i):
             build(i)
@@ -158,6 +161,15 @@ def buildpacks ():
         if os.path.isdir('packs/'+i):
             manifest(i)
             build(i)
-    
+
+    try:
+        list = os.listdir('packs-extra')
+        for i in list:
+            if os.path.isdir('packs-extra/' + i):
+                manifest_extra(i)
+                build_extra(i)
+    except:
+        pass
+
     manifest('ir.pyabr.updates')
     build('ir.pyabr.updates')

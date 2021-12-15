@@ -1,5 +1,0 @@
-name[en]: LibreOffice Draw
-logo: @icon/breeze-libreoffice-draw
-exec: libreofficedraw
-application: Yes
-category: tools

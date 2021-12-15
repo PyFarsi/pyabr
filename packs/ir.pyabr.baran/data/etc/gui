@@ -15,4 +15,4 @@ enter.background: @background/Sunset_and_sea_blur
 desktop.background: @background/Sunset_and_sea
 unlock.background: @background/Sunset_and_sea_blur
 lock.background: @background/Sunset_and_sea_blur
-dock: unity-right
+dock: unity

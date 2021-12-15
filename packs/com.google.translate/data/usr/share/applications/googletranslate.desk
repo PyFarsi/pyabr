@@ -1,8 +1,0 @@
-name[en]: Google Translate
-name[fa]: مترجم گوگل
-name[ar]: جوجل المترجم
-name[tr]: Google Çeviri
-logo: @icon/googletranslate
-exec: googletranslate
-application: Yes
-category: internet

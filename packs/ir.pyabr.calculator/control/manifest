@@ -11,5 +11,5 @@ description: Simple Calculator
 compile: Yes
 entry: calculator
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.calculator.svg
-build: 1400-09-12
+build: 1400-09-23
 mirror: https://mirror.pyabr.ir/zayanderoad/

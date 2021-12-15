@@ -11,5 +11,5 @@ description: Commento is a XTerm Terminal Emulator for Pyabr
 compile: Yes
 entry: commento
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.commento.svg
-build: 1400-09-12
+build: 1400-09-23
 mirror: https://mirror.pyabr.ir/zayanderoad/

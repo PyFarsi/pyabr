@@ -16,9 +16,9 @@ Window {
     Image {
         id: logo
         fillMode: Image.PreserveAspectFit
-        objectName: "logo"
         sourceSize: Qt.size( logo.width, logo.height )
         height: splash.width/3
+        objectName: "logo"
         anchors.centerIn: parent
         width: splash.height/4
     }

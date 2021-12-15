@@ -1,5 +1,0 @@
-name[en]: LibreOffice Calc
-logo: @icon/breeze-libreoffice-calc
-exec: libreofficecalc
-application: Yes
-category: tools

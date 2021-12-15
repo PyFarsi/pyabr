@@ -1,8 +1,0 @@
-name[en]: Google Docs
-name[fa]: اسناد گوگل
-name[ar]: مستندات جوجل
-name[tr]: Google dokümanları
-logo: @icon/googledocs
-exec: googledocs
-application: Yes
-category: internet
