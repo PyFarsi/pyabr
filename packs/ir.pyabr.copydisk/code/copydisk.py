@@ -23,7 +23,7 @@ from pyabr.quick import *
 import subprocess, multiprocessing
 
 def _format_():
-    subprocess.call(['mkfs.vfat','-I',f'{files.readall("/tmp/copydisk.tmp")}'])
+    subprocess.call(['mkfs.ext4','-F',f'{files.readall("/tmp/copydisk.tmp")}'])
     subprocess.call(['mount',f'{files.readall("/tmp/copydisk.tmp")}','/mnt'])
     subprocess.call(['cp','-r','/run/initramfs/memory/data/pyabr','/mnt'])
     subprocess.call('cd /mnt/pyabr/boot && sh bootinst.sh',shell=True)
