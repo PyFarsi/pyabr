@@ -18,7 +18,7 @@
 '''
 import os,multiprocessing
 import subprocess
-import sys, hashlib,shutil
+import sys, hashlib,shutil,psutil
 from typing import Text
 
 from pyabr.core import *
@@ -604,7 +604,16 @@ class Desktop (MainApp):
     NameRole = QtCore.Qt.ItemDataRole.UserRole + 1000
     LabelRole = QtCore.Qt.ItemDataRole.UserRole + 1001
     LogoRole = QtCore.Qt.ItemDataRole.UserRole + 1002
+
+
     pins = 0
+
+    def showTime(self):
+        current_time = QTime.currentTime()
+
+        # converting QTime object to string
+        label_time = current_time.toString('hh:mm:ss')
+        self.leClock.setProperty('text', res.num(label_time))
 
     def create_model(self,dir_path,category):
         model = QtGui.QStandardItemModel()
@@ -1023,7 +1032,142 @@ class Desktop (MainApp):
 
         self.addFileModel('/root/Desktop')
 
-        QTimer.singleShot(200,self.loop)
+        self.shells()
+
+        QTimer.singleShot(500,self.loop)
+
+    # function of battery #
+
+    def shells (self):
+        # WiFi Check
+        try:
+            self.wifi_signal = int(subprocess.check_output('nmcli -t -f SIGNAL dev wifi',shell=True))
+            if self.wifi_signal<=20:
+                self.shell_w020.setProperty('visible',True)
+                self.shell_w040.setProperty('visible',False)
+                self.shell_w080.setProperty('visible', False)
+                self.shell_w100.setProperty('visible', False)
+            elif self.wifi_signal<=40:
+                self.shell_w020.setProperty('visible',False)
+                self.shell_w040.setProperty('visible',True)
+                self.shell_w080.setProperty('visible', False)
+                self.shell_w100.setProperty('visible', False)
+            elif self.wifi_signal<=80:
+                self.shell_w020.setProperty('visible',False)
+                self.shell_w040.setProperty('visible',False)
+                self.shell_w080.setProperty('visible', True)
+                self.shell_w100.setProperty('visible', False)
+            elif self.wifi_signal<=100:
+                self.shell_w020.setProperty('visible',False)
+                self.shell_w040.setProperty('visible',False)
+                self.shell_w080.setProperty('visible', False)
+                self.shell_w100.setProperty('visible', True)
+        except:
+            pass
+
+        # Battery check
+        try:
+            battery = psutil.sensors_battery()
+            percent = battery.percent
+            plugged = battery.power_plugged
+
+            if plugged:
+                if percent>10:
+                    self.battery_000.setProperty('visible', False)
+                    self.battery_010.setProperty('visible', False)
+                    self.battery_020.setProperty('visible', False)
+                    self.battery_030.setProperty('visible', False)
+                    self.battery_040.setProperty('visible', False)
+                    self.battery_050.setProperty('visible', False)
+                    self.battery_060.setProperty('visible', False)
+                    self.battery_070.setProperty('visible', False)
+                    self.battery_080.setProperty('visible', False)
+                    self.battery_090.setProperty('visible', False)
+                    self.battery_100.setProperty('visible', False)
+                    self.battery_000_charging.setProperty('visible', True)
+                    self.battery_010_charging.setProperty('visible', False)
+                    self.battery_020_charging.setProperty('visible', False)
+                    self.battery_030_charging.setProperty('visible', False)
+                    self.battery_040_charging.setProperty('visible', False)
+                    self.battery_050_charging.setProperty('visible', False)
+                    self.battery_060_charging.setProperty('visible', False)
+                    self.battery_070_charging.setProperty('visible', False)
+                    self.battery_080_charging.setProperty('visible', False)
+                    self.battery_090_charging.setProperty('visible', False)
+                    self.battery_100_charging.setProperty('visible', False)
+                if percent > 20:
+                    self.battery_000.setProperty('visible', False)
+                    self.battery_010.setProperty('visible', False)
+                    self.battery_020.setProperty('visible', False)
+                    self.battery_030.setProperty('visible', False)
+                    self.battery_040.setProperty('visible', False)
+                    self.battery_050.setProperty('visible', False)
+                    self.battery_060.setProperty('visible', False)
+                    self.battery_070.setProperty('visible', False)
+                    self.battery_080.setProperty('visible', False)
+                    self.battery_090.setProperty('visible', False)
+                    self.battery_100.setProperty('visible', False)
+                    self.battery_000_charging.setProperty('visible', False)
+                    self.battery_010_charging.setProperty('visible', True)
+                    self.battery_020_charging.setProperty('visible', False)
+                    self.battery_030_charging.setProperty('visible', False)
+                    self.battery_040_charging.setProperty('visible', False)
+                    self.battery_050_charging.setProperty('visible', False)
+                    self.battery_060_charging.setProperty('visible', False)
+                    self.battery_070_charging.setProperty('visible', False)
+                    self.battery_080_charging.setProperty('visible', False)
+                    self.battery_090_charging.setProperty('visible', False)
+                    self.battery_100_charging.setProperty('visible', False)
+                if percent>30:
+                    self.battery_000.setProperty('visible', False)
+                    self.battery_010.setProperty('visible', False)
+                    self.battery_020.setProperty('visible', False)
+                    self.battery_030.setProperty('visible', False)
+                    self.battery_040.setProperty('visible', False)
+                    self.battery_050.setProperty('visible', False)
+                    self.battery_060.setProperty('visible', False)
+                    self.battery_070.setProperty('visible', False)
+                    self.battery_080.setProperty('visible', False)
+                    self.battery_090.setProperty('visible', False)
+                    self.battery_100.setProperty('visible', False)
+                    self.battery_000_charging.setProperty('visible', False)
+                    self.battery_010_charging.setProperty('visible', False)
+                    self.battery_020_charging.setProperty('visible', True)
+                    self.battery_030_charging.setProperty('visible', False)
+                    self.battery_040_charging.setProperty('visible', False)
+                    self.battery_050_charging.setProperty('visible', False)
+                    self.battery_060_charging.setProperty('visible', False)
+                    self.battery_070_charging.setProperty('visible', False)
+                    self.battery_080_charging.setProperty('visible', False)
+                    self.battery_090_charging.setProperty('visible', False)
+                    self.battery_100_charging.setProperty('visible', False)
+                if percent>30:
+                    self.battery_000.setProperty('visible', False)
+                    self.battery_010.setProperty('visible', False)
+                    self.battery_020.setProperty('visible', False)
+                    self.battery_030.setProperty('visible', False)
+                    self.battery_040.setProperty('visible', False)
+                    self.battery_050.setProperty('visible', False)
+                    self.battery_060.setProperty('visible', False)
+                    self.battery_070.setProperty('visible', False)
+                    self.battery_080.setProperty('visible', False)
+                    self.battery_090.setProperty('visible', False)
+                    self.battery_100.setProperty('visible', False)
+                    self.battery_000_charging.setProperty('visible', False)
+                    self.battery_010_charging.setProperty('visible', False)
+                    self.battery_020_charging.setProperty('visible', True)
+                    self.battery_030_charging.setProperty('visible', False)
+                    self.battery_040_charging.setProperty('visible', False)
+                    self.battery_050_charging.setProperty('visible', False)
+                    self.battery_060_charging.setProperty('visible', False)
+                    self.battery_070_charging.setProperty('visible', False)
+                    self.battery_080_charging.setProperty('visible', False)
+                    self.battery_090_charging.setProperty('visible', False)
+                    self.battery_100_charging.setProperty('visible', False)
+            else:
+                pass
+        except:
+            pass
 
     def startup (self):
         # Startup applications
@@ -1157,6 +1301,41 @@ class Desktop (MainApp):
         self.rmac.setProperty('text',res.get('@string/rma'))
         self.runc = self.findChild( 'runc')
         self.runc.setProperty('text',res.get('@string/runner'))
+
+        self.shell_w100 = self.findChild('shell_w100')
+        self.shell_w080 = self.findChild('shell_w080')
+        self.shell_w040 = self.findChild('shell_w040')
+        self.shell_w020 = self.findChild('shell_w020')
+
+        self.battery_000_charging = self.findChild('battery_000_charging')
+        self.battery_010_charging = self.findChild('battery_010_charging')
+        self.battery_020_charging = self.findChild('battery_020_charging')
+        self.battery_030_charging = self.findChild('battery_030_charging')
+        self.battery_040_charging = self.findChild('battery_040_charging')
+        self.battery_050_charging = self.findChild('battery_050_charging')
+        self.battery_060_charging = self.findChild('battery_060_charging')
+        self.battery_070_charging = self.findChild('battery_070_charging')
+        self.battery_080_charging = self.findChild('battery_080_charging')
+        self.battery_090_charging = self.findChild('battery_090_charging')
+        self.battery_100_charging = self.findChild('battery_100_charging')
+
+        self.battery_000 = self.findChild('battery_000')
+        self.battery_010 = self.findChild('battery_010')
+        self.battery_020 = self.findChild('battery_020')
+        self.battery_030 = self.findChild('battery_030')
+        self.battery_040 = self.findChild('battery_040')
+        self.battery_050 = self.findChild('battery_050')
+        self.battery_060 = self.findChild('battery_060')
+        self.battery_070 = self.findChild('battery_070')
+        self.battery_080 = self.findChild('battery_080')
+        self.battery_090 = self.findChild('battery_090')
+        self.battery_100 = self.findChild('battery_100')
+
+        self.leClock = self.findChild('leClock')
+
+        timer = QTimer(self)
+        timer.timeout.connect(self.showTime)
+        timer.start(1000)
 
         self._background = self.findChild( 'background')
         try:
