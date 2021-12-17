@@ -1,0 +1,9 @@
+name[en]: Brave
+name[fa]: بریو
+name[ar]: بریو
+name[tr]: brave
+logo: @icon/brave
+exec: brave
+application: Yes
+category: internet
+pin: Yes

@@ -7,7 +7,7 @@ copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
 version: 2.0.2
-description: Commento is a XTerm Terminal Emulator for Pyabr
+description: Commento is a Saye shell emulator uses Konsole, xterm, qterminal
 compile: Yes
 entry: commento
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.commento.svg

@@ -1,9 +1,9 @@
-name[en]: Web Browser
-name[fa]: مرورگر اینترنتی
-name[ar]: متصفح الإنترنت
-name[tr]: İnternet tarayıcısı
+name[en]: Chromium
+name[fa]: کرومیوم
+name[ar]: کرومیوم
+name[tr]: Krom
 logo: @icon/chromium
 exec: chromium
 application: Yes
 category: internet
-pin: Yes
+pin: No
