@@ -1,3 +1,5 @@
+import os
+import shutil
 
 from pyabr.core import *
 from pyabr.quick import *
@@ -8,16 +10,20 @@ class MainApp (MainApp):
         self.pro.setProperty('value',value/100)
         if value == 100:
             self.close()
-            subprocess.call('mount /tmp/stor.sb /mnt',shell=True)
-            subprocess.call('cp -r /mnt/stor/app /stor',shell=True)
-            subprocess.call('cp -r /mnt/stor/proc /stor',shell=True)
-            subprocess.call('cp -r /mnt/stor/usr /stor',shell=True)
-            subprocess.call('cp -r /mnt/stor/vmabr.pyc /stor',shell=True)
-            subprocess.call('cp -r /mnt/stor/etc/domain /stor/etc',shell=True)
-            subprocess.call('cp -r /mnt/stor/etc/distro /stor/etc',shell=True)
-            subprocess.call('cp -r /mnt/stor/etc/ext /stor/etc',shell=True)
-            subprocess.call('cp -r /mnt/stor/etc/fhs /stor/etc',shell=True)
-            subprocess.call('umount /mnt',shell=True)
+            try:
+                os.remove('/run/initramfs/memory/data/pyabr/modules/stor.sb')
+                shutil.copyfile('/tmp/stor.sb','/run/initramfs/memory/data/pyabr/modules/stor.sb')
+            except:
+                subprocess.call('mount /tmp/stor.sb /mnt',shell=True)
+                subprocess.call('cp -r /mnt/stor/app /stor',shell=True)
+                subprocess.call('cp -r /mnt/stor/proc /stor',shell=True)
+                subprocess.call('cp -r /mnt/stor/usr /stor',shell=True)
+                subprocess.call('cp -r /mnt/stor/vmabr.pyc /stor',shell=True)
+                subprocess.call('cp -r /mnt/stor/etc/domain /stor/etc',shell=True)
+                subprocess.call('cp -r /mnt/stor/etc/distro /stor/etc',shell=True)
+                subprocess.call('cp -r /mnt/stor/etc/ext /stor/etc',shell=True)
+                subprocess.call('cp -r /mnt/stor/etc/fhs /stor/etc',shell=True)
+                subprocess.call('umount /mnt',shell=True)
             subprocess.call('rm /tmp/stor.sb',shell=True)
             subprocess.call('rm /stor/tmp/stor.txt',shell=True)
             return
