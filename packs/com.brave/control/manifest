@@ -9,6 +9,7 @@ unpack: /
 version: current
 description: Brave Web Browser
 compile: Yes
+entry: brave
 logo: https://mirror.pyabr.ir/zayanderoad/com.brave.png
 build: 1400-09-23
 mirror: https://mirror.pyabr.ir/zayanderoad/

@@ -10,5 +10,6 @@ version: 2.0.1
 description: General Help application
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.help.svg
 compile: Yes
+entry: onlinesupport
 build: 1400-09-23
 mirror: https://mirror.pyabr.ir/zayanderoad/
