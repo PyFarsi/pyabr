@@ -1,0 +1,7 @@
+name[en]: Kill Windows
+logo: @icon/breeze-app
+exec: kma
+application: No
+hidden: Yes
+category: tools
+pin: No

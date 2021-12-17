@@ -80,6 +80,202 @@ ApplicationWindow {
         width: parent.width
         height: 30
         id: topbar
+
+        Row {
+            anchors.verticalCenter: parent.verticalCenter
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-shutdown.svg'
+                icon.color: 'white'
+                onClicked: {
+                    background_app.text = 'pysys';
+                }
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-w100.svg'
+                icon.color: 'white'
+                objectName: 'shell_w100'
+                visible: false
+                onClicked: {
+                    background_app.text = 'wifi';
+                }
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-w080.svg'
+                icon.color: 'white'
+                objectName: 'shell_w080'
+                visible: false
+                onClicked: {
+                    background_app.text = 'wifi';
+                }
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-w040.svg'
+                icon.color: 'white'
+                objectName: 'shell_w040'
+                visible: false
+                onClicked: {
+                    background_app.text = 'wifi';
+                }
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-w020.svg'
+                icon.color: 'red'
+                objectName: 'shell_w020'
+                visible: false
+                onClicked: {
+                    background_app.text = 'wifi';
+                }
+            }
+
+            /* Battery */
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-000.svg'
+                icon.color: 'red'
+                objectName: 'battery_000'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-010.svg'
+                icon.color: 'red'
+                objectName: 'battery_010'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-020.svg'
+                icon.color: 'white'
+                objectName: 'battery_020'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-030.svg'
+                icon.color: 'white'
+                objectName: 'battery_030'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-040.svg'
+                icon.color: 'white'
+                objectName: 'battery_040'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-050.svg'
+                icon.color: 'white'
+                objectName: 'battery_050'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-060.svg'
+                icon.color: 'white'
+                objectName: 'battery_060'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-070.svg'
+                icon.color: 'white'
+                objectName: 'battery_070'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-080.svg'
+                icon.color: 'white'
+                objectName: 'battery_080'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-090.svg'
+                icon.color: 'white'
+                objectName: 'battery_090'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-100.svg'
+                icon.color: 'white'
+                objectName: 'battery_100'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-000-charging.svg'
+                icon.color: 'green'
+                objectName: 'battery_000_charging'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-010-charging.svg'
+                icon.color: 'green'
+                objectName: 'battery_010_charging'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-020-charging.svg'
+                icon.color: 'green'
+                objectName: 'battery_020_charging'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-030-charging.svg'
+                icon.color: 'green'
+                objectName: 'battery_030_charging'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-040-charging.svg'
+                icon.color: 'green'
+                objectName: 'battery_040_charging'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-050-charging.svg'
+                icon.color: 'green'
+                objectName: 'battery_050_charging'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-060-charging.svg'
+                icon.color: 'green'
+                objectName: 'battery_060_charging'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-070-charging.svg'
+                icon.color: 'green'
+                objectName: 'battery_070_charging'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-080-charging.svg'
+                icon.color: 'green'
+                objectName: 'battery_080_charging'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-090-charging.svg'
+                icon.color: 'green'
+                objectName: 'battery_090_charging'
+                visible: false
+            }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-battery-100-charging.svg'
+                icon.color: 'green'
+                objectName: 'battery_100_charging'
+                visible: false
+            }
+        }
+
+        Text {
+            id: leClock
+            anchors.centerIn: parent
+            objectName: "leClock"
+            font.family: "IRANSans"
+            font.pixelSize: 16
+            color: "white"
+            ToolButton {
+                anchors.fill: parent
+                onClicked: {
+                        background_app.text = 'clock';
+                }
+            }
+        }
     }
 
 

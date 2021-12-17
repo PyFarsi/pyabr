@@ -1,0 +1,3 @@
+exec: pysys.desk
+logo: @icon/breeze-shutdown
+color: white

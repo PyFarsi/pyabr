@@ -6,8 +6,8 @@ name[tr]: pyabr yükseltmesi
 copyright: (c) 2021 Mani Jamali
 license: CC0
 unpack: /
-version: 1.0.0
-description: Hello Example
+version: 1.0.1
+description: Pyabr upgrade application
 compile: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.upstor.svg
 build: 1400-09-23

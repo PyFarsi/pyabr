@@ -1,0 +1,6 @@
+name[en]: WiFi
+logo: @icon/breeze-w100
+exec: wifi_app
+application: No
+hidden: Yes
+category: tools
