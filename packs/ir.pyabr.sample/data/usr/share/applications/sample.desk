@@ -5,4 +5,5 @@ name[tr]: örneklem
 logo: @icon/breeze-app
 exec: sample
 application: No
+hidden: Yes
 category: tools
