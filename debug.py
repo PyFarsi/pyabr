@@ -39,10 +39,50 @@ pack.install()
 
 if not os.path.isdir ('sb'): os.mkdir ('sb')
 shutil.copytree ('stor','sb/stor')
+os.mkdir('sb/root')
+os.makedirs('sb/usr/bin')
+os.mkdir('sb/etc')
+os.makedirs('sb/usr/lib')
+f = open('sb/root/.xinitrc','w')
+f.write('pyabr')
+f.close()
+
+f = open('sb/usr/bin/pyabr','w')
+f.write('''#!/usr/bin/python3
+import subprocess
+f = open ('/stor/proc/info/su','w')
+f.write('root')
+f.close()
+subprocess.call ('cd /stor && python3 vmabr.pyc',shell=True)''')
+f.close()
+
+f = open('sb/etc/os-release','w')
+f.write('''PRETTY_NAME="Pyabr 2.2"
+NAME="Pyabr"
+VERSION_ID="2.2"
+VERSION="2.2 (Zayande Road)"
+VERSION_CODENAME=zayanderoad
+ID=pyabr
+ID_LIKE=ubuntu
+HOME_URL="https://pyabr.ir/"''')
+f.close()
+
+f = open('sb/usr/lib/os-release','w')
+f.write('''PRETTY_NAME="Pyabr 2.2"
+NAME="Pyabr"
+VERSION_ID="2.2"
+VERSION="2.2 (Zayande Road)"
+VERSION_CODENAME=zayanderoad
+ID=pyabr
+ID_LIKE=ubuntu
+HOME_URL="https://pyabr.ir/"''')
+f.close()
+
+subprocess.call(['chmod','+x','sb/usr/bin/pyabr'])
 
 # Create ISO #
 
-subprocess.call(['mksquashfs','sb','os/pyabr/modules/stor.sb','-comp','xz'])
+subprocess.call(['mksquashfs','sb','os/pyabr/modules/stor.sb','-comp','xz','-b','1024K','-always-use-fragments','-noappend'])
 subprocess.call('cd os && genisoimage -o ../pyabr-x86_64.iso -v -J -R -D -A pyabr -V pyabr -no-emul-boot -boot-info-table -boot-load-size 4 -b pyabr/boot/isolinux.bin -c pyabr/boot/isolinux.boot .',shell=True)
 os.remove('os/pyabr/modules/stor.sb')
 clean.clean()
