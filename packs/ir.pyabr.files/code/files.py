@@ -95,22 +95,7 @@ class MainApp (MainApp):
 
             elif self.fsel.property('text').endswith('.pyc'):
                 if permissions.check(f'{files.output(self.fsel.property("text"))}', "x", files.readall("/proc/info/su")):
-                    files.write ('/tmp/exec.sa',files.output(self.fsel.property('text').replace('.pyc','').replace('.sa',''))+"\nrm /tmp/exec.sa\nshut")
-                    app.start ('commento','')
-                else:
-                    self.e = Perm()
-
-            elif self.fsel.property('text').endswith('.pashm'):
-                if permissions.check(f'{files.output(self.fsel.property("text"))}', "x", files.readall("/proc/info/su")):
-                    files.write ('/tmp/exec.sa',f"pashmak {self.fsel.property('text')}\nrm /tmp/exec.sa\nshut")
-                    app.start ('commento','')
-                else:
-                    self.e = Perm()
-
-            elif self.fsel.property('text').endswith('.py'):
-                if permissions.check(f'{files.output(self.fsel.property("text"))}', "x", files.readall("/proc/info/su")):
-                    commands.cc ([self.fsel.property('text')])
-                    files.write ('/tmp/exec.sa',f"{self.fsel.property('text').replace('.py','')}\nrm /tmp/exec.sa\nrm {self.fsel.property('text')}c\nrm __pycache__\nshut")
+                    files.write ('/tmp/exec.sa',files.output(self.fsel.property('text').replace('.pyc','').replace('.sa',''))+"\nrm /tmp/exec.sa")
                     app.start ('commento','')
                 else:
                     self.e = Perm()
@@ -121,29 +106,9 @@ class MainApp (MainApp):
                 else:
                     self.e = Perm()
 
-            elif self.fsel.property('text').endswith('.jar'):
-                if permissions.check(f'{files.output(self.fsel.property("text"))}', "x", files.readall("/proc/info/su")):
-                    files.write ('/tmp/exec.sa',f"java -jar {self.fsel.property('text')}\nrm /tmp/exec.sa\nshut")
-                    app.start ('commento','')
-                else:
-                    self.e = Perm()
-
-            elif self.fsel.property('text').endswith ('.desk'):
-                try:
-                    app.start (files.filename (self.fsel.property('text')).replace('.desk',''),'')
-                except:
-                    pass
-
             elif self.fsel.property('text').endswith ('.pa'):
                 if permissions.check(f'{files.output(self.fsel.property("text"))}', "x", files.readall("/proc/info/su")):
                     self.i = Install ( self.fsel.property('text'))
-                else:
-                    self.e = Perm()
-
-            elif self.fsel.property('text').endswith('.qml'):
-                if permissions.check(f'{files.output(self.fsel.property("text"))}', "x", files.readall("/proc/info/su")):
-                    files.copy (self.fsel.property('text'),'/usr/share/layouts/debug.qml')
-                    app.start ('debug','')
                 else:
                     self.e = Perm()
 
@@ -187,7 +152,7 @@ class MainApp (MainApp):
                 self.extract.setProperty('enabled',True)
             else:
                 self.extract.setProperty('enabled',False)
-            if self.fselp.endswith('.pyc') or self.fselp.endswith('.pashm') or self.fselp.endswith('.pa') or self.fselp.endswith('.qml') or self.fselp.endswith('.py') or self.fselp.endswith('.sa') or self.fselp.endswith('.exe'):
+            if self.fselp.endswith('.pyc')  or self.fselp.endswith('.pa')   or self.fselp.endswith('.sa') or self.fselp.endswith('.exe'):
                 self._execute.setProperty('enabled',True)
             else:
                 self._execute.setProperty('enabled',False)
@@ -277,35 +242,10 @@ class MainApp (MainApp):
                     if self.fselp.endswith('.pyc'):
                         files.write ('/tmp/exec.sa',files.output(self.fselp.replace('.pyc','').replace('.sa',''))+"\nrm /tmp/exec.sa\nshut")
                         app.start ('commento','')
-
-                    elif self.fselp.endswith('.pashm'):
-                        files.write ('/tmp/exec.sa',f"pashmak {self.fselp}\nrm /tmp/exec.sa\nshut")
-                        app.start ('commento','')
-
-                    elif self.fselp.endswith('.py'):
-                        commands.cc ([self.fselp])
-                        files.write ('/tmp/exec.sa',f"{self.fselp.replace('.py','')}\nrm /tmp/exec.sa\nrm {self.fselp}c\nrm __pycache__\nshut")
-                        app.start ('commento','')
-
                     elif self.fselp.endswith('.exe'):
                         app.start ('wine',f"wine '{self.fselp}'")
-
-                    elif self.fselp.endswith('.jar'):
-                        files.write ('/tmp/exec.sa',f"java -jar {self.fselp}\nrm /tmp/exec.sa\nshut")
-                        app.start ('commento','')
-
-                    elif self.fselp.endswith ('.desk'):
-                        try:
-                            app.start (files.filename (self.fselp).replace('.desk',''),'')
-                        except:
-                            pass
-
                     elif self.fselp.endswith ('.pa'):
                         self.i = Install ( self.fselp)
-
-                    elif self.fselp.endswith('.qml'):
-                        files.copy (self.fsel.property('text'),'/usr/share/layouts/debug.qml')
-                        app.start ('debug','')
                 else:
                     self.e = Perm()
 

@@ -27,9 +27,6 @@ class MainApp (MainApp):
         self.setProperty ('title',files.filename(filename)+' - '+res.get('@string/barge'))
         self.path.setProperty ('text',filename)
 
-        if filename.endswith ('.py') or filename.endswith ('.sa') or filename.endswith ('.pashm') or filename.endswith('.qml') or filename.endswith('.htm') or filename.endswith('.html') or filename.endswith('.c') or filename.endswith('.cpp') or filename.endswith('.cxx') or filename.endswith('.c++'):
-            self.start.setProperty ('visible',True)
-
     def open__(self,filename):
         if permissions.check(files.output(filename), "r", files.readall("/proc/info/su")):
             self.text.setProperty ('text',files.readall(filename))
@@ -58,36 +55,11 @@ class MainApp (MainApp):
                 files.write (self.path.property('text'),self.text.property('text'))
             else:
                 self.e = Perm()
-    
-    def start_(self):
-        if permissions.check(files.output(self.path.property('text')), "x", files.readall("/proc/info/su")):
-            if self.path.property('text').endswith ('.py'):
-                commands.cc ([self.path.property('text')])
-                files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.py','')}\nrm /tmp/exec.sa\nrm {self.path.property('text')}c\nrm  __pycache__\npause")
-                app.start ('commento','')
-            elif self.path.property('text').endswith ('.c') or self.path.property('text').endswith ('.cpp') or self.path.property('text').endswith ('.cxx') or self.path.property('text').endswith ('.c++'):
-                commands.cc([self.path.property('text')])
-                files.write('/tmp/exec.sa',f"run a.out\nrm  /tmp/exec.sa\npause")
-                app.start('commento', '')
-            elif self.path.property('text').endswith ('.sa'):
-                files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.sa','')}\nrm /tmp/exec.sa\npause")
-                app.start ('commento','')
-            elif self.path.property('text').endswith ('.pashm'):
-                files.write ('/tmp/exec.sa',f"pashmak {self.path.property('text')}\nrm /tmp/exec.sa\npause")
-                app.start ('commento','')
-            elif self.path.property('text').endswith ('.qml'):
-                files.copy (self.path.property('text'),'/usr/share/layouts/debug.qml')
-                app.start ('debug','')
-            elif self.path.property('text').endswith('.html') or self.path.property('text').endswith('.htm'):
-                app.start ('chromium',f'file:///stor/{self.path.property("text")}')
-        else:
-            self.e = Perm()
 
     def add_(self):
         self.text.setProperty('text','')
         self.setProperty('title',res.get('@string/barge'))
         self.path.setProperty('text','')
-        self.start.setProperty('visible',False)
 
     def addwin_(self):
         app.start ('barge','')
@@ -104,7 +76,6 @@ class MainApp (MainApp):
         self.saveas = self.findChild ('saveas')
         self.text = self.findChild ('text')
         self.path = self.findChild ('path')
-        self.start = self.findChild ('start')
         self.add = self.findChild ('add')
         self.addwin = self.findChild ('addwin')
 
@@ -113,7 +84,6 @@ class MainApp (MainApp):
         self.open.clicked.connect(self.open_)
         self.saveas.clicked.connect(self.saveas_)
         self.save.clicked.connect (self.save_)
-        self.start.clicked.connect (self.start_)
         self.add.clicked.connect (self.add_)
         self.addwin.clicked.connect (self.addwin_)
 
