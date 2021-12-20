@@ -614,7 +614,7 @@ class Commands:
 
         elif filename.endswith('.c'):
             if args[1:]==[]:
-                subprocess.call(['gcc',files.input(filename)])
+                subprocess.call(['gcc',files.input(filename),'-o',files.input('a.out')])
                 if not permissions.check(files.output('a.out'), "w", files.readall("/proc/info/su")):
                     colors.show('cc', 'perm', '')
                     sys.exit(0)
@@ -623,11 +623,15 @@ class Commands:
                 if not permissions.check(files.output(output), "w", files.readall("/proc/info/su")):
                     colors.show('cc', 'perm', '')
                     sys.exit(0)
-                subprocess.call(['gcc',files.input(filename),files.input(output)])
+
+                if output.endswith('.so'):
+                    subprocess.call(['gcc','-shared','-o',files.input(output),'-fPIC',files.input(filename)])
+                else:
+                    subprocess.call(['gcc',files.input(filename),'-o',files.input(output)])
 
         elif filename.endswith('.cpp') or filename.endswith('.cxx') or filename.endswith('.c++'):
             if args[1:]==[]:
-                subprocess.call(['g++',files.input(filename)])
+                subprocess.call(['g++',files.input(filename),'-o',files.input('a.out')])
                 if not permissions.check(files.output('a.out'), "w", files.readall("/proc/info/su")):
                     colors.show('cc', 'perm', '')
                     sys.exit(0)
@@ -636,7 +640,11 @@ class Commands:
                 if not permissions.check(files.output(output), "w", files.readall("/proc/info/su")):
                     colors.show('cc', 'perm', '')
                     sys.exit(0)
-                subprocess.call(['g++',files.input(filename),files.input(output)])
+
+                if output.endswith('.so'):
+                    subprocess.call(['g++','-shared','-o',files.input(output),'-fPIC',files.input(filename)])
+                else:
+                    subprocess.call(['g++',files.input(filename),'-o',files.input(output)])
 
 
     # check command #
