@@ -142,6 +142,7 @@ class Commands:
         for i in args[1:]:
             commands+=f' {i}'
 
+        subprocess.call(f'chmod +x {files.input(args[0])}',shell=True)
         subprocess.call(commands,shell=True)
 
     # apt debian #
