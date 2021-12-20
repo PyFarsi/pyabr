@@ -598,18 +598,45 @@ class Commands:
             colors.show('cc','perm','')
             sys.exit(0)
 
-        # compile types #
-        if args[1:]==[]:
-            py_compile.compile(files.input(filename),files.input(filename.replace('.py','.pyc')))
-            if not permissions.check(files.output(filename.replace('.py','.pyc')), "w", files.readall("/proc/info/su")):
-                colors.show('cc', 'perm', '')
-                sys.exit(0)
-        else:
-            output = args[1]
-            if not permissions.check(files.output(output), "w", files.readall("/proc/info/su")):
-                colors.show('cc', 'perm', '')
-                sys.exit(0)
-            py_compile.compile(files.input(filename), files.input(output))
+        if filename.endswith('.py'):
+            # compile types #
+            if args[1:]==[]:
+                py_compile.compile(files.input(filename),files.input(filename.replace('.py','.pyc')))
+                if not permissions.check(files.output(filename.replace('.py','.pyc')), "w", files.readall("/proc/info/su")):
+                    colors.show('cc', 'perm', '')
+                    sys.exit(0)
+            else:
+                output = args[1]
+                if not permissions.check(files.output(output), "w", files.readall("/proc/info/su")):
+                    colors.show('cc', 'perm', '')
+                    sys.exit(0)
+                py_compile.compile(files.input(filename), files.input(output))
+
+        elif filename.endswith('.c'):
+            if args[1:]==[]:
+                subprocess.call(['gcc',files.input(filename)])
+                if not permissions.check(files.output('a.out'), "w", files.readall("/proc/info/su")):
+                    colors.show('cc', 'perm', '')
+                    sys.exit(0)
+            else:
+                output = args[1]
+                if not permissions.check(files.output(output), "w", files.readall("/proc/info/su")):
+                    colors.show('cc', 'perm', '')
+                    sys.exit(0)
+                subprocess.call(['gcc',files.input(filename),files.input(output)])
+
+        elif filename.endswith('.cpp') or filename.endswith('.cxx') or filename.endswith('.c++'):
+            if args[1:]==[]:
+                subprocess.call(['g++',files.input(filename)])
+                if not permissions.check(files.output('a.out'), "w", files.readall("/proc/info/su")):
+                    colors.show('cc', 'perm', '')
+                    sys.exit(0)
+            else:
+                output = args[1]
+                if not permissions.check(files.output(output), "w", files.readall("/proc/info/su")):
+                    colors.show('cc', 'perm', '')
+                    sys.exit(0)
+                subprocess.call(['g++',files.input(filename),files.input(output)])
 
 
     # check command #
