@@ -208,11 +208,9 @@ def gui_splash ():
         subprocess.call([sys.executable,'vmabr.pyc','exec',control.read_record('desktop','/etc/gui')])
 
 if sys.argv[1:][0] == "gui-splash":
-    p1 = multiprocessing.Process(target=windows_manager)
-    p2 = multiprocessing.Process(target=gui_splash)
-
-    p1.start()
-    p2.start()
+    control.write_record('params', 'splash', '/etc/gui')
+    os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
+    import baran
 
 ## @core/gui-login ##
 
@@ -226,11 +224,9 @@ def gui_login():
         pass
 
 if sys.argv[1:][0] == "gui-login":
-    p1 = multiprocessing.Process(target=windows_manager)
-    p2 = multiprocessing.Process(target=gui_login)
-
-    p1.start()
-    p2.start()
+    control.write_record('params', 'login', '/etc/gui')
+    os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
+    import baran
 ## @core/gui-enter ##
 
 def gui_enter():
@@ -242,11 +238,10 @@ def gui_enter():
             os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
             subprocess.call([sys.executable,'vmabr.pyc','exec',control.read_record('desktop','/etc/gui')])
 if sys.argv[1:][0] == "gui-enter":
-    p1 = multiprocessing.Process(target=windows_manager)
-    p2 = multiprocessing.Process(target=gui_enter)
-
-    p1.start()
-    p2.start()
+    control.write_record('params', 'enter', '/etc/gui')
+    control.write_record('username',sys.argv[1:][1],'/etc/gui')
+    os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
+    import baran
 
 def gui_unlock():
         if sys.argv[1:][1:] == [] or sys.argv[1:][1] == 'guest' or not files.isfile(f'/etc/users/{sys.argv[1:][1]}'):
@@ -258,11 +253,10 @@ def gui_unlock():
             subprocess.call([sys.executable,'vmabr.pyc','exec',control.read_record('desktop','/etc/gui')])
 
 if sys.argv[1:][0] == "gui-unlock":
-    p1 = multiprocessing.Process(target=windows_manager)
-    p2 = multiprocessing.Process(target=gui_unlock)
-
-    p1.start()
-    p2.start()
+    control.write_record('params', 'unlock', '/etc/gui')
+    control.write_record('username',sys.argv[1:][1],'/etc/gui')
+    os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
+    import baran
 
 def gui_desktop():
         if sys.argv[1:][1:] == [] or sys.argv[1:][2:] == [] or sys.argv[1:][1] == 'guest' or not files.isfile(f'/etc/users/{sys.argv[1:][1]}'):
@@ -284,11 +278,11 @@ def gui_desktop():
 ## @core/gui-desktop ##
 
 if sys.argv[1:][0] == "gui-desktop":
-    p1 = multiprocessing.Process(target=windows_manager)
-    p2 = multiprocessing.Process(target=gui_desktop)
-
-    p1.start()
-    p2.start()
+    control.write_record('params', 'desktop', '/etc/gui')
+    control.write_record('username', sys.argv[1:][1], '/etc/gui')
+    control.write_record('password', sys.argv[1:][2], '/etc/gui')
+    os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
+    import baran
 
 ## @lib/shell ##
 

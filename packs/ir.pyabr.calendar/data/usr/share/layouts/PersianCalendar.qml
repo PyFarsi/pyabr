@@ -8,12 +8,14 @@ import QtQuick.Controls 2.3
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls.Material 2.12
 
+/* Copyright https://github.com/mshobeyri/PersianCalendar/blob/master/PersianCalendar.qml */
 
 Calendar{
     property bool isPersianMode: true
     property date persianGregorianSelectedDate
     onPersianGregorianSelectedDateChanged: {
-        console.log(persianGregorianSelectedDate)
+        dsel.text = gregorian_to_jalali(persianDate[0],persianDate[1],persianDate[2])[1]+"/"+ gregorian_to_jalali(persianDate[0],persianDate[1],persianDate[2])[2];
+        dselm.text = persianDate[1]+"/"+persianDate[2];
     }
 
     property var  persianDate
@@ -129,7 +131,7 @@ Calendar{
         return 29;
     }
 
-    style: PersianCalendarStyle{
+    style: PersianCalendarStyle {
 
     }
 }

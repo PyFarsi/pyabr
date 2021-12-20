@@ -13,18 +13,52 @@ ApplicationWindow {
     visible: true
     color: "white"
     width: 600
-    height: 500
+    height: 600
     title: "Calendar"
+
+    Text {
+        id: dsel
+        objectName: "dsel"
+    }
+
+    Text {
+        id: dselm
+        objectName: "dselm"
+    }
 
     PersianCalendar {
         visible: false
+        id: jalali_c
+        anchors.top: parent.top
+        width: parent.width
+        height: parent.height-parent.height/8
         anchors.fill: parent
         objectName: "Jalali"
     }
 
     Calendar {
-        anchors.fill: parent
+        anchors.top: parent.top
+        width: parent.width
+        height: parent.height-parent.height/8
         visible: false
+        id: gregorian_c
         objectName: "Gregorian"
+    }
+
+    Rectangle {
+        color: "white"
+        anchors.bottom: parent.bottom
+        width: parent.width
+        height: parent.height/8
+
+        Text {
+            anchors.centerIn: parent
+            text: ""
+            id: txtD
+            objectName: "txtD"
+            font.family: "IRANSans"
+            font.pixelSize: 20
+            color: "gray"
+        }
     }
 }
