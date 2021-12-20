@@ -149,11 +149,14 @@ class Commands:
 
         subprocess.call(cmd, shell=True)
 
+    def neofetch (self,args):
+        subprocess.call(['neofetch'])
+
     def bash (self,args):
         if not permissions.check_root(files.readall("/proc/info/su")):
-            subprocess.call('runuser -S pyabr -e sh', shell=True)
+            subprocess.call('PS1=" Bash # " runuser -S pyabr -e sh', shell=True)
         else:
-            subprocess.call('sh', shell=True)
+            subprocess.call('PS1=" Bash # " sh', shell=True)
 
     def python (self,args):
         cmd = 'python3 '
@@ -642,6 +645,7 @@ class Commands:
                     sys.exit(0)
 
                 if output.endswith('.so'):
+                    # https://stackoverflow.com/questions/14884126/build-so-file-from-c-file-using-gcc-command-line
                     subprocess.call(['g++','-shared','-o',files.input(output),'-fPIC',files.input(filename)])
                 else:
                     subprocess.call(['g++',files.input(filename),'-o',files.input(output)])
