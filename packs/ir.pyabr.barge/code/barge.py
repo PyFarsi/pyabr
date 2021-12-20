@@ -27,7 +27,7 @@ class MainApp (MainApp):
         self.setProperty ('title',files.filename(filename)+' - '+res.get('@string/barge'))
         self.path.setProperty ('text',filename)
 
-        if filename.endswith ('.py') or filename.endswith ('.sa') or filename.endswith ('.pashm') or filename.endswith('.qml') or filename.endswith('.htm') or filename.endswith('.html'):
+        if filename.endswith ('.py') or filename.endswith ('.sa') or filename.endswith ('.pashm') or filename.endswith('.qml') or filename.endswith('.htm') or filename.endswith('.html') or filename.endswith('.c') or filename.endswith('.cpp') or filename.endswith('.cxx') or filename.endswith('.c++'):
             self.start.setProperty ('visible',True)
 
     def open__(self,filename):
@@ -63,13 +63,17 @@ class MainApp (MainApp):
         if permissions.check(files.output(self.path.property('text')), "x", files.readall("/proc/info/su")):
             if self.path.property('text').endswith ('.py'):
                 commands.cc ([self.path.property('text')])
-                files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.py','')}\nrm -rf /tmp/exec.sa\nrm {self.path.property('text')}c\nrm -rf __pycache__\npause")
+                files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.py','')}\nrm /tmp/exec.sa\nrm {self.path.property('text')}c\nrm  __pycache__\npause")
                 app.start ('commento','')
+            elif self.path.property('text').endswith ('.c') or self.path.property('text').endswith ('.cpp') or self.path.property('text').endswith ('.cxx') or self.path.property('text').endswith ('.c++'):
+                commands.cc([self.path.property('text')])
+                files.write('/tmp/exec.sa',f"run a.out\nrm  /tmp/exec.sa\npause")
+                app.start('commento', '')
             elif self.path.property('text').endswith ('.sa'):
-                files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.sa','')}\nrm -rf /tmp/exec.sa\npause")
+                files.write ('/tmp/exec.sa',f"{self.path.property('text').replace('.sa','')}\nrm /tmp/exec.sa\npause")
                 app.start ('commento','')
             elif self.path.property('text').endswith ('.pashm'):
-                files.write ('/tmp/exec.sa',f"pashmak {self.path.property('text')}\nrm -rf /tmp/exec.sa\npause")
+                files.write ('/tmp/exec.sa',f"pashmak {self.path.property('text')}\nrm /tmp/exec.sa\npause")
                 app.start ('commento','')
             elif self.path.property('text').endswith ('.qml'):
                 files.copy (self.path.property('text'),'/usr/share/layouts/debug.qml')
