@@ -6,7 +6,7 @@ name[tr]: Metin düzeltici
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.2
+version: 2.0.3
 description: Barge Text Editor
 compile: Yes
 entry: barge

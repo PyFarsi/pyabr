@@ -150,6 +150,33 @@ def genisoinstall ():
             build(i)
             unpack(i)
 
+def linuxinstall ():
+    list = [
+        'ir.pyabr',
+        'ir.pyabr.baad',
+        'ir.pyabr.barf',
+        'ir.pyabr.barge',
+        'ir.pyabr.calculator',
+        'ir.pyabr.calendar',
+        'ir.pyabr.chat',
+        'ir.pyabr.clock',
+        'ir.pyabr.controls',
+        'ir.pyabr.files',
+        'ir.pyabr.help',
+        'ir.pyabr.nama',
+        'ir.pyabr.paye',
+        'ir.pyabr.pyket',
+        'ir.pyabr.pysys',
+        'ir.pyabr.runapp',
+        'ir.pyabr.sample',
+        'ir.pyabr.sysinfo',
+        'ir.pyabr.updates',
+    ]
+    for i in list:
+        if os.path.isdir('packs/'+i):
+            build(i)
+            unpack(i)
+
 def inst (pack):
     build(pack)
     unpack(pack)
