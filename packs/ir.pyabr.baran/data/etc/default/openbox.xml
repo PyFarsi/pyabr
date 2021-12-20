@@ -58,7 +58,7 @@
     <animateIconify>yes</animateIconify>
     <font place="ActiveWindow">
       <name>IRANSans</name>
-      <size>8</size>
+      <size>10</size>
       <!-- font size in points -->
       <weight>bold</weight>
       <!-- 'bold' or 'normal' -->
@@ -67,7 +67,7 @@
     </font>
     <font place="InactiveWindow">
       <name>IRANSans</name>
-      <size>8</size>
+      <size>10</size>
       <!-- font size in points -->
       <weight>bold</weight>
       <!-- 'bold' or 'normal' -->
@@ -76,7 +76,7 @@
     </font>
     <font place="MenuHeader">
       <name>IRANSans</name>
-      <size>9</size>
+      <size>11</size>
       <!-- font size in points -->
       <weight>normal</weight>
       <!-- 'bold' or 'normal' -->
@@ -85,7 +85,7 @@
     </font>
     <font place="MenuItem">
       <name>IRANSans</name>
-      <size>9</size>
+      <size>11</size>
       <!-- font size in points -->
       <weight>normal</weight>
       <!-- 'bold' or 'normal' -->
@@ -94,7 +94,7 @@
     </font>
     <font place="ActiveOnScreenDisplay">
       <name>IRANSans</name>
-      <size>9</size>
+      <size>11</size>
       <!-- font size in points -->
       <weight>bold</weight>
       <!-- 'bold' or 'normal' -->
@@ -103,7 +103,7 @@
     </font>
     <font place="InactiveOnScreenDisplay">
       <name>IRANSans</name>
-      <size>9</size>
+      <size>11</size>
       <!-- font size in points -->
       <weight>bold</weight>
       <!-- 'bold' or 'normal' -->
