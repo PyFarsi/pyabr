@@ -131,6 +131,19 @@ class Commands:
     def __init__(self):
         pass
 
+    # run #
+    def run (self,args):
+        if not permissions.check(files.output(args[0]), "x", files.readall("/proc/info/su")):
+            colors.show('','perm','')
+            sys.exit(0)
+
+        commands = f'{files.input(args[0])}'
+
+        for i in args[1:]:
+            commands+=f' {i}'
+
+        subprocess.call(commands,shell=True)
+
     # apt debian #
     def apt (self,args):
         if not permissions.check_root(files.readall("/proc/info/su")):
