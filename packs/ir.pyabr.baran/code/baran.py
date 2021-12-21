@@ -397,11 +397,6 @@ class Enter (MainApp):
         self._logout.triggered.connect(self.logout_)
         self._exit = self.findChild( 'exit')
         self._exit.setProperty('title', res.get('@string/power_options'))
-        self._account = self.findChild('account')
-        if self.getdata("fullname")=='':
-            self._account.setProperty('title',self.username)
-        else:   
-            self._account.setProperty('title',self.getdata("fullname"))
         self._background = self.findChild( 'background')
 
         if self.getdata("enter.background").startswith('@background/'):        
@@ -760,12 +755,6 @@ class Desktop (MainApp):
         elif files.readall('/proc/info/sig')=='logout':
             files.create('/proc/info/sig')
             self.logout_()
-
-        elif files.readall('/proc/info/sig')=='username':
-            if self.getdata("fullname")=='':
-                self._account.setProperty('title',self.username)
-            else:   
-                self._account.setProperty('title',self.getdata("fullname"))
 
         elif files.readall('/proc/info/sig')=='background':
             try:

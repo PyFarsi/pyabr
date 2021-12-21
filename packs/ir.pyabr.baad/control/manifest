@@ -11,5 +11,5 @@ description: BaaD is a weather checker
 compile: Yes
 entry: baad
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.baad.svg
-build: 1400-09-23
+build: 1400-09-30
 mirror: https://mirror.pyabr.ir/zayanderoad/

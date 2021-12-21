@@ -1527,7 +1527,10 @@ class Commands:
 
             files.write("/proc/info/su", thisuser)
 
-            files.remove ("/proc/info/pause")
+            try:
+                files.remove ("/proc/info/pause")
+            except:
+                pass
         elif args[0] == '-a':
             ## Check root ##
             if not permissions.check_root(files.readall("/proc/info/su")):

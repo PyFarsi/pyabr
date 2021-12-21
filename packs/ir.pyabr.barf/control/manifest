@@ -9,5 +9,5 @@ unpack: /
 version: 2.0.4
 description: Barf based on KDE Breeze for Pyabr
 compile: No
-build: 1400-09-23
+build: 1400-09-30
 mirror: https://mirror.pyabr.ir/zayanderoad/

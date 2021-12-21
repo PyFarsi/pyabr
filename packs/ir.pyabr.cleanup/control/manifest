@@ -1,0 +1,12 @@
+name: ir.pyabr.cleanup
+name[fa]: بهینه ساز رایانه
+name[en]: Computer optimizer
+name[ar]: مُحسِّن الكمبيوتر
+name[tr]: Bilgisayar iyileştirici
+copyright: (c) 2021 Mani Jamali
+license: MIT
+unpack: /
+version: 1.0.0
+description: Computer optimizer script for Debian based linux operating systems
+compile: Yes
+build: 1400-05-27

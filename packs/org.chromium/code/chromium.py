@@ -86,8 +86,6 @@ if files.readall('/proc/info/su')=='root':
 else:
     user = f'/stor/desk/{files.readall("/proc/info/su")}'
 
-subprocess.call(['rm','-rf',f'{user}/.config/chromium'])
-    
 os.environ['HOME'] = user
 # Running Chromium
 

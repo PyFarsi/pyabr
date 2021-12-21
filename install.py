@@ -34,7 +34,7 @@ if not os.path.isdir ('stor'):		os.mkdir ('stor')
 if not os.path.isdir ("stor/app"):	os.mkdir ("stor/app")
 if not os.path.isdir ("stor/app/packages"): os.mkdir ("stor/app/packages")
 if not os.path.isdir ('build-packs'): os.mkdir('build-packs')
-pack.genisoinstall()
+pack.linuxinstall()
 
 subprocess.call(['sudo','cp','-rf','stor','/'])
 subprocess.call(['sudo','chmod','777','/stor'])

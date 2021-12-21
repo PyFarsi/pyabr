@@ -11,5 +11,5 @@ description: Simple Calendar
 compile: Yes
 entry: calendar_app
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.calendar.svg
-build: 1400-09-23
+build: 1400-09-30
 mirror: https://mirror.pyabr.ir/zayanderoad/

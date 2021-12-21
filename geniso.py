@@ -57,25 +57,33 @@ subprocess.call ('cd /stor && python3 vmabr.pyc',shell=True)''')
 f.close()
 
 f = open('sb/etc/os-release','w')
-f.write('''PRETTY_NAME="Pyabr 2.2"
+f.write('''PRETTY_NAME="Pyabr 2.3.0"
 NAME="Pyabr"
-VERSION_ID="2.2"
-VERSION="2.2 (Zayande Road)"
+VERSION_ID="2.3.0"
+VERSION="2.3.0 (Zayande Road)"
 VERSION_CODENAME=zayanderoad
 ID=pyabr
-ID_LIKE=ubuntu
+ID_LIKE=debian
 HOME_URL="https://pyabr.ir/"''')
 f.close()
 
 f = open('sb/usr/lib/os-release','w')
-f.write('''PRETTY_NAME="Pyabr 2.2"
+f.write('''PRETTY_NAME="Pyabr 2.3.0"
 NAME="Pyabr"
-VERSION_ID="2.2"
-VERSION="2.2 (Zayande Road)"
+VERSION_ID="2.3.0"
+VERSION="2.3.0 (Zayande Road)"
 VERSION_CODENAME=zayanderoad
 ID=pyabr
-ID_LIKE=ubuntu
+ID_LIKE=debian
 HOME_URL="https://pyabr.ir/"''')
+f.close()
+
+f = open('sb/etc/issue','w')
+f.write('Pyabr 2.3.0 \l \\n\n')
+f.close()
+
+f = open('sb/etc/issue.net','w')
+f.write('Pyabr 2.3.0')
 f.close()
 
 subprocess.call(['chmod','+x','sb/usr/bin/pyabr'])
