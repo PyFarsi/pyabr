@@ -278,6 +278,25 @@ ApplicationWindow {
                 color: "silver"
                 anchors.top: dockLocation.bottom
             }
+            Text {
+                text: "Window Manager Theme"
+                objectName: "txtWMTheme"
+                id: txtWMTheme
+                color: "gray"
+                anchors.top: line2.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.family: "IRANSans"
+                font.pixelSize: 15
+                height: parent.height/20
+            }
+            ComboBox {
+                anchors.top: txtWMTheme.bottom
+                model: ['Select one','Afterpiece (Default)','Windows 10','OS X (Light)','OS X (Dark)']
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.width/2
+                id: wmTheme
+                objectName: "wmTheme"
+            }
             Button {
                 text: "Apply"
                 anchors.bottom: parent.bottom

@@ -20,7 +20,7 @@
 from os import SEEK_HOLE
 from pyabr.core import *
 from pyabr.quick import *
-import hashlib,subprocess,sys
+import hashlib,subprocess,sys,shutil
 
 class MainApp (MainApp):
 
@@ -305,6 +305,8 @@ class MainApp (MainApp):
     def apply2_(self):
         currentIndex = self.cbDock.property('currentIndex')
 
+        currentIndex2 = self.wmTheme.property('currentIndex')
+
         control.remove_record ('dock',f'/etc/users/{self.username}')
         
         if currentIndex==0:
@@ -342,6 +344,34 @@ class MainApp (MainApp):
 
         elif currentIndex==11:
             control.write_record ('dock','unity-right',f'/etc/users/{self.username}')
+
+        f = open('/stor/etc/default/openbox.xml.bak','r')
+        openboxrc = f.read()
+        f.close()
+
+
+
+        if currentIndex2==1:
+            f = open('/stor/etc/default/openbox.xml', 'w')
+            f.write(openboxrc.replace('<name>Afterpiece</name>','<name>Afterpiece</name>'))
+            f.close()
+        elif currentIndex2==2:
+            f = open('/stor/etc/default/openbox.xml', 'w')
+            f.write(openboxrc.replace('<name>Afterpiece</name>','<name>Win10</name>'))
+            f.close()
+        elif currentIndex2==3:
+            f = open('/stor/etc/default/openbox.xml', 'w')
+            f.write(openboxrc.replace('<name>Afterpiece</name>','<name>Arc_OSX</name>'))
+            f.close()
+        elif currentIndex2==4:
+            f = open('/stor/etc/default/openbox.xml', 'w')
+            f.write(openboxrc.replace('<name>Afterpiece</name>','<name>Arc-Dark-OSX</name>'))
+            f.close()
+
+        shutil.copyfile('/stor/etc/default/openbox.xml','/root/.config/openbox/rc.xml')
+        subprocess.call(['openbox','--reconfigure'])
+
+
 
         app.signal ('dock')
 
@@ -487,6 +517,7 @@ class MainApp (MainApp):
         self.addLanguageModel()
         self.load (res.get('@layout/controls'))
         self.setProperty('title',res.get('@string/controls'))
+        app.launchedlogo(self.property('title'), res.etc('controls', 'logo'))
         self.fsel = self.findChild('fsel')
         self.lsel = self.findChild('lsel')
         self.controlview = self.findChild ('controlview')
@@ -546,6 +577,7 @@ class MainApp (MainApp):
         self.imgChange_enter.setProperty('source',res.qmlget(res.etc('controls','imgChange_enter')))
         self.adduser = self.findChild('adduser')
         self.back_users = self.findChild('back_users')
+        self.wmTheme = self.findChild('wmTheme')
         self.cbDock = self.findChild ('cbDock')
         self.apply = self.findChild('apply')
         self.cancel = self.findChild('cancel')
@@ -614,7 +646,7 @@ class MainApp (MainApp):
         self.lock_bg = self.getdata("lock.background")
         self.unlock_bg = self.getdata("unlock.background")
         self.enter_bg = self.getdata("enter.background")
-        
+
 
         if self.desktop_bg.startswith('@background/'):
             self.imgChange_desktop.setProperty('source',res.qmlget(self.desktop_bg))
