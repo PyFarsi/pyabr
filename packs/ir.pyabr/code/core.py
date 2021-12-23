@@ -2388,18 +2388,13 @@ class App:
     def start(self,id,external):
         files = Files()
 
-        ## Check exists ##
-        if files.isfile(f'/proc/id/{id}'):
-            pass
-
-
         ## Create id ##
-        files.create(f"/proc/id/{id}")
+        files.create(f"/proc/id/{id}.desk")
 
         ## Check desktop shortcut ##
-        if files.isfile(f"/usr/share/applications/{id}"):
+        if files.isfile(f"/usr/share/applications/{id}.desk"):
             files.copy(f"/usr/share/applications/{id}.desk",
-                       f"/proc/id/{id}")  # Copy all informations about this GUI application
+                       f"/proc/id/{id}.desk")  # Copy all informations about this GUI application
 
         ## Set default id ##
         files.write("/proc/info/id", id)
@@ -2410,21 +2405,16 @@ class App:
         proc = multiprocessing.Process(target=startId)
         proc.start()
 
-        ## Write pid ##
-        files.write(f'/proc/id/{id}.pid',str(proc.pid))
-
     ## Check id ##
     def check(self,id):
         files = Files()
-        return files.isfile(f'/proc/id/{id}')
+        return files.isfile(f'/proc/id/{id}.desk')
 
     ## End id ##
     def end(self,id):
         files = Files()
 
-        if files.isfile(f'/proc/id/{id}') and files.isfile(f'/proc/id/{id}.pid'):
-            subprocess.call(['kill', files.readall(f'/proc/id/{id}.pid')])
-            #files.remove(f"/proc/id/{id}")
+        files.remove(f"/proc/id/{id}.desk")
 
     ## Endall id ##
     def endall(self):
@@ -2432,15 +2422,13 @@ class App:
         self.switch('desktop')
         for i in files.list("/proc/id"):
             if files.isfile(f'/proc/id/{i}'):
-                if i.endswith ('.pid'):
-                    subprocess.call(['kill',files.readall(f'/proc/id/{i}')])
                 files.remove(f'/proc/id/{i}')
 
     ## Switch id process ##
     def switch(self,id):
         files = Files()
 
-        if files.isfile(f'/proc/id/{id}'):
+        if files.isfile(f'/proc/id/{id}.desk'):
             files.write("/proc/info/id", id)
 
     ## Check application ##
@@ -2453,6 +2441,7 @@ class App:
     def signal (self,sig):
         files = Files()
         files.write('/proc/info/sig',sig)
+
 
 app = App()
 # process #

@@ -10,13 +10,27 @@ for i in listp:
     except:
         pass
 
-for i in list:
-    if not 'vmabr' in i:
-        subprocess.call(f'xdotool windowunmap {i}',shell=True)
+listp = subprocess.check_output('xdotool search "vmabr.pyc"',shell=True).decode('utf-8').split('\n')
+
+for i in listp:
+    try:
+        list.remove(i)
+    except:
+        pass
+
+listp = subprocess.check_output('xdotool search "Qt Selection*"',shell=True).decode('utf-8').split('\n')
+
+for i in listp:
+    try:
+        list.remove(i)
+    except:
+        pass
 
 for i in list:
-    if not 'vmabr' in i:
-        subprocess.call(f'xdotool windowmap {i}',shell=True)
+    subprocess.call(f'xdotool windowunmap {i}',shell=True)
+
+for i in list:
+    subprocess.call(f'xdotool windowmap {i}',shell=True)
 
 #subprocess.call("xdotool search '.*' windowunmap %@",shell=True)
 #subprocess.call("xdotool search '.*' windowmap %@",shell=True)

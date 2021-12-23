@@ -193,6 +193,7 @@ class Login (MainApp):
         if not self._keyless.property('text')=='':
             subprocess.call(control.read_record('keyless',f'/usr/share/locales/{self._keyless.property("text")}'),shell=True)
 
+
         self._keyless.setProperty('text','')
         QTimer.singleShot(10,self.loop)
 
@@ -635,6 +636,7 @@ class Desktop (MainApp):
                 model.appendRow(it)
         return model
 
+
     def check_cat (self,dir_path,category):
         i = 0
         for name in files.list(dir_path):
@@ -693,6 +695,43 @@ class Desktop (MainApp):
                 model.appendRow(it)
         return model
 
+    launchedapps = 0
+
+    def get_launchedapps (self):
+        lista = subprocess.check_output(['wmctrl', '-l']).decode('utf-8').split('\n')
+        list2 = []
+        for i in lista:
+            try:
+                list2.append(i.split('  0 pyabr ')[1])
+            except:
+                pass
+
+        list2 = list(dict.fromkeys(list2))
+        try:
+            list2.pop(0)
+        except:
+            pass
+
+        return list2
+
+    def get_len_of_launchedapps (self):
+        return len(self.get_launchedapps())
+
+    def create_model_launchedapps (self):
+        #https://www.w3schools.com/python/python_howto_remove_duplicates.asp
+        self.launchedapps = self.get_len_of_launchedapps()
+
+        model = QtGui.QStandardItemModel()
+        roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
+        model.setItemRoleNames(roles)
+        for name in self.get_launchedapps():
+            it = QtGui.QStandardItem(name)
+            it.setData(name, self.NameRole)
+            it.setData(name, self.LabelRole)
+            it.setData(res.qmlget('@icon/breeze-app'), self.LogoRole)
+            model.appendRow(it)
+        return  model
+
     def create_model5(self):
         #model = QtGui.QStandardItemModel()
         #roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
@@ -731,280 +770,417 @@ class Desktop (MainApp):
         if not files.isfile('/proc/info/sig'):
             files.create('/proc/info/sig')
 
-        if files.readall('/proc/info/sig')=='apps':
-            files.create('/proc/info/sig')
-            self.modelAllApplications = self.create_model4('/usr/share/applications')
-            self.rootContext().setContextProperty('EntryAppApplications', self.modelAllApplications)
-
-        if files.readall('/proc/info/sig')=='sleep':
-            files.create('/proc/info/sig')
+        elif files.readall('/proc/info/sig')=='sleep':
             self.sleep_()
 
         elif files.readall('/proc/info/sig')=='shutdown':
-            files.create('/proc/info/sig')
             self.shutdown_()
 
         elif files.readall('/proc/info/sig') == 'restart':
-            files.create('/proc/info/sig')
             self.restart_()
 
         elif files.readall('/proc/info/sig')=='lock':
-            files.create('/proc/info/sig')
             self.lock_()
 
         elif files.readall('/proc/info/sig')=='logout':
-            files.create('/proc/info/sig')
             self.logout_()
 
         elif files.readall('/proc/info/sig')=='background':
-            try:
-                if self.getdata('desktop.background').startswith('@background/'):
-                    self._background.setProperty('source', res.qmlget(self.getdata("desktop.background")))
-                else:
-                    self._background.setProperty('source', files.input_qml(self.getdata("desktop.background")))
-            except:
-                pass
+            self.update_background()
+
+        elif files.readall('/proc/info/sig')=='apps':
+            self.update_apps()
 
         elif files.readall('/proc/info/sig')=='dock':
-            if self.getdata('dock') == 'bottom':
-                self._toolbar.setProperty('visible', True)
-                self._toolbar2.setProperty('visible', False)
-                self._toolbar3.setProperty('visible', False)
-                self._toolbar4.setProperty('visible', False)
-                self._toolbar5.setProperty('visible', False)
-                self._toolbar6.setProperty('visible', False)
-                self._toolbar7.setProperty('visible', False)
-                self._toolbar8.setProperty('visible', False)
-                self._toolbar9.setProperty('visible', False)
-                self._toolbar10.setProperty('visible', False)
-                self._toolbar11.setProperty('visible', False)
-                self._toolbar12.setProperty('visible', False)
-                self._btnMenu = self.findChild('btnMenu')
-                self.btnMenu_anim = self.findChild('btnMenu_anim')
-                self._btnMenu.clicked.connect(self.menuApps_)
-                self._menuApps = self.findChild('menuApps')
-                self.menuApps_anim = self.findChild('menuApps_anim')
+            self.update_dock()
 
-            elif self.getdata('dock') == 'top':
-                self._toolbar.setProperty('visible', False)
-                self._toolbar2.setProperty('visible', True)
-                self._toolbar3.setProperty('visible', False)
-                self._toolbar4.setProperty('visible', False)
-                self._toolbar5.setProperty('visible', False)
-                self._toolbar6.setProperty('visible', False)
-                self._toolbar7.setProperty('visible', False)
-                self._toolbar8.setProperty('visible', False)
-                self._toolbar9.setProperty('visible', False)
-                self._toolbar10.setProperty('visible', False)
-                self._toolbar11.setProperty('visible', False)
-                self._toolbar12.setProperty('visible', False)
-                self._btnMenu = self.findChild('btnMenu2')
-                self.btnMenu_anim = self.findChild('btnMenu2_anim')
-                self._btnMenu.clicked.connect(self.menuApps_)
-                self._menuApps = self.findChild('menuApps2')
-                self.menuApps_anim = self.findChild('menuApps2_anim')
+        elif files.readall('/proc/info/sig') == 'menu':
+            self.update_menu()
 
-            elif self.getdata('dock') == 'left':
-                self._toolbar.setProperty('visible', False)
-                self._toolbar2.setProperty('visible', False)
-                self._toolbar3.setProperty('visible', True)
-                self._toolbar4.setProperty('visible', False)
-                self._toolbar5.setProperty('visible', False)
-                self._toolbar6.setProperty('visible', False)
-                self._toolbar7.setProperty('visible', False)
-                self._toolbar8.setProperty('visible', False)
-                self._toolbar9.setProperty('visible', False)
-                self._toolbar10.setProperty('visible', False)
-                self._toolbar11.setProperty('visible', False)
-                self._toolbar12.setProperty('visible', False)
-                self._btnMenu = self.findChild('btnMenu3')
-                self.btnMenu_anim = self.findChild('btnMenu3_anim')
-                self._btnMenu.clicked.connect(self.menuApps_)
-                self._menuApps = self.findChild('menuApps3')
-                self.menuApps_anim = self.findChild('menuApps3_anim')
+        files.create('/proc/info/sig')
 
-            elif self.getdata('dock') == 'right':
-                self._toolbar.setProperty('visible', False)
-                self._toolbar2.setProperty('visible', False)
-                self._toolbar3.setProperty('visible', False)
-                self._toolbar4.setProperty('visible', True)
-                self._toolbar5.setProperty('visible', False)
-                self._toolbar6.setProperty('visible', False)
-                self._toolbar7.setProperty('visible', False)
-                self._toolbar8.setProperty('visible', False)
-                self._toolbar9.setProperty('visible', False)
-                self._toolbar10.setProperty('visible', False)
-                self._toolbar11.setProperty('visible', False)
-                self._toolbar12.setProperty('visible', False)
-                self._btnMenu = self.findChild('btnMenu4')
-                self.btnMenu_anim = self.findChild('btnMenu4_anim')
-                self._btnMenu.clicked.connect(self.menuApps_)
-                self._menuApps = self.findChild('menuApps4')
-                self.menuApps_anim = self.findChild('menuApps4_anim')
+    def update_background(self):
+        try:
+            if self.getdata('desktop.background').startswith('@background/'):
+                self._background.setProperty('source', res.qmlget(self.getdata("desktop.background")))
+            else:
+                self._background.setProperty('source', files.input_qml(self.getdata("desktop.background")))
+        except:
+            pass
 
-            elif self.getdata('dock') == 'windows' or self.getdata('dock') == 'windows-bottom':
-                self._toolbar.setProperty('visible', False)
-                self._toolbar2.setProperty('visible', False)
-                self._toolbar3.setProperty('visible', False)
-                self._toolbar4.setProperty('visible', False)
-                self._toolbar5.setProperty('visible', True)
-                self._toolbar6.setProperty('visible', False)
-                self._toolbar7.setProperty('visible', False)
-                self._toolbar8.setProperty('visible', False)
-                self._toolbar9.setProperty('visible', False)
-                self._toolbar10.setProperty('visible', False)
-                self._toolbar11.setProperty('visible', False)
-                self._toolbar12.setProperty('visible', False)
-                self._btnMenu = self.findChild('btnMenu5')
-                self.btnMenu_anim = self.findChild('btnMenu5_anim')
-                self._btnMenu.clicked.connect(self.menuApps_)
-                self._menuApps = self.findChild('menuApps')
-                self.menuApps_anim = self.findChild('menuApps_anim')
+    def update_dock_bottom (self):
+        self.xall = self.pins + self.launchedapps
+        self.toolbar_height = self._toolbar.property('height')
+        self._toolbar.setProperty('width', self.xall * self.toolbar_height)
+        self._toolbar.setProperty('visible', True)
+        self._toolbar2.setProperty('visible', False)
+        self._toolbar3.setProperty('visible', False)
+        self._toolbar4.setProperty('visible', False)
+        self._toolbar5.setProperty('visible', False)
+        self._toolbar6.setProperty('visible', False)
+        self._toolbar7.setProperty('visible', False)
+        self._toolbar8.setProperty('visible', False)
+        self._toolbar9.setProperty('visible', False)
+        self._toolbar10.setProperty('visible', False)
+        self._toolbar11.setProperty('visible', False)
+        self._toolbar12.setProperty('visible', False)
+        # menu 1
 
-            elif self.getdata('dock') == 'windows-top':
-                self._toolbar.setProperty('visible', False)
-                self._toolbar2.setProperty('visible', False)
-                self._toolbar3.setProperty('visible', False)
-                self._toolbar4.setProperty('visible', False)
-                self._toolbar5.setProperty('visible', False)
-                self._toolbar6.setProperty('visible', True)
-                self._toolbar7.setProperty('visible', False)
-                self._toolbar8.setProperty('visible', False)
-                self._toolbar9.setProperty('visible', False)
-                self._toolbar10.setProperty('visible', False)
-                self._toolbar11.setProperty('visible', False)
-                self._toolbar12.setProperty('visible', False)
-                self._btnMenu = self.findChild('btnMenu6')
-                self.btnMenu_anim = self.findChild('btnMenu6_anim')
-                self._btnMenu.clicked.connect(self.menuApps_)
-                self._menuApps = self.findChild('menuApps2')
-                self.menuApps_anim = self.findChild('menuApps2_anim')
+    def update_menu1 (self):
+        self._btnMenu = self.findChild('btnMenu')
+        self.btnMenu_anim = self.findChild('btnMenu_anim')
+        self._btnMenu.clicked.connect(self.menuApps_)
+        self._menuApps = self.findChild('menuApps')
+        self.menuApps_anim = self.findChild('menuApps_anim')
 
-            elif self.getdata('dock') == 'windows-left':
-                self._toolbar.setProperty('visible', False)
-                self._toolbar2.setProperty('visible', False)
-                self._toolbar3.setProperty('visible', False)
-                self._toolbar4.setProperty('visible', False)
-                self._toolbar5.setProperty('visible', False)
-                self._toolbar6.setProperty('visible', False)
-                self._toolbar7.setProperty('visible', True)
-                self._toolbar8.setProperty('visible', False)
-                self._toolbar9.setProperty('visible', False)
-                self._toolbar10.setProperty('visible', False)
-                self._toolbar11.setProperty('visible', False)
-                self._toolbar12.setProperty('visible', False)
-                self._btnMenu = self.findChild('btnMenu7')
-                self.btnMenu_anim = self.findChild('btnMenu7_anim')
-                self._btnMenu.clicked.connect(self.menuApps_)
-                self._menuApps = self.findChild('menuApps3')
-                self.menuApps_anim = self.findChild('menuApps3_anim')
+    def update_dock_top(self):
+        self.xall = self.pins + self.launchedapps
+        self.toolbar_height2 = self._toolbar2.property('height')
+        self._toolbar2.setProperty('width', self.xall * self.toolbar_height2)
+        self._toolbar.setProperty('visible', False)
+        self._toolbar2.setProperty('visible', True)
+        self._toolbar3.setProperty('visible', False)
+        self._toolbar4.setProperty('visible', False)
+        self._toolbar5.setProperty('visible', False)
+        self._toolbar6.setProperty('visible', False)
+        self._toolbar7.setProperty('visible', False)
+        self._toolbar8.setProperty('visible', False)
+        self._toolbar9.setProperty('visible', False)
+        self._toolbar10.setProperty('visible', False)
+        self._toolbar11.setProperty('visible', False)
+        self._toolbar12.setProperty('visible', False)
+        # menu 2
 
-            elif self.getdata('dock') == 'windows-right':
-                self._toolbar.setProperty('visible', False)
-                self._toolbar2.setProperty('visible', False)
-                self._toolbar3.setProperty('visible', False)
-                self._toolbar4.setProperty('visible', False)
-                self._toolbar5.setProperty('visible', False)
-                self._toolbar6.setProperty('visible', False)
-                self._toolbar7.setProperty('visible', False)
-                self._toolbar8.setProperty('visible', True)
-                self._toolbar9.setProperty('visible', False)
-                self._toolbar10.setProperty('visible', False)
-                self._toolbar11.setProperty('visible', False)
-                self._toolbar12.setProperty('visible', False)
-                self._btnMenu = self.findChild('btnMenu8')
-                self.btnMenu_anim = self.findChild('btnMenu8_anim')
-                self._btnMenu.clicked.connect(self.menuApps_)
-                self._menuApps = self.findChild('menuApps4')
-                self.menuApps_anim = self.findChild('menuApps4_anim')
+    def update_menu2 (self):
+        self._btnMenu = self.findChild('btnMenu2')
+        self.btnMenu_anim = self.findChild('btnMenu2_anim')
+        self._btnMenu.clicked.connect(self.menuApps_)
+        self._menuApps = self.findChild('menuApps2')
+        self.menuApps_anim = self.findChild('menuApps2_anim')
 
-            elif self.getdata('dock') == 'unity' or self.getdata('dock') == 'unity-bottom':
-                self._toolbar.setProperty('visible', False)
-                self._toolbar2.setProperty('visible', False)
-                self._toolbar3.setProperty('visible', False)
-                self._toolbar4.setProperty('visible', False)
-                self._toolbar5.setProperty('visible', False)
-                self._toolbar6.setProperty('visible', False)
-                self._toolbar7.setProperty('visible', False)
-                self._toolbar8.setProperty('visible', False)
-                self._toolbar9.setProperty('visible', True)
-                self._toolbar10.setProperty('visible', False)
-                self._toolbar11.setProperty('visible', False)
-                self._toolbar12.setProperty('visible', False)
-                self._btnMenu = self.findChild('btnMenu9')
-                self.btnMenu_anim = self.findChild('btnMenu9_anim')
-                self._btnMenu.clicked.connect(self.menuApps_)
-                self._menuApps = self.findChild('menuApps')
-                self.menuApps_anim = self.findChild('menuApps_anim')
+    def update_dock_left (self):
+        self.xall = self.pins + self.launchedapps
+        self.toolbar_width3 = self._toolbar3.property('width')
+        self._toolbar3.setProperty('height', self.xall * self.toolbar_width3)
+        self._toolbar.setProperty('visible', False)
+        self._toolbar2.setProperty('visible', False)
+        self._toolbar3.setProperty('visible', True)
+        self._toolbar4.setProperty('visible', False)
+        self._toolbar5.setProperty('visible', False)
+        self._toolbar6.setProperty('visible', False)
+        self._toolbar7.setProperty('visible', False)
+        self._toolbar8.setProperty('visible', False)
+        self._toolbar9.setProperty('visible', False)
+        self._toolbar10.setProperty('visible', False)
+        self._toolbar11.setProperty('visible', False)
+        self._toolbar12.setProperty('visible', False)
 
-            elif self.getdata('dock') == 'unity-top':
-                self._toolbar.setProperty('visible', False)
-                self._toolbar2.setProperty('visible', False)
-                self._toolbar3.setProperty('visible', False)
-                self._toolbar4.setProperty('visible', False)
-                self._toolbar5.setProperty('visible', False)
-                self._toolbar6.setProperty('visible', False)
-                self._toolbar7.setProperty('visible', False)
-                self._toolbar8.setProperty('visible', False)
-                self._toolbar9.setProperty('visible', False)
-                self._toolbar10.setProperty('visible', True)
-                self._toolbar11.setProperty('visible', False)
-                self._toolbar12.setProperty('visible', False)
-                self._btnMenu = self.findChild('btnMenu10')
-                self.btnMenu_anim = self.findChild('btnMenu10_anim')
-                self._btnMenu.clicked.connect(self.menuApps_)
-                self._menuApps = self.findChild('menuApps2')
-                self.menuApps_anim = self.findChild('menuApps2_anim')
+    def update_menu3 (self):
+        self._btnMenu = self.findChild('btnMenu3')
+        self.btnMenu_anim = self.findChild('btnMenu3_anim')
+        self._btnMenu.clicked.connect(self.menuApps_)
+        self._menuApps = self.findChild('menuApps3')
+        self.menuApps_anim = self.findChild('menuApps3_anim')
 
-            elif self.getdata('dock') == 'unity-left':
-                self._toolbar.setProperty('visible', False)
-                self._toolbar2.setProperty('visible', False)
-                self._toolbar3.setProperty('visible', False)
-                self._toolbar4.setProperty('visible', False)
-                self._toolbar5.setProperty('visible', False)
-                self._toolbar6.setProperty('visible', False)
-                self._toolbar7.setProperty('visible', False)
-                self._toolbar8.setProperty('visible', False)
-                self._toolbar9.setProperty('visible', False)
-                self._toolbar10.setProperty('visible', False)
-                self._toolbar11.setProperty('visible', True)
-                self._toolbar12.setProperty('visible', False)
-                self._btnMenu = self.findChild('btnMenu11')
-                self.btnMenu_anim = self.findChild('btnMenu11_anim')
-                self._btnMenu.clicked.connect(self.menuApps_)
-                self._menuApps = self.findChild('menuApps3')
-                self.menuApps_anim = self.findChild('menuApps3_anim')
+    def update_dock_right (self):
+        self.xall = self.pins + self.launchedapps
+        self.toolbar_width4 = self._toolbar4.property('width')
+        self._toolbar4.setProperty('height', self.xall * self.toolbar_width4)
+        self._toolbar.setProperty('visible', False)
+        self._toolbar2.setProperty('visible', False)
+        self._toolbar3.setProperty('visible', False)
+        self._toolbar4.setProperty('visible', True)
+        self._toolbar5.setProperty('visible', False)
+        self._toolbar6.setProperty('visible', False)
+        self._toolbar7.setProperty('visible', False)
+        self._toolbar8.setProperty('visible', False)
+        self._toolbar9.setProperty('visible', False)
+        self._toolbar10.setProperty('visible', False)
+        self._toolbar11.setProperty('visible', False)
+        self._toolbar12.setProperty('visible', False)
 
-            elif self.getdata('dock') == 'unity-right':
-                self._toolbar.setProperty('visible', False)
-                self._toolbar2.setProperty('visible', False)
-                self._toolbar3.setProperty('visible', False)
-                self._toolbar4.setProperty('visible', False)
-                self._toolbar5.setProperty('visible', False)
-                self._toolbar6.setProperty('visible', False)
-                self._toolbar7.setProperty('visible', False)
-                self._toolbar8.setProperty('visible', False)
-                self._toolbar9.setProperty('visible', False)
-                self._toolbar10.setProperty('visible', False)
-                self._toolbar11.setProperty('visible', False)
-                self._toolbar12.setProperty('visible', True)
-                self._btnMenu = self.findChild('btnMenu12')
-                self.btnMenu_anim = self.findChild('btnMenu12_anim')
-                self._btnMenu.clicked.connect(self.menuApps_)
-                self._menuApps = self.findChild('menuApps4')
-                self.menuApps_anim = self.findChild('menuApps4_anim')
+
+    def update_menu4 (self):
+        self._btnMenu = self.findChild('btnMenu4')
+        self.btnMenu_anim = self.findChild('btnMenu4_anim')
+        self._btnMenu.clicked.connect(self.menuApps_)
+        self._menuApps = self.findChild('menuApps4')
+        self.menuApps_anim = self.findChild('menuApps4_anim')
+
+    def update_dock_windows_bottom (self):
+        self._toolbar.setProperty('visible', False)
+        self._toolbar2.setProperty('visible', False)
+        self._toolbar3.setProperty('visible', False)
+        self._toolbar4.setProperty('visible', False)
+        self._toolbar5.setProperty('visible', True)
+        self._toolbar6.setProperty('visible', False)
+        self._toolbar7.setProperty('visible', False)
+        self._toolbar8.setProperty('visible', False)
+        self._toolbar9.setProperty('visible', False)
+        self._toolbar10.setProperty('visible', False)
+        self._toolbar11.setProperty('visible', False)
+        self._toolbar12.setProperty('visible', False)
+
+    def update_menu5 (self):
+        self._btnMenu = self.findChild('btnMenu5')
+        self.btnMenu_anim = self.findChild('btnMenu5_anim')
+        self._btnMenu.clicked.connect(self.menuApps_)
+        self._menuApps = self.findChild('menuApps')
+        self.menuApps_anim = self.findChild('menuApps_anim')
+
+    def update_dock_windows_top (self):
+        self._toolbar.setProperty('visible', False)
+        self._toolbar2.setProperty('visible', False)
+        self._toolbar3.setProperty('visible', False)
+        self._toolbar4.setProperty('visible', False)
+        self._toolbar5.setProperty('visible', False)
+        self._toolbar6.setProperty('visible', True)
+        self._toolbar7.setProperty('visible', False)
+        self._toolbar8.setProperty('visible', False)
+        self._toolbar9.setProperty('visible', False)
+        self._toolbar10.setProperty('visible', False)
+        self._toolbar11.setProperty('visible', False)
+        self._toolbar12.setProperty('visible', False)
+
+    def update_menu6 (self):
+        self._btnMenu = self.findChild('btnMenu6')
+        self.btnMenu_anim = self.findChild('btnMenu6_anim')
+        self._btnMenu.clicked.connect(self.menuApps_)
+        self._menuApps = self.findChild('menuApps2')
+        self.menuApps_anim = self.findChild('menuApps2_anim')
+
+    def update_dock_windows_left(self):
+        self._toolbar.setProperty('visible', False)
+        self._toolbar2.setProperty('visible', False)
+        self._toolbar3.setProperty('visible', False)
+        self._toolbar4.setProperty('visible', False)
+        self._toolbar5.setProperty('visible', False)
+        self._toolbar6.setProperty('visible', False)
+        self._toolbar7.setProperty('visible', True)
+        self._toolbar8.setProperty('visible', False)
+        self._toolbar9.setProperty('visible', False)
+        self._toolbar10.setProperty('visible', False)
+        self._toolbar11.setProperty('visible', False)
+        self._toolbar12.setProperty('visible', False)
+
+    def update_menu7 (self):
+        self._btnMenu = self.findChild('btnMenu7')
+        self.btnMenu_anim = self.findChild('btnMenu7_anim')
+        self._btnMenu.clicked.connect(self.menuApps_)
+        self._menuApps = self.findChild('menuApps3')
+        self.menuApps_anim = self.findChild('menuApps3_anim')
+
+    def update_dock_windows_right(self):
+        self._toolbar.setProperty('visible', False)
+        self._toolbar2.setProperty('visible', False)
+        self._toolbar3.setProperty('visible', False)
+        self._toolbar4.setProperty('visible', False)
+        self._toolbar5.setProperty('visible', False)
+        self._toolbar6.setProperty('visible', False)
+        self._toolbar7.setProperty('visible', False)
+        self._toolbar8.setProperty('visible', True)
+        self._toolbar9.setProperty('visible', False)
+        self._toolbar10.setProperty('visible', False)
+        self._toolbar11.setProperty('visible', False)
+        self._toolbar12.setProperty('visible', False)
+
+    def update_menu8 (self):
+        self._btnMenu = self.findChild('btnMenu8')
+        self.btnMenu_anim = self.findChild('btnMenu8_anim')
+        self._btnMenu.clicked.connect(self.menuApps_)
+        self._menuApps = self.findChild('menuApps4')
+        self.menuApps_anim = self.findChild('menuApps4_anim')
+
+    def update_dock_unity_bottom (self):
+        self._toolbar.setProperty('visible', False)
+        self._toolbar2.setProperty('visible', False)
+        self._toolbar3.setProperty('visible', False)
+        self._toolbar4.setProperty('visible', False)
+        self._toolbar5.setProperty('visible', False)
+        self._toolbar6.setProperty('visible', False)
+        self._toolbar7.setProperty('visible', False)
+        self._toolbar8.setProperty('visible', False)
+        self._toolbar9.setProperty('visible', True)
+        self._toolbar10.setProperty('visible', False)
+        self._toolbar11.setProperty('visible', False)
+        self._toolbar12.setProperty('visible', False)
+
+    def update_menu9 (self):
+        self._btnMenu = self.findChild('btnMenu9')
+        self.btnMenu_anim = self.findChild('btnMenu9_anim')
+        self._btnMenu.clicked.connect(self.menuApps_)
+        self._menuApps = self.findChild('menuApps')
+        self.menuApps_anim = self.findChild('menuApps_anim')
+
+    def update_dock_unity_top (self):
+        self._toolbar.setProperty('visible', False)
+        self._toolbar2.setProperty('visible', False)
+        self._toolbar3.setProperty('visible', False)
+        self._toolbar4.setProperty('visible', False)
+        self._toolbar5.setProperty('visible', False)
+        self._toolbar6.setProperty('visible', False)
+        self._toolbar7.setProperty('visible', False)
+        self._toolbar8.setProperty('visible', False)
+        self._toolbar9.setProperty('visible', False)
+        self._toolbar10.setProperty('visible', True)
+        self._toolbar11.setProperty('visible', False)
+        self._toolbar12.setProperty('visible', False)
+
+    def update_menu10 (self):
+        self._btnMenu = self.findChild('btnMenu10')
+        self.btnMenu_anim = self.findChild('btnMenu10_anim')
+        self._btnMenu.clicked.connect(self.menuApps_)
+        self._menuApps = self.findChild('menuApps2')
+        self.menuApps_anim = self.findChild('menuApps2_anim')
+
+    def update_dock_unity_left(self):
+        self._toolbar.setProperty('visible', False)
+        self._toolbar2.setProperty('visible', False)
+        self._toolbar3.setProperty('visible', False)
+        self._toolbar4.setProperty('visible', False)
+        self._toolbar5.setProperty('visible', False)
+        self._toolbar6.setProperty('visible', False)
+        self._toolbar7.setProperty('visible', False)
+        self._toolbar8.setProperty('visible', False)
+        self._toolbar9.setProperty('visible', False)
+        self._toolbar10.setProperty('visible', False)
+        self._toolbar11.setProperty('visible', True)
+        self._toolbar12.setProperty('visible', False)
+
+    def update_menu11 (self):
+        self._btnMenu = self.findChild('btnMenu11')
+        self.btnMenu_anim = self.findChild('btnMenu11_anim')
+        self._btnMenu.clicked.connect(self.menuApps_)
+        self._menuApps = self.findChild('menuApps3')
+        self.menuApps_anim = self.findChild('menuApps3_anim')
+
+    def update_dock_unity_right(self):
+        self._toolbar.setProperty('visible', False)
+        self._toolbar2.setProperty('visible', False)
+        self._toolbar3.setProperty('visible', False)
+        self._toolbar4.setProperty('visible', False)
+        self._toolbar5.setProperty('visible', False)
+        self._toolbar6.setProperty('visible', False)
+        self._toolbar7.setProperty('visible', False)
+        self._toolbar8.setProperty('visible', False)
+        self._toolbar9.setProperty('visible', False)
+        self._toolbar10.setProperty('visible', False)
+        self._toolbar11.setProperty('visible', False)
+        self._toolbar12.setProperty('visible', True)
+
+    def update_menu12 (self):
+        self._btnMenu = self.findChild('btnMenu12')
+        self.btnMenu_anim = self.findChild('btnMenu12_anim')
+        self._btnMenu.clicked.connect(self.menuApps_)
+        self._menuApps = self.findChild('menuApps4')
+        self.menuApps_anim = self.findChild('menuApps4_anim')
+
+    def update_dock (self):
+        if self.getdata('dock') == 'bottom':
+            self.update_dock_bottom()
+
+        elif self.getdata('dock') == 'top':
+            self.update_dock_top()
+
+        elif self.getdata('dock') == 'left':
+            self.update_dock_left()
+
+        elif self.getdata('dock') == 'right':
+            self.update_dock_right()
+
+        elif self.getdata('dock') == 'windows' or self.getdata('dock') == 'windows-bottom':
+            self.update_dock_windows_bottom()
+
+        elif self.getdata('dock') == 'windows-top':
+            self.update_dock_windows_top()
+
+        elif self.getdata('dock') == 'windows-left':
+            self.update_dock_windows_left()
+
+        elif self.getdata('dock') == 'windows-right':
+            self.update_dock_windows_right()
+
+        elif self.getdata('dock') == 'unity' or self.getdata('dock') == 'unity-bottom':
+            self.update_dock_unity_bottom()
+
+        elif self.getdata('dock') == 'unity-top':
+            self.update_dock_unity_top()
+
+        elif self.getdata('dock') == 'unity-left':
+            self.update_dock_unity_left()
+
+        elif self.getdata('dock') == 'unity-right':
+            self.update_dock_unity_right()
+
+    def update_menu (self):
+        if self.getdata('dock') == 'bottom':
+            self.update_menu1()
+
+        elif self.getdata('dock') == 'top':
+            self.update_menu2()
+
+        elif self.getdata('dock') == 'left':
+            self.update_menu3()
+
+        elif self.getdata('dock') == 'right':
+            self.update_menu4()
+
+        elif self.getdata('dock') == 'windows' or self.getdata('dock') == 'windows-bottom':
+            self.update_menu5()
+
+        elif self.getdata('dock') == 'windows-top':
+            self.update_menu6()
+
+        elif self.getdata('dock') == 'windows-left':
+            self.update_menu7()
+
+        elif self.getdata('dock') == 'windows-right':
+            self.update_menu8()
+
+        elif self.getdata('dock') == 'unity' or self.getdata('dock') == 'unity-bottom':
+            self.update_menu9()
+
+        elif self.getdata('dock') == 'unity-top':
+            self.update_menu10()
+
+        elif self.getdata('dock') == 'unity-left':
+            self.update_menu11()
+
+        elif self.getdata('dock') == 'unity-right':
+            self.update_menu12()
+
+    def update_lanuched_apps (self):
+        if not self.launchedapps == self.get_len_of_launchedapps():
+            self.modelAllApplicationsx = self.create_model_launchedapps()
+            self.rootContext().setContextProperty('LaunchedAppApplications', self.modelAllApplicationsx)
+
+    def update_apps (self):
+        self.modelAllApplications = self.create_model4('/usr/share/applications')
+        self.rootContext().setContextProperty('EntryAppApplications', self.modelAllApplications)
 
     def loop (self):
         # Applications starts in background
+
+        self.update_lanuched_apps()
+        self.update_dock_bottom()
+
         if not self._background_app.property('text')=='':
             self._menuApps.setProperty('visible', False)
             self.menuClicked = False
             
             if files.isfile ('/proc/info/ext'): files.remove ('/proc/info/ext')
 
-            System ('rma')
+            #System ('rma')
 
             app.start(self._background_app.property('text').replace('.desk',''),'')
+
+        if not self._restore_app.property('text')=='':
+            try:
+                self.winid = subprocess.check_output(f'xdotool search "{self._restore_app.property("text")}"',shell=True).decode('utf-8').split('\n')
+                for i in self.winid:
+                    subprocess.call(f'xdotool windowactivate {i}',shell=True)
+            except:
+                pass
 
         # Check signals #
         if not files.isfile('/proc/info/pause'):
@@ -1018,6 +1194,7 @@ class Desktop (MainApp):
         self._keyless.setProperty('text','')
 
         self._background_app.setProperty('text','')
+        self._restore_app.setProperty('text','')
 
         # scrot
 
@@ -1030,34 +1207,52 @@ class Desktop (MainApp):
 
         self.shells()
 
-        QTimer.singleShot(500,self.loop)
+        QTimer.singleShot(200,self.loop)
 
     # function of battery #
+
+    def update_shell_wifi (self,w20,w40,w80,w100):
+        self.shell_w020.setProperty('visible', w20)
+        self.shell_w040.setProperty('visible', w40)
+        self.shell_w080.setProperty('visible', w80)
+        self.shell_w100.setProperty('visible', w100)
+
+    def update_shell_battery (self,dicargs):
+        self.battery_000.setProperty('visible', dicargs['000'])
+        self.battery_010.setProperty('visible', dicargs['010'])
+        self.battery_020.setProperty('visible', dicargs['020'])
+        self.battery_030.setProperty('visible', dicargs['030'])
+        self.battery_040.setProperty('visible', dicargs['040'])
+        self.battery_050.setProperty('visible', dicargs['050'])
+        self.battery_060.setProperty('visible', dicargs['060'])
+        self.battery_070.setProperty('visible', dicargs['070'])
+        self.battery_080.setProperty('visible', dicargs['080'])
+        self.battery_090.setProperty('visible', dicargs['090'])
+        self.battery_100.setProperty('visible', dicargs['100'])
+        self.battery_000_charging.setProperty('visible', dicargs['000c'])
+        self.battery_010_charging.setProperty('visible', dicargs['010c'])
+        self.battery_020_charging.setProperty('visible', dicargs['020c'])
+        self.battery_030_charging.setProperty('visible', dicargs['030c'])
+        self.battery_040_charging.setProperty('visible', dicargs['040c'])
+        self.battery_050_charging.setProperty('visible', dicargs['050c'])
+        self.battery_060_charging.setProperty('visible', dicargs['060c'])
+        self.battery_070_charging.setProperty('visible', dicargs['070c'])
+        self.battery_080_charging.setProperty('visible', dicargs['080c'])
+        self.battery_090_charging.setProperty('visible', dicargs['090c'])
+        self.battery_100_charging.setProperty('visible', dicargs['100c'])
 
     def shells (self):
         # WiFi Check
         try:
             self.wifi_signal = int(subprocess.check_output('nmcli -t -f SIGNAL dev wifi',shell=True))
             if self.wifi_signal<=20:
-                self.shell_w020.setProperty('visible',True)
-                self.shell_w040.setProperty('visible',False)
-                self.shell_w080.setProperty('visible', False)
-                self.shell_w100.setProperty('visible', False)
+                self.update_shell_wifi_signal(True,False,False,False)
             elif self.wifi_signal<=40:
-                self.shell_w020.setProperty('visible',False)
-                self.shell_w040.setProperty('visible',True)
-                self.shell_w080.setProperty('visible', False)
-                self.shell_w100.setProperty('visible', False)
+                self.update_shell_wifi_signal(False,True,False,False)
             elif self.wifi_signal<=80:
-                self.shell_w020.setProperty('visible',False)
-                self.shell_w040.setProperty('visible',False)
-                self.shell_w080.setProperty('visible', True)
-                self.shell_w100.setProperty('visible', False)
+                self.update_shell_wifi_signal(False,False,True,False)
             elif self.wifi_signal<=100:
-                self.shell_w020.setProperty('visible',False)
-                self.shell_w040.setProperty('visible',False)
-                self.shell_w080.setProperty('visible', False)
-                self.shell_w100.setProperty('visible', True)
+                self.update_shell_wifi_signal(False,False,False,True)
         except:
             pass
 
@@ -1067,524 +1262,559 @@ class Desktop (MainApp):
             percent = battery.percent
             plugged = battery.power_plugged
 
+
             if plugged:
                 if percent>10:
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
-                    self.battery_000_charging.setProperty('visible', True)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000c':True,
+                        '010c':False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                    })
                 elif percent > 20:
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', True)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000c': False,
+                        '010c': True,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                    })
                 elif percent>30:
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', True)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000c': False,
+                        '010c': False,
+                        '020c': True,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                    })
                 elif percent>40:
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', True)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': True,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                    })
                 elif percent>50:
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', True)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': True,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                    })
                 elif percent>60:
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', True)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': True,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                    })
                 elif percent>70:
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', True)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': True,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                    })
                 elif percent>80:
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', True)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': True,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                    })
                 elif percent>90:
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', True)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': True,
+                        '090c': False,
+                        '100c': False,
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                    })
                 elif percent>100:
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', True)
-                    self.battery_100_charging.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': True,
+                        '100c': False,
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                    })
                 else:
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', True)
+                    self.update_shell_battery({
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': True,
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                    })
             else:
                 if percent > 10:
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
-                    self.battery_000.setProperty('visible', True)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000': True,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                    })
                 elif percent > 20:
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
-
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', True)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000': False,
+                        '010': True,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                    })
                 elif percent > 30:
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
-
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', True)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000': False,
+                        '010': False,
+                        '020': True,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                    })
                 elif percent > 40:
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
-
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', True)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': True,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                    })
                 elif percent > 50:
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
-
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', True)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': True,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                    })
                 elif percent > 60:
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
-
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', True)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': True,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                    })
                 elif percent > 70:
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
-
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', True)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': True,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                    })
                 elif percent > 80:
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
-
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', True)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': True,
+                        '080': False,
+                        '090': False,
+                        '100': False,
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                    })
                 elif percent > 90:
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
-
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', True)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': True,
+                        '090': False,
+                        '100': False,
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                    })
                 elif percent > 100:
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
-
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', True)
-                    self.battery_100.setProperty('visible', False)
+                    self.update_shell_battery({
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': True,
+                        '100': False,
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                    })
                 else:
-                    self.battery_000_charging.setProperty('visible', False)
-                    self.battery_010_charging.setProperty('visible', False)
-                    self.battery_020_charging.setProperty('visible', False)
-                    self.battery_030_charging.setProperty('visible', False)
-                    self.battery_040_charging.setProperty('visible', False)
-                    self.battery_050_charging.setProperty('visible', False)
-                    self.battery_060_charging.setProperty('visible', False)
-                    self.battery_070_charging.setProperty('visible', False)
-                    self.battery_080_charging.setProperty('visible', False)
-                    self.battery_090_charging.setProperty('visible', False)
-                    self.battery_100_charging.setProperty('visible', False)
-
-                    self.battery_000.setProperty('visible', False)
-                    self.battery_010.setProperty('visible', False)
-                    self.battery_020.setProperty('visible', False)
-                    self.battery_030.setProperty('visible', False)
-                    self.battery_040.setProperty('visible', False)
-                    self.battery_050.setProperty('visible', False)
-                    self.battery_060.setProperty('visible', False)
-                    self.battery_070.setProperty('visible', False)
-                    self.battery_080.setProperty('visible', False)
-                    self.battery_090.setProperty('visible', False)
-                    self.battery_100.setProperty('visible', True)
+                    self.update_shell_battery({
+                        '000': False,
+                        '010': False,
+                        '020': False,
+                        '030': False,
+                        '040': False,
+                        '050': False,
+                        '060': False,
+                        '070': False,
+                        '080': False,
+                        '090': False,
+                        '100': True,
+                        '000c': False,
+                        '010c': False,
+                        '020c': False,
+                        '030c': False,
+                        '040c': False,
+                        '050c': False,
+                        '060c': False,
+                        '070c': False,
+                        '080c': False,
+                        '090c': False,
+                        '100c': False,
+                    })
         except:
             pass
 
@@ -1650,17 +1880,18 @@ class Desktop (MainApp):
 
     menuClicked = False
 
+    def update_menuapps (self,a0,a1):
+        self._menuApps.setProperty('visible', a0)
+        self.msaDesktop.setProperty('visible', a1)
+        self.menuClicked = a0
+
     def menuApps_(self):
         self.btnMenu_anim.start()
         if self.menuClicked:
-            self._menuApps.setProperty('visible',False)
-            self.msaDesktop.setProperty('visible',True)
-            self.menuClicked = False
+            self.update_menuapps(False,True)
         else:
             self.menuApps_anim.start()
-            self._menuApps.setProperty('visible', True)
-            self.msaDesktop.setProperty('visible',False)
-            self.menuClicked = True
+            self.update_menuapps(True,False)
 
     def account_setting_(self):
         app.start ('controls','users')
@@ -1680,6 +1911,9 @@ class Desktop (MainApp):
 
         self.modelAllApplications = self.create_model4('/usr/share/applications')
         self.rootContext().setContextProperty('EntryAppApplications', self.modelAllApplications)
+
+        self.modelAllApplicationsx = self.create_model_launchedapps()
+        self.rootContext().setContextProperty('LaunchedAppApplications', self.modelAllApplicationsx)
 
         self.load(res.get('@layout/desktop'))
         if not self.rootObjects():
@@ -1765,6 +1999,7 @@ class Desktop (MainApp):
         except:
             pass
         self._background_app = self.findChild('background_app')
+        self._restore_app = self.findChild('restore_app')
         self._toolbar = self.findChild('toolbar')
         self._toolbar2 = self.findChild('toolbar2')
         self._toolbar3 = self.findChild('toolbar3')
@@ -1777,245 +2012,57 @@ class Desktop (MainApp):
         self._toolbar10 = self.findChild('toolbar10')
         self._toolbar11 = self.findChild('toolbar11')
         self._toolbar12 = self.findChild('toolbar12')
-        self.toolbar_height = self._toolbar.property('height')
-        self.toolbar_height2 = self._toolbar2.property('height')
-        self.toolbar_width3 = self._toolbar3.property('width')
-        self.toolbar_width4 = self._toolbar4.property('width')
-        self._toolbar.setProperty('width',self.pins*self.toolbar_height)
-        self._toolbar2.setProperty('width',self.pins*self.toolbar_height2)
-        self._toolbar3.setProperty('height',self.pins*self.toolbar_width3)
-        self._toolbar4.setProperty('height',self.pins*self.toolbar_width4)
         self.msaDesktop = self.findChild('msaDesktop')
         self._keyless = self.findChild('keyless')
         
 
         if self.getdata  ('dock')=='bottom':
-            self._toolbar.setProperty ('visible',True)
-            self._toolbar2.setProperty('visible',False)
-            self._toolbar3.setProperty('visible',False)
-            self._toolbar4.setProperty('visible',False)
-            self._toolbar5.setProperty('visible',False)
-            self._toolbar6.setProperty('visible',False)
-            self._toolbar7.setProperty('visible',False)
-            self._toolbar8.setProperty('visible',False)
-            self._toolbar9.setProperty('visible', False)
-            self._toolbar10.setProperty('visible', False)
-            self._toolbar11.setProperty('visible', False)
-            self._toolbar12.setProperty('visible', False)
-            self._btnMenu = self.findChild ('btnMenu')
-            self.btnMenu_anim = self.findChild ('btnMenu_anim')
-            self._btnMenu.clicked.connect (self.menuApps_)
-            self._menuApps = self.findChild ('menuApps')
-            self.menuApps_anim = self.findChild('menuApps_anim')
+            self.update_dock_bottom()
+            self.update_menu1()
 
         elif self.getdata ('dock')=='top':
-            self._toolbar.setProperty ('visible',False)
-            self._toolbar2.setProperty('visible',True)
-            self._toolbar3.setProperty('visible',False)
-            self._toolbar4.setProperty('visible',False)
-            self._toolbar5.setProperty('visible',False)
-            self._toolbar6.setProperty('visible',False)
-            self._toolbar7.setProperty('visible',False)
-            self._toolbar8.setProperty('visible',False)
-            self._toolbar9.setProperty('visible', False)
-            self._toolbar10.setProperty('visible', False)
-            self._toolbar11.setProperty('visible', False)
-            self._toolbar12.setProperty('visible', False)
-            self._btnMenu = self.findChild ('btnMenu2')
-            self.btnMenu_anim = self.findChild ('btnMenu2_anim')
-            self._btnMenu.clicked.connect (self.menuApps_)
-            self._menuApps = self.findChild ('menuApps2')
-            self.menuApps_anim = self.findChild('menuApps2_anim')
+            self.update_dock_top()
+            self.update_menu2()
 
         elif self.getdata  ('dock')=='left':
-            self._toolbar.setProperty ('visible',False)
-            self._toolbar2.setProperty('visible',False)
-            self._toolbar3.setProperty('visible',True)
-            self._toolbar4.setProperty('visible',False)
-            self._toolbar5.setProperty('visible',False)
-            self._toolbar6.setProperty('visible',False)
-            self._toolbar7.setProperty('visible',False)
-            self._toolbar8.setProperty('visible',False)
-            self._toolbar9.setProperty('visible', False)
-            self._toolbar10.setProperty('visible', False)
-            self._toolbar11.setProperty('visible', False)
-            self._toolbar12.setProperty('visible', False)
-            self._btnMenu = self.findChild ('btnMenu3')
-            self.btnMenu_anim = self.findChild ('btnMenu3_anim')
-            self._btnMenu.clicked.connect (self.menuApps_)
-            self._menuApps = self.findChild ('menuApps3')
-            self.menuApps_anim = self.findChild('menuApps3_anim')
+            self.update_dock_left()
+            self.update_menu3()
 
         elif self.getdata  ('dock')=='right':
-            self._toolbar.setProperty ('visible',False)
-            self._toolbar2.setProperty('visible',False)
-            self._toolbar3.setProperty('visible',False)
-            self._toolbar4.setProperty('visible',True)
-            self._toolbar5.setProperty('visible',False)
-            self._toolbar6.setProperty('visible',False)
-            self._toolbar7.setProperty('visible',False)
-            self._toolbar8.setProperty('visible',False)
-            self._toolbar9.setProperty('visible', False)
-            self._toolbar10.setProperty('visible', False)
-            self._toolbar11.setProperty('visible', False)
-            self._toolbar12.setProperty('visible', False)
-            self._btnMenu = self.findChild ('btnMenu4')
-            self.btnMenu_anim = self.findChild ('btnMenu4_anim')
-            self._btnMenu.clicked.connect (self.menuApps_)
-            self._menuApps = self.findChild ('menuApps4')
-            self.menuApps_anim = self.findChild('menuApps4_anim')
+            self.update_dock_right()
+            self.update_menu4()
 
         elif self.getdata  ('dock')=='windows' or self.getdata  ('dock')=='windows-bottom':
-            self._toolbar.setProperty ('visible',False)
-            self._toolbar2.setProperty('visible',False)
-            self._toolbar3.setProperty('visible',False)
-            self._toolbar4.setProperty('visible',False)
-            self._toolbar5.setProperty('visible',True)
-            self._toolbar6.setProperty('visible',False)
-            self._toolbar7.setProperty('visible',False)
-            self._toolbar8.setProperty('visible',False)
-            self._toolbar9.setProperty('visible', False)
-            self._toolbar10.setProperty('visible', False)
-            self._toolbar11.setProperty('visible', False)
-            self._toolbar12.setProperty('visible', False)
-            self._btnMenu = self.findChild ('btnMenu5')
-            self.btnMenu_anim = self.findChild ('btnMenu5_anim')
-            self._btnMenu.clicked.connect (self.menuApps_)
-            self._menuApps = self.findChild ('menuApps')
-            self.menuApps_anim = self.findChild('menuApps_anim')
+            self.update_dock_windows_bottom()
+            self.update_menu5()
 
         elif self.getdata ('dock')=='windows-top':
-            self._toolbar.setProperty ('visible',False)
-            self._toolbar2.setProperty('visible',False)
-            self._toolbar3.setProperty('visible',False)
-            self._toolbar4.setProperty('visible',False)
-            self._toolbar5.setProperty('visible',False)
-            self._toolbar6.setProperty('visible',True)
-            self._toolbar7.setProperty('visible',False)
-            self._toolbar8.setProperty('visible',False)
-            self._toolbar9.setProperty('visible', False)
-            self._toolbar10.setProperty('visible', False)
-            self._toolbar11.setProperty('visible', False)
-            self._toolbar12.setProperty('visible', False)
-            self._btnMenu = self.findChild ('btnMenu6')
-            self.btnMenu_anim = self.findChild ('btnMenu6_anim')
-            self._btnMenu.clicked.connect (self.menuApps_)
-            self._menuApps = self.findChild ('menuApps2')
-            self.menuApps_anim = self.findChild('menuApps2_anim')
+            self.update_dock_windows_top()
+            self.update_menu6()
 
         elif self.getdata ('dock')=='windows-left':
-            self._toolbar.setProperty ('visible',False)
-            self._toolbar2.setProperty('visible',False)
-            self._toolbar3.setProperty('visible',False)
-            self._toolbar4.setProperty('visible',False)
-            self._toolbar5.setProperty('visible',False)
-            self._toolbar6.setProperty('visible',False)
-            self._toolbar7.setProperty('visible',True)
-            self._toolbar8.setProperty('visible',False)
-            self._toolbar9.setProperty('visible', False)
-            self._toolbar10.setProperty('visible', False)
-            self._toolbar11.setProperty('visible', False)
-            self._toolbar12.setProperty('visible', False)
-            self._btnMenu = self.findChild ('btnMenu7')
-            self.btnMenu_anim = self.findChild ('btnMenu7_anim')
-            self._btnMenu.clicked.connect (self.menuApps_)
-            self._menuApps = self.findChild ('menuApps3')
-            self.menuApps_anim = self.findChild('menuApps3_anim')
+            self.update_dock_windows_left()
+            self.update_menu7()
 
         elif self.getdata ('dock')=='windows-right':
-            self._toolbar.setProperty ('visible',False)
-            self._toolbar2.setProperty('visible',False)
-            self._toolbar3.setProperty('visible',False)
-            self._toolbar4.setProperty('visible',False)
-            self._toolbar5.setProperty('visible',False)
-            self._toolbar6.setProperty('visible',False)
-            self._toolbar7.setProperty('visible',False)
-            self._toolbar8.setProperty('visible',True)
-            self._toolbar9.setProperty('visible',False)
-            self._toolbar10.setProperty('visible', False)
-            self._toolbar11.setProperty('visible', False)
-            self._toolbar12.setProperty('visible', False)
-            self._btnMenu = self.findChild ('btnMenu8')
-            self.btnMenu_anim = self.findChild ('btnMenu8_anim')
-            self._btnMenu.clicked.connect (self.menuApps_)
-            self._menuApps = self.findChild ('menuApps4')
-            self.menuApps_anim = self.findChild('menuApps4_anim')
+            self.update_dock_windows_right()
+            self.update_menu8()
 
         elif self.getdata  ('dock')=='unity' or self.getdata  ('dock')=='unity-bottom':
-            self._toolbar.setProperty ('visible',False)
-            self._toolbar2.setProperty('visible',False)
-            self._toolbar3.setProperty('visible',False)
-            self._toolbar4.setProperty('visible',False)
-            self._toolbar5.setProperty('visible',False)
-            self._toolbar6.setProperty('visible',False)
-            self._toolbar7.setProperty('visible',False)
-            self._toolbar8.setProperty('visible',False)
-            self._toolbar9.setProperty('visible',True)
-            self._toolbar10.setProperty('visible', False)
-            self._toolbar11.setProperty('visible', False)
-            self._toolbar12.setProperty('visible', False)
-            self._btnMenu = self.findChild ('btnMenu9')
-            self.btnMenu_anim = self.findChild ('btnMenu9_anim')
-            self._btnMenu.clicked.connect (self.menuApps_)
-            self._menuApps = self.findChild ('menuApps')
-            self.menuApps_anim = self.findChild('menuApps_anim')
+            self.update_dock_unity_bottom()
+            self.update_menu9()
 
         elif self.getdata ('dock')=='unity-top':
-            self._toolbar.setProperty ('visible',False)
-            self._toolbar2.setProperty('visible',False)
-            self._toolbar3.setProperty('visible',False)
-            self._toolbar4.setProperty('visible',False)
-            self._toolbar5.setProperty('visible',False)
-            self._toolbar6.setProperty('visible',False)
-            self._toolbar7.setProperty('visible',False)
-            self._toolbar8.setProperty('visible',False)
-            self._toolbar9.setProperty('visible', False)
-            self._toolbar10.setProperty('visible', True)
-            self._toolbar11.setProperty('visible', False)
-            self._toolbar12.setProperty('visible', False)
-            self._btnMenu = self.findChild ('btnMenu10')
-            self.btnMenu_anim = self.findChild ('btnMenu10_anim')
-            self._btnMenu.clicked.connect (self.menuApps_)
-            self._menuApps = self.findChild ('menuApps2')
-            self.menuApps_anim = self.findChild('menuApps2_anim')
+            self.update_dock_unity_top()
+            self.update_menu10()
 
         elif self.getdata ('dock')=='unity-left':
-            self._toolbar.setProperty ('visible',False)
-            self._toolbar2.setProperty('visible',False)
-            self._toolbar3.setProperty('visible',False)
-            self._toolbar4.setProperty('visible',False)
-            self._toolbar5.setProperty('visible',False)
-            self._toolbar6.setProperty('visible',False)
-            self._toolbar7.setProperty('visible',False)
-            self._toolbar8.setProperty('visible',False)
-            self._toolbar9.setProperty('visible', False)
-            self._toolbar10.setProperty('visible', False)
-            self._toolbar11.setProperty('visible', True)
-            self._toolbar12.setProperty('visible', False)
-            self._btnMenu = self.findChild ('btnMenu11')
-            self.btnMenu_anim = self.findChild ('btnMenu11_anim')
-            self._btnMenu.clicked.connect (self.menuApps_)
-            self._menuApps = self.findChild ('menuApps3')
-            self.menuApps_anim = self.findChild('menuApps3_anim')
+            self.update_dock_unity_left()
+            self.update_menu11()
 
         elif self.getdata ('dock')=='unity-right':
-            self._toolbar.setProperty ('visible',False)
-            self._toolbar2.setProperty('visible',False)
-            self._toolbar3.setProperty('visible',False)
-            self._toolbar4.setProperty('visible',False)
-            self._toolbar5.setProperty('visible',False)
-            self._toolbar6.setProperty('visible',False)
-            self._toolbar7.setProperty('visible',False)
-            self._toolbar8.setProperty('visible',False)
-            self._toolbar9.setProperty('visible',False)
-            self._toolbar10.setProperty('visible', False)
-            self._toolbar11.setProperty('visible', False)
-            self._toolbar12.setProperty('visible', True)
-            self._btnMenu = self.findChild ('btnMenu12')
-            self.btnMenu_anim = self.findChild ('btnMenu12_anim')
-            self._btnMenu.clicked.connect (self.menuApps_)
-            self._menuApps = self.findChild ('menuApps4')
-            self.menuApps_anim = self.findChild('menuApps4_anim')
+            self.update_dock_unity_right()
+            self.update_menu12()
 
         # check cats
         self.bashrc()

@@ -20,4 +20,4 @@
 import subprocess, os
 from pyabr.core import *
 
-app.terminal (res.get('@string/python'),'/stor/usr/share/icons/breeze-commento.svg','/usr/bin/sh')
+app.terminal (res.get('@string/bash'),'/stor/usr/share/icons/breeze-commento.svg','/usr/bin/sh')

@@ -18,6 +18,7 @@
 '''
 
 import sys, subprocess, os
+import zipapp
 
 from pyabr.core import *
 from termcolor import colored
@@ -107,8 +108,9 @@ elif sys.argv[1]=="rm" or sys.argv[1]=="remove" or sys.argv[1]=="uninstall" or s
         else:
             colors.show ('paye','fail',f"{i}: is a permanetly application that cannot be removed.")
 
-    app.signal ('dock')
-    app.signal ('apps')
+    app.signal('apps')
+    app.signal('dock')
+    app.signal('menu')
 
     package.clean()
 
@@ -172,8 +174,9 @@ elif sys.argv[1]=="in" or sys.argv[1]=="it" or sys.argv[1]=="install" or sys.arg
 
     # update desktop signals
 
-    app.signal ('dock')
     app.signal ('apps')
+    app.signal ('dock')
+    app.signal ('menu')
 
     package.clean()
 

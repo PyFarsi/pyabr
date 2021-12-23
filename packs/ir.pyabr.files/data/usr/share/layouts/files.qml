@@ -442,9 +442,10 @@ ApplicationWindow {
                         onDoubleClicked: {
                             fsel.text = model.path;
                             file_anim.start();
+                            fsela.text = model.path;
                         }
                         onClicked: {
-                            fsela.text = model.path;
+
                             file_anim.start();
 
                             if (mouse.button === Qt.RightButton)

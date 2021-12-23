@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Window 2.3
+import QtQuick.Window 2.15
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 1.4
@@ -17,11 +18,101 @@ ApplicationWindow {
 
     /* Application Background */
 
-    
+
+     Rectangle {
+        id: popupz
+        x: 100
+        y: 100
+        width: 1000
+        height: 600
+        radius: 10
+        visible: false
+        focus: true
+
+        property var floating: false
+        property var pwidth: 0
+        property var pheight: 0
+
+        Drag.active: true
+           MouseArea{
+                anchors.fill: parent
+                drag.target: parent
+            }
+
+        Rectangle {
+            color: "transparent"
+            width: parent.width
+            height: 20
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            radius: 40
+            anchors.topMargin: 10
+            anchors.leftMargin: 10
+            anchors.bottomMargin: 10
+            anchors.rightMargin: 10
+
+            ToolButton {
+                anchors.right: parent.right
+                width: 25
+                height: 25
+
+                Image {
+                    source: "file:///stor/usr/share/icons/breeze-close.svg"
+                    anchors.fill: parent
+                    sourceSize: Qt.size( parent.width, parent.height )
+                }
+
+                onClicked: {
+                    popupz.visible = false
+                }
+
+                id: panjere_btnClose
+            }
+
+            ToolButton {
+                id: panjere_btnFloat
+                anchors.right: panjere_btnClose.left
+                anchors.rightMargin: 5
+                width: 25
+                height: 25
+
+                Image {
+                    source: "file:///stor/usr/share/icons/breeze-float.svg"
+                    anchors.fill: parent
+                    sourceSize: Qt.size( parent.width, parent.height )
+                }
+
+
+
+                onClicked: {
+                }
+            }
+
+            Text {
+                anchors.centerIn: parent
+                text: "Barge"
+            }
+        }
+    }
     
     Text {
         id: background_app
         objectName: "background_app"
+        text: ""
+        visible: false
+    }
+
+    Text {
+        id: icon_app
+        objectName: "icon_app"
+        text: "file:///stor/usr/share/icons/breeze-app.svg"
+        visible: false
+    }
+
+    Text {
+        id: restore_app
+        objectName: "restore_app"
         text: ""
         visible: false
     }
@@ -353,6 +444,7 @@ ApplicationWindow {
                         onClicked: {
                             menu_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                     }
 
@@ -456,6 +548,7 @@ ApplicationWindow {
                         onClicked: {
                             menu2_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                     }
 
@@ -557,6 +650,7 @@ ApplicationWindow {
                         onClicked: {
                             menu3_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                     }
 
@@ -657,6 +751,7 @@ ApplicationWindow {
                         onClicked: {
                             menu4_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                     }
 
@@ -733,6 +828,7 @@ ApplicationWindow {
                         onClicked: {
                             app_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                         NumberAnimation on opacity {
                             id: app_anim
@@ -741,6 +837,39 @@ ApplicationWindow {
                             duration: 100
                         }
                     }
+            }
+            Repeater {
+                model: LaunchedAppApplications
+
+                    ToolButton {
+                        width: toolbar.height
+                        height: toolbar.height
+                        id: launchedbtn
+                        Image {
+                            source: icon_app.text
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app_anim.start();
+                            restore_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            color: "blue"
+                            width: 5
+                            height: 5
+                            radius: 5
+                        }
+                    }
+
             }
             Item { Layout.fillWidth: true }
         }
@@ -795,6 +924,7 @@ ApplicationWindow {
                         onClicked: {
                             app2_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                         NumberAnimation on opacity {
                             id: app2_anim
@@ -857,6 +987,7 @@ ApplicationWindow {
                         onClicked: {
                             app3_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                         NumberAnimation on opacity {
                             id: app3_anim
@@ -918,6 +1049,7 @@ ApplicationWindow {
                         onClicked: {
                             app4_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                         NumberAnimation on opacity {
                             id: app4_anim
@@ -979,6 +1111,7 @@ ApplicationWindow {
                         onClicked: {
                             app5_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                         NumberAnimation on opacity {
                             id: app5_anim
@@ -1040,6 +1173,7 @@ ApplicationWindow {
                         onClicked: {
                             app6_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                         NumberAnimation on opacity {
                             id: app6_anim
@@ -1104,6 +1238,7 @@ ApplicationWindow {
                         onClicked: {
                             app7_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                         NumberAnimation on opacity {
                             id: app7_anim
@@ -1168,6 +1303,7 @@ ApplicationWindow {
                         onClicked: {
                             app8_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                         NumberAnimation on opacity {
                             id: app8_anim
@@ -1230,6 +1366,7 @@ ApplicationWindow {
                         onClicked: {
                             app9_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                         NumberAnimation on opacity {
                             id: app9_anim
@@ -1292,6 +1429,7 @@ ApplicationWindow {
                         onClicked: {
                             app10_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                         NumberAnimation on opacity {
                             id: app10_anim
@@ -1358,6 +1496,7 @@ ApplicationWindow {
                         onClicked: {
                             app11_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                         NumberAnimation on opacity {
                             id: app11_anim
@@ -1424,6 +1563,7 @@ ApplicationWindow {
                         onClicked: {
                             app12_anim.start();
                             background_app.text = model.name;
+                            icon_app.text = model.logo;
                         }
                         NumberAnimation on opacity {
                             id: app12_anim

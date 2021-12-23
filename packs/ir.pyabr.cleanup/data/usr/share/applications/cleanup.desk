@@ -1,9 +1,0 @@
-name[fa]: بهینه ساز رایانه
-name[en]: Computer optimizer
-name[ar]: مُحسِّن الكمبيوتر
-name[tr]: Bilgisayar iyileştirici
-logo: @icon/breeze-app
-exec: cleanup_gui
-application: Yes
-hidden: No
-category: tools
