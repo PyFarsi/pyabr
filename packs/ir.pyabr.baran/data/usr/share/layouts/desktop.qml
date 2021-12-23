@@ -104,13 +104,6 @@ ApplicationWindow {
     }
 
     Text {
-        id: icon_app
-        objectName: "icon_app"
-        text: "file:///stor/usr/share/icons/breeze-app.svg"
-        visible: false
-    }
-
-    Text {
         id: restore_app
         objectName: "restore_app"
         text: ""
@@ -444,7 +437,7 @@ ApplicationWindow {
                         onClicked: {
                             menu_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                     }
 
@@ -548,7 +541,7 @@ ApplicationWindow {
                         onClicked: {
                             menu2_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                     }
 
@@ -650,7 +643,7 @@ ApplicationWindow {
                         onClicked: {
                             menu3_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                     }
 
@@ -751,7 +744,7 @@ ApplicationWindow {
                         onClicked: {
                             menu4_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                     }
 
@@ -828,7 +821,7 @@ ApplicationWindow {
                         onClicked: {
                             app_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                         NumberAnimation on opacity {
                             id: app_anim
@@ -844,9 +837,9 @@ ApplicationWindow {
                     ToolButton {
                         width: toolbar.height
                         height: toolbar.height
-                        id: launchedbtn
+
                         Image {
-                            source: icon_app.text
+                            source: model.logo
                             sourceSize: Qt.size( parent.width, parent.height )
                             anchors.fill: parent
                         }
@@ -869,7 +862,6 @@ ApplicationWindow {
                             radius: 5
                         }
                     }
-
             }
             Item { Layout.fillWidth: true }
         }
@@ -924,13 +916,45 @@ ApplicationWindow {
                         onClicked: {
                             app2_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                         NumberAnimation on opacity {
                             id: app2_anim
                             from: 0
                             to: 1
                             duration: 100
+                        }
+                    }
+            }
+            Repeater {
+                model: LaunchedAppApplications
+
+                    ToolButton {
+                        width: toolbar2.height
+                        height: toolbar2.height
+
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app2_anim.start();
+                            restore_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app2_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            color: "blue"
+                            width: 5
+                            height: 5
+                            radius: 5
                         }
                     }
             }
@@ -987,13 +1011,45 @@ ApplicationWindow {
                         onClicked: {
                             app3_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                         NumberAnimation on opacity {
                             id: app3_anim
                             from: 0
                             to: 1
                             duration: 100
+                        }
+                    }
+            }
+            Repeater {
+                model: LaunchedAppApplications
+
+                    ToolButton {
+                        width: toolbar3.height
+                        height: toolbar3.height
+
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app3_anim.start();
+                            restore_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app3_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            color: "blue"
+                            width: 5
+                            height: 5
+                            radius: 5
                         }
                     }
             }
@@ -1049,13 +1105,45 @@ ApplicationWindow {
                         onClicked: {
                             app4_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                         NumberAnimation on opacity {
                             id: app4_anim
                             from: 0
                             to: 1
                             duration: 100
+                        }
+                    }
+            }
+            Repeater {
+                model: LaunchedAppApplications
+
+                    ToolButton {
+                        width: toolbar4.height
+                        height: toolbar4.height
+
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app4_anim.start();
+                            restore_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app4_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            color: "blue"
+                            width: 5
+                            height: 5
+                            radius: 5
                         }
                     }
             }
@@ -1111,13 +1199,45 @@ ApplicationWindow {
                         onClicked: {
                             app5_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                         NumberAnimation on opacity {
                             id: app5_anim
                             from: 0
                             to: 1
                             duration: 100
+                        }
+                    }
+            }
+            Repeater {
+                model: LaunchedAppApplications
+
+                    ToolButton {
+                        width: toolbar5.height
+                        height: toolbar5.height
+
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app5_anim.start();
+                            restore_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app5_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            color: "blue"
+                            width: 5
+                            height: 5
+                            radius: 5
                         }
                     }
             }
@@ -1173,13 +1293,45 @@ ApplicationWindow {
                         onClicked: {
                             app6_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                         NumberAnimation on opacity {
                             id: app6_anim
                             from: 0
                             to: 1
                             duration: 100
+                        }
+                    }
+            }
+            Repeater {
+                model: LaunchedAppApplications
+
+                    ToolButton {
+                        width: toolbar6.height
+                        height: toolbar6.height
+
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app6_anim.start();
+                            restore_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app6_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            color: "blue"
+                            width: 5
+                            height: 5
+                            radius: 5
                         }
                     }
             }
@@ -1238,13 +1390,45 @@ ApplicationWindow {
                         onClicked: {
                             app7_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                         NumberAnimation on opacity {
                             id: app7_anim
                             from: 0
                             to: 1
                             duration: 100
+                        }
+                    }
+            }
+            Repeater {
+                model: LaunchedAppApplications
+
+                    ToolButton {
+                        width: toolbar7.height
+                        height: toolbar7.height
+
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app7_anim.start();
+                            restore_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app7_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            color: "blue"
+                            width: 5
+                            height: 5
+                            radius: 5
                         }
                     }
             }
@@ -1303,13 +1487,45 @@ ApplicationWindow {
                         onClicked: {
                             app8_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                         NumberAnimation on opacity {
                             id: app8_anim
                             from: 0
                             to: 1
                             duration: 100
+                        }
+                    }
+            }
+            Repeater {
+                model: LaunchedAppApplications
+
+                    ToolButton {
+                        width: toolbar8.height
+                        height: toolbar8.height
+
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app8_anim.start();
+                            restore_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app8_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            color: "blue"
+                            width: 5
+                            height: 5
+                            radius: 5
                         }
                     }
             }
@@ -1366,13 +1582,45 @@ ApplicationWindow {
                         onClicked: {
                             app9_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                         NumberAnimation on opacity {
                             id: app9_anim
                             from: 0
                             to: 1
                             duration: 100
+                        }
+                    }
+            }
+            Repeater {
+                model: LaunchedAppApplications
+
+                    ToolButton {
+                        width: toolbar9.height
+                        height: toolbar9.height
+
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app9_anim.start();
+                            restore_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app9_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            color: "blue"
+                            width: 5
+                            height: 5
+                            radius: 5
                         }
                     }
             }
@@ -1429,13 +1677,45 @@ ApplicationWindow {
                         onClicked: {
                             app10_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                         NumberAnimation on opacity {
                             id: app10_anim
                             from: 0
                             to: 1
                             duration: 100
+                        }
+                    }
+            }
+            Repeater {
+                model: LaunchedAppApplications
+
+                    ToolButton {
+                        width: toolbar10.height
+                        height: toolbar10.height
+
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app10_anim.start();
+                            restore_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app10_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            color: "blue"
+                            width: 5
+                            height: 5
+                            radius: 5
                         }
                     }
             }
@@ -1496,13 +1776,45 @@ ApplicationWindow {
                         onClicked: {
                             app11_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                         NumberAnimation on opacity {
                             id: app11_anim
                             from: 0
                             to: 1
                             duration: 100
+                        }
+                    }
+            }
+            Repeater {
+                model: LaunchedAppApplications
+
+                    ToolButton {
+                        width: toolbar11.height
+                        height: toolbar11.height
+
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app11_anim.start();
+                            restore_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app11_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            color: "blue"
+                            width: 5
+                            height: 5
+                            radius: 5
                         }
                     }
             }
@@ -1563,13 +1875,45 @@ ApplicationWindow {
                         onClicked: {
                             app12_anim.start();
                             background_app.text = model.name;
-                            icon_app.text = model.logo;
+                            
                         }
                         NumberAnimation on opacity {
                             id: app12_anim
                             from: 0
                             to: 1
                             duration: 100
+                        }
+                    }
+            }
+            Repeater {
+                model: LaunchedAppApplications
+
+                    ToolButton {
+                        width: toolbar12.height
+                        height: toolbar12.height
+
+                        Image {
+                            source: model.logo
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            anchors.fill: parent
+                        }
+                        onClicked: {
+                            app12_anim.start();
+                            restore_app.text = model.name;
+                        }
+                        NumberAnimation on opacity {
+                            id: app12_anim
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            color: "blue"
+                            width: 5
+                            height: 5
+                            radius: 5
                         }
                     }
             }

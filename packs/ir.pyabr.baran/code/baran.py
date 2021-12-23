@@ -582,7 +582,8 @@ class Desktop (MainApp):
     PROJECTS = ''
     SAMPLES = ''
     VIDEOS = ''
-    
+
+
     def shutdown_ (self):
         subprocess.call(['poweroff'])
 
@@ -728,7 +729,11 @@ class Desktop (MainApp):
             it = QtGui.QStandardItem(name)
             it.setData(name, self.NameRole)
             it.setData(name, self.LabelRole)
-            it.setData(res.qmlget('@icon/breeze-app'), self.LogoRole)
+            correctname = name.replace(' ','').replace('\n','').replace('(','').replace(')', '').replace('0', '').replace('1', '').replace('2', '').replace('3', '').replace('4', '').replace('5', '').replace('6', '').replace('7', '').replace('8', '').replace('9', '')
+            if not control.read_record(correctname,'/etc/launched/logo.list')==None:
+                it.setData(res.qmlget(control.read_record(correctname,'/etc/launched/logo.list')), self.LogoRole)
+            else:
+                it.setData(res.qmlget('@icon/breeze-app'), self.LogoRole)
             model.appendRow(it)
         return  model
 
@@ -1161,8 +1166,11 @@ class Desktop (MainApp):
     def loop (self):
         # Applications starts in background
 
-        self.update_lanuched_apps()
-        self.update_dock_bottom()
+        try:
+            self.update_lanuched_apps()
+            self.update_dock()
+        except:
+            pass
 
         if not self._background_app.property('text')=='':
             self._menuApps.setProperty('visible', False)
