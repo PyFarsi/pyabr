@@ -42,6 +42,7 @@ class MainApp (MainApp):
 
         self.load (res.get('@layout/upstor'))
         self.setProperty('title',res.get('@string/upstor'))
+        app.launchedlogo(self.property('title'), res.etc('upstor', 'logo'))
 
         if files.isfile ('/tmp/stor.txt'): files.remove ('/tmp/stor.txt')
         commands.wget (['https://dl.pyabr.ir/stor.txt','/tmp/stor.txt'])

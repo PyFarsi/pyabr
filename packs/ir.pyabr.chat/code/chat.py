@@ -41,6 +41,7 @@ class ChannelConnector (MainApp):
         self.load (res.get('@layout/ChannelConnector'))
 
         self.setProperty('title',res.get('@string/c_channel'))
+        app.launchedlogo(self.property('title'), res.etc('chat', 'logo'))
 
         self.leChannel = self.findChild('leChannel')
         self.leChannel.setProperty('placeholderText',res.get('@string/e_channel'))

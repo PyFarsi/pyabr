@@ -45,6 +45,7 @@ class MainApp (MainApp):
 
         self.load (res.get('@layout/copydisk'))
         self.setProperty('title',res.get('@string/copydisk'))
+        app.launchedlogo(self.property('title'), res.etc('copydisk', 'logo'))
         self.dsel = self.findChild ('dsel')
         self.btnCopy = self.findChild ('btnCopy')
         self.btnCopy.setProperty('text',res.get('@string/fcopy'))

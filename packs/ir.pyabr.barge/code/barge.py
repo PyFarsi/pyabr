@@ -26,6 +26,7 @@ class MainApp (MainApp):
     def update_(self,filename):
         self.setProperty ('title',files.filename(filename)+' - '+res.get('@string/barge'))
         self.path.setProperty ('text',filename)
+        app.launchedlogo(self.property('title'), '@icon/breeze-barge')
 
     def open__(self,filename):
         if permissions.check(files.output(filename), "r", files.readall("/proc/info/su")):
@@ -80,6 +81,7 @@ class MainApp (MainApp):
         self.addwin = self.findChild ('addwin')
 
         self.setProperty ('title',res.get('@string/barge'))
+        app.launchedlogo(self.property('title'),res.etc('barge','logo'))
 
         self.open.clicked.connect(self.open_)
         self.saveas.clicked.connect(self.saveas_)

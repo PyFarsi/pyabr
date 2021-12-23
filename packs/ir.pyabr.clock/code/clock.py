@@ -52,6 +52,7 @@ class MainApp (MainApp):
 
         self.load (res.get('@layout/clock'))
         self.setProperty('title',res.get('@string/clock'))
+        app.launchedlogo(self.property('title'), res.etc('clock', 'logo'))
 
         timer = QTimer(self)
         timer.timeout.connect(self.showTime)

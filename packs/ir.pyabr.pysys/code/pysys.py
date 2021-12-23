@@ -62,6 +62,7 @@ class MainApp (MainApp):
         self.load(res.get('@layout/pysys'))
         self.setProperty('title',res.get('@string/power_options'))
         self.background_text = self.findChild('background_text')
+        app.launchedlogo(self.property('title'), res.etc('pysys', 'logo'))
 
         self.shutdown = self.findChild ('shutdown')
         self.shutdown.setProperty('source',res.qmlget(res.etc('pysys','shutdown')))

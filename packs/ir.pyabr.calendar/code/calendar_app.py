@@ -38,6 +38,7 @@ class MainApp (MainApp):
 
         self.load (res.get('@layout/calendar'))
         self.setProperty('title',res.get('@string/calendar'))
+        app.launchedlogo(self.property('title'), res.etc('calendar', 'logo'))
 
         self.Jalali = self.findChild('Jalali')
         self.Gregorian = self.findChild('Gregorian')

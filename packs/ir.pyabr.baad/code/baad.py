@@ -111,6 +111,7 @@ class MainApp (MainApp):
 
         self.load (res.get('@layout/baad'))
         self.setProperty('title',res.get('@string/baad'))
+        app.launchedlogo(self.property('title'), res.etc('baad', 'logo'))
 
         self.loop()
 
@@ -131,6 +132,7 @@ def cityWriter (city):
 try:
     w = MainApp()
 except:
+    app.launchedlogo(res.get('@string/e_city'), res.etc('baad', 'logo'))
     w = Input (res.get('@string/e_city'),cityWriter)
 
 application.exec()

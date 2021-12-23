@@ -19,5 +19,5 @@
 
 import subprocess
 from pyabr.core import *
-
+app.launchedlogo(res.get('@string/python'), res.etc('python', 'logo'))
 app.terminal (res.get('@string/python'),'/stor/usr/share/icons/python.svg','/usr/bin/python3')

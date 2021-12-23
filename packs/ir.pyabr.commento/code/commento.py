@@ -19,5 +19,5 @@
 
 import subprocess
 from pyabr.core import *
-
+app.launchedlogo(res.get('@string/terminal'),res.etc('commento','logo'))
 app.terminal (res.get('@string/terminal'),'/stor/usr/share/icons/breeze-commento.svg','/usr/bin/bash')

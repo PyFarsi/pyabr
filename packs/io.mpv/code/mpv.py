@@ -37,6 +37,7 @@ class MainApp (MainApp):
         self.load (res.get('@layout/mpv'))
 
         self.setProperty('title',res.get('@string/mpv'))
+        app.launchedlogo(self.property('title'), res.etc('mpv', 'logo'))
 
         self.open = self.findChild ('open')
         self.image = self.findChild ('image')

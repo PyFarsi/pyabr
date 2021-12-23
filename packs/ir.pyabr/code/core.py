@@ -2442,6 +2442,15 @@ class App:
         files = Files()
         files.write('/proc/info/sig',sig)
 
+    def launchedlogo(self,title,logo):
+        correctname = title.replace(' ', '').replace('\n', '').replace('(', '').replace(')', '').replace('0',
+                                                                                                        '').replace('1',
+                                                                                                                    '').replace(
+            '2', '').replace('3', '').replace('4', '').replace('5', '').replace('6', '').replace('7', '').replace('8',
+                                                                                                                  '').replace(
+            '9', '')
+
+        control.write_record(correctname,logo,'/etc/launched/logo.list')
 
 app = App()
 # process #

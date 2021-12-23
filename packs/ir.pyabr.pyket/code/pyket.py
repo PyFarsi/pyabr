@@ -220,6 +220,7 @@ class MainApp (MainApp):
         self.pkgDescription = self.findChild('pkgDescription')
 
         self.setProperty('title',res.get('@string/pyket'))
+        app.launchedlogo(self.property('title'), res.etc('pyket', 'logo'))
         self.loop()
 
 application = QtGui.QGuiApplication([])

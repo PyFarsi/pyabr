@@ -43,6 +43,7 @@ class MainApp (MainApp):
         
         self.load (res.get('@layout/dmgr'))
         self.setProperty('title',res.get('@string/download'))
+        app.launchedlogo(self.property('title'), res.etc('dmgr', 'logo'))
         self.add = self.findChild('add')
         self.add.clicked.connect (self.add_)
 

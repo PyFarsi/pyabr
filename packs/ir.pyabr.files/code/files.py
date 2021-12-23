@@ -351,6 +351,7 @@ class MainApp (MainApp):
             self.setProperty('title',res.get('@string/files'))
         except:
             pass
+        app.launchedlogo(self.property('title'), res.etc('files', 'logo'))
         self.fsel = self.findChild ('fsel')
         self.fsela = self.findChild('fsela')
         self.title =self.findChild('title')

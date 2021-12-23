@@ -91,6 +91,7 @@ except:
 
         self.load (res.get('@layout/calculator'))
         self.setProperty ('title',res.get('@string/calculator'))
+        app.launchedlogo(self.property('title'), res.etc('calculator', 'logo'))
 
         self.o1 = self.findChild('o1')
         self.o2 = self.findChild('o2')

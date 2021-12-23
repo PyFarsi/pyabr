@@ -63,6 +63,7 @@ class MainApp (MainApp):
             sys.exit(-1)
 
         self.setProperty('title',res.get('@string/runner'))
+        app.launchedlogo(self.property('title'), res.etc('runapp', 'logo'))
 
         self.leRun = self.findChild('leRun')
         self.btnRun = self.findChild('btnRun')

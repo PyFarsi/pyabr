@@ -155,6 +155,7 @@ class MainApp (MainApp):
 
         self.load (res.get('@layout/setup'))
         self.setProperty('title',res.get('@string/setup'))
+        app.launchedlogo(self.property('title'), res.etc('setup', 'logo'))
 
         self.next = self.findChild ('next')
         self.next.clicked.connect (self.next_)

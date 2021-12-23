@@ -26,6 +26,7 @@ class MainApp (MainApp):
 
         self.load(res.get("@layout/sysinfo"))
 
+
         self.host = self.findChild ('host')
         self.cs = self.findChild ('cs')
         self.bl = self.findChild ('bl')
@@ -47,6 +48,7 @@ class MainApp (MainApp):
         self.arch1 = self.findChild ('arch1')
 
         self.setProperty ('title',res.get('@string/sysinfo'))
+        app.launchedlogo(self.property('title'), res.etc('sysinfo', 'logo'))
         self.logo = self.findChild ('logo')
         self.logo.setProperty('source',res.qmlget(res.etc('sysinfo','cloud')))
 
@@ -94,8 +96,8 @@ class MainApp (MainApp):
             self.gui1.setProperty ('text',files.readall('/proc/info/gui'))
             self.arch1.setProperty ('text',files.readall('/proc/info/arch'))
 
-app = QtGui.QGuiApplication([])
-app.setWindowIcon (QIcon(res.get(res.etc('sysinfo','logo'))))
+appx = QtGui.QGuiApplication([])
+appx.setWindowIcon (QIcon(res.get(res.etc('sysinfo','logo'))))
 
 w = MainApp()
-app.exec()
+appx.exec()

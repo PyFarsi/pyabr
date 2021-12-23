@@ -59,6 +59,8 @@ class MainApp (MainApp):
         self.open.clicked.connect(self.open_)
         self.fullscreen.clicked.connect(self.fullscreen_)
 
+        app.launchedlogo(self.property('title'), res.etc('nama', 'logo'))
+
         if not sys.argv[1:]==[]:
             self.open__(sys.argv[1])
 
