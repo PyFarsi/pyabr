@@ -39,6 +39,15 @@ def windows_manager ():
     except:
         pass
 
+def vkey():
+    try:
+        subprocess.call(['rm','-rf','/root/.config/dconf'])
+        subprocess.call(['onboard', '--theme', 'Droid'])
+
+        app.launchedlogo('Onboard','@icon/breeze-onboard')
+    except:
+        pass
+
 application = QGuiApplication(sys.argv)
 application.setWindowIcon(QIcon(res.get(ql('pyabr'))))
 
@@ -193,7 +202,6 @@ class Login (MainApp):
         if not self._keyless.property('text')=='':
             subprocess.call(control.read_record('keyless',f'/usr/share/locales/{self._keyless.property("text")}'),shell=True)
 
-
         self._keyless.setProperty('text','')
         QTimer.singleShot(10,self.loop)
 
@@ -299,7 +307,7 @@ class Enter (MainApp):
 
         if control.read_record('code',f'/etc/users/{self.username}')==hashlib.sha3_512(self._password.property("text").encode()).hexdigest():
             self.close()
-            self.desktop = Desktop([self.Backend,self.username,self._password.property("text")])
+            self.desktop = Desktop([self.Backend, self.username, self._password.property("text")])
         else:
             self._password.setProperty('text','')
             self._password.setProperty('placeholderText', res.get('@string/wrong_password'))
@@ -699,58 +707,52 @@ class Desktop (MainApp):
     launchedapps = 0
 
     def get_launchedapps (self):
-        lista = subprocess.check_output(['wmctrl', '-l']).decode('utf-8').split('\n')
-        list2 = []
-        for i in lista:
+        try:
+            lista = subprocess.check_output(['wmctrl', '-l']).decode('utf-8').split('\n')
+            list2 = []
+            for i in lista:
+                try:
+                    list2.append(i.split('  0 pyabr ')[1])
+                except:
+                    pass
+
+            list2 = list(dict.fromkeys(list2))
             try:
-                list2.append(i.split('  0 pyabr ')[1])
+                list2.pop(0)
             except:
                 pass
-
-        list2 = list(dict.fromkeys(list2))
-        try:
-            list2.pop(0)
         except:
-            pass
+            list2 = []
 
         return list2
 
     def get_len_of_launchedapps (self):
-        return len(self.get_launchedapps())
+        try:
+            return len(self.get_launchedapps())
+        except:
+            return 0
 
     def create_model_launchedapps (self):
-        #https://www.w3schools.com/python/python_howto_remove_duplicates.asp
-        self.launchedapps = self.get_len_of_launchedapps()
+        try:
+            #https://www.w3schools.com/python/python_howto_remove_duplicates.asp
+            self.launchedapps = self.get_len_of_launchedapps()
 
-        model = QtGui.QStandardItemModel()
-        roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
-        model.setItemRoleNames(roles)
-        for name in self.get_launchedapps():
-            it = QtGui.QStandardItem(name)
-            it.setData(name, self.NameRole)
-            it.setData(name, self.LabelRole)
-            correctname = name.replace(' ','').replace('\n','').replace('(','').replace(')', '').replace('0', '').replace('1', '').replace('2', '').replace('3', '').replace('4', '').replace('5', '').replace('6', '').replace('7', '').replace('8', '').replace('9', '')
-            if not control.read_record(correctname,'/etc/launched/logo.list')==None:
-                it.setData(res.qmlget(control.read_record(correctname,'/etc/launched/logo.list')), self.LogoRole)
-            else:
-                it.setData(res.qmlget('@icon/breeze-app'), self.LogoRole)
-            model.appendRow(it)
-        return  model
-
-    def create_model5(self):
-        #model = QtGui.QStandardItemModel()
-        #roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
-        #model.setItemRoleNames(roles)
-
-        lista = subprocess.check_output ("wmctrl -l | awk '{print $4}'",shell=True).decode ('utf-8').split('\n')
-        lista.pop(0)
-
-        if '' in lista:
-            lista.remove('')
-
-        
-        listb = files.list ('/proc/id')
-        #return model
+            model = QtGui.QStandardItemModel()
+            roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
+            model.setItemRoleNames(roles)
+            for name in self.get_launchedapps():
+                it = QtGui.QStandardItem(name)
+                it.setData(name, self.NameRole)
+                it.setData(name, self.LabelRole)
+                correctname = name.replace(' ','').replace('\n','').replace('(','').replace(')', '').replace('0', '').replace('1', '').replace('2', '').replace('3', '').replace('4', '').replace('5', '').replace('6', '').replace('7', '').replace('8', '').replace('9', '')
+                if not control.read_record(correctname,'/etc/launched/logo.list')==None:
+                    it.setData(res.qmlget(control.read_record(correctname,'/etc/launched/logo.list')), self.LogoRole)
+                else:
+                    it.setData(res.qmlget('@icon/breeze-app'), self.LogoRole)
+                model.appendRow(it)
+            return  model
+        except:
+            pass
 
     def getdata (self,name):
         try:
@@ -776,30 +778,39 @@ class Desktop (MainApp):
             files.create('/proc/info/sig')
 
         elif files.readall('/proc/info/sig')=='sleep':
+            files.create('/proc/info/sig')
             self.sleep_()
 
         elif files.readall('/proc/info/sig')=='shutdown':
+            files.create('/proc/info/sig')
             self.shutdown_()
 
         elif files.readall('/proc/info/sig') == 'restart':
+            files.create('/proc/info/sig')
             self.restart_()
 
         elif files.readall('/proc/info/sig')=='lock':
+            files.create('/proc/info/sig')
             self.lock_()
 
         elif files.readall('/proc/info/sig')=='logout':
+            files.create('/proc/info/sig')
             self.logout_()
 
         elif files.readall('/proc/info/sig')=='background':
+            files.create('/proc/info/sig')
             self.update_background()
 
         elif files.readall('/proc/info/sig')=='apps':
+            files.create('/proc/info/sig')
             self.update_apps()
 
         elif files.readall('/proc/info/sig')=='dock':
+            files.create('/proc/info/sig')
             self.update_dock()
 
         elif files.readall('/proc/info/sig') == 'menu':
+            files.create('/proc/info/sig')
             self.update_menu()
 
         files.create('/proc/info/sig')
@@ -1182,11 +1193,15 @@ class Desktop (MainApp):
 
             app.start(self._background_app.property('text').replace('.desk',''),'')
 
+
         if not self._restore_app.property('text')=='':
             try:
                 self.winid = subprocess.check_output(f'xdotool search "{self._restore_app.property("text")}"',shell=True).decode('utf-8').split('\n')
                 for i in self.winid:
-                    subprocess.call(f'xdotool windowactivate {i}',shell=True)
+                    try:
+                        subprocess.call(f'xdotool windowactivate {i}',shell=True)
+                    except:
+                        pass
             except:
                 pass
 
@@ -1904,6 +1919,10 @@ class Desktop (MainApp):
     def account_setting_(self):
         app.start ('controls','users')
 
+    def virtualkeyboard_(self):
+        virtualkeyboard_run = multiprocessing.Process(target=vkey)
+        virtualkeyboard_run.start()
+
     def __init__(self,ports):
         super(Desktop, self).__init__()
 
@@ -1915,7 +1934,7 @@ class Desktop (MainApp):
         self.modelDockApplications = self.create_model3()
         self.rootContext().setContextProperty('EntryDockApplications',self.modelDockApplications)
 
-        self.create_model5()
+        #self.create_model5()
 
         self.modelAllApplications = self.create_model4('/usr/share/applications')
         self.rootContext().setContextProperty('EntryAppApplications', self.modelAllApplications)
@@ -1967,6 +1986,9 @@ class Desktop (MainApp):
         self.shell_w080 = self.findChild('shell_w080')
         self.shell_w040 = self.findChild('shell_w040')
         self.shell_w020 = self.findChild('shell_w020')
+
+        self.virtualkeyboard = self.findChild('virtualkeyboard')
+        self.virtualkeyboard.clicked.connect (self.virtualkeyboard_)
 
         self.battery_000_charging = self.findChild('battery_000_charging')
         self.battery_010_charging = self.findChild('battery_010_charging')
