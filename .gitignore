@@ -54,7 +54,7 @@ pip-delete-this-directory.txt
 venv/
 # Unit test / coverage reports
 htmlcov/
-packs/ir.pyabr.iran-wallpaper/
+packs-extra/ir.pyabr.iran-wallpaper/
 packs/shad/
 packs/bale/
 packs/chromium/
