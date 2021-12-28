@@ -170,7 +170,7 @@ Style {
         The implicit size of the calendar is calculated based on the implicit size of the background delegate.
     */
     property Component background: Rectangle {
-        color: "#fff"
+        color: "transparent"
         implicitWidth: Math.max(250, Math.round(TextSingleton.implicitHeight * 14))
         implicitHeight: Math.max(250, Math.round(TextSingleton.implicitHeight * 14))
     }
@@ -189,7 +189,7 @@ Style {
     */
     property Component navigationBar: Rectangle {
         height: Math.round(TextSingleton.implicitHeight * 2.73)
-        color: "#f9f9f9"
+        color: "#A0FFFFFF"
 
         Rectangle {
             color: Qt.rgba(1,1,1,0.6)
