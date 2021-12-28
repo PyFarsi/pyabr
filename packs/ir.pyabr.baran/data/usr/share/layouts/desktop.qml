@@ -18,13 +18,13 @@ ApplicationWindow {
 
     /* Application Background */
 
-
      Rectangle {
-        id: popupz
+        id: bWindowManager
+        objectName: "bWindowManager"
         x: 100
         y: 100
-        width: 1000
-        height: 600
+        width: 400
+        height: 400
         radius: 10
         visible: false
         focus: true
@@ -34,10 +34,10 @@ ApplicationWindow {
         property var pheight: 0
 
         Drag.active: true
-           MouseArea{
-                anchors.fill: parent
-                drag.target: parent
-            }
+        MouseArea{
+            anchors.fill: parent
+            drag.target: parent
+        }
 
         Rectangle {
             color: "transparent"
@@ -46,7 +46,7 @@ ApplicationWindow {
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
-            radius: 40
+            radius: 30
             anchors.topMargin: 10
             anchors.leftMargin: 10
             anchors.bottomMargin: 10
@@ -64,15 +64,15 @@ ApplicationWindow {
                 }
 
                 onClicked: {
-                    popupz.visible = false
+                    bWindowManager.visible = false
                 }
 
-                id: panjere_btnClose
+                id: bwin_btnClose
             }
 
             ToolButton {
-                id: panjere_btnFloat
-                anchors.right: panjere_btnClose.left
+                id: bwin_btnFloat
+                anchors.right: bwin_btnClose.left
                 anchors.rightMargin: 5
                 width: 25
                 height: 25
@@ -83,15 +83,13 @@ ApplicationWindow {
                     sourceSize: Qt.size( parent.width, parent.height )
                 }
 
-
-
                 onClicked: {
                 }
             }
 
             Text {
                 anchors.centerIn: parent
-                text: "Barge"
+                text: "Bomi Window Manager"
             }
         }
     }
@@ -127,14 +125,14 @@ ApplicationWindow {
     Shortcut {
         sequence: "Esc"
         onActivated: {
-            background_app.text = 'pysys';
+            popup_pysys.open()
         }
     }
 
     Shortcut {
         sequence: "Alt+F4"
         onActivated: {
-            background_app.text = 'pysys';
+            popup_pysys.open()
         }
     }
 
@@ -167,11 +165,12 @@ ApplicationWindow {
 
         Row {
             anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
             ToolButton {
                 icon.source: 'file:///stor/usr/share/icons/breeze-shutdown.svg'
                 icon.color: 'white'
                 onClicked: {
-                    background_app.text = 'pysys';
+                    popup_pysys.open()
                 }
             }
             ToolButton {
@@ -344,6 +343,12 @@ ApplicationWindow {
                 objectName: 'battery_100_charging'
                 visible: false
             }
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-onboard.svg'
+                icon.color: 'white'
+                objectName: 'virtualkeyboard'
+                visible: true
+            }
         }
 
         Text {
@@ -355,9 +360,21 @@ ApplicationWindow {
             color: "white"
             ToolButton {
                 anchors.fill: parent
-                onClicked: {
-                        background_app.text = 'clock';
-                }
+                objectName: "btnClock"
+                id: btnClock
+            }
+        }
+
+        Row
+        {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-menu-panel.svg'
+                icon.color: 'white'
+                objectName: 'btnPanel'
+                id: btnPanel
+                visible: false
             }
         }
     }
@@ -371,7 +388,7 @@ ApplicationWindow {
        anchors.horizontalCenter: parent.horizontalCenter
        width: 560
        height: 560
-       radius: 40
+       radius: 30
        anchors.bottomMargin: 20
        visible: false
        //visible: true
@@ -437,7 +454,6 @@ ApplicationWindow {
                         onClicked: {
                             menu_anim.start();
                             background_app.text = model.name;
-                            
                         }
                     }
 
@@ -475,7 +491,7 @@ ApplicationWindow {
        anchors.horizontalCenter: parent.horizontalCenter
        width: 560
        height: 560
-       radius: 40
+       radius: 30
        anchors.topMargin: 20
        visible: false
        objectName: "menuApps2"
@@ -577,7 +593,7 @@ ApplicationWindow {
        anchors.verticalCenter: parent.verticalCenter
        width: 560
        height: 560
-       radius: 40
+       radius: 30
        anchors.leftMargin: 20
        visible: false
        objectName: "menuApps3"
@@ -679,7 +695,7 @@ ApplicationWindow {
        anchors.verticalCenter: parent.verticalCenter
        width: 560
        height: 560
-       radius: 40
+       radius: 30
        anchors.rightMargin: 20
        visible: false
        objectName: "menuApps4"
@@ -821,7 +837,7 @@ ApplicationWindow {
                         onClicked: {
                             app_anim.start();
                             background_app.text = model.name;
-                            
+
                         }
                         NumberAnimation on opacity {
                             id: app_anim
@@ -829,6 +845,7 @@ ApplicationWindow {
                             to: 1
                             duration: 100
                         }
+
                     }
             }
             Repeater {
@@ -1921,6 +1938,247 @@ ApplicationWindow {
         }
     }
 
+    /* Show clock */
+    Rectangle {
+       color: "#A0FFFFFF"
+       anchors.top: topbar.bottom
+       anchors.horizontalCenter: parent.horizontalCenter
+       width: 256
+       height: 256
+       radius: 256
+       anchors.topMargin: 5
+       visible: false
+       //visible: true
+       objectName: "showclock"
+       id: showclock
+
+       AnalogClock
+       {
+            width: parent.height
+            height: parent.height
+            anchors.centerIn: parent
+       }
+
+       NumberAnimation on height {
+            id: showclock_anim
+            objectName: "showclock_anim"
+            from: 0
+            to: 256
+            duration: 100
+        }
+    }
+
+    /* Show Panel */
+    Rectangle {
+       color: "#A0FFFFFF"
+       anchors.right: parent.right
+       anchors.top: topbar.bottom
+       width: parent.width/3
+       height: parent.height-topbar.height
+       radius: 0
+       anchors.rightMargin: 0
+       visible: false
+       //visible: true
+       objectName: "showpanel"
+       id: showpanel
+
+       NumberAnimation on width {
+            id: showpanel_anim
+            objectName: "showpanel_anim"
+            from: 0
+            to: desktop.width/3
+            duration: 100
+        }
+    }
+
+    /* Popup PySys */
+    Popup {
+        id: popup_pysys
+        objectName: "popup_pysys"
+        anchors.centerIn: parent
+        width: 520
+        height: 200
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+        ToolButton {
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.rightMargin: 1
+            anchors.leftMargin: 1
+            width: 25
+            height: 25
+
+            Image {
+                    source: "file:///stor/usr/share/icons/breeze-close.svg"
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size( parent.width, parent.height )
+
+            }
+
+            onClicked: {
+                popup_pysys.close()
+            }
+        }
+
+            ToolButton {
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+                width: 100
+                height: parent.height/2
+                id: shutdown
+                objectName: "shutdown"
+                Image {
+                    anchors.fill: parent
+                    id: shutdown_img
+                    objectName: "shutdown_img"
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size( shutdown.width, shutdown.height )
+                }
+            }
+            Text {
+                text: "Shutdown"
+                objectName: "txtShutdown"
+                anchors.top: shutdown.bottom
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: shutdown.horizontalCenter
+                font.family: "IRANSans"
+            }
+            ToolButton {
+                anchors.left: shutdown.right
+                anchors.verticalCenter: parent.verticalCenter
+                width: 100
+                height: parent.height/2
+                id: lock
+                objectName: "lock"
+                Image {
+                    anchors.fill: parent
+                    id: lock_img
+                    objectName: "lock_img"
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size( lock.width, lock.height )
+                }
+            }
+            Text {
+                text: "Lock"
+                objectName: "txtLock"
+                anchors.top: lock.bottom
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: lock.horizontalCenter
+                font.family: "IRANSans"
+            }
+            ToolButton {
+                anchors.left: lock.right
+                anchors.verticalCenter: parent.verticalCenter
+                width: 100
+                height: parent.height/2
+                id: logout
+                objectName: "logout"
+                Image {
+                    anchors.fill: parent
+                    id: logout_img
+                    objectName: "logout_img"
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size( logout.width, logout.height )
+                }
+            }
+            Text {
+                text: "Logout"
+                objectName: "txtLogout"
+                anchors.top: logout.bottom
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: logout.horizontalCenter
+                font.family: "IRANSans"
+            }
+            ToolButton {
+                anchors.left: logout.right
+                anchors.verticalCenter: parent.verticalCenter
+                width: 100
+                height: parent.height/2
+                id: reboot
+                objectName: "reboot"
+                Image {
+                    anchors.fill: parent
+                    id: reboot_img
+                    objectName: "reboot_img"
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size( reboot.width, reboot.height )
+                }
+            }
+            Text {
+                text: "Restart"
+                objectName: "txtReboot"
+                anchors.top: reboot.bottom
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: reboot.horizontalCenter
+                font.family: "IRANSans"
+            }
+            ToolButton {
+                anchors.left: reboot.right
+                anchors.verticalCenter: parent.verticalCenter
+                width: 100
+                height: parent.height/2
+                id: suspend
+                objectName: "suspend"
+                Image {
+                    anchors.fill: parent
+                    id: suspend_img
+                    objectName: "suspend_img"
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size( suspend.width, suspend.height )
+                }
+            }
+            Text {
+                text: "Sleep"
+                objectName: "txtSuspend"
+                anchors.top: suspend.bottom
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: suspend.horizontalCenter
+                font.family: "IRANSans"
+            }
+    }
+
+    /* Text Popup */
+    Popup {
+        id: popup_text
+        anchors.centerIn: parent
+        width: 400
+        height: 90
+        modal: false
+        visible: false
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+        ToolButton {
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.rightMargin: 1
+            anchors.leftMargin: 1
+            width: 25
+            height: 25
+
+            Image {
+                source: "file:///stor/usr/share/icons/breeze-close.svg"
+                fillMode: Image.PreserveAspectFit
+                sourceSize: Qt.size( parent.width, parent.height )
+            }
+
+            onClicked: {
+                popup_text.close()
+            }
+        }
+
+        Text {
+            anchors.centerIn: parent
+            font.family: "IRANSans"
+            objectName: "popup_text_txtText"
+            id: popup_text_txtText
+            text: "a message"
+        }
+    }
+
+
     Menu {
         id: contextMenu
         font.family: "IRANSans"
@@ -1962,8 +2220,8 @@ ApplicationWindow {
 
     MouseArea {
         anchors.centerIn: parent
-        width: parent.width/3
-        height: parent.height/3
+        width: parent.width/2
+        height: parent.height/2
         id: msaDesktop
         objectName: "msaDesktop"
         acceptedButtons: Qt.LeftButton | Qt.RightButton
