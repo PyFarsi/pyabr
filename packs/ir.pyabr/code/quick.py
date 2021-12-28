@@ -108,6 +108,11 @@ class MainApp (QtQml.QQmlApplicationEngine):
     DEV_TITLE = QtCore.Qt.ItemDataRole.UserRole+1001 # Partition 1 (SDA1:)
     DEV_LOGO = QtCore.Qt.ItemDataRole.UserRole+1002
 
+    # PROCESS MANAGER
+    PICON = QtCore.Qt.ItemDataRole.UserRole+1000
+    PNAME = QtCore.Qt.ItemDataRole.UserRole + 1001
+    PUSER = QtCore.Qt.ItemDataRole.UserRole + 1002
+
     def CopyDiskModel (self):
         model = QtGui.QStandardItemModel()
         roles = {self.DEV: b"dev", self.DEV_TITLE: b'title'}
@@ -124,6 +129,41 @@ class MainApp (QtQml.QQmlApplicationEngine):
                 except:
                     it.setData(f'{res.get("@string/disk")} ({name}:)',self.DEV_TITLE)
                 model.appendRow(it)
+        return model
+
+    def ProcessModel (self):
+        model = QtGui.QStandardItemModel()
+        roles = {self.PNAME: b"name", self.PICON: b'icon',self.PUSER:b'user'}
+        model.setItemRoleNames(roles)
+
+        lista = subprocess.check_output(['wmctrl', '-l']).decode('utf-8').split('\n')
+        list2 = []
+        for i in lista:
+            try:
+                list2.append(i.split('  0 pyabr ')[1])
+            except:
+                pass
+
+        list2 = list(dict.fromkeys(list2))
+
+        for name in list2:
+            it = QtGui.QStandardItem(name)
+            it.setData(name, self.PNAME)
+
+            if name=='Pyabr OS':
+                it.setData('root',self.PUSER)
+            else:
+                it.setData(files.readall('/proc/info/su'),self.PUSER)
+
+            correctname = name.replace(' ', '').replace('\n', '').replace('(', '').replace(')', '').replace('0',
+                                                                                                            '').replace(
+                '1', '').replace('2', '').replace('3', '').replace('4', '').replace('5', '').replace('6', '').replace(
+                '7', '').replace('8', '').replace('9', '')
+            if not control.read_record(correctname, '/etc/launched/logo.list') == None:
+                it.setData(res.qmlget(control.read_record(correctname, '/etc/launched/logo.list')), self.PICON)
+            else:
+                it.setData(res.qmlget('@icon/breeze-app'), self.PICON)
+            model.appendRow(it)
         return model
 
     def ql (self,name):
@@ -625,6 +665,10 @@ class MainApp (QtQml.QQmlApplicationEngine):
     def addDrivesModel (self):
         self.xddrivesmodel = self.DrivesModel()
         self.rootContext().setContextProperty('DrivesModel', self.xddrivesmodel)
+
+    def addProcessModel (self):
+        self.xprocessmdl = self.ProcessModel()
+        self.rootContext().setContextProperty('ProcessModel', self.xprocessmdl)
 
     def setProperty(self,name,value):
         self.rootObjects()[0].setProperty(name,value)
