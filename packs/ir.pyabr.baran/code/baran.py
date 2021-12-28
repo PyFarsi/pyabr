@@ -58,7 +58,7 @@ s = multiprocessing.Process(target=windows_manager)
 s.start()
 keylessx = ''
 for i in files.list ('/usr/share/locales'):
-    if i.endswith('.locale'):
+    if i.endswith('.locale') and control.read_record('keyless.enable',f'/usr/share/locales/{i}')=='Yes':
         ic = control.read_record ('keyless',f'/usr/share/locales/{i}')
         if keylessx=='':
             keylessx+=ic
@@ -178,42 +178,10 @@ class Login (MainApp):
             self._username.setProperty('enabled',False)
             QTimer.singleShot(3000,self.clean)
 
-    NameRole = QtCore.Qt.ItemDataRole.UserRole + 1000
-    LabelRole = QtCore.Qt.ItemDataRole.UserRole + 1001
-    LogoRole = QtCore.Qt.ItemDataRole.UserRole + 1002
-    ShortcutRole = QtCore.Qt.ItemDataRole.UserRole + 1003
-
-    def create_model(self):
-        model = QtGui.QStandardItemModel()
-        roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo',self.ShortcutRole:b'shortcut'}
-        model.setItemRoleNames(roles)
-        for name in files.list('/usr/share/locales'):
-            if control.read_record('keyless.enable',f'/usr/share/locales/{name}')=='Yes':
-                it = QtGui.QStandardItem(name)
-                it.setData(name, self.NameRole)
-                namex = control.read_record('name', f'/usr/share/locales/{name}')
-                it.setData(namex, self.LabelRole)
-                it.setData(control.read_record ('keyless.shortcut',f'/usr/share/locales/{name}'),self.ShortcutRole)
-                it.setData('../../../'+res.get(control.read_record('logo', f'/usr/share/locales/{name}')), self.LogoRole)
-                model.appendRow(it)
-        return model
-
-    def loop (self):
-        if not self._keyless.property('text')=='':
-            subprocess.call(control.read_record('keyless',f'/usr/share/locales/{self._keyless.property("text")}'),shell=True)
-
-        self._keyless.setProperty('text','')
-        QTimer.singleShot(10,self.loop)
-
     def __init__(self,ports):
         super(Login, self).__init__()
 
-        
-
         self.Backend = ports[0]
-
-        self.langModel = self.create_model()
-        self.rootContext().setContextProperty("Lang", self.langModel)
 
         self.load(res.get('@layout/login'))
 
@@ -230,45 +198,41 @@ class Login (MainApp):
 
         # Connects
 
-        self._submenu = self.findChild( 'submenu')
-        self._submenu.setProperty('title',res.get('@string/etcetra'))
-        self._shutdown = self.findChild('shutdown')
-        self._shutdown.setProperty('text',res.get('@string/escape'))
-        self._shutdown.triggered.connect (self.shutdown_)
-        self._restart = self.findChild( 'restart')
-        self._restart.setProperty('text', res.get('@string/restart'))
-        self._restart.triggered.connect(self.restart_)
-        self._sleep = self.findChild( 'sleep')
-        self._sleep.setProperty('text', res.get('@string/sleep'))
-        self._sleep.triggered.connect(self.sleep_)
         self._next = self.findChild( 'next')
         self._username = self.findChild( 'username')
         self._username.setProperty("placeholderText",res.get('@string/username_placeholder'))
         self._next.clicked.connect(self.next_)
         self._next.setProperty('text',res.get('@string/next'))
-        self._lang = self.findChild( 'lang')
-        self._lang.setProperty('title', res.get('@string/keyboard_languages'))
-        self._exit = self.findChild( 'exit')
-        self._exit.setProperty('title', res.get('@string/power_options'))
         self._background = self.findChild( 'background')
+
+        self.shutdown = self.findChild('shutdown')
+        self.txtShutdown = self.findChild('txtShutdown')
+        self.txtShutdown.setProperty('text', res.get('@string/escape'))
+        self.shutdown.clicked.connect(self.shutdown_)
+        self.shutdown_img = self.findChild('shutdown_img')
+        self.shutdown_img.setProperty('source', res.qmlget(res.etc('pysys', 'shutdown')))
+        self.reboot = self.findChild('reboot')
+        self.txtReboot = self.findChild('txtReboot')
+        self.txtReboot.setProperty('text', res.get('@string/restart'))
+        self.reboot.clicked.connect(self.restart_)
+        self.reboot_img = self.findChild('reboot_img')
+        self.reboot_img.setProperty('source', res.qmlget(res.etc('pysys', 'reboot')))
+        self.suspend = self.findChild('suspend')
+        self.txtSuspend = self.findChild('txtSuspend')
+        self.txtSuspend.setProperty('text', res.get('@string/sleep'))
+        self.suspend.clicked.connect(self.sleep_)
+        self.suspend_img = self.findChild('suspend_img')
+        self.suspend_img.setProperty('source', res.qmlget(res.etc('pysys', 'suspend')))
+        self.popup_pysys = self.findChild('popup_pysys')
 
         if getdata("login.background").startswith('@background/'):
             self._background.setProperty('source', res.qmlget(getdata("login.background")))
         else:
             self._background.setProperty('source', files.input_qml(getdata("login.background")))
 
-        self._virtualkeyboard = self.findChild('virtualkeyboard')
-        self._virtualkeyboard.setProperty('text',res.get('@string/virtualkeyboard'))
-        self._keyless = self.findChild('keyless')
-
-        self.loop()
-
-
 class Sleep (MainApp):
     def __init__(self):
         super(Sleep, self).__init__()
-
-        
 
         self.load(res.get('@layout/sleep'))
         if not self.rootObjects():
@@ -314,31 +278,6 @@ class Enter (MainApp):
             self._password.setProperty('enabled',False)
             QTimer.singleShot(3000,self.clean)
 
-    def loop (self):
-        if not self._keyless.property('text')=='':
-            subprocess.call(control.read_record('keyless',f'/usr/share/locales/{self._keyless.property("text")}'),shell=True)
-
-        self._keyless.setProperty('text','')
-        QTimer.singleShot(10,self.loop)
-
-    NameRole = QtCore.Qt.ItemDataRole.UserRole + 1000
-    LabelRole = QtCore.Qt.ItemDataRole.UserRole + 1001
-    LogoRole = QtCore.Qt.ItemDataRole.UserRole + 1002
-
-    def create_model(self):
-        model = QtGui.QStandardItemModel()
-        roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
-        model.setItemRoleNames(roles)
-        for name in files.list('/usr/share/locales'):
-            if control.read_record('keyless.enable',f'/usr/share/locales/{name}')=='Yes':
-                it = QtGui.QStandardItem(name)
-                it.setData(name, self.NameRole)
-                namex = control.read_record('name', f'/usr/share/locales/{name}')
-                it.setData(namex, self.LabelRole)
-                it.setData('../../../'+res.get(control.read_record('logo', f'/usr/share/locales/{name}')), self.LogoRole)
-                model.appendRow(it)
-        return model
-
     def logout_(self):
 
         self.close()
@@ -362,13 +301,8 @@ class Enter (MainApp):
     def __init__(self, ports):
         super(Enter, self).__init__()
 
-        
-
         self.Backend = ports[0]
         self.username = ports[1]
-
-        self.langModel = self.create_model()
-        self.rootContext().setContextProperty("Lang", self.langModel)
 
         self.load(res.get('@layout/enter'))
         if not self.rootObjects():
@@ -383,29 +317,38 @@ class Enter (MainApp):
 
         # Connects
 
-        self._submenu = self.findChild( 'submenu')
-        self._submenu.setProperty('title',res.get('@string/etcetra'))
-        self._shutdown = self.findChild( 'shutdown')
-        self._shutdown.setProperty('text',res.get('@string/escape'))
-        self._shutdown.triggered.connect(self.shutdown_)
-        self._restart = self.findChild( 'restart')
-        self._restart.setProperty('text', res.get('@string/restart'))
-        self._restart.triggered.connect(self.restart_)
-        self._sleep = self.findChild( 'sleep')
-        self._sleep.setProperty('text', res.get('@string/sleep'))
-        self._sleep.triggered.connect(self.sleep_)
+        self.shutdown = self.findChild('shutdown')
+        self.txtShutdown = self.findChild('txtShutdown')
+        self.txtShutdown.setProperty('text', res.get('@string/escape'))
+        self.shutdown.clicked.connect(self.shutdown_)
+        self.shutdown_img = self.findChild('shutdown_img')
+        self.shutdown_img.setProperty('source', res.qmlget(res.etc('pysys', 'shutdown')))
+        self.logout = self.findChild('logout')
+        self.txtLogout = self.findChild('txtLogout')
+        self.txtLogout.setProperty('text', res.get('@string/logout'))
+        self.logout.clicked.connect(self.logout_)
+        self.logout_img = self.findChild('logout_img')
+        self.logout_img.setProperty('source', res.qmlget(res.etc('pysys', 'logout')))
+        self.reboot = self.findChild('reboot')
+        self.txtReboot = self.findChild('txtReboot')
+        self.txtReboot.setProperty('text', res.get('@string/restart'))
+        self.reboot.clicked.connect(self.restart_)
+        self.reboot_img = self.findChild('reboot_img')
+        self.reboot_img.setProperty('source', res.qmlget(res.etc('pysys', 'reboot')))
+        self.suspend = self.findChild('suspend')
+        self.txtSuspend = self.findChild('txtSuspend')
+        self.txtSuspend.setProperty('text', res.get('@string/sleep'))
+        self.suspend.clicked.connect(self.sleep_)
+        self.suspend_img = self.findChild('suspend_img')
+        self.suspend_img.setProperty('source', res.qmlget(res.etc('pysys', 'suspend')))
+
+
         self._login = self.findChild( 'login')
         self._password = self.findChild( 'password')
         self._password.setProperty('placeholderText',res.get('@string/password_placeholder').replace('{0}',self.username))
         self._login.clicked.connect(self.login_)
         self._login.setProperty('text',res.get('@string/login'))
-        self._lang = self.findChild( 'lang')
-        self._lang.setProperty('title', res.get('@string/keyboard_languages'))
-        self._logout = self.findChild( 'logout')
-        self._logout.setProperty('text',res.get('@string/logout'))
-        self._logout.triggered.connect(self.logout_)
-        self._exit = self.findChild( 'exit')
-        self._exit.setProperty('title', res.get('@string/power_options'))
+
         self._background = self.findChild( 'background')
 
         if self.getdata("enter.background").startswith('@background/'):        
@@ -418,12 +361,6 @@ class Enter (MainApp):
             self._profile.setProperty('source',res.qmlget(self.getdata("profile")))
         else:
             self._profile.setProperty('source',files.input_qml(self.getdata("profile")))
-
-        self._virtualkeyboard = self.findChild('virtualkeyboard')
-        self._virtualkeyboard.setProperty('text',res.get('@string/virtualkeyboard'))
-        self._keyless = self.findChild('keyless')
-
-        self.loop()
 
 
 class Unlock (MainApp):
@@ -780,6 +717,10 @@ class Desktop (MainApp):
         elif files.readall('/proc/info/sig')=='sleep':
             files.create('/proc/info/sig')
             self.sleep_()
+
+        elif files.readall('/proc/info/sig')=='pysys':
+            files.create('/proc/info/sig')
+            self.popup_pysys.open()
 
         elif files.readall('/proc/info/sig')=='shutdown':
             files.create('/proc/info/sig')
@@ -1915,6 +1856,8 @@ class Desktop (MainApp):
         else:
             self.menuApps_anim.start()
             self.update_menuapps(True,False)
+            self.showpanel.setProperty('visible',False)
+            self.showclock.setProperty('visible',False)
 
     def account_setting_(self):
         app.start ('controls','users')
@@ -1922,6 +1865,31 @@ class Desktop (MainApp):
     def virtualkeyboard_(self):
         virtualkeyboard_run = multiprocessing.Process(target=vkey)
         virtualkeyboard_run.start()
+
+    panelClicked = False
+    clockClicked = False
+
+    def showpanel_(self):
+        if self.panelClicked:
+            self.showpanel.setProperty('visible',False)
+            self.panelClicked = False
+        else:
+            self.showpanel_anim.start()
+            self.update_menuapps(False, True)
+            self.showpanel.setProperty('visible', True)
+            self.showclock.setProperty('visible', False)
+            self.panelClicked = True
+
+    def showclock_(self):
+        if self.clockClicked:
+            self.showclock.setProperty('visible',False)
+            self.clockClicked = False
+        else:
+            self.showclock_anim.start()
+            self.update_menuapps(False, True)
+            self.showclock.setProperty('visible', True)
+            self.showpanel.setProperty('visible', False)
+            self.clockClicked = True
 
     def __init__(self,ports):
         super(Desktop, self).__init__()
@@ -1989,6 +1957,49 @@ class Desktop (MainApp):
 
         self.virtualkeyboard = self.findChild('virtualkeyboard')
         self.virtualkeyboard.clicked.connect (self.virtualkeyboard_)
+
+        self.showpanel = self.findChild('showpanel')
+        self.showpanel_anim = self.findChild('showpanel_anim')
+        self.showclock = self.findChild('showclock')
+        self.showclock_anim = self.findChild('showclock_anim')
+        self.btnPanel = self.findChild('btnPanel')
+        self.btnPanel.clicked.connect (self.showpanel_)
+        self.btnClock = self.findChild('btnClock')
+        self.btnClock.clicked.connect(self.showclock_)
+
+        self.shutdown = self.findChild('shutdown')
+        self.txtShutdown = self.findChild('txtShutdown')
+        self.txtShutdown.setProperty('text',res.get('@string/escape'))
+        self.shutdown.clicked.connect (self.shutdown_)
+        self.shutdown_img = self.findChild('shutdown_img')
+        self.shutdown_img.setProperty('source', res.qmlget(res.etc('pysys', 'shutdown')))
+        self.lock = self.findChild('lock')
+        self.txtLock = self.findChild('txtLock')
+        self.txtLock.setProperty('text',res.get('@string/lock'))
+        self.lock.clicked.connect (self.lock_)
+        self.lock_img = self.findChild('lock_img')
+        self.lock_img.setProperty('source', res.qmlget(res.etc('pysys', 'lock')))
+        self.logout = self.findChild('logout')
+        self.txtLogout = self.findChild('txtLogout')
+        self.txtLogout.setProperty('text',res.get('@string/logout'))
+        self.logout.clicked.connect(self.logout_)
+        self.logout_img = self.findChild('logout_img')
+        self.logout_img.setProperty('source', res.qmlget(res.etc('pysys', 'logout')))
+        self.reboot = self.findChild('reboot')
+        self.txtReboot = self.findChild('txtReboot')
+        self.txtReboot.setProperty('text',res.get('@string/restart'))
+        self.reboot.clicked.connect(self.restart_)
+        self.reboot_img = self.findChild('reboot_img')
+        self.reboot_img.setProperty('source', res.qmlget(res.etc('pysys', 'reboot')))
+        self.suspend = self.findChild('suspend')
+        self.txtSuspend = self.findChild('txtSuspend')
+        self.txtSuspend.setProperty('text',res.get('@string/sleep'))
+        self.suspend.clicked.connect(self.sleep_)
+        self.suspend_img = self.findChild('suspend_img')
+        self.suspend_img.setProperty('source', res.qmlget(res.etc('pysys', 'suspend')))
+
+        self.popup_pysys = self.findChild('popup_pysys')
+        self.popup_text = self.findChild('popup_text')
 
         self.battery_000_charging = self.findChild('battery_000_charging')
         self.battery_010_charging = self.findChild('battery_010_charging')
