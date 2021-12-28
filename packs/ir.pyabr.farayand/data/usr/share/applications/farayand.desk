@@ -1,0 +1,9 @@
+name[en]: System Monitor
+name[fa]: فرآیندها
+name[ar]: ادارة العمليات
+name[tr]: Süreç yönetimi
+logo: @icon/breeze-process
+exec: farayand
+application: Yes
+category: system
+pin: No
