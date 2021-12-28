@@ -1,0 +1,15 @@
+name: ir.pyabr.farayand
+name[en]: System Monitor
+name[fa]: فرآیندها
+name[ar]: ادارة العمليات
+name[tr]: Süreç yönetimi
+copyright: (c) 2021 Mani Jamali
+license: GNU GPL v3.0
+unpack: /
+version: 1.0.0
+description: Farayand ha is a simple system monitor for controlling process
+compile: Yes
+entry: farayand
+logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.farayand.svg
+build: 1400-10-06
+mirror: https://mirror.pyabr.ir/zayanderoad/

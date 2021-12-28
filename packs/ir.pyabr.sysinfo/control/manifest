@@ -11,5 +11,5 @@ description: System informations software
 compile: Yes
 entry: sysinfo
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.sysinfo.svg
-build: 1400-09-30
+build: 1400-10-06
 mirror: https://mirror.pyabr.ir/zayanderoad/
