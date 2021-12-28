@@ -2383,7 +2383,23 @@ class App:
         subprocess.call(f'''{files.readall(f"/etc/default/terminals/{control.read_record('external-terminal','/etc/gui')}")} {command}'''.replace('{0}',title).replace('{1}',icon),shell=True)
 
     def browser (self,url):
-        self.start(files.readall('/etc/default/browser'),url)
+        if importlib.util.find_spec("PyQt5.QtWebEngineWidgets") is not None:
+            System (f'webapp {url}')
+        else:
+            self.start(files.readall('/etc/default/browser'),url)
+
+    def browser (self,url,icon):
+        if importlib.util.find_spec("PyQt5.QtWebEngineWidgets") is not None:
+            System (f'webapp {url} "{icon}"')
+        else:
+            self.start(files.readall('/etc/default/browser'),url)
+
+    def browser (self,url,icon,title):
+        if importlib.util.find_spec("PyQt5.QtWebEngineWidgets") is not None:
+            System (f'webapp {url} "{icon}" "{title}"')
+        else:
+            self.start(files.readall('/etc/default/browser'),url)
+
     # start app
     def start(self,id,external):
         files = Files()
