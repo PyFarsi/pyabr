@@ -349,31 +349,38 @@ class MainApp (MainApp):
         openboxrc = f.read()
         f.close()
 
-
-
         if currentIndex2==1:
             f = open('/stor/etc/default/openbox.xml', 'w')
             f.write(openboxrc.replace('<name>Afterpiece</name>','<name>Afterpiece</name>'))
             f.close()
+
+            shutil.copyfile('/stor/etc/default/openbox.xml', '/root/.config/openbox/rc.xml')
+            subprocess.call(['openbox', '--reconfigure'])
         elif currentIndex2==2:
             f = open('/stor/etc/default/openbox.xml', 'w')
             f.write(openboxrc.replace('<name>Afterpiece</name>','<name>Win10</name>'))
             f.close()
+
+            shutil.copyfile('/stor/etc/default/openbox.xml', '/root/.config/openbox/rc.xml')
+            subprocess.call(['openbox', '--reconfigure'])
+
         elif currentIndex2==3:
             f = open('/stor/etc/default/openbox.xml', 'w')
             f.write(openboxrc.replace('<name>Afterpiece</name>','<name>Arc_OSX</name>'))
             f.close()
+
+            shutil.copyfile('/stor/etc/default/openbox.xml', '/root/.config/openbox/rc.xml')
+            subprocess.call(['openbox', '--reconfigure'])
+
         elif currentIndex2==4:
             f = open('/stor/etc/default/openbox.xml', 'w')
             f.write(openboxrc.replace('<name>Afterpiece</name>','<name>Arc-Dark-OSX</name>'))
             f.close()
+            shutil.copyfile('/stor/etc/default/openbox.xml', '/root/.config/openbox/rc.xml')
+            subprocess.call(['openbox', '--reconfigure'])
 
-        shutil.copyfile('/stor/etc/default/openbox.xml','/root/.config/openbox/rc.xml')
-        subprocess.call(['openbox','--reconfigure'])
-
-
-
-        app.signal ('dock')
+        app.signal('apps')
+        app.signal('dock')
 
         self.fsel.setProperty('text','..')
 
