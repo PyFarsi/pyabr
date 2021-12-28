@@ -13,81 +13,163 @@ ApplicationWindow {
     visible: true
     color: "purple"
 
-    Text {
-        objectName: "keyless"
-        id: keyless
-        visible: false
-        text: ''
-    }
+    /* Topbar */
+    Rectangle {
+        color: "#A0FFFFFF"
+        anchors.top: parent.top
+        width: parent.width
+        height: 30
+        id: topbar
 
-    menuBar: MenuBar {
-
-        Menu {
-            title: "منوی اصلی"
-            id: submenu
-            objectName: "submenu"
-            font.family: "IRANSans"
-
-            Menu {
-                title: "حساب کاربری"
-                id: account
-                objectName: "account"
-                font.family: "IRANSans"
-
-                Action {
-                    text: "خروج از نشست"
-                    id: logout
-                    objectName: "logout"
+        Row {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            ToolButton {
+                icon.source: 'file:///stor/usr/share/icons/breeze-shutdown.svg'
+                icon.color: 'white'
+                onClicked: {
+                    popup_pysys.open()
                 }
-            }
-
-            Menu {
-                title: "خروج"
-                id: exit
-                objectName: "exit"
-                font.family: "IRANSans"
-
-                Action {
-                    text: "خاموش کردن"
-                    id: shutdown
-                    objectName: "shutdown"
-                }
-                Action {
-                    text: "راه اندازی مجدد"
-                    id: restart
-                    objectName: "restart"
-                }
-                Action {
-                    text: "حالت خواب"
-                    id: sleep
-                    objectName: "sleep"
-                }
-            }
-            Menu {
-                title: "زبان ها"
-                id: lang
-                font.family: "IRANSans"
-                objectName: "lang"
-                Repeater{
-                    model: Lang
-                    MenuItem {
-                        objectName: model.name
-                        text: model.label
-                        onTriggered: {
-                            keyless.text = model.name
-                        }
-                        font.family: "IRANSans"
-                    }
-                }
-            }
-            CheckBox {
-                id: virtualkeyboard
-                objectName: "virtualkeyboard"
-                 visible: false
-                text: "کیبورد مجازی"
-                font.family: "IRANSans"
             }
         }
+
+        Text {
+            id: leClock
+            anchors.centerIn: parent
+            objectName: "leClock"
+            font.family: "IRANSans"
+            font.pixelSize: 16
+            color: "white"
+            ToolButton {
+                anchors.fill: parent
+                objectName: "btnClock"
+                id: btnClock
+            }
+        }
+    }
+
+    /* Popup PySys */
+    Popup {
+        id: popup_pysys
+        objectName: "popup_pysys"
+        anchors.centerIn: parent
+        width: 440
+        height: 200
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+        ToolButton {
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.rightMargin: 1
+            anchors.leftMargin: 1
+            width: 25
+            height: 25
+
+            Image {
+                    source: "file:///stor/usr/share/icons/breeze-close.svg"
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size( parent.width, parent.height )
+            }
+
+            onClicked: {
+                popup_pysys.close()
+            }
+        }
+
+            ToolButton {
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+                width: 100
+                height: parent.height/2
+                id: shutdown
+                objectName: "shutdown"
+                Image {
+                    anchors.fill: parent
+                    id: shutdown_img
+                    objectName: "shutdown_img"
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size( shutdown.width, shutdown.height )
+                }
+            }
+            Text {
+                text: "Shutdown"
+                objectName: "txtShutdown"
+                anchors.top: shutdown.bottom
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: shutdown.horizontalCenter
+                font.family: "IRANSans"
+            }
+            ToolButton {
+                anchors.left: shutdown.right
+                anchors.verticalCenter: parent.verticalCenter
+                width: 100
+                height: parent.height/2
+                id: logout
+                objectName: "logout"
+                Image {
+                    anchors.fill: parent
+                    id: logout_img
+                    objectName: "logout_img"
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size( logout.width, logout.height )
+                }
+            }
+            Text {
+                text: "Logout"
+                objectName: "txtLogout"
+                anchors.top: logout.bottom
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: logout.horizontalCenter
+                font.family: "IRANSans"
+            }
+            ToolButton {
+                anchors.left: logout.right
+                anchors.verticalCenter: parent.verticalCenter
+                width: 100
+                height: parent.height/2
+                id: reboot
+                objectName: "reboot"
+                Image {
+                    anchors.fill: parent
+                    id: reboot_img
+                    objectName: "reboot_img"
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size( reboot.width, reboot.height )
+                }
+            }
+            Text {
+                text: "Restart"
+                objectName: "txtReboot"
+                anchors.top: reboot.bottom
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: reboot.horizontalCenter
+                font.family: "IRANSans"
+            }
+            ToolButton {
+                anchors.left: reboot.right
+                anchors.verticalCenter: parent.verticalCenter
+                width: 100
+                height: parent.height/2
+                id: suspend
+                objectName: "suspend"
+                Image {
+                    anchors.fill: parent
+                    id: suspend_img
+                    objectName: "suspend_img"
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size( suspend.width, suspend.height )
+                }
+            }
+            Text {
+                text: "Sleep"
+                objectName: "txtSuspend"
+                anchors.top: suspend.bottom
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: suspend.horizontalCenter
+                font.family: "IRANSans"
+            }
     }
 
     background: Rectangle {
