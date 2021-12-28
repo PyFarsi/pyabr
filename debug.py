@@ -53,29 +53,37 @@ import subprocess
 f = open ('/stor/proc/info/su','w')
 f.write('root')
 f.close()
-subprocess.call ('cd /stor && python3 vmabr.pyc',shell=True)''')
+subprocess.call ('cd /stor && QTWEBENGINE_DISABLE_SANDBOX=1 python3 vmabr.pyc',shell=True)''')
 f.close()
 
 f = open('sb/etc/os-release','w')
-f.write('''PRETTY_NAME="Pyabr 2.2"
+f.write('''PRETTY_NAME="Pyabr 2.3.0"
 NAME="Pyabr"
-VERSION_ID="2.2"
-VERSION="2.2 (Zayande Road)"
+VERSION_ID="2.3.0"
+VERSION="2.3.0 (Zayande Road)"
 VERSION_CODENAME=zayanderoad
 ID=pyabr
-ID_LIKE=ubuntu
+ID_LIKE=debian
 HOME_URL="https://pyabr.ir/"''')
 f.close()
 
 f = open('sb/usr/lib/os-release','w')
-f.write('''PRETTY_NAME="Pyabr 2.2"
+f.write('''PRETTY_NAME="Pyabr 2.3.0"
 NAME="Pyabr"
-VERSION_ID="2.2"
-VERSION="2.2 (Zayande Road)"
+VERSION_ID="2.3.0"
+VERSION="2.3.0 (Zayande Road)"
 VERSION_CODENAME=zayanderoad
 ID=pyabr
-ID_LIKE=ubuntu
+ID_LIKE=debian
 HOME_URL="https://pyabr.ir/"''')
+f.close()
+
+f = open('sb/etc/issue','w')
+f.write('Pyabr 2.3.0 \l \\n\n')
+f.close()
+
+f = open('sb/etc/issue.net','w')
+f.write('Pyabr 2.3.0')
 f.close()
 
 subprocess.call(['chmod','+x','sb/usr/bin/pyabr'])
@@ -87,4 +95,4 @@ subprocess.call('cd os && genisoimage -o ../pyabr-x86_64.iso -v -J -R -D -A pyab
 os.remove('os/pyabr/modules/stor.sb')
 clean.clean()
 
-subprocess.call('qemu-system-x86_64 -m 4000 -enable-kvm -cdrom pyabr-x86_64.iso',shell=True)
+subprocess.call('qemu-system-x86_64 -m 4000 -enable-kvm -cdrom pyabr-x86_64.iso -hda 1.img',shell=True)
