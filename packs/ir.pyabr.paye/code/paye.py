@@ -110,7 +110,7 @@ elif sys.argv[1]=="rm" or sys.argv[1]=="remove" or sys.argv[1]=="uninstall" or s
 
     app.signal('apps')
     app.signal('dock')
-    app.signal('menu')
+    #app.signal('menu')
 
     package.clean()
 
@@ -176,7 +176,7 @@ elif sys.argv[1]=="in" or sys.argv[1]=="it" or sys.argv[1]=="install" or sys.arg
 
     app.signal ('apps')
     app.signal ('dock')
-    app.signal ('menu')
+    #app.signal ('menu')
 
     package.clean()
 
