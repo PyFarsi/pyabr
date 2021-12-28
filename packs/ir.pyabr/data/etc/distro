@@ -3,5 +3,5 @@ version: 2.3.0
 name: Pyabr
 copyright: (c) 2021 Mani Jamali
 license: GNU General Public License v3.0
-build: 1400-09-12
+build: 1400-10-06
 website: https://pyabr.ir
