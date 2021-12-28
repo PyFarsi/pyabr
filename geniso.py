@@ -53,7 +53,7 @@ import subprocess
 f = open ('/stor/proc/info/su','w')
 f.write('root')
 f.close()
-subprocess.call ('cd /stor && python3 vmabr.pyc',shell=True)''')
+subprocess.call ('cd /stor && QTWEBENGINE_DISABLE_SANDBOX=1 python3 vmabr.pyc',shell=True)''')
 f.close()
 
 f = open('sb/etc/os-release','w')
