@@ -140,10 +140,10 @@
     <!-- 'Center', 'Top', or 'Fixed' -->
     <popupFixedPosition>
       <!-- these are used if popupPosition is set to 'Fixed' -->
-      <x>10</x>
+      <x>center</x>
       <!-- positive number for distance from left edge, negative number for
          distance from right edge, or 'Center' -->
-      <y>10</y>
+      <y>center</y>
       <!-- positive number for distance from top edge, negative number for
          distance from bottom edge, or 'Center' -->
     </popupFixedPosition>
@@ -797,7 +797,12 @@
 
   # end of the example
 -->
-
+  <application type="normal">
+      <position>
+        <x>center</x>
+        <y>center</y>
+      </position>
+  </application>
 
   </applications>
 </openbox_config>
