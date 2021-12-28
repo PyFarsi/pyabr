@@ -65,7 +65,7 @@ ApplicationWindow {
                             sourceSize: Qt.size( parent.width, parent.height )
                             height: parent.height
                             id: imagex
-                            source: harddisk.text
+                            source: 'file:///stor/usr/share/icons/breeze-harddisk.svg'
                     }
 
                     Text {
