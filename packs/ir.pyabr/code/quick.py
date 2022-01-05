@@ -113,6 +113,28 @@ class MainApp (QtQml.QQmlApplicationEngine):
     PNAME = QtCore.Qt.ItemDataRole.UserRole + 1001
     PUSER = QtCore.Qt.ItemDataRole.UserRole + 1002
 
+    # SCREENSHOT
+    SCREENSHOT = QtCore.Qt.ItemDataRole.UserRole+1000
+
+    # GALLEY IMAGES
+
+
+    def ScreenShotMarketModel (self,package):
+        model = QtGui.QStandardItemModel()
+        roles = {self.SCREENSHOT: b"screenshot"}
+        model.setItemRoleNames(roles)
+
+        mirror = control.read_record('mirror',f'/app/mirrors/{package}.manifest')
+        x = (requests.post(f'{mirror}/{package}.screenshots').text).split('\n')
+
+        x.remove('')
+
+        for i in x:
+            it = QtGui.QStandardItem(f'{mirror}/{package}/{i}')
+            it.setData(f'{mirror}/{package}/{i}',self.SCREENSHOT)
+            model.appendRow(it)
+        return model
+
     def CopyDiskModel (self):
         model = QtGui.QStandardItemModel()
         roles = {self.DEV: b"dev", self.DEV_TITLE: b'title'}
@@ -669,6 +691,10 @@ class MainApp (QtQml.QQmlApplicationEngine):
     def addProcessModel (self):
         self.xprocessmdl = self.ProcessModel()
         self.rootContext().setContextProperty('ProcessModel', self.xprocessmdl)
+
+    def addScreenShotMarketModel (self,package):
+        self.xscreenshotmdl = self.ScreenShotMarketModel(package)
+        self.rootContext().setContextProperty('ScreenShotMarketModel', self.xscreenshotmdl)
 
     def setProperty(self,name,value):
         self.rootObjects()[0].setProperty(name,value)
