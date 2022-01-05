@@ -4,3 +4,4 @@ quick.py:usr/app/pyabr/quick.pyc
 chat.py:usr/app/pyabr/chat.pyc
 cloud.py:usr/app/pyabr/cloud.pyc
 webapp.py:usr/app/webapp.pyc
+Download.py:usr/app/Download.pyc
