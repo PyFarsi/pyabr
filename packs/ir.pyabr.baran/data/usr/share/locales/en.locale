@@ -100,7 +100,7 @@ unpack: Installed in
 mirror: Mirror
 uninstall_message: Do you want to remove {0} package?
 install_message: Do you want to install {0} package?
-install_message: Do you want to update {0} package?
+update_message: Do you want to update {0} package?
 pyket: Pyket
 download: Download
 url: URL 

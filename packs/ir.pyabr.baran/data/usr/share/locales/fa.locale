@@ -100,7 +100,7 @@ unpack: نصب شده است در
 mirror: مخزن
 uninstall_message: آیا می خواهید بسته {0} را حذف کنید؟
 install_message: آیا می خواهید بسته {0} را نصب کنید؟
-install_message: آیا می خواهید بسته {0} را به روز کنید؟
+update_message: آیا می خواهید بسته {0} را به روز کنید؟
 pyket: پایکت
 download: بارگیری
 url: آدرس اینترنتی
