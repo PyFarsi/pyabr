@@ -46,7 +46,7 @@ class MainApp (MainApp):
         elif self.leRun.property('text').startswith ('abr://'):
             self.d = Domain (self.leRun.property('text'))
         elif self.leRun.property('text').startswith ('https://') or self.leRun.property('text').startswith ('http://'):
-            app.start ('chromium',self.leRun.property('text'))
+            app.browser(self.leRun.property('text'),'@icon/breeze-browser',self.leRun.property('text').replace('https://','').replace('http://',''))
         elif not command=='':
             self.leRun.setProperty('placeholderText',res.get('@string/application_not_found').replace('{0}',command))
             self.leRun.setProperty('enabled',False)
