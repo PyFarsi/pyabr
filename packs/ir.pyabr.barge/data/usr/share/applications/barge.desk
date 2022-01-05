@@ -9,13 +9,3 @@ application: Yes
 hidden: No
 category: tools
 pin: No
-
-# not added ; we can't add to icon.source in qml
-add: @icon/breeze-new
-addwin: @icon/breeze-newwindow
-open: @icon/breeze-open
-redoz: @icon/breeze-redo
-undoz: @icon/breeze-undo
-save: @icon/breeze-save
-saveas: @icon/breeze-saveas
-start: @icon/breeze-run

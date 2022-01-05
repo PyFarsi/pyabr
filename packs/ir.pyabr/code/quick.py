@@ -188,9 +188,6 @@ class MainApp (QtQml.QQmlApplicationEngine):
             model.appendRow(it)
         return model
 
-    def ql (self,name):
-        return control.read_record (name,'/etc/default/quicklogo')
-
     def DrivesModel (self):
         model = QtGui.QStandardItemModel()
         roles = {self.DEV: b"dev", self.DEV_TITLE: b'title',self.DEV_LOGO:b'logo'}
@@ -206,7 +203,7 @@ class MainApp (QtQml.QQmlApplicationEngine):
                     it.setData(f'{res.get("@string/drive")} {name[3]} ({name[0]}{name[1]}{name[2]}:)',self.DEV_TITLE)
                 except:
                     it.setData(f'{res.get("@string/disk")} ({name}:)',self.DEV_TITLE)
-                it.setData(res.qmlget(self.ql('harddisk')),self.DEV_LOGO)
+                it.setData(res.qmlget('@icon/harddisk'),self.DEV_LOGO)
                 model.appendRow(it)
             elif name.startswith('sr'):
                 it = QtGui.QStandardItem(name)
@@ -215,7 +212,7 @@ class MainApp (QtQml.QQmlApplicationEngine):
                     it.setData(f'{res.get("@string/sr")} {name[3]} ({name[0]}{name[1]}{name[2]}:)',self.DEV_TITLE)
                 except:
                     it.setData(f'{res.get("@string/srp")} ({name}:)',self.DEV_TITLE)
-                it.setData(res.qmlget(self.ql('cdrom')),self.DEV_LOGO)
+                it.setData(res.qmlget('@icon/cdrom'),self.DEV_LOGO)
                 model.appendRow(it)
         return model
 
@@ -349,15 +346,15 @@ class MainApp (QtQml.QQmlApplicationEngine):
             it.setData(signal[j],self.SIGNAL)
             try:
                 if int(signal[j])<=20:
-                    it.setData(res.qmlget(self.ql('w020')),self.NETLOGO)
+                    it.setData(res.qmlget('@icon/w020'),self.NETLOGO)
                 elif int(signal[j])<=40:
-                    it.setData(res.qmlget(self.ql('w040')),self.NETLOGO)
+                    it.setData(res.qmlget('@icon/w040'),self.NETLOGO)
                 elif int(signal[j])<=80:
-                    it.setData(res.qmlget(self.ql('w080')),self.NETLOGO)
+                    it.setData(res.qmlget('@icon/w080'),self.NETLOGO)
                 elif int(signal[j])<=10:
-                    it.setData(res.qmlget(self.ql('w100')),self.NETLOGO)
+                    it.setData(res.qmlget('@icon/w100'),self.NETLOGO)
             except:
-                it.setData(res.qmlget(self.ql('w020')),self.NETLOGO)
+                it.setData(res.qmlget('@icon/w020'),self.NETLOGO)
             it.setData(mode[j],self.MODE)
             it.setData(rate[j],self.RATE)
             it.setData(security[j],self.SECURITY)
@@ -449,7 +446,7 @@ class MainApp (QtQml.QQmlApplicationEngine):
                 else:
                     it.setData(files.input_qml(control.read_record('profile',f'/etc/users/{i}')),self.Profile)
             except:
-                it.setData(files.input_qml(self.ql('users')), self.Profile)
+                it.setData(files.input_qml('@icon/users'), self.Profile)
             model.appendRow(it)
 
         return model
@@ -516,9 +513,9 @@ class MainApp (QtQml.QQmlApplicationEngine):
                     if files.isfile (f'{directory}/{i}/.logo'):
                         it.setData(res.qmlget(files.readall(f'{directory}/{i}/.logo')),self.FileLogo)
                     else:
-                        it.setData(res.qmlget(self.ql('folder')),self.FileLogo)
+                        it.setData(res.qmlget('@icon/folder'),self.FileLogo)
                 else:
-                    it.setData(res.qmlget(self.ql('text')),self.FileLogo)
+                    it.setData(res.qmlget('@icon/txt'),self.FileLogo)
             else:
                 if files.isfile(f'{directory}/{i}'):
                     if i.endswith('.desk'):
@@ -527,14 +524,14 @@ class MainApp (QtQml.QQmlApplicationEngine):
                         it.setData(files.input_qml(f'{directory}/{i}'),self.FileLogo)
                     else:
                         if control.read_record (f'{ext.replace(".","")}.icon','/etc/ext')==None:
-                            it.setData(res.qmlget(self.ql('text')),self.FileLogo)
+                            it.setData(res.qmlget('@icon/txt'),self.FileLogo)
                         else:
                             it.setData(res.qmlget(control.read_record (f'{ext.replace(".","")}.icon','/etc/ext')),self.FileLogo)
                 else:
                     if files.isfile (f'{directory}/{i}/.logo'):
                         it.setData(res.qmlget(files.readall(f'{directory}/{i}/.logo')),self.FileLogo)
                     else:
-                        it.setData(res.qmlget(self.ql('folder')),self.FileLogo)
+                        it.setData(res.qmlget('@icon/folder'),self.FileLogo)
 
             # generate size of file #
             size = files.size(f'{directory}/{i}')
@@ -635,7 +632,7 @@ class MainApp (QtQml.QQmlApplicationEngine):
             if not control.read_record (f'logo',f'/app/mirrors/{i}')==None:
                 it.setData(control.read_record (f'logo',f'/app/mirrors/{i}'),self.PKG_LOGO)
             else:
-                it.setData(res.qmlget(self.ql('archive')),self.PKG_LOGO)
+                it.setData(res.qmlget('@icon/archive'),self.PKG_LOGO)
             model.appendRow(it)
         return model
 
@@ -861,9 +858,8 @@ class Select (MainApp):
     isdetail = False
 
     def loop (self):
-        
+        self.title.setProperty('text', files.readall('/proc/info/pwd'))
         if not self.fsel.property('text')=='':
-
             if files.isdir (self.fsel.property('text')) or self.fsel.property('text')=='..':
                 commands.cd ([self.fsel.property('text')])
                 self.addFileModel(files.readall('/proc/info/pwd'))
@@ -902,6 +898,7 @@ class Select (MainApp):
         self.fsel = self.findChild ('fsel')
 
         self.btnCancel = self.findChild('btnCancel')
+        self.title = self.findChild('title')
         self.btnCancel.setProperty('text', res.get('@string/cancel'))
         self.btnSelect = self.findChild('btnSelect')
         self.ListView = self.findChild('ListView')
@@ -922,7 +919,7 @@ class Open (MainApp):
 
     def loop (self):
         if not self.fsel.property('text')=='':
-
+            self.title.setProperty('text', files.readall('/proc/info/pwd'))
             if files.isdir (self.fsel.property('text')) or self.fsel.property('text')=='..':
                 commands.cd ([self.fsel.property('text')])
                 self.addFileModel(files.readall('/proc/info/pwd'))
@@ -961,6 +958,7 @@ class Open (MainApp):
         self.fsel = self.findChild ('fsel')
 
         self.btnCancel = self.findChild('btnCancel')
+        self.title = self.findChild('title')
         self.ListView = self.findChild('ListView')
         self.Details = self.findChild('Details')
         self.btnCancel.setProperty('text', res.get('@string/cancel'))
@@ -977,12 +975,12 @@ class Open (MainApp):
 class Save (MainApp):
     isdetail = False
     def loop (self):
+        self.title.setProperty('text', files.readall('/proc/info/pwd'))
         if not self.fsel.property('text')=='':
-
             if files.isdir (self.fsel.property('text')) or self.fsel.property('text')=='..':
                 commands.cd ([self.fsel.property('text')])
                 self.addFileModel(files.readall('/proc/info/pwd'))
-            
+
         if not self.leName.property('text')=='':
             self.btnSave.setProperty('enabled',True)
 
@@ -1015,6 +1013,7 @@ class Save (MainApp):
         self.fsel = self.findChild ('fsel')
 
         self.btnCancel = self.findChild('btnCancel')
+        self.title = self.findChild('title')
         self.btnCancel.setProperty('text',res.get('@string/cancel'))
         self.btnSave = self.findChild('btnSave')
         self.btnCancel.clicked.connect (self.close)
@@ -1057,7 +1056,7 @@ class Install (MainApp):
         
         self.pro = self.findChild('pro')
         self.logo = self.findChild('logo')
-        self.logo.setProperty('source',res.qmlget(self.ql('archive')))
+        self.logo.setProperty('source',res.qmlget('@icon/archive'))
         self.name = self.findChild('name')
         self.name.setProperty('text',control.read_record ('name','/tmp/package-installer.control/manifest'))
         self.description = self.findChild('descriptionx')

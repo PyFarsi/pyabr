@@ -2,7 +2,7 @@ name[en]: Terminal
 name[fa]: پایانه
 name[ar]: طرفية
 name[tr]: terminal
-logo: @icon/breeze-commento
+logo: @icon/commento
 exec: commento
 shortcut: Ctrl+Alt+C
 application: Yes

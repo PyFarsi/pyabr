@@ -169,7 +169,7 @@ class MainApp (MainApp):
         self.delete_m = self.findChild('delete_m')
         self.history_m= self.findChild('history_m')
         self.profimg2 = self.findChild('profimg2')
-        self.profimg2.setProperty('source',res.qmlget(res.etc('chat','profimg2')))
+        self.profimg2.setProperty('source',res.qmlget('@icon/users'))
 
         self.loop()
 

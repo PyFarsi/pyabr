@@ -2245,7 +2245,20 @@ class Res:
                 elif files.isfile(f"/usr/share/icons/{name}.tif"):
                     return files.input_qml(f"/usr/share/icons/{name}.tif")
                 else:
-                    return ''
+                    theme = self.getdata('icon-theme')
+                    if theme==None:
+                        theme='breeze'
+
+                    if files.isfile(f"/usr/share/icons/{theme}-{name}.svg"):
+                        return files.input_qml(f"/usr/share/icons/{theme}-{name}.svg")
+                    elif files.isfile(f"/usr/share/icons/{theme}-{name}.png"):
+                        return files.input_qml(f"/usr/share/icons/{theme}-{name}.png")
+                    elif files.isfile(f"/usr/share/icons/{theme}-{name}.gif"):
+                        return files.input_qml(f"/usr/share/icons/{theme}-{name}.gif")
+                    elif files.isfile(f"/usr/share/icons/{theme}-{name}.tif"):
+                        return files.input_qml(f"/usr/share/icons/{theme}-{name}.tif")
+                    else:
+                        return ''
             else:
                 return ''
 
@@ -2351,7 +2364,20 @@ class Res:
                 elif files.isfile(f"/usr/share/icons/{name}.tif"):
                     return files.input(f"/usr/share/icons/{name}.tif")
                 else:
-                    return ''
+                    theme = self.getdata('icon-theme')
+                    if theme == None:
+                        theme = 'breeze'
+
+                    if files.isfile(f"/usr/share/icons/{theme}-{name}.svg"):
+                        return files.input(f"/usr/share/icons/{theme}-{name}.svg")
+                    elif files.isfile(f"/usr/share/icons/{theme}-{name}.png"):
+                        return files.input(f"/usr/share/icons/{theme}-{name}.png")
+                    elif files.isfile(f"/usr/share/icons/{theme}-{name}.gif"):
+                        return files.input(f"/usr/share/icons/{theme}-{name}.gif")
+                    elif files.isfile(f"/usr/share/icons/{theme}-{name}.tif"):
+                        return files.input(f"/usr/share/icons/{theme}-{name}.tif")
+                    else:
+                        return ''
 
             elif share.startswith('@sample'):
                 if files.isfile(f"/usr/share/samples/{name}" ):

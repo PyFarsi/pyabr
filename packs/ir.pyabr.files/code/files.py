@@ -309,6 +309,10 @@ class MainApp (MainApp):
             elif self.act.property('text')=='shortcut':
                 self.s = Input ("Choose name",self.addapp_)
 
+            elif self.act.property('text')=='terminal':
+                files.write('/tmp/exec.sa',f'cd {files.readall("/proc/info/pwd")}\nrm /tmp/exec.sa')
+                app.start('commento','')
+
             elif self.act.property('text')=='extract':
                 if self.fselp.endswith('.zip'):
                     commands.unzip ([self.fselp,self.fselp.replace('.zip','')])

@@ -122,7 +122,7 @@ class MainApp (MainApp):
                     control.write_record ('fullname',self.leFullName.property('text'),f'/etc/users/{self.leUsername.property("text")}')
                     
                 files.write ('/etc/sudoers',self.leUsername.property("text"))
-                control.write_record('profile',res.etc('setup','users'),f'/etc/users/{self.leUsername.property("text")}')
+                control.write_record('profile','@icon/users',f'/etc/users/{self.leUsername.property("text")}')
 
                 k = Key(self.leUsername.property('text')) # create public key and private key for created user
 

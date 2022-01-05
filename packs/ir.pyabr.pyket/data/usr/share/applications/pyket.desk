@@ -2,10 +2,7 @@ name[en]: Pyket
 name[fa]: پایکت
 name[ar]: بایکت
 name[tr]: uygulama mağazası
-logo: @icon/breeze-paye
+logo: @icon/paye
 exec: pyket
 application: No
 category: internet
-back: @icon/breeze-back
-pkgImage: @icon/breeze-archive
-next: @icon/breeze-next

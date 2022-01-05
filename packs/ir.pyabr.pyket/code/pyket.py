@@ -187,7 +187,7 @@ class MainApp (MainApp):
         self.psel = self.findChild('psel')
         self.pselnamex = self.findChild('pselnamex')
         self.pkgImage = self.findChild('pkgImage')
-        self.pkgImage.setProperty('source',res.qmlget(res.etc('pyket','pkgImage')))
+        self.pkgImage.setProperty('source',res.qmlget('@icon/archive'))
         self.pkgTitle = self.findChild('pkgTitle')
         self.pselcopyright = self.findChild('pselcopyright')
         self.ScreenShot = self.findChild('ScreenShot')

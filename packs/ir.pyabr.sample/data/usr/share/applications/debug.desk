@@ -2,7 +2,7 @@ name[en]: Debug Application
 name[fa]: برنامه دیباگی
 name[ar]: تطبيق التصحيح
 name[tr]: hata ayıklamas
-logo: @icon/breeze-app
+logo: @icon/app
 exec: debug
 application: No
 hidden: Yes

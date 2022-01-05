@@ -30,9 +30,6 @@ files = Files()
 app = App()
 process = Process()
 
-def ql (name):
-    return control.read_record (name,'/etc/default/quicklogo')
-
 def windows_manager ():
     try:
         subprocess.call([control.read_record('external-windows-manager','/etc/gui')])
@@ -49,7 +46,7 @@ def vkey():
         pass
 
 application = QGuiApplication(sys.argv)
-application.setWindowIcon(QIcon(res.get(ql('pyabr'))))
+application.setWindowIcon(QIcon(res.get('@icon/pyabr')))
 
 
 shutil.copyfile('/stor/etc/default/openbox.xml','/root/.config/openbox/rc.xml')
@@ -137,7 +134,7 @@ class Splash (MainApp):
         self.Backend = ports[0]
         self.load(res.get('@layout/splash'))
         self.logo = self.findChild ('logo')
-        self.logo.setProperty('source',res.qmlget(ql('pyabr')))
+        self.logo.setProperty('source',res.qmlget('@icon/pyabr'))
         self.setProperty('height', int(getdata("height")))
         self.setProperty('width', int(getdata("width")))
         self.setProperty('title', 'Pyabr OS')
@@ -189,7 +186,7 @@ class Login (MainApp):
             sys.exit(-1)
 
         self.profile = self.findChild('profile')
-        self.profile.setProperty('source',res.qmlget(ql('users')))
+        self.profile.setProperty('source',res.qmlget('@icon/users'))
 
         self.setProperty('height', int(getdata("height")))
         self.setProperty('width', int(getdata("width")))
@@ -1840,7 +1837,7 @@ class Desktop (MainApp):
             self.VIDEOS = f'/desk/{self.username}/Videos'
 
     def homelogo (self):
-        files.write ('.logo',ql('homes'))
+        files.write ('.logo','@icon/homes')
 
     menuClicked = False
 
@@ -1924,29 +1921,29 @@ class Desktop (MainApp):
         self.imgMenu = self.findChild('imgMenu')
         self.enable_anim = self.findChild('enable_anim')
         self.enable_anim.setProperty('text',getdata('anim'))
-        self.imgMenu.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu.setProperty('source',res.qmlget('@icon/pyabr'))
         self.imgMenu2 = self.findChild('imgMenu2')
-        self.imgMenu2.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu2.setProperty('source',res.qmlget('@icon/pyabr'))
         self.imgMenu3 = self.findChild('imgMenu3')
-        self.imgMenu3.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu3.setProperty('source',res.qmlget('@icon/pyabr'))
         self.imgMenu4 = self.findChild('imgMenu4')
-        self.imgMenu4.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu4.setProperty('source',res.qmlget('@icon/pyabr'))
         self.imgMenu5 = self.findChild('imgMenu5')
-        self.imgMenu5.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu5.setProperty('source',res.qmlget('@icon/pyabr'))
         self.imgMenu6 = self.findChild('imgMenu6')
-        self.imgMenu6.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu6.setProperty('source',res.qmlget('@icon/pyabr'))
         self.imgMenu7 = self.findChild('imgMenu7')
-        self.imgMenu7.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu7.setProperty('source',res.qmlget('@icon/pyabr'))
         self.imgMenu8 = self.findChild('imgMenu8')
-        self.imgMenu8.setProperty('source',res.qmlget(ql('pyabr')))
+        self.imgMenu8.setProperty('source',res.qmlget('@icon/pyabr'))
         self.imgMenu9 = self.findChild('imgMenu9')
-        self.imgMenu9.setProperty('source', res.qmlget(ql('pyabr')))
+        self.imgMenu9.setProperty('source', res.qmlget('@icon/pyabr'))
         self.imgMenu10 = self.findChild('imgMenu10')
-        self.imgMenu10.setProperty('source', res.qmlget(ql('pyabr')))
+        self.imgMenu10.setProperty('source', res.qmlget('@icon/pyabr'))
         self.imgMenu11 = self.findChild('imgMenu11')
-        self.imgMenu11.setProperty('source', res.qmlget(ql('pyabr')))
+        self.imgMenu11.setProperty('source', res.qmlget('@icon/pyabr'))
         self.imgMenu12 = self.findChild('imgMenu12')
-        self.imgMenu12.setProperty('source', res.qmlget(ql('pyabr')))
+        self.imgMenu12.setProperty('source', res.qmlget('@icon/pyabr'))
         self.appc = self.findChild( 'appc')
         self.appc.setProperty('text',res.get('@string/appearance'))
         self.displayc = self.findChild( 'displayc')

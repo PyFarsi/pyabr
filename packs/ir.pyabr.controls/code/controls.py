@@ -412,7 +412,7 @@ class MainApp (MainApp):
             control.write_record(f'/desk/{self.leUsername.property("text")}',f"drwxr-x---/{self.leUsername.property('text')}",'/etc/permtab')
             control.write_record ('code',hashlib.sha3_512(self.lePassword.property('text').encode()).hexdigest(),f"/etc/users/{self.leUsername.property('text')}")
             control.write_record ('fullname',self.leFullName.property('text'),f"/etc/users/{self.leUsername.property('text')}")
-            control.write_record ('profile',res.etc('controls','users'),f"/etc/users/{self.leUsername.property('text')}")
+            control.write_record ('profile','@icon/users',f"/etc/users/{self.leUsername.property('text')}")
             if self.cbSudoers.property('checked'):
                 files.write ('/etc/sudoers',f"{self.leUsername.property('text')}\n")
 
@@ -440,7 +440,7 @@ class MainApp (MainApp):
         self.back_users.setProperty('visible',True)
         self.adduser.setProperty('visible',False)
 
-    profile_show = res.etc('controls','users')
+    profile_show = '@icon/users'
 
     def change_profile_img_(self):
         self.x = Select (self.change_profile_img__)
@@ -536,14 +536,14 @@ class MainApp (MainApp):
         self.controlview = self.findChild ('controlview')
         self.back = self.findChild('back')
         self.logo = self.findChild ('logo')
-        self.logo.setProperty('source',res.qmlget(res.etc('controls','cloud')))
+        self.logo.setProperty('source',res.qmlget('@icon/cloud'))
         self.sysinfo = self.findChild ('sysinfo')
         self.sysinfo_exec = self.findChild ('sysinfo_exec')
         self.sysinfo.setProperty('text',res.get('@string/sysinfo'))
         self.info = self.findChild('info')
-        self.info.setProperty('source',res.qmlget(res.etc('controls','info')))
+        self.info.setProperty('source',res.qmlget('@icon/info'))
         self.usersimg = self.findChild ('usersimg')
-        self.usersimg.setProperty('source',res.qmlget(res.etc('controls','users')))
+        self.usersimg.setProperty('source',res.qmlget('@icon/users'))
         self.setProperty('text',res.get('@string/controls'))
         self.title = self.findChild('title')
         self.title.setProperty('text',res.get('@string/controls'))
@@ -554,7 +554,7 @@ class MainApp (MainApp):
 
         self.display = self.findChild ('display')
         self.displayimg = self.findChild ('displayimg')
-        self.displayimg.setProperty('source',res.qmlget(res.etc('controls','display')))
+        self.displayimg.setProperty('source',res.qmlget('@icon/display'))
         self.display.setProperty('text',res.get('@string/display'))
         self.display_exec = self.findChild ('display_exec')
 
@@ -607,7 +607,7 @@ class MainApp (MainApp):
         self.lePassword = self.findChild('lePassword')
         self.lePassword.setProperty('placeholderText',res.get('@string/e_password'))
         self.w100 = self.findChild ('w100')
-        self.w100.setProperty('source',res.qmlget(res.etc('controls','w100')))
+        self.w100.setProperty('source',res.qmlget('@icon/w100'))
         self.cbSudoers = self.findChild('cbSudoers')
         self.cbSudoers.setProperty('text',res.get('@string/sudoers'))
         self.stWifi = self.findChild('stWifi')
@@ -619,7 +619,7 @@ class MainApp (MainApp):
         self.usel = self.findChild ('usel')
         self.leUsername_show = self.findChild('leUsername_show')
         self.lang = self.findChild ('lang')
-        self.lang.setProperty('source',res.qmlget(res.etc('controls','lang')))
+        self.lang.setProperty('source',res.qmlget('@icon/lang'))
         self.leUsername_show.setProperty('placeholderText',res.get('@string/e_username'))    
         self.rsel = self.findChild('rsel')
         self.cbSudoers_show = self.findChild('cbSudoers_show')
@@ -627,7 +627,7 @@ class MainApp (MainApp):
         self.leFullName_show = self.findChild('leFullName_show')
         self.leFullName_show.setProperty('placeholderText',res.get('@string/fullname'))
         self.imgProfile_show = self.findChild('imgProfile_show')
-        self.imgProfile_show.setProperty('source',res.qmlget(res.etc('controls','users')))
+        self.imgProfile_show.setProperty('source',res.qmlget('@icon/users'))
         self.btnProfile_show = self.findChild('btnProfile_show')
         self.savechanges = self.findChild('savechanges')
         self.savechanges.setProperty('text',res.get('@string/savechanges'))
@@ -645,7 +645,7 @@ class MainApp (MainApp):
         self.changepassword_exec = self.findChild('changepassword_exec')
         self.wsel = self.findChild('wsel')
         self.wallpaper = self.findChild('wallpaper')
-        self.wallpaper.setProperty('source',res.qmlget(res.etc('controls','wallpaper')))
+        self.wallpaper.setProperty('source',res.qmlget('@icon/wallpaper'))
         self.cancel3 = self.findChild('cancel3')
         self.cancel3.setProperty('text',res.get('@string/cancel'))
         self.cancel2 = self.findChild('cancel2')

@@ -2,7 +2,7 @@ name[en]: Bash
 name[fa]: بش
 name[ar]: بش
 name[tr]: bash
-logo: @icon/breeze-commento
+logo: @icon/commento
 exec: bash_app
 application: Yes
 category: tools

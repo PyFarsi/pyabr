@@ -17,3 +17,4 @@ unlock.background: @background/Sunset_and_sea_blur
 lock.background: @background/Sunset_and_sea_blur
 dock: bottom
 anim: No
+icon-theme: breeze

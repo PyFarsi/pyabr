@@ -2,10 +2,9 @@ name[en]: System Informations
 name[fa]: اطلاعات سیستمی
 name[ar]: معلومات النظام
 name[tr]: sistem bilgisi
-logo: @icon/breeze-info
+logo: @icon/info
 exec: sysinfo
 application: Yes
 category: system
 pin: Yes
 setting: Yes
-cloud: @icon/breeze-cloud

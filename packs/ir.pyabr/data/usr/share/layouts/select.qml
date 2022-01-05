@@ -48,8 +48,15 @@ ApplicationWindow {
                 objectName: "btnDetail"
             }
          }
-        
-        
+
+        Text {
+            color: "white"
+            id: title
+            objectName: "title"
+            font.family: "IRANSans"
+            font.pixelSize: 18
+            anchors.centerIn: parent
+        }
     }
 
     ScrollView {

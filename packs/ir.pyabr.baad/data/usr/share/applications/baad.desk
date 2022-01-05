@@ -2,7 +2,7 @@ name[en]: BaaD
 name[fa]: باد
 name[ar]: ريح
 name[tr]: hava Durumu
-logo: @icon/breeze-weather-clouds
+logo: @icon/weather-clouds
 exec: baad
 application: Yes
 category: tools

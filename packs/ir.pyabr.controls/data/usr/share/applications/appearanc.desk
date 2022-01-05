@@ -1,5 +1,5 @@
 name[en]: Appearanc
-logo: @icon/breeze-setting
+logo: @icon/setting
 exec: appearanc
 application: No
 hidden: Yes

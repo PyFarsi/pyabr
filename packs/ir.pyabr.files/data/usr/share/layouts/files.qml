@@ -320,6 +320,15 @@ ApplicationWindow {
                                     act.text = 'extract'
                                 }
                             }
+                            Action {
+                                text: "Open in Terminal"
+                                //icon.source: "file:///stor/usr/share/icons/breeze-commento.svg"
+                                id: terminal
+                                objectName: "terminal"
+                                onTriggered: {
+                                    act.text = 'terminal'
+                                }
+                            }
                             Action { 
                                 text: "Information" 
                                 objectName: "info"

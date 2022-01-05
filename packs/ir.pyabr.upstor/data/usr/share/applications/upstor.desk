@@ -1,8 +1,7 @@
 name[en]: Upgrade
 name[fa]: ارتقا
 name[ar]: تطوير
-logo: @icon/breeze-upstor
+logo: @icon/upstor
 exec: upstor
 application: Yes
 category: tools
-cloud: @icon/breeze-cloud

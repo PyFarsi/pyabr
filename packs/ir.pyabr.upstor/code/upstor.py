@@ -56,7 +56,7 @@ class MainApp (MainApp):
             self.logo = self.findChild('logo')
             self.name = self.findChild('name')
             self.name.setProperty('text',f'{res.get("@string/upstort")} {res.num(files.readall("/tmp/stor.txt"))}')
-            self.logo.setProperty('source',res.qmlget(res.etc('upstor','cloud')))
+            self.logo.setProperty('source',res.qmlget('@icon/cloud'))
             self.btnUpgrade.clicked.connect (self.install_)
             self.btnUpgrade.setProperty('text',res.get('@string/upstor'))
 
@@ -66,4 +66,5 @@ class MainApp (MainApp):
 
 application = QtGui.QGuiApplication([])
 w = MainApp()
+application.setWindowIcon(QIcon(res.get(res.etc('upstor','logo'))))
 application.exec()

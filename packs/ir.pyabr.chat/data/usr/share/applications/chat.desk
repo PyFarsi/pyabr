@@ -2,14 +2,7 @@ name[en]: Chat
 name[fa]: پیام رسان
 name[ar]: دردشة
 name[tr]: sohbet etmek
-logo: @icon/breeze-chat
+logo: @icon/chat
 exec: chat
 application: Yes
 category: internet
-profimg2: @icon/breeze-users
-# do added in source:
-back: @icon/breeze-back
-addcontact: @icon/breeze-adduser
-add: @icon/breeze-new
-btnSend: @icon/breeze-next
-gotoContact: @icon/breeze-gotoContact
