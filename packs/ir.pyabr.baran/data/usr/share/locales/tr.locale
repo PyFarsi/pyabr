@@ -100,7 +100,7 @@ unpack: yüklü
 mirror: Ayna
 uninstall_message: {0} paketini kaldırmak istiyor musunuz?
 install_message: {0} paketini kurmak istiyor musunuz?
-install_message: {0} paketini güncellemek istiyor musunuz?
+update_message: {0} paketini güncellemek istiyor musunuz?
 pyket: Uygulama mağazası
 download: İndirmek
 url: adres
