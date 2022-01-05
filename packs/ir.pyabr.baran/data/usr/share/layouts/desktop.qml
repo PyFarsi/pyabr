@@ -16,6 +16,13 @@ ApplicationWindow {
     font.family: "IRANSans"
     color: "blue"
 
+    Text {
+        id: enable_anim
+        objectName: "enable_anim"
+        visible: false
+        text: "Yes"
+    }
+
     /* Application Background */
 
      Rectangle {
@@ -140,6 +147,20 @@ ApplicationWindow {
         sequence: "Ctrl+A"
         onActivated: {
             background_app.text = 'rma';
+        }
+    }
+
+    Shortcut {
+        sequence: "F5"
+        onActivated: {
+            background_app.text = "refresh";
+        }
+    }
+
+    Shortcut {
+        sequence: "F1"
+        onActivated: {
+            background_app.text = "help";
         }
     }
 
@@ -452,7 +473,9 @@ ApplicationWindow {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            menu_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                menu_anim.start();
+                            }
                             background_app.text = model.name;
                         }
                     }
@@ -555,7 +578,9 @@ ApplicationWindow {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            menu2_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                menu2_anim.start();
+                            }
                             background_app.text = model.name;
                             
                         }
@@ -657,7 +682,9 @@ ApplicationWindow {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            menu3_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                menu3_anim.start();
+                            }
                             background_app.text = model.name;
                             
                         }
@@ -758,7 +785,9 @@ ApplicationWindow {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            menu4_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                menu4_anim.start();
+                            }
                             background_app.text = model.name;
                             
                         }
@@ -835,7 +864,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app_anim.start();
+                            }
                             background_app.text = model.name;
 
                         }
@@ -861,7 +892,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app_anim.start();
+                            }
                             restore_app.text = model.name;
                         }
                         NumberAnimation on opacity {
@@ -931,7 +964,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app2_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app2_anim.start();
+                            }
                             background_app.text = model.name;
                             
                         }
@@ -956,7 +991,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app2_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app2_anim.start();
+                            }
                             restore_app.text = model.name;
                         }
                         NumberAnimation on opacity {
@@ -1026,7 +1063,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app3_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app3_anim.start();
+                            }
                             background_app.text = model.name;
                             
                         }
@@ -1051,7 +1090,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app3_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app3_anim.start();
+                            }
                             restore_app.text = model.name;
                         }
                         NumberAnimation on opacity {
@@ -1120,7 +1161,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app4_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app4_anim.start();
+                            }
                             background_app.text = model.name;
                             
                         }
@@ -1145,7 +1188,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app4_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app4_anim.start();
+                            }
                             restore_app.text = model.name;
                         }
                         NumberAnimation on opacity {
@@ -1214,7 +1259,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app5_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app5_anim.start();
+                            }
                             background_app.text = model.name;
                             
                         }
@@ -1239,7 +1286,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app5_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app5_anim.start();
+                            }
                             restore_app.text = model.name;
                         }
                         NumberAnimation on opacity {
@@ -1308,7 +1357,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app6_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app6_anim.start();
+                            }
                             background_app.text = model.name;
                             
                         }
@@ -1333,7 +1384,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app6_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app6_anim.start();
+                            }
                             restore_app.text = model.name;
                         }
                         NumberAnimation on opacity {
@@ -1405,7 +1458,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app7_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app7_anim.start();
+                            }
                             background_app.text = model.name;
                             
                         }
@@ -1430,7 +1485,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app7_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app7_anim.start();
+                            }
                             restore_app.text = model.name;
                         }
                         NumberAnimation on opacity {
@@ -1502,7 +1559,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app8_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app8_anim.start();
+                            }
                             background_app.text = model.name;
                             
                         }
@@ -1527,7 +1586,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app8_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app8_anim.start();
+                            }
                             restore_app.text = model.name;
                         }
                         NumberAnimation on opacity {
@@ -1597,7 +1658,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app9_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app9_anim.start();
+                            }
                             background_app.text = model.name;
                             
                         }
@@ -1622,7 +1685,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app9_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app9_anim.start();
+                            }
                             restore_app.text = model.name;
                         }
                         NumberAnimation on opacity {
@@ -1692,7 +1757,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app10_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app10_anim.start();
+                            }
                             background_app.text = model.name;
                             
                         }
@@ -1717,7 +1784,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app10_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app10_anim.start();
+                            }
                             restore_app.text = model.name;
                         }
                         NumberAnimation on opacity {
@@ -1791,7 +1860,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app11_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app11_anim.start();
+                            }
                             background_app.text = model.name;
                             
                         }
@@ -1816,7 +1887,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app11_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app11_anim.start();
+                            }
                             restore_app.text = model.name;
                         }
                         NumberAnimation on opacity {
@@ -1890,7 +1963,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app12_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app12_anim.start();
+                            }
                             background_app.text = model.name;
                             
                         }
@@ -1915,7 +1990,9 @@ ApplicationWindow {
                             anchors.fill: parent
                         }
                         onClicked: {
-                            app12_anim.start();
+                            if (enable_anim.text == "Yes"){
+                                app12_anim.start();
+                            }
                             restore_app.text = model.name;
                         }
                         NumberAnimation on opacity {
@@ -2198,6 +2275,14 @@ ApplicationWindow {
             objectName: "displayc"
             onTriggered: {
                 background_app.text = 'displaymanager'
+            }
+        }
+        Action {
+            text: "Refresh"
+            id: refresh
+            objectName: "refreshc"
+            onTriggered: {
+                background_app.text = 'refresh'
             }
         }
         Action {
