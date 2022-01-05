@@ -47,15 +47,15 @@ class MainApp (MainApp):
 
         # check direction
         if res.getdata ('locale')=='fa' or res.getdata('locale')=='ar':
-            self.host1.setProperty ('text',res.get('@string/host')+":  ")
-            self.cs1.setProperty ('text',res.get('@string/cs')+":  ")
-            self.bl1.setProperty ('text',res.get('@string/bl')+":  ")
-            self.os1.setProperty ('text',res.get('@string/os')+":  ")
-            self.kname1.setProperty ('text',res.get('@string/kname')+":  ")
-            self.su1.setProperty ('text',res.get('@string/su')+":  ")
-            self.de1.setProperty ('text',res.get('@string/de')+":  ")
-            self.gui1.setProperty ('text',res.get('@string/gui')+":  ")
-            self.arch1.setProperty ('text',res.get('@string/arch')+":  ")
+            self.host1.setProperty ('text',res.get('@string/host'))
+            self.cs1.setProperty ('text',res.get('@string/cs'))
+            self.bl1.setProperty ('text',res.get('@string/bl'))
+            self.os1.setProperty ('text',res.get('@string/os'))
+            self.kname1.setProperty ('text',res.get('@string/kname'))
+            self.su1.setProperty ('text',res.get('@string/su'))
+            self.de1.setProperty ('text',res.get('@string/de'))
+            self.gui1.setProperty ('text',res.get('@string/gui'))
+            self.arch1.setProperty ('text',res.get('@string/arch'))
 
             self.host.setProperty ('text',files.readall('/proc/info/host'))
             self.cs.setProperty ('text',f"{files.readall('/proc/info/cs')} {files.readall('/proc/info/ver')} ({files.readall('/proc/info/cd')})")
@@ -67,15 +67,15 @@ class MainApp (MainApp):
             self.gui.setProperty ('text',files.readall('/proc/info/gui'))
             self.arch.setProperty ('text',files.readall('/proc/info/arch'))
         else:
-            self.host.setProperty ('text',res.get('@string/host')+":  ")
-            self.cs.setProperty ('text',res.get('@string/cs')+":  ")
-            self.bl.setProperty ('text',res.get('@string/bl')+":  ")
-            self.os.setProperty ('text',res.get('@string/os')+":  ")
-            self.kname.setProperty ('text',res.get('@string/kname')+":  ")
-            self.su.setProperty ('text',res.get('@string/su')+":  ")
-            self.de.setProperty ('text',res.get('@string/de')+":  ")
-            self.gui.setProperty ('text',res.get('@string/gui')+":  ")
-            self.arch.setProperty ('text',res.get('@string/arch')+":  ")
+            self.host.setProperty ('text',res.get('@string/host'))
+            self.cs.setProperty ('text',res.get('@string/cs'))
+            self.bl.setProperty ('text',res.get('@string/bl'))
+            self.os.setProperty ('text',res.get('@string/os'))
+            self.kname.setProperty ('text',res.get('@string/kname'))
+            self.su.setProperty ('text',res.get('@string/su'))
+            self.de.setProperty ('text',res.get('@string/de'))
+            self.gui.setProperty ('text',res.get('@string/gui'))
+            self.arch.setProperty ('text',res.get('@string/arch'))
 
             self.host1.setProperty ('text',files.readall('/proc/info/host'))
             self.cs1.setProperty ('text',f"{files.readall('/proc/info/cs')} {files.readall('/proc/info/ver')} ({files.readall('/proc/info/cd')})")
@@ -97,7 +97,7 @@ class MainApp (MainApp):
                 self.back.setProperty('visible',True)
                 self.scroll.setProperty('enabled',False)
                 self.scroll.setProperty('visible',False)
-                self.title.setProperty('text',res.get('@string/controls'))
+                self.title.setProperty('text',res.get('@string/sysinfo'))
                 self.sysinfo_()
 
             elif self.fsel.property('text')=='apper':
@@ -115,7 +115,7 @@ class MainApp (MainApp):
                 self.back.setProperty('visible',True)
                 self.adduser.setProperty('visible',True)
                 self.back_users.setProperty('visible',False)
-                self.title.setProperty('text',res.get('@string/controls'))
+                self.title.setProperty('text',res.get('@string/accounts'))
                 self.scroll.setProperty('enabled',False)
                 self.scroll.setProperty('visible',False)
                 self.apply2.clicked.connect (self.apply_adduser_)
@@ -140,7 +140,13 @@ class MainApp (MainApp):
                 if self.usel.property('text')=='root':
                     self.cbSudoers_show.setProperty('visible',False)
                     self.removeuser.setProperty('visible',False)
+                    self.savechanges.setProperty('visible',True)
+                elif self.usel.property('text')=='guest':
+                    self.cbSudoers_show.setProperty('visible',False)
+                    self.removeuser.setProperty('visible',False)
+                    self.savechanges.setProperty('visible', False)
                 else:
+                    self.savechanges.setProperty('visible', True)
                     if self.usel.property('text') in files.readall('/etc/sudoers'):
                         self.cbSudoers_show.setProperty('checked',True)
                     else:
@@ -351,14 +357,14 @@ class MainApp (MainApp):
 
         if currentIndex2==1:
             f = open('/stor/etc/default/openbox.xml', 'w')
-            f.write(openboxrc.replace('<name>Afterpiece</name>','<name>Afterpiece</name>'))
+            f.write(openboxrc.replace('<name>Win10</name>','<name>Afterpiece</name>'))
             f.close()
 
             shutil.copyfile('/stor/etc/default/openbox.xml', '/root/.config/openbox/rc.xml')
             subprocess.call(['openbox', '--reconfigure'])
         elif currentIndex2==2:
             f = open('/stor/etc/default/openbox.xml', 'w')
-            f.write(openboxrc.replace('<name>Afterpiece</name>','<name>Win10</name>'))
+            f.write(openboxrc.replace('<name>Win10</name>','<name>Win10</name>'))
             f.close()
 
             shutil.copyfile('/stor/etc/default/openbox.xml', '/root/.config/openbox/rc.xml')
@@ -366,7 +372,7 @@ class MainApp (MainApp):
 
         elif currentIndex2==3:
             f = open('/stor/etc/default/openbox.xml', 'w')
-            f.write(openboxrc.replace('<name>Afterpiece</name>','<name>Arc_OSX</name>'))
+            f.write(openboxrc.replace('<name>Win10</name>','<name>Arc_OSX</name>'))
             f.close()
 
             shutil.copyfile('/stor/etc/default/openbox.xml', '/root/.config/openbox/rc.xml')
@@ -374,7 +380,7 @@ class MainApp (MainApp):
 
         elif currentIndex2==4:
             f = open('/stor/etc/default/openbox.xml', 'w')
-            f.write(openboxrc.replace('<name>Afterpiece</name>','<name>Arc-Dark-OSX</name>'))
+            f.write(openboxrc.replace('<name>Win10</name>','<name>Arc-Dark-OSX</name>'))
             f.close()
             shutil.copyfile('/stor/etc/default/openbox.xml', '/root/.config/openbox/rc.xml')
             subprocess.call(['openbox', '--reconfigure'])

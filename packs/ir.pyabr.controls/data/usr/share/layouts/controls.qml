@@ -660,165 +660,304 @@ ApplicationWindow {
             width: file.width
             height: file.height-70
             anchors.top: toolbar.bottom
+
             Image {
                 anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
                 objectName: "logo"
-                anchors.topMargin: 20
-                width: parent.height
+                anchors.topMargin: 30
+                width: parent.width/4
+                height: parent.width/4
                 sourceSize: Qt.size( parent.width, parent.height )
-                height: parent.height
             }
 
             Column {
-                spacing: 2
-                width: parent.width/2
-                anchors.left: parent.left
+                width: parent.width
+                anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 20
-            Text {
-                text: 'Static hostname:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "host"
-            }
-            Text {
-                text: 'Cloud distro:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "cs"
-            }
-            Text {
-                text: 'Build date:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "bl"
-            }
-            Text {
-                text: 'Operating System:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "os"
-            }
-            Text {
-                text: 'Kernel:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "kname"
-            }
-            Text {
-                text: 'Switched User:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "su"
-            }
-            Text {
-                text: 'Desktop Enviroment:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "de"
-            }
-            Text {
-                text: 'Graphical Toolkit:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "gui"
-            }
-            Text {
-                text: 'Architecture:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "arch"
-            }
-        }
+                anchors.bottomMargin: 100
+                height: 250
 
-        Column {
-                spacing: 2
-                width: parent.width/2
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 20
-                Text {
-                    text: 'pyabr'
-                    font.family: "IRANSans"
-                    font.pixelSize: 16
-                    anchors.left: parent.left
-                    font.bold: true
-                    objectName: "host1"
+                Rectangle {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: host
+                            objectName: "host"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: host1
+                            objectName: "host1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+                Rectangle {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: cs
+                            objectName: "cs"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: cs1
+                            objectName: "cs1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+                Rectangle {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: bl
+                            objectName: "bl"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: bl1
+                            objectName: "bl1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+                Rectangle {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: os
+                            objectName: "os"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: os1
+                            objectName: "os1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+                Rectangle {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: kname
+                            objectName: "kname"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: kname1
+                            objectName: "kname1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+
+                Rectangle {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: su
+                            objectName: "su"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: su1
+                            objectName: "su1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+                Rectangle {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: de
+                            objectName: "de"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: de1
+                            objectName: "de1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+                Rectangle {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: gui
+                            objectName: "gui"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: gui1
+                            objectName: "gui1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+                Rectangle {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: arch
+                            objectName: "arch"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: arch1
+                            objectName: "arch1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
                 }
-                Text {
-                    text: 'Pyabr 2.1 (Aras)'
-                    font.family: "IRANSans"
-                    font.pixelSize: 16
-                    anchors.left: parent.left
-                    font.bold: true
-                    objectName: "cs1"
-                }
-                Text {
-                    text: '1400-06-13'
-                    font.family: "IRANSans"
-                    font.pixelSize: 16
-                    anchors.left: parent.left
-                    font.bold: true
-                    objectName: "bl1"
-                }
-                Text {
-                    text: 'Pyabr'
-                    font.family: "IRANSans"
-                    font.pixelSize: 16
-                    anchors.left: parent.left
-                    font.bold: true
-                    objectName: "os1"
-                }
-                Text {
-                    text: 'Linux 5'
-                    font.family: "IRANSans"
-                    font.pixelSize: 16
-                    anchors.left: parent.left
-                    font.bold: true
-                    objectName: "kname1"
-                }
-                Text {
-                    text: 'root'
-                    font.family: "IRANSans"
-                    font.pixelSize: 16
-                    anchors.left: parent.left
-                    font.bold: true
-                    objectName: "su1"
-                }
-                Text {
-                    text: 'Baran Desktop Enviroment'
-                    font.family: "IRANSans"
-                    font.pixelSize: 16
-                    anchors.left: parent.left
-                    font.bold: true
-                    objectName: "de1"
-                }
-                Text {
-                    text: 'Qt Framework'
-                    font.family: "IRANSans"
-                    font.pixelSize: 16
-                    anchors.left: parent.left
-                    font.bold: true
-                    objectName: "gui1"
-                }
-                Text {
-                    text: 'AMD, Intel 64-bit'
-                    font.family: "IRANSans"
-                    font.pixelSize: 16
-                    anchors.left: parent.left
-                    font.bold: true
-                    objectName: "arch1"
-                }
-            }
         }
 
 
