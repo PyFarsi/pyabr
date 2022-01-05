@@ -62,6 +62,12 @@ class MainApp (MainApp):
             self.pkgTitle.setProperty('text',self.pselnamex.property('text'))
             self.title.setProperty('text',self.pselnamex.property('text'))
 
+            if control.read_record('screenshots',f'/app/mirrors/{self.psel.property("text")}.manifest')=='Yes':
+                self.ScreenShot.setProperty('visible',True)
+                self.addScreenShotMarketModel(self.psel.property('text'))
+            else:
+                self.ScreenShot.setProperty('visible', False)
+
             self.show_info()
 
             if self.pselinstalled.property('text')=='Yes':
@@ -73,11 +79,16 @@ class MainApp (MainApp):
                     self.entry = control.read_record ('entry',f'/app/packages/{self.psel.property("text")}.manifest')
                 else:
                     self.btnOpen.setProperty('enabled',False)
-                
                 if self.psel.property('text') in files.readall('/etc/paye/permanetly_applications'):
                     self.btnUninstall.setProperty('enabled',False)
                 else:
                     self.btnUninstall.setProperty('enabled',True)
+
+                if not control.read_record ('version',f'/app/packages/{self.psel.property("text")}.manifest')==control.read_record('version',f'/app/mirrors/{self.psel.property("text")}.manifest'):
+                    self.btnUpdate.setProperty('visible',True)
+                    self.btnOpen.setProperty('visible',False)
+                else:
+                    self.btnUpdate.setProperty('visible',False)
             else:
                 self.btnInstall.setProperty('visible',True)
                 self.btnOpen.setProperty('visible',False)
@@ -141,21 +152,21 @@ class MainApp (MainApp):
             self.pkgUnpack.setProperty('text',self.pselunpack.property('text'))
             self.pkgMirror.setProperty('text',self.pselmirror.property('text'))
 
-            self.pkgName1.setProperty('text',res.get('@string/package_name')+": ")
-            self.pkgVersion1.setProperty('text',res.get('@string/package_version')+": ")
-            self.pkgBuild1.setProperty('text',res.get('@string/bl')+": ")
-            self.pkgCopyright1.setProperty('text',res.get('@string/copyright')+": ")
-            self.pkgLicense1.setProperty('text',res.get('@string/license')+": ")
-            self.pkgUnpack1.setProperty('text',res.get('@string/unpack')+": ")
-            self.pkgMirror1.setProperty('text',res.get('@string/mirror')+": ")
+            self.pkgName1.setProperty('text',res.get('@string/package_name'))
+            self.pkgVersion1.setProperty('text',res.get('@string/package_version'))
+            self.pkgBuild1.setProperty('text',res.get('@string/bl'))
+            self.pkgCopyright1.setProperty('text',res.get('@string/copyright'))
+            self.pkgLicense1.setProperty('text',res.get('@string/license'))
+            self.pkgUnpack1.setProperty('text',res.get('@string/unpack'))
+            self.pkgMirror1.setProperty('text',res.get('@string/mirror'))
         else:
-            self.pkgName.setProperty('text',res.get('@string/package_name')+": ")
-            self.pkgVersion.setProperty('text',res.get('@string/package_version')+": ")
-            self.pkgBuild.setProperty('text',res.get('@string/bl')+": ")
-            self.pkgCopyright.setProperty('text',res.get('@string/copyright')+": ")
-            self.pkgLicense.setProperty('text',res.get('@string/license')+": ")
-            self.pkgUnpack.setProperty('text',res.get('@string/unpack')+": ")
-            self.pkgMirror.setProperty('text',res.get('@string/mirror')+": ")
+            self.pkgName.setProperty('text',res.get('@string/package_name'))
+            self.pkgVersion.setProperty('text',res.get('@string/package_version'))
+            self.pkgBuild.setProperty('text',res.get('@string/bl'))
+            self.pkgCopyright.setProperty('text',res.get('@string/copyright'))
+            self.pkgLicense.setProperty('text',res.get('@string/license'))
+            self.pkgUnpack.setProperty('text',res.get('@string/unpack'))
+            self.pkgMirror.setProperty('text',res.get('@string/mirror'))
 
             self.pkgName1.setProperty('text',self.psel.property('text'))
             self.pkgVersion1.setProperty('text',self.pselversion.property('text'))
@@ -171,6 +182,7 @@ class MainApp (MainApp):
         super(MainApp, self).__init__()
         System (f'sudo paye in {files.readall("/etc/paye/sources")}')
         self.addPackageModel()
+        self.addScreenShotMarketModel('ir.pyabr.pyket')
         self.load (res.get('@layout/pyket'))
         self.psel = self.findChild('psel')
         self.pselnamex = self.findChild('pselnamex')
@@ -178,6 +190,7 @@ class MainApp (MainApp):
         self.pkgImage.setProperty('source',res.qmlget(res.etc('pyket','pkgImage')))
         self.pkgTitle = self.findChild('pkgTitle')
         self.pselcopyright = self.findChild('pselcopyright')
+        self.ScreenShot = self.findChild('ScreenShot')
         self.psellicense = self.findChild('psellicense')
         self.pselunpack = self.findChild('pselunpack')
         self.pselversion = self.findChild('pselversion')

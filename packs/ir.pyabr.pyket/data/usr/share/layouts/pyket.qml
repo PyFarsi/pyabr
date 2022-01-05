@@ -9,11 +9,15 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
-    id: file
+    id: pyket
     visible: true
     color: "white"
     width: 900
+    maximumWidth: 900
+    minimumWidth: 900
     height: 700
+    maximumHeight: 700
+    minimumHeight: 700
     title: "Pyket"
     Text {
         visible: false
@@ -167,13 +171,13 @@ ApplicationWindow {
             anchors.topMargin: 20
             anchors.top: parent.top
             Text {
-                
+
                 text: "Commento"
                 font.family: "IRANSans"
                 font.pixelSize: 20
                 objectName: "pkgTitle"
                 id: titlex
-            }        
+            }
         }
 
         RowLayout {
@@ -232,138 +236,285 @@ ApplicationWindow {
             id: pro
             visible: false
         }
-        TextArea {
-            width: parent.width/1.5
-            height: parent.height/5
-            enabled: false
-            objectName: "pkgDescription"
-            anchors.leftMargin: 30
-            anchors.rightMargin: 30
-            anchors.horizontalCenter: parent.horizontalCenter
-            id: descriptionx
+        /* Pyket meta data */
+        ScrollView{
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            //ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+            clip: true
             anchors.top: pro.bottom
-            text: "Commento is the best xterminal emulator"
-        }
-        Column {
-            spacing: 2
-            width: parent.width/2
-            anchors.left: parent.left
-            anchors.top: descriptionx.bottom
-            anchors.bottomMargin: 20
-            Text {
-                text: 'Package name:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "pkgName"
-            }
-            Text {
-                text: 'Package version:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "pkgVersion"
-            }
-            Text {
-                text: 'Build date:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "pkgBuild"
-            }
-            Text {
-                text: 'Copyright:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "pkgCopyright"
-            }
-            Text {
-                text: 'License:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "pkgLicense"
-            }
-            Text {
-                text: 'Installed in:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "pkgUnpack"
-            }
-            Text {
-                text: 'Mirror:  '
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.right: parent.right
-                objectName: "pkgMirror"
-            }
-            
-        }
+            anchors.bottom: parent.bottom
+            width: pyket.width
+            height: pyket.height
 
-        Column {
-            spacing: 2
-            width: parent.width/2
-            anchors.right: parent.right
-            anchors.top: descriptionx.bottom
-            anchors.bottomMargin: 20
-            Text {
-                text: 'ir.pyabr'
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.left: parent.left
-                font.bold: true
-                objectName: "pkgName1"
+            ColumnLayout {
+                width: pyket.width
+                height: pyket.height
+
+                Rectangle {
+                    width: pyket.width
+                    anchors.horizontalCenter: pyket.horizontalCenter
+                    height: 400
+                    objectName: "ScreenShot"
+                    ScrollView{
+                        anchors.fill: parent
+                        width: pyket.width
+                        height: 400
+                        //ScrollBar.horizontal.policy: ScrollBar.AlwaysOn
+                        ScrollBar.vertical.policy: ScrollBar.AlwaysOff
+                        Row {
+                            width: pyket.width
+                            height: 400
+                            Repeater {
+                                model: ScreenShotMarketModel
+                                Image {
+                                    width: 640
+                                    height: 400
+                                    source: model.screenshot
+                                    sourceSize: Qt.size( 640, 400 )
+                                }
+                            }
+                        }
+                    }
+                    id: recscreenshots
+                }
+
+                Rectangle {
+                    anchors.top: recscreenshots.bottom
+                    width: parent.width/1.5
+                    height: parent.height/5
+                    anchors.horizontalCenter: pyket.horizontalCenter
+                    TextArea {
+                        enabled: false
+                        objectName: "pkgDescription"
+                        anchors.centerIn: parent
+                        id: descriptionx
+                        font.pixelSize: 16
+                        font.bold: false
+                        color: "black"
+                        font.family: "IRANSans"
+                        text: "Commento is the best xterminal emulator"
+                    }
+                }
+
+
+                Rectangle {
+                    width: pyket.width
+                    height: 30
+                    anchors.horizontalCenter: pyket.horizontalCenter
+                    Text {
+                        anchors.left: parent.left
+                        anchors.leftMargin: 20
+                        id: pkgName
+                        objectName: "pkgName"
+                        color: "gray"
+                        font.pixelSize: 16
+                        font.family: "IRANSans"
+                    }
+                    Text {
+                        color: "black"
+                        font.bold: true
+                        anchors.right: parent.right
+                        font.pixelSize: 16
+                        anchors.rightMargin: 20
+                        id: pkgName1
+                        objectName: "pkgName1"
+                        font.family: "IRANSans"
+                    }
+                    Rectangle {
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 1
+                        color: "silver"
+                    }
+                }
+
+                Rectangle {
+                    width: pyket.width
+                    height: 30
+                    anchors.horizontalCenter: pyket.horizontalCenter
+                    Text {
+                        anchors.left: parent.left
+                        anchors.leftMargin: 20
+                        id: pkgVersion
+                        font.family: "IRANSans"
+                        font.pixelSize: 16
+                        objectName: "pkgVersion"
+                        color: "gray"
+                    }
+                    Text {
+                        color: "black"
+                        font.bold: true
+                        anchors.right: parent.right
+                        anchors.rightMargin: 20
+                        font.pixelSize: 16
+                        id: pkgVersion1
+                        objectName: "pkgVersion1"
+                        font.family: "IRANSans"
+                    }
+                    Rectangle {
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 1
+                        color: "silver"
+                    }
+                }
+
+                Rectangle {
+                    width: pyket.width
+                    anchors.horizontalCenter: pyket.horizontalCenter
+                    height: 30
+                    Text {
+                        anchors.left: parent.left
+                        anchors.leftMargin: 20
+                        font.pixelSize: 16
+                        id: pkgBuild
+                        font.family: "IRANSans"
+                        objectName: "pkgBuild"
+                        color: "gray"
+                    }
+                    Text {
+                        color: "black"
+                        font.bold: true
+                        font.pixelSize: 16
+                        anchors.right: parent.right
+                        anchors.rightMargin: 20
+                        font.family: "IRANSans"
+                        id: pkgBuild1
+                        objectName: "pkgBuild1"
+                    }
+                    Rectangle {
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 1
+                        color: "silver"
+                    }
+                }
+
+                Rectangle {
+                    width: pyket.width
+                    height: 30
+                    anchors.horizontalCenter: pyket.horizontalCenter
+                    Text {
+                        anchors.left: parent.left
+                        anchors.leftMargin: 20
+                        font.family: "IRANSans"
+                        id: pkgCopyright
+                        objectName: "pkgCopyright"
+                        font.pixelSize: 16
+                        color: "gray"
+                    }
+                    Text {
+                        color: "black"
+                        font.bold: true
+                        font.pixelSize: 16
+                        anchors.right: parent.right
+                        anchors.rightMargin: 20
+                        font.family: "IRANSans"
+                        id: pkgCopyright1
+                        objectName: "pkgCopyright1"
+                    }
+                    Rectangle {
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 1
+                        color: "silver"
+                    }
+                }
+
+                Rectangle {
+                    width: pyket.width
+                    height: 30
+                    anchors.horizontalCenter: pyket.horizontalCenter
+                    Text {
+                        anchors.left: parent.left
+                        anchors.leftMargin: 20
+                        id: pkgLicense
+                        objectName: "pkgLicense"
+                        font.pixelSize: 16
+                        color: "gray"
+                        font.family: "IRANSans"
+                    }
+                    Text {
+                        color: "black"
+                        font.bold: true
+                        anchors.right: parent.right
+                        anchors.rightMargin: 20
+                        font.family: "IRANSans"
+                        font.pixelSize: 16
+                        id: pkgLicense1
+                        objectName: "pkgLicense1"
+                    }
+                    Rectangle {
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 1
+                        color: "silver"
+                    }
+                }
+
+                Rectangle {
+                    width: pyket.width
+                    height: 30
+                    anchors.horizontalCenter: pyket.horizontalCenter
+                    Text {
+                        anchors.left: parent.left
+                        anchors.leftMargin: 20
+                        id: pkgUnpack
+                        font.family: "IRANSans"
+                        objectName: "pkgUnpack"
+                        color: "gray"
+                        font.pixelSize: 16
+                    }
+                    Text {
+                        color: "black"
+                        font.bold: true
+                        anchors.right: parent.right
+                        anchors.rightMargin: 20
+                        id: pkgUnpack1
+                        font.family: "IRANSans"
+                        objectName: "pkgUnpack1"
+                        font.pixelSize: 16
+                    }
+                    Rectangle {
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 1
+                        color: "silver"
+                    }
+                }
+
+                Rectangle {
+                    width: pyket.width
+                    height: 30
+                    anchors.horizontalCenter: pyket.horizontalCenter
+                    Text {
+                        anchors.left: parent.left
+                        anchors.leftMargin: 20
+                        id: pkgMirror
+                        font.family: "IRANSans"
+                        objectName: "pkgMirror"
+                        color: "gray"
+                        font.pixelSize: 16
+                    }
+                    Text {
+                        color: "black"
+                        font.bold: true
+                        font.family: "IRANSans"
+                        anchors.right: parent.right
+                        anchors.rightMargin: 20
+                        id: pkgMirror1
+                        objectName: "pkgMirror1"
+                        font.pixelSize: 16
+                    }
+                    Rectangle {
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 1
+                        color: "silver"
+                    }
+                }
             }
-            Text {
-                text: '2.0.1'
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.left: parent.left
-                font.bold: true
-                objectName: "pkgVersion1"
-            }
-            Text {
-                text: '1400-06-13'
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.left: parent.left
-                font.bold: true
-                objectName: "pkgBuild1"
-            }
-            Text {
-                text: '(c) 2021 Mani Jamali'
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.left: parent.left
-                font.bold: true
-                objectName: "pkgCopyright1"
-            }
-            Text {
-                text: 'GNU General Public License v3'
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.left: parent.left
-                font.bold: true
-                objectName: "pkgLicense1"
-            }
-            Text {
-                text: '/'
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.left: parent.left
-                font.bold: true
-                objectName: "pkgUnpack1"
-            }
-            Text {
-                text: 'mirror.pyabr.ir/aras'
-                font.family: "IRANSans"
-                font.pixelSize: 16
-                anchors.left: parent.left
-                font.bold: true
-                objectName: "pkgMirror1"
-            }
+
         }
     }
 
@@ -376,8 +527,8 @@ ApplicationWindow {
         id: scroll
         objectName: "scroll"
         Column {
-            width: file.width
-            height: file.height-70
+            width: pyket.width
+            height: pyket.height-70
             spacing: 2
             Repeater {
                 model: PackageModel
@@ -427,7 +578,7 @@ ApplicationWindow {
                     Text {
                         text: model.namex
                         font.family: "IRANSans"
-                        font.pixelSize: 18
+                        font.pixelSize: 16
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: imagex.right
                         anchors.leftMargin: 20
