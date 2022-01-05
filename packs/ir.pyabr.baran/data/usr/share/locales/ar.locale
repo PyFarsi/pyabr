@@ -99,7 +99,7 @@ unpack: مثبتة في
 mirror: مرآتي
 uninstall_message: هل تريد إزالة الحزمة {0}؟
 install_message: هل تريد تثبيت حزمة {0}؟
-install_message: هل تريد تحديث الحزمة {0}؟
+update_message: هل تريد تحديث الحزمة {0}؟
 pyket: بایکت
 download: تنزيل
 url: العنوان 
