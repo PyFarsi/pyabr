@@ -13,11 +13,22 @@ class CustomWebEnginePage(QWebEnginePage):
 
     def acceptNavigationRequest(self, url,  _type, isMainFrame):
         if _type == QWebEnginePage.NavigationTypeLinkClicked:
-            # Keep reference to external window, so it isn't cleared up.
-            app.start('chromium',url.toString())
+            urlx = url.toString()
+            if urlx.endswith('.exe') or urlx.endswith('.msi') or urlx.endswith('.doc') or urlx.endswith('.docx') or urlx.endswith('.ppt') or urlx.endswith('.pptx') or \
+               urlx.endswith('.dot') or urlx.endswith('.dotx') or urlx.endswith('.iso') or urlx.endswith('.bin') or urlx.endswith('.zip') or urlx.endswith('.tar') or urlx.endswith('.xz') or urlx.endswith('.bz2') \
+                    or urlx.endswith('.bz') or urlx.endswith('.sb') or urlx.endswith('.squashfs') or urlx.endswith('.rar') or urlx.endswith('.cab') or urlx.endswith('.run') or urlx.endswith('.apk') or urlx.endswith('.rtf') \
+                    or urlx.endswith('.egg') or urlx.endswith('.dwg') or urlx.endswith('.xls') or urlx.endswith('.xlsm') or urlx.endswith('.xlsx') or urlx.endswith('.com') or urlx.endswith('.pdf') or urlx.endswith('.ai') \
+                    or urlx.endswith('.img') or urlx.endswith('.pa'):
+                app.start('download',urlx)
+            else:
+                w = QWebEngineView()
+                w.setUrl(url)
+                w.show()
+
+                # Keep reference to external window, so it isn't cleared up.
+                self.external_windows.append(w)
             return False
         return super().acceptNavigationRequest(url,  _type, isMainFrame)
-
 
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
