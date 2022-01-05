@@ -48,6 +48,18 @@ def build_extra(name):
     os.rename (name+".zip","build-packs/"+name+".pa")
     clean()
 
+def build_3rd(name):
+    if not ("3rd/"+name + "/code") and ("3rd/"+name + "/data") and (
+            "3rd/"+name + "/control") and ("3rd/"+name + "/control/manifest"):
+        exit(0)
+
+    shutil.make_archive("app/cache/archives/build/data", "zip",    "3rd/"+name + "/data")
+    shutil.make_archive("app/cache/archives/build/code", "zip",    "3rd/"+name + "/code")
+    shutil.make_archive("app/cache/archives/build/control", "zip", "3rd/"+ name + "/control")
+    shutil.make_archive(name, "zip", "app/cache/archives/build")
+    os.rename (name+".zip","os/3rd/"+name+".pa")
+    clean()
+
 def manifest(name):
     if not ("packs/"+name + "/code") and ("packs/"+name + "/data") and (
             "packs/"+name + "/control") and ("packs/"+name + "/control/manifest"):
