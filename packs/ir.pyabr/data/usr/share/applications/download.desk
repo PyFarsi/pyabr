@@ -1,0 +1,6 @@
+name[en]: Download
+logo: @icon/breeze-dmgr
+exec: Download
+application: No
+category: tools
+hidden: Yes
