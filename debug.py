@@ -95,4 +95,4 @@ subprocess.call('cd os && genisoimage -o ../pyabr-x86_64.iso -v -J -R -D -A pyab
 os.remove('os/pyabr/modules/stor.sb')
 clean.clean()
 
-subprocess.call('qemu-system-x86_64 -m 4000 -enable-kvm -cdrom pyabr-x86_64.iso -hda 1.img',shell=True)
+subprocess.call('qemu-system-x86_64 -m 4000 -enable-kvm -cdrom pyabr-x86_64.iso -soundhw all',shell=True)
