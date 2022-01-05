@@ -6,9 +6,10 @@ name[tr]: baran masaüstü ortamı
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.22
+version: 2.0.23
 description: Baran Desktop Environment is the default desktop enviroment.
 compile: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.baran.svg
-build: 1400-10-06
+screenshots: Yes
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

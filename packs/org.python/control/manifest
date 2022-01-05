@@ -10,5 +10,6 @@ version: current
 description: Python programming language
 compile: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/org.python.svg
-build: 1400-10-06
+screenshots: Yes
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

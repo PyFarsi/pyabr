@@ -9,6 +9,7 @@ unpack: /
 version: 1.0.1
 description: Pyabr upgrade application
 compile: Yes
+screenshots: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.upstor.svg
-build: 1400-10-06
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

@@ -11,5 +11,6 @@ description: Commento is a Saye shell emulator uses Konsole, xterm, qterminal
 compile: Yes
 entry: commento
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.commento.svg
-build: 1400-10-06
+screenshots: Yes
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

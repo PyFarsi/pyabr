@@ -10,6 +10,7 @@ version: 2.0.2
 description: Simple Download manager
 compile: Yes
 entry: dmgr
+screenshots: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.dmgr.svg
-build: 1400-10-06
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

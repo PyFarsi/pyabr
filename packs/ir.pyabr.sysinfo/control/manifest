@@ -10,6 +10,7 @@ version: 2.0.2
 description: System informations software
 compile: Yes
 entry: sysinfo
+screenshots: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.sysinfo.svg
-build: 1400-10-06
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

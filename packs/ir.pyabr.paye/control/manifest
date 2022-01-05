@@ -9,5 +9,5 @@ unpack: /
 version: 2.0.8
 description: Paye package manager as a default package manager that can control the system
 compile: Yes
-build: 1400-10-06
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

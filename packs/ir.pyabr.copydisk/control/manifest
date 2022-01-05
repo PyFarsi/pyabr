@@ -11,5 +11,6 @@ description: With this tool you can copy your Pyabr files into internal/external
 compile: Yes
 entry: copydisk
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.copydisk.svg
-build: 1400-10-06
+screenshots: Yes
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

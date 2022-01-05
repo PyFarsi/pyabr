@@ -11,5 +11,6 @@ description: Chat message
 compile: Yes
 entry: chat
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.chat.svg
-build: 1400-10-06
+screenshots: Yes
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

@@ -8,8 +8,9 @@ license: GNU GPL v3.0
 unpack: /
 version: 2.0.2
 description: General Help application
+screenshots: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.help.svg
 compile: Yes
 entry: onlinesupport
-build: 1400-10-06
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

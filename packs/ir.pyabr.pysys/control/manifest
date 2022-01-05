@@ -9,7 +9,8 @@ unpack: /
 version: 2.0.4
 description: PySys is a power options of system
 compile: Yes
+screenshots: Yes
 entry: pysys
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.pysys.svg
-build: 1400-10-06
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

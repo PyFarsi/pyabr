@@ -10,6 +10,7 @@ version: 1.0.0
 description: Farayand ha is a simple system monitor for controlling process
 compile: Yes
 entry: farayand
+screenshots: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.farayand.svg
-build: 1400-10-06
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

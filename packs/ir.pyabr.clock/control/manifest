@@ -11,5 +11,6 @@ description: Clock & Stopwatch
 compile: Yes
 entry: clock
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.clock.svg
-build: 1400-10-06
+screenshots: Yes
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

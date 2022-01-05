@@ -10,5 +10,6 @@ version: current
 description: Bash Default Linux shell
 logo: https://mirror.pyabr.ir/zayanderoad/org.gnu.bash.svg
 compile: Yes
-build: 1400-10-06
+screenshots: Yes
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/

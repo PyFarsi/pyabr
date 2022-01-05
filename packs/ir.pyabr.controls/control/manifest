@@ -11,5 +11,6 @@ description: General control application
 compile: Yes
 entry: controls
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.controls.svg
-build: 1400-10-06
+screenshots: Yes
+build: 1400-10-12
 mirror: https://mirror.pyabr.ir/zayanderoad/
