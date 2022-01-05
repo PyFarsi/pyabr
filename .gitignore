@@ -17,6 +17,7 @@ dist/
 packs/ir.projop/
 downloads/
 *.squashfs
+3rd/
 initrd.img*
 vmlinuz*
 eggs/
