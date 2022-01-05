@@ -1850,11 +1850,13 @@ class Desktop (MainApp):
         self.menuClicked = a0
 
     def menuApps_(self):
-        self.btnMenu_anim.start()
+        if self.enable_anim.property('text')=='Yes':
+            self.btnMenu_anim.start()
         if self.menuClicked:
             self.update_menuapps(False,True)
         else:
-            self.menuApps_anim.start()
+            if self.enable_anim.property('text') == 'Yes':
+                self.menuApps_anim.start()
             self.update_menuapps(True,False)
             self.showpanel.setProperty('visible',False)
             self.showclock.setProperty('visible',False)
@@ -1874,7 +1876,8 @@ class Desktop (MainApp):
             self.showpanel.setProperty('visible',False)
             self.panelClicked = False
         else:
-            self.showpanel_anim.start()
+            if self.enable_anim.property('text') == 'Yes':
+                self.showpanel_anim.start()
             self.update_menuapps(False, True)
             self.showpanel.setProperty('visible', True)
             self.showclock.setProperty('visible', False)
@@ -1885,7 +1888,8 @@ class Desktop (MainApp):
             self.showclock.setProperty('visible',False)
             self.clockClicked = False
         else:
-            self.showclock_anim.start()
+            if self.enable_anim.property('text') == 'Yes':
+                self.showclock_anim.start()
             self.update_menuapps(False, True)
             self.showclock.setProperty('visible', True)
             self.showpanel.setProperty('visible', False)
@@ -1918,6 +1922,8 @@ class Desktop (MainApp):
         self.setProperty('visibility', getdata("visibility"))
         self.setProperty('title','Pyabr OS')
         self.imgMenu = self.findChild('imgMenu')
+        self.enable_anim = self.findChild('enable_anim')
+        self.enable_anim.setProperty('text',getdata('anim'))
         self.imgMenu.setProperty('source',res.qmlget(ql('pyabr')))
         self.imgMenu2 = self.findChild('imgMenu2')
         self.imgMenu2.setProperty('source',res.qmlget(ql('pyabr')))
@@ -1949,6 +1955,8 @@ class Desktop (MainApp):
         self.rmac.setProperty('text',res.get('@string/rma'))
         self.runc = self.findChild( 'runc')
         self.runc.setProperty('text',res.get('@string/runner'))
+        self.refreshc = self.findChild('refreshc')
+        #self.refreshc.setProperty('text', res.get('@string/runner'))
 
         self.shell_w100 = self.findChild('shell_w100')
         self.shell_w080 = self.findChild('shell_w080')
