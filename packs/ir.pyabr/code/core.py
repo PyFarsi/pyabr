@@ -1828,6 +1828,7 @@ class Package:
             ## Get database of this package ##
             name = control.read_record("name", "/app/cache/archives/control/manifest").lower()
             unpack =control.read_record("unpack", "/app/cache/archives/control/manifest")
+            apt = control.read_record("apt", "/app/cache/archives/control/manifest")
 
             ## Run preinstall script ##
 
@@ -1880,6 +1881,31 @@ class Package:
 
             if files.isfile('/app/cache/archives/control/postremove.sa'):
                 files.copy('/app/cache/archives/control/postremove.sa', f'/app/packages/{name}.postremove')
+
+            ## Check dpkg
+            if not apt==None:
+                subprocess.call(f'''
+cd /tmp
+apt update
+echo Install {name} 3rd-party package ...
+apt install --no-install-recommends {apt}
+echo Saving changes ...
+savechanges {name}.sb
+echo Extract changes ...
+unsquashfs {name}.sb
+Remove unused files ...
+rm -rf squashfs-root/usr/share/doc/*
+rm -rf squashfs-root/stor
+rm -rf squashfs-root/etc/apt*
+rm -rf squashfs-root/var
+Create data ...
+mksquashfs squashfs-root {name}.sb -no-append -comp xz
+Remove cache ...
+rm -rf squashfs-root
+echo Remove {name} 3rd-party package in RAM ...
+apt purge {apt}
+apt autoremove
+''',shell=True)
 
             ## Unlock the cache ##
         else:
@@ -2417,9 +2443,11 @@ class App:
 
         if not (external=='' or external==None): files.write('/proc/info/ext',external)
 
-
-        proc = multiprocessing.Process(target=startId)
-        proc.start()
+        try:
+            proc = multiprocessing.Process(target=startId)
+            proc.start()
+        except:
+            pass
 
     ## Check id ##
     def check(self,id):
