@@ -20,7 +20,6 @@
 import os, shutil,sys
 from buildlibs import  control
 
-
 def clean():
     if os.path.isdir ('app'):                                           shutil.rmtree('app')
     if os.path.isdir ('build-packs'):                                   shutil.rmtree('build-packs')
