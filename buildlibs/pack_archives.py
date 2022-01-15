@@ -18,16 +18,46 @@
 '''
 
 import shutil, os, sys,glob, platform,py_compile,hashlib
+import subprocess
+
 from buildlibs import control
 
 def compile (src,dest):
     py_compile.compile(src,dest)
+
+def list (fullname):
+    list2 = subprocess.check_output(f'cd {fullname}/data/ && find . -type f',shell=True).decode('utf-8').split('\n')
+    list2.remove('')
+
+    f = open(f'{fullname}/control/list','w')
+    for i in list2:
+        try:
+            f.write(i.replace('./','')+"\n")
+        except:
+            pass
+    f.close()
+
+    try:
+        f = open(f'{fullname}/control/compile','r')
+        list3 = f.read().split('\n')
+        f.close()
+
+        f = open(f'{fullname}/control/list','a')
+        for i in list3:
+            if not i =='':
+                f.write(i.split(":")[1]+"\n")
+        f.close()
+    except:
+        pass
 
 ## Build ##
 def build(name):
     if not ("packs/"+name + "/code") and ("packs/"+name + "/data") and (
             "packs/"+name + "/control") and ("packs/"+name + "/control/manifest"):
         exit(0)
+
+    # generate list of files #
+    list(f'packs/{name}')
 
     shutil.make_archive("app/cache/archives/build/data", "zip",    "packs/"+name + "/data")
     shutil.make_archive("app/cache/archives/build/code", "zip",    "packs/"+name + "/code")
@@ -41,6 +71,8 @@ def build_extra(name):
             "packs-extra/"+name + "/control") and ("packs-extra/"+name + "/control/manifest"):
         exit(0)
 
+    list(f'packs-extra/{name}')
+
     shutil.make_archive("app/cache/archives/build/data", "zip",    "packs-extra/"+name + "/data")
     shutil.make_archive("app/cache/archives/build/code", "zip",    "packs-extra/"+name + "/code")
     shutil.make_archive("app/cache/archives/build/control", "zip", "packs-extra/"+ name + "/control")
@@ -52,6 +84,8 @@ def build_3rd(name):
     if not ("3rd/"+name + "/code") and ("3rd/"+name + "/data") and (
             "3rd/"+name + "/control") and ("3rd/"+name + "/control/manifest"):
         exit(0)
+
+    list(f'3rd/{name}')
 
     shutil.make_archive("app/cache/archives/build/data", "zip",    "3rd/"+name + "/data")
     shutil.make_archive("app/cache/archives/build/code", "zip",    "3rd/"+name + "/code")
@@ -146,14 +180,12 @@ def install ():
             build(i)
             unpack(i)
 
-    try:
-        list = os.listdir('packs-extra')
-        for i in list:
-            if os.path.isdir('packs-extra/' + i):
-                build_extra(i)
-                unpack(i)
-    except:
-        pass
+    #try:
+    list = os.listdir('packs-extra')
+    for i in list:
+        if os.path.isdir('packs-extra/' + i):
+            build_extra(i)
+            unpack(i)
 
 def genisoinstall ():
     list = os.listdir('packs')
@@ -166,7 +198,6 @@ def linuxinstall ():
     list = [
         'ir.pyabr',
         'ir.pyabr.baad',
-        'ir.pyabr.barf',
         'ir.pyabr.barge',
         'ir.pyabr.calculator',
         'ir.pyabr.calendar',
@@ -183,6 +214,7 @@ def linuxinstall ():
         'ir.pyabr.sample',
         'ir.pyabr.sysinfo',
         'ir.pyabr.updates',
+        'org.kde.breeze'
     ]
     for i in list:
         if os.path.isdir('packs/'+i):

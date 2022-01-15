@@ -24,7 +24,7 @@ ApplicationWindow {
                 anchors.centerIn: parent
                 height: 250
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -55,7 +55,7 @@ ApplicationWindow {
                         }
                     }
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -86,7 +86,7 @@ ApplicationWindow {
                         }
                     }
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -117,7 +117,7 @@ ApplicationWindow {
                         }
                     }
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -148,7 +148,7 @@ ApplicationWindow {
                         }
                     }
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -180,7 +180,7 @@ ApplicationWindow {
                     }
 
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -211,7 +211,7 @@ ApplicationWindow {
                         }
                     }
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -242,7 +242,7 @@ ApplicationWindow {
                         }
                     }
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -273,7 +273,7 @@ ApplicationWindow {
                         }
                     }
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter

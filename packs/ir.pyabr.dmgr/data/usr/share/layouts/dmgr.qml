@@ -48,11 +48,11 @@ ApplicationWindow {
             Repeater {
                 model: FileModel
 
-                Rectangle {
+                ToolButton {
 
                     width: parent.width
                     height: parent.width/10
-                    color: "transparent"
+                    //color: "transparent"
 
                     Image {
                             source: model.logo

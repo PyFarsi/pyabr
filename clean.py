@@ -29,5 +29,5 @@ def clean():
     if os.path.isdir('sb'): shutil.rmtree('sb')
     if os.path.isdir('stor'): shutil.rmtree('stor')
     
-if sys.argv[0].replace('/','') in __file__.replace('\\',''):
-    clean()
+#if sys.argv[0].replace('/','') in __file__.replace('\\',''):
+clean()

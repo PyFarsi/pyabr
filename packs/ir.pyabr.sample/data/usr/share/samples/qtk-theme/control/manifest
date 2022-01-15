@@ -1,0 +1,11 @@
+name: com.example.example
+name[en]: a GTK Theme
+name[fa]: یک تم جی تی کی
+copyright: (c) 2021 Example
+license: GPL Example
+unpack: /
+version: 1.0.0
+description: Example ...
+compile: Yes
+build: 1400-10-18
+mirror: https://mirror.pyabr.ir/zayanderoad/

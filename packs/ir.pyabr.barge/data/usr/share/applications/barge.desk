@@ -2,7 +2,7 @@ name[en]: Text Editor
 name[fa]: برگه
 name[ar]: محرر النص
 name[tr]: Metin düzeltici
-logo: @icon/breeze-barge
+logo: @icon/barge
 exec: barge
 shortcut: Ctrl+Alt+B
 application: Yes

@@ -44,10 +44,14 @@ ApplicationWindow {
         width: parent.width
         height: parent.height-80
         anchors.topMargin: 10
+        anchors.leftMargin: 10
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.rightMargin: 10
         objectName: "Details"
-        visible: false
         anchors.top: toolbar.bottom
         clip: true
+        visible: false
         id: scroll2
 
         Column {
@@ -57,7 +61,7 @@ ApplicationWindow {
 
             GridView {
                 model: DrivesModel
-                cellWidth: 128; cellHeight: 150
+                cellWidth: 150; cellHeight: 150
                 highlight: highlight
                 width: parent.width
                 height: parent.height
@@ -118,15 +122,15 @@ ApplicationWindow {
             Repeater {
                 model: DrivesModel
 
-                Rectangle {
+                ToolButton {
 
                     width: parent.width
                     height: parent.width/8
-                    color: "transparent"
+                    //color: "transparent"
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: {
+                        onDoubleClicked: {
                             dsel.text = model.dev;
                         }
                     }

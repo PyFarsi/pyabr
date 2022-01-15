@@ -113,27 +113,10 @@ class MainApp (QtQml.QQmlApplicationEngine):
     PNAME = QtCore.Qt.ItemDataRole.UserRole + 1001
     PUSER = QtCore.Qt.ItemDataRole.UserRole + 1002
 
-    # SCREENSHOT
-    SCREENSHOT = QtCore.Qt.ItemDataRole.UserRole+1000
-
-    # GALLEY IMAGES
-
-
-    def ScreenShotMarketModel (self,package):
-        model = QtGui.QStandardItemModel()
-        roles = {self.SCREENSHOT: b"screenshot"}
-        model.setItemRoleNames(roles)
-
-        mirror = control.read_record('mirror',f'/app/mirrors/{package}.manifest')
-        x = (requests.post(f'{mirror}/{package}.screenshots').text).split('\n')
-
-        x.remove('')
-
-        for i in x:
-            it = QtGui.QStandardItem(f'{mirror}/{package}/{i}')
-            it.setData(f'{mirror}/{package}/{i}',self.SCREENSHOT)
-            model.appendRow(it)
-        return model
+    # Icon theme
+    ITNAME = QtCore.Qt.ItemDataRole.UserRole+1000
+    ITNAMEX = QtCore.Qt.ItemDataRole.UserRole+1001
+    ITLOGO = QtCore.Qt.ItemDataRole.UserRole + 1002
 
     def CopyDiskModel (self):
         model = QtGui.QStandardItemModel()
@@ -266,6 +249,67 @@ class MainApp (QtQml.QQmlApplicationEngine):
                     namex = control.read_record(f'name[en]', f'/usr/share/applications/{name}')
                 it.setData(namex, self.LabelRole)
                 it.setData(res.qmlget(control.read_record('logo', f'/usr/share/applications/{name}')), self.LogoRole)
+                model.appendRow(it)
+        return model
+
+    def IconThemeModel(self):
+        model = QtGui.QStandardItemModel()
+        roles = {self.ITNAME:b'name',self.ITNAMEX:b'namex',self.ITLOGO:b'logo'}
+        model.setItemRoleNames(roles)
+        for name in files.list('/usr/share/themes/icon'):
+                it = QtGui.QStandardItem(name)
+                it.setData(name, self.ITNAME)
+                namex = control.read_record(f'name[{res.getdata("locale")}]', f'/usr/share/themes/icon/{name}')
+                if namex == '' or namex == None:
+                    namex = control.read_record(f'name[en]', f'/usr/share/themes/icon/{name}')
+                it.setData(namex, self.ITNAMEX)
+                it.setData(res.qmlget(control.read_record('logo', f'/usr/share/themes/icon/{name}')), self.ITLOGO)
+                model.appendRow(it)
+        return model
+
+
+    def CursorThemeModel(self):
+        model = QtGui.QStandardItemModel()
+        roles = {self.ITNAME:b'name',self.ITNAMEX:b'namex',self.ITLOGO:b'logo'}
+        model.setItemRoleNames(roles)
+        for name in files.list('/usr/share/themes/cursor'):
+                it = QtGui.QStandardItem(name)
+                it.setData(name, self.ITNAME)
+                namex = control.read_record(f'name[{res.getdata("locale")}]', f'/usr/share/themes/cursor/{name}')
+                if namex == '' or namex == None:
+                    namex = control.read_record(f'name[en]', f'/usr/share/themes/cursor/{name}')
+                it.setData(namex, self.ITNAMEX)
+                it.setData(res.qmlget(control.read_record('logo', f'/usr/share/themes/cursor/{name}')), self.ITLOGO)
+                model.appendRow(it)
+        return model
+
+    def ShellThemeModel(self):
+        model = QtGui.QStandardItemModel()
+        roles = {self.ITNAME:b'name',self.ITNAMEX:b'namex',self.ITLOGO:b'logo'}
+        model.setItemRoleNames(roles)
+        for name in files.list('/usr/share/themes/shell'):
+                it = QtGui.QStandardItem(name)
+                it.setData(name, self.ITNAME)
+                namex = control.read_record(f'name[{res.getdata("locale")}]', f'/usr/share/themes/shell/{name}')
+                if namex == '' or namex == None:
+                    namex = control.read_record(f'name[en]', f'/usr/share/themes/shell/{name}')
+                it.setData(namex, self.ITNAMEX)
+                it.setData(res.qmlget(control.read_record('logo', f'/usr/share/themes/shell/{name}')), self.ITLOGO)
+                model.appendRow(it)
+        return model
+
+    def ApplicationThemeModel(self):
+        model = QtGui.QStandardItemModel()
+        roles = {self.ITNAME:b'name',self.ITNAMEX:b'namex',self.ITLOGO:b'logo'}
+        model.setItemRoleNames(roles)
+        for name in files.list('/usr/share/themes/gtk'):
+                it = QtGui.QStandardItem(name)
+                it.setData(name, self.ITNAME)
+                namex = control.read_record(f'name[{res.getdata("locale")}]', f'/usr/share/themes/gtk/{name}')
+                if namex == '' or namex == None:
+                    namex = control.read_record(f'name[en]', f'/usr/share/themes/gtk/{name}')
+                it.setData(namex, self.ITNAMEX)
+                it.setData(res.qmlget(control.read_record('logo', f'/usr/share/themes/gtk/{name}')), self.ITLOGO)
                 model.appendRow(it)
         return model
 
@@ -515,7 +559,20 @@ class MainApp (QtQml.QQmlApplicationEngine):
                     else:
                         it.setData(res.qmlget('@icon/folder'),self.FileLogo)
                 else:
-                    it.setData(res.qmlget('@icon/txt'),self.FileLogo)
+                    if i.lower()=='install':
+                        it.setData(res.qmlget('@icon/file-install'),self.FileLogo)
+                    elif i.lower() == 'makefile':
+                        it.setData(res.qmlget('@icon/file-makefile'), self.FileLogo)
+                    elif i.lower() == 'authers':
+                        it.setData(res.qmlget('@icon/file-authers'), self.FileLogo)
+                    elif i.lower() == 'copying':
+                        it.setData(res.qmlget('@icon/file-copying'), self.FileLogo)
+                    elif i.lower() == 'readme':
+                        it.setData(res.qmlget('@icon/file-readme'), self.FileLogo)
+                    elif i.lower() == 'credits':
+                        it.setData(res.qmlget('@icon/file-credits'), self.FileLogo)
+                    else:
+                        it.setData(res.qmlget('@icon/file'),self.FileLogo)
             else:
                 if files.isfile(f'{directory}/{i}'):
                     if i.endswith('.desk'):
@@ -523,10 +580,10 @@ class MainApp (QtQml.QQmlApplicationEngine):
                     elif i.endswith ('.png') or i.endswith ('.jpg') or i.endswith ('.jpeg') or i.endswith ('.bmp') or i.endswith ('.tiff') or i.endswith ('.tif') or i.endswith ('.gif') or i.endswith ('.svg'):
                         it.setData(files.input_qml(f'{directory}/{i}'),self.FileLogo)
                     else:
-                        if control.read_record (f'{ext.replace(".","")}.icon','/etc/ext')==None:
-                            it.setData(res.qmlget('@icon/txt'),self.FileLogo)
+                        if res.get(f'@icon/file-{ext.replace(".","")}')=='':
+                            it.setData(res.qmlget('@icon/file'),self.FileLogo)
                         else:
-                            it.setData(res.qmlget(control.read_record (f'{ext.replace(".","")}.icon','/etc/ext')),self.FileLogo)
+                            it.setData(res.qmlget(f'@icon/file-{ext.replace(".","")}'),self.FileLogo)
                 else:
                     if files.isfile (f'{directory}/{i}/.logo'):
                         it.setData(res.qmlget(files.readall(f'{directory}/{i}/.logo')),self.FileLogo)
@@ -629,10 +686,15 @@ class MainApp (QtQml.QQmlApplicationEngine):
 
             #i = i.replace('.manifest','')
 
-            if not control.read_record (f'logo',f'/app/mirrors/{i}')==None:
-                it.setData(control.read_record (f'logo',f'/app/mirrors/{i}'),self.PKG_LOGO)
+
+            if control.read_record('logo.inside',f'/app/mirrors/{i}')==None or res.get(control.read_record('logo.inside',f'/app/mirrors/{i}'))=='':
+                if not control.read_record (f'logo',f'/app/mirrors/{i}')==None:
+                    it.setData(control.read_record (f'logo',f'/app/mirrors/{i}'),self.PKG_LOGO)
+                else:
+                    it.setData(res.qmlget('@icon/archive'),self.PKG_LOGO)
             else:
-                it.setData(res.qmlget('@icon/archive'),self.PKG_LOGO)
+                it.setData(res.qmlget(control.read_record('logo.inside',f'/app/mirrors/{i}')),self.PKG_LOGO)
+
             model.appendRow(it)
         return model
 
@@ -689,9 +751,21 @@ class MainApp (QtQml.QQmlApplicationEngine):
         self.xprocessmdl = self.ProcessModel()
         self.rootContext().setContextProperty('ProcessModel', self.xprocessmdl)
 
-    def addScreenShotMarketModel (self,package):
-        self.xscreenshotmdl = self.ScreenShotMarketModel(package)
-        self.rootContext().setContextProperty('ScreenShotMarketModel', self.xscreenshotmdl)
+    def addIconThemeModel (self):
+        self.xitmdl = self.IconThemeModel()
+        self.rootContext().setContextProperty('IconThemeModel', self.xitmdl)
+
+    def addCursorThemeModel (self):
+        self.xctmdl = self.CursorThemeModel()
+        self.rootContext().setContextProperty('CursorThemeModel', self.xctmdl)
+
+    def addApplicationThemeModel (self):
+        self.xatmdl = self.ApplicationThemeModel()
+        self.rootContext().setContextProperty('ApplicationThemeModel', self.xatmdl)
+
+    def addShellThemeModel (self):
+        self.xstmdl = self.ShellThemeModel()
+        self.rootContext().setContextProperty('ShellThemeModel', self.xstmdl)
 
     def setProperty(self,name,value):
         self.rootObjects()[0].setProperty(name,value)
@@ -1029,6 +1103,134 @@ class Save (MainApp):
 
         self.loop()
 
+class IconTheme (MainApp):
+
+    def loop (self):
+        if not self.tsel.property('text')=='':
+            self.btnChange.setProperty('enabled',True)
+
+        QTimer.singleShot (10,self.loop)
+
+    def change_(self):
+        self.function (self.tsel.property('text'))
+        self.close()
+
+    def __init__(self,function):
+        super(MainApp, self).__init__()
+
+        self.function = function
+
+        self.addIconThemeModel()
+        self.load (res.get('@layout/icon_theme'))
+        self.setProperty('title',res.get('@string/icon'))
+        self.tsel = self.findChild ('tsel')
+        self.btnCancel = self.findChild('btnCancel')
+        self.title = self.findChild('title')
+        self.ListView = self.findChild('ListView')
+        self.btnCancel.setProperty('text', res.get('@string/cancel'))
+        self.btnChange = self.findChild('btnChange')
+        self.btnCancel.clicked.connect (self.close)
+        self.btnChange.setProperty('text',res.get('@string/change'))
+        self.btnChange.clicked.connect (self.change_)
+
+        self.loop()
+
+class ApplicationTheme (MainApp):
+
+    def loop (self):
+        if not self.tsel.property('text')=='':
+            self.btnChange.setProperty('enabled',True)
+
+        QTimer.singleShot (10,self.loop)
+
+    def change_(self):
+        self.function (self.tsel.property('text'))
+        self.close()
+
+    def __init__(self,function):
+        super(MainApp, self).__init__()
+
+        self.function = function
+
+        self.addApplicationThemeModel()
+        self.load (res.get('@layout/application_theme'))
+        self.setProperty('title',res.get('@string/gtk'))
+        self.tsel = self.findChild ('tsel')
+        self.btnCancel = self.findChild('btnCancel')
+        self.title = self.findChild('title')
+        self.ListView = self.findChild('ListView')
+        self.btnCancel.setProperty('text', res.get('@string/cancel'))
+        self.btnChange = self.findChild('btnChange')
+        self.btnCancel.clicked.connect (self.close)
+        self.btnChange.setProperty('text',res.get('@string/change'))
+        self.btnChange.clicked.connect (self.change_)
+
+        self.loop()
+
+class CursorTheme (MainApp):
+
+    def loop (self):
+        if not self.tsel.property('text')=='':
+            self.btnChange.setProperty('enabled',True)
+
+        QTimer.singleShot (10,self.loop)
+
+    def change_(self):
+        self.function (self.tsel.property('text'))
+        self.close()
+
+    def __init__(self,function):
+        super(MainApp, self).__init__()
+
+        self.function = function
+
+        self.addCursorThemeModel()
+        self.load (res.get('@layout/cursor_theme'))
+        self.setProperty('title',res.get('@string/cursor'))
+        self.tsel = self.findChild ('tsel')
+        self.btnCancel = self.findChild('btnCancel')
+        self.title = self.findChild('title')
+        self.ListView = self.findChild('ListView')
+        self.btnCancel.setProperty('text', res.get('@string/cancel'))
+        self.btnChange = self.findChild('btnChange')
+        self.btnCancel.clicked.connect (self.close)
+        self.btnChange.setProperty('text',res.get('@string/change'))
+        self.btnChange.clicked.connect (self.change_)
+
+        self.loop()
+
+class ShellTheme (MainApp):
+
+    def loop (self):
+        if not self.tsel.property('text')=='':
+            self.btnChange.setProperty('enabled',True)
+
+        QTimer.singleShot (10,self.loop)
+
+    def change_(self):
+        self.function (self.tsel.property('text'))
+        self.close()
+
+    def __init__(self,function):
+        super(MainApp, self).__init__()
+
+        self.function = function
+
+        self.addShellThemeModel()
+        self.load (res.get('@layout/shell_theme'))
+        self.setProperty('title',res.get('@string/shell'))
+        self.tsel = self.findChild ('tsel')
+        self.btnCancel = self.findChild('btnCancel')
+        self.title = self.findChild('title')
+        self.ListView = self.findChild('ListView')
+        self.btnCancel.setProperty('text', res.get('@string/cancel'))
+        self.btnChange = self.findChild('btnChange')
+        self.btnCancel.clicked.connect (self.close)
+        self.btnChange.setProperty('text',res.get('@string/change'))
+        self.btnChange.clicked.connect (self.change_)
+
+        self.loop()
+
 # Ask Dialog
 class Install (MainApp):
 
@@ -1230,7 +1432,7 @@ class FileInfo (MainApp):
         self.size = self.findChild('size')
         self.created = self.findChild('created')
         self.modified = self.findChild('modified')
-        self.owership = self.findChild('owership')
+        self.ownership = self.findChild('ownership')
         self.perma = self.findChild('perma')
         self.permb = self.findChild('permb')
         self.permc = self.findChild('permc')
@@ -1241,7 +1443,7 @@ class FileInfo (MainApp):
         self.size1 = self.findChild('size1')
         self.created1 = self.findChild('created1')
         self.modified1 = self.findChild('modified1')
-        self.owership1 = self.findChild('owership1')
+        self.ownership1 = self.findChild('ownership1')
         self.perma1 = self.findChild('perma1')
         self.permb1 = self.findChild('permb1')
         self.permc1 = self.findChild('permc1')
@@ -1291,7 +1493,7 @@ class FileInfo (MainApp):
 
         self._created = time.ctime (os.path.getctime(files.input(filename)))
         self._modified = time.ctime (os.path.getctime(files.input(filename)))
-        self._owership = perm.split('/')[1]
+        self._ownership = perm.split('/')[1]
         self._perma = self.access_show(perm,'owner')
         self._permb = self.access_show(perm,'users')
         self._permc = self.access_show(perm,'guest')
@@ -1303,7 +1505,7 @@ class FileInfo (MainApp):
             self.size1.setProperty('text',self._size)
             self.created1.setProperty('text',self._created)
             self.modified1.setProperty('text',self._modified)
-            self.owership1.setProperty('text',self._owership)
+            self.ownership1.setProperty('text',self._ownership)
             self.perma1.setProperty('text',self._perma)
             self.permb1.setProperty('text',self._permb)
             self.permc1.setProperty('text',self._permc)
@@ -1314,7 +1516,7 @@ class FileInfo (MainApp):
             self.size.setProperty('text',res.get('@string/size')+": ")
             self.created.setProperty('text',res.get('@string/created')+": ")
             self.modified.setProperty('text',res.get('@string/modified')+": ")
-            self.owership.setProperty('text',res.get('@string/ownership')+": ")
+            self.ownership.setProperty('text',res.get('@string/ownership')+": ")
             self.perma.setProperty('text',res.get('@string/access_owner')+": ")
             self.permb.setProperty('text',res.get('@string/access_users')+": ")
             self.permc.setProperty('text',res.get('@string/access_guest')+": ")
@@ -1325,7 +1527,7 @@ class FileInfo (MainApp):
             self.size.setProperty('text',self._size)
             self.created.setProperty('text',self._created)
             self.modified.setProperty('text',self._modified)
-            self.owership.setProperty('text',self._owership)
+            self.ownership.setProperty('text',self._ownership)
             self.perma.setProperty('text',self._perma)
             self.permb.setProperty('text',self._permb)
             self.permc.setProperty('text',self._permc)
@@ -1336,7 +1538,7 @@ class FileInfo (MainApp):
             self.size1.setProperty('text',res.get('@string/size')+": ")
             self.created1.setProperty('text',res.get('@string/created')+": ")
             self.modified1.setProperty('text',res.get('@string/modified')+": ")
-            self.owership1.setProperty('text',res.get('@string/ownership')+": ")
+            self.ownership1.setProperty('text',res.get('@string/ownership')+": ")
             self.perma1.setProperty('text',res.get('@string/access_owner')+": ")
             self.permb1.setProperty('text',res.get('@string/access_users')+": ")
             self.permc1.setProperty('text',res.get('@string/access_guest')+": ")

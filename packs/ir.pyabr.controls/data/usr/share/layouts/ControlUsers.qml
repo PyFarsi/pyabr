@@ -20,12 +20,12 @@ ScrollView {
                     Repeater {
                         model: UserModel
 
-                        Rectangle {
+                        ToolButton {
                             visible: true
 
                             width: parent.width
                             height: parent.width/10
-                            color: "transparent"
+                            //color: "transparent"
 
                             MouseArea {
                                 anchors.fill: parent

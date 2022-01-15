@@ -1,9 +1,0 @@
-echo Setting GUI themes ...
-sel /etc/gui
-add /usr/share/themes/breeze-gui-dark
-unsel
-
-echo Setting Extension themes ...
-sel /etc/ext
-add /usr/share/themes/breeze-ext
-unsel

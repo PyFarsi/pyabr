@@ -43,11 +43,11 @@ ApplicationWindow {
             Repeater {
                 model: CopyDiskModel
 
-                Rectangle {
+                ToolButton {
 
                     width: parent.width
                     height: parent.width/10
-                    color: "transparent"
+                    //color: "transparent"
 
                     MouseArea {
                         anchors.fill: parent

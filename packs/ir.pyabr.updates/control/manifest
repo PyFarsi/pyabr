@@ -9,5 +9,5 @@ unpack: /app/mirrors/
 version: current
 description: A software package used for checking packages for update
 compile: No
-build: 1400-10-12
+build: 1400-10-19
 mirror: https://mirror.pyabr.ir/zayanderoad/

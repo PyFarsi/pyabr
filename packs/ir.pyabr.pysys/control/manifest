@@ -6,11 +6,12 @@ name[tr]: pysis
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.4
+version: 2.0.5
 description: PySys is a power options of system
 compile: Yes
 screenshots: Yes
 entry: pysys
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.pysys.svg
-build: 1400-10-12
+logo.inside: @icon/pysys
+build: 1400-10-19
 mirror: https://mirror.pyabr.ir/zayanderoad/

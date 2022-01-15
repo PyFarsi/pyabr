@@ -6,11 +6,12 @@ name[tr]: takvim
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.3
+version: 2.0.4
 description: Simple Calendar
 compile: Yes
 entry: calendar_app
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.calendar.svg
+logo.inside: @icon/calendar
 screenshots: Yes
-build: 1400-10-12
+build: 1400-10-19
 mirror: https://mirror.pyabr.ir/zayanderoad/

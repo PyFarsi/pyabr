@@ -52,8 +52,8 @@ class downloadThread(QThread):
 class MainApp (MainApp):
 
     def loop (self):
-
         if not self.psel.property('text')=='':
+
             self.scroll.setProperty('visible',False)
             self.package_exec.setProperty('visible',True)
             self.back.setProperty('visible',True)
@@ -63,8 +63,8 @@ class MainApp (MainApp):
             self.title.setProperty('text',self.pselnamex.property('text'))
 
             if control.read_record('screenshots',f'/app/mirrors/{self.psel.property("text")}.manifest')=='Yes':
-                self.ScreenShot.setProperty('visible',True)
-                self.addScreenShotMarketModel(self.psel.property('text'))
+                #self.ScreenShot.setProperty('url', control.read_record('mirror',f'/app/mirrors/{self.psel.property("text")}.manifest') + "/" + self.psel.property("text"))
+                self.ScreenShot.setProperty('visible', True)
             else:
                 self.ScreenShot.setProperty('visible', False)
 
@@ -98,7 +98,6 @@ class MainApp (MainApp):
             self.package_exec.setProperty('visible',False)
             self.back.setProperty('visible',False)
             self.title.setProperty('visible',False)   
-
 
         if not self.act.property('text')=='':
             if self.act.property('text')=='open':
@@ -180,9 +179,15 @@ class MainApp (MainApp):
 
     def __init__(self):
         super(MainApp, self).__init__()
+
+        # Starter
+        for i in files.list("/app/mirrors"):
+            if not i.startswith(files.readall('/etc/paye/sources')):
+                files.remove(f"/app/mirrors/{i}")
+
         System (f'sudo paye in {files.readall("/etc/paye/sources")}')
+
         self.addPackageModel()
-        self.addScreenShotMarketModel('ir.pyabr.pyket')
         self.load (res.get('@layout/pyket'))
         self.psel = self.findChild('psel')
         self.pselnamex = self.findChild('pselnamex')
@@ -190,6 +195,7 @@ class MainApp (MainApp):
         self.pkgImage.setProperty('source',res.qmlget('@icon/archive'))
         self.pkgTitle = self.findChild('pkgTitle')
         self.pselcopyright = self.findChild('pselcopyright')
+        self.pselurl = self.findChild('pselurl')
         self.ScreenShot = self.findChild('ScreenShot')
         self.psellicense = self.findChild('psellicense')
         self.pselunpack = self.findChild('pselunpack')

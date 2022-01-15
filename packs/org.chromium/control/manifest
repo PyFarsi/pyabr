@@ -11,5 +11,6 @@ description: Chromium Web Browser
 compile: Yes
 screenshots: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/org.chromium.png
-build: 1400-10-12
+logo.inside: @icon/chromium
+build: 1400-10-19
 mirror: https://mirror.pyabr.ir/zayanderoad/

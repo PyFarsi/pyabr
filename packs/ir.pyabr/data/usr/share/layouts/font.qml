@@ -34,10 +34,10 @@ ApplicationWindow {
             Repeater {
                 model: fontList
 
-                Rectangle {
+                ToolButton {
                     width: parent.width
                     height: parent.width/6
-                    color: "white"
+                    //color: "white"
 
                     Text {
                         anchors.centerIn: parent

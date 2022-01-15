@@ -7,6 +7,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls 2.3
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls.Material 2.12
+import QtWebEngine 1.0
 
 ApplicationWindow {
     id: pyket
@@ -31,6 +32,13 @@ ApplicationWindow {
         text: ''
         id: pselnamex
         objectName: "pselnamex"
+    }
+
+    Text {
+        visible: false
+        text: ''
+        id: pselurl
+        objectName: "pselurl"
     }
 
     Text {
@@ -246,40 +254,19 @@ ApplicationWindow {
             width: pyket.width
             height: pyket.height
 
-            ColumnLayout {
+            Column {
                 width: pyket.width
                 height: pyket.height
 
-                Rectangle {
-                    width: pyket.width
+                 WebEngineView {
                     anchors.horizontalCenter: pyket.horizontalCenter
-                    height: 400
+                    width: parent.width
+                    height: 450
                     objectName: "ScreenShot"
-                    ScrollView{
-                        anchors.fill: parent
-                        width: pyket.width
-                        height: 400
-                        //ScrollBar.horizontal.policy: ScrollBar.AlwaysOn
-                        ScrollBar.vertical.policy: ScrollBar.AlwaysOff
-                        Row {
-                            width: pyket.width
-                            height: 400
-                            Repeater {
-                                model: ScreenShotMarketModel
-                                Image {
-                                    width: 640
-                                    height: 400
-                                    source: model.screenshot
-                                    sourceSize: Qt.size( 640, 400 )
-                                }
-                            }
-                        }
-                    }
-                    id: recscreenshots
+                    id: screenShot
                 }
 
                 Rectangle {
-                    anchors.top: recscreenshots.bottom
                     width: parent.width/1.5
                     height: parent.height/5
                     anchors.horizontalCenter: pyket.horizontalCenter
@@ -297,7 +284,7 @@ ApplicationWindow {
                 }
 
 
-                Rectangle {
+                ToolButton {
                     width: pyket.width
                     height: 30
                     anchors.horizontalCenter: pyket.horizontalCenter
@@ -328,7 +315,7 @@ ApplicationWindow {
                     }
                 }
 
-                Rectangle {
+                ToolButton {
                     width: pyket.width
                     height: 30
                     anchors.horizontalCenter: pyket.horizontalCenter
@@ -359,7 +346,7 @@ ApplicationWindow {
                     }
                 }
 
-                Rectangle {
+                ToolButton {
                     width: pyket.width
                     anchors.horizontalCenter: pyket.horizontalCenter
                     height: 30
@@ -390,7 +377,7 @@ ApplicationWindow {
                     }
                 }
 
-                Rectangle {
+                ToolButton {
                     width: pyket.width
                     height: 30
                     anchors.horizontalCenter: pyket.horizontalCenter
@@ -421,7 +408,7 @@ ApplicationWindow {
                     }
                 }
 
-                Rectangle {
+                ToolButton {
                     width: pyket.width
                     height: 30
                     anchors.horizontalCenter: pyket.horizontalCenter
@@ -452,7 +439,7 @@ ApplicationWindow {
                     }
                 }
 
-                Rectangle {
+                ToolButton {
                     width: pyket.width
                     height: 30
                     anchors.horizontalCenter: pyket.horizontalCenter
@@ -483,7 +470,7 @@ ApplicationWindow {
                     }
                 }
 
-                Rectangle {
+                ToolButton {
                     width: pyket.width
                     height: 30
                     anchors.horizontalCenter: pyket.horizontalCenter
@@ -533,11 +520,11 @@ ApplicationWindow {
             Repeater {
                 model: PackageModel
 
-                Rectangle {
+                ToolButton {
 
                     width: parent.width
                     height: parent.width/10
-                    color: "transparent"
+                    //color: "transparent"
 
                     MouseArea {
                         anchors.fill: parent
@@ -552,6 +539,7 @@ ApplicationWindow {
                             pseldescription.text = model.description
                             pselmirror.text = model.mirror
                             pseltype.text = model.type
+                            screenShot.url =  model.mirror+"/"+model.name
                             if (model.installed){
                                 pselinstalled.text = 'Yes' 
                             }

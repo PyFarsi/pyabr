@@ -1744,6 +1744,31 @@ class Package:
     def __init__(self):
         pass
 
+    def listfiles(self,package):
+        list2 = subprocess.check_output(f'cd {files.input(package)}/data && find . -type f', shell=True).decode('utf-8').split('\n')
+        list2.remove('')
+
+        f = open(f'{files.input(package)}/control/list', 'w')
+        for i in list2:
+            try:
+                f.write(f"{i.replace('./','')}\n")
+            except:
+                pass
+        f.close()
+
+        try:
+            f = open(f'{files.input(package)}/control/compile', 'r')
+            list3 = f.read().split('\n')
+            f.close()
+
+            f = open(f'{files.input(package)}/control/list', 'a')
+            for i in list3:
+                if not i=='':
+                    f.write(i.split(":")[1] + "\n")
+            f.close()
+        except:
+            pass
+
     def clean (self):
 
         permissions = Permissions()
@@ -1778,6 +1803,8 @@ class Package:
 
             if not files.isdir(f"{name}/data"): files.mkdir(f"{name}/data")
             if not files.isdir(f"{name}/code"): files.mkdir(f"{name}/code")
+
+            self.listfiles(name)
 
             ## Remove cache archives ##
             if files.isdir('/app/cache/archives/control'): files.removedirs('/app/cache/archives/control')
@@ -1885,26 +1912,13 @@ class Package:
             ## Check dpkg
             if not apt==None:
                 subprocess.call(f'''
-cd /tmp
+Installing {apt} 3rd-party package ...
 apt update
-echo Install {name} 3rd-party package ...
 apt install --no-install-recommends {apt}
-echo Saving changes ...
-savechanges {name}.sb
-echo Extract changes ...
-unsquashfs {name}.sb
-Remove unused files ...
-rm -rf squashfs-root/usr/share/doc/*
-rm -rf squashfs-root/stor
-rm -rf squashfs-root/etc/apt*
-rm -rf squashfs-root/var
-Create data ...
-mksquashfs squashfs-root {name}.sb -no-append -comp xz
-Remove cache ...
-rm -rf squashfs-root
-echo Remove {name} 3rd-party package in RAM ...
-apt purge {apt}
 apt autoremove
+apt clean
+apt autoclean
+echo Finish installaction of {apt}
 ''',shell=True)
 
             ## Unlock the cache ##
@@ -1959,9 +1973,7 @@ apt autoremove
             filelist = control.read_list(list)
 
             for i in filelist:
-                if files.isdir(f"{unpack}/{i}"):
-                    files.removedirs(f"{unpack}/{i}")
-                elif files.isfile(f"{unpack}/{i}"):
+                if files.isfile(f"{unpack}/{i}"):
                     files.remove(f"{unpack}/{i}")
 
 
@@ -2236,29 +2248,38 @@ class Res:
                     return ''
 
             elif share.startswith("@icon"):
-                if files.isfile(f"/usr/share/icons/{name}.svg"):
-                    return files.input_qml(f"/usr/share/icons/{name}.svg")
-                elif files.isfile(f"/usr/share/icons/{name}.png"):
-                    return files.input_qml(f"/usr/share/icons/{name}.png")
-                elif files.isfile(f"/usr/share/icons/{name}.gif"):
-                    return files.input_qml(f"/usr/share/icons/{name}.gif")
-                elif files.isfile(f"/usr/share/icons/{name}.tif"):
-                    return files.input_qml(f"/usr/share/icons/{name}.tif")
-                else:
-                    theme = self.getdata('icon-theme')
-                    if theme==None:
-                        theme='breeze'
+                theme = self.getdata('icon-theme')
+                if theme == None:
+                    theme = 'breeze'
 
-                    if files.isfile(f"/usr/share/icons/{theme}-{name}.svg"):
-                        return files.input_qml(f"/usr/share/icons/{theme}-{name}.svg")
-                    elif files.isfile(f"/usr/share/icons/{theme}-{name}.png"):
-                        return files.input_qml(f"/usr/share/icons/{theme}-{name}.png")
-                    elif files.isfile(f"/usr/share/icons/{theme}-{name}.gif"):
-                        return files.input_qml(f"/usr/share/icons/{theme}-{name}.gif")
-                    elif files.isfile(f"/usr/share/icons/{theme}-{name}.tif"):
-                        return files.input_qml(f"/usr/share/icons/{theme}-{name}.tif")
+                if files.isfile(f"/usr/share/icons/{theme}-{name}.svg"):
+                    return files.input_qml(f"/usr/share/icons/{theme}-{name}.svg")
+                elif files.isfile(f"/usr/share/icons/{theme}-{name}.png"):
+                    return files.input_qml(f"/usr/share/icons/{theme}-{name}.png")
+                elif files.isfile(f"/usr/share/icons/{theme}-{name}.gif"):
+                    return files.input_qml(f"/usr/share/icons/{theme}-{name}.gif")
+                elif files.isfile(f"/usr/share/icons/{theme}-{name}.tif"):
+                    return files.input_qml(f"/usr/share/icons/{theme}-{name}.tif")
+                else:
+                    if files.isfile(f"/usr/share/icons/breeze-{name}.svg"):
+                        return files.input_qml(f"/usr/share/icons/breeze-{name}.svg")
+                    elif files.isfile(f"/usr/share/icons/breeze-{name}.png"):
+                        return files.input_qml(f"/usr/share/icons/breeze-{name}.png")
+                    elif files.isfile(f"/usr/share/icons/breeze-{name}.gif"):
+                        return files.input_qml(f"/usr/share/icons/breeze-{name}.gif")
+                    elif files.isfile(f"/usr/share/icons/breeze-{name}.tif"):
+                        return files.input_qml(f"/usr/share/icons/breeze-{name}.tif")
                     else:
-                        return ''
+                        if files.isfile(f"/usr/share/icons/{name}.svg"):
+                            return files.input_qml(f"/usr/share/icons/{name}.svg")
+                        elif files.isfile(f"/usr/share/icons/{name}.png"):
+                            return files.input_qml(f"/usr/share/icons/{name}.png")
+                        elif files.isfile(f"/usr/share/icons/{name}.gif"):
+                            return files.input_qml(f"/usr/share/icons/{name}.gif")
+                        elif files.isfile(f"/usr/share/icons/{name}.tif"):
+                            return files.input_qml(f"/usr/share/icons/{name}.tif")
+                        else:
+                            return ''
             else:
                 return ''
 
@@ -2355,29 +2376,38 @@ class Res:
                     return ''
 
             elif share.startswith("@icon"):
-                if files.isfile(f"/usr/share/icons/{name}.svg"):
-                    return files.input(f"/usr/share/icons/{name}.svg")
-                elif files.isfile(f"/usr/share/icons/{name}.png"):
-                    return files.input(f"/usr/share/icons/{name}.png")
-                elif files.isfile(f"/usr/share/icons/{name}.gif"):
-                    return files.input(f"/usr/share/icons/{name}.gif")
-                elif files.isfile(f"/usr/share/icons/{name}.tif"):
-                    return files.input(f"/usr/share/icons/{name}.tif")
-                else:
-                    theme = self.getdata('icon-theme')
-                    if theme == None:
-                        theme = 'breeze'
+                theme = self.getdata('icon-theme')
+                if theme == None:
+                    theme = 'breeze'
 
-                    if files.isfile(f"/usr/share/icons/{theme}-{name}.svg"):
-                        return files.input(f"/usr/share/icons/{theme}-{name}.svg")
-                    elif files.isfile(f"/usr/share/icons/{theme}-{name}.png"):
-                        return files.input(f"/usr/share/icons/{theme}-{name}.png")
-                    elif files.isfile(f"/usr/share/icons/{theme}-{name}.gif"):
-                        return files.input(f"/usr/share/icons/{theme}-{name}.gif")
-                    elif files.isfile(f"/usr/share/icons/{theme}-{name}.tif"):
-                        return files.input(f"/usr/share/icons/{theme}-{name}.tif")
+                if files.isfile(f"/usr/share/icons/{theme}-{name}.svg"):
+                    return files.input(f"/usr/share/icons/{theme}-{name}.svg")
+                elif files.isfile(f"/usr/share/icons/{theme}-{name}.png"):
+                    return files.input(f"/usr/share/icons/{theme}-{name}.png")
+                elif files.isfile(f"/usr/share/icons/{theme}-{name}.gif"):
+                    return files.input(f"/usr/share/icons/{theme}-{name}.gif")
+                elif files.isfile(f"/usr/share/icons/{theme}-{name}.tif"):
+                    return files.input(f"/usr/share/icons/{theme}-{name}.tif")
+                else:
+                    if files.isfile(f"/usr/share/icons/breeze-{name}.svg"):
+                        return files.input(f"/usr/share/icons/breeze-{name}.svg")
+                    elif files.isfile(f"/usr/share/icons/breeze-{name}.png"):
+                        return files.input(f"/usr/share/icons/breeze-{name}.png")
+                    elif files.isfile(f"/usr/share/icons/breeze-{name}.gif"):
+                        return files.input(f"/usr/share/icons/breeze-{name}.gif")
+                    elif files.isfile(f"/usr/share/icons/breeze-{name}.tif"):
+                        return files.input(f"/usr/share/icons/breeze-{name}.tif")
                     else:
-                        return ''
+                        if files.isfile(f"/usr/share/icons/{name}.svg"):
+                            return files.input(f"/usr/share/icons/{name}.svg")
+                        elif files.isfile(f"/usr/share/icons/{name}.png"):
+                            return files.input(f"/usr/share/icons/{name}.png")
+                        elif files.isfile(f"/usr/share/icons/{name}.gif"):
+                            return files.input(f"/usr/share/icons/{name}.gif")
+                        elif files.isfile(f"/usr/share/icons/{name}.tif"):
+                            return files.input(f"/usr/share/icons/{name}.tif")
+                        else:
+                            return ''
 
             elif share.startswith('@sample'):
                 if files.isfile(f"/usr/share/samples/{name}" ):

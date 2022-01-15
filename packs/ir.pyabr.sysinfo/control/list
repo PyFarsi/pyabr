@@ -1,2 +1,4 @@
-/usr/share/applications/sysinfo.desk
-/usr/app/sysinfo.pyc
+usr/app/empty
+usr/share/applications/sysinfo.desk
+usr/share/layouts/sysinfo.qml
+usr/app/sysinfo.pyc

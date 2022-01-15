@@ -12,175 +12,325 @@ ApplicationWindow {
     id: fileinfo
     visible: true
     color: "white"
-    maximumWidth: 600
-    maximumHeight: 400
-    minimumWidth: 600
-    minimumHeight: 400
-    width: 600
-    height: 400
+    maximumWidth: 400
+    maximumHeight: 350
+    minimumWidth: 400
+    minimumHeight: 350
+    width: 400
+    height: 350
     Column {
         spacing: 2
-        width: parent.width/2
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 20
-        Text {
-            text: 'Filename: '
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.right: parent.right
-            objectName: "name"
-        }
-        Text {
-            text: 'Type: '
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.right: parent.right
-            objectName: "type"
-        }
-        Text {
-            text: 'Location: '
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.right: parent.right
-            objectName: "location"
-        }
-        Text {
-            text: 'Size: '
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.right: parent.right
-            objectName: "size"
-        }
-        Text {
-            text: 'Created: '
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.right: parent.right
-            objectName: "created"
-        }
-        Text {
-            text: 'Modified: '
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.right: parent.right
-            objectName: "modified"
-        }
-        Text {
-            text: 'Owership:  '
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.right: parent.right
-            objectName: "owership"
-        }
-        Text {
-            text: 'Access for owner: '
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.right: parent.right
-            objectName: "perma"
-        }
-        Text {
-            text: 'Access for users: '
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.right: parent.right
-            objectName: "permb"
-        }
-        Text {
-            text: 'Access for guest: '
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.right: parent.right
-            objectName: "permc"
-        }
-    }
+        width: parent.width
+        height: parent.height
+        anchors.fill: parent
+        ToolButton {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: name
+                            objectName: "name"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: name1
+                            objectName: "name1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
 
-    Column {
-        spacing: 2
-        width: parent.width/2
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 20
-        Text {
-            text: 'vmabr.pyc'
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.left: parent.left
-            objectName: "name1"
-            font.bold: true
-        }
-        Text {
-            text: 'Python bytecode'
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.left: parent.left
-            objectName: "type1"
-            font.bold: true
-        }
-        Text {
-            text: '/'
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.left: parent.left
-            objectName: "location1"
-            font.bold: true
-        }
-        Text {
-            text: '12 GB'
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.left: parent.left
-            objectName: "size1"
-            font.bold: true
-        }
-        Text {
-            text: '1382-04-30 08:00:00'
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.left: parent.left
-            objectName: "created1"
-            font.bold: true
-        }
-        Text {
-            text: '1400-04-30 08:00:00'
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.left: parent.left
-            objectName: "modified1"
-            font.bold: true
-        }
-        Text {
-            text: 'Mani Jamali'
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.left: parent.left
-            objectName: "owership1"
-            font.bold: true
-        }
-        Text {
-            text: 'Read, Write, Execute'
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.left: parent.left
-            objectName: "perma1"
-            font.bold: true
-        }
-        Text {
-            text: 'Read, Write'
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.left: parent.left
-            objectName: "permb1"
-            font.bold: true
-        }
-        Text {
-            text: 'Read'
-            font.family: "IRANSans"
-            font.pixelSize: 16
-            anchors.left: parent.left
-            objectName: "permc1"
-            font.bold: true
-        }
+        ToolButton {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: type
+                            objectName: "type"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: type1
+                            objectName: "type1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+        ToolButton {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: location
+                            objectName: "location"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: location1
+                            objectName: "location1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+        ToolButton {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: size
+                            objectName: "size"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: size1
+                            objectName: "size1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+        ToolButton {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: created
+                            objectName: "created"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: created1
+                            objectName: "created1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+        ToolButton {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: modified
+                            objectName: "modified"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: modified1
+                            objectName: "modified1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+        ToolButton {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: ownership
+                            objectName: "ownership"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: ownership1
+                            objectName: "ownership1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+        ToolButton {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: perma
+                            objectName: "perma"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: perma1
+                            objectName: "perma1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+        ToolButton {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: permb
+                            objectName: "permb"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: permb1
+                            objectName: "permb1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+        ToolButton {
+                        width: parent.width
+                        height: 30
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: permc
+                            objectName: "permc"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: permc1
+                            objectName: "permc1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
     }
 }

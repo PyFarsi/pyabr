@@ -6,11 +6,12 @@ name[tr]: Dosyalar
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.8
+version: 2.0.9
 description: Cloud & NonCloud File manager for Pyabr
 compile: Yes
 entry: files
 screenshots: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.files.svg
-build: 1400-10-12
+logo.inside: @icon/files
+build: 1400-10-19
 mirror: https://mirror.pyabr.ir/zayanderoad/

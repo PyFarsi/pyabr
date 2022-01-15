@@ -344,6 +344,10 @@ ApplicationWindow {
         width: parent.width
         height: parent.height-80
         anchors.topMargin: 10
+        anchors.leftMargin: 10
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.rightMargin: 10
         objectName: "Details"
         anchors.top: toolbar.bottom
         clip: true
@@ -357,7 +361,7 @@ ApplicationWindow {
 
             GridView {
                 model: FileModel
-                cellWidth: 128; cellHeight: 150
+                cellWidth: 150; cellHeight: 150
                 highlight: highlight
                 width: parent.width
                 height: parent.height
@@ -439,11 +443,11 @@ ApplicationWindow {
             Repeater {
                 model: FileModel
 
-                Rectangle {
+                ToolButton {
 
                     width: parent.width
                     height: parent.width/10
-                    color: "transparent"
+                    //color: "transparent"
 
                     MouseArea {
                         anchors.fill: parent

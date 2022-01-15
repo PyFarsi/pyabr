@@ -1,4 +1,5 @@
-usr/app/paye.pyc
-usr/share/docs/paye
+etc/paye/permanetly_applications
+etc/paye/sources
+usr/app/empty
 usr/share/helps/paye
-etc/paye
+usr/app/paye.pyc

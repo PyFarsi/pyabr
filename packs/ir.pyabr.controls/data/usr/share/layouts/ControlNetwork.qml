@@ -19,15 +19,15 @@ ScrollView {
                     Repeater {
                         model: NetworkModel
 
-                        Rectangle {
+                        ToolButton {
                             width: parent.width
                             height: parent.width/10
-                            color: "transparent"
+                            //color: "transparent"
 
                             MouseArea {
                                 anchors.fill: parent
                                 acceptedButtons: Qt.LeftButton | Qt.RightButton
-                                onClicked: {
+                                onDoubleClicked: {
                                     wsel.text = model.ssid
                                 }
                             }

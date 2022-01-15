@@ -6,9 +6,10 @@ name[tr]: Pyabr işletim sistemi
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.3.1
+version: 2.3.2
 description: Pyabr internal package
 compile: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.svg
-build: 1400-10-12
+logo.inside: @icon/pyabr
+build: 1400-10-19
 mirror: https://mirror.pyabr.ir/zayanderoad/

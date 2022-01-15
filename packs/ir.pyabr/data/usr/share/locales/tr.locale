@@ -1,0 +1,197 @@
+name: Türk
+keyless: tr
+keyless.enable: No
+0: 0
+1: 1
+2: 2
+3: 3
+4: 4
+5: 5
+6: 6
+7: 7
+8: 8
+9: 9
+username_placeholder: Kullanıcı adınızı giriniz
+user_not_found: {0} kullanıcı bulunamadı
+etcetra: Ve benzeri
+escape: Kaçmak
+restart: Tekrar başlat
+sleep: Uyku
+next: Sonraki
+keyboard_languages: Klavye dilleri
+virtualkeyboard: sanal klavye
+password_placeholder: {0} şifresini girin
+login: Giriş yapmak
+logout: Çıkış Yap
+unlock: Kilidini aç
+guest: Konuk
+calendar: Takvim
+switchuser: Kullanıcı değiştir
+applications: Uygulamalar
+lock: Kilit
+accounts: hesaplar
+barge: Metin düzeltici
+calculator: Hesap makinesi
+clock: Saat
+host: ana bilgisayar adı
+cs: Bulut Yazılımı
+bl: Kuruluş zamanı
+os: İşletim sistemi
+kname: çekirdek adı
+su: Değiştirilen kullanıcı
+de: Masaüstü Ortamı
+gui: GUI araç seti
+arch: Mimari
+controls: Kontroller
+appearance: Dış görünüş
+adduser: Kullanıcı Ekle
+desktop: masaüstü
+cancel: İptal
+apply: Uygulamak
+dock_location: rıhtım konumu
+change_wallpaper: Duvar kağıdını değiştir
+files: Dosyalar
+open: Açık
+openwith: Bununla aç...
+execute: Uygulamak
+cut: Kesmek
+copy: kopyala
+paste: Yapıştırmak
+rename: Yeniden isimlendirmek
+delete: Silmek
+newfile: Yeni dosya
+newfolder: Yeni dosya
+info: bilgiler
+exists: {0} var
+exists_message: {0} zaten var
+nama: Resim görüntüleyici
+power_options: Güç seçenekleri
+runner: koşucu
+run: Çalıştırmak
+application_not_found: {0} uygulama bulunamadı
+setup: Kurmak
+sysinfo: Sistem Bilgileri
+terminal: terminal
+mpv: MPV Film Oynatıcı
+ok: Tamam
+select: Seçme
+select_file: Bir dosya seçin
+select_folder: Bir dizin seçin
+open: Açık
+save: Kaydetmek
+fullname: Ad Soyad
+install_package: {0} paketini yükle
+install: Düzenlemek
+enter_hostname: ana bilgisayar adını girin
+pick_username: Bir kullanıcı adı seçin
+choose_root_password: Kök şifresini seçin
+choose_password: Yeni bir şifre seçin
+phone: Telefon
+email: E-posta
+sample: Örnek uygulama
+debug: Hata ayıklama uygulaması
+update: Güncelleme
+uninstall: Kaldır
+package_name: Paket ismi
+package_version: Paket versiyonu
+copyright: Telif hakkı
+license: Lisans
+unpack: yüklü
+mirror: Ayna
+uninstall_message: {0} paketini kaldırmak istiyor musunuz?
+install_message: {0} paketini kurmak istiyor musunuz?
+update_message: {0} paketini güncellemek istiyor musunuz?
+pyket: Uygulama mağazası
+download: İndirmek
+url: adres
+setup_message: Kurulum zaten tamamlandı Bitirmek için '>' öğesine tıklayın
+display: Görüntülemek
+wifi: Kablosuz ağ
+not_matched: Şifreler eşleşmedi
+remove: Kaldırmak
+savechanges: Değişiklikleri Kaydet
+remove_user_message: {0} öğesini kaldırmak istiyor musunuz? bu, seçilen kullanıcıdaki tüm verilerin kaybolduğu anlamına gelir
+e_username: Kullanıcı adı
+e_password: Parola
+birthday: Doğum günü
+sudoers: sudocular
+oldpass: Eski Şifreler
+newpass: Yeni Şifreler
+confirmpass: Şifreyi onaylayın
+change_password: Şifre değiştir
+languages: Diller
+syslang: Sistem Dili
+wrong_password: Yanlış şifre; Tekrar deneyin
+perm: İzin reddedildi
+perm_message: Bu işleme erişiminiz yok; İzin reddedildi
+baad: hava Durumu
+filename: Dosya adı
+type: Tip
+size: Boy
+created: oluşturuldu
+modified: Değiştirilmiş
+access_owner: Sahip için erişim
+access_users: Kullanıcılar için erişim
+access_guest: Konuk için erişim
+location: Konum
+ownership: Mülkiyet
+chat: Sohbet etmek
+datainstaller: Veri Yükleyici
+need_restart: {0} yüklemesinin yeniden başlatılması gerekiyor, Yeniden başlatmak istiyor musunuz?
+connect: Bağlamak
+e_cloud: Bulut ana bilgisayar adı (isteğe bağlı)
+c_cloud: Buluta Bağlan
+connection_fail: Bağlantı başarısız
+connection_failmc: Bu buluta bağlanılamıyor
+unknown: Bilinmeyen
+folder: Dosya
+---: erişim yok
+rwx: Görüntüleyebilir, Değiştirebilir ve Çalıştırabilir
+rw-: Görüntüleyebilir ve Değiştirebilir
+r--: Yalnızca görüntüleyebilir
+-wx: Değiştir ve Çalıştır
+--x: Yalnızca yürüt
+-w-: Yalnızca değiştir
+always: Hep
+atonce: Bir kerede
+fonts: yazı tipleri
+sr: CD/DVD ROM'u
+srp: CD/DVD Sürmek
+drive: Sürmek
+disk: Disk
+part: bölme
+e_city: Bulunduğunuz şehri girin (İngilizce)
+e_contact: İletişim kullanıcı adınızı girin
+e_channel: Kanal ana bilgisayar adı (isteğe bağlı)
+c_channel: Kanala bağlan
+e_send: Bir mesaj göndermek
+n_connected: {0} bağlı değil
+connected: {0} bağlandı
+connectedm: {0} başarıyla bağlandı
+connect_to: {0}'e bağlan
+connect_tom: {0} ağına bağlanmak istiyor musunuz?
+fcopy: Biçimlendir ve Kopyala
+copydisk: kopya diski
+format: Biçim
+formatm: Bu diski/bölümü biçimlendirmek istiyor musunuz?
+e_mount: Monte edilemiyor
+e_mountm: Bu sürücü yüklenemiyor
+extract: Çıkarmak
+cloud_o: Bulut seçenekleri
+compress: sıkıştır
+upload: Yüklemek
+ziro: Yükleme ve Sıfırlama
+sharelink: Bu bağlantıyı paylaş
+rma: Uygulamaları geri yükle
+bash: bash
+python: piton
+upstor: Güncelleme
+upstorum: Pyabr'ınız en yeni sürümdür
+upstoru: Güncel
+upstort: yükseltmek
+themes: Temalar
+icon: simge
+gtk: uygulama
+shell: kabuk
+cursor: imleç
+change: değişiklik

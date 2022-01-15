@@ -9,7 +9,9 @@ With ***Remote Pyabr Server (RPS)***
 - Copy Pyabr with **copydisk** application
 - Shutdown the Pyabr
 
+# Launch 
+
 # Launch on XServer XSDL Android
-- Run `XServerXSDL.py` script
+- Run `Launch-XSDL.py` script
 - Put id of your Android phone in XServer XSDL android app
 - Enjoy

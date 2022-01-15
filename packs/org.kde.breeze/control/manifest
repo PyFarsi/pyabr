@@ -1,0 +1,12 @@
+name: org.kde.breeze
+name[en]: Breeze theme
+copyright: (c) 2021 KDE
+license: GNU GPL v3.0
+unpack: /
+version: 1.0.0
+description: Breeze theme
+compile: No
+logo: https://mirror.pyabr.ir/zayanderoad/org.kde.breeze.svg
+logo.inside: @icon/breeze
+build: 1400-10-19
+mirror: https://mirror.pyabr.ir/zayanderoad/

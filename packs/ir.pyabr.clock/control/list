@@ -1,3 +1,6 @@
-/usr/share/applications/clock.desk
-/usr/app/clock.pyc
-/usr/share/layouts/clock.qml
+usr/app/empty
+usr/share/images/clock-face.png
+usr/share/applications/clock.desk
+usr/share/layouts/AnalogClock.qml
+usr/share/layouts/clock.qml
+usr/app/clock.pyc

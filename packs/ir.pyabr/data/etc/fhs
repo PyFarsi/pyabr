@@ -35,6 +35,10 @@
 /usr/share/images
 /usr/share/locales
 /usr/share/themes
+/usr/share/themes/icon
+/usr/share/themes/gtk
+/usr/share/themes/cursor
+/usr/share/themes/shell
 /usr/share/widgets
 /usr/share/layouts
 /usr/share/shells

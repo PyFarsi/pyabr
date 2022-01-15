@@ -6,10 +6,11 @@ name[tr]: pyabr yükseltmesi
 copyright: (c) 2021 Mani Jamali
 license: CC0
 unpack: /
-version: 1.0.1
+version: 1.0.2
 description: Pyabr upgrade application
 compile: Yes
 screenshots: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.upstor.svg
-build: 1400-10-12
+logo.inside: @icon/upstor
+build: 1400-10-19
 mirror: https://mirror.pyabr.ir/zayanderoad/

@@ -322,6 +322,165 @@ ApplicationWindow {
             }
         }
 
+        /*Text {
+            id: theme_sel
+            objectName: "theme_sel"
+            text: ""
+            visible: false
+        }*/
+
+        /* Appearanc */
+        Rectangle {
+            objectName: "theme_exec"
+            visible: false
+            width: file.width
+            anchors.top: toolbar.bottom
+            height: file.height-70
+
+            Column {
+                anchors.fill: parent
+                ToolButton {
+                        width: parent.width
+                        height: 60
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        objectName: "btnGTK"
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: txtGTK
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: "Application"
+                            objectName: "txtGTK"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            anchors.verticalCenter: parent.verticalCenter
+                            id: txtGTK1
+                            objectName: "txtGTK1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+                ToolButton {
+                        width: parent.width
+                        height: 60
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        objectName: "btnIcon"
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: txtIcon
+                            anchors.verticalCenter: parent.verticalCenter
+                            objectName: "txtIcon"
+                            font.pixelSize: 16
+                            text: "Icon"
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            id: txtIcon1
+                            objectName: "txtIcon1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+                ToolButton {
+                        width: parent.width
+                        height: 60
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        objectName: "btnCursor"
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: txtCursor
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: "Cursor"
+                            objectName: "txtCursor"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            anchors.verticalCenter: parent.verticalCenter
+                            id: txtCursor1
+                            objectName: "txtCursor1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+
+                ToolButton {
+                        width: parent.width
+                        height: 60
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        objectName: "btnShell"
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            font.family: "IRANSans"
+                            id: txtShell
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: "Shell"
+                            objectName: "txtShell"
+                            font.pixelSize: 16
+                            color: "gray"
+                        }
+                        Text {
+                            color: "black"
+                            font.bold: true
+                            font.pixelSize: 16
+                            anchors.right: parent.right
+                            anchors.rightMargin: 20
+                            font.family: "IRANSans"
+                            anchors.verticalCenter: parent.verticalCenter
+                            id: txtShell1
+                            objectName: "txtShell1"
+                        }
+                        Rectangle {
+                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: 1
+                            color: "silver"
+                        }
+                    }
+            }
+        }
+
         /* Network */
         Rectangle {
             objectName: "network_exec"
@@ -678,7 +837,7 @@ ApplicationWindow {
                 anchors.bottomMargin: 100
                 height: 250
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -709,7 +868,7 @@ ApplicationWindow {
                         }
                     }
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -740,7 +899,7 @@ ApplicationWindow {
                         }
                     }
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -771,7 +930,7 @@ ApplicationWindow {
                         }
                     }
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -802,7 +961,7 @@ ApplicationWindow {
                         }
                     }
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -834,7 +993,7 @@ ApplicationWindow {
                     }
 
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -865,7 +1024,7 @@ ApplicationWindow {
                         }
                     }
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -896,7 +1055,7 @@ ApplicationWindow {
                         }
                     }
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -927,7 +1086,7 @@ ApplicationWindow {
                         }
                     }
 
-                Rectangle {
+                ToolButton {
                         width: parent.width
                         height: 30
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -978,16 +1137,16 @@ ApplicationWindow {
             objectName: "controlview"
             spacing: 2
                 /* WiFi */
-                Rectangle {
+                ToolButton {
                     id: wifi
                     width: parent.width
                     height: parent.width/10
-                    color: "transparent"
+                    //color: "transparent"
 
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
-                        onClicked: {
+                        onDoubleClicked: {
                             fsel.text = 'network'
                         }
                     }
@@ -1028,16 +1187,16 @@ ApplicationWindow {
                     }
                 }
                 /* Appearance */
-                Rectangle {
+                ToolButton {
                     id: apper
                     width: parent.width
                     height: parent.width/10
-                    color: "transparent"
+                    //color: "transparent"
 
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
-                        onClicked: {
+                        onDoubleClicked: {
                             fsel.text = 'apper'
                         }
                     }
@@ -1071,17 +1230,61 @@ ApplicationWindow {
                         anchors.top: parent.bottom
                     }
                 }
-                /* Languages */
-                Rectangle {
-                    id: languages
+                /* Themes */
+                ToolButton {
+                    id: theme
                     width: parent.width
                     height: parent.width/10
-                    color: "transparent"
+                    //color: "transparent"
 
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
-                        onClicked: {
+                        onDoubleClicked: {
+                            fsel.text = 'theme'
+                        }
+                    }
+
+                    Image {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 20
+                            anchors.rightMargin: 20
+                            width: parent.height
+                            sourceSize: Qt.size( parent.width, parent.height )
+                            height: parent.height
+                            id: imgTheme
+                            objectName: "imgTheme"
+                    }
+
+                    Text {
+                        text: 'Themes'
+                        font.family: "IRANSans"
+                        objectName: 'txtTheme'
+                        font.pixelSize: 18
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: imgTheme.right
+                        anchors.leftMargin: 20
+                        anchors.rightMargin: 20
+                    }
+
+                    Rectangle {
+                        width: parent.width
+                        height: 1
+                        color: "silver"
+                        anchors.top: parent.bottom
+                    }
+                }
+                /* Languages */
+                ToolButton {
+                    id: languages
+                    width: parent.width
+                    height: parent.width/10
+                    //color: "transparent"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                        onDoubleClicked: {
                             fsel.text = 'languages'
                         }
                     }
@@ -1116,16 +1319,16 @@ ApplicationWindow {
                     }
                 }
                 /* Display */
-                Rectangle {
+                ToolButton {
                     id: display
                     width: parent.width
                     height: parent.width/10
-                    color: "transparent"
+                    //color: "transparent"
 
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
-                        onClicked: {
+                        onDoubleClicked: {
                             fsel.text = 'display'
                         }
                     }
@@ -1160,16 +1363,16 @@ ApplicationWindow {
                     }
                 }
                 /* Users */
-                Rectangle {
+                ToolButton {
                     id: users
                     width: parent.width
                     height: parent.width/10
-                    color: "transparent"
+                    //color: "transparent"
 
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
-                        onClicked: {
+                        onDoubleClicked: {
                             fsel.text = 'users'
                         }
                     }
@@ -1204,16 +1407,16 @@ ApplicationWindow {
                     }
                 }
                 /* System Informations */
-                Rectangle {
+                ToolButton {
                     id: sysinfo
                     width: parent.width
                     height: parent.width/10
-                    color: "transparent"
+                    //color: "transparent"
 
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
-                        onClicked: {
+                        onDoubleClicked: {
                             fsel.text = 'sysinfo'
                         }
                     }

@@ -12,5 +12,6 @@ compile: Yes
 screenshots: Yes
 entry: setup
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.setup.svg
-build: 1400-10-12
+logo.inside: @icon/setup
+build: 1400-10-19
 mirror: https://mirror.pyabr.ir/zayanderoad/

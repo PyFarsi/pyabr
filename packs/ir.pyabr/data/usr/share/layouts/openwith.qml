@@ -37,7 +37,7 @@ ApplicationWindow {
             Repeater {
                 model: ApplicationModel
 
-                Rectangle {
+                ToolButton {
 
                     MouseArea {
                         anchors.fill: parent
@@ -50,7 +50,7 @@ ApplicationWindow {
 
                     width: parent.width
                     height: parent.width/10
-                    color: "transparent"
+                    //color: "transparent"
 
                     Image {
                             source: model.logo

@@ -1,0 +1,197 @@
+name: فارسی
+keyless: ir
+keyless.enable: Yes
+0: ۰
+1: ۱
+2: ۲
+3: ۳
+4: ۴
+5: ۵
+6: ۶
+7: ۷
+8: ۸
+9: ۹
+username_placeholder: نام کاربری خود را وارد کنید
+user_not_found: {0} کاربر پیدا نشد
+etcetra: دیگر
+escape: فرار
+restart: راه اندازی مجدد
+sleep: حالت خواب
+next: بعدی
+keyboard_languages: زبان های صفحه کلید
+virtualkeyboard: صفحه کلید مجازی
+password_placeholder: گذرواژه {0} را وارد کنید
+login: ورود
+logout: خروج از سیستم
+unlock: باز کردن
+guest: حساب مهمان
+switchuser: تغییر نشست
+applications: برنامه های کاربردی
+lock: قفل کردن
+accounts: حسابها
+barge: ویرایشگر متن
+calculator: ماشین حساب
+clock: ساعت
+host: نام میزبان
+cs: نرم افزار ابری
+bl: تاریخ ساخت
+os: سیستم عامل
+kname: نام هسته
+su: نشست فعلی
+de: میزکار
+gui: کتابخانه گرافیکی
+arch: معماری رایانه ای
+controls: تنظیمات
+appearance: ظاهر میزکار
+adduser: اضافه کردن کاربر
+desktop: میزکار
+cancel: لغو
+apply: اعمال
+dock_location: محل نوار برنامه ها
+change_wallpaper: تغییر تصویر پس زمینه
+files: فایل ها
+open: باز کردن
+openwith: باز کردن با ...
+execute: اجرا
+cut: برش
+copy: نسخه برداری
+paste: چسباندن
+rename: تغییر نام
+delete: حذف
+newfile: فایل جدید
+newfolder: پوشه جدید
+info: اطلاعات
+exist: {0} وجود دارد
+exist_message: {0} در حال حاضر وجود دارد
+nama: نمایشگر تصویر
+power_options: گزینه های قدرت
+runner: بارگذار
+run: بارگذاری
+application_not_found: {0} برنامه پیدا نشد
+setup: نصب
+sysinfo: اطلاعات سیستم
+terminal: پایانه
+mpv: پخش کننده ویدئو
+ok: تایید
+select: انتخاب کنید
+select_file: یک فایل انتخاب کنید
+select_folder: یک مسیر انتخاب کنید
+open: باز کردن
+save: ذخیره
+fullname: نام کامل
+install_package: نصب بسته {0}
+install: نصب 
+enter_hostname: نام میزبان را وارد کنید
+pick_username: نام کاربری را انتخاب کنید
+choose_root_password: رمز عبور حساب ریشه را تنظیم کنید
+select_password: رمز عبور جدیدی انتخاب کنید
+phone: تلفن همراه
+email: پست الکترونیکی
+sample: برنامه نمونه
+debug: برنامه اشکال زدایی
+update: بروزرسانی
+uninstall: حذف نصب
+calendar: تقویم
+package_name: نام بسته
+package_version: نسخه بسته
+copyright: حق چاپ
+license: پروانه ساخت
+unpack: نصب شده است در
+mirror: مخزن
+uninstall_message: آیا می خواهید بسته {0} را حذف کنید؟
+install_message: آیا می خواهید بسته {0} را نصب کنید؟
+update_message: آیا می خواهید بسته {0} را به روز کنید؟
+pyket: پایکت
+download: بارگیری
+url: آدرس اینترنتی
+setup_message: نصب پای ابر پایان یافت؛ برای ادامه > کلیک کنید
+display: رزولوشن صفحه
+wifi: شبکه بی سیم
+not_matched: گذرواژه ها مطابقت ندارند
+remove: حذف
+savechanges: تغییرات را ذخیره کنید
+remove_user_message: آیا می خواهید {0} را حذف کنید؟ این بدان معناست که تمام داده ها در کاربر انتخاب شده از بین می روند 
+e_username: نام حساب کاربری
+e_password: رمزعبور
+birthday: تاریخ تولد
+sudoers: حساب برتر
+oldpass: گذرواژه قبلی
+newpass: گذرواژه جدید
+confirmpass: تایید گذرواژه جدید
+change_password: تغییر گذرواژه
+languages: زبان ها
+syslang: زبان رایانه
+wrong_password: گذرواژه نادرست می باشد لطفا دوباره تلاش کنید
+perm: دسترسی رد شد
+perm_message: شما به این فرآیند دسترسی ندارید؛ مجوز رد شد
+baad: آب و هوا
+filename: نام
+type: نوع
+size: حجم
+created: تاریخ ایجاد
+modified: تاریخ تغییر
+access_owner: دسترسی مالک
+access_users: دسترسی دیگران
+access_guest: دسترسی مهمان
+location: مسیر
+ownership: مالک
+chat: پیام رسانی
+datainstaller: نصب کننده دیتاها
+need_restart: نصب {0} نیاز به راه اندازی مجدد دارد، آیا می خواهید دوباره راه اندازی شود؟
+connect: اتصال
+e_cloud: نام میزبان ابری (اختیاری)
+c_cloud: اتصال به فضای ابری
+connection_fail: اتصال ناموفق
+connection_failmc: نمی توان به این فضای ابری متصل شد
+unknown: ناشناس
+folder: پوشه
+---: بدون دسترسی
+rwx: دسترسی کامل
+rw-: نوشتن و خواندنی
+r--: فقط خواندنی
+-wx: نوشتن و اجرا کردنی
+--x: فقط اجرا کردنی
+-w-: فقط نوشتنی
+always: همیشه
+atonce: فقط یک بار
+fonts: قلم ها
+sr: دیسک نوری
+srp: درایو نوری
+drive: درایو
+disk: دیسک
+part: پارتیشن
+e_city: شهر محل سکونت خود را وارد نمایید (به صورت لاتین)
+e_contact: نام مخاطب خود را وارد کنید
+e_channel: نام میزبان کانال (اختیاری)
+c_channel: اتصال به کانال پیام رسانی
+e_send: ارسال یک پیام
+n_connected: {0} متصل نشد
+connected: {0} متصل شد
+connectedm: {0} با موفقیت متصل شد
+connect_to: اتصال به {0}
+connect_tom: آیا می خواهید به شبکه {0} متصل شوید؟
+fcopy: فرمت و کپی
+copydisk: جایگذاری در دیسک
+format: فرمت
+formatm: آیا می خواهید این دیسک/پارتیشن را فرمت کنید؟
+e_mount: امکان اتصال به درایو وجود ندارد
+e_mountm: امکان اتصال به درایو بنابر دلایلی وجود ندارد
+extract: استخراج
+cloud_o: امکانات ابری
+compress: فشرده سازی به صورت
+upload: بارگذاری
+ziro: بارگذاری و صفر سازی
+sharelink: اشتراک گذاری نشانی
+rma: بازیابی برنامه ها
+bash: بش
+python: پایتون
+upstor: بروزرسانی
+upstorum: پای ابر شما بروز است
+upstoru: بروز است
+upstort: ارتقا به نگارش
+themes: پوسته ها
+icon: آیکون ها
+gtk: برنامه
+shell: پوسته
+cursor: مکان نما
+change: تغییر

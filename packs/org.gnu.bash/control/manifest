@@ -9,7 +9,8 @@ unpack: /
 version: current
 description: Bash Default Linux shell
 logo: https://mirror.pyabr.ir/zayanderoad/org.gnu.bash.svg
+logo.inside: @icon/commento
 compile: Yes
 screenshots: Yes
-build: 1400-10-12
+build: 1400-10-19
 mirror: https://mirror.pyabr.ir/zayanderoad/

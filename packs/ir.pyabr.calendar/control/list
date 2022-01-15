@@ -1,5 +1,6 @@
-/usr/share/applications/calendar.desk
-/usr/app/calendar_app.pyc
-/usr/share/layouts/calendar.qml
-/usr/share/layouts/PersianCalendar.qml
-/usr/share/layouts/PersianCalendarStyle.qml
+usr/app/empty
+usr/share/applications/calendar.desk
+usr/share/layouts/calendar.qml
+usr/share/layouts/PersianCalendarStyle.qml
+usr/share/layouts/PersianCalendar.qml
+usr/app/calendar_app.pyc

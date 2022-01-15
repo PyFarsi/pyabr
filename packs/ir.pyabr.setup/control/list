@@ -1,3 +1,5 @@
-/usr/share/applications/setup.desk
-/usr/app/setup.pyc
-/usr/share/layouts/setup.qml
+usr/app/empty
+usr/share/images/setup.png
+usr/share/applications/setup.desk
+usr/share/layouts/setup.qml
+usr/app/setup.pyc

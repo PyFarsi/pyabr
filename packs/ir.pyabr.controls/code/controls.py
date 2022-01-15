@@ -16,13 +16,85 @@
     * Persian Page:     https://pyabr.ir
     * English Page:     https://en.pyabr.ir
 '''
-
+import os.path
 from os import SEEK_HOLE
 from pyabr.core import *
 from pyabr.quick import *
 import hashlib,subprocess,sys,shutil
 
 class MainApp (MainApp):
+
+    def btnGtk_click_(self,name):
+        f = open('/stor/etc/default/openbox.xml.bak', 'r')
+        openboxrc = f.read()
+        f.close()
+
+        f = open('/stor/etc/default/openbox.xml', 'w')
+        f.write(openboxrc.replace('<name>Win10</name>', f'<name>{name}</name>'))
+        f.close()
+
+        # copy theme to /usr/share/themes
+        if os.path.isdir(f'/stor/usr/share/themes/{name}') and not os.path.isdir(f'/usr/share/themes/{name}'):
+            subprocess.call(f'ln -sv /stor/usr/share/themes/{name} /usr/share/themes/{name}',shell=True)
+
+        shutil.copyfile('/stor/etc/default/openbox.xml', '/root/.config/openbox/rc.xml')
+        subprocess.call(['openbox', '--reconfigure'])
+
+    def btnGtk_click(self):
+        self.w = ApplicationTheme (self.btnGtk_click_)
+
+    def btnIcon_click_(self, name):
+        control.write_record('icon-theme',name,'/etc/gui')
+
+    def btnIcon_click(self):
+        self.w = IconTheme(self.btnIcon_click_)
+
+    def btnCursor_click_(self, name):
+        if os.path.isdir(f'/stor/usr/share/themes/{name}') and not os.path.isdir(f'/usr/share/icons/{name}'):
+            shutil.copytree(f'/stor/usr/share/themes/{name}',f'/usr/share/icons/{name}')
+
+        shutil.copyfile(f'/usr/share/icons/{name}/index.theme','/usr/share/icons/default/index.theme')
+
+    def btnCursor_click(self):
+        self.w = CursorTheme(self.btnCursor_click_)
+
+    def btnShell_click_(self, name):
+        pass
+
+    def btnShell_click(self):
+        self.w = ShellTheme(self.btnShell_click_)
+
+    def themes_(self):
+        self.txtGTK = self.findChild('txtGTK')
+        self.txtGTK1 = self.findChild('txtGTK1')
+        self.txtIcon = self.findChild('txtIcon')
+        self.txtIcon1 = self.findChild('txtIcon1')
+        self.txtCursor = self.findChild('txtCursor')
+        self.txtCursor1 = self.findChild('txtCursor1')
+        self.txtShell = self.findChild('txtShell')
+        self.txtShell1 = self.findChild('txtShell1')
+
+        self.btnGTK = self.findChild('btnGTK')
+        self.btnIcon = self.findChild('btnIcon')
+        self.btnCursor = self.findChild('btnCursor')
+        self.btnShell = self.findChild('btnShell')
+
+        self.btnGTK.clicked.connect (self.btnGtk_click)
+        self.btnIcon.clicked.connect (self.btnIcon_click)
+        self.btnCursor.clicked.connect (self.btnCursor_click)
+        self.btnShell.clicked.connect (self.btnShell_click)
+
+        if res.getdata('locale') == 'fa' or res.getdata('locale') == 'ar':
+            self.txtGTK1.setProperty('text',res.get('@string/gtk'))
+            self.txtIcon1.setProperty('text',res.get('@string/icon'))
+            self.txtCursor1.setProperty('text',res.get('@string/cursor'))
+            self.txtShell1.setProperty('text',res.get('@string/shell'))
+        else:
+            self.txtGTK.setProperty('text',res.get('@string/gtk'))
+            self.txtIcon.setProperty('text',res.get('@string/icon'))
+            self.txtCursor.setProperty('text',res.get('@string/cursor'))
+            self.txtShell.setProperty('text',res.get('@string/shell'))
+
 
     def sysinfo_ (self):
         self.host = self.findChild ('host')
@@ -107,6 +179,16 @@ class MainApp (MainApp):
                 self.scroll.setProperty('visible',False)
                 self.back.setProperty('visible',True)
                 self.title.setProperty('text',res.get('@string/appearance'))
+
+            elif self.fsel.property('text')=='theme':
+                self.controlview.setProperty('visible',False)
+                self.theme_exec.setProperty('visible',True)
+                self.scroll.setProperty('enabled',False)
+                self.scroll.setProperty('visible',False)
+                self.back.setProperty('visible',True)
+                self.title.setProperty('text',res.get('@string/themes'))
+
+                self.themes_()
 
             elif self.fsel.property('text')=='users':
                 self.controlview.setProperty('visible',False)
@@ -196,6 +278,7 @@ class MainApp (MainApp):
                 self.languages_exec.setProperty('visible',False)
                 self.sysinfo_exec.setProperty('visible',False)
                 self.apper_exec.setProperty('visible',False)
+                self.theme_exec.setProperty('visible',False)
                 self.scroll.setProperty('enabled',True)
                 self.scroll.setProperty('visible',True)
                 self.display_exec.setProperty('visible',False)
@@ -551,6 +634,13 @@ class MainApp (MainApp):
         self.apper = self.findChild ('apper')
         self.apper_exec = self.findChild ('apper_exec')
         self.apper.setProperty('text',res.get('@string/appearance'))
+
+        self.txtTheme = self.findChild ('txtTheme')
+        self.theme_exec = self.findChild ('theme_exec')
+        self.txtTheme.setProperty('text',res.get('@string/themes'))
+
+        self.imgTheme = self.findChild('imgTheme')
+        self.imgTheme.setProperty('source',res.qmlget('@icon/theme'))
 
         self.display = self.findChild ('display')
         self.displayimg = self.findChild ('displayimg')

@@ -6,11 +6,12 @@ name[tr]: kontroller
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.4
+version: 2.0.5
 description: General control application
 compile: Yes
 entry: controls
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.controls.svg
+logo.inside: @icon/setting
 screenshots: Yes
-build: 1400-10-12
+build: 1400-10-19
 mirror: https://mirror.pyabr.ir/zayanderoad/

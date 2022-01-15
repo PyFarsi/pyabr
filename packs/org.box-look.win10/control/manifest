@@ -1,0 +1,13 @@
+name: org.box-look.win10
+name[en]: Windows 10 theme
+name[fa]: تم ویندوز ۱۰
+name[ar]: سمة فیندوز ۱۰
+name[tr]: Windows 10 teması
+license: GNU GPL v3.0
+copyright: Copyright (c) 2022 PIXELOCDGUY
+unpack: /
+version: 1.0.0
+description: Windows 10 OpenBox theme
+compile: No
+build: 1400-10-19
+mirror: https://mirror.pyabr.ir/zayanderoad/

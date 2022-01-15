@@ -2,7 +2,7 @@ name[en]: Drives
 name[fa]: درایو ها
 name[ar]: محرکات
 name[tr]: Sürücüler
-logo: @icon/breeze-disk
+logo: @icon/disk
 exec: drives
 application: Yes
 category: tools

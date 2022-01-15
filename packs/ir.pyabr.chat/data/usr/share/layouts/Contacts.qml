@@ -21,12 +21,12 @@ ScrollView {
                     Repeater {
                         model: ContactModel
 
-                        Rectangle {
+                        ToolButton {
                             visible: true
 
                             width: parent.width
                             height: parent.width/8
-                            color: "transparent"
+                            //color: "transparent"
 
                             MouseArea {
                                 anchors.fill: parent

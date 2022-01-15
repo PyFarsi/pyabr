@@ -42,6 +42,9 @@ modules.get_modules()
 if sys.argv[1:] == []:
     sys.argv[1:] = [files.readall('/etc/interface').lower()]
 
+## @core/style ##
+os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
+
 ## @core/exec ##
 
 if sys.argv[1:][0] == 'exec':
@@ -126,7 +129,6 @@ files.write("/proc/info/ver",  control.read_record("version", "/etc/distro"))
 files.write("/proc/info/bl", control.read_record("build", "/etc/distro"))
 
 
-
 # @core/os ##
 if platform.system()=='Linux':
     files.write("/proc/info/kname", os.uname()[0])
@@ -160,8 +162,11 @@ files.write("/proc/info/sweek", control.read_record("start-week", "/etc/time"))
 files.write("/proc/info/boot", 'vmabr.pyc')
 files.write('/proc/info/host',files.readall('/etc/hostname'))
 files.write('/proc/info/py', sys.executable)
-files.write('/proc/info/de',res.getdata('desktop'))
-files.write('/proc/info/gui',res.getdata('gui'))
+try:
+    files.write('/proc/info/de',res.getdata('desktop'))
+    files.write('/proc/info/gui', res.getdata('gui'))
+except:
+    pass
 ## @core/dirs ##
 
 for i in control.read_list("/etc/fhs"):
@@ -183,7 +188,6 @@ if files.isfile ('/app/packages/ir.pyabr.setup.manifest') and sys.argv[1:][0]=='
 
 def gui():
     if not control.read_record('desktop', '/etc/gui') == None:
-        os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
         subprocess.call([sys.executable,'vmabr.pyc','exec',control.read_record('desktop','/etc/gui')])
 def windows_manager ():
     try:
@@ -204,7 +208,6 @@ def gui_splash ():
     control.write_record('params', 'splash', '/etc/gui')
 
     if not control.read_record('desktop', '/etc/gui') == None:
-        os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
         subprocess.call([sys.executable,'vmabr.pyc','exec',control.read_record('desktop','/etc/gui')])
 
 if sys.argv[1:][0] == "gui-splash":
@@ -233,7 +236,6 @@ def gui_enter():
         control.write_record('params', 'enter', '/etc/gui')
         control.write_record('username', sys.argv[1:][1], '/etc/gui')
         if not control.read_record('desktop', '/etc/gui') == None:
-            os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
             subprocess.call([sys.executable,'vmabr.pyc','exec',control.read_record('desktop','/etc/gui')])
 if sys.argv[1:][0] == "gui-enter":
     p = multiprocessing.Process(target=gui_enter)
@@ -245,7 +247,6 @@ def gui_unlock():
         control.write_record('params', 'unlock', '/etc/gui')
         control.write_record('username', sys.argv[1:][1], '/etc/gui')
         if not control.read_record('desktop', '/etc/gui') == None:
-            os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
             subprocess.call([sys.executable,'vmabr.pyc','exec',control.read_record('desktop','/etc/gui')])
 
 if sys.argv[1:][0] == "gui-unlock":
@@ -267,7 +268,6 @@ def gui_desktop():
         control.write_record('password', sys.argv[1:][2], '/etc/gui')
 
         if not control.read_record('desktop', '/etc/gui') == None:
-            os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
             subprocess.call([sys.executable,'vmabr.pyc','exec',control.read_record('desktop','/etc/gui')])
 ## @core/gui-desktop ##
 
