@@ -1,14 +1,22 @@
-#######################################################################################
-#  In the name of God, the Compassionate, the Merciful
-#  Pyabr (c) 2020 Mani Jamali. GNU General Public License v3.0
-#
-#  Official Website: 		https://pyabr.ir
-#  Programmer & Creator:    Mani Jamali <manijamali2003@gmail.com>
-#  Gap channel: 			@pyabr
-#  Gap group:   			@pyabr_community
-#  Git source:              github.com/PyFarsi/pyabr
-#
-#######################################################################################
+'''
+    Pyabr OS
+
+    Python Cloud Operating System Platform (c) 2021 PyFarsi. Free Software GNU General Public License v3.0
+
+    - Informations
+
+    * Name:             Pyabr
+    * Founder:          Mani Jamali
+    * Developers:       PyFarsi Community
+    * Package Manager:  Paye, PyPI
+    * License:          GNU General Publice License v3.0
+
+    - Official Website
+
+    * Persian Page:     https://pyabr.ir
+    * English Page:     https://en.pyabr.ir
+'''
+
 import sys
 
 from PyQt5.QtGui import *
