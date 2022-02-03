@@ -1,0 +1,4 @@
+name: Google
+url: https://www.google.com
+qurl: https://www.google.com/search?q={0}
+key: :g

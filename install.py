@@ -37,4 +37,10 @@ if not os.path.isdir ('build-packs'): os.mkdir('build-packs')
 pack.linuxinstall()
 
 subprocess.call(['sudo','cp','-rf','stor','/'])
-subprocess.call(['sudo','chmod','777','/stor'])
+subprocess.call(['sudo','chmod','-R','777','/stor'])
+subprocess.call(f'echo "#!/bin/bash\ncd /stor\npython3 vmabr.pyc" > ~/.local/bin/pyabr\nchmod +x ~/.local/bin/pyabr',shell=True)
+subprocess.call([sys.executable,'-m','pip','uninstall','pyabr'])
+
+print("Run: `pyabr` to launch Pyabr Platform")
+
+subprocess.call(['pyabr'])

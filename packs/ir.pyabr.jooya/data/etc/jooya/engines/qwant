@@ -1,0 +1,4 @@
+name: QWant
+url: https://www.qwant.com/
+qurl: https://www.qwant.com/?q={0}
+key: :q

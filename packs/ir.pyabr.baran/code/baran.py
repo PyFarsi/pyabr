@@ -16,19 +16,21 @@
     * Persian Page:     https://pyabr.ir
     * English Page:     https://en.pyabr.ir
 '''
+import datetime,csv
+import json
 import os,multiprocessing
+import random
 import subprocess
-import sys, hashlib,shutil,psutil
+import sys, hashlib,shutil,psutil, requests
 from typing import Text
 
 from pyabr.core import *
 from pyabr.quick import *
 
-res = Res()
-control = Control()
-files = Files()
-app = App()
-process = Process()
+try:
+    issue = subprocess.check_output(['cat','/etc/issue.net']).decode('utf-8').replace('\n','')
+except:
+    issue = ''
 
 def windows_manager ():
     try:
@@ -48,23 +50,26 @@ def vkey():
 application = QGuiApplication(sys.argv)
 application.setWindowIcon(QIcon(res.get('@icon/pyabr')))
 
+jdata = '''{"1": {"1": "آغاز نوروز", "2": "آغاز عملیات فتح المبین", "3": "عید نوروز", "4": "عید نوروز", "5": null, "6": null, "7": "روز هنرهای نمایشی", "8": null, "9": null, "10": null, "11": "تقویم هجری شمسی به طور قانونی در ایران تصویب شده", "12": "روز جمهوری اسلامی ایران", "13": "روز طبیعت", "14": null, "15": "روز زخایر ژنتیکی و زیستی", "16": null, "17": null, "18": "روز سلامتی", "19": null, "20": "روز ملی فناوری هسته ای", "21": "شهادت امیر سپهبد علی صیاد شیرازی", "22": null, "23": null, "24": null, "25": "روز بزرگداشت عطار نیشابوری", "26": null, "27": null, "28": null, "29": "روز ارتش جمهوری اسلامی و نیروی زمینی", "30": null, "31": null}, "2": {"1": "روز بزرگداشت سعدی", "2": "سالروز اعلام انقلاب فرهنگی", "3": "روز بزرگداشت شیخ بهایی", "4": null, "5": "شکست حمله نظامی آمریکا به ایران در طبس", "6": null, "7": "روز ایمنی و حمل و نقل", "8": null, "9": "روز شوراها", "10": "روز ملی خلیج فارس", "11": "روز جهانی کار و کارگر", "12": "شهادت استاد مرتضی مطهری", "13": null, "14": null, "15": "روز بزرگداشت شیخ صدوق", "16": null, "17": null, "18": "روز بیماری های خاص و صعب العلاج", "19": "خروج نیروهای شوروی از ایران", "20": null, "21": null, "22": null, "23": null, "24": "لغو امتیاز تنباکو به فتوای آیت الله میرزا حسن شیرازی", "25": "روز بزرگداشت حکیم ابوالقاسم فردوسی و پاسداشت زبان فارسی", "26": null, "27": "روز ارتباطات و روابط عمومی", "28": "روز بزرگداشت حکیم عمر خیام", "29": null, "30": "روز ملی جمعیت", "31": " امضاء معاهده استانبول بین ایران و عثمانی و واگزاری سرزمین های قفقاز به دولت عثمانی به مدت چندین سال "}, "3": {"1": "روز بزرگداشت ملاصدرا", "2": null, "3": "فتح خرمشهر در عملیات بیت المقدس", "4": "روز دزفول - روز مقاومت و پایداری", "5": "روز حمایت از خانواده زندانیان", "6": null, "7": "افتتاح اولین دوره مجلس شورای اسلامی", "8": null, "9": null, "10": null, "11": null, "12": null, "13": null, "14": "رحلت امام خمینی(ره) بنیانگزار جمهوری اسلامی ایران", "15": "قیام 15 خرداد", "16": null, "17": null, "18": null, "19": null, "20": "روز صنایع دستی", "21": null, "22": null, "23": null, "24": null, "25": null, "26": null, "27": "روز جهاد کشاورزی", "28": null, "29": "درگذشت دکتر علی شریعتی", "30": null, "31": "شهادت دکتر مصطفی چمران"}, "4": {"1": "روز اصناف", "2": null, "3": null, "4": null, "5": null, "6": null, "7": "روز قوه قضاییه", "8": "روز مبارزه با سلاح های شیمیایی و میکروبی", "9": null, "10": "روز بزرگداشت صائب تبریزی", "11": "شهادت ایت الله صدوقی", "12": "حمله ناو آمریکایی به هواپیمای مسافربری جمهوری اسلامی", "13": null, "14": "روز شهرداری و دهیاری", "15": null, "16": "روز مالیات", "17": null, "18": "روز ادبیات کودکان و نوجوانان", "19": null, "20": null, "21": "روز فرهنگ پهلوانی و ورزش زورخانه ای", "22": null, "23": "گشایش اولین مجلس خبرگان رهبری", "24": null, "25": "روز بهزیستی و تأمین اجتماعی", "26": "سالروز تأسیس نهاد شورای نگهبان", "27": "اعلام پذیرش قطعنامه 598 شورای امنیت سازمان ملل از سوی ایران", "28": null, "29": null, "30": null, "31": null}, "5": {"1": null, "2": null, "3": null, "4": null, "5": "سالروز عملیات مرصاد", "6": "روز کارآفرینی و آموزش های فنی و حرفه ای", "7": null, "8": "روز بزرگداشت شیخ شهاب الدین سهروردی", "9": "روز اهدای خون", "10": null, "11": "شهادت آیت الله شیخ فضل الله نوری", "12": null, "13": null, "14": "صدور فرمان مشروطیت", "15": null, "16": "تشکیل جهاد دانشگاهی", "17": "روز خبرنگار", "18": null, "19": null, "20": null, "21": "روز حمایت از صنایع کوچک", "22": "روز تشکل ها و مشارکت های اجتماعی", "23": null, "24": null, "25": "جنگ های ایران و روسیه - حمله ایران به سرزمین های تازه اشغال شده توسط روس ها به منظور بازپس گیری این مناطق", "26": "آغاز بازگشت اسرای جنگی به ایران", "27": null, "28": "کودتای آمریکا برای بازگرداندن شاه", "29": null, "30": "روز بزرگداشت علامه مجلسی", "31": "روز صنعت دفاعی"}, "6": {"1": "روز بزرگداشت ابو علی سینا", "2": "آغاز هفته دولت", "3": "اشغال ایران توسط متفقین و فرار رضاخان", "4": "روز کارمند", "5": "روز بزرگداشت محمدبن زکریای رازی", "6": null, "7": null, "8": "انفجار دفتر نخست وزیری و شهادت رجایی و باهنر", "9": null, "10": "روز بانکداری اسلامی", "11": null, "12": "روز بهورز", "13": "امضاء معاهده گردان بین ایران و امپراطوری عثمانی ", "14": null, "15": "ورود پادشاه عثمانی به تبریز در پی اشغال شمال غربی ایران توسط عثمانی", "16": null, "17": "قیام 17 شهریور بر علیه حکومت پهلوی", "18": null, "19": "وفات آیت الله محمود طالقانی اولین امام جمعه تهران", "20": "نبرد کرتسانیسی بین آقامحمدخان قاجار و هراکلیوس دوم (حاکم گرجستان) و پیروزی آقا محمدخان و پیوستن دوباره منطقه قفقاز به ایران", "21": "امضاء معاهده سنت پترزبورگ بین ایران و روسیه", "22": null, "23": null, "24": null, "25": "روز خانواده و تکریم بازنشستگان", "26": "رسیدن نیروهای برتانیا و روسیه به یکدیگر در تهران در پی اشغال ایران در جنگ جهانی دوم", "27": "روز شعر و ادب فارسی", "28": null, "29": null, "30": "امضاء عهدنامه آخال میان ایران و امپراتوری روسیه", "31": "آغاز جنگ تحمیلی"}, "7": {"1": null, "2": null, "3": null, "4": null, "5": "شکست حصر آبادان در عملیات ثامن الائمه", "6": null, "7": "روز بزرگداشت شمس تبریزی", "8": "روز بزرگداشت مولوی", "9": "روز جهانی سالمندان", "10": "روز تجلیل از اسرا و مفقودان", "11": null, "12": null, "13": "روز نیروی انتظامی", "14": "روز دامپزشکی", "15": "روز روستا و عشایر", "16": null, "17": null, "18": null, "19": null, "20": "روز بزرگداشت حافظ", "21": null, "22": "روز جهانی استاندارد", "23": "روز جهانی نابینایان", "24": "روز پیوند اولیا و مربیان", "25": null, "26": "روز تربیت بدنی و ورزش", "27": null, "28": null, "29": "روز صادرات", "30": null}, "8": {"1": "روز آمار و برنامه ریزی", "2": " امضاء عهدنامه گلستان بین ایران و روسیه -  قفقاز ،ارمنستان و ایالت‌های شرقی گرجستان از ایران سلب و به روسیه واگذار شد", "3": null, "4": null, "5": "روز بزرگداشت سلمان فارسی", "6": null, "7": null, "8": "روز نوجوان و بسیج دانش آموزی", "9": null, "10": null, "11": null, "12": null, "13": "روز دانش آموز", "14": "روز فرهنگ عمومی", "15": null, "16": null, "17": null, "18": "روز کیفیت", "19": "روز جهانی علم در خدمت صلح و توسعه", "20": null, "21": null, "22": null, "23": null, "24": "روز کتاب، کتاب خوانی و کتابدار", "25": "روز وقف", "26": "سالروز آزادسازی سوسنگرد", "27": null, "28": null, "29": null, "30": null}, "9": {"1": null, "2": null, "3": null, "4": null, "5": "سالروز قیام مردم گرگان", "6": null, "7": "روز نیروی دریای", "8": null, "9": "روز بزرگداشت شیخ مفید", "10": "روز مجلس", "11": "شهادت میرزا کوچک خان جنگلی", "12": "روز قانون اساسی جمهوری اسلامی ایران (تصویب قانون اساسی جمهوری اسلامی ایران)", "13": "روز بیمه", "14": null, "15": null, "16": "روز دانشجو", "17": null, "18": "معرفی عراق به عنوان آغازگر جنگ از سوی سازمان ملل", "19": "تشکیل شورای فرهنگی به فرمان امام خمینی(ره)", "20": "ایران مناطق تحت کنترل حکومت ملی آذربایجان را باز پس گرفت", "21": null, "22": null, "23": null, "24": "تصرف مهاباد توسط ارتش ایران", "25": "روز پژوهش", "26": "روز حمل و نقل و رانندگان", "27": "روز جهان عاری از خشونت و افراطی گری", "28": null, "29": null, "30": "شب یلدا"}, "10": {"1": "جنگ های ایران و روسیه - حمله ارتش روسیه به گنجه واقع در جمهوری آذربایجان", "2": null, "3": "روز ثبت احوال", "4": "ولادت حضرت مسیح(ع)", "5": "روز ایمنی در برابر زلزله و کاهش اثرات بلایای طبیعی", "6": null, "7": "تشکیل نهضت سواد آموزی", "8": "روز صنعت پتروشیمی", "9": null, "10": null, "11": null, "12": null, "13": null, "14": null, "15": null, "16": null, "17": null, "18": null, "19": "قیام مردم قم", "20": "شهادت میرزا تقی خان امیر کبیر", "21": null, "22": "تشکیل شورای انقلاب", "23": null, "24": null, "25": null, "26": "فرار شاه از ایران", "27": null, "28": null, "29": null, "30": null}, "11": {"1": null, "2": "اعلام استقلال جمهوری کردستان از ایران با پشتیبانی اتحاد جماهیر شوروی", "3": null, "4": null, "5": null, "6": null, "7": null, "8": null, "9": null, "10": null, "11": null, "12": "بازگشت امام خمینی(ره) به ایران و آغاز دهه فجر", "13": null, "14": "روز فناوری فضایی", "15": null, "16": null, "17": null, "18": null, "19": "روز نیروی هوایی", "20": null, "21": null, "22": "پیروزی انقلاب اسلامی", "23": null, "24": null, "25": null, "26": null, "27": null, "28": null, "29": "قیام مردم تبریز", "30": null}, "12": {"1": "امضاء عهدنامه ترکمنچای", "2": null, "3": "کودتای رضاخان", "4": null, "5": "روز بزرگداشت خواجه نصیرالدین طوسی", "6": null, "7": null, "8": null, "9": "روز حمایت از حقوق مصرف کنندگان", "10": null, "11": "نیروهای انگلیسی از ایران خارج شدند. اتحاد جماهیر شوروی موافقت قبلی خود را نقض و عقب نشینی نکرد", "12": null, "13": null, "14": "روز احسان و نیکوکاری", "15": "روز درختکاری", "16": null, "17": null, "18": null, "19": null, "20": null, "21": "روز بزرگداشت نظامی گنجوی", "22": null, "23": null, "24": null, "25": "بمباران شیمیایی حلبچه به دست ارتش بعث عراق", "26": null, "27": null, "28": null, "29": "روز ملی شدن صنعت نفت", "30": null}}'''
+x = json.loads(jdata)
 
-shutil.copyfile('/stor/etc/default/openbox.xml','/root/.config/openbox/rc.xml')
-subprocess.call(['sudo','openbox','--reconfigure'])
-s = multiprocessing.Process(target=windows_manager)
-s.start()
-keylessx = ''
-for i in files.list ('/usr/share/locales'):
-    if i.endswith('.locale') and control.read_record('keyless.enable',f'/usr/share/locales/{i}')=='Yes':
-        ic = control.read_record ('keyless',f'/usr/share/locales/{i}')
-        if keylessx=='':
-            keylessx+=ic
-        else:
-            keylessx+=f',{ic}'
+if 'Pyabr' in issue:
+    shutil.copyfile('/stor/etc/default/openbox.xml','/root/.config/openbox/rc.xml')
+    subprocess.call(['sudo','openbox','--reconfigure'])
+    s = multiprocessing.Process(target=windows_manager)
+    s.start()
+    keylessx = ''
+    for i in files.list ('/usr/share/locales'):
+        if i.endswith('.locale') and control.read_record('keyless.enable',f'/usr/share/locales/{i}')=='Yes':
+            ic = control.read_record ('keyless',f'/usr/share/locales/{i}')
+            if keylessx=='':
+                keylessx+=ic
+            else:
+                keylessx+=f',{ic}'
 
-subprocess.call(f'setxkbmap -layout "{keylessx}" -option "grp:alt_shift_toggle"',shell=True)
+    subprocess.call(f'setxkbmap -layout "{keylessx}" -option "grp:alt_shift_toggle"',shell=True)
 
-if files.isfile ('/proc/info/randr'): subprocess.call(['xrandr','-s',files.readall('/proc/info/randr')])
+    if files.isfile ('/proc/info/randr'): subprocess.call(['xrandr','-s',files.readall('/proc/info/randr')])
 
 files.write('/proc/info/id','baran')
 
@@ -150,7 +155,7 @@ class Login (MainApp):
         subprocess.call(['reboot'])
 
     def sleep_ (self):
-        self.sleep = Sleep()
+        subprocess.call(['systemctl','suspend'])
 
     def lang_(self):
         pass
@@ -227,26 +232,6 @@ class Login (MainApp):
         else:
             self._background.setProperty('source', files.input_qml(getdata("login.background")))
 
-class Sleep (MainApp):
-    def __init__(self):
-        super(Sleep, self).__init__()
-
-        self.load(res.get('@layout/sleep'))
-        if not self.rootObjects():
-            sys.exit(-1)
-
-        # Get data
-
-        self.setProperty('height', int(getdata("height")))
-        self.setProperty('width', int(getdata("width")))
-        self.setProperty('visibility', getdata("visibility"))
-        self.setProperty('title', 'Pyabr OS')
-
-
-        # Connects
-        self._wakeup = self.findChild( 'wakeup')
-        self._wakeup.clicked.connect (self.close)
-
 class Enter (MainApp):
     def shutdown_ (self):
         subprocess.call(['poweroff'])
@@ -255,7 +240,7 @@ class Enter (MainApp):
         subprocess.call(['reboot'])
 
     def sleep_ (self):
-        self.sleep = Sleep()
+        subprocess.call(['systemctl','suspend'])
 
     def lang_(self):
         pass
@@ -382,31 +367,6 @@ class Unlock (MainApp):
 
         return x
 
-    def loop (self):
-        if not self._keyless.property('text')=='':
-            subprocess.call(control.read_record('keyless',f'/usr/share/locales/{self._keyless.property("text")}'),shell=True)
-
-        self._keyless.setProperty('text','')
-        QTimer.singleShot(10,self.loop)
-
-    NameRole = QtCore.Qt.ItemDataRole.UserRole + 1000
-    LabelRole = QtCore.Qt.ItemDataRole.UserRole + 1001
-    LogoRole = QtCore.Qt.ItemDataRole.UserRole + 1002
-
-    def create_model(self):
-        model = QtGui.QStandardItemModel()
-        roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
-        model.setItemRoleNames(roles)
-        for name in files.list('/usr/share/locales'):
-            if control.read_record('keyless.enable',f'/usr/share/locales/{name}')=='Yes':
-                it = QtGui.QStandardItem(name)
-                it.setData(name, self.NameRole)
-                namex = control.read_record('name', f'/usr/share/locales/{name}')
-                it.setData(namex, self.LabelRole)
-                it.setData('../../../'+res.get(control.read_record('logo', f'/usr/share/locales/{name}')), self.LogoRole)
-                model.appendRow(it)
-        return model
-
     def __init__(self, ports):
         super(Unlock, self).__init__()
 
@@ -414,9 +374,6 @@ class Unlock (MainApp):
 
         self.Backend = ports[0]
         self.Env = ports[1]
-
-        self.langModel = self.create_model()
-        self.rootContext().setContextProperty("Lang", self.langModel)
 
         self.load(res.get('@layout/unlock'))
         if not self.rootObjects():
@@ -430,12 +387,12 @@ class Unlock (MainApp):
         self.setProperty('title', 'Pyabr OS')
 
         # Connects
+
         self._password = self.findChild( 'password')
         self._password.setProperty('placeholderText',res.get('@string/password_placeholder').replace('{0}',self.Env.username))
         self._unlock = self.findChild('login')
         self._unlock.setProperty('text',res.get('@string/unlock'))
         self._unlock.clicked.connect(self.unlock_)
-
 
         self._background = self.findChild( 'background')
 
@@ -449,15 +406,6 @@ class Unlock (MainApp):
             self._profile.setProperty('source', res.qmlget(self.getdata("profile")))
         else:
             self._profile.setProperty('source', files.input_qml(self.getdata("profile")))
-        self._submenu = self.findChild('submenu')
-        self._submenu.setProperty('title',res.get('@string/etcetra'))
-        self._virtualkeyboard = self.findChild( 'virtualkeyboard')
-        self._virtualkeyboard.setProperty('text', res.get('@string/virtualkeyboard'))
-        self._lang = self.findChild( 'lang')
-        self._lang.setProperty('title', res.get('@string/keyboard_languages'))
-        self._keyless = self.findChild ('keyless')
-
-        self.loop()
 
 class Lock (MainApp):
     def unlock_(self):
@@ -533,7 +481,7 @@ class Desktop (MainApp):
         subprocess.call(['reboot'])
 
     def sleep_ (self):
-        self.sleep = Sleep()
+        subprocess.call(['systemctl','suspend'])
 
     def logout_(self):
         self.close()
@@ -1149,11 +1097,6 @@ class Desktop (MainApp):
 
         self.signal()
 
-        if not self._keyless.property('text')=='':
-            subprocess.call(control.read_record('keyless',f'/usr/share/locales/{self._keyless.property("text")}'),shell=True)
-
-        self._keyless.setProperty('text','')
-
         self._background_app.setProperty('text','')
         self._restore_app.setProperty('text','')
 
@@ -1168,8 +1111,29 @@ class Desktop (MainApp):
 
         self.shells()
 
+        # Check feeds #
+
+        self.feedCheck()
+        self.changeDate()
+
+        # jumper:
+
         QTimer.singleShot(200,self.loop)
 
+    def changeDate (self):
+        if not self.dsel.property('text')=='':
+            self.xplit = self.dsel.property('text').split('/')
+            self.x1plit = self.dselm.property('text').split('/')
+
+            self.txtD.setProperty('text',x[self.xplit[0]][self.xplit[1]])
+
+    # Check feeds #
+    def feedCheck (self):
+        if not self.feedsel.property('text')=='':
+            self.showpanel.setProperty('visible',False)
+            self.panelClicked = False
+            app.start('jooya',self.feedsel.property('text'))
+        self.feedsel.setProperty('text','')
     # function of battery #
 
     def update_shell_wifi (self,w20,w40,w80,w100):
@@ -1220,12 +1184,14 @@ class Desktop (MainApp):
         # Battery check
         try:
             battery = psutil.sensors_battery()
-            percent = battery.percent
+            percent = int(battery.percent)
             plugged = battery.power_plugged
 
+            self.battery_percent.setProperty('visible',True)
+            self.battery_percent_text.setProperty('text',f"{str(percent)}%")
 
             if plugged:
-                if percent>10:
+                if percent<10:
                     self.update_shell_battery({
                         '000c':True,
                         '010c':False,
@@ -1250,7 +1216,7 @@ class Desktop (MainApp):
                         '090': False,
                         '100': False,
                     })
-                elif percent > 20:
+                elif percent < 20:
                     self.update_shell_battery({
                         '000c': False,
                         '010c': True,
@@ -1275,7 +1241,7 @@ class Desktop (MainApp):
                         '090': False,
                         '100': False,
                     })
-                elif percent>30:
+                elif percent<30:
                     self.update_shell_battery({
                         '000c': False,
                         '010c': False,
@@ -1300,7 +1266,7 @@ class Desktop (MainApp):
                         '090': False,
                         '100': False,
                     })
-                elif percent>40:
+                elif percent<40:
                     self.update_shell_battery({
                         '000c': False,
                         '010c': False,
@@ -1325,7 +1291,7 @@ class Desktop (MainApp):
                         '090': False,
                         '100': False,
                     })
-                elif percent>50:
+                elif percent<50:
                     self.update_shell_battery({
                         '000c': False,
                         '010c': False,
@@ -1350,7 +1316,7 @@ class Desktop (MainApp):
                         '090': False,
                         '100': False,
                     })
-                elif percent>60:
+                elif percent<60:
                     self.update_shell_battery({
                         '000c': False,
                         '010c': False,
@@ -1375,7 +1341,7 @@ class Desktop (MainApp):
                         '090': False,
                         '100': False,
                     })
-                elif percent>70:
+                elif percent<70:
                     self.update_shell_battery({
                         '000c': False,
                         '010c': False,
@@ -1400,7 +1366,7 @@ class Desktop (MainApp):
                         '090': False,
                         '100': False,
                     })
-                elif percent>80:
+                elif percent<80:
                     self.update_shell_battery({
                         '000c': False,
                         '010c': False,
@@ -1425,7 +1391,7 @@ class Desktop (MainApp):
                         '090': False,
                         '100': False,
                     })
-                elif percent>90:
+                elif percent<90:
                     self.update_shell_battery({
                         '000c': False,
                         '010c': False,
@@ -1450,7 +1416,7 @@ class Desktop (MainApp):
                         '090': False,
                         '100': False,
                     })
-                elif percent>100:
+                elif percent<100:
                     self.update_shell_battery({
                         '000c': False,
                         '010c': False,
@@ -1501,7 +1467,7 @@ class Desktop (MainApp):
                         '100': False,
                     })
             else:
-                if percent > 10:
+                if percent < 10:
                     self.update_shell_battery({
                         '000': True,
                         '010': False,
@@ -1526,7 +1492,7 @@ class Desktop (MainApp):
                         '090c': False,
                         '100c': False,
                     })
-                elif percent > 20:
+                elif percent < 20:
                     self.update_shell_battery({
                         '000': False,
                         '010': True,
@@ -1551,7 +1517,7 @@ class Desktop (MainApp):
                         '090c': False,
                         '100c': False,
                     })
-                elif percent > 30:
+                elif percent < 30:
                     self.update_shell_battery({
                         '000': False,
                         '010': False,
@@ -1576,7 +1542,7 @@ class Desktop (MainApp):
                         '090c': False,
                         '100c': False,
                     })
-                elif percent > 40:
+                elif percent < 40:
                     self.update_shell_battery({
                         '000': False,
                         '010': False,
@@ -1601,7 +1567,7 @@ class Desktop (MainApp):
                         '090c': False,
                         '100c': False,
                     })
-                elif percent > 50:
+                elif percent < 50:
                     self.update_shell_battery({
                         '000': False,
                         '010': False,
@@ -1626,7 +1592,7 @@ class Desktop (MainApp):
                         '090c': False,
                         '100c': False,
                     })
-                elif percent > 60:
+                elif percent < 60:
                     self.update_shell_battery({
                         '000': False,
                         '010': False,
@@ -1651,7 +1617,7 @@ class Desktop (MainApp):
                         '090c': False,
                         '100c': False,
                     })
-                elif percent > 70:
+                elif percent < 70:
                     self.update_shell_battery({
                         '000': False,
                         '010': False,
@@ -1676,7 +1642,7 @@ class Desktop (MainApp):
                         '090c': False,
                         '100c': False,
                     })
-                elif percent > 80:
+                elif percent < 80:
                     self.update_shell_battery({
                         '000': False,
                         '010': False,
@@ -1701,7 +1667,7 @@ class Desktop (MainApp):
                         '090c': False,
                         '100c': False,
                     })
-                elif percent > 90:
+                elif percent < 90:
                     self.update_shell_battery({
                         '000': False,
                         '010': False,
@@ -1726,7 +1692,7 @@ class Desktop (MainApp):
                         '090c': False,
                         '100c': False,
                     })
-                elif percent > 100:
+                elif percent < 100:
                     self.update_shell_battery({
                         '000': False,
                         '010': False,
@@ -1777,7 +1743,7 @@ class Desktop (MainApp):
                         '100c': False,
                     })
         except:
-            pass
+            self.battery_percent.setProperty('visible',True)
 
     def startup (self):
         # Startup applications
@@ -1790,14 +1756,16 @@ class Desktop (MainApp):
 
     def bashrc (self):
         try:
-            if self.username=='guest':
-                f = open('/etc/bash.bashrc','w')
-                f.write(f'cd /stor\npython3 vmabr.pyc user guest\nexit')
-                f.close()
-            else:
-                f = open('/etc/bash.bashrc','w')
-                f.write(f'cd /stor\npython3 vmabr.pyc user {self.username} {self.password}\nexit')
-                f.close()
+
+            if 'Pyabr' in issue:
+                if self.username=='guest':
+                    f = open('/etc/bash.bashrc','w')
+                    f.write(f'cd /stor\npython3 vmabr.pyc user guest\nexit')
+                    f.close()
+                else:
+                    f = open('/etc/bash.bashrc','w')
+                    f.write(f'cd /stor\npython3 vmabr.pyc user {self.username} {self.password}\nexit')
+                    f.close()
         except:
             pass
 
@@ -1856,6 +1824,8 @@ class Desktop (MainApp):
                 self.menuApps_anim.start()
             self.update_menuapps(True,False)
             self.showpanel.setProperty('visible',False)
+            self.eventpanel.setProperty('visible', False)
+            self.notepanel.setProperty('visible', False)
             self.showclock.setProperty('visible',False)
 
     def account_setting_(self):
@@ -1866,9 +1836,12 @@ class Desktop (MainApp):
         virtualkeyboard_run.start()
 
     panelClicked = False
+    eventClicked = False
+    noteClicked  = False
     clockClicked = False
 
     def showpanel_(self):
+
         if self.panelClicked:
             self.showpanel.setProperty('visible',False)
             self.panelClicked = False
@@ -1877,8 +1850,42 @@ class Desktop (MainApp):
                 self.showpanel_anim.start()
             self.update_menuapps(False, True)
             self.showpanel.setProperty('visible', True)
+            self.eventpanel.setProperty('visible', False)
+            self.notepanel.setProperty('visible', False)
             self.showclock.setProperty('visible', False)
             self.panelClicked = True
+
+    def eventpanel_(self):
+
+        if self.eventClicked:
+            self.eventpanel.setProperty('visible',False)
+            self.eventClicked = False
+        else:
+            if self.enable_anim.property('text') == 'Yes':
+                self.eventpanel_anim.start()
+
+            self.update_menuapps(False, True)
+            self.eventpanel.setProperty('visible', True)
+            self.showpanel.setProperty('visible', False)
+            self.showclock.setProperty('visible', False)
+            self.notepanel.setProperty('visible', False)
+            self.eventClicked = True
+
+    def notepanel_(self):
+
+        if self.noteClicked:
+            self.notepanel.setProperty('visible',False)
+            self.noteClicked = False
+        else:
+            if self.enable_anim.property('text') == 'Yes':
+                self.notepanel_anim.start()
+
+            self.update_menuapps(False, True)
+            self.notepanel.setProperty('visible', True)
+            self.showpanel.setProperty('visible', False)
+            self.showclock.setProperty('visible', False)
+            self.eventpanel.setProperty('visible', False)
+            self.noteClicked = True
 
     def showclock_(self):
         if self.clockClicked:
@@ -1890,7 +1897,75 @@ class Desktop (MainApp):
             self.update_menuapps(False, True)
             self.showclock.setProperty('visible', True)
             self.showpanel.setProperty('visible', False)
+            self.eventpanel.setProperty('visible', False)
+            self.notepanel.setProperty('visible', False)
             self.clockClicked = True
+
+    def calcTemp (self):
+        try:
+            Url = f"https://api.openweathermap.org/data/2.5/weather?q={files.readall('/etc/default/baadcity')}&appid=d2ae6d25c09549f38d8feed1d116c580"
+        except:
+            Url = f"https://api.openweathermap.org/data/2.5/weather?q=tehran&appid=d2ae6d25c09549f38d8feed1d116c580"
+
+        try:
+            data = (requests.get(Url)).json()
+            temp = round( data['main']["temp"] - 275.15)
+            type = data["weather"][0]['main'].lower()
+
+            self.txtTemp = self.findChild('txtTemp')
+            self.imgTemp = self.findChild('imgTemp')
+
+            self.txtTemp.setProperty('text', res.num(str(temp)) + ' °C')
+
+            if 'few' in type and 'wind' in type and 'clouds' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_FewClouds')))
+            elif 'clear' in type and 'wind' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_Clear')))
+            elif 'snow' in type and 'scattered' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'Baad_Snow')))
+            elif 'shower' in type and 'scattered' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'Baad_Rain')))
+            elif 'cloud' in type and 'wind' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_Clouds')))
+            elif 'many' in type and 'clouds' in type and 'wind' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_FewClouds')))
+            elif 'many' in type and 'clouds' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_FewClouds')))
+            elif 'freezing' in type and 'rain' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_Frozen')))
+            elif 'overcast' in type and 'wind' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_FewClouds')))
+            elif 'clear' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_Clear')))
+            elif 'fog' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_Fog')))
+            elif 'hail' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_Hails')))
+            elif 'mist' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_BlackClouds')))
+            elif 'snow' in type and 'rain' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_Rain')))
+            elif 'snow' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'Baad_Snow')))
+            elif 'storm' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_BlackClouds')))
+            elif 'showers' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_Rain')))
+            elif 'overcast' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_Clouds')))
+            elif 'rain' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_Rain')))
+            elif 'few' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_FewClouds')))
+            elif 'clouds' in type:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_Clouds')))
+            else:
+                self.imgTemp.setProperty('source', res.qmlget(res.etc('baad', 'BaaD_Clear')))
+        except:
+            pass
+
+        if self.eventClicked:
+            QTimer.singleShot(10000,self.calcTemp)
 
     def __init__(self,ports):
         super(Desktop, self).__init__()
@@ -1910,7 +1985,7 @@ class Desktop (MainApp):
 
         self.modelAllApplicationsx = self.create_model_launchedapps()
         self.rootContext().setContextProperty('LaunchedAppApplications', self.modelAllApplicationsx)
-
+        self.addFeedModel()
         self.load(res.get('@layout/desktop'))
         if not self.rootObjects():
             sys.exit(-1)
@@ -1920,6 +1995,7 @@ class Desktop (MainApp):
         self.setProperty('title','Pyabr OS')
         self.imgMenu = self.findChild('imgMenu')
         self.enable_anim = self.findChild('enable_anim')
+        self.feedsel = self.findChild('feedsel')
         self.enable_anim.setProperty('text',getdata('anim'))
         self.imgMenu.setProperty('source',res.qmlget('@icon/pyabr'))
         self.imgMenu2 = self.findChild('imgMenu2')
@@ -1965,10 +2041,27 @@ class Desktop (MainApp):
 
         self.showpanel = self.findChild('showpanel')
         self.showpanel_anim = self.findChild('showpanel_anim')
+        self.eventpanel = self.findChild('eventpanel')
+        self.eventpanel_anim = self.findChild('eventpanel_anim')
         self.showclock = self.findChild('showclock')
         self.showclock_anim = self.findChild('showclock_anim')
+        self.notepanel = self.findChild('notepanel')
+        self.notepanel_anim = self.findChild('notepanel_anim')
+
+        self.Jalali = self.findChild('Jalali')
+        self.dsel = self.findChild('dsel')
+        self.dselm = self.findChild('dselm')
+        self.txtD = self.findChild('txtD')
+
         self.btnPanel = self.findChild('btnPanel')
         self.btnPanel.clicked.connect (self.showpanel_)
+
+        self.btnEvent = self.findChild('btnEvent')
+        self.btnEvent.clicked.connect(self.eventpanel_)
+
+        self.btnNote = self.findChild('btnNote')
+        self.btnNote.clicked.connect(self.notepanel_)
+
         self.btnClock = self.findChild('btnClock')
         self.btnClock.clicked.connect(self.showclock_)
 
@@ -1985,6 +2078,7 @@ class Desktop (MainApp):
         self.lock_img = self.findChild('lock_img')
         self.lock_img.setProperty('source', res.qmlget('@icon/lock'))
         self.logout = self.findChild('logout')
+
         self.txtLogout = self.findChild('txtLogout')
         self.txtLogout.setProperty('text',res.get('@string/logout'))
         self.logout.clicked.connect(self.logout_)
@@ -2029,6 +2123,9 @@ class Desktop (MainApp):
         self.battery_080 = self.findChild('battery_080')
         self.battery_090 = self.findChild('battery_090')
         self.battery_100 = self.findChild('battery_100')
+
+        self.battery_percent = self.findChild('battery_percent')
+        self.battery_percent_text = self.findChild('battery_percent_text')
 
         self.leClock = self.findChild('leClock')
 
@@ -2123,6 +2220,7 @@ class Desktop (MainApp):
         self.startup()
         # Main Loop
         self.loop()
+        self.calcTemp()
 
 desktop = Backend()
 sys.exit(application.exec())

@@ -6,7 +6,7 @@ name[tr]: kopyalama diski
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 0.0.4
+version: 0.0.5
 description: With this tool you can copy your Pyabr files into internal/external disk drive.
 compile: Yes
 entry: copydisk

@@ -1,0 +1,10 @@
+name: ir.pyabr.jooya
+name[fa]: جویا
+name[en]: Jooya
+copyright: (c) 2021 Mani Jamali
+license: CC0
+unpack: /
+version: 1.0.0
+description: Jooya lightweight QML based browser
+compile: Yes
+build: 1400-05-27

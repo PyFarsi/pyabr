@@ -1,0 +1,4 @@
+name: Brave
+url: https://search.brave.com
+qurl: https://search.brave.com/search?q={0}&source=desktop
+key: :b

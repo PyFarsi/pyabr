@@ -23,7 +23,8 @@ import subprocess
 
 class MainApp (MainApp):
     def kill_(self):
-        if self.psel.property('text')=='Pyabr OS':
+        print(self.psel.property('text'))
+        if 'Pyabr' in self.psel.property('text'):
             app.signal('shutdown')
         else:
             subprocess.call(['wmctrl','-c',self.psel.property('text')])

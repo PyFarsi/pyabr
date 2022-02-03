@@ -5,6 +5,8 @@ if sys.argv[1:]==[]:
 else:
     name = sys.argv[1]
 
+name = hashlib.md5(name.encode()).hexdigest()
+
 if sys.argv[2:]==[]:
     ip = input('Enter remote device ip: ')
 else:

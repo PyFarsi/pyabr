@@ -8,6 +8,8 @@ if sys.argv[1:]==[]:
 else:
     name = sys.argv[1]
 
+name = hashlib.md5(name.encode()).hexdigest()
+
 f = open(f'Etc/Users/{name}.json','r')
 config = json.loads(f.read())
 f.close()

@@ -11,6 +11,7 @@ class CustomWebEnginePage(QWebEnginePage):
     # Store external windows.
     external_windows = []
 
+
     def acceptNavigationRequest(self, url,  _type, isMainFrame):
         if _type == QWebEnginePage.NavigationTypeLinkClicked:
             urlx = url.toString()
@@ -25,6 +26,16 @@ class CustomWebEnginePage(QWebEnginePage):
                 w.setUrl(url)
                 w.show()
 
+                try:
+                    w.setWindowIcon(QIcon(res.get(sys.argv[2])))
+                except:
+                    w.setWindowIcon(QIcon(res.get('@icon/breeze-app')))
+
+                try:
+                    w.setWindowTitle(sys.argv[3])
+                except:
+                    pass
+
                 # Keep reference to external window, so it isn't cleared up.
                 self.external_windows.append(w)
             return False
@@ -35,6 +46,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
 
         self.browser = QWebEngineView()
+
         self.browser.setPage(CustomWebEnginePage(self))
 
         icon = False

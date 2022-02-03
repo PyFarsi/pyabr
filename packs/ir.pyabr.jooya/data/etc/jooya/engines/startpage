@@ -1,0 +1,4 @@
+name: StartPage
+url: https://www.startpage.com/
+qurl: https://www.startpage.com/do/search?q={0}
+key: :sp

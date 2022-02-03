@@ -50,16 +50,21 @@ class MainApp (MainApp):
         self.w = IconTheme(self.btnIcon_click_)
 
     def btnCursor_click_(self, name):
-        if os.path.isdir(f'/stor/usr/share/themes/{name}') and not os.path.isdir(f'/usr/share/icons/{name}'):
+        if os.path.isdir(f'/stor/usr/share/themes/{name}'):
+            if os.path.isdir(f'/usr/share/icons/{name}'): shutil.rmtree(f'/usr/share/icons/{name}')
             shutil.copytree(f'/stor/usr/share/themes/{name}',f'/usr/share/icons/{name}')
 
         shutil.copyfile(f'/usr/share/icons/{name}/index.theme','/usr/share/icons/default/index.theme')
+
+        f = open('/usr/share/icons/default/index.theme','a')
+        f.write(f'\nInherits={name}')
+        f.close()
 
     def btnCursor_click(self):
         self.w = CursorTheme(self.btnCursor_click_)
 
     def btnShell_click_(self, name):
-        pass
+        control.write_record('shell-theme',name,'/etc/gui')
 
     def btnShell_click(self):
         self.w = ShellTheme(self.btnShell_click_)

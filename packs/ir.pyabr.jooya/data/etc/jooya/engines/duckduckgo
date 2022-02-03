@@ -1,0 +1,4 @@
+name: DuckDuckGo
+url: https://duckduckgo.com
+qurl: https://duckduckgo.com/?q={0}
+key: :d

@@ -1,7 +1,7 @@
-usr/app/empty
+usr/share/layouts/drives.qml
+usr/share/layouts/files.qml
 usr/share/applications/files.desk
 usr/share/applications/drives.desk
-usr/share/layouts/files.qml
-usr/share/layouts/drives.qml
+usr/app/empty
 usr/app/files.pyc
 usr/app/drives.pyc

@@ -1,0 +1,25 @@
+name[en]: Mines
+name[fa]: مین ها
+name[ar]: المناجم
+exec: /usr/games/mines
+logo: @icon/mines
+bug: @icon/bug
+flag: @icon/flag
+rocket: @icon/rocket
+clock-select: @icon/clock-select
+color1: #f44336
+color2: #9C27B0
+color3: #3F51B5
+color4: #03A9F4
+color5: #00BCD4
+color6: #4CAF50
+color7: #E91E63
+color8: #FF9800
+plus: @icon/plus
+smiley: @icon/smiley
+cross: @icon/cross
+smiley-lol: @icon/smiley-lol
+width: 700
+height: 500
+category: games
+game: Yes

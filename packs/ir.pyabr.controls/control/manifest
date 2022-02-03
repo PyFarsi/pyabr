@@ -6,7 +6,7 @@ name[tr]: kontroller
 copyright: (c) 2021 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.5
+version: 2.0.6
 description: General control application
 compile: Yes
 entry: controls

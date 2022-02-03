@@ -1,0 +1,14 @@
+usr/share/layouts/jooya.qml
+usr/share/applications/jooya.desk
+etc/jooya/searchengine
+etc/jooya/engines/brave
+etc/jooya/engines/duckduckgo
+etc/jooya/engines/zarebin
+etc/jooya/engines/ecosia
+etc/jooya/engines/gerdoo
+etc/jooya/engines/qwant
+etc/jooya/engines/yahoo
+etc/jooya/engines/google
+etc/jooya/engines/bing
+etc/jooya/engines/startpage
+usr/app/jooya.pyc

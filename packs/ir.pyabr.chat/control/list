@@ -1,7 +1,7 @@
-usr/app/empty
-usr/share/applications/chat.desk
-usr/share/layouts/chat.qml
-usr/share/layouts/Contacts.qml
 usr/share/layouts/Chats.qml
 usr/share/layouts/ChannelConnector.qml
+usr/share/layouts/Contacts.qml
+usr/share/layouts/chat.qml
+usr/share/applications/chat.desk
+usr/app/empty
 usr/app/chat.pyc

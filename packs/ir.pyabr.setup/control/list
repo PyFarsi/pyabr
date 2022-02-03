@@ -1,5 +1,5 @@
-usr/app/empty
+usr/share/layouts/setup.qml
 usr/share/images/setup.png
 usr/share/applications/setup.desk
-usr/share/layouts/setup.qml
+usr/app/empty
 usr/app/setup.pyc

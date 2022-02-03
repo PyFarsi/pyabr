@@ -10,11 +10,12 @@ params: gui
 external-windows-manager: openbox
 external-terminal: xterm
 visibility: FullScreen
-login.background: @background/Sunset_and_sea_blur
-enter.background: @background/Sunset_and_sea_blur
+login.background: @background/Sunset_and_sea
+enter.background: @background/Sunset_and_sea
 desktop.background: @background/Sunset_and_sea
-unlock.background: @background/Sunset_and_sea_blur
-lock.background: @background/Sunset_and_sea_blur
+unlock.background: @background/Sunset_and_sea
+lock.background: @background/Sunset_and_sea
 dock: bottom
 anim: Yes
 icon-theme: breeze
+shell-theme: barf-dark

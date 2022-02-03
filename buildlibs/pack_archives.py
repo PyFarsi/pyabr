@@ -214,7 +214,9 @@ def linuxinstall ():
         'ir.pyabr.sample',
         'ir.pyabr.sysinfo',
         'ir.pyabr.updates',
-        'org.kde.breeze'
+        'org.kde.breeze',
+        'ir.pyabr.baran',
+        'ir.pyabr.barf',
     ]
     for i in list:
         if os.path.isdir('packs/'+i):

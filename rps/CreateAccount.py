@@ -4,14 +4,14 @@ from termcolor import colored
 # Asks
 config = {'name':'','size':'','ram':'','smp':''}
 
-config['name'] = input(colored('Enter a new name: ','cyan'))
+config['name'] = hashlib.md5(input(colored('Enter a new name: ','cyan')).encode()).hexdigest()
 config['size'] = input(colored('Enter the size of Pyabr Disk (e.g. 1G): ','cyan'))
 config['ram']  = input(colored('RAM for install [e.g. 4000]: ','cyan'))
 config['smp']  = input(colored('SMP Cores [e.g. 1]: ','cyan'))
 
 # Checking #
 if os.path.isfile(f'Etc/Users/{config["name"]}.json'):
-    print(colored('User alreay exists','red'))
+    print(colored('Account alreay exists','red'))
     exit(0)
 
 # User config #
@@ -26,9 +26,9 @@ if config["ram"]=='':
     ram='4000'
 
 print('Creating disk ...')
-subprocess.call(['qemu-img','create',f'Disks/{config["name"]}.img',config["size"]])
+subprocess.call(['qemu-img','create','-f','qcow2',f'Disks/{config["name"]}.img',config["size"]])
 
 # Booting #
 print('Booting Pyabr ISO on this disk ...')
 print('Please copy Pyabr with copydisk in current disk and shutdown it')
-subprocess.call(['qemu-system-x86_64','-enable-kvm','-hda',f'Disks/{config["name"]}.img','-cdrom','../pyabr-x86_64.iso','-m',config["ram"],'-smp',config["smp"]])
+subprocess.call(['qemu-system-x86_64','-enable-kvm','-hda',f'Disks/{config["name"]}.img','-cdrom','CDImage.iso','-m',config["ram"],'-smp',config["smp"]])

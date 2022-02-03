@@ -23,4 +23,3 @@ location  = str(pyabr.__file__).replace ("__init__.py","").replace ("__main__.py
 shutil.unpack_archive(f'{location}/pyabr.zip',f"{location}/pyabr-install","zip")
 os.chdir (f'{location}/pyabr-install')
 subprocess.call([sys.executable,'install.py'])
-shutil.rmtree (f"{location}/pyabr-install")

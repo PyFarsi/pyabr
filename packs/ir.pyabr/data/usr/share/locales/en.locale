@@ -195,3 +195,4 @@ gtk: Application
 shell: Shell
 cursor: Cursor
 change: Change
+news: News

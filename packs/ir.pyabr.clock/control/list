@@ -1,6 +1,8 @@
-usr/app/empty
+usr/share/layouts/clock.qml
+usr/share/layouts/AnalogClock.qml
+usr/share/layouts/AnalogClockLight.qml
+usr/share/images/clock-face-light.png
 usr/share/images/clock-face.png
 usr/share/applications/clock.desk
-usr/share/layouts/AnalogClock.qml
-usr/share/layouts/clock.qml
+usr/app/empty
 usr/app/clock.pyc

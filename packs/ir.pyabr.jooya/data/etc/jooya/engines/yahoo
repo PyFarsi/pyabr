@@ -1,0 +1,4 @@
+name: Yahoo
+url: https://yahoo.com
+qurl: https://search.yahoo.com/search?p={0}
+key: :y

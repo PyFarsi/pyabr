@@ -24,7 +24,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyabr",
-    version="2.3.2",
+    version="2.3.4.1",
     author="Mani Jamali",
     author_email="pyabrsystem@gmail.com",
     description="Python Cloud & OS",
@@ -41,10 +41,12 @@ setuptools.setup(
     setup_requires=['wheel'],
     install_requires=[
         'PyQt5',
+        'PyQtWebEngine',
         'requests',
         'cryptography',
         'termcolor',
         'wget',
+        'psutil',
     ],
     include_package_data=True,
 )

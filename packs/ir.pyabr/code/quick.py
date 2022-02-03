@@ -17,7 +17,7 @@
     * English Page:     https://en.pyabr.ir
 '''
 
-import json,time,requests
+import json,time,requests,html2text
 import subprocess
 from pyabr.core import *
 
@@ -31,6 +31,7 @@ from PyQt5.QtQuick import *
 from pyabr.cloud import *
 
 import sys,os,shutil,hashlib
+import feedparser
 
 # Main Entry
 class MainApp (QtQml.QQmlApplicationEngine):
@@ -118,6 +119,105 @@ class MainApp (QtQml.QQmlApplicationEngine):
     ITNAMEX = QtCore.Qt.ItemDataRole.UserRole+1001
     ITLOGO = QtCore.Qt.ItemDataRole.UserRole + 1002
 
+    # Feeds
+
+    FeedTitle = QtCore.Qt.ItemDataRole.UserRole+1000
+    FeedImage = QtCore.Qt.ItemDataRole.UserRole+1001
+    FeedLink = QtCore.Qt.ItemDataRole.UserRole+1002
+    FeedSummary = QtCore.Qt.ItemDataRole.UserRole+1003
+    
+    # Jooya Web Search History
+    
+    JHLink = QtCore.Qt.ItemDataRole.UserRole+1000
+    JHIcon = QtCore.Qt.ItemDataRole.UserRole+1001
+    JHTitle = QtCore.Qt.ItemDataRole.UserRole+1002
+
+    # Jooya Web Engines
+    JEName = QtCore.Qt.ItemDataRole.UserRole+1000
+    JEUrl = QtCore.Qt.ItemDataRole.UserRole+1001
+    JEQUrl = QtCore.Qt.ItemDataRole.UserRole+1002
+    JEKey = QtCore.Qt.ItemDataRole.UserRole+1003
+    JEID = QtCore.Qt.ItemDataRole.UserRole+1004
+
+    def shortText (self,value):
+        if len(value)>=60:
+            strv = ''
+
+            j = 0
+
+            for i in value:
+                strv+=i
+                j +=1
+                if j>=60:
+                    break
+
+            return f"{strv}..."
+        else:
+            return value
+
+    def longText (self,value):
+        if len(value)>=70:
+            strv = ''
+
+            j = 0
+
+            for i in value:
+                strv+=i
+                j +=1
+                if j>=70:
+                    break
+
+            return f"{strv}..."
+        else:
+            return value
+
+    def FeedModel (self):
+        model = QtGui.QStandardItemModel()
+        roles = {self.FeedTitle: b"title", self.FeedImage: b'image',self.FeedLink:b'link',self.FeedSummary:b'summary'}
+        model.setItemRoleNames(roles)
+
+        html2text.ignore_links = True
+        html2text.ignore_images = True
+
+        h = html2text.HTML2Text()
+
+        for feedsite in control.read_list('/etc/feeds.list'):
+            feeds = feedparser.parse (feedsite)
+
+            for i in feeds.entries:
+
+                # support zoomit feeds
+                if 'zoomit.ir' in i['id']:
+                    it = QtGui.QStandardItem(i['id'])
+                    it.setData(self.shortText(i['title']),self.FeedTitle)
+                    it.setData(i['summary'].split("\"")[3],self.FeedImage)
+                    it.setData(self.longText(h.handle(i['summary'].split("\"")[4]).replace('/>','').replace('\n','')),self.FeedSummary)
+                    it.setData(i['link'],self.FeedLink)
+
+                elif 'khabaronline.ir' in i['id'] or 'mehrnews.com' in i['id']:
+                    it = QtGui.QStandardItem(i['id'])
+                    it.setData(self.shortText(i['title']), self.FeedTitle)
+                    it.setData(i['links'][1]['href'], self.FeedImage)
+                    it.setData(self.longText(i['summary']), self.FeedSummary)
+                    it.setData(i['link'], self.FeedLink)
+                    
+                else:
+                    try:
+                        it = QtGui.QStandardItem(i['id'])
+                        it.setData(self.shortText(i['title']), self.FeedTitle)
+                        it.setData(i['summary'].split("\"")[3], self.FeedImage)
+                        it.setData(self.longText(h.handle(i['summary'].split("\"")[4]).replace('/>', '').replace('\n', '')),
+                                   self.FeedSummary)
+                        it.setData(i['link'], self.FeedLink)
+                    except:
+                        pass
+
+                model.appendRow(it)
+
+        model.sort(1,Qt.DescendingOrder)
+
+        return model
+
     def CopyDiskModel (self):
         model = QtGui.QStandardItemModel()
         roles = {self.DEV: b"dev", self.DEV_TITLE: b'title'}
@@ -134,6 +234,46 @@ class MainApp (QtQml.QQmlApplicationEngine):
                 except:
                     it.setData(f'{res.get("@string/disk")} ({name}:)',self.DEV_TITLE)
                 model.appendRow(it)
+        return model
+    
+    
+    def JooyaHistoryModel (self):
+        model = QtGui.QStandardItemModel()
+        roles = {self.JHLink:b'link',self.JHIcon:b'icon',self.JHTitle:b'title'}
+        model.setItemRoleNames(roles)
+        
+        links = control.read_list('.jooya_history')
+        icons = control.read_list('.jooya_history_icons')
+        titles = control.read_list('.jooya_history_titles')
+
+
+        i = 0
+        for link in links:
+                if (link.startswith('http://') or link.startswith('https://')):
+                    it = QtGui.QStandardItem(link)
+                    it.setData(link,self.JHLink)
+                    it.setData(icons[i],self.JHIcon)
+                    it.setData(titles[i],self.JHTitle)
+                    i+=1
+                    model.appendRow(it)
+        return model
+
+    def JooyaSearchEngineModel (self):
+        model = QtGui.QStandardItemModel()
+        roles = {self.JEName:b'name',self.JEUrl:b'url',self.JEQUrl:b'qurl',self.JEKey:b'key',self.JEID:b'id'}
+        model.setItemRoleNames(roles)
+
+        listwe = files.list('/etc/jooya/engines')
+
+        for we in listwe:
+            it = QtGui.QStandardItem(we)
+            it.setData(we,self.JEID)
+            it.setData(control.read_record('name',f'/etc/jooya/engines/{we}'),self.JEName)
+            it.setData(control.read_record('url',f'/etc/jooya/engines/{we}'),self.JEUrl)
+            it.setData(control.read_record('qurl',f'/etc/jooya/engines/{we}'),self.JEQUrl)
+            it.setData(control.read_record('key',f'/etc/jooya/engines/{we}'),self.JEKey)
+            model.appendRow(it)
+
         return model
 
     def ProcessModel (self):
@@ -730,6 +870,14 @@ class MainApp (QtQml.QQmlApplicationEngine):
     def addLanguageModel (self):
         self.langmdl = self.LanguageModel()
         self.rootContext().setContextProperty('LanguageModel', self.langmdl)
+        
+    def addJooyaHistoryModel (self):
+        self.jh = self.JooyaHistoryModel()
+        self.rootContext().setContextProperty('JooyaHistoryModel', self.jh)
+
+    def addJooyaSearchEngineModel (self):
+        self.je = self.JooyaSearchEngineModel()
+        self.rootContext().setContextProperty('JooyaSearchEngineModel', self.je)
 
     def addChatModel (self,listx):
         self.chatmdl = self.ChatModel(listx)
@@ -742,6 +890,10 @@ class MainApp (QtQml.QQmlApplicationEngine):
     def addCopyDiskModel (self):
         self.xdcopydiskmdl = self.CopyDiskModel()
         self.rootContext().setContextProperty('CopyDiskModel', self.xdcopydiskmdl)
+
+    def addFeedModel (self):
+        self.xdmx = self.FeedModel()
+        self.rootContext().setContextProperty('FeedModel', self.xdmx)
 
     def addDrivesModel (self):
         self.xddrivesmodel = self.DrivesModel()

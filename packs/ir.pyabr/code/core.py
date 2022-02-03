@@ -2171,7 +2171,16 @@ class Res:
             ## Real Resource ##
             if share.startswith("@layout"):
                 try:
-                    return files.input_qml(f"/usr/share/layouts/{name}.qml")
+                    shell_theme = self.getdata("shell-theme")
+                    if shell_theme == None:
+                        shell_theme = "barf"
+
+                    if files.isfile(f"/usr/share/layouts/{shell_theme}-{name}.qml"):
+                        return files.input_qml(f"/usr/share/layouts/{shell_theme}-{name}.qml")
+                    elif files.isfile(f"/usr/share/layouts/barf-{name}.qml"):
+                        return files.input_qml(f"/usr/share/layouts/barf-{name}.qml")
+                    else:
+                        return files.input_qml(f"/usr/share/layouts/{name}.qml")
                 except:
                     return ''
 
@@ -2261,25 +2270,37 @@ class Res:
                 elif files.isfile(f"/usr/share/icons/{theme}-{name}.tif"):
                     return files.input_qml(f"/usr/share/icons/{theme}-{name}.tif")
                 else:
-                    if files.isfile(f"/usr/share/icons/breeze-{name}.svg"):
-                        return files.input_qml(f"/usr/share/icons/breeze-{name}.svg")
-                    elif files.isfile(f"/usr/share/icons/breeze-{name}.png"):
-                        return files.input_qml(f"/usr/share/icons/breeze-{name}.png")
-                    elif files.isfile(f"/usr/share/icons/breeze-{name}.gif"):
-                        return files.input_qml(f"/usr/share/icons/breeze-{name}.gif")
-                    elif files.isfile(f"/usr/share/icons/breeze-{name}.tif"):
-                        return files.input_qml(f"/usr/share/icons/breeze-{name}.tif")
-                    else:
-                        if files.isfile(f"/usr/share/icons/{name}.svg"):
-                            return files.input_qml(f"/usr/share/icons/{name}.svg")
-                        elif files.isfile(f"/usr/share/icons/{name}.png"):
-                            return files.input_qml(f"/usr/share/icons/{name}.png")
-                        elif files.isfile(f"/usr/share/icons/{name}.gif"):
-                            return files.input_qml(f"/usr/share/icons/{name}.gif")
-                        elif files.isfile(f"/usr/share/icons/{name}.tif"):
-                            return files.input_qml(f"/usr/share/icons/{name}.tif")
+                    if name.startswith ('file-'):
+                        if files.isfile(f'/usr/share/icons/{theme}-file.svg'):
+                            return files.input_qml(f'/usr/share/icons/{theme}-file.svg')
+                        elif files.isfile(f'/usr/share/icons/{theme}-file.png'):
+                            return files.input_qml(f'/usr/share/icons/{theme}-file.png')
+                        elif files.isfile(f'/usr/share/icons/{theme}-file.gif'):
+                            return files.input_qml(f'/usr/share/icons/{theme}-file.gif')
+                        elif files.isfile(f'/usr/share/icons/{theme}-file.tif'):
+                            return files.input_qml(f'/usr/share/icons/{theme}-file.tif')
                         else:
-                            return ''
+                            return files.input_qml(f'/usr/share/icons/breeze-file.png')
+                    else:
+                        if files.isfile(f"/usr/share/icons/breeze-{name}.svg"):
+                            return files.input_qml(f"/usr/share/icons/breeze-{name}.svg")
+                        elif files.isfile(f"/usr/share/icons/breeze-{name}.png"):
+                            return files.input_qml(f"/usr/share/icons/breeze-{name}.png")
+                        elif files.isfile(f"/usr/share/icons/breeze-{name}.gif"):
+                            return files.input_qml(f"/usr/share/icons/breeze-{name}.gif")
+                        elif files.isfile(f"/usr/share/icons/breeze-{name}.tif"):
+                            return files.input_qml(f"/usr/share/icons/breeze-{name}.tif")
+                        else:
+                            if files.isfile(f"/usr/share/icons/{name}.svg"):
+                                return files.input_qml(f"/usr/share/icons/{name}.svg")
+                            elif files.isfile(f"/usr/share/icons/{name}.png"):
+                                return files.input_qml(f"/usr/share/icons/{name}.png")
+                            elif files.isfile(f"/usr/share/icons/{name}.gif"):
+                                return files.input_qml(f"/usr/share/icons/{name}.gif")
+                            elif files.isfile(f"/usr/share/icons/{name}.tif"):
+                                return files.input_qml(f"/usr/share/icons/{name}.tif")
+                            else:
+                                return ''
             else:
                 return ''
 
@@ -2299,7 +2320,16 @@ class Res:
             ## Real Resource ##
             if share.startswith("@layout"):
                 try:
-                    return files.input(f"/usr/share/layouts/{name}.qml")
+                    shell_theme = self.getdata("shell-theme")
+                    if shell_theme==None:
+                        shell_theme="barf"
+
+                    if files.isfile (f"/usr/share/layouts/{shell_theme}-{name}.qml"):
+                        return files.input(f"/usr/share/layouts/{shell_theme}-{name}.qml")
+                    elif files.isfile(f"/usr/share/layouts/barf-{name}.qml"):
+                        return files.input(f"/usr/share/layouts/barf-{name}.qml")
+                    else:
+                        return files.input(f"/usr/share/layouts/{name}.qml")
                 except:
                     return ''
 
@@ -2389,25 +2419,37 @@ class Res:
                 elif files.isfile(f"/usr/share/icons/{theme}-{name}.tif"):
                     return files.input(f"/usr/share/icons/{theme}-{name}.tif")
                 else:
-                    if files.isfile(f"/usr/share/icons/breeze-{name}.svg"):
-                        return files.input(f"/usr/share/icons/breeze-{name}.svg")
-                    elif files.isfile(f"/usr/share/icons/breeze-{name}.png"):
-                        return files.input(f"/usr/share/icons/breeze-{name}.png")
-                    elif files.isfile(f"/usr/share/icons/breeze-{name}.gif"):
-                        return files.input(f"/usr/share/icons/breeze-{name}.gif")
-                    elif files.isfile(f"/usr/share/icons/breeze-{name}.tif"):
-                        return files.input(f"/usr/share/icons/breeze-{name}.tif")
-                    else:
-                        if files.isfile(f"/usr/share/icons/{name}.svg"):
-                            return files.input(f"/usr/share/icons/{name}.svg")
-                        elif files.isfile(f"/usr/share/icons/{name}.png"):
-                            return files.input(f"/usr/share/icons/{name}.png")
-                        elif files.isfile(f"/usr/share/icons/{name}.gif"):
-                            return files.input(f"/usr/share/icons/{name}.gif")
-                        elif files.isfile(f"/usr/share/icons/{name}.tif"):
-                            return files.input(f"/usr/share/icons/{name}.tif")
+                    if name.startswith ('file-'):
+                        if files.isfile(f'/usr/share/icons/{theme}-file.svg'):
+                            return files.input(f'/usr/share/icons/{theme}-file.svg')
+                        elif files.isfile(f'/usr/share/icons/{theme}-file.png'):
+                            return files.input(f'/usr/share/icons/{theme}-file.png')
+                        elif files.isfile(f'/usr/share/icons/{theme}-file.gif'):
+                            return files.input(f'/usr/share/icons/{theme}-file.gif')
+                        elif files.isfile(f'/usr/share/icons/{theme}-file.tif'):
+                            return files.input(f'/usr/share/icons/{theme}-file.tif')
                         else:
-                            return ''
+                            return files.input(f'/usr/share/icons/breeze-file.png')
+                    else:
+                        if files.isfile(f"/usr/share/icons/breeze-{name}.svg"):
+                            return files.input(f"/usr/share/icons/breeze-{name}.svg")
+                        elif files.isfile(f"/usr/share/icons/breeze-{name}.png"):
+                            return files.input(f"/usr/share/icons/breeze-{name}.png")
+                        elif files.isfile(f"/usr/share/icons/breeze-{name}.gif"):
+                            return files.input(f"/usr/share/icons/breeze-{name}.gif")
+                        elif files.isfile(f"/usr/share/icons/breeze-{name}.tif"):
+                            return files.input(f"/usr/share/icons/breeze-{name}.tif")
+                        else:
+                            if files.isfile(f"/usr/share/icons/{name}.svg"):
+                                return files.input(f"/usr/share/icons/{name}.svg")
+                            elif files.isfile(f"/usr/share/icons/{name}.png"):
+                                return files.input(f"/usr/share/icons/{name}.png")
+                            elif files.isfile(f"/usr/share/icons/{name}.gif"):
+                                return files.input(f"/usr/share/icons/{name}.gif")
+                            elif files.isfile(f"/usr/share/icons/{name}.tif"):
+                                return files.input(f"/usr/share/icons/{name}.tif")
+                            else:
+                                return ''
 
             elif share.startswith('@sample'):
                 if files.isfile(f"/usr/share/samples/{name}" ):
