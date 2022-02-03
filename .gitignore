@@ -12,9 +12,7 @@ build/
 .vscode/
 develop-eggs/
 packs-extra/
-packs/io.github.pashmaklang/
 dist/
-packs/ir.projop/
 downloads/
 *.squashfs
 3rd/
@@ -55,11 +53,6 @@ pip-delete-this-directory.txt
 venv/
 # Unit test / coverage reports
 htmlcov/
-packs-extra/ir.pyabr.iran-wallpaper/
-packs/shad/
-packs/bale/
-packs/chromium/
-packs/gap/
 run.sh
 gen.sh
 pyabr-amd64/
@@ -79,7 +72,8 @@ coverage.xml
 # Translations
 *.mo
 *.pot
-
+*.elf
+*.bin
 # Django stuff:
 *.log
 local_settings.py
