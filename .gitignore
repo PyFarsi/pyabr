@@ -74,6 +74,7 @@ coverage.xml
 *.pot
 *.elf
 *.bin
+os/
 # Django stuff:
 *.log
 local_settings.py
