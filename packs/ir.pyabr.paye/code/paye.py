@@ -305,6 +305,12 @@ elif sys.argv[1]=='crt' or sys.argv[1]=="create":
             files.copydir(res.get('@sample/pashmak-console'), crname)
         elif crtype == 'saye-console':
             files.copydir(res.get('@sample/saye-console'), crname)
+        elif crtype == 'c-console':
+            files.copydir(res.get('@sample/c-console'), crname)
+        elif crtype == 'cpp-console':
+            files.copydir(res.get('@sample/cpp-console'), crname)
+        elif crtype == 'hascal-console':
+            files.copydir(res.get('@sample/hascal-console'), crname)
         else:
             files.copydir(res.get('@sample/python-console'), crtype)
     except:
