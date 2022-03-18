@@ -1,7 +1,10 @@
-name[en]: Pyket
-name[fa]: پایکت
-name[ar]: بایکت
+name[en]: Store
+name[fa]: فروشگاه
+name[ar]: متجر
 name[tr]: uygulama mağazası
+name[de]: Pyabr-Shop
+name[cn]: 店铺
+name[ru]: Магазин
 logo: @icon/paye
 exec: pyket
 application: No

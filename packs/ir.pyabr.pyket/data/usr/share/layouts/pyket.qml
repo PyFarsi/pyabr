@@ -12,7 +12,7 @@ import QtWebEngine 1.0
 ApplicationWindow {
     id: pyket
     visible: true
-    color: "white"
+    color: wt.background
     width: 900
     maximumWidth: 900
     minimumWidth: 900
@@ -20,6 +20,9 @@ ApplicationWindow {
     maximumHeight: 700
     minimumHeight: 700
     title: "Pyket"
+    WindowTheme {
+        id: wt
+    }
     Text {
         visible: false
         text: ''
@@ -142,9 +145,9 @@ ApplicationWindow {
             anchors.centerIn: parent
             text: "Control"
             visible: true
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             font.pixelSize: 20
-            color: "white"
+            color: wt.colorTitle
             objectName: "title"
         }
     }
@@ -156,6 +159,7 @@ ApplicationWindow {
         anchors.top: toolbar.bottom
         id: package_exec
         objectName: "package_exec"
+        color: wt.background
 
 
         Image {
@@ -179,9 +183,9 @@ ApplicationWindow {
             anchors.topMargin: 20
             anchors.top: parent.top
             Text {
-
                 text: "Commento"
-                font.family: "IRANSans"
+                color: wt.color
+                font.family: wt.fontFamily
                 font.pixelSize: 20
                 objectName: "pkgTitle"
                 id: titlex
@@ -270,6 +274,7 @@ ApplicationWindow {
                     width: parent.width/1.5
                     height: parent.height/5
                     anchors.horizontalCenter: pyket.horizontalCenter
+                    color: wt.background
                     TextArea {
                         enabled: false
                         objectName: "pkgDescription"
@@ -277,8 +282,8 @@ ApplicationWindow {
                         id: descriptionx
                         font.pixelSize: 16
                         font.bold: false
-                        color: "black"
-                        font.family: "IRANSans"
+                        color: wt.color
+                        font.family: wt.fontFamily
                         text: "Commento is the best xterminal emulator"
                     }
                 }
@@ -293,25 +298,25 @@ ApplicationWindow {
                         anchors.leftMargin: 20
                         id: pkgName
                         objectName: "pkgName"
-                        color: "gray"
+                        color: wt.colorSmall
                         font.pixelSize: 16
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                     }
                     Text {
-                        color: "black"
+                        color: wt.color
                         font.bold: true
                         anchors.right: parent.right
                         font.pixelSize: 16
                         anchors.rightMargin: 20
                         id: pkgName1
                         objectName: "pkgName1"
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                     }
                     Rectangle {
                         anchors.bottom: parent.bottom
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                     }
                 }
 
@@ -323,26 +328,26 @@ ApplicationWindow {
                         anchors.left: parent.left
                         anchors.leftMargin: 20
                         id: pkgVersion
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 16
                         objectName: "pkgVersion"
-                        color: "gray"
+                        color: wt.colorSmall
                     }
                     Text {
-                        color: "black"
+                        color: wt.color
                         font.bold: true
                         anchors.right: parent.right
                         anchors.rightMargin: 20
                         font.pixelSize: 16
                         id: pkgVersion1
                         objectName: "pkgVersion1"
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                     }
                     Rectangle {
                         anchors.bottom: parent.bottom
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                     }
                 }
 
@@ -355,17 +360,17 @@ ApplicationWindow {
                         anchors.leftMargin: 20
                         font.pixelSize: 16
                         id: pkgBuild
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         objectName: "pkgBuild"
-                        color: "gray"
+                        color: wt.colorSmall
                     }
                     Text {
-                        color: "black"
+                        color: wt.color
                         font.bold: true
                         font.pixelSize: 16
                         anchors.right: parent.right
                         anchors.rightMargin: 20
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         id: pkgBuild1
                         objectName: "pkgBuild1"
                     }
@@ -373,7 +378,7 @@ ApplicationWindow {
                         anchors.bottom: parent.bottom
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                     }
                 }
 
@@ -384,19 +389,19 @@ ApplicationWindow {
                     Text {
                         anchors.left: parent.left
                         anchors.leftMargin: 20
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         id: pkgCopyright
                         objectName: "pkgCopyright"
                         font.pixelSize: 16
-                        color: "gray"
+                        color: wt.colorSmall
                     }
                     Text {
-                        color: "black"
+                        color: wt.color
                         font.bold: true
                         font.pixelSize: 16
                         anchors.right: parent.right
                         anchors.rightMargin: 20
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         id: pkgCopyright1
                         objectName: "pkgCopyright1"
                     }
@@ -404,7 +409,7 @@ ApplicationWindow {
                         anchors.bottom: parent.bottom
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                     }
                 }
 
@@ -418,15 +423,15 @@ ApplicationWindow {
                         id: pkgLicense
                         objectName: "pkgLicense"
                         font.pixelSize: 16
-                        color: "gray"
-                        font.family: "IRANSans"
+                        color: wt.colorSmall
+                        font.family: wt.fontFamily
                     }
                     Text {
-                        color: "black"
+                        color: wt.color
                         font.bold: true
                         anchors.right: parent.right
                         anchors.rightMargin: 20
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 16
                         id: pkgLicense1
                         objectName: "pkgLicense1"
@@ -435,7 +440,7 @@ ApplicationWindow {
                         anchors.bottom: parent.bottom
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                     }
                 }
 
@@ -447,18 +452,18 @@ ApplicationWindow {
                         anchors.left: parent.left
                         anchors.leftMargin: 20
                         id: pkgUnpack
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         objectName: "pkgUnpack"
-                        color: "gray"
+                        color: wt.colorSmall
                         font.pixelSize: 16
                     }
                     Text {
-                        color: "black"
+                        color: wt.color
                         font.bold: true
                         anchors.right: parent.right
                         anchors.rightMargin: 20
                         id: pkgUnpack1
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         objectName: "pkgUnpack1"
                         font.pixelSize: 16
                     }
@@ -466,7 +471,7 @@ ApplicationWindow {
                         anchors.bottom: parent.bottom
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                     }
                 }
 
@@ -478,15 +483,15 @@ ApplicationWindow {
                         anchors.left: parent.left
                         anchors.leftMargin: 20
                         id: pkgMirror
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         objectName: "pkgMirror"
-                        color: "gray"
+                        color: wt.colorSmall
                         font.pixelSize: 16
                     }
                     Text {
-                        color: "black"
+                        color: wt.color
                         font.bold: true
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         anchors.right: parent.right
                         anchors.rightMargin: 20
                         id: pkgMirror1
@@ -497,7 +502,7 @@ ApplicationWindow {
                         anchors.bottom: parent.bottom
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                     }
                 }
             }
@@ -524,7 +529,7 @@ ApplicationWindow {
 
                     width: parent.width
                     height: parent.width/10
-                    //color: "transparent"
+      
 
                     MouseArea {
                         anchors.fill: parent
@@ -565,20 +570,21 @@ ApplicationWindow {
 
                     Text {
                         text: model.namex
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 16
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: imagex.right
                         anchors.leftMargin: 20
+                        color: wt.color
                         anchors.rightMargin: 20
                     }
                    
                     ToolButton {
                         text: model.size
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 14
                         icon.source: "file:///stor/usr/share/icons/breeze-next.svg"
-                        icon.color: "gray"
+                        icon.color: wt.colorSmall
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.right: parent.right
                         anchors.leftMargin: 20
@@ -588,7 +594,7 @@ ApplicationWindow {
                     Rectangle {
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                         anchors.top: parent.bottom
                     }
                 }
