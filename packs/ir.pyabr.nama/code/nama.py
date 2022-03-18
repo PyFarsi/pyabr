@@ -23,7 +23,8 @@ from pyabr.quick import *
 
 class MainApp (MainApp):
     def update_(self,filename):
-        self.setProperty ('title',files.filename(filename)+' - '+res.get('@string/nama'))
+        self.setProperty ('title',files.filename(filename)+' - '+res.getname('nama'))
+        app.launchedlogo(self.property('title'), res.etc('nama', 'logo'))
         self.fullscreen.setProperty ('visible',True)
 
     def open__(self,filename):
@@ -52,13 +53,13 @@ class MainApp (MainApp):
         self.load (res.get('@layout/nama'))
 
         self.open = self.findChild ('open')
-        self.open.setProperty('text',res.get('@string/open'))
         self.image = self.findChild ('image')
         self.fullscreen = self.findChild ('fullscreen')
         self.setProperty ('title',res.get('@string/nama'))
         self.open.clicked.connect(self.open_)
         self.fullscreen.clicked.connect(self.fullscreen_)
 
+        self.setProperty('title',res.getname('nama'))
         app.launchedlogo(self.property('title'), res.etc('nama', 'logo'))
 
         if not sys.argv[1:]==[]:

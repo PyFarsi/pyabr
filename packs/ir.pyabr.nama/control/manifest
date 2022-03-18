@@ -3,15 +3,16 @@ name[fa]: نمایشگر تصویر
 name[en]: Image Viewer
 name[ar]: عارض الصور
 name[tr]: resim görüntüleyici
-copyright: (c) 2021 Mani Jamali
+copyright: (c) 2022 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.2
+version: 2.0.3
 screenshots: Yes
 description: Nama Image Viewer
 compile: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.nama.svg
 logo.inside: @icon/nama
 entry: nama
-build: 1400-10-19
+
+build: 1400-12-26
 mirror: https://mirror.pyabr.ir/zayanderoad/

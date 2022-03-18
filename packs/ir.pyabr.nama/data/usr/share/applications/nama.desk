@@ -2,6 +2,9 @@ name[en]: Image Viewer
 name[fa]: نمایشگر تصویر
 name[ar]: عارض الصور
 name[tr]: resim görüntüleyici
+name[de]: Bildbetrachter
+name[cn]: 图像查看器
+name[ru]: Средство просмотра изображений
 logo: @icon/shotwell
 exec: nama
 shortcut: Ctrl+Alt+N
