@@ -25,6 +25,10 @@ from pyabr.cloud import *
 def getdata (name):
     return control.read_record (name,'/etc/gui')
 
+if not sys.argv[1:]==[]:
+    app.start(files.filename(sys.argv[1]).replace('.desk',''),'')
+    sys.exit(0)
+
 application = QGuiApplication(sys.argv)
 application.setWindowIcon(QIcon(res.get(res.etc('runapp','logo'))))
 
@@ -43,10 +47,13 @@ class MainApp (MainApp):
 
         if app.exists(command):
             app.start(command, args)
+
         elif self.leRun.property('text').startswith ('abr://'):
             self.d = Domain (self.leRun.property('text'))
+
         elif self.leRun.property('text').startswith ('https://') or self.leRun.property('text').startswith ('http://'):
-            app.browser(self.leRun.property('text'),'@icon/browser',self.leRun.property('text').replace('https://','').replace('http://',''))
+            app.start('jooya',self.leRun.property('text'))
+
         elif not command=='':
             self.leRun.setProperty('placeholderText',res.get('@string/application_not_found').replace('{0}',command))
             self.leRun.setProperty('enabled',False)
@@ -62,8 +69,9 @@ class MainApp (MainApp):
         if not self.rootObjects():
             sys.exit(-1)
 
-        self.setProperty('title',res.get('@string/runner'))
+        self.setProperty('title',res.getname('runapp'))
         app.launchedlogo(self.property('title'), res.etc('runapp', 'logo'))
+
 
         self.leRun = self.findChild('leRun')
         self.btnRun = self.findChild('btnRun')

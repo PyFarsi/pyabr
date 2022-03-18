@@ -11,17 +11,21 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: backend
     visible: true
-    color: "white"
+    color: wt.background
 
     width: 400
     height: 90
 
+    WindowTheme {
+        id: wt
+    }
 
     TextField {
         width: parent.width
         height: parent.height/2
         id: leRun
-        font.family: "Iran Sans"
+        font.family: wt.fontFamily
+        color: wt.color
         selectByMouse: true
                     MouseArea {
                         anchors.fill: parent

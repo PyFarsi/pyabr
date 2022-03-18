@@ -3,15 +3,17 @@ name[fa]: بارگذار
 name[en]: Runner
 name[ar]: عداء
 name[tr]: koşucu
-copyright: (c) 2021 Mani Jamali
+name[de]: Läufer
+copyright: (c) 2022 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.2
+version: 2.0.4
 description: Applications, commands and protocol runner
 compile: Yes
 entry: runapp
 screenshots: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.runapp.svg
 logo.inside: @icon/runapp
-build: 1400-10-19
+
+build: 1400-12-26
 mirror: https://mirror.pyabr.ir/zayanderoad/

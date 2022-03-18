@@ -2,6 +2,9 @@ name[en]: Runner
 name[fa]: بارگذار
 name[ar]: عداء
 name[tr]: koşucu
+name[de]: Läufer
+name[cn]: 赛跑者
+name[ru]: бегун
 logo: @icon/runapp
 exec: runapp
 shortcut: Ctrl+Alt+R
