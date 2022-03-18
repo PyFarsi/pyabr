@@ -12,6 +12,11 @@ ApplicationWindow {
     visible: true
     width: 400
     height: 400
+    color: wt.background
+    
+    WindowTheme {
+        id: wt
+    }
 
     ToolBar {
         id: toolbar
@@ -41,7 +46,8 @@ ApplicationWindow {
     Text {
         text: ""
         objectName: "leClock"
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
+        color: wt.color
         font.pixelSize: 40
         anchors.centerIn: parent
     }
@@ -49,7 +55,8 @@ ApplicationWindow {
     Text {
         text: ""
         objectName: "leStopwatch"
-        font.family: "IRANSans"
+        color: wt.color
+        font.family: wt.fontFamily
         font.pixelSize: 40
         id: lestopwatch
         visible: false

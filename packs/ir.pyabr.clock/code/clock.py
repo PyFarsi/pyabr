@@ -51,7 +51,7 @@ class MainApp (MainApp):
         super(MainApp, self).__init__()
 
         self.load (res.get('@layout/clock'))
-        self.setProperty('title',res.get('@string/clock'))
+        self.setProperty('title',res.getname('clock'))
         app.launchedlogo(self.property('title'), res.etc('clock', 'logo'))
 
         timer = QTimer(self)

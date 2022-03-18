@@ -2,6 +2,9 @@ name[en]: Clock
 name[fa]: ساعت
 name[ar]: ساعة
 name[tr]: saat
+name[de]: Uhr
+name[cn]: 钟
+name[ru]: Часы
 logo: @icon/clock
 exec: clock
 application: Yes
