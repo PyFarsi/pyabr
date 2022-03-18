@@ -3,7 +3,7 @@ name[en]: Calendar
 name[fa]: تقویم
 name[ar]: التقويم
 name[tr]: takvim
-copyright: (c) 2021 Mani Jamali
+copyright: (c) 2022 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
 version: 2.0.4
@@ -13,5 +13,6 @@ entry: calendar_app
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.calendar.svg
 logo.inside: @icon/calendar
 screenshots: Yes
-build: 1400-10-19
+
+build: 1400-12-26
 mirror: https://mirror.pyabr.ir/zayanderoad/

@@ -37,7 +37,7 @@ class MainApp (MainApp):
         super(MainApp, self).__init__()
 
         self.load (res.get('@layout/calendar'))
-        self.setProperty('title',res.get('@string/calendar'))
+        self.setProperty('title',res.getname('calendar'))
         app.launchedlogo(self.property('title'), res.etc('calendar', 'logo'))
 
         self.Jalali = self.findChild('Jalali')
@@ -54,6 +54,15 @@ class MainApp (MainApp):
             self.Gregorian.setProperty('visible',True)
         elif x=='1':
             self.Jalali.setProperty('visible',True)
+        elif x=='2':
+            locale = res.getdata("locale")
+            
+            if locale=="fa":
+                self.Gregorian.setProperty('visible',False)
+                self.Jalali.setProperty('visible',True)
+            else:
+                self.Gregorian.setProperty('visible',True)
+                self.Jalali.setProperty('visible',False)
 
         self.loop()
 

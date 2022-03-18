@@ -2,6 +2,9 @@ name[en]: Calendar
 name[fa]: تقویم
 name[ar]: التقويم
 name[tr]: takvim
+name[de]: Kalender
+name[cn]: 日历
+name[ru]: календарь
 logo: @icon/calendar
 exec: calendar_app
 application: Yes

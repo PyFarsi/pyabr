@@ -11,9 +11,13 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: app
     visible: true
-    color: "white"
+    color: wt.background
     width: 600
     height: 600
+    
+    WindowTheme {
+        id: wt
+    }
     title: "Calendar"
 
     Text {
@@ -56,9 +60,9 @@ ApplicationWindow {
             text: ""
             id: txtD
             objectName: "txtD"
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             font.pixelSize: 20
-            color: "gray"
+            color: wt.color
         }
     }
 }
