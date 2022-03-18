@@ -1,6 +1,6 @@
 PyQt5
+PyQtWebEngine
 requests
-pyqtconsole
-pygame
-QScintilla
 wget
+psutil
+termcolor
