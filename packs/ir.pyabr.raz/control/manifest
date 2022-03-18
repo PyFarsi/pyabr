@@ -1,0 +1,14 @@
+name: ir.pyabr.raz
+name[fa]: پست ابری
+name[en]: Cloud Mail
+name[ar]: البريد السحابي
+name[tr]: bulut posta
+copyright: (c) 2022 Mani Jamali
+license: GNU GPL v3.0
+unpack: /
+version: 1.0.0
+description: Cloud Encrypted Mail
+compile: Yes
+
+build: 1400-12-26
+mirror: https://mirror.pyabr.ir/zayanderoad/

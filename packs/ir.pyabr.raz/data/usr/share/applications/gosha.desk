@@ -1,0 +1,12 @@
+name[fa]: رمزگشایی
+name[en]: Decryptor
+name[ar]: فك التشفير
+name[tr]: şifre çözme
+name[de]: Entschlüsseler
+name[cn]: 解密器
+name[ru]: Расшифровщик
+logo: @icon/chat
+exec: gosha
+application: No
+hidden: Yes
+category: tools

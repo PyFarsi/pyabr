@@ -1,0 +1,11 @@
+name[fa]: پست ابری
+name[en]: Cloud Mail
+name[ar]: البريد السحابي
+name[tr]: bulut posta
+name[de]: Cloud-Mail
+name[cn]: 云邮件
+name[ru]: облачная почта
+logo: @icon/chat
+exec: raz
+application: Yes
+category: tools

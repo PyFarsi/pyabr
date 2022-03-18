@@ -1,0 +1,12 @@
+name[fa]: رمزنگار
+name[en]: Cryptographer
+name[ar]: التشفير
+name[tr]: kriptograf
+name[de]: Kryptograf
+name[cn]: 密码学家
+name[ru]: Криптограф
+logo: @icon/chat
+exec: negar
+application: No
+hidden: Yes
+category: tools
