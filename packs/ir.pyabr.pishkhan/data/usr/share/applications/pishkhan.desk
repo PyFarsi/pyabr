@@ -1,0 +1,12 @@
+name[en]: Dashboard
+name[fa]: پیشخان
+name[ar]: لوحة القيادة
+name[tr]: Gösterge Paneli
+name[de]: Armaturenbrett
+name[cn]: 仪表板
+name[ru]: Панель приборов
+logo: @icon/vscode
+exec: pishkhan
+application: Yes
+hidden: No
+category: develop

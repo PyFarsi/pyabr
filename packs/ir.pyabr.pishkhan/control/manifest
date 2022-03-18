@@ -1,0 +1,17 @@
+name: ir.pyabr.pishkhan
+name[en]: Dashboard
+name[fa]: پیشخان
+name[ar]: لوحة القيادة
+name[tr]: Gösterge Paneli
+copyright: (c) 2022 Mani Jamali
+license: GNU GPL v3.0
+unpack: /
+version: 2.0.4
+description: Project Dashboard for Pyabr developers (Use VSCode as IDE)
+compile: Yes
+logo: https://mirror.pyabr.ir/zayanderoad/com.visualstudio.code.svg
+logo.inside: @icon/vscode
+entry: sample
+
+build: 1400-12-26
+mirror: https://mirror.pyabr.ir/zayanderoad/
