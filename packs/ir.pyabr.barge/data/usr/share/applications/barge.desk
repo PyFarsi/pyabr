@@ -2,6 +2,9 @@ name[en]: Text Editor
 name[fa]: برگه
 name[ar]: محرر النص
 name[tr]: Metin düzeltici
+name[de]: Texteditor
+name[cn]: 文本编辑器
+name[ru]: Текстовый редактор
 logo: @icon/barge
 exec: barge
 shortcut: Ctrl+Alt+B

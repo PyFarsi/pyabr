@@ -11,9 +11,13 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: barge
     visible: true
-    color: "white"
+    color: wt.background
     width: 1000
     height: 600
+    
+    WindowTheme {
+        id: wt
+    }
 
     ToolBar {
         id: toolbar
@@ -99,8 +103,9 @@ ApplicationWindow {
         TextArea {
             anchors.top: toolbar.bottom
             id: textT
+            color: wt.color
             width: parent.width
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             objectName: "text"
             selectByMouse: true
                     MouseArea {
