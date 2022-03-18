@@ -4,7 +4,7 @@
 
 # Pyabr Distro
 
-Pyabr &copy; 2019 - 2021 Mani Jamali. Free Software GNU General Public License v3.0
+Pyabr &copy; 2019 - 2022 Mani Jamali. Free Software GNU General Public License v3.0
 
 ## How to Contributing?
 For contributing in pyabr please read [CONTRIBUTING.md](/CONTRIBUTING.md)
