@@ -2,6 +2,9 @@ name[en]: Downloads
 name[fa]: دانلودها
 name[ar]: التحميل
 name[tr]: İndirilenler
+name[de]: Downloads
+name[cn]: 下载
+name[ru]: загрузки
 logo: @icon/dmgr
 exec: dmgr
 application: Yes

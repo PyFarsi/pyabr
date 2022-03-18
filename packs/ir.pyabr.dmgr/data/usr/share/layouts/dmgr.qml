@@ -10,10 +10,14 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: dmgr
     visible: true
-    color: "white"
+    color: wt.background
     width: 600
     height: 500
     title: "Downloads"
+    
+    WindowTheme {
+        id: wt
+    }
 
     ToolBar {
         id: toolbar
@@ -67,8 +71,9 @@ ApplicationWindow {
 
                     Text {
                         text: model.name
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 18
+                        color: wt.color
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: imagex.right
                         anchors.leftMargin: 20
@@ -77,7 +82,7 @@ ApplicationWindow {
 
                     Text {
                         text: model.mimetype
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 14
                         color: "gray"
                         anchors.right: parent.right
@@ -87,7 +92,7 @@ ApplicationWindow {
                    
                     Text {
                         text: model.size
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 14
                         color: "gray"
                         anchors.verticalCenter: parent.verticalCenter
@@ -99,7 +104,7 @@ ApplicationWindow {
                     Rectangle {
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                         anchors.top: parent.bottom
                     }
                 }

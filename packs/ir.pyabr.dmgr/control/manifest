@@ -3,15 +3,16 @@ name[en]: Download Manager
 name[fa]: مدیریت دانلودها
 name[ar]: مدير التحميل
 name[tr]: İndirilenler
-copyright: (c) 2021 Mani Jamali
+copyright: (c) 2022 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.3
+version: 2.0.4
 description: Simple Download manager
 compile: Yes
 entry: dmgr
 screenshots: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.dmgr.svg
 logo.inside: @icon/dmgr
-build: 1400-10-19
+
+build: 1400-12-26
 mirror: https://mirror.pyabr.ir/zayanderoad/
