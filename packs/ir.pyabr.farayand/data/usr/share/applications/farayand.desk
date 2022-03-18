@@ -2,6 +2,9 @@ name[en]: System Monitor
 name[fa]: فرآیندها
 name[ar]: ادارة العمليات
 name[tr]: Süreç yönetimi
+name[de]: Systemmonitor
+name[cn]: 系统监视器
+name[ru]: системный монитор
 logo: @icon/process
 exec: farayand
 application: Yes

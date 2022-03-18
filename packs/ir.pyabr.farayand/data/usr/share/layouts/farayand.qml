@@ -11,10 +11,14 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: farayand
     visible: true
-    color: "white"
+    color: wt.background
     width: 600
     height: 500
     title: "Downloads"
+    
+    WindowTheme {
+        id: wt
+    }
 
     Text {
         id: psel
@@ -81,10 +85,11 @@ ApplicationWindow {
 
                     Text {
                         text: model.name
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 18
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: imagex.right
+                        color: wt.color
                         anchors.leftMargin: 20
                         anchors.rightMargin: 20
                     }
@@ -92,9 +97,9 @@ ApplicationWindow {
                     Text {
                         text: model.user
                         id: puser
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 16
-                        color: "gray"
+                        color: wt.colorSmall
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.right: parent.right
                         anchors.leftMargin: 20
@@ -104,7 +109,7 @@ ApplicationWindow {
                     Rectangle {
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                         anchors.top: parent.bottom
                     }
                 }
