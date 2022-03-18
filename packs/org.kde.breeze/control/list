@@ -231,9 +231,6 @@ usr/share/themes/breeze_cursors/cursors/right_side
 usr/share/themes/breeze_cursors/cursors/copy
 usr/share/themes/cursor/breeze_cursors_dark
 usr/share/themes/cursor/breeze_cursors
-usr/share/backgrounds/breeze-dark.png
-usr/share/backgrounds/breeze-next.png
-usr/share/backgrounds/Sunset_and_sea.jpg
 usr/share/icons/breeze-file-vcf.svg
 usr/share/icons/breeze-copydisk.svg
 usr/share/icons/breeze-file-apk.svg
@@ -350,6 +347,7 @@ usr/share/icons/breeze-process.svg
 usr/share/icons/breeze-desk.svg
 usr/share/icons/breeze-cloud.svg
 usr/share/icons/breeze-file-rv.svg
+usr/share/icons/breeze-camera.svg
 usr/share/icons/breeze-file-flic.svg
 usr/share/icons/breeze-drive.svg
 usr/share/icons/breeze-ssl.svg
@@ -416,6 +414,7 @@ usr/share/icons/breeze-file-r.svg
 usr/share/icons/breeze-file-lnk.svg
 usr/share/icons/breeze-compress.svg
 usr/share/icons/breeze-file-text.svg
+usr/share/icons/breeze-bookmark-new.svg
 usr/share/icons/breeze-file-c++.svg
 usr/share/icons/breeze-file-odb.svg
 usr/share/icons/breeze-stickers.svg
@@ -475,6 +474,7 @@ usr/share/icons/breeze-rootfolder.svg
 usr/share/icons/breeze-file-zoo.svg
 usr/share/icons/breeze-file-ui.svg
 usr/share/icons/breeze-back.svg
+usr/share/icons/breeze-bookmarks.svg
 usr/share/icons/breeze-install.svg
 usr/share/icons/breeze-database.svg
 usr/share/icons/breeze-file-xliff.svg
@@ -489,6 +489,7 @@ usr/share/icons/breeze-file-kra.svg
 usr/share/icons/breeze-weather-storm.svg
 usr/share/icons/breeze-file-abc.svg
 usr/share/icons/breeze-information.svg
+usr/share/icons/breeze-bright.svg
 usr/share/icons/breeze-xfig.svg
 usr/share/icons/breeze-time-pause.svg
 usr/share/icons/breeze-search.svg
@@ -512,6 +513,7 @@ usr/share/icons/breeze-file-ott.svg
 usr/share/icons/breeze-battery-100.svg
 usr/share/icons/breeze-file-credits.svg
 usr/share/icons/breeze.svg
+usr/share/icons/breeze-mirror.svg
 usr/share/icons/breeze-file-log.svg
 usr/share/icons/breeze-pause.svg
 usr/share/icons/breeze-patch.svg
@@ -531,6 +533,7 @@ usr/share/icons/breeze-upstor.svg
 usr/share/icons/breeze-desktop.svg
 usr/share/icons/breeze-menu.svg
 usr/share/icons/breeze-file-tiff.svg
+usr/share/icons/breeze-vscode.svg
 usr/share/icons/breeze-file-xml.svg
 usr/share/icons/breeze-file-svgz.svg
 usr/share/icons/breeze-file-afm.svg
@@ -596,6 +599,7 @@ usr/share/icons/breeze-weather-many-clouds-wind.svg
 usr/share/icons/breeze-file-ape.svg
 usr/share/icons/breeze-battery-090-charging.svg
 usr/share/icons/breeze-file-tar.bz.svg
+usr/share/icons/breeze-audio.svg
 usr/share/icons/breeze-help.svg
 usr/share/icons/breeze-weather-mist.svg
 usr/share/icons/breeze-file-epub.svg
@@ -678,7 +682,9 @@ usr/share/icons/breeze-file-7z.svg
 usr/share/icons/breeze-file-rtf.svg
 usr/share/icons/breeze-file-sqlite.svg
 usr/share/icons/breeze-file-sif.svg
+usr/share/icons/breeze-dashboard.svg
 usr/share/icons/breeze-weather-clouds.svg
+usr/share/icons/breeze-bookmark-remove.svg
 usr/share/icons/breeze-file-rtspu.svg
 usr/share/icons/breeze-file-pst.svg
 usr/share/icons/breeze-action-preview2.svg
