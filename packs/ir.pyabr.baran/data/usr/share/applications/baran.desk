@@ -1,6 +1,10 @@
 name[en]: Baran desktop Enviroment
 name[fa]: میزکار باران
 name[ar]: بيئة سطح المكتب باران
+name[tr]: Baran Masaüstü Ortamı
+name[de]: Baran Desktop-Umgebung
+name[cn]: 桌面环境
+name[ru]: Среда рабочего стола
 logo: @icon/breeze-rain
 exec: baran
 shortcut: Ctrl+Alt+R

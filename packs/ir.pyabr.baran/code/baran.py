@@ -20,10 +20,9 @@ import datetime,csv
 import json
 import os,multiprocessing
 import random
+from re import sub
 import subprocess
 import sys, hashlib,shutil,psutil, requests
-from typing import Text
-
 from pyabr.core import *
 from pyabr.quick import *
 
@@ -40,8 +39,8 @@ def windows_manager ():
 
 def vkey():
     try:
-        subprocess.call(['rm','-rf','/root/.config/dconf'])
-        subprocess.call(['onboard', '--theme', 'Droid'])
+        subprocess.call(['/usr/bin/rm','-rf','/root/.config/dconf'])
+        subprocess.call(['/usr/bin/onboard', '--theme', 'Droid'])
 
         app.launchedlogo('Onboard','@icon/onboard')
     except:
@@ -55,7 +54,7 @@ x = json.loads(jdata)
 
 if 'Pyabr' in issue:
     shutil.copyfile('/stor/etc/default/openbox.xml','/root/.config/openbox/rc.xml')
-    subprocess.call(['sudo','openbox','--reconfigure'])
+    subprocess.call(['/usr/bin/sudo','openbox','--reconfigure'])
     s = multiprocessing.Process(target=windows_manager)
     s.start()
     keylessx = ''
@@ -67,11 +66,12 @@ if 'Pyabr' in issue:
             else:
                 keylessx+=f',{ic}'
 
-    subprocess.call(f'setxkbmap -layout "{keylessx}" -option "grp:alt_shift_toggle"',shell=True)
+    subprocess.call(f'/usr/bin/setxkbmap -layout "{keylessx}" -option "grp:alt_shift_toggle"',shell=True)
 
-    if files.isfile ('/proc/info/randr'): subprocess.call(['xrandr','-s',files.readall('/proc/info/randr')])
+    if files.isfile ('/proc/info/randr'): subprocess.call(['/usr/bin/xrandr','-s',files.readall('/proc/info/randr')])
 
 files.write('/proc/info/id','baran')
+
 
 ## Get data ##
 def getdata (name):
@@ -212,19 +212,19 @@ class Login (MainApp):
         self.txtShutdown.setProperty('text', res.get('@string/escape'))
         self.shutdown.clicked.connect(self.shutdown_)
         self.shutdown_img = self.findChild('shutdown_img')
-        self.shutdown_img.setProperty('source', res.qmlget('@icon/shutdown'))
+        self.shutdown_img.setProperty('source', res.qmlget('@icon/breeze-shutdown'))
         self.reboot = self.findChild('reboot')
         self.txtReboot = self.findChild('txtReboot')
         self.txtReboot.setProperty('text', res.get('@string/restart'))
         self.reboot.clicked.connect(self.restart_)
         self.reboot_img = self.findChild('reboot_img')
-        self.reboot_img.setProperty('source', res.qmlget('@icon/reboot'))
+        self.reboot_img.setProperty('source', res.qmlget('@icon/breeze-reboot'))
         self.suspend = self.findChild('suspend')
         self.txtSuspend = self.findChild('txtSuspend')
         self.txtSuspend.setProperty('text', res.get('@string/sleep'))
         self.suspend.clicked.connect(self.sleep_)
         self.suspend_img = self.findChild('suspend_img')
-        self.suspend_img.setProperty('source', res.qmlget('@icon/suspend'))
+        self.suspend_img.setProperty('source', res.qmlget('@icon/breeze-suspend'))
         self.popup_pysys = self.findChild('popup_pysys')
 
         if getdata("login.background").startswith('@background/'):
@@ -304,25 +304,25 @@ class Enter (MainApp):
         self.txtShutdown.setProperty('text', res.get('@string/escape'))
         self.shutdown.clicked.connect(self.shutdown_)
         self.shutdown_img = self.findChild('shutdown_img')
-        self.shutdown_img.setProperty('source', res.qmlget('@icon/shutdown'))
+        self.shutdown_img.setProperty('source', res.qmlget('@icon/breeze-shutdown'))
         self.logout = self.findChild('logout')
         self.txtLogout = self.findChild('txtLogout')
         self.txtLogout.setProperty('text', res.get('@string/logout'))
         self.logout.clicked.connect(self.logout_)
         self.logout_img = self.findChild('logout_img')
-        self.logout_img.setProperty('source', res.qmlget('@icon/logout'))
+        self.logout_img.setProperty('source', res.qmlget('@icon/breeze-logout'))
         self.reboot = self.findChild('reboot')
         self.txtReboot = self.findChild('txtReboot')
         self.txtReboot.setProperty('text', res.get('@string/restart'))
         self.reboot.clicked.connect(self.restart_)
         self.reboot_img = self.findChild('reboot_img')
-        self.reboot_img.setProperty('source', res.qmlget('@icon/reboot'))
+        self.reboot_img.setProperty('source', res.qmlget('@icon/breeze-reboot'))
         self.suspend = self.findChild('suspend')
         self.txtSuspend = self.findChild('txtSuspend')
         self.txtSuspend.setProperty('text', res.get('@string/sleep'))
         self.suspend.clicked.connect(self.sleep_)
         self.suspend_img = self.findChild('suspend_img')
-        self.suspend_img.setProperty('source', res.qmlget('@icon/suspend'))
+        self.suspend_img.setProperty('source', res.qmlget('@icon/breeze-suspend'))
 
 
         self._login = self.findChild( 'login')
@@ -626,11 +626,23 @@ class Desktop (MainApp):
                 it = QtGui.QStandardItem(name)
                 it.setData(name, self.NameRole)
                 it.setData(name, self.LabelRole)
-                correctname = name.replace(' ','').replace('\n','').replace('(','').replace(')', '').replace('0', '').replace('1', '').replace('2', '').replace('3', '').replace('4', '').replace('5', '').replace('6', '').replace('7', '').replace('8', '').replace('9', '')
+                correctname = name.replace('\n','').replace('(','').replace(')', '').replace('0', '').replace('1', '').replace('2', '').replace('3', '').replace('4', '').replace('5', '').replace('6', '').replace('7', '').replace('8', '').replace('9', '')
                 if not control.read_record(correctname,'/etc/launched/logo.list')==None:
                     it.setData(res.qmlget(control.read_record(correctname,'/etc/launched/logo.list')), self.LogoRole)
+                elif ' - ' in correctname:
+                    scorrent = correctname.split(" - ")
+                    it.setData(res.qmlget(control.read_record(scorrent[1],'/etc/launched/logo.list')), self.LogoRole)
                 else:
-                    it.setData(res.qmlget('@icon/app'), self.LogoRole)
+                    worked = False
+                    scorrent = correctname.split(" ")
+                    for i in scorrent:
+                        if not control.read_record(i,'/etc/launched/logo.list')==None:
+                            worked = True
+                            it.setData(res.qmlget(control.read_record(i,'/etc/launched/logo.list')), self.LogoRole)
+                            break
+                    if not worked:
+                        it.setData(res.qmlget('@icon/app'), self.LogoRole)
+
                 model.appendRow(it)
             return  model
         except:
@@ -1082,7 +1094,17 @@ class Desktop (MainApp):
 
         if not self._restore_app.property('text')=='':
             try:
-                self.winid = subprocess.check_output(f'xdotool search "{self._restore_app.property("text")}"',shell=True).decode('utf-8').split('\n')
+                resapp = ''
+                
+                if 'Python' in self._restore_app.property("text"):
+                    resapp = 'Python'
+                elif 'Bash' in self._restore_app.property("text"):
+                    resapp = 'Bash'
+                elif 'Konsole' in self._restore_app.property("text"):
+                    resapp = 'Konsole'
+                else:
+                    resapp = self._restore_app.property("text")
+                self.winid = subprocess.check_output(f'xdotool search "{resapp}"',shell=True).decode('utf-8').split('\n')
                 for i in self.winid:
                     try:
                         subprocess.call(f'xdotool windowactivate {i}',shell=True)
@@ -1102,12 +1124,9 @@ class Desktop (MainApp):
 
         # scrot
 
-        try:
-            subprocess.call(f'mv /root/*scrot* /stor/{self.PICTURES}',shell=True)
-        except:
-            pass
+        if os.path.isfile('/usr/bin/scrot'): subprocess.call(f'/usr/bin/mv /root/*scrot* /stor/{self.PICTURES}',shell=True)
 
-        self.addFileModel('/root/Desktop')
+        #self.addFileModel('/root/Desktop')
 
         self.shells()
 
@@ -1115,6 +1134,13 @@ class Desktop (MainApp):
 
         self.feedCheck()
         self.changeDate()
+
+        # audio changing volume #
+        if self.eventClicked:
+            try:
+                subprocess.call (f'amixer set \'Master\' {str(int(self.slAudio.property("value")))}%',shell=True)
+            except:
+                pass
 
         # jumper:
 
@@ -1754,18 +1780,18 @@ class Desktop (MainApp):
         except:
             pass
 
-    def bashrc (self):
+    def saye (self):
         try:
-
             if 'Pyabr' in issue:
                 if self.username=='guest':
-                    f = open('/etc/bash.bashrc','w')
-                    f.write(f'cd /stor\npython3 vmabr.pyc user guest\nexit')
+                    f = open('/usr/bin/saye','w')
+                    f.write(f'#!/usr/bin/bash\ncd /stor\npython3 vmabr.pyc user guest\nexit')
                     f.close()
                 else:
-                    f = open('/etc/bash.bashrc','w')
-                    f.write(f'cd /stor\npython3 vmabr.pyc user {self.username} {self.password}\nexit')
+                    f = open('/usr/bin/saye','w')
+                    f.write(f'#!/usr/bin/bash\ncd /stor\npython3 vmabr.pyc user {self.username} {self.password}\nexit')
                     f.close()
+                subprocess.call("/usr/bin/chmod +x /usr/bin/saye",shell=True)
         except:
             pass
 
@@ -1837,7 +1863,7 @@ class Desktop (MainApp):
 
     panelClicked = False
     eventClicked = False
-    noteClicked  = False
+    noteClicked = False
     clockClicked = False
 
     def showpanel_(self):
@@ -1964,8 +1990,22 @@ class Desktop (MainApp):
         except:
             pass
 
-        if self.eventClicked:
-            QTimer.singleShot(10000,self.calcTemp)
+    def NotificationShow(self):
+        try:
+            n = Notifications()
+            splitor = (n.Show()).split(":::")
+            id_    = splitor[0]
+            title_ = splitor[1]
+            text_  = splitor[2]
+            app_   = splitor[3]
+            open_  = splitor[4]
+
+            self.w = Notif (title_,text_,app_,open_)
+
+        except:
+            pass
+
+        QTimer.singleShot(2000,self.NotificationShow)
 
     def __init__(self,ports):
         super(Desktop, self).__init__()
@@ -2054,6 +2094,10 @@ class Desktop (MainApp):
         self.txtD = self.findChild('txtD')
 
         self.btnPanel = self.findChild('btnPanel')
+        if self.getdata("feed")=='Yes':
+            self.btnPanel.setProperty('visible',True)
+        else:
+            self.btnPanel.setProperty('visible',False)
         self.btnPanel.clicked.connect (self.showpanel_)
 
         self.btnEvent = self.findChild('btnEvent')
@@ -2070,7 +2114,7 @@ class Desktop (MainApp):
         self.txtShutdown.setProperty('text',res.get('@string/escape'))
         self.shutdown.clicked.connect (self.shutdown_)
         self.shutdown_img = self.findChild('shutdown_img')
-        self.shutdown_img.setProperty('source', res.qmlget('@icon/shutdown'))
+        self.shutdown_img.setProperty('source', res.qmlget('@icon/breeze-shutdown'))
         self.lock = self.findChild('lock')
         self.txtLock = self.findChild('txtLock')
         self.txtLock.setProperty('text',res.get('@string/lock'))
@@ -2083,22 +2127,25 @@ class Desktop (MainApp):
         self.txtLogout.setProperty('text',res.get('@string/logout'))
         self.logout.clicked.connect(self.logout_)
         self.logout_img = self.findChild('logout_img')
-        self.logout_img.setProperty('source', res.qmlget('@icon/logout'))
+        self.logout_img.setProperty('source', res.qmlget('@icon/breeze-logout'))
         self.reboot = self.findChild('reboot')
         self.txtReboot = self.findChild('txtReboot')
         self.txtReboot.setProperty('text',res.get('@string/restart'))
         self.reboot.clicked.connect(self.restart_)
         self.reboot_img = self.findChild('reboot_img')
-        self.reboot_img.setProperty('source', res.qmlget('@icon/reboot'))
+        self.reboot_img.setProperty('source', res.qmlget('@icon/breeze-reboot'))
         self.suspend = self.findChild('suspend')
         self.txtSuspend = self.findChild('txtSuspend')
         self.txtSuspend.setProperty('text',res.get('@string/sleep'))
         self.suspend.clicked.connect(self.sleep_)
         self.suspend_img = self.findChild('suspend_img')
-        self.suspend_img.setProperty('source', res.qmlget('@icon/suspend'))
+        self.suspend_img.setProperty('source', res.qmlget('@icon/breeze-suspend'))
 
         self.popup_pysys = self.findChild('popup_pysys')
         self.popup_text = self.findChild('popup_text')
+
+        self.slAudio = self.findChild ('slAudio')
+        self.slAudio.setProperty('value','50')
 
         self.battery_000_charging = self.findChild('battery_000_charging')
         self.battery_010_charging = self.findChild('battery_010_charging')
@@ -2157,6 +2204,27 @@ class Desktop (MainApp):
         self._toolbar12 = self.findChild('toolbar12')
         self.msaDesktop = self.findChild('msaDesktop')
         self._keyless = self.findChild('keyless')
+
+        self.Gregorian = self.findChild('Gregorian')
+        self.Jalali = self.findChild('Jalali')
+
+        x = control.read_record ('type','/etc/default/calendar')
+        
+        if x=='0':
+            self.Gregorian.setProperty('visible',True)
+            self.Jalali.setProperty('visible',False)
+        elif x=='1':
+            self.Gregorian.setProperty('visible',False)
+            self.Jalali.setProperty('visible',True)
+        elif x=='2':
+            locale = self.getdata("locale")
+            
+            if locale=="fa":
+                self.Gregorian.setProperty('visible',False)
+                self.Jalali.setProperty('visible',True)
+            else:
+                self.Gregorian.setProperty('visible',True)
+                self.Jalali.setProperty('visible',False)
         
 
         if self.getdata  ('dock')=='bottom':
@@ -2208,7 +2276,7 @@ class Desktop (MainApp):
             self.update_menu12()
 
         # check cats
-        self.bashrc()
+        self.saye()
         self.pwduser()
         self.deskdirs()
         self.homelogo()
@@ -2220,7 +2288,8 @@ class Desktop (MainApp):
         self.startup()
         # Main Loop
         self.loop()
-        self.calcTemp()
+        QTimer.singleShot (10000,self.calcTemp)
+        self.NotificationShow()
 
 desktop = Backend()
 sys.exit(application.exec())
