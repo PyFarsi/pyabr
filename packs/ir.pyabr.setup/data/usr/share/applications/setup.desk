@@ -2,6 +2,9 @@ name[en]: Pyabr setup
 name[fa]: نصاب پای ابر
 name[ar]: مثبت بای ابر
 name[tr]: pyabr kurmak
+name[de]: Pyabr-Setup
+name[cn]: 设置
+name[ru]: настраивать
 logo: @icon/setup
 exec: setup
 application: No

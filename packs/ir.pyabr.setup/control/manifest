@@ -3,7 +3,7 @@ name[en]: Pyabr Setup
 name[fa]: نصاب پای ابر
 name[ar]: مثبت بای ابر
 name[tr]: pyabr kurmak
-copyright: (c) 2021 Mani Jamali
+copyright: (c) 2022 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
 version: current
@@ -13,5 +13,6 @@ screenshots: Yes
 entry: setup
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.setup.svg
 logo.inside: @icon/setup
-build: 1400-10-19
+
+build: 1400-12-26
 mirror: https://mirror.pyabr.ir/zayanderoad/

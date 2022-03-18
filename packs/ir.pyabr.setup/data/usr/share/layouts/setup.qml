@@ -11,9 +11,13 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: app
     visible: true
-    color: "white"
+    color: wt.background
     width: 600
     height: 472
+    
+    WindowTheme {
+        id: wt
+    }
 
     maximumWidth: 600
     maximumHeight: 472
@@ -52,8 +56,9 @@ ApplicationWindow {
                 placeholderText: "Enter a new hostname"
                 width: parent.width
                 objectName: "leHostname"
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
                 selectByMouse: true
+                color: wt.color
                     MouseArea {
                         anchors.fill: parent
                         cursorShape: Qt.IBeamCursor
@@ -65,8 +70,9 @@ ApplicationWindow {
                 placeholderText: "Enter a new root password"
                 width: parent.width
                 echoMode: TextInput.Password
+                color: wt.color
                 objectName: "leRootCode"
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
                 selectByMouse: true
                     MouseArea {
                         anchors.fill: parent
@@ -79,7 +85,8 @@ ApplicationWindow {
                 placeholderText: "Pick a username"
                 objectName: "leUsername"
                 width: parent.width
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
+                color: wt.color
                 selectByMouse: true
                     MouseArea {
                         anchors.fill: parent
@@ -93,14 +100,15 @@ ApplicationWindow {
                 width: parent.width
                 echoMode: TextInput.Password
                 objectName: "lePassword"
-                font.family: "IRANSans"
+                color: wt.color
+                font.family: wt.fontFamily
             }
 
             CheckBox {
                 text: 'Enable Guest account'
                 width: parent.width
                 objectName: "chGuest"
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
             }
         }
     }
@@ -120,14 +128,15 @@ ApplicationWindow {
 
             Label {
                 text: "Choose your language"
+                color: wt.color
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
             ComboBox {
-                model: ["English", "فارسی","Türk","عربی"]
+                model: ["English", "فارسی","Türk","عربی","中国人","Deutsch","русский"]
                 width: parent.width
                 objectName: "cmLang"
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
             }
         }
     }
@@ -148,8 +157,9 @@ ApplicationWindow {
             TextField {
                 placeholderText: "Enter your fullname"
                 width: parent.width
+                color: wt.color
                 objectName: "leFullName"
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
                 selectByMouse: true
                     MouseArea {
                         anchors.fill: parent
@@ -173,7 +183,8 @@ ApplicationWindow {
             anchors.centerIn: parent
             text: "Setup is already complete;\n that you can signout and use your Pyabr is your Portable USB/SD"
             font.pixelSize: 15
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
+            color: wt.color
             objectName: "setup_message"
         }
     }

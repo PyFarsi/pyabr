@@ -17,6 +17,7 @@
     * English Page:     https://en.pyabr.ir
 '''
 
+from urllib import request
 from pyabr.core import *
 from pyabr.quick import *
 import hashlib,subprocess
@@ -142,6 +143,12 @@ class MainApp (MainApp):
                 control.write_record ('locale','tr','/etc/gui')
             elif self.cmLang.property('currentIndex')==3:
                 control.write_record ('locale','ar','/etc/gui')
+            elif self.cmLang.property('currentIndex')==4:
+                control.write_record ('locale','cn','/etc/gui')
+            elif self.cmLang.property('currentIndex')==5:
+                control.write_record ('locale','de','/etc/gui')
+            elif self.cmLang.property('currentIndex')==6:
+                control.write_record ('locale','ru','/etc/gui')
             else:
                 control.write_record ('locale','en','/etc/gui')
 
@@ -150,12 +157,19 @@ class MainApp (MainApp):
             files.create ('/etc/suapp')
             app.signal('logout')
 
+    def Counter_(self,yes):
+        if yes:
+            self.x = requests.post ('https://cloud.pyabr.ir/counter.php',data={'version':files.readall("/proc/info/ver")})
+
     def __init__(self):
         super(MainApp, self).__init__()
 
         self.load (res.get('@layout/setup'))
-        self.setProperty('title',res.get('@string/setup'))
+        self.setProperty('title',res.etc('setup',f'name[{res.getdata("locale")}]'))
         app.launchedlogo(self.property('title'), res.etc('setup', 'logo'))
+
+        self.w = Ask (res.get('@string/statistics'),res.get('@string/statisticsm'),self.Counter_)
+       
 
         self.next = self.findChild ('next')
         self.next.clicked.connect (self.next_)
@@ -184,7 +198,6 @@ class MainApp (MainApp):
         self.back.setProperty('visible',False)
         self.img0 = self.findChild('img0')
         self.img0.setProperty ('source',res.qmlget(res.etc('setup','img0')))
-        self.setProperty('title',res.get('@string/setup'))
 
 
 application = QtGui.QGuiApplication([])
