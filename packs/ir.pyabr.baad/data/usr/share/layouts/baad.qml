@@ -12,13 +12,16 @@ import QtGraphicalEffects 1.12
 ApplicationWindow {
     id: app
     visible: true
-    color: "white"
+    color: wt.background
     width: 1000
     height: 600
+    
+    WindowTheme {
+        id: wt
+    }
 
     background: Rectangle {
         Image {
-            source: "../../../usr/share/backgrounds/breeze-splash.jpg"
             id: background
             objectName: "background"
         }
@@ -28,11 +31,11 @@ ApplicationWindow {
             radius: 32
         }
         Text {
-            color: "white"
+            color: wt.color
             text: ""
             objectName: "txtTemp"
             font.pixelSize: 100
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             id: txtTemp
             anchors.centerIn: parent
         }

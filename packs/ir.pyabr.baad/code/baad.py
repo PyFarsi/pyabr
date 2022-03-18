@@ -105,16 +105,15 @@ class MainApp (MainApp):
         else:
             self.background.setProperty('source',res.qmlget(res.etc('baad','BaaD_Clear')))
 
-        QTimer.singleShot(5000,self.loop)
 
     def __init__(self):
         super(MainApp, self).__init__()
 
         self.load (res.get('@layout/baad'))
-        self.setProperty('title',res.get('@string/baad'))
+        self.setProperty('title',res.getname('baad'))
         app.launchedlogo(self.property('title'), res.etc('baad', 'logo'))
 
-        self.loop()
+        self.tempC_()
 
         self.tempF = self.findChild('tempF')
         self.tempF.clicked.connect (self.tempF_)

@@ -2,6 +2,9 @@ name[en]: BaaD
 name[fa]: باد
 name[ar]: ريح
 name[tr]: hava Durumu
+name[de]: Wetter
+name[cn]: 天气
+name[ru]: Погода
 logo: @icon/weather-clouds
 exec: baad
 application: Yes

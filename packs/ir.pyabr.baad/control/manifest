@@ -3,15 +3,16 @@ name[en]: BaaD
 name[fa]: باد
 name[ar]: ريح
 name[tr]: rüzgâr
-copyright: (c) 2021 Abolfazl Deymekar
+copyright: (c) 2022 Abolfazl Deymekar
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.5
+version: 2.0.6
 description: BaaD is a weather checker
 compile: Yes
 entry: baad
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.baad.svg
 logo.inside: @icon/weather-clouds
 screenshots: Yes
-build: 1400-10-19
+
+build: 1400-12-26
 mirror: https://mirror.pyabr.ir/zayanderoad/
