@@ -1,5 +1,9 @@
+usr/share/layouts/HTMLViewer.qml
 usr/share/layouts/jooya.qml
+usr/share/layouts/MarkdownViewer.qml
 usr/share/applications/jooya.desk
+usr/share/applications/MarkdownViewer.desk
+usr/share/applications/HTMLViewer.desk
 etc/jooya/searchengine
 etc/jooya/engines/brave
 etc/jooya/engines/duckduckgo
@@ -12,3 +16,5 @@ etc/jooya/engines/google
 etc/jooya/engines/bing
 etc/jooya/engines/startpage
 usr/app/jooya.pyc
+usr/app/MarkdownViewer.pyc
+usr/app/HTMLViewer.pyc

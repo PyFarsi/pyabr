@@ -1,5 +1,10 @@
 name[fa]: جویا
-name[en]: Jooya
+name[en]: Jooya Browser
+name[ar]: متصفح جویا
+name[tr]: Jooya Tarayıcı
+name[de]: Jooya-Browser
+name[cn]: 浏览器
+name[ru]: Браузер
 logo: @icon/breeze-browser
 exec: jooya
 application: Yes

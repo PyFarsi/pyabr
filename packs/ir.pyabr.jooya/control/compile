@@ -1,1 +1,3 @@
 jooya.py:usr/app/jooya.pyc
+MarkdownViewer.py:usr/app/MarkdownViewer.pyc
+HTMLViewer.py:usr/app/HTMLViewer.pyc

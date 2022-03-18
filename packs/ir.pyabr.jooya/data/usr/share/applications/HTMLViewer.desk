@@ -1,0 +1,12 @@
+name[fa]: ابرمتن خوان
+name[en]: HTML Viewer
+name[ar]: عارض HTML
+name[tr]: HTML Görüntüleyici
+name[de]: HTML-Viewer
+name[cn]: HTML 查看器
+name[ru]: Просмотрщик HTML
+logo: @icon/file-html
+exec: HTMLViewer
+application: No
+category: tools
+hidden: Yes

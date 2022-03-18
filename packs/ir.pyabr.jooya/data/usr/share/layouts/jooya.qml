@@ -8,18 +8,23 @@ import QtQuick.Controls 2.3
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls.Material 2.12
 import QtWebEngine 1.2
-import QtWebEngine 1.10
-import QtWebEngine 1.0
+//import QtWebEngine 1.10
 import QtQuick.Layouts 1.11
+
 
 ApplicationWindow {
     id: jooya
     visible: true
-    color: "white"
+    color: wt.background
     title: "Jooya"
 
     width: 1000
     height: 600
+
+    WindowTheme {
+        id: wt
+    }
+
 
     Text {
         id: sesel
@@ -81,7 +86,8 @@ ApplicationWindow {
                             height: parent.height
 
                             onClicked: {
-                                webView.url = webView.url
+                                webView.url = webView.url;
+                                //webView.url = "file:///stor/usr/share/samples/sample.html";
                             }
                     }
 
@@ -90,7 +96,8 @@ ApplicationWindow {
                         placeholderText: ""
                         anchors.centerIn: parent
                         width: parent.width/1.5
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
+                        color: wt.colorTitle
                         height: parent.height
                         id: txtURL
                         objectName: "txtURL"
@@ -113,6 +120,19 @@ ApplicationWindow {
                             height: parent.height
                             anchors.top: parent.top
                             anchors.left: txtURL.right
+                            anchors.bottom: parent.bottom
+                    }
+
+                    ToolButton {
+                            icon.source: 'file:///stor/usr/share/icons/breeze-bookmark-new.svg'
+                            icon.color: "white"
+                            id: addbookmark
+                            objectName: "addbookmark"
+
+                            width: parent.height
+                            height: parent.height
+                            anchors.top: parent.top
+                            anchors.left: search.right
                             anchors.bottom: parent.bottom
                     }
 
@@ -143,11 +163,12 @@ ApplicationWindow {
                     width: parent.width
                     height: parent.height-toolbar.height
 
+
                 }
 
     Menu {
         id: contextMenu
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         objectName: "contextMenu"
 
         Action {
@@ -161,18 +182,29 @@ ApplicationWindow {
             text: "History"
 
             onTriggered: {
-                popup_history.open();
+                popup_history.show();
+            }
+        }
+        Action {
+            id: act_bookmarks
+            objectName: "act_bookmarks"
+            text: "Bookmarks"
+
+            onTriggered: {
+                popup_bookmarks.show();
             }
         }
         Menu {
             title: "Settings"
+            font.family: wt.fontFamily
+            objectName: "men_controls"
             Action {
                 id: act_searchengines
                 objectName: "act_searchengines"
                 text: "Search Engines"
 
                 onTriggered: {
-                    popup_searchengine.open();
+                    popup_searchengine.show();
                 }
             }
             Action {
@@ -181,12 +213,14 @@ ApplicationWindow {
                 text: "Add a new search engine"
 
                 onTriggered: {
-                    popup_addsearchengine.open();
+                    popup_addsearchengine.show();
                 }
             }
         }
         Menu {
             title: "View"
+            font.family: wt.fontFamily
+            objectName: "men_view"
             Action {
                 id: act_fullscreen
                 objectName: "act_fullscreen"
@@ -201,56 +235,24 @@ ApplicationWindow {
     }
 
     /* History */
-    Popup {
+    Window {
         id: popup_history
-        anchors.centerIn: parent
-        width: parent.width/2
-        height: parent.height/2
-        modal: false
+        objectName: "popup_history"
+        width: 400
+        height: 200
         visible: false
-        focus: true
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
-
-        ToolButton {
-            anchors.top: parent.top
-            anchors.right: parent.right
-            anchors.rightMargin: 1
-            anchors.leftMargin: 1
-            width: 25
-            height: 25
-            id: btnClose
-
-            Image {
-                source: "file:///stor/usr/share/icons/breeze-close.svg"
-                fillMode: Image.PreserveAspectFit
-                sourceSize: Qt.size( parent.width, parent.height )
-            }
-
-            onClicked: {
-                popup_history.close()
-            }
-        }
-
-        Text {
-            anchors.horizontalCenter: popup_history.horizontalCenter
-            anchors.top: popup_history.top
-            height: btnClose2.height
-            text: "History"
-            font.family: "IRANSans"
-        }
+        title: "History"
 
         ScrollView {
-            width: popup_history.width-18
-            height: popup_history.height-btnClose.height
-            anchors.top: btnClose.bottom
-            anchors.bottom: popup_history.bottom
+            width: popup_history.width
+            height: popup_history.height
+            anchors.fill: parent
             clip: true
             id: scroll
             Column {
                 width: popup_history.width
-                height: popup_history.height-btnClose.height
-                anchors.top: btnClose.bottom
-                anchors.bottom: popup_history.bottom
+                height: popup_history.height
+               anchors.fill: parent
                 spacing: 2
                 Repeater {
                     model: JooyaHistoryModel
@@ -273,7 +275,7 @@ ApplicationWindow {
 
                         Text {
                             text: model.title
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             font.pixelSize: 18
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.left: imagex.right
@@ -284,7 +286,7 @@ ApplicationWindow {
                         Rectangle {
                             width: parent.width
                             height: 1
-                            color: "silver"
+                            color: wt.colorLine
                             anchors.top: parent.bottom
                         }
 
@@ -301,57 +303,94 @@ ApplicationWindow {
         }
     }
 
-    /* Search Engines */
-    Popup {
-        id: popup_searchengine
-        anchors.centerIn: parent
-        width: parent.width/2
-        height: parent.height/2
-        modal: false
+    /* Bookmarks */
+    Window {
+        id: popup_bookmarks
+        objectName: "popup_bookmarks"
+        width: 400
+        height: 200
         visible: false
-        focus: true
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+        title: "Bookmarks"
 
-        ToolButton {
-            anchors.top: parent.top
-            anchors.right: parent.right
-            anchors.rightMargin: 1
-            anchors.leftMargin: 1
-            width: 25
-            height: 25
-            id: btnClose2
+        ScrollView {
+            width: popup_bookmarks.width
+            height: popup_bookmarks.height
+            anchors.fill: parent
+            clip: true
+            id: scrollb
+            Column {
+                width: popup_bookmarks.width
+                height: popup_bookmarks.height
+               anchors.fill: parent
+                spacing: 2
+                Repeater {
+                    model: JooyaBookmarkModel
 
-            Image {
-                source: "file:///stor/usr/share/icons/breeze-close.svg"
-                fillMode: Image.PreserveAspectFit
-                sourceSize: Qt.size( parent.width, parent.height )
-            }
+                    ToolButton {
 
-            onClicked: {
-                popup_searchengine.close()
+                        width: popup_bookmarks.width
+                        height: parent.width/10
+
+                        Image {
+                                source: model.icon
+                                anchors.left: parent.left
+                                anchors.leftMargin: 20
+                                anchors.rightMargin: 20
+                                width: parent.height
+                                sourceSize: Qt.size( parent.width, parent.height )
+                                height: parent.height
+                                id: imagex
+                        }
+
+                        Text {
+                            text: model.title
+                            font.family: wt.fontFamily
+                            font.pixelSize: 18
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.left: imagex.right
+                            anchors.leftMargin: 20
+                            anchors.rightMargin: 20
+                        }
+
+                        Rectangle {
+                            width: parent.width
+                            height: 1
+                            color: wt.colorLine
+                            anchors.top: parent.bottom
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                webView.url = model.link;
+                                popup_bookmarks.close();
+                            }
+                        }
+                    }
+                }
             }
         }
+    }
 
-        Text {
-            anchors.horizontalCenter: popup_searchengine.horizontalCenter
-            anchors.top: popup_searchengine.top
-            height: btnClose2.height
-            text: "Search Engines"
-            font.family: "IRANSans"
-        }
+    /* Search Engines */
+    Window {
+        id: popup_searchengine
+        objectName: "popup_searchengine"
+        width: 400
+        height: 200
+        visible: false
+        title: "Search Engines"
 
         ScrollView {
             width: popup_searchengine.width
-            height: popup_searchengine.height-btnClose.height
-            anchors.top: btnClose2.bottom
-            anchors.bottom: popup_searchengine.bottom
+            height: popup_searchengine.height
+            anchors.fill: parent
             clip: true
             id: scrollse
             Column {
-                width: popup_searchengine.width-18
-                height: popup_searchengine.height-btnClose2.height
-                anchors.top: btnClose2.bottom
-                anchors.bottom: popup_searchengine.bottom
+                width: popup_searchengine.width
+                height: popup_searchengine.height
+                anchors.fill: parent
                 spacing: 2
                 Repeater {
                     model: JooyaSearchEngineModel
@@ -363,7 +402,7 @@ ApplicationWindow {
 
                         Text {
                             text: model.name
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             font.pixelSize: 18
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.left: imagex.right
@@ -374,7 +413,7 @@ ApplicationWindow {
                         Rectangle {
                             width: parent.width
                             height: 1
-                            color: "silver"
+                            color: wt.colorLine
                             anchors.top: parent.bottom
                         }
 
@@ -392,52 +431,19 @@ ApplicationWindow {
     }
 
     /* Search Engines */
-    Popup {
+    Window {
         id: popup_addsearchengine
         objectName: "popup_addsearchengine"
-        anchors.centerIn: parent
-        width: parent.width/2
-        height: 40*7
-        modal: false
+        width: 400
+        height: 200
         visible: false
-        focus: true
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
-
-        ToolButton {
-            anchors.top: parent.top
-            anchors.right: parent.right
-            anchors.rightMargin: 1
-            anchors.leftMargin: 1
-            width: 25
-            height: 25
-            id: btnClose3
-
-            Image {
-                source: "file:///stor/usr/share/icons/breeze-close.svg"
-                fillMode: Image.PreserveAspectFit
-                sourceSize: Qt.size( parent.width, parent.height )
-            }
-
-            onClicked: {
-                popup_addsearchengine.close()
-            }
-        }
-
-        Text {
-            anchors.horizontalCenter: popup_addsearchengine.horizontalCenter
-            anchors.top: popup_addsearchengine.top
-            height: btnClose3.height
-            text: "Add a new search engine"
-            font.family: "IRANSans"
-        }
-
-
+        title: "Add a new Search Engine"
                 TextField {
-                        anchors.top: btnClose3.bottom
+                        anchors.top: parent.top
                         width: parent.width
                         height: 40
                         placeholderText: "ID (e.g google)"
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         id: seID
                         objectName: "seID"
                         selectByMouse: true
@@ -453,7 +459,7 @@ ApplicationWindow {
                         width: parent.width
                         height: 40
                         placeholderText: "Name (e.g. Google)"
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         id: seName
                         objectName: "seName"
                         font.pixelSize: 12
@@ -470,7 +476,7 @@ ApplicationWindow {
                         width: parent.width
                         height: 40
                         placeholderText: "URL (e.g. https://google.com)"
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         id: seUrl
                         objectName: "seUrl"
                         selectByMouse: true
@@ -485,7 +491,7 @@ ApplicationWindow {
                         width: parent.width
                         height: 40
                         placeholderText: "Query URL (e.g. https://google.com/search?={0})"
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         id: seQUrl
                         objectName: "seQUrl"
                         font.pixelSize: 12
@@ -501,7 +507,7 @@ ApplicationWindow {
                         width: parent.width
                         height: 40
                         placeholderText: "Keyboard (e.g. :g)"
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 12
                         id: seKey
                         objectName: "seKey"

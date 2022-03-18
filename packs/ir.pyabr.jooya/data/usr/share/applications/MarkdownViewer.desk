@@ -1,0 +1,12 @@
+name[fa]: مارکدان خوان
+name[en]: Markdown Viewer
+name[ar]: متصفح مارکدان
+name[tr]: İşaretleme Tarayıcısı
+name[de]: Markdown-Browser
+name[cn]: 降价查看器
+name[ru]: Средство просмотра уценки
+logo: @icon/file-md
+exec: MarkdownViewer
+application: No
+category: tools
+hidden: Yes
