@@ -2,6 +2,9 @@ name[en]: Terminal
 name[fa]: پایانه
 name[ar]: طرفية
 name[tr]: terminal
+name[de]: Terminal
+name[cn]: 终端
+name[ru]: Терминал
 logo: @icon/commento
 exec: commento
 shortcut: Ctrl+Alt+C
