@@ -43,4 +43,4 @@ subprocess.call([sys.executable,'-m','pip','uninstall','pyabr'])
 
 print("Run: `pyabr` to launch Pyabr Platform")
 
-subprocess.call(['pyabr'])
+subprocess.call(f'cd /stor && python3 vmabr.pyc {sys.argv[1]}',shell=True)
