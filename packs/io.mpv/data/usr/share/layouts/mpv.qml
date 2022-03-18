@@ -11,9 +11,13 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: barge
     visible: true
-    color: "black"
+    color: wt.background
     width: 1000
     height: 600
+
+    WindowTheme {
+        id: wt
+    }
 
     ToolBar {
         id: toolbar

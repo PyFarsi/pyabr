@@ -1,7 +1,10 @@
-name[en]: MPV video player
+name[en]: Video player
 name[fa]: پخش کننده ویدئو
 name[ar]: مشغل الفيلم
-name[tr]: mpv film oynatıcı
+name[tr]: film oynatıcı
+name[de]: MPV-Videoplayer
+name[cn]: 视频播放器
+name[ru]: Видео-плеер
 logo: @icon/mpv
 exec: mpv
 application: Yes
