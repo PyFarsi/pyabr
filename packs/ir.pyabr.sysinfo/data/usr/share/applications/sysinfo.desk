@@ -2,6 +2,9 @@ name[en]: System Informations
 name[fa]: اطلاعات سیستمی
 name[ar]: معلومات النظام
 name[tr]: sistem bilgisi
+name[de]: Systeminformationen
+name[cn]: 系统信息
+name[ru]: Информация о системе
 logo: @icon/info
 exec: sysinfo
 application: Yes

@@ -47,7 +47,7 @@ class MainApp (MainApp):
         self.gui1 = self.findChild ('gui1')
         self.arch1 = self.findChild ('arch1')
 
-        self.setProperty ('title',res.get('@string/sysinfo'))
+        self.setProperty('title',res.getname('sysinfo'))
         app.launchedlogo(self.property('title'), res.etc('sysinfo', 'logo'))
         # check direction
         if res.getdata ('locale')=='fa' or res.getdata('locale')=='ar':
