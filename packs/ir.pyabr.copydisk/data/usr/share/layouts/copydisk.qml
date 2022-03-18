@@ -11,9 +11,13 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: file
     visible: true
-    color: "white"
+    color: wt.background
     width: 400
     height: 400
+    
+    WindowTheme {
+        id: wt
+    }
 
     Text {
         visible: false
@@ -70,8 +74,9 @@ ApplicationWindow {
 
                     Text {
                         text: model.title
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 18
+                        color: wt.color
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: imagex.right
                         anchors.leftMargin: 20
@@ -81,7 +86,7 @@ ApplicationWindow {
                     Rectangle {
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                         anchors.top: parent.bottom
                     }
                 }
@@ -97,7 +102,7 @@ ApplicationWindow {
         height: parent.height/10
         anchors.bottomMargin: 0
         anchors.bottom: parent.bottom
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
     }
     Button {
         text: "Format and Copy"
@@ -109,6 +114,6 @@ ApplicationWindow {
         anchors.bottomMargin: 0
         anchors.left: cancel.right
         anchors.bottom: parent.bottom
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
     }
 }

@@ -2,6 +2,9 @@ name[en]: Copydisk
 name[fa]: کپی دیسک
 name[ar]: نسخ
 name[tr]: kopyalama diski
+name[de]: Datenträger kopieren
+name[cn]: 复制盘
+name[ru]: Копидиск
 logo: @icon/copydisk
 exec: copydisk
 application: Yes
