@@ -1,3 +1,3 @@
 from pyabr.core import *
 
-app.start('chromium','https://pyabr.ir')
+app.browser('https://pyabr.ir')

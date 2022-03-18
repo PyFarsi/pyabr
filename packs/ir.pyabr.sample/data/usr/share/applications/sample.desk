@@ -2,6 +2,9 @@ name[en]: Sample Application
 name[fa]: برنامه نمونه
 name[ar]: تطبيق العينة
 name[tr]: örneklem
+name[de]: Musteranwendung
+name[cn]: 示例应用程序
+name[ru]: образец заявления
 logo: @icon/app
 exec: sample
 application: No

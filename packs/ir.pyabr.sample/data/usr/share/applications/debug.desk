@@ -2,6 +2,9 @@ name[en]: Debug Application
 name[fa]: برنامه دیباگی
 name[ar]: تطبيق التصحيح
 name[tr]: hata ayıklamas
+name[de]: Anwendung debuggen
+name[cn]: 调试应用程序
+name[ru]: Отладка приложения
 logo: @icon/app
 exec: debug
 application: No

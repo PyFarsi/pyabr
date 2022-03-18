@@ -3,14 +3,15 @@ name[en]: Sample software
 name[fa]: نمونه
 name[ar]: برنامج عينة
 name[tr]: örneklem
-copyright: (c) 2021 Mani Jamali
+copyright: (c) 2022 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.3
+version: 2.0.4
 description: Sample software and files for Pyabr
 compile: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.sample.svg
 logo.inside: @icon/app
 entry: sample
-build: 1400-10-19
+
+build: 1400-12-26
 mirror: https://mirror.pyabr.ir/zayanderoad/

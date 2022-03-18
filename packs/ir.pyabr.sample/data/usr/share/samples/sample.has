@@ -1,0 +1,4 @@
+function main(argv:[string]) : int {
+    print("Hello World!")
+    return 0   
+}

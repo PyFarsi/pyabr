@@ -1,0 +1,4 @@
+add config
+paye pak :project_dir
+paye upak :project_pack
+rm :project_pack
