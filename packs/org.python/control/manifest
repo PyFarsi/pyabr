@@ -3,7 +3,8 @@ name[en]: Python
 name[fa]: پایتون
 name[ar]: بایثون
 name[tr]: piton
-copyright: (c) 2021 Python
+name[de]: Python
+copyright: (c) 2022 Python
 license: PSF
 unpack: /
 version: current
@@ -12,5 +13,6 @@ compile: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/org.python.svg
 logo.inside: @icon/python
 screenshots: Yes
-build: 1400-10-19
+
+build: 1400-12-26
 mirror: https://mirror.pyabr.ir/zayanderoad/
