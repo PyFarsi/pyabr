@@ -52,7 +52,7 @@ class MainApp (MainApp):
         self.addDrivesModel()
 
         self.load (res.get('@layout/drives'))
-        self.setProperty('title','Drives')
+        self.setProperty('title',res.getname('drives'))
         app.launchedlogo(self.property('title'), res.etc('drives', 'logo'))
         self.dsel = self.findChild ('dsel')
         self.btnDetail = self.findChild ('btnDetail')

@@ -11,9 +11,13 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: file
     visible: true
-    color: "white"
+    color: wt.background
     width: 900
     height: 700
+
+    WindowTheme {
+        id: wt
+    }
 
     Text {
         visible: false
@@ -85,7 +89,8 @@ ApplicationWindow {
                     Text { 
                         text: model.title
                          anchors.horizontalCenter: parent.horizontalCenter
-                          font.family: "IRANSans"
+                          font.family: wt.fontFamily
+                          color: wt.color
                         width: parent.width
               
                     }
@@ -148,8 +153,9 @@ ApplicationWindow {
 
                     Text {
                         text: model.title
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 18
+                        color: wt.color
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: imagex.right
                         anchors.leftMargin: 20
@@ -159,7 +165,7 @@ ApplicationWindow {
                     Rectangle {
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                         anchors.top: parent.bottom
                     }
                 }

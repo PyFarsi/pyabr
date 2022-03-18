@@ -2,6 +2,9 @@ name[en]: Drives
 name[fa]: درایو ها
 name[ar]: محرکات
 name[tr]: Sürücüler
+name[de]: Fährt
+name[cn]: 驱动器
+name[ru]: диски
 logo: @icon/disk
 exec: drives
 application: Yes

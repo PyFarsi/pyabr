@@ -19,6 +19,7 @@
 
 from pyabr.core import *
 from pyabr.quick import *
+from pyabr.cloud import *
 import multiprocessing,subprocess,sys,random,shutil
 
 class MainApp (MainApp):
@@ -162,9 +163,6 @@ class MainApp (MainApp):
         else:
             self._paste.setProperty('enabled',True)
 
-        if self.act.property('text')=='connectcloud':
-            self.w = CloudConnector()
-
         if files.isfile (self.fselp) or files.isdir (self.fselp):
             if self.act.property('text')=='cut':
                 if permissions.check(f'{files.output(self.fselp)}', "r", files.readall("/proc/info/su")):
@@ -274,10 +272,15 @@ class MainApp (MainApp):
                 d = Drive()
                 d.Download (self.fselp)
 
-            elif self.act.property('text')=='ziro':
+            elif self.act.property('text')=='zero':
                 d = Drive()
                 d.Upload (self.fselp)
                 files.create (self.fselp)
+
+            elif self.act.property('text')=='unlink':
+                d = Drive()
+                d.Unlink (self.fselp)
+                commands.rm ([self.fselp])
 
             elif self.act.property('text')=='link':
                 d = Drive()
@@ -352,7 +355,7 @@ class MainApp (MainApp):
             
         self.load (res.get('@layout/files'))
         try:
-            self.setProperty('title',res.get('@string/files'))
+            self.setProperty('title',res.getname('files'))
         except:
             pass
         app.launchedlogo(self.property('title'), res.etc('files', 'logo'))
@@ -393,8 +396,10 @@ class MainApp (MainApp):
         self._upcloud.setProperty('text',res.get('@string/upload'))
         self._downcloud = self.findChild('downcloud')
         self._downcloud.setProperty('text',res.get('@string/download'))
-        self._ziro = self.findChild('ziro')
-        self._ziro.setProperty('text',res.get('@string/ziro'))
+        self._zero = self.findChild('zero')
+        self._zero.setProperty('text',res.get('@string/zero'))
+        self._unlink = self.findChild('unlink')
+        self._unlink.setProperty('text', res.get('@string/unlink'))
         self.act = self.findChild('act')
 
         self.zipc = self.findChild('zipc')

@@ -2,6 +2,9 @@ name[en]: Files
 name[fa]: فایل ها
 name[ar]: الملفات
 name[tr]: Dosyalar
+name[de]: Dateien
+name[cn]: 文件
+name[ru]: файлы
 logo: @icon/roller
 exec: files
 application: Yes

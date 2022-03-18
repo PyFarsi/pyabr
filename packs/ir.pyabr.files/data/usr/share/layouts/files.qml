@@ -11,9 +11,13 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: file
     visible: true
-    color: "white"
+    color: wt.background
     width: 1000
     height: 720
+
+    WindowTheme {
+        id: wt
+    }
 
     Text {
         visible: false
@@ -75,15 +79,6 @@ ApplicationWindow {
             ToolButton {
                 anchors.leftMargin: 20
                 anchors.rightMargin: 20
-                icon.source: 'file:///stor/usr/share/icons/breeze-cloud-light.svg'
-                icon.color: "white"
-                onClicked: {
-                    act.text = 'connectcloud'
-                }
-            }
-            ToolButton {
-                anchors.leftMargin: 20
-                anchors.rightMargin: 20
                 icon.source: 'file:///stor/usr/share/icons/breeze-details.svg'
                 icon.color: "white"
                 onClicked: {
@@ -92,18 +87,18 @@ ApplicationWindow {
             }
         }
         Text {
-            color: "white"
             id: title
             objectName: "title"
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             font.pixelSize: 18
             anchors.centerIn: parent
+            color: wt.colorTitle
         }
     }
 
     Menu {
                       id: contextMenu
-                      font.family: "IRANSans"
+                      font.family: wt.fontFamily
                             objectName: "contextMenu"
                             Action { 
                                 id: filex
@@ -191,13 +186,23 @@ ApplicationWindow {
                                     }
                                 }
                                 Action {
-                                    text: "Ziro"
-                                    objectName: "ziro"
-                                    id: ziro
+                                    text: "Zero"
+                                    objectName: "zero"
+                                    id: zero
                                     
                                     icon.source: "file:///stor/usr/share/icons/breeze-delete.svg"
                                     onTriggered: {
-                                        act.text = "ziro"
+                                        act.text = "zero"
+                                    }
+                                }
+                                Action {
+                                    text: "Unlink (Remove from cloud)"
+                                    objectName: "unlink"
+                                    id: unlink
+                                    icon.color: "red"
+                                    icon.source: "file:///stor/usr/share/icons/breeze-delete.svg"
+                                    onTriggered: {
+                                        act.text = "unlink"
                                     }
                                 }
                                 Action {
@@ -406,8 +411,9 @@ ApplicationWindow {
                     }
                     Text { 
                         text: model.name
+                        color: wt.color
                          anchors.horizontalCenter: parent.horizontalCenter
-                          font.family: "IRANSans"
+                          font.family: wt.fontFamily
     
                     }
                 }
@@ -492,19 +498,20 @@ ApplicationWindow {
 
                     Text {
                         text: model.name
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 18
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: imagex.right
                         anchors.leftMargin: 20
                         anchors.rightMargin: 20
+                        color: wt.color
                     }
 
                     Text {
                         text: model.mimetype
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 14
-                        color: "gray"
+                        color: wt.colorSmall
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.rightMargin: 100
@@ -512,9 +519,9 @@ ApplicationWindow {
                    
                     Text {
                         text: model.size
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 14
-                        color: "gray"
+                        color: wt.colorSmall
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.right: parent.right
                         anchors.leftMargin: 20
@@ -524,7 +531,7 @@ ApplicationWindow {
                     Rectangle {
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                         anchors.top: parent.bottom
                     }
                 }
