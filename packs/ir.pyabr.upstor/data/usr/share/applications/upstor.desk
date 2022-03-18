@@ -1,6 +1,10 @@
 name[en]: Upgrade
 name[fa]: ارتقا
 name[ar]: تطوير
+name[tr]: Güncelleme
+name[de]: Aktualisierung
+name[cn]: 升级
+name[ru]: Обновление
 logo: @icon/upstor
 exec: upstor
 application: Yes

@@ -3,6 +3,7 @@ import shutil
 
 from pyabr.core import *
 from pyabr.quick import *
+
 import subprocess
 class MainApp (MainApp):
 
@@ -15,14 +16,14 @@ class MainApp (MainApp):
                 shutil.copyfile('/tmp/stor.sb','/run/initramfs/memory/data/pyabr/modules/stor.sb')
             except:
                 subprocess.call('mount /tmp/stor.sb /mnt',shell=True)
-                subprocess.call('cp -r /mnt/stor/app /stor',shell=True)
-                subprocess.call('cp -r /mnt/stor/proc /stor',shell=True)
-                subprocess.call('cp -r /mnt/stor/usr /stor',shell=True)
-                subprocess.call('cp -r /mnt/stor/vmabr.pyc /stor',shell=True)
-                subprocess.call('cp -r /mnt/stor/etc/domain /stor/etc',shell=True)
-                subprocess.call('cp -r /mnt/stor/etc/distro /stor/etc',shell=True)
-                subprocess.call('cp -r /mnt/stor/etc/ext /stor/etc',shell=True)
-                subprocess.call('cp -r /mnt/stor/etc/fhs /stor/etc',shell=True)
+                subprocess.call('/usr/bin/cp -r /mnt/stor/app /stor',shell=True)
+                subprocess.call('/usr/bin/cp -r /mnt/stor/proc /stor',shell=True)
+                subprocess.call('/usr/bin/cp -r /mnt/stor/usr /stor',shell=True)
+                subprocess.call('/usr/bin/cp -r /mnt/stor/vmabr.pyc /stor',shell=True)
+                subprocess.call('/usr/bin/cp -r /mnt/stor/etc/domain /stor/etc',shell=True)
+                subprocess.call('/usr/bin/cp -r /mnt/stor/etc/distro /stor/etc',shell=True)
+                subprocess.call('/usr/bin/cp -r /mnt/stor/etc/ext /stor/etc',shell=True)
+                subprocess.call('/usr/bin/cp -r /mnt/stor/etc/fhs /stor/etc',shell=True)
                 subprocess.call('umount /mnt',shell=True)
             subprocess.call('rm /tmp/stor.sb',shell=True)
             subprocess.call('rm /stor/tmp/stor.txt',shell=True)
@@ -41,7 +42,7 @@ class MainApp (MainApp):
         super(MainApp, self).__init__()
 
         self.load (res.get('@layout/upstor'))
-        self.setProperty('title',res.get('@string/upstor'))
+        self.setProperty('title',res.getname('upstor'))
         app.launchedlogo(self.property('title'), res.etc('upstor', 'logo'))
 
         if files.isfile ('/tmp/stor.txt'): files.remove ('/tmp/stor.txt')

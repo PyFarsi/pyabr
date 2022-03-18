@@ -11,10 +11,14 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: upstor
     visible: true
-    color: "white"
+    color: wt.background
 
     width: 500
     height: 200
+    
+    WindowTheme {
+        id: wt
+    }
 
     Rectangle {
         id: txtText
@@ -35,8 +39,9 @@ ApplicationWindow {
         Text {
             anchors.left: imagex.right
             text: "Pyabr 2.1.14 new release"
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             font.pixelSize: 30
+            color: wt.color
             anchors.leftMargin: 20
             objectName: "name"
             anchors.rightMargin: 20
@@ -62,7 +67,7 @@ ApplicationWindow {
         id: cancel
         text: "Cancel"
         objectName: "btnCancel"
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         width: parent.width/2
         height: parent.height/4
         anchors.bottom: parent.bottom
@@ -71,7 +76,7 @@ ApplicationWindow {
         text: "Upgrade"
         objectName: "btnUpgrade"
         width: parent.width/2
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         height: parent.height/4
         anchors.left: cancel.right
         anchors.bottom: parent.bottom
