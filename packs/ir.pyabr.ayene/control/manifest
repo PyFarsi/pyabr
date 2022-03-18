@@ -1,0 +1,17 @@
+name: ir.pyabr.ayene
+name[en]: Mirror
+name[fa]: آینه
+name[ar]: مرآة
+name[tr]: Ayna
+copyright: (c) 2022 Mani Jamali
+license: GNU GPL v3.0
+unpack: /
+version: 1.0.0
+screenshots: Yes
+description: Simple Mirror
+compile: Yes
+logo.inside: @icon/mirror
+entry: ayene
+
+build: 1400-12-26
+mirror: https://mirror.pyabr.ir/zayanderoad/

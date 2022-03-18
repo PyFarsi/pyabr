@@ -1,0 +1,13 @@
+name[en]: Mirror
+name[fa]: آینه
+name[ar]: مرآة
+name[tr]: Ayna
+name[de]: Spiegel
+name[cn]: 镜子
+name[ru]: Зеркало
+logo: @icon/mirror
+exec: ayene
+application: Yes
+hidden: No
+category: multimedia
+pin: No
