@@ -13,6 +13,10 @@ ApplicationWindow {
     id: unlock
     visible: true
     color: "purple"
+    
+    WindowTheme {
+        id: wt
+    }
 
     background: Rectangle {
         anchors.fill: parent
@@ -49,14 +53,14 @@ ApplicationWindow {
             Layout.fillWidth: true
             echoMode: TextInput.Password
             placeholderText: "رمزعبور خود را وارد کنید"
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
         }
 
-        Button {
+        ToolButton {
             id: login
             objectName: "login"
             text: "بازکردن"
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             Layout.fillWidth: true
         }
     }

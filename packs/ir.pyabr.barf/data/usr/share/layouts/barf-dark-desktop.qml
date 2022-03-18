@@ -14,8 +14,12 @@ import QtGraphicalEffects 1.12
 ApplicationWindow {
     id: desktop
     visible: true
-    font.family: "IRANSans"
+    font.family: wt.fontFamily‍
     color: "blue"
+    
+    WindowTheme {
+        id: wt
+    }
 
     Text {
         id: enable_anim
@@ -33,12 +37,14 @@ ApplicationWindow {
 
     Text {
         id: dsel
+        visible: false
         objectName: "dsel"
     }
 
     Text {
         id: dselm
         objectName: "dselm"
+        visible: false
     }
 
     /* Application Background */
@@ -134,6 +140,7 @@ ApplicationWindow {
     }
 
     Text {
+        visible: false
         id: act
         objectName: "act"
     }
@@ -397,7 +404,7 @@ ApplicationWindow {
                     color: "white"
                     text: ""
                     visible: false
-                    font.family: "IRANSans"
+                    font.family: wt.fontFamily
                 }
             }
 
@@ -407,7 +414,7 @@ ApplicationWindow {
             id: leClock
             anchors.centerIn: parent
             objectName: "leClock"
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             font.pixelSize: 16
             color: "white"
             ToolButton {
@@ -421,6 +428,7 @@ ApplicationWindow {
         {
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
+
             ToolButton {
                 icon.source: 'file:///stor/usr/share/icons/breeze-action-toolpen.svg'
                 icon.color: 'white'
@@ -522,7 +530,7 @@ ApplicationWindow {
 
                     Text {
                         text: model.label
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 18
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: imagex.right
@@ -540,13 +548,6 @@ ApplicationWindow {
                             }
                             background_app.text = model.name;
                         }
-                    }
-
-                    Rectangle {
-                        width: parent.width
-                        height: 1
-                        color: "transparent"
-                        anchors.top: parent.bottom
                     }
                 }
             }
@@ -629,7 +630,7 @@ ApplicationWindow {
 
                     Text {
                         text: model.label
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 18
                         color: "white"
                         anchors.verticalCenter: parent.verticalCenter
@@ -647,13 +648,6 @@ ApplicationWindow {
                             background_app.text = model.name;
                             
                         }
-                    }
-
-                    Rectangle {
-                        width: parent.width
-                        height: 1
-                        color: "silver"
-                        anchors.top: parent.bottom
                     }
                 }
             }
@@ -734,7 +728,7 @@ ApplicationWindow {
 
                     Text {
                         text: model.label
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 18
                         color: "white"
                         anchors.verticalCenter: parent.verticalCenter
@@ -752,13 +746,6 @@ ApplicationWindow {
                             background_app.text = model.name;
                             
                         }
-                    }
-
-                    Rectangle {
-                        width: parent.width
-                        height: 1
-                        color: "silver"
-                        anchors.top: parent.bottom
                     }
                 }
             }
@@ -838,7 +825,7 @@ ApplicationWindow {
 
                     Text {
                         text: model.label
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 18
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: imagex.right
@@ -856,13 +843,6 @@ ApplicationWindow {
                             background_app.text = model.name;
                             
                         }
-                    }
-
-                    Rectangle {
-                        width: parent.width
-                        height: 1
-                        color: "silver"
-                        anchors.top: parent.bottom
                     }
                 }
             }
@@ -2169,19 +2149,18 @@ ApplicationWindow {
 
                                 Text {
                                     text: model.title
-                                    font.family: "IRANSans"
+                                    font.family: wt.fontFamily
                                     font.pixelSize: parent.width/35
                                     font.bold: true
                                     color: "white"
                                     id: titlefeed
-                                    anchors.top: imagefeed.bottom
                                     anchors.topMargin: 5
                                     anchors.horizontalCenter: parent.horizontalCenter
                                 }
 
                                 Text {
                                     text: model.summary
-                                    font.family: "IRANSans"
+                                    font.family: wt.fontFamily
                                     font.pixelSize: parent.width/40
                                     font.bold: false
                                     color: "white"
@@ -2235,21 +2214,54 @@ ApplicationWindow {
        objectName: "eventpanel"
        id: eventpanel
 
-       ScrollView {
-            width: parent.width
-            height: parent.height
-            anchors.topMargin: 10
-            anchors.leftMargin: 10
-            anchors.rightMargin: 10
-            anchors.bottomMargin: 10
-            anchors.top: topbar.bottom
-            clip: true
-            id: scrolle
             Column {
                 width: eventpanel.width
-                height: eventpanel.height
+                id: clTop
+                height: eventpanel.width/1.3+eventpanel.width/3
 
                 spacing: 2
+
+                    Rectangle {
+                        width: parent.width
+                        height: parent.width/6
+                        color: "#A0404040"
+                        radius: parent.width/20
+                        id: reccontrols
+                        visible: true
+
+                        Column {
+                            width: parent.width
+                            id: clInside
+                            height: parent.height
+
+                            Rectangle {
+                                width: parent.width
+                                height: parent.height
+                                color: "transparent"
+
+                                ToolButton {
+                                    icon.source: 'file:///stor/usr/share/icons/breeze-audio.svg'
+                                    icon.color: "white"
+                                    width: parent.height
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    height: parent.height
+                                    id: btnAudio
+                                }
+
+                                Slider {
+                                    id: slAudio
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    objectName: "slAudio"
+                                    from: 1
+                                    value: 50
+                                    to: 100
+                                    anchors.left: btnAudio.right
+                                    anchors.right: parent.right
+                                    width: parent.width-parent.height
+                                }
+                            }
+                        }
+                    }
 
                     Image {
                         width: parent.width
@@ -2266,11 +2278,12 @@ ApplicationWindow {
                             anchors.centerIn: parent
                             text: "34 °C"
                             color: "white"
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             objectName: "txtTemp"
                             font.pixelSize: parent.width/8
                         }
                     }
+
 
                     Rectangle {
                         width: parent.width
@@ -2282,10 +2295,10 @@ ApplicationWindow {
                     }
 
                     Rectangle {
-
+                        id: reccalendar
                         width: parent.width
                         height: parent.width/1.3
-                        color: "black"
+                        color: "white"
                         radius: parent.width/20
 
                         PersianCalendar {
@@ -2296,6 +2309,17 @@ ApplicationWindow {
                             width: parent.width
                             height: parent.height/1.3
                             objectName: "Jalali"
+                        }
+
+                        Calendar {
+                            anchors.top: parent.top
+                            anchors.topMargin: parent.height/18
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            width: parent.width
+                            visible: false
+                            height: parent.height/1.3
+                            objectName: "Gregorian"
                         }
 
                         Rectangle {
@@ -2309,14 +2333,12 @@ ApplicationWindow {
                                 text: ""
                                 id: txtD
                                 objectName: "txtD"
-                                font.family: "IRANSans"
+                                font.family: wt.fontFamily
                                 font.pixelSize: 16
-                                color: "white"
+                                color: "gray"
                             }
                         }
                     }
-
-            }
         }
 
        NumberAnimation on width {
@@ -2387,7 +2409,7 @@ ApplicationWindow {
                                 anchors.top: toolbar.bottom
                                 id: txtNote
                                 width: parent.width
-                                font.family: "IRANSans"
+                                font.family: wt.fontFamily
                                 objectName: "txtNote"
                                 color: "white"
                                 selectByMouse: true
@@ -2466,7 +2488,7 @@ ApplicationWindow {
                 anchors.top: shutdown.bottom
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: shutdown.horizontalCenter
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
             }
             ToolButton {
                 anchors.left: shutdown.right
@@ -2490,7 +2512,7 @@ ApplicationWindow {
                 anchors.top: lock.bottom
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: lock.horizontalCenter
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
             }
             ToolButton {
                 anchors.left: lock.right
@@ -2514,7 +2536,7 @@ ApplicationWindow {
                 anchors.top: logout.bottom
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: logout.horizontalCenter
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
             }
             ToolButton {
                 anchors.left: logout.right
@@ -2538,7 +2560,7 @@ ApplicationWindow {
                 anchors.bottom: parent.bottom
                 color: "black"
                 anchors.horizontalCenter: reboot.horizontalCenter
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
             }
             ToolButton {
                 anchors.left: reboot.right
@@ -2562,7 +2584,7 @@ ApplicationWindow {
                 anchors.top: suspend.bottom
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: suspend.horizontalCenter
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
             }
     }
 
@@ -2598,7 +2620,7 @@ ApplicationWindow {
 
         Text {
             anchors.centerIn: parent
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             color: "white"
             objectName: "popup_text_txtText"
             id: popup_text_txtText
@@ -2644,7 +2666,7 @@ ApplicationWindow {
 
     Menu {
         id: contextMenu
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         objectName: "contextMenu"
 
         Action {
@@ -2746,7 +2768,7 @@ ApplicationWindow {
             Text { 
                 text: model.name
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
                 color: "black"
             }
         }

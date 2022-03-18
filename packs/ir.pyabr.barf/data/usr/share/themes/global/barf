@@ -1,0 +1,14 @@
+name[en]: Snow theme
+name[fa]: پوسته برف
+logo: @icon/theme
+icon-theme: breeze
+shell-theme: barf
+gtk-theme: win10
+cursor-theme: breeze_cursors
+qml-theme: barf
+login.background: @background/Sunset_and_sea
+enter.background: @background/Sunset_and_sea
+desktop.background: @background/Sunset_and_sea
+unlock.background: @background/Sunset_and_sea
+lock.background: @background/Sunset_and_sea
+dock: bottom

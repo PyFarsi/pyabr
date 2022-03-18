@@ -13,6 +13,10 @@ ApplicationWindow {
     id: login
     visible: true
     color: "purple"
+    
+    WindowTheme {
+        id: wt
+    }
 
     /* Topbar */
     Rectangle {
@@ -38,7 +42,7 @@ ApplicationWindow {
             id: leClock
             anchors.centerIn: parent
             objectName: "leClock"
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             font.pixelSize: 16
             color: "white"
             ToolButton {
@@ -100,7 +104,7 @@ ApplicationWindow {
                 anchors.top: shutdown.bottom
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: shutdown.horizontalCenter
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
             }
             ToolButton {
                 anchors.left: shutdown.right
@@ -123,7 +127,7 @@ ApplicationWindow {
                 anchors.top: reboot.bottom
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: reboot.horizontalCenter
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
             }
             ToolButton {
                 anchors.left: reboot.right
@@ -146,7 +150,7 @@ ApplicationWindow {
                 anchors.top: suspend.bottom
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: suspend.horizontalCenter
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
             }
     }
 
@@ -183,7 +187,7 @@ ApplicationWindow {
             id: username
             objectName: "username"
             Layout.fillWidth: true
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             placeholderText: "حساب کاربری"
             selectByMouse: true
                     MouseArea {
@@ -193,10 +197,10 @@ ApplicationWindow {
                     }
         }
 
-        Button {
+        ToolButton {
             id: next
             objectName: "next"
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             text: "بعدی"
             Layout.fillWidth: true
         }

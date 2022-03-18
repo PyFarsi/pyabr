@@ -13,6 +13,10 @@ ApplicationWindow {
     id: enter
     visible: true
     color: "purple"
+    
+    WindowTheme {
+        id: wt
+    }
 
     /* Topbar */
     Rectangle {
@@ -38,7 +42,7 @@ ApplicationWindow {
             id: leClock
             anchors.centerIn: parent
             objectName: "leClock"
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             font.pixelSize: 16
             color: "white"
             ToolButton {
@@ -100,7 +104,7 @@ ApplicationWindow {
                 anchors.top: shutdown.bottom
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: shutdown.horizontalCenter
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
             }
             ToolButton {
                 anchors.left: shutdown.right
@@ -123,7 +127,7 @@ ApplicationWindow {
                 anchors.top: logout.bottom
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: logout.horizontalCenter
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
             }
             ToolButton {
                 anchors.left: logout.right
@@ -146,7 +150,7 @@ ApplicationWindow {
                 anchors.top: reboot.bottom
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: reboot.horizontalCenter
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
             }
             ToolButton {
                 anchors.left: reboot.right
@@ -169,7 +173,7 @@ ApplicationWindow {
                 anchors.top: suspend.bottom
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: suspend.horizontalCenter
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
             }
     }
 
@@ -210,15 +214,15 @@ ApplicationWindow {
             Layout.fillWidth: true
             echoMode: TextInput.Password
             placeholderText: "رمزعبور خود را وارد کنید"
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
         }
 
-        Button {
+        ToolButton {
             id: login
             objectName: "login"
             text: "ورود"
             Layout.fillWidth: true
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
         }
     }
 }

@@ -1,0 +1,14 @@
+name: ir.pyabr.barf
+name[en]: Barf shell theme
+name[fa]: پوسته برف
+copyright: (c) 2022 Mani Jamali
+license: GNU GPL v3.0
+unpack: /
+version: 1.0.2
+description: Default shell theme for Pyabr
+compile: No
+logo.inside: @icon/theme
+screenshots: No
+
+build: 1400-12-26
+mirror: https://mirror.pyabr.ir/zayanderoad/

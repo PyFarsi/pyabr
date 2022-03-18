@@ -13,6 +13,10 @@ Window {
     id: lock
     visible: true
     color: "black"
+    
+    WindowTheme {
+        id: wt
+    }
 
     Button {
         anchors.centerIn: parent
@@ -42,7 +46,7 @@ Window {
                 text: ""
                 objectName: "txtClock"
                 font.pixelSize: 100
-                font.family: "IRANSans"
+                font.family: wt.fontFamily
                 id: txtClock
                 anchors.centerIn: parent
             }
