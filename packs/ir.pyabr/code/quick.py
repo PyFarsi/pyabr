@@ -97,12 +97,12 @@ class MainApp (QtQml.QQmlApplicationEngine):
     CFullName = QtCore.Qt.ItemDataRole.UserRole+1003
     CProfile = QtCore.Qt.ItemDataRole.UserRole+1000
 
-    # Chat
-    CID = QtCore.Qt.ItemDataRole.UserRole+1000
-    CSender = QtCore.Qt.ItemDataRole.UserRole+1001
-    CGiver = QtCore.Qt.ItemDataRole.UserRole+1002
-    CData = QtCore.Qt.ItemDataRole.UserRole+1003
-    CME = QtCore.Qt.ItemDataRole.UserRole+1004
+    # Mail
+    MailID = QtCore.Qt.ItemDataRole.UserRole+1001
+    MailSender = QtCore.Qt.ItemDataRole.UserRole+1002
+    MailGiver = QtCore.Qt.ItemDataRole.UserRole+1003
+    MailSubject = QtCore.Qt.ItemDataRole.UserRole+1004
+    MailData = QtCore.Qt.ItemDataRole.UserRole+1005
 
     # Drives 
     DEV = QtCore.Qt.ItemDataRole.UserRole+1000 # /dev/sda1
@@ -139,6 +139,22 @@ class MainApp (QtQml.QQmlApplicationEngine):
     JEKey = QtCore.Qt.ItemDataRole.UserRole+1003
     JEID = QtCore.Qt.ItemDataRole.UserRole+1004
 
+    # Jooya Web Search History
+
+    JBLink = QtCore.Qt.ItemDataRole.UserRole + 1000
+    JBIcon = QtCore.Qt.ItemDataRole.UserRole + 1001
+    JBTitle = QtCore.Qt.ItemDataRole.UserRole + 1002
+
+    # Project Model
+    ProjectName = QtCore.Qt.ItemDataRole.UserRole + 1000
+    ProjectType = QtCore.Qt.ItemDataRole.UserRole + 1001
+    ProjectPackage = QtCore.Qt.ItemDataRole.UserRole + 1002
+
+    NOTitle = QtCore.Qt.ItemDataRole.UserRole + 1000
+    NOLogo = QtCore.Qt.ItemDataRole.UserRole + 1001
+    NOCommand = QtCore.Qt.ItemDataRole.UserRole + 1002
+    NOText = QtCore.Qt.ItemDataRole.UserRole + 1003
+
     def shortText (self,value):
         if len(value)>=60:
             strv = ''
@@ -170,6 +186,35 @@ class MainApp (QtQml.QQmlApplicationEngine):
             return f"{strv}..."
         else:
             return value
+
+    def MailModel (self):
+        model = QtGui.QStandardItemModel()
+        roles = {
+            self.MailID:b'id',
+            self.MailSender:b'sender',
+            self.MailGiver:b'giver',
+            self.MailSubject:b'subject',
+            self.MailData:b'data'
+        }
+        model.setItemRoleNames(roles)
+
+        try:
+            m = Mail()
+            mails = json.loads(m.Inbox())
+
+            for i in mails:
+                it = QtGui.QStandardItem(i['id'])
+                it.setData(i['id'],self.MailID)
+                it.setData(i['sender'],self.MailSender)
+                it.setData(i['giver'],self.MailGiver)
+                it.setData(i['subject'],self.MailSubject)
+                it.setData(i['data'],self.MailData)
+
+                model.appendRow(it)
+        except:
+            pass
+        
+        return model
 
     def FeedModel (self):
         model = QtGui.QStandardItemModel()
@@ -241,10 +286,15 @@ class MainApp (QtQml.QQmlApplicationEngine):
         model = QtGui.QStandardItemModel()
         roles = {self.JHLink:b'link',self.JHIcon:b'icon',self.JHTitle:b'title'}
         model.setItemRoleNames(roles)
+
+        if files.readall('/proc/info/su') == 'root':
+            self.username = f'/root'
+        else:
+            self.username = f'/desk/{files.readall("/proc/info/su")}'
         
-        links = control.read_list('.jooya_history')
-        icons = control.read_list('.jooya_history_icons')
-        titles = control.read_list('.jooya_history_titles')
+        links = control.read_list(f'{self.username}/.jooya_history')
+        icons = control.read_list(f'{self.username}/.jooya_history_icons')
+        titles = control.read_list(f'{self.username}/.jooya_history_titles')
 
 
         i = 0
@@ -256,6 +306,34 @@ class MainApp (QtQml.QQmlApplicationEngine):
                     it.setData(titles[i],self.JHTitle)
                     i+=1
                     model.appendRow(it)
+        return model
+
+    def JooyaBookmarkModel(self):
+        model = QtGui.QStandardItemModel()
+        roles = {self.JBLink: b'link', self.JBIcon: b'icon', self.JBTitle: b'title'}
+        model.setItemRoleNames(roles)
+
+        if files.readall('/proc/info/su') == 'root':
+            self.username = f'/root'
+        else:
+            self.username = f'/desk/{files.readall("/proc/info/su")}'
+
+        links = control.read_list(f'{self.username}/.jooya_bookmarks')
+        icons = control.read_list(f'{self.username}/.jooya_bookmarks_icons')
+        titles = control.read_list(f'{self.username}/.jooya_bookmarks_titles')
+
+        i = 0
+        for link in links:
+            if (link.startswith('http://') or link.startswith('https://') or link.startswith('stor:///')):
+                it = QtGui.QStandardItem(link)
+                it.setData(link, self.JBLink)
+                it.setData(icons[i], self.JBIcon)
+                try:
+                    it.setData(titles[i], self.JBTitle)
+                except:
+                    it.setData(link,self.JBTitle)
+                i += 1
+                model.appendRow(it)
         return model
 
     def JooyaSearchEngineModel (self):
@@ -350,31 +428,6 @@ class MainApp (QtQml.QQmlApplicationEngine):
             model.appendRow(it)
         return model
 
-    def ChatModel (self,listx):
-        if listx==None:
-            listx = []
-            
-        model = QtGui.QStandardItemModel()
-        roles = {self.CSender: b"sender", self.CGiver: b'giver',self.CData:b'data',self.CID:b'id',self.CME:b'me'}
-        model.setItemRoleNames(roles)
-
-        su = files.readall('/proc/info/su')
-
-        for i in listx:
-            it = QtGui.QStandardItem(i['id'])
-            it.setData(i['sender'],self.CSender)
-            it.setData(i['giver'],self.CGiver)
-            it.setData(i['data'],self.CData)
-            it.setData(i['id'],self.CID)
-
-            if i['sender']==files.readall(f'/etc/chat/{su}/user'):
-                it.setData(True,self.CME)
-            else:
-                it.setData(False,self.CME)
-
-            model.appendRow(it)
-        return model
-
     def ApplicationModel(self,ext):
         model = QtGui.QStandardItemModel()
         roles = {self.NameRole: b"name", self.LabelRole: b'label', self.LogoRole: b'logo'}
@@ -450,6 +503,38 @@ class MainApp (QtQml.QQmlApplicationEngine):
                     namex = control.read_record(f'name[en]', f'/usr/share/themes/gtk/{name}')
                 it.setData(namex, self.ITNAMEX)
                 it.setData(res.qmlget(control.read_record('logo', f'/usr/share/themes/gtk/{name}')), self.ITLOGO)
+                model.appendRow(it)
+        return model
+
+
+    def WindowThemeModel(self):
+        model = QtGui.QStandardItemModel()
+        roles = {self.ITNAME:b'name',self.ITNAMEX:b'namex',self.ITLOGO:b'logo'}
+        model.setItemRoleNames(roles)
+        for name in files.list('/usr/share/themes/qml'):
+                it = QtGui.QStandardItem(name)
+                it.setData(name, self.ITNAME)
+                namex = control.read_record(f'name[{res.getdata("locale")}]', f'/usr/share/themes/qml/{name}')
+                if namex == '' or namex == None:
+                    namex = control.read_record(f'name[en]', f'/usr/share/themes/qml/{name}')
+                it.setData(namex, self.ITNAMEX)
+                it.setData(res.qmlget(control.read_record('logo', f'/usr/share/themes/qml/{name}')), self.ITLOGO)
+                model.appendRow(it)
+        return model
+
+
+    def GlobalThemeModel(self):
+        model = QtGui.QStandardItemModel()
+        roles = {self.ITNAME:b'name',self.ITNAMEX:b'namex',self.ITLOGO:b'logo'}
+        model.setItemRoleNames(roles)
+        for name in files.list('/usr/share/themes/global'):
+                it = QtGui.QStandardItem(name)
+                it.setData(name, self.ITNAME)
+                namex = control.read_record(f'name[{res.getdata("locale")}]', f'/usr/share/themes/global/{name}')
+                if namex == '' or namex == None:
+                    namex = control.read_record(f'name[en]', f'/usr/share/themes/global/{name}')
+                it.setData(namex, self.ITNAMEX)
+                it.setData(res.qmlget(control.read_record('logo', f'/usr/share/themes/global/{name}')), self.ITLOGO)
                 model.appendRow(it)
         return model
 
@@ -634,6 +719,36 @@ class MainApp (QtQml.QQmlApplicationEngine):
             model.appendRow(it)
 
         return model
+
+    def ProjectModel (self):
+        model = QtGui.QStandardItemModel()
+        roles = {
+            self.ProjectName:b'name',
+            self.ProjectType:b'type',
+            self.ProjectPackage:b'package',
+        }
+        model.setItemRoleNames(roles)
+
+        self.user = files.readall('/proc/info/su')
+        if self.user=='root':
+            self.projectdir = f'/root/Projects'
+        else:
+            self.projectdir = f'/desk/{self.user}/Projects'
+
+        self.listprojects = files.list(self.projectdir)
+        self.listprojects.sort()
+
+        for i in self.listprojects:
+            if files.isfile (f'{self.projectdir}/{i}/config'):
+                it = QtGui.QStandardItem(i)
+                it.setData(i,self.ProjectName)
+                it.setData(control.read_record('project_type',f'{self.projectdir}/{i}/config'),self.ProjectType)
+                it.setData(control.read_record('project_name',f'{self.projectdir}/{i}/config'),self.ProjectPackage)
+                    
+                model.appendRow(it)
+            
+        return model
+            
 
     def FileModel (self,d):
         model = QtGui.QStandardItemModel()
@@ -843,6 +958,10 @@ class MainApp (QtQml.QQmlApplicationEngine):
         self.newmodel = self.ItemModel(listModel)
         self.rootContext().setContextProperty(nameModel, self.newmodel)
 
+    def addMailModel (self):
+        self.mdlxa = self.MailModel()
+        self.rootContext().setContextProperty('MailModel', self.mdlxa)
+
     def addFileModel (self,directory):
         self.newmodelx = self.FileModel(directory)
         self.rootContext().setContextProperty('FileModel', self.newmodelx)
@@ -875,13 +994,13 @@ class MainApp (QtQml.QQmlApplicationEngine):
         self.jh = self.JooyaHistoryModel()
         self.rootContext().setContextProperty('JooyaHistoryModel', self.jh)
 
+    def addJooyaBookmarkModel (self):
+        self.jb = self.JooyaBookmarkModel()
+        self.rootContext().setContextProperty('JooyaBookmarkModel', self.jb)
+
     def addJooyaSearchEngineModel (self):
         self.je = self.JooyaSearchEngineModel()
         self.rootContext().setContextProperty('JooyaSearchEngineModel', self.je)
-
-    def addChatModel (self,listx):
-        self.chatmdl = self.ChatModel(listx)
-        self.rootContext().setContextProperty('ChatModel', self.chatmdl)
 
     def addContactModel (self,listx):
         self.cntmdl = self.ContactModel(listx)
@@ -903,6 +1022,10 @@ class MainApp (QtQml.QQmlApplicationEngine):
         self.xprocessmdl = self.ProcessModel()
         self.rootContext().setContextProperty('ProcessModel', self.xprocessmdl)
 
+    def addProjectModel (self):
+        self.apmdl = self.ProjectModel()
+        self.rootContext().setContextProperty('ProjectModel', self.apmdl)
+
     def addIconThemeModel (self):
         self.xitmdl = self.IconThemeModel()
         self.rootContext().setContextProperty('IconThemeModel', self.xitmdl)
@@ -915,9 +1038,17 @@ class MainApp (QtQml.QQmlApplicationEngine):
         self.xatmdl = self.ApplicationThemeModel()
         self.rootContext().setContextProperty('ApplicationThemeModel', self.xatmdl)
 
+    def addWindowThemeModel (self):
+        self.xwtmdl = self.WindowThemeModel()
+        self.rootContext().setContextProperty('WindowThemeModel', self.xwtmdl)
+
     def addShellThemeModel (self):
         self.xstmdl = self.ShellThemeModel()
         self.rootContext().setContextProperty('ShellThemeModel', self.xstmdl)
+
+    def addGlobalThemeModel (self):
+        self.xgtmdl = self.GlobalThemeModel()
+        self.rootContext().setContextProperty('GlobalThemeModel', self.xgtmdl)
 
     def setProperty(self,name,value):
         self.rootObjects()[0].setProperty(name,value)
@@ -946,6 +1077,35 @@ class Text (MainApp):
         self.btnOK = self.findChild('btnOK')
         self.btnOK.setProperty('text', res.get('@string/ok'))
         self.btnOK.clicked.connect(self.close)
+
+# Notification Dialog
+class Notif (MainApp):
+
+    def view_(self):
+        self.close()
+        app.start(self.app_,self.open_)
+
+    def __init__(self,title:str,text:str,app_:str,open_:str):
+        super(Notif, self).__init__()
+
+        files.write('/proc/info/id','notif')
+
+        self.app_ = app_
+        self.open_ = open_
+
+        self.load(res.get('@layout/notif'))
+        self.setProperty('title', title)
+        app.launchedlogo(title,res.etc(app_,'logo'))
+        
+        self.imgNotif = self.findChild('imgNotif')
+        self.imgNotif.setProperty('source',res.qmlget(res.etc(app_,'logo')))
+        self.txtText = self.findChild('txtText')
+        self.txtText.setProperty('text', text)
+        self.btnView = self.findChild('btnView')
+        self.btnView.setProperty('text', res.get('@string/view'))
+        self.btnView.clicked.connect(self.view_)
+
+        QTimer.singleShot(8000,self.close)
 
 # Sharelink Dialog
 class Sharelink (MainApp):
@@ -1319,6 +1479,38 @@ class ApplicationTheme (MainApp):
 
         self.loop()
 
+class WindowTheme (MainApp):
+
+    def loop (self):
+        if not self.tsel.property('text')=='':
+            self.btnChange.setProperty('enabled',True)
+
+        QTimer.singleShot (10,self.loop)
+
+    def change_(self):
+        self.function (self.tsel.property('text'))
+        self.close()
+
+    def __init__(self,function):
+        super(MainApp, self).__init__()
+
+        self.function = function
+
+        self.addWindowThemeModel()
+        self.load (res.get('@layout/window_theme'))
+        self.setProperty('title',res.get('@string/window'))
+        self.tsel = self.findChild ('tsel')
+        self.btnCancel = self.findChild('btnCancel')
+        self.title = self.findChild('title')
+        self.ListView = self.findChild('ListView')
+        self.btnCancel.setProperty('text', res.get('@string/cancel'))
+        self.btnChange = self.findChild('btnChange')
+        self.btnCancel.clicked.connect (self.close)
+        self.btnChange.setProperty('text',res.get('@string/change'))
+        self.btnChange.clicked.connect (self.change_)
+
+        self.loop()
+
 class CursorTheme (MainApp):
 
     def loop (self):
@@ -1371,6 +1563,38 @@ class ShellTheme (MainApp):
         self.addShellThemeModel()
         self.load (res.get('@layout/shell_theme'))
         self.setProperty('title',res.get('@string/shell'))
+        self.tsel = self.findChild ('tsel')
+        self.btnCancel = self.findChild('btnCancel')
+        self.title = self.findChild('title')
+        self.ListView = self.findChild('ListView')
+        self.btnCancel.setProperty('text', res.get('@string/cancel'))
+        self.btnChange = self.findChild('btnChange')
+        self.btnCancel.clicked.connect (self.close)
+        self.btnChange.setProperty('text',res.get('@string/change'))
+        self.btnChange.clicked.connect (self.change_)
+
+        self.loop()
+
+class GlobalTheme (MainApp):
+
+    def loop (self):
+        if not self.tsel.property('text')=='':
+            self.btnChange.setProperty('enabled',True)
+
+        QTimer.singleShot (10,self.loop)
+
+    def change_(self):
+        self.function (self.tsel.property('text'))
+        self.close()
+
+    def __init__(self,function):
+        super(MainApp, self).__init__()
+
+        self.function = function
+
+        self.addGlobalThemeModel()
+        self.load (res.get('@layout/global_theme'))
+        self.setProperty('title',res.get('@string/global'))
         self.tsel = self.findChild ('tsel')
         self.btnCancel = self.findChild('btnCancel')
         self.title = self.findChild('title')
@@ -1483,11 +1707,7 @@ class DownloadThread(QThread):
 
 class OpenWith(MainApp):
     def atonce_(self):
-        ext = os.path.splitext(self.filename)[1].replace('.','')
-        if ext=='html' or ext=='htm':
-            app.start (self.asel.property('text').replace('.desk',''),f'"file:///stor/{self.filename}"')
-        else:
-            app.start (self.asel.property('text').replace('.desk',''),f'"{self.filename}"')
+        app.start (self.asel.property('text').replace('.desk',''),f'"{self.filename}"')
         self.close()
 
     def always_ (self):
@@ -1694,41 +1914,6 @@ class FileInfo (MainApp):
             self.perma1.setProperty('text',res.get('@string/access_owner')+": ")
             self.permb1.setProperty('text',res.get('@string/access_users')+": ")
             self.permc1.setProperty('text',res.get('@string/access_guest')+": ")
-
-class CloudConnector (MainApp):
-    def connect_(self):
-
-        su = files.readall('/proc/info/su')
-
-        if self.leCloud.property('text')=='':
-            pass
-        else:
-            control.write_record ('host',self.leCloud.property('text'),'/etc/cloud')
-
-        d = Drive()
-        d.Connect (self.leUsername.property('text'),self.lePassword.property('text'))
-
-        self.close()
-
-        if not files.isfile (f'/etc/drive/{su}/user'):
-            self.e = Text(res.get('@string/connection_fail'),res.get('@string/connection_failmc'))
-
-    def __init__(self):
-        super(CloudConnector, self).__init__()
-
-        self.load (res.get('@layout/CloudConnector'))
-
-        self.setProperty('title',res.get('@string/c_cloud'))
-
-        self.leCloud = self.findChild('leCloud')
-        self.leCloud.setProperty('placeholderText',res.get('@string/e_cloud'))
-        self.leUsername = self.findChild('leUsername')
-        self.leUsername.setProperty('placeholderText',res.get('@string/e_username'))
-        self.lePassword = self.findChild('lePassword')
-        self.lePassword.setProperty('placeholderText',res.get('@string/e_password'))
-        self.btnConnect = self.findChild('btnConnect')
-        self.btnConnect.setProperty('text',res.get('@string/connect'))
-        self.btnConnect.clicked.connect (self.connect_)
 
 class DataInstaller (MainApp):
     namex = ''

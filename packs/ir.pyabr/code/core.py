@@ -26,6 +26,8 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
+from rich.console import Console
+from rich.markdown import Markdown
 
 def read_record (name,filename):
     file = open (filename,"r")
@@ -116,7 +118,7 @@ class Script:
                     else:
                         scmd+=f' {i}'
 
-                strcmd = f"{sys.executable} -c \""
+                strcmd = f"\"{sys.executable}\" -c \""
                 strcmd2 = scmd.replace('"','\\"')
                 strcmd = f"{strcmd}{strcmd2}\""
                 subprocess.call(strcmd,shell=True)
@@ -130,109 +132,6 @@ class Script:
 class Commands:
     def __init__(self):
         pass
-
-    # run #
-    def run (self,args):
-        if not permissions.check(files.output(args[0]), "x", files.readall("/proc/info/su")):
-            colors.show('','perm','')
-            sys.exit(0)
-
-        commands = f'{files.input(args[0])}'
-
-        for i in args[1:]:
-            commands+=f' {i}'
-
-        subprocess.call(f'chmod +x {files.input(args[0])}',shell=True)
-        subprocess.call(commands,shell=True)
-
-    # apt debian #
-    def apt (self,args):
-        if not permissions.check_root(files.readall("/proc/info/su")):
-            colors.show("apt", "perm", "")
-            sys.exit(0)
-
-        cmd = 'apt '
-        for i in args:
-            if i.startswith('/') or i.endswith('/') or i.startswith('./') or '/' in i:
-                i = files.input(i)
-
-            if cmd == '':
-                cmd = i
-            else:
-                cmd = f"{cmd} {i}"
-
-        subprocess.call(cmd, shell=True)
-
-    def neofetch (self,args):
-        subprocess.call(['neofetch'])
-
-    def bash (self,args):
-        if not permissions.check_root(files.readall("/proc/info/su")):
-            subprocess.call('PS1=" Bash # " runuser -S pyabr -e sh', shell=True)
-        else:
-            subprocess.call('PS1=" Bash # " sh', shell=True)
-
-    def python (self,args):
-        cmd = 'python3 '
-        for i in args:
-            if i.startswith('/') or i.endswith('/') or i.startswith('./') or '/' in i:
-                i = files.input(i)
-
-            if cmd == '':
-                cmd = i
-            else:
-                cmd = f"{cmd} {i}"
-
-        if not permissions.check_root(files.readall("/proc/info/su")):
-            subprocess.call(f'runuser -S pyabr -e {cmd}', shell=True)
-        else:
-            subprocess.call(cmd, shell=True)
-
-    # pip #
-    def pip (self,args):
-        if not permissions.check_root(files.readall("/proc/info/su")):
-            colors.show("pip", "perm", "")
-            sys.exit(0)
-
-        cmd = 'pip '
-        for i in args:
-            if i.startswith('/') or i.endswith('/') or i.startswith('./') or '/' in i:
-                i = files.input(i)
-
-            if cmd == '':
-                cmd = i
-            else:
-                cmd = f"{cmd} {i}"
-
-        subprocess.call(cmd, shell=True)
-
-    # dpkg command #
-    def dpkg (self, args):
-        if not permissions.check_root(files.readall("/proc/info/su")):
-            colors.show("dpkg", "perm", "")
-            sys.exit(0)
-
-        cmd = 'dpkg '
-        for i in args:
-            if i.startswith('/') or i.endswith('/') or i.startswith('./') or '/' in i:
-                i = files.input(i)
-
-            if cmd == '':
-                cmd = i
-            else:
-                cmd = f"{cmd} {i}"
-
-        subprocess.call(cmd, shell=True)
-
-    # kill process #
-    def kill (self,args):
-        colors = Colors()
-        app = App()
-        for i in args:
-            if app.check(i):
-                app.end(i)
-            else:
-                colors.show ('kill','fail',f'{i}: id process not found.')
 
     # un set a variable
     def unset(self,args):
@@ -631,7 +530,7 @@ class Commands:
 
         elif filename.endswith('.c'):
             if args[1:]==[]:
-                subprocess.call(['gcc',files.input(filename),'-o',files.input('a.out')])
+                subprocess.call(['/usr/bin/gcc',files.input(filename),'-o',files.input('a.out')])
                 if not permissions.check(files.output('a.out'), "w", files.readall("/proc/info/su")):
                     colors.show('cc', 'perm', '')
                     sys.exit(0)
@@ -642,13 +541,13 @@ class Commands:
                     sys.exit(0)
 
                 if output.endswith('.so'):
-                    subprocess.call(['gcc','-shared','-o',files.input(output),'-fPIC',files.input(filename)])
+                    subprocess.call(['/usr/bin/gcc','-shared','-o',files.input(output),'-fPIC',files.input(filename)])
                 else:
-                    subprocess.call(['gcc',files.input(filename),'-o',files.input(output)])
+                    subprocess.call(['/usr/bin/gcc',files.input(filename),'-o',files.input(output)])
 
-        elif filename.endswith('.cpp') or filename.endswith('.cxx') or filename.endswith('.c++'):
+        elif filename.endswith('.has'):
             if args[1:]==[]:
-                subprocess.call(['g++',files.input(filename),'-o',files.input('a.out')])
+                System (f"hascal {files.input(filename)} {files.input('a.out')}")
                 if not permissions.check(files.output('a.out'), "w", files.readall("/proc/info/su")):
                     colors.show('cc', 'perm', '')
                     sys.exit(0)
@@ -657,13 +556,8 @@ class Commands:
                 if not permissions.check(files.output(output), "w", files.readall("/proc/info/su")):
                     colors.show('cc', 'perm', '')
                     sys.exit(0)
-
-                if output.endswith('.so'):
-                    # https://stackoverflow.com/questions/14884126/build-so-file-from-c-file-using-gcc-command-line
-                    subprocess.call(['g++','-shared','-o',files.input(output),'-fPIC',files.input(filename)])
-                else:
-                    subprocess.call(['g++',files.input(filename),'-o',files.input(output)])
-
+                
+                System (f"hascal {files.input(filename)} {files.input(output)}")
 
     # check command #
     def check (self,args):
@@ -771,7 +665,7 @@ class Commands:
         control = Control()
         files = Files()
         for i in args:
-            control.remove_record(i,files.readall('/proc/info/sel'))
+            control.remove_item(i,files.readall('/proc/info/sel'))
 
     # reboot #
     def reboot (self,args):
@@ -799,7 +693,7 @@ class Commands:
 
         process.endall()
 
-        subprocess.call(['reboot'])
+        subprocess.call(['/usr/bin/reboot'])
 
     # shut command #
     def shut (self,args):
@@ -818,7 +712,7 @@ class Commands:
             if files.isfile("/proc/selected"): files.remove("/proc/selected")
             process.endall()
 
-            subprocess.call(['poweroff'])
+            subprocess.call(['/usr/bin/poweroff'])
 
     # shutdown command #
     def shutdown (self,args):
@@ -843,7 +737,7 @@ class Commands:
 
         process.endall()
 
-        subprocess.call(['poweroff'])
+        subprocess.call(['/usr/bin/poweroff'])
 
 
     # touch #
@@ -972,6 +866,26 @@ class Commands:
                     files.append(cmdln[2], texts)
                 else:
                     colors.show("cat", "perm", "")
+
+    # view command #
+    def view (self,args):
+        if args==[]:
+            colors.show("view", "fail", "no inputs.")
+            sys.exit (0)
+
+        viewname = args[0]
+
+        if permissions.check(files.output(viewname), "r", files.readall("/proc/info/su")):
+            if files.isfile (viewname):
+                if viewname.endswith('.qml'):
+                    files.copy (viewname,'/usr/share/layouts/debug.qml')
+                    app.start('debug','')
+                else:
+                    colors.show("view", "fail", f"{viewname}: is not a QML file.")
+            else:
+                colors.show("view", "fail", f"{viewname}: QML file not found.")
+        else:
+            colors.show("view", "perm", "")
 
     # cd command #
     def cd (self,args):
@@ -1133,23 +1047,26 @@ class Commands:
         files = Files()
         colors = Colors()
 
-        x =  files.list ('/usr/share/helps')
+        x =  files.list ('/usr/share/docs/commands')
         x.sort()
 
         if args==[]:
             
             print (f"{colored('Commands are:','cyan')}")
             for i in x:
-                print(i,end=' ')
-            print (f"\n{colored('Try help [command] to see more informations','cyan')}")
+                print(i.replace(".md",""),end=' ')
+            print (f"\n{colored('Try `help [command]` to see more informations','cyan')}")
         else:
-            if files.isfile(f"/usr/share/helps/{args[0]}"):
-                print(files.readall(f"/usr/share/helps/{args[0]}"))
+            if files.isfile(f"/usr/share/docs/commands/{args[0]}.md"):
+                console = Console()
+                md = Markdown(files.readall(f"/usr/share/docs/commands/{args[0]}.md"))
+                console.print(md)
+                pass
             else:
                 print (f"{colored('Commands are:','cyan')}")
                 for i in x:
-                    print(i,end=' ')
-                print (f"\n{colored('Try help [command] to see more informations','cyan')}")
+                    print(i.replace(".md",""),end=' ')
+                print (f"\n{colored('Try `help [command]` to see more informations','cyan')}")
 
     # read command #
     def read (self,args):
@@ -1466,6 +1383,7 @@ class Commands:
             colors.show("su", "warning", f"{user} has already switched.")
         elif input_username == "guest":
             if files.readall('/etc/guest') == "enable":
+                files.create('/proc/info/pause')
                 subprocess.call ([sys.executable,'vmabr.pyc','user','guest'])
             else:
                 colors.show(input_username, "fail", "user not found.")
@@ -1474,6 +1392,7 @@ class Commands:
 
                 input_password = getpass.getpass(f'Enter {input_username}\'s password: ')
                 if hashlib.sha3_512(str(input_password).encode()).hexdigest() == control.read_record("code", f"/etc/users/{input_username}"):
+                    files.create('/proc/info/pause')
                     subprocess.call ([sys.executable,'vmabr.pyc','user',input_username,input_password])
                 else:
                     colors.show("su", "fail", f"{input_username}: wrong password.")
@@ -1517,7 +1436,7 @@ class Commands:
             files.create("/proc/info/pause")
 
             #prompt = [sys.executable,'vmabr.pyc', 'exec']
-            prompt = f'{sys.executable} vmabr.pyc exec '
+            prompt = f'"{sys.executable}" vmabr.pyc exec '
 
             for i in args:
                 prompt+=f" {i}"
@@ -1586,12 +1505,6 @@ class Commands:
 
                 if not files.isdir (f'/etc/key/{input_username}'):
                     files.mkdir(f'/etc/key/{input_username}')
-
-                if not files.isdir (f'/etc/chat/{input_username}'):
-                    files.mkdir(f'/etc/chat/{input_username}')
-
-                if not files.isdir (f'/etc/drive/{input_username}'):
-                    files.mkdir(f'/etc/drive/{input_username}')
 
                 k = Key(input_username) # create public key and private key for created user
 
@@ -1855,7 +1768,6 @@ class Package:
             ## Get database of this package ##
             name = control.read_record("name", "/app/cache/archives/control/manifest").lower()
             unpack =control.read_record("unpack", "/app/cache/archives/control/manifest")
-            apt = control.read_record("apt", "/app/cache/archives/control/manifest")
 
             ## Run preinstall script ##
 
@@ -1908,18 +1820,6 @@ class Package:
 
             if files.isfile('/app/cache/archives/control/postremove.sa'):
                 files.copy('/app/cache/archives/control/postremove.sa', f'/app/packages/{name}.postremove')
-
-            ## Check dpkg
-            if not apt==None:
-                subprocess.call(f'''
-Installing {apt} 3rd-party package ...
-apt update
-apt install --no-install-recommends {apt}
-apt autoremove
-apt clean
-apt autoclean
-echo Finish installaction of {apt}
-''',shell=True)
 
             ## Unlock the cache ##
         else:
@@ -2482,12 +2382,21 @@ class Res:
         else:
             return ''
 
+    def getname (self,app):
+        locale = control.read_record("locale", "/etc/gui")
+
+                ## Set default lang ##
+        result =  self.etc (app,f'name[{locale}]')
+        if result==None:
+            result = self.etc (app,f'name[en]')
+
+        return result
 
 res = Res()
 # system #
 class System:
     def __init__(self,cmd):
-        prompt = f'{sys.executable} vmabr.pyc exec '
+        prompt = f'\"{sys.executable}\" vmabr.pyc exec '
         cmdln = cmd.split(" ")
 
         if '' in cmdln:
@@ -2585,7 +2494,7 @@ class App:
         files.write('/proc/info/sig',sig)
 
     def launchedlogo(self,title,logo):
-        correctname = title.replace(' ', '').replace('\n', '').replace('(', '').replace(')', '').replace('0',
+        correctname = title.replace('\n', '').replace('(', '').replace(')', '').replace('0',
                                                                                                         '').replace('1',
                                                                                                                     '').replace(
             '2', '').replace('3', '').replace('4', '').replace('5', '').replace('6', '').replace('7', '').replace('8',
@@ -3080,7 +2989,7 @@ class Files:
             return f"./{pwd}/{filename}"
 
     def input_exec(self,filename):
-        x = self.input(filename.replace("./", "")).replace(".//", "").replace("/", ".")
+        x = self.input(filename.replace("./", "")).replace(".//", "").replace("/", ".").replace('\\','/')
 
         if x.startswith('.////'):
             x = x.replace('.////', '/')
@@ -3088,7 +2997,8 @@ class Files:
         return x
 
     def output(self,filename):
-        x = subprocess.check_output(f'readlink -f "{self.input(filename)}"',shell=True).decode('utf-8').replace('\n','').replace('/stor','')
+        #x = subprocess.check_output(f'readlink -f "{self.input(filename)}"',shell=True).decode('utf-8').replace('\n','').replace('/stor','')
+        x = os.path.realpath (self.input(filename)).replace('/stor','').replace('C:\\stor\\','/').replace('C:\\stor','')
         if x=='':
             return '/'
         else:
@@ -3192,6 +3102,14 @@ class Control:
                 if i[0] == (name):
                     return i[1]
 
+    def read_in (self,name, filename):
+        files = Files()
+        for i in (files.readall(filename)).split("\n"):
+            if i.__contains__(name):
+                i = i.split(": ")
+                if i[0].__contains__(name):
+                    return i[1]
+
     def read_list(self,filename):
         files = Files()
         return (files.readall(filename)).split("\n")
@@ -3268,3 +3186,59 @@ class Key:
         f = open(files.input(f'/etc/key/{su}/Public Key.pem'),'wb')
         f.write(public)
         f.close()
+
+class Message:
+    text = ''
+    def __init__(self):
+        super(Message, self).__init__()
+
+    def Write (self,text):
+        self.text+=text+"\n"
+
+    def Save (self):
+        self.user = files.readall('/proc/info/su')
+        self.keydir = f'/etc/key/{self.user}'
+        message = self.text.encode()
+
+        with open(files.input(f'/etc/external-key/Public Key.pem'), "rb") as key_file:
+            public_key = serialization.load_pem_public_key(
+                key_file.read(),
+                backend=default_backend()
+            )
+
+        encrypted = public_key.encrypt(
+            message,
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+                label=None
+            )
+        )
+
+        f = open(files.input(f'/etc/external-key/Message.bin'), 'wb')
+        f.write(encrypted)
+        f.close()
+
+    def Read (self):
+        self.user = files.readall('/proc/info/su')
+        with open(files.input(f'/etc/key/{self.user}/Private Key.pem'), "rb") as key_file:
+            private_key = serialization.load_pem_private_key(
+                key_file.read(),
+                password=None,
+                backend=default_backend()
+            )
+
+        f = open(files.input(f'/etc/key/{self.user}/Message.bin'), 'rb')
+        encrypted = f.read()
+        f.close()
+
+        original_message = private_key.decrypt(
+            encrypted,
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+                label=None
+            )
+        )
+
+        return original_message.decode('utf-8')

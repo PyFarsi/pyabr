@@ -21,6 +21,7 @@ json.external.persia: Yes
 rss.external.barge: Yes
 rss.external.persia: Yes
 txt.external.barge: Yes
+pem.external.raznegar: Yes
 txt.external.persia: Yes
 cfg.external.barge: Yes
 cfg.external.persia: Yes
@@ -56,8 +57,10 @@ php.external.persia: Yes
 sln.external.barge: Yes
 sln.external.persia: Yes
 html.external.chromium: Yes
+html.external.jooya: Yes
 html.external.barge: Yes
 htm.external.chromium: Yes
+htm.external.jooya: Yes
 htm.external.barge: Yes
 cgm.text: Computer Graphics Metafile
 svg.external.paint: Yes
@@ -83,6 +86,8 @@ css.external.barge: Yes
 css.external.persia: Yes
 md.external.barge: Yes
 md.external.persia: Yes
+md.external.jooya: Yes
+md.external.MarkdownViewer: Yes
 sgml.external.barge: Yes
 sgml.external.persia: Yes
 cpp.external.barge: Yes
@@ -122,12 +127,16 @@ r.external.persia: Yes
 sass.external.barge: Yes
 sass.external.persia: Yes
 xhtml.external.chromium: Yes
+xhtml.external.jooya: Yes
 xhtml.external.barge: Yes
 xhtml.external.persia: Yes
+xhtml.external.HTMLViewer: Yes
 xml.external.barge: Yes
 xml.external.persia: Yes
 xml.external.uiv: Yes
 xml.external.chromium: Yes
+xml.external.jooya: Yes
+xml.external.HTMLViewer: Yes
 pot.text: Microsoft PowerPoint Template (Legacy)
 wps.text: Microsoft Works Word Processor Document
 xlt.external.libreofficecalc: Yes
@@ -170,6 +179,7 @@ smil.external.mpv: Yes
 mxf.text: Material Exchange Format File
 mxf.external.mpv: Yes
 pdf.text: Portable Document Format File
+pdf.external.PDFReader: Yes
 rss.text: Rich Site Summary
 rtf.text: Rich Text Format File
 rtf.external.libreofficewriter: Yes
@@ -203,6 +213,7 @@ jar.text: Java Archive File
 m4.text: Macro Processor Library
 msi.text: Windows Installer Package
 exe.text: Windows Executable File
+raz.text: Encrypted Message
 com.text: DOS Command File
 efi.text: Extensible Firmware Interface File
 c32.text: Syslinux COM32 Module
@@ -246,6 +257,8 @@ woff.text: Web Open Font Format File
 htm.text: Hypertext Markup Language File
 html.text: Hypertext Markup Language File
 html.external.libreofficecalc: Yes
+html.external.HTMLViewer: Yes
+htm.external.HTMLViewer: Yes
 emf.text: Enhanced Windows Metafile
 svg.text: Scalable Vector Graphics File
 webp.text: WebP Image

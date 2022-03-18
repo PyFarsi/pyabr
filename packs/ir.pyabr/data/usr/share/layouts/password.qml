@@ -11,18 +11,24 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: password
     visible: true
-    color: "white"
+    color: wt.background
 
     width: 400
     height: 90
+    
+    WindowTheme {
+        id: wt
+    }
 
     Rectangle {
         id: txtText
         width: parent.width
+        color: wt.background
         height: parent.height/2
         TextField {
             anchors.centerIn: parent
-            font.family: "Iran Sans"
+            font.family: wt.fontFamily
+            color: wt.color
             width: parent.width
             echoMode: TextInput.Password
             height: parent.height
@@ -39,13 +45,13 @@ ApplicationWindow {
         objectName: "btnCancel"
         width: parent.width/2
         height: parent.height/2
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         anchors.top: txtText.bottom
     }
     Button {
         text: "OK"
         objectName: "btnOK"
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         width: parent.width/2
         height: parent.height/2
         anchors.left: cancel.right

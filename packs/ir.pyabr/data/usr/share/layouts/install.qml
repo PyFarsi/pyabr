@@ -11,14 +11,19 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: ask
     visible: true
-    color: "white"
+    color: wt.background
 
     width: 500
     height: 200
 
+    WindowTheme {
+        id: wt
+    }
+
     Rectangle {
         id: txtText
         width: parent.width
+        color: wt.background
         height: parent.height/2
         
         Image {
@@ -35,10 +40,11 @@ ApplicationWindow {
         Text {
             anchors.left: imagex.right
             text: "Commento"
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             font.pixelSize: 30
             anchors.leftMargin: 20
             objectName: "name"
+            color: wt.color
             anchors.rightMargin: 20
             anchors.topMargin: 20
             anchors.top: parent.top
@@ -46,9 +52,9 @@ ApplicationWindow {
         }
 
         Text {
-            color: "gray"
+            color: wt.colorSmall
             anchors.left: imagex.right
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             anchors.leftMargin: 20
             anchors.rightMargin: 20
             objectName: "descriptionx"
@@ -73,7 +79,7 @@ ApplicationWindow {
         id: cancel
         text: "No"
         objectName: "btnCancel"
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         width: parent.width/2
         height: parent.height/4
         anchors.bottom: parent.bottom
@@ -82,7 +88,7 @@ ApplicationWindow {
         text: "Yes"
         objectName: "btnOK"
         width: parent.width/2
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         height: parent.height/4
         anchors.left: cancel.right
         anchors.bottom: parent.bottom

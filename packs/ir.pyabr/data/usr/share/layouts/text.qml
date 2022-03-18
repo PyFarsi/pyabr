@@ -11,18 +11,24 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: backend
     visible: true
-    color: "white"
+    color: wt.background
 
     width: 500
     height: 90
+    
+    WindowTheme {
+        id: wt
+    }
 
     Rectangle {
+        color: wt.background
         id: txtText
         width: parent.width
         height: parent.height/2
         Text {
             anchors.centerIn: parent
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
+            color: wt.color
             objectName: "txtText"
         }
         anchors.topMargin: 5
@@ -36,6 +42,6 @@ ApplicationWindow {
         width: parent.width
         height: parent.height/2
         anchors.top: txtText.bottom
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
     }
 }

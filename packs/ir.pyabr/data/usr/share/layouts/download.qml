@@ -11,7 +11,11 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: download
     visible: true
-    color: "white"
+    color: wt.background
+    
+    WindowTheme {
+        id: wt
+    }
 
     width: 400
     height: 100
@@ -20,13 +24,15 @@ ApplicationWindow {
     Rectangle {
         id: txtText
         width: parent.width
+        color: wt.background
         height: parent.height/2
         TextField {
             anchors.centerIn: parent
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             width: parent.width
             height: parent.height
             objectName: "leDownload"
+            color: wt.color
             selectByMouse: true
                     MouseArea {
                         anchors.fill: parent
@@ -53,7 +59,7 @@ ApplicationWindow {
         objectName: "btnDownload"
         width: parent.width
         height: parent.height/2
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         anchors.top: pro.bottom
     }
 }

@@ -1,0 +1,231 @@
+name: русский
+keyless: ru
+keyless.enable: No
+0: 0
+1: 1
+2: 2
+3: 3
+4: 4
+5: 5
+6: 6
+7: 7
+8: 8
+9: 9
+username_placeholder: Введите имя пользователя
+user_not_found: {0} пользователь не найден
+etcetra: И так далее
+escape: Побег
+restart: Начать сначала
+sleep: Спать
+next: Следующий
+keyboard_languages: Языки клавиатуры
+virtualkeyboard: Виртуальная клавиатура
+password_placeholder: Введите пароль пользователя {0}
+login: Авторизоваться
+logout: Выйти
+unlock: Разблокировать
+guest: Гость
+calendar: Календарь
+switchuser: Поменять пользователя
+applications: Приложения
+lock: Замок
+accounts: учетные записи
+barge: Текстовый редактор
+calculator: Калькулятор
+clock: Часы
+host: Имя хоста
+cs: Облачное ПО
+bl: Дата постройки
+os: Операционная система
+kname: Имя ядра
+su: Переключенный пользователь
+de: Среда рабочего стола
+gui: GUI
+arch: Архитектура
+controls: Элементы управления
+appearance: Появление
+adduser: Добавить пользователя
+desktop: Рабочий стол
+cancel: Отмена
+apply: Применять
+dock_location: Расположение дока
+change_wallpaper: Изменить обои
+files: Файлы
+open: Открыть
+openwith: Открыть с...
+execute: выполнить
+cut: резать
+copy: копировать
+paste: паста
+rename: переименовать
+delete: Удалить
+newfile: новый файл
+newfolder: Новая папка
+info: Информация
+exists: {0} существует
+exists_message: {0} уже существует
+nama: Средство просмотра изображений
+power_options: параметры питания
+runner: Бегун
+run: беги
+application_not_found: {0} приложение не найдено
+setup: настройка
+sysinfo: Системная информация
+terminal: Терминал
+mpv: Видеоплеер MPV
+ok: Ok
+select: Выбирать
+select_file: Выберите файл
+select_folder: Выберите каталог
+open: Открыть
+save: Сохранять
+fullname: Полное имя
+install_package: Установить пакет {0}
+install: Установить
+enter_hostname: Введите имя хоста
+pick_username: Выберите никнейм
+choose_root_password: Выберите корневой пароль
+choose_password: Выберите новый пароль
+phone: Телефон
+email: Эл. адрес
+sample: Образец заявления
+debug: Отладка приложения
+update: Обновлять
+uninstall: Удалить
+package_name: Имя пакета
+package_version: Версия пакета
+copyright: Авторские права
+license: Лицензия
+unpack: Установлен в
+mirror: Зеркало
+uninstall_message: Вы хотите удалить пакет {0}?
+install_message: Хотите установить пакет {0}?
+update_message: Хотите обновить пакет {0}?
+pyket: Магазин
+download: Скачать
+url: URL-адрес
+setup_message: Настройка уже завершена. Нажмите «>», чтобы завершить
+display: Отображать
+wifi: Вай-фай
+not_matched: Пароли не совпадают
+remove: Удалять
+savechanges: Сохранить изменения
+remove_user_message: Вы хотите удалить {0}? это означает потерю всех данных в выбранном пользователе
+e_username: Имя пользователя
+e_password: Пароль
+birthday: День рождения
+sudoers: Судоерс
+oldpass: Старые пароли
+newpass: Новые пароли
+confirmpass: Подтвердите пароль
+change_password: Изменить пароль
+languages: Языки
+syslang: Язык системы
+wrong_password: Неправильный пароль; Попробуйте снова
+perm: Доступ запрещен
+perm_message: У вас нет доступа к этому процессу; Доступ запрещен
+baad: Погода
+filename: Имя файла
+type: Тип
+size: Размер
+created: Созданный
+modified: Изменено
+access_owner: Доступ для владельца
+access_users: Доступ для пользователей
+access_guest: Доступ для гостя
+location: Место нахождения
+ownership: Владение
+chat: Чат
+datainstaller: Установщик данных
+need_restart: Установку {0} необходимо перезапустить. Вы хотите перезапустить?
+connect: Соединять
+e_cloud: Имя облачного хоста (необязательно)
+c_cloud: Подключиться к облаку
+connection_fail: Ошибка подключения
+connection_failmc: Не удается подключиться к этому облаку
+unknown: Неизвестный
+folder: Папка
+---: No access
+rwx: Может просматривать, изменять и выполнять
+rw-: Можно просматривать и изменять
+r--: Только просмотр
+-wx: Изменить и выполнить
+--x: Выполнить только
+-w-: Только изменить
+always: Всегда
+atonce: Сразу
+fonts: Шрифты
+sr: CD/DVD ROM
+srp: CD/DVD Водить машину
+drive: Водить машину
+disk: Диск
+part: Раздел
+e_city: Введите свой текущий город (на английском языке)
+e_contact: Введите ваше контактное имя пользователя
+e_channel: Имя хоста канала (необязательно)
+c_channel: Подключиться к каналу
+e_send: Отправить сообщение
+n_connected: {0} не подключен
+connected: {0} подключено
+connectedm: {0} успешно подключено
+connect_to: Подключиться к {0}
+connect_tom: Вы хотите подключиться к сети {0}?
+fcopy: Формат и копирование
+copydisk: Копидиск
+format: Формат
+formatm: Вы хотите отформатировать этот диск/раздел?
+e_mount: Не удается смонтировать
+e_mountm: Не удается смонтировать этот диск
+extract: Извлекать
+cloud_o: Облачные опции
+compress: Сжать в
+upload: Загрузить
+zero: Загрузить и обнулить
+sharelink: Поделитесь этой ссылкой
+rma: Восстановить приложения
+bash: Bash
+python: Python
+upstor: Обновление
+upstorum: Ваш Pyabr - самая новая версия
+upstoru: До настоящего времени
+upstort: Обновитесь до
+themes: Темы
+icon: Значок
+gtk: Заявление
+shell: Оболочка
+cursor: Курсор
+change: Изменять
+news: Новости
+window: Окно
+global: Глобальный
+sync: Синхронизировать
+unlink: Отвязать (удалить из облака)
+sync_E0: Пустые поля
+sync_E0M: Пожалуйста, заполните форму
+sync_E1: Ошибка подключения
+sync_E1M: Ошибка подключения; пожалуйста, попробуйте снова
+sync_E5: Неправильный пароль
+sync_E5M: Ваш введенный пароль был неправильным
+sync_S: Успешно синхронизировано
+sync_SM: Ваш введенный пользователь успешно синхронизирован
+view: Вид
+subject: Тема
+send: Отправлять
+encrypt: Шифровать
+search: Поиск
+newwindow: Новое окно
+history: История
+bookmarks: Закладки
+searchengines: Поисковые системы
+addsearchengine: Добавить новую поисковую систему
+exit: Выход
+fullscreen: Полноэкранный
+back: назад
+seadd: Добавить поисковую систему
+seid: Я БЫ (Например: google)
+sename: Имя (Например: Google)
+seurl: URL-адрес (Например: https://google.com)
+sequrl: URL запроса (Например" https://google.com/search?={0})
+sekey: Клавиатура (Например: :g)
+statistics: Статистика
+statisticsm: Вы хотите, чтобы ваша статистика отправлялась как пользователь облака?

@@ -179,7 +179,7 @@ extract: استخراج
 cloud_o: خيارات السحابة
 compress: اضغط إلى
 upload: تحميل
-ziro: تحميل وزيرو
+zero: تحميل وزيرو
 sharelink: شارك هذا الرابط
 rma: استعاده التطبيقات
 bash: بش
@@ -196,3 +196,36 @@ shell: الصدف
 cursor: المؤشر
 change: يتغير
 news: الإخبارية
+window: نافذة او شباك
+global: عالمي
+sync: مزامنة
+unlink: إلغاء الارتباط (إزالة من السحابة)
+sync_E0: حقول فارغة
+sync_E0M: الرجاء ملء النموذج
+sync_E1: فشل الاتصال
+sync_E1M: فشل الاتصال ؛ حاول مرة اخرى
+sync_E5: كلمة مرور خاطئة
+sync_E5M: كلمة المرور التي أدخلتها كانت خاطئة
+sync_S: تمت المزامنة بنجاح
+sync_SM: تم إدخال المستخدم بنجاح
+view: رأي
+subject: الموضوع
+send: إرسال
+encrypt: تشفير
+search: بحث
+newwindow: نافذة جديدة
+history: التاريخ
+bookmarks: الإشارات المرجعية
+searchengines: محركات البحث
+addsearchengine: إضافة محرك بحث جديد
+exit: خروج
+fullscreen: ملء الشاشة
+back: العودة
+seadd: إضافة محرك بحث
+seid: هوية شخصية (مثل google)
+sename: الاسم (مثل Google)
+seurl: عنوان (مثل https://google.com)
+sequrl: عنوان للاستعلام (مثل https://google.com/search?={0})
+sekey: لوحة المفاتيح
+statistics: إحصائيات
+statisticsm: هل تريد إرسال إحصائياتك كمستخدم بای ابر؟

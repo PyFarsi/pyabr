@@ -1,7 +1,14 @@
 core.py:usr/app/pyabr/core.pyc
 vmabr.py:vmabr.pyc
 quick.py:usr/app/pyabr/quick.pyc
-chat.py:usr/app/pyabr/chat.pyc
 cloud.py:usr/app/pyabr/cloud.pyc
 webapp.py:usr/app/webapp.pyc
 Download.py:usr/app/Download.pyc
+sync.py:usr/app/sync.pyc
+up.py:usr/app/up.pyc
+down.py:usr/app/down.pyc
+link.py:usr/app/link.pyc
+unlink.py:usr/app/unlink.pyc
+zero.py:usr/app/zero.pyc
+push.py:usr/app/push.pyc
+UpdateFonts.py:usr/app/UpdateFonts.pyc

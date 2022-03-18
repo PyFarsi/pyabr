@@ -11,13 +11,16 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: fileinfo
     visible: true
-    color: "white"
+    color: wt.background
     maximumWidth: 400
     maximumHeight: 350
     minimumWidth: 400
     minimumHeight: 350
     width: 400
     height: 350
+    WindowTheme {
+        id: wt
+    }
     Column {
         spacing: 2
         width: parent.width
@@ -30,19 +33,19 @@ ApplicationWindow {
                         Text {
                             anchors.left: parent.left
                             anchors.leftMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: name
                             objectName: "name"
                             font.pixelSize: 16
-                            color: "gray"
+                            color: wt.colorSmall
                         }
                         Text {
-                            color: "black"
+                            color: wt.color
                             font.bold: true
                             font.pixelSize: 16
                             anchors.right: parent.right
                             anchors.rightMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: name1
                             objectName: "name1"
                         }
@@ -50,7 +53,7 @@ ApplicationWindow {
                             anchors.bottom: parent.bottom
                             width: parent.width
                             height: 1
-                            color: "silver"
+                            color: wt.colorLine
                         }
                     }
 
@@ -61,19 +64,19 @@ ApplicationWindow {
                         Text {
                             anchors.left: parent.left
                             anchors.leftMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: type
                             objectName: "type"
                             font.pixelSize: 16
-                            color: "gray"
+                            color: wt.colorSmall
                         }
                         Text {
-                            color: "black"
+                            color: wt.color
                             font.bold: true
                             font.pixelSize: 16
                             anchors.right: parent.right
                             anchors.rightMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: type1
                             objectName: "type1"
                         }
@@ -81,7 +84,7 @@ ApplicationWindow {
                             anchors.bottom: parent.bottom
                             width: parent.width
                             height: 1
-                            color: "silver"
+                            color: wt.colorLine
                         }
                     }
 
@@ -92,19 +95,19 @@ ApplicationWindow {
                         Text {
                             anchors.left: parent.left
                             anchors.leftMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: location
                             objectName: "location"
                             font.pixelSize: 16
-                            color: "gray"
+                            color: wt.colorSmall
                         }
                         Text {
-                            color: "black"
+                            color: wt.color
                             font.bold: true
                             font.pixelSize: 16
                             anchors.right: parent.right
                             anchors.rightMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: location1
                             objectName: "location1"
                         }
@@ -112,7 +115,7 @@ ApplicationWindow {
                             anchors.bottom: parent.bottom
                             width: parent.width
                             height: 1
-                            color: "silver"
+                            color: wt.colorLine
                         }
                     }
 
@@ -123,19 +126,19 @@ ApplicationWindow {
                         Text {
                             anchors.left: parent.left
                             anchors.leftMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: size
                             objectName: "size"
                             font.pixelSize: 16
-                            color: "gray"
+                            color: wt.colorSmall
                         }
                         Text {
-                            color: "black"
+                            color: wt.color
                             font.bold: true
                             font.pixelSize: 16
                             anchors.right: parent.right
                             anchors.rightMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: size1
                             objectName: "size1"
                         }
@@ -143,7 +146,7 @@ ApplicationWindow {
                             anchors.bottom: parent.bottom
                             width: parent.width
                             height: 1
-                            color: "silver"
+                            color: wt.colorLine
                         }
                     }
 
@@ -154,19 +157,19 @@ ApplicationWindow {
                         Text {
                             anchors.left: parent.left
                             anchors.leftMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: created
                             objectName: "created"
                             font.pixelSize: 16
-                            color: "gray"
+                            color: wt.colorSmall
                         }
                         Text {
-                            color: "black"
+                            color: wt.color
                             font.bold: true
                             font.pixelSize: 16
                             anchors.right: parent.right
                             anchors.rightMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: created1
                             objectName: "created1"
                         }
@@ -174,7 +177,7 @@ ApplicationWindow {
                             anchors.bottom: parent.bottom
                             width: parent.width
                             height: 1
-                            color: "silver"
+                            color: wt.colorLine
                         }
                     }
 
@@ -185,19 +188,19 @@ ApplicationWindow {
                         Text {
                             anchors.left: parent.left
                             anchors.leftMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: modified
                             objectName: "modified"
                             font.pixelSize: 16
-                            color: "gray"
+                            color: wt.colorSmall
                         }
                         Text {
-                            color: "black"
+                            color: wt.color
                             font.bold: true
                             font.pixelSize: 16
                             anchors.right: parent.right
                             anchors.rightMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: modified1
                             objectName: "modified1"
                         }
@@ -205,7 +208,7 @@ ApplicationWindow {
                             anchors.bottom: parent.bottom
                             width: parent.width
                             height: 1
-                            color: "silver"
+                            color: wt.colorLine
                         }
                     }
 
@@ -216,19 +219,19 @@ ApplicationWindow {
                         Text {
                             anchors.left: parent.left
                             anchors.leftMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: ownership
                             objectName: "ownership"
                             font.pixelSize: 16
-                            color: "gray"
+                            color: wt.colorSmall
                         }
                         Text {
-                            color: "black"
+                            color: wt.color
                             font.bold: true
                             font.pixelSize: 16
                             anchors.right: parent.right
                             anchors.rightMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: ownership1
                             objectName: "ownership1"
                         }
@@ -236,7 +239,7 @@ ApplicationWindow {
                             anchors.bottom: parent.bottom
                             width: parent.width
                             height: 1
-                            color: "silver"
+                            color: wt.colorLine
                         }
                     }
 
@@ -247,19 +250,19 @@ ApplicationWindow {
                         Text {
                             anchors.left: parent.left
                             anchors.leftMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: perma
                             objectName: "perma"
                             font.pixelSize: 16
-                            color: "gray"
+                            color: wt.colorSmall
                         }
                         Text {
-                            color: "black"
+                            color: wt.color
                             font.bold: true
                             font.pixelSize: 16
                             anchors.right: parent.right
                             anchors.rightMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: perma1
                             objectName: "perma1"
                         }
@@ -267,7 +270,7 @@ ApplicationWindow {
                             anchors.bottom: parent.bottom
                             width: parent.width
                             height: 1
-                            color: "silver"
+                            color: wt.colorLine
                         }
                     }
 
@@ -278,19 +281,19 @@ ApplicationWindow {
                         Text {
                             anchors.left: parent.left
                             anchors.leftMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: permb
                             objectName: "permb"
                             font.pixelSize: 16
-                            color: "gray"
+                            color: wt.colorSmall
                         }
                         Text {
-                            color: "black"
+                            color: wt.color
                             font.bold: true
                             font.pixelSize: 16
                             anchors.right: parent.right
                             anchors.rightMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: permb1
                             objectName: "permb1"
                         }
@@ -298,7 +301,7 @@ ApplicationWindow {
                             anchors.bottom: parent.bottom
                             width: parent.width
                             height: 1
-                            color: "silver"
+                            color: wt.colorLine
                         }
                     }
 
@@ -309,19 +312,19 @@ ApplicationWindow {
                         Text {
                             anchors.left: parent.left
                             anchors.leftMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: permc
                             objectName: "permc"
                             font.pixelSize: 16
-                            color: "gray"
+                            color: wt.colorSmall
                         }
                         Text {
-                            color: "black"
+                            color: wt.color
                             font.bold: true
                             font.pixelSize: 16
                             anchors.right: parent.right
                             anchors.rightMargin: 20
-                            font.family: "IRANSans"
+                            font.family: wt.fontFamily
                             id: permc1
                             objectName: "permc1"
                         }
@@ -329,7 +332,7 @@ ApplicationWindow {
                             anchors.bottom: parent.bottom
                             width: parent.width
                             height: 1
-                            color: "silver"
+                            color: wt.colorLine
                         }
                     }
     }

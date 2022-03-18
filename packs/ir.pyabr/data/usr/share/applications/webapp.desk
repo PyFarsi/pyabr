@@ -1,0 +1,6 @@
+name[en]: WebApp
+logo: @icon/browser
+exec: webapp
+application: No
+category: internet
+hidden: Yes

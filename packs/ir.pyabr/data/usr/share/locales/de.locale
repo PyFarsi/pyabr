@@ -1,0 +1,232 @@
+#translated by sohrabbehdani
+name: Deutsch
+keyless: de
+keyless.enable: No
+0: 0
+1: 1
+2: 2
+3: 3
+4: 4
+5: 5
+6: 6
+7: 7
+8: 8
+9: 9
+username_placeholder: geben Sie Ihren Benutzernamen ein
+user_not_found: {0} Benutzer nicht gefunden
+etcetra: und so weiter
+escape: Flucht
+restart: neu starten
+sleep: Schlaf
+next: nächste
+keyboard_languages: Tastatursprachen
+virtualkeyboard: virtuelle Tastatur
+password_placeholder: Geben Sie das Passwort von {0} ein
+login: Anmeldung
+logout: Ausloggen
+unlock: Freischalten
+guest: Gast
+calendar: Kalender
+switchuser: Benutzer wechseln
+applications: Anwendungen
+lock: sperren
+accounts: Konten
+barge: Texteditor
+calculator: Taschenrechner
+clock: Uhr
+host: Hostname
+cs: Cloud-Software
+bl: Baujahr
+os: Betriebssystem
+kname: Kernel name
+su: Benutzer gewechselt
+de: Desktop-Umgebung
+gui: Gui toolkit
+arch: Die Architektur
+controls: Kontrollen
+appearance: Aussehen
+adduser: Benutzer hinzufügen
+desktop: Schreibtisch
+cancel: Stornieren
+apply: Anwenden
+dock_location: Dock-Standort
+change_wallpaper: Hintergrund ändern
+files: Dateien
+open: Offen
+openwith: Öffnen mit...
+execute: Ausführen
+cut: Schneiden
+copy: Kopieren
+paste: Paste
+rename: Umbenennen
+delete: Löschen
+newfile: Neue Datei
+newfolder: Neuer Ordner
+info: Informationen
+exists: {0} existiert
+exists_message: {0} ist bereits vorhanden
+nama: Bildbetrachter
+power_options: Energieeinstellungen
+runner: Läufer
+run: Laufen
+application_not_found: {0} Anwendung nicht gefunden
+setup: Aufstellen
+sysinfo: Systeminformationen
+terminal: Terminal
+mpv: MPV-Filmplayer
+ok: OK
+select: Auswählen
+select_file: Wählen Sie eine Datei aus
+select_folder: Wählen Sie ein Verzeichnis aus
+open: Offen
+save: Speichern
+fullname: Vollständiger Name
+install_package: Paket {0} installieren
+install: Installieren
+enter_hostname: Geben Sie den Hostnamen ein
+pick_username: Wähle einen Benutzernamen
+choose_root_password: Wählen Sie das Root-Passwort
+choose_password: Wähle ein neues Passwort
+phone: Telefon
+email: Email
+sample: Beispielanwendung
+debug: Anwendung debuggen
+update: Aktualisieren
+uninstall: Deinstallieren
+package_name: Paketnamen
+package_version: Paketversion
+copyright: Urheberrechte ©
+license: Lizenz
+unpack: Eingebaut
+mirror: Spiegel
+uninstall_message: Möchten Sie {0} Paket entfernen?
+install_message: Möchten Sie das Paket {0} installieren?
+update_message: Möchten Sie das Paket {0} aktualisieren?
+pyket: Pyket
+download: Herunterladen
+url: URL
+setup_message: Die Einrichtung ist bereits abgeschlossen. Klicken Sie zum Beenden auf „>“.
+display: Display
+wifi: W-lan
+not_matched: Passwörter nicht abgeglichen
+remove: Entfernen
+savechanges: Änderungen speichern
+remove_user_message: Möchten Sie {0} entfernen? Dies bedeutet, dass alle Daten im ausgewählten Benutzer verloren gegangen sind
+e_username: Nutzername
+e_password: Passwort
+birthday: Geburtstag
+sudoers: Sudoers
+oldpass: Alte Passwörter
+newpass: Neue Passwörter
+confirmpass: Bestätigen Sie das Passwort
+change_password: Passwort ändern
+languages: Sprachen
+syslang: Systemsprache
+wrong_password: Falsches Passwort; versuchen Sie es nochmal
+perm: Zugriff verweigert
+perm_message: Sie haben keinen Zugriff auf diesen Prozess; Zugriff verweigert
+baad: BaaD Wetter
+filename: Dateiname
+type: Art
+size: Größe
+created: Erstellt
+modified: Geändert
+access_owner: Zugang für Eigentümer
+access_users: Zugang für Benutzer
+access_guest: Zugang für Gäste
+location: Standort
+ownership: Eigentum
+chat: Plaudern
+datainstaller: Daten-Installer
+need_restart: Die Installation von {0} muss neu gestartet werden. Möchten Sie neu starten?
+connect: Anschließen
+e_cloud: Cloud hostname (optional)
+c_cloud: Verbinden Sie sich mit der Cloud
+connection_fail: Verbindung fehlgeschlagen
+connection_failmc: Es kann keine Verbindung zu dieser Cloud hergestellt werden
+unknown: Unbekannt
+folder: Mappe
+---: No access
+rwx: Kann anzeigen, ändern und ausführen
+rw-: Kann anzeigen und ändern
+r--: Kann nur anzeigen
+-wx: Ändern und ausführen
+--x: Nur ausführen
+-w-: Nur ändern
+always: Immer
+atonce: Auf einmal
+fonts: Schriftarten
+sr: CD/DVD ROM
+srp: CD/DVD Drive
+drive: Drive
+disk: Scheibe
+part: Teilung
+e_city: Geben Sie Ihre aktuelle Stadt ein (auf Englisch)
+e_contact: Geben Sie Ihren Kontakt-Benutzernamen ein
+e_channel: Hostname des Kanals (optional)
+c_channel: Mit Kanal verbinden
+e_send: Eine Nachricht schicken
+n_connected: {0} nicht verbunden
+connected: {0} verbunden
+connectedm: {0} erfolgreich verbunden
+connect_to: Verbinden mit {0}
+connect_tom: Möchten Sie eine Verbindung zum Netzwerk {0} herstellen?
+fcopy: Formatieren und kopieren
+copydisk: Kopierplatte
+format: Format
+formatm: Möchten Sie diese Festplatte/Partition formatieren?
+e_mount: Mounten nicht möglich
+e_mountm: Dieses Laufwerk kann nicht gemountet werden
+extract: Extrakt
+cloud_o: Cloud-Optionen
+compress: Komprimieren, um
+upload: Hochladen
+zero: Hochladen und Null
+sharelink: Teilen Sie diesen Link
+rma: Apps wiederherstellen
+bash: Bash
+python: Python
+upstor: Aktualisierung
+upstorum: Ihr Pyabr ist die neueste Version
+upstoru: Auf dem Laufenden
+upstort: Upgraden auf
+themes: Themen
+icon: Symbol
+gtk: Anwendung
+shell: Hülse
+cursor: Mauszeiger
+change: Ändern
+news: Nachrichten
+window: Fenster
+global: Global
+sync: Synchronisieren
+unlink: Verknüpfung aufheben (aus der Cloud entfernen)
+sync_E0: Leerfelder
+sync_E0M: Bitte füllen sie das Formular aus
+sync_E1: Verbindung fehlgeschlagen
+sync_E1M: Verbindung fehlgeschlagen; Bitte versuche es erneut
+sync_E5: Falsches Passwort
+sync_E5M: Ihr eingegebenes Passwort war falsch
+sync_S: Erfolgreich synchronisiert
+sync_SM: Ihr eingegebener Benutzer wurde erfolgreich synchronisiert
+view: Sicht
+subject: Fach
+send: Schicken
+encrypt: Verschlüsseln
+search: Suche
+newwindow: Neues Fenster
+history: Geschichte
+bookmarks: Lesezeichen
+searchengines: Suchmaschinen
+addsearchengine: Fügen Sie eine neue Suchmaschine hinzu
+exit: Ausgang
+fullscreen: Vollbild
+back: zurück
+seadd: Suchmaschine hinzufügen
+seid: ID (z. B. Google)
+sename: Name (z. B. Google)
+seurl: URL (z. B. https://google.com)
+sequrl: Abfrage-URL (z. B. https://google.com/search?={0})
+sekey: Tastatur (zB :g)
+statistics: Statistiken
+statisticsm: Möchten Sie, dass Ihre Statistiken als Pyabr-Benutzer gesendet werden?

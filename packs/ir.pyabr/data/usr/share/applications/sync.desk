@@ -1,0 +1,12 @@
+name[en]: Online Account
+name[fa]: حساب آنلاین
+name[ar]: حساب على الانترنت
+name[tr]: Çevrimiçi Hesap
+name[de]: Online-Konto
+name[cn]: 网上账户
+name[ru]: Онлайн-аккаунт
+logo: @icon/users
+exec: sync
+application: Yes
+category: tools
+hidden: Yes

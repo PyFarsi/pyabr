@@ -8,7 +8,9 @@ desktop: baran
 gui: Qt Framework
 params: gui
 external-windows-manager: openbox
-external-terminal: xterm
+external-terminal: konsole
+style: material
+feed: Yes
 visibility: FullScreen
 login.background: @background/Sunset_and_sea
 enter.background: @background/Sunset_and_sea
@@ -19,3 +21,4 @@ dock: bottom
 anim: Yes
 icon-theme: breeze
 shell-theme: barf-dark
+font.family: IRANSansX # Just used for Pyabr projects; because it's not a free font

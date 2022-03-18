@@ -11,7 +11,11 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: font
     visible: true
-    color: "white"
+    color: wt.background
+    
+    WindowTheme {
+        id: wt
+    }
 
     width: 500
     height: 600
@@ -44,6 +48,7 @@ ApplicationWindow {
                         text: model.text
                         font.family: model.fontFamily
                         font.pixelSize: model.fontSize
+                        color: wt.color
                     }
 
                     MouseArea {
@@ -56,7 +61,7 @@ ApplicationWindow {
                     Rectangle {
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                         anchors.top: parent.bottom
                     }
                 }
@@ -70,14 +75,14 @@ ApplicationWindow {
         width: parent.width/2
         height: parent.height/12
         anchors.bottom: parent.bottom
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
     }
     Button {
         text: "Select"
         objectName: "btnSelect"
         anchors.bottom: parent.bottom
         width: parent.width/2
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         height: parent.height/12
         anchors.left: cancel.right
     }

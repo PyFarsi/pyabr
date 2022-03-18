@@ -11,14 +11,19 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: ask
     visible: true
-    color: "white"
+    color: wt.background
 
     width: 500
     height: 200
+    
+    WindowTheme {
+        id: wt
+    }
 
     Rectangle {
         id: txtText
         width: parent.width
+        color: wt.background
         height: parent.height/2
         
         Image {
@@ -35,7 +40,8 @@ ApplicationWindow {
         Text {
             anchors.left: imagex.right
             text: "VSCode Data files"
-            font.family: "IRANSans"
+            color: wt.color
+            font.family: wt.fontFamily
             font.pixelSize: 30
             anchors.leftMargin: 20
             objectName: "name"
@@ -62,7 +68,7 @@ ApplicationWindow {
         id: cancel
         text: "Cancel"
         objectName: "btnCancel"
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         width: parent.width/2
         height: parent.height/4
         anchors.bottom: parent.bottom
@@ -71,7 +77,7 @@ ApplicationWindow {
         text: "Install"
         objectName: "btnInstall"
         width: parent.width/2
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         height: parent.height/4
         anchors.left: cancel.right
         anchors.bottom: parent.bottom

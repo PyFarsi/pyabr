@@ -1,3 +1,4 @@
-# Gregorian: 0
-# Jalali:    1
-type: 1
+# Gregorian:    0
+# Jalali:       1
+# Base locale:  2  
+type: 2

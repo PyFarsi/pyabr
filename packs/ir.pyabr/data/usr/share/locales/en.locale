@@ -180,7 +180,7 @@ extract: Extract
 cloud_o: Cloud options
 compress: Compress to
 upload: Upload
-ziro: Upload and Ziro
+zero: Upload and Zero
 sharelink: Share this link
 rma: Restore Apps
 bash: Bash
@@ -196,3 +196,36 @@ shell: Shell
 cursor: Cursor
 change: Change
 news: News
+window: Window
+global: Global
+sync: Sync
+unlink: Unlink (Remove from cloud)
+sync_E0: Empty fields
+sync_E0M: Please fill the form
+sync_E1: Connection Failed
+sync_E1M: Connection failed; please try again
+sync_E5: Wrong password
+sync_E5M: Your entered password was wrong
+sync_S: Successfully Synced
+sync_SM: Your entered is user successfully synced
+view: View
+subject: Subject
+send: Send
+encrypt: Encrypt
+search: Search
+newwindow: New Window
+history: History
+bookmarks: Bookmarks
+searchengines: Search Engines
+addsearchengine: Add a new search engine
+exit: Exit
+fullscreen: Full Screen
+back: back
+seadd: Add Search Engine
+seid: ID (e.g google)
+sename: Name (e.g. Google)
+seurl: URL (e.g. https://google.com)
+sequrl: Query URL (e.g. https://google.com/search?={0})
+sekey: Keyboard (e.g. :g)
+statistics: Statistics
+statisticsm: Do you want your statistics to be sent as a Pyabr user?

@@ -180,7 +180,7 @@ extract: Çıkarmak
 cloud_o: Bulut seçenekleri
 compress: sıkıştır
 upload: Yüklemek
-ziro: Yükleme ve Sıfırlama
+zero: Yükleme ve Sıfırlama
 sharelink: Bu bağlantıyı paylaş
 rma: Uygulamaları geri yükle
 bash: bash
@@ -196,3 +196,36 @@ shell: kabuk
 cursor: imleç
 change: değişiklik
 news: Haberler
+window: pencere
+global: küresel
+sync: senkronizasyon
+unlink: Bağlantıyı kaldır (Buluttan kaldır)
+sync_E0: Boş alanlar
+sync_E0M: Lütfen formu doldurun
+sync_E1: Bağlantı Başarısız
+sync_E1M: Bağlantı başarısız; lütfen tekrar deneyin
+sync_E5: Yanlış şifre
+sync_E5M: Girdiğiniz şifre yanlıştı
+sync_S: Başarıyla Senkronize Edildi
+sync_SM: Girdiğiniz kullanıcı başarıyla senkronize edildi
+view: görüş
+subject: konu
+send: gönder
+encrypt: şifrelemek
+search: Arama
+newwindow: Yeni Pencere
+history: Tarih
+bookmarks: Yer imleri
+searchengines: Arama Motorları
+addsearchengine: Yeni bir arama motoru ekleyin
+exit: Çıkış
+fullscreen: Tam Ekran
+back: geri
+seadd: Arama Motoru Ekle
+seid: İD (ör google)
+sename: isim (ör Google)
+seurl: URL (ör https://google.com)
+sequrl: Sorgu URL'si (ör https://google.com/search?={0})
+sekey: klavye (ör :g)
+statistics: İstatistik
+statisticsm: İstatistiklerinizin bir bulut kullanıcısı olarak gönderilmesini istiyor musunuz?

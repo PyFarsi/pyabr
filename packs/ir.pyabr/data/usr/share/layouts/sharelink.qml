@@ -11,20 +11,26 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: backend
     visible: true
-    color: "white"
+    color: wt.background
 
     width: 500
     height: 90
+    
+    WindowTheme {
+        id: wt
+    }
 
     Rectangle {
         id: txtText
+        color: wt.background
         width: parent.width
         height: parent.height/2
         TextField {
             anchors.fill: parent
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             objectName: "txtText"
             id: leText
+            color: wt.color
             selectByMouse: true
             MouseArea {
                 anchors.fill: parent
@@ -43,6 +49,6 @@ ApplicationWindow {
         width: parent.width
         height: parent.height/2
         anchors.top: txtText.bottom
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
     }
 }

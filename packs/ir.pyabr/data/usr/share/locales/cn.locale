@@ -1,0 +1,229 @@
+name: 中国人
+keyless: cn
+keyless.enable: No
+0: 0
+1: 1
+2: 2
+3: 3
+4: 4
+5: 5
+6: 6
+7: 7
+8: 8
+9: 9
+username_placeholder: 输入你的用户名
+user_not_found: {0} 未找到用户
+etcetra: 其他
+escape: 逃脱
+restart: 重新开始
+sleep: 睡眠模式
+next: 下一个
+keyboard_languages: 键盘语言
+virtualkeyboard: 虚拟键盘
+password_placeholder: 输入密码 {0}
+login: 登录
+logout: 登出
+unlock: 开幕
+guest: 访客帐户
+switchuser: 更改会议
+applications: 应用
+lock: 锁
+accounts: 帐户 
+barge: 文本编辑器
+calculator: 计算器
+clock: 手表
+host: 主机名
+cs: 云软件
+bl: 生产日期
+os: 操作系统
+kname: 核心名称
+su: 当前会议
+de: 桌子
+gui: 图形库
+arch: 计算机架构
+controls: 设置
+appearance: 桌面外观
+adduser: 添加用户
+desktop: 桌子
+cancel: 消除
+apply: 行动
+dock_location: 应用栏的位置
+change_wallpaper: 更改背景图片
+files: 文件
+open: 开幕
+openwith: 打开用 ...
+execute: 表现
+cut: 切
+copy: 复制
+paste: 粘贴
+rename: 改名
+delete: 删除
+newfile: 新文件
+newfolder: 新建文件夹
+info: 信息
+exist: {0} 有
+exist_message: {0} 现在有
+nama: 图像查看器
+power_options: 电源选项
+runner: 装载机
+run: 上传
+application_not_found: {0} 未找到应用
+setup: 安装
+sysinfo: 系统信息
+terminal: 终端
+mpv: 视频播放器
+ok: 确认
+select: 选择
+select_file: 选择一个文件
+select_folder: 选择路线
+open: 开幕
+save: 店铺
+fullname: 全名
+install_package: 安装包 {0}
+install: 安装
+enter_hostname: 输入主机名
+pick_username: 选择用户名
+choose_root_password: 设置root账户密码
+select_password: 选择一个新密码
+phone: 移动的
+email: 电子邮件
+sample: 示例程序
+debug: 调试程序
+uninstall: 卸载
+calendar: 日历
+package_name: 包裹名字
+package_version: 包版本
+copyright: 版权
+license: 生产许可证
+unpack: 安装在
+mirror: 水库
+uninstall_message: 
+install_message: 要删除包吗 {0}？
+update_message: 您要更新软件包吗 {0}？
+pyket: 店铺
+download: 下载
+url: 互联网地址
+setup_message: 安装完成; 点击继续>
+display: 页面分辨率
+wifi: 无线网络
+not_matched: 密码不匹配
+remove: 删除
+savechanges: 保存更改
+remove_user_message: 您要删除此帐户吗？ 这意味着所选用户中的所有数据都将丢失
+e_username: 帐户名称
+e_password: 密码
+birthday: 出生日期
+sudoers: 热门帐号
+oldpass: 以前的密码
+newpass: 新密码
+confirmpass: 确认新密码
+change_password: 更改密码
+languages: 语言
+wrong_password: 密码错误。请重试
+perm: 拒绝访问
+perm_message: 您无权访问此流程； 执照被拒绝
+baad: 天气
+filename: 姓名
+type: 类型
+size: 体积
+created: 创建日期
+modified: 改变日期
+access_owner: 所有者访问
+access_users: 访问他人
+access_guest: 访客访问
+location: 方向
+ownership: 主人
+chat: 消息传递
+datainstaller: 数据安装程序
+need_restart: 安装此应用程序需要重新启动，您要重新启动吗？
+connect: 联系
+e_cloud: 云主机名（可选）
+c_cloud: 连接到云端
+connection_fail: 连接失败
+connection_failmc: 无法连接到此云空间
+unknown: 匿名的
+folder: 文件夹
+---: 无法访问
+rwx: 完全访问
+rw-: 写作和阅读
+r--: 只读
+-wx: 编写和执行
+--x: 只能执行
+-w-: 只能写
+always: 总是
+atonce: 就一次
+fonts: 笔
+sr: 光盘
+srp: 光驱
+drive: 驾驶
+disk: 磁盘
+part: 划分
+e_city: 输入您的居住城市（拉丁文）
+e_contact: 输入您的联系人姓名
+e_channel: 频道主机名（可选）
+c_channel: 连接到消息通道
+e_send: 发送消息
+n_connected: {0} 无法连接
+connected: {0} 已连接
+connectedm: {0} 连接成功 
+connect_to: {0} 连接至
+connect_tom: 你想连接到这个网络吗？
+fcopy: 格式化和复制
+copydisk: 磁盘放置
+format: 格式
+formatm: 你想格式化这个磁盘/分区吗？
+e_mount: 无法连接到驱动器
+e_mountm: 由于某种原因无法连接到驱动器
+extract: 萃取
+cloud_o: 云功能
+compress: 面部压缩
+upload: 上传
+zero: 加载和归零
+sharelink: 地址共享
+rma: 应用程序恢复
+bash: 贝斯
+python: 蟒蛇
+upstor: 更新
+upstorum: 你浑浊的脚是最新的
+upstoru: 已更新
+upstort: 升级写作
+themes: 皮肤
+icon: 图标
+gtk: 程序
+shell: 贝壳
+cursor: 光标 
+change: 改变
+news: 消息
+window: 窗户
+global: 全球的
+sync: 同步
+unlink: 取消链接（从云端移除）
+sync_E0: 字段为空
+sync_E0M: 请填写该表格
+sync_E1: 连接失败
+sync_E1M: 连接失败。 请再试一次
+sync_E5: 密码错误
+sync_E5M: 您的密码是不正确的
+sync_S: 同步成功
+sync_SM: 您的账号已与云腿同步成功
+view: 演出
+subject: 问题
+send: 提交
+encrypt: 加密
+search: 搜索
+newwindow: 新窗户
+history: 日期
+bookmarks: 标志
+searchengines: 搜索引擎
+addsearchengine: 添加搜索引擎
+exit: 出口
+fullscreen: 全屏
+back: 返回
+seadd: 添加搜索引擎
+seid: ID (示例: google)
+sename: 关注 (示例: Google)
+seurl: 网址 (示例: https://google.com)
+sequrl: 搜索地址 (示例: https://google.com/search?={0})
+sekey: 键盘 (示例 :g)
+statistics: 统计数据
+statisticsm: 您希望以云用户的身份发送您的统计信息吗？

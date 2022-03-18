@@ -18,11 +18,14 @@ class CustomWebEnginePage(QWebEnginePage):
             if urlx.endswith('.exe') or urlx.endswith('.msi') or urlx.endswith('.doc') or urlx.endswith('.docx') or urlx.endswith('.ppt') or urlx.endswith('.pptx') or \
                urlx.endswith('.dot') or urlx.endswith('.dotx') or urlx.endswith('.iso') or urlx.endswith('.bin') or urlx.endswith('.zip') or urlx.endswith('.tar') or urlx.endswith('.xz') or urlx.endswith('.bz2') \
                     or urlx.endswith('.bz') or urlx.endswith('.sb') or urlx.endswith('.squashfs') or urlx.endswith('.rar') or urlx.endswith('.cab') or urlx.endswith('.run') or urlx.endswith('.apk') or urlx.endswith('.rtf') \
-                    or urlx.endswith('.egg') or urlx.endswith('.dwg') or urlx.endswith('.xls') or urlx.endswith('.xlsm') or urlx.endswith('.xlsx') or urlx.endswith('.com') or urlx.endswith('.pdf') or urlx.endswith('.ai') \
+                    or urlx.endswith('.egg') or urlx.endswith('.dwg') or urlx.endswith('.xls') or urlx.endswith('.xlsm') or urlx.endswith('.xlsx') or urlx.endswith('.com') or urlx.endswith('.ai') \
                     or urlx.endswith('.img') or urlx.endswith('.pa'):
                 app.start('download',urlx)
             else:
                 w = QWebEngineView()
+                w.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
+                w.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
+                w.settings().setAttribute(QWebEngineSettings.FullScreenSupportEnabled, True)
                 w.setUrl(url)
                 w.show()
 
@@ -42,12 +45,39 @@ class CustomWebEnginePage(QWebEnginePage):
         return super().acceptNavigationRequest(url,  _type, isMainFrame)
 
 class MainWindow(QMainWindow):
+    style='''<!DOCTYPE HTML>
+<html>
+<head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<style>
+@font-face {
+	font-family: 'IRANSansX';
+	src: url('/usr/share/fonts/truetype/IRANSansX-Regular.ttf') format('truetype');
+} 
+body {
+    font-family: "IRANSansX" !important;
+}
+</style>
+</head>
+<body>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>'''
+
+    def processHTML(self,html):
+        
+        files.write('m.html',f"{self.style}{html}</body></html>")
+
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
         self.browser = QWebEngineView()
 
         self.browser.setPage(CustomWebEnginePage(self))
+        self.browser.settings().setAttribute(QWebEngineSettings.PluginsEnabled,True)
+        self.browser.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled,True)
+        self.browser.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls,True)
+        self.browser.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessRemoteUrls,True)
+        self.browser.settings().setAttribute(QWebEngineSettings.FullScreenSupportEnabled,True)
 
         icon = False
         title = False

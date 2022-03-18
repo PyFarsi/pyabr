@@ -11,32 +11,23 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: app
     visible: true
-    color: "white"
+    color: wt.background
     width: 400
     height: 200
 
+    WindowTheme {
+        id: wt
+    }
     Column {
                 anchors.centerIn: parent
                 width: parent.width/2
 
                 TextField {
-                    placeholderText: "Cloud host (URL)"
-                    width: parent.width
-                    font.family: "IRANSans"
-                    id: leCloud
-                    objectName: "leCloud"
-                    selectByMouse: true
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.IBeamCursor
-                        acceptedButtons: Qt.NoButton
-                    }
-                }
-                TextField {
                     placeholderText: "Username"
                     width: parent.width
-                    font.family: "IRANSans"
+                    font.family: wt.fontFamily
                     id: leUsername
+                    color: wt.color
                     objectName: "leUsername"
                     selectByMouse: true
                     MouseArea {
@@ -48,16 +39,17 @@ ApplicationWindow {
                 TextField {
                     placeholderText: "Password"
                     width: parent.width
-                    font.family: "IRANSans"
+                    font.family: wt.fontFamily
                     id: lePassword
+                    color: wt.color
                     objectName: "lePassword"
                     echoMode: TextInput.Password
                 }
                 Button {
-                    text: "Connect"
+                    text: "Sync"
                     width: parent.width
-                    objectName: "btnConnect"
-                    id: btnConnect
+                    objectName: "btnCreate"
+                    id: btnCreate
                 }
     }
 }

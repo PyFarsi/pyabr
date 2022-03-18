@@ -1,5 +1,5 @@
 name[en]: Download
-logo: @icon/breeze-dmgr
+logo: @icon/dmgr
 exec: Download
 application: No
 category: tools

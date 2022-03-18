@@ -11,21 +11,27 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: input
     visible: true
-    color: "white"
+    color: wt.background
 
     width: 400
     height: 90
+    
+    WindowTheme {
+        id: wt
+    }
 
     Rectangle {
         id: txtText
+        color: wt.background
         width: parent.width
         height: parent.height/2
         TextField {
             anchors.centerIn: parent
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             width: parent.width
             height: parent.height
             objectName: "leText"
+            color: wt.color
             selectByMouse: true
                     MouseArea {
                         anchors.fill: parent
@@ -43,7 +49,7 @@ ApplicationWindow {
         text: "Cancel"
         objectName: "btnCancel"
         width: parent.width/2
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         height: parent.height/2
         anchors.top: txtText.bottom
     }
@@ -52,7 +58,7 @@ ApplicationWindow {
         objectName: "btnOK"
         width: parent.width/2
         height: parent.height/2
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         anchors.left: cancel.right
         anchors.top: txtText.bottom
     }

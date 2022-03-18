@@ -180,7 +180,7 @@ extract: استخراج
 cloud_o: امکانات ابری
 compress: فشرده سازی به صورت
 upload: بارگذاری
-ziro: بارگذاری و صفر سازی
+zero: بارگذاری و صفر سازی
 sharelink: اشتراک گذاری نشانی
 rma: بازیابی برنامه ها
 bash: بش
@@ -196,3 +196,36 @@ shell: پوسته
 cursor: مکان نما
 change: تغییر
 news: تازه ها
+window: پنجره
+global: سراسری
+sync: همگام سازی
+unlink: لغو پیوند (حذف از ابر)
+sync_E0: فیلدها خالی است
+sync_E0M: لطفا فرم را پر کنید
+sync_E1: اتصال انجام نشد
+sync_E1M: اتصال ناموفق بود. لطفا دوباره تلاش کنید
+sync_E5: گذرواژه اشتباه است
+sync_E5M: گذرواژه شما اشتباه بود
+sync_S: با موفقیت همگام سازی شد
+sync_SM: با موفقیت حساب شما با پای ابر همگام سازی شد
+view: نمایش
+subject: موضوع
+send: ارسال
+encrypt: رمزگذاری
+search: جستجو
+newwindow: پنجره جدید
+history: تاریخ
+bookmarks: نشان ها
+searchengines: موتورهای جستجو
+addsearchengine: اضافه کردن موتورجستجو
+exit: خروج
+fullscreen: تمام صفحه
+back: برگشت
+seadd: اضافه کردن موتورجستجو
+seid: آیدی (مثال: google)
+sename: نام (مثال: Google)
+seurl: نشانی اینترنتی (مثال: https://google.com)
+sequrl: نشانی جستجو (مثال: https://google.com/search?={0})
+sekey: صفحه کلید (مثال :g)
+statistics: آمارگیری
+statisticsm: آیا می خواهید آمار شما به عنوان یک کاربر پای ابری گرفته شود؟

@@ -11,9 +11,13 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: file
     visible: true
-    color: "white"
+    color: wt.background
     width: 900
     height: 700
+    
+    WindowTheme {
+        id: wt
+    }
 
     Text {
         visible: false
@@ -40,8 +44,7 @@ ApplicationWindow {
                 ToolButton {
 
                     width: parent.width
-                    height: parent.width/10
-                    //color: "transparent"
+                    height: parent.width/9
 
                     MouseArea {
                         anchors.fill: parent
@@ -70,11 +73,12 @@ ApplicationWindow {
 
                     Text {
                         text: model.namex
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 18
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: imagex.right
                         anchors.leftMargin: 20
+                        color: wt.color
                         anchors.rightMargin: 20
                     }
 
@@ -82,7 +86,7 @@ ApplicationWindow {
                     Rectangle {
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                         anchors.top: parent.bottom
                     }
                 }
@@ -98,7 +102,7 @@ ApplicationWindow {
         height: parent.height/10
         anchors.bottomMargin: 0
         anchors.bottom: parent.bottom
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
     }
     Button {
         text: "Change"
@@ -107,7 +111,7 @@ ApplicationWindow {
         enabled: false
         height: parent.height/10
         anchors.bottomMargin: 0
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         anchors.left: cancel.right
         anchors.bottom: parent.bottom
     }

@@ -11,9 +11,13 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: file
     visible: true
-    color: "white"
+    color: wt.background
     width: 900
     height: 700
+    
+    WindowTheme {
+        id: wt
+    }
 
     Text {
         visible: false
@@ -50,10 +54,10 @@ ApplicationWindow {
          }
 
        Text {
-            color: "white"
+            color: wt.colorTitle
             id: title
             objectName: "title"
-            font.family: "IRANSans"
+            font.family: wt.fontFamily
             font.pixelSize: 18
             anchors.centerIn: parent
         }
@@ -126,7 +130,8 @@ ApplicationWindow {
                     Text { 
                         text: model.name
                          anchors.horizontalCenter: parent.horizontalCenter
-                          font.family: "IRANSans"
+                          font.family: wt.fontFamily
+                          color: wt.color
                      
                     }
                 }
@@ -164,8 +169,7 @@ ApplicationWindow {
                 ToolButton {
 
                     width: parent.width
-                    height: parent.width/10
-                    //color: "transparent"
+                    height: parent.width/9
 
                     MouseArea {
                         anchors.fill: parent
@@ -194,8 +198,9 @@ ApplicationWindow {
 
                     Text {
                         text: model.name
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 18
+                        color: wt.color
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: imagex.right
                         anchors.leftMargin: 20
@@ -204,9 +209,9 @@ ApplicationWindow {
 
                     Text {
                         text: model.mimetype
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 14
-                        color: "gray"
+                        color: wt.colorSmall
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.rightMargin: 100
@@ -214,9 +219,9 @@ ApplicationWindow {
                    
                     Text {
                         text: model.size
-                        font.family: "IRANSans"
+                        font.family: wt.fontFamily
                         font.pixelSize: 14
-                        color: "gray"
+                        color: wt.colorSmall
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.right: parent.right
                         anchors.leftMargin: 20
@@ -226,7 +231,7 @@ ApplicationWindow {
                     Rectangle {
                         width: parent.width
                         height: 1
-                        color: "silver"
+                        color: wt.colorLine
                         anchors.top: parent.bottom
                     }
                 }
@@ -237,10 +242,11 @@ ApplicationWindow {
     TextField {
         placeholderText: "Filename"
         objectName: "leName"
+        color: wt.color
         id: leName
         width: parent.width
         height: parent.height/10
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
         anchors.bottom: cancel.top
         selectByMouse: true
                     MouseArea {
@@ -257,7 +263,7 @@ ApplicationWindow {
         height: parent.height/10
         anchors.bottomMargin: 0
         anchors.bottom: parent.bottom
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
     }
     Button {
         text: "Save"
@@ -268,6 +274,6 @@ ApplicationWindow {
         anchors.bottomMargin: 0
         anchors.left: cancel.right
         anchors.bottom: parent.bottom
-        font.family: "IRANSans"
+        font.family: wt.fontFamily
     }
 }

@@ -18,7 +18,7 @@
 '''
 
 import subprocess,time
-import sys, platform, hashlib, os, getpass, subprocess as sub, importlib,multiprocessing
+import sys, platform, hashlib, os, getpass, subprocess as sub, importlib,multiprocessing,signal
 
 ## Configure kernel ###############################################################################
 
@@ -29,8 +29,6 @@ sys.path.append("usr/app")
 from pyabr.core import *
 from pyabr.quick import *
 from pyabr.cloud import *
-from pyabr.chat import *
-
 from termcolor import colored
 
 ################## Interface configure ##########################
@@ -43,7 +41,7 @@ if sys.argv[1:] == []:
     sys.argv[1:] = [files.readall('/etc/interface').lower()]
 
 ## @core/style ##
-os.environ['QT_QUICK_CONTROLS_STYLE'] = 'material'
+os.environ['QT_QUICK_CONTROLS_STYLE'] = control.read_record ('style','/etc/gui')
 
 ## @core/exec ##
 
@@ -58,8 +56,9 @@ if sys.argv[1:][0] == 'exec':
 
     elif sys.argv[1:][1].__contains__("/"):
 
+        ### Executable file: Python byte code ###
         if files.isfile(f"{sys.argv[1:][1]}.pyc"):
-            if permissions.check(f"{files.output(sys.argv[1:][1])}.pyc", "x", files.readall("/proc/info/su")):
+            if permissions.check(files.output(sys.argv[1:][1]+'.pyc'), "x", files.readall("/proc/info/su")):
                 ## Set args ##
                 sys.argv = sys.argv[1:][1:]
 
@@ -73,9 +72,51 @@ if sys.argv[1:][0] == 'exec':
             else:
                 colors.show(sys.argv[1:][1], "perm", "")
 
+        ### Executable file: Saye Script ###
         elif files.isfile(f'{sys.argv[1:][1]}.sa'):
-            if permissions.check(f'{files.output(sys.argv[1:][1])}.sa', "x", files.readall("/proc/info/su")):
+            if permissions.check(files.output(sys.argv[1:][1]+".sa"), "x", files.readall("/proc/info/su")):
                 Script(sys.argv[1:][1])
+            else:
+                colors.show(sys.argv[1:][1], "perm", "")
+
+        ## Executable file: Windows Executable file ###
+        elif files.isfile(f'{sys.argv[1:][1]}.exe') and os.path.isfile('/usr/bin/wine'):
+            if permissions.check(files.output(sys.argv[1:][1]+".exe"), "x", files.readall("/proc/info/su")):
+                args = ''
+                for i in sys.argv[1:][2:]:
+                    args+=f' {i}'
+                subprocess.call(f'/usr/bin/wine /stor/{files.output(sys.argv[1:][1]+".exe")} {args}', shell=True)
+            else:
+                colors.show(sys.argv[1:][1], "perm", "")
+
+        ## Executable file: Java Archive file ###
+        elif files.isfile(f'{sys.argv[1:][1]}.jar') and os.path.isfile('/usr/bin/java'):
+            if permissions.check(files.output(sys.argv[1:][1]+".jar"), "x", files.readall("/proc/info/su")):
+                args = ''
+                for i in sys.argv[1:][2:]:
+                    args+=f' {i}'
+                subprocess.call(f'java -jar /stor/{files.output(sys.argv[1:][1]+".jar")} {args}', shell=True)
+            else:
+                colors.show(sys.argv[1:][1], "perm", "")
+
+        ## Executable file: Pashmak ###
+        elif files.isfile(f'{sys.argv[1:][1]}.pashm') and files.isfile('/usr/app/pashmak.pyc'):
+            if permissions.check(files.output(sys.argv[1:][1]+".pashm"), "x", files.readall("/proc/info/su")):
+                args = ''
+                for i in sys.argv[1:][2:]:
+                    args+=f' {i}'
+                subprocess.call(f'"{sys.executable}" vmabr.pyc exec pashmak {files.output(sys.argv[1:][1]+".pashm")} {args}', shell=True)
+            else:
+                colors.show(sys.argv[1:][1], "perm", "")
+
+        ## Executable file: Linux Binary ###
+        elif files.isfile(f'{sys.argv[1:][1]}'):
+            if permissions.check(files.output(sys.argv[1:][1]), "x", files.readall("/proc/info/su")):
+                args = ''
+                for i in sys.argv[1:][2:]:
+                    args+=f' {i}'
+                subprocess.call(['/usr/bin/chmod','+x',f'/stor/{files.output(sys.argv[1:][1])}'])
+                subprocess.call(f'/stor/{files.output(sys.argv[1:][1])} {args}', shell=True)
             else:
                 colors.show(sys.argv[1:][1], "perm", "")
         else:
@@ -86,17 +127,148 @@ if sys.argv[1:][0] == 'exec':
             result = getattr(commands, sys.argv[1:][1])(sys.argv[1:][
                                                 2:])  # https://stackoverflow.com/questions/3061/calling-a-function-of-a-module-by-using-its-name-a-string
 
+        ## Executable file: In path: Python bytecode ###
         elif files.isfile(f"/usr/app/{sys.argv[1:][1]}.pyc"):
-            if permissions.check(f"/usr/app/{files.output(sys.argv[1:][1])}.pyc", "x", files.readall("/proc/info/su")):
+            if permissions.check(files.output(f'/usr/app/{sys.argv[1:][1]}.pyc'), "x", files.readall("/proc/info/su")):
                 ## Set args ##
                 sys.argv = sys.argv[2:]
                 __import__(sys.argv[0])
             else:
                 colors.show(sys.argv[1:][1], "perm", "")
 
+        elif files.isfile(f"/usr/games/{sys.argv[1:][1]}.pyc"):
+            if permissions.check(files.output(f'/usr/games/{sys.argv[1:][1]}.pyc'), "x", files.readall("/proc/info/su")):
+                ## Set args ##
+                sys.argv = sys.argv[2:]
+                __import__(sys.argv[0])
+            else:
+                colors.show(sys.argv[1:][1], "perm", "")
+
+        ## Executable file: In path: Saye Script ###
+
         elif files.isfile(f'/usr/app/{sys.argv[1:][1]}.sa') :
             if permissions.check(files.output(f'/usr/app/{sys.argv[1:][1]}.sa'), "x", files.readall("/proc/info/su")):
                 Script(f'/usr/app/{sys.argv[1:][1]}')
+            else:
+                colors.show(sys.argv[1:][1], "perm", "")
+
+        elif files.isfile(f'/usr/games/{sys.argv[1:][1]}.sa') :
+            if permissions.check(files.output(f'/usr/games/{sys.argv[1:][1]}.sa'), "x", files.readall("/proc/info/su")):
+                Script(f'/usr/games/{sys.argv[1:][1]}')
+            else:
+                colors.show(sys.argv[1:][1], "perm", "")
+        ## In path: Linux commands ###
+
+        elif not control.read_record(sys.argv[1:][1], '/etc/commands') == None:
+            commands = []
+            command = control.read_record(f'{sys.argv[1:][1]}', '/etc/commands')
+            args = control.read_record(f'{sys.argv[1:][1]}.args', '/etc/commands')
+            perm = control.read_record(f'{sys.argv[1:][1]}.perm', '/etc/commands')
+
+            # args check #
+            if not args == None:
+                if args == 'Yes':
+                    args = True
+                else:
+                    args = False
+            else:
+                args = True
+
+            # perm check #
+            if perm == None:
+                perm = 3
+
+            if files.readall('/proc/info/su') == 'guest' and int(perm) < 3:
+                colors.show(sys.argv[1:][1], 'perm', '')
+                sys.exit(0)
+            elif not files.readall('/proc/info/su') == 'root' and int(perm) < 2:
+                colors.show(sys.argv[1:][1], 'perm', '')
+                sys.exit(0)
+
+            commands.append(command)
+
+            if args:
+                for i in sys.argv[1:][2:]:
+                    commands.append(i)
+
+            sub.call(commands)
+
+        ## Executable file: In path: Windows Executable ###
+        elif files.isfile(f'/usr/app/{sys.argv[1:][1]}.exe') and os.path.isfile('/usr/bin/wine'):
+            if permissions.check(files.output(f'/usr/app/{sys.argv[1:][1]}.exe'), "x", files.readall("/proc/info/su")):
+                args = ''
+                for i in sys.argv[1:][2:]:
+                    args+=f' {i}'
+                subprocess.call(f'wine /stor/usr/app/{sys.argv[1:][1]}.exe {args}', shell=True)
+            else:
+                colors.show(sys.argv[1:][1], "perm", "")
+
+        elif files.isfile(f'/usr/games/{sys.argv[1:][1]}.exe') and os.path.isfile('/usr/bin/wine'):
+            if permissions.check(files.output(f'/usr/games/{sys.argv[1:][1]}.exe'), "x", files.readall("/proc/info/su")):
+                args = ''
+                for i in sys.argv[1:][2:]:
+                    args+=f' {i}'
+                subprocess.call(f'/usr/bin/wine /stor/usr/games/{sys.argv[1:][1]}.exe {args}', shell=True)
+            else:
+                colors.show(sys.argv[1:][1], "perm", "")
+
+        ## Executable file: In path: Java Archive ###
+        elif files.isfile(f'/usr/app/{sys.argv[1:][1]}.jar') and os.path.isfile('/usr/bin/java'):
+            if permissions.check(files.output(f'/usr/app/{sys.argv[1:][1]}.jar'), "x", files.readall("/proc/info/su")):
+                args = ''
+                for i in sys.argv[1:][2:]:
+                    args+=f' {i}'
+                subprocess.call(f'java -jar /stor/usr/app/{sys.argv[1:][1]}.jar {args}', shell=True)
+            else:
+                colors.show(sys.argv[1:][1], "perm", "")
+
+        elif files.isfile(f'/usr/games/{sys.argv[1:][1]}.jar') and os.path.isfile('/usr/bin/java'):
+            if permissions.check(files.output(f'/usr/games/{sys.argv[1:][1]}.jar'), "x", files.readall("/proc/info/su")):
+                args = ''
+                for i in sys.argv[1:][2:]:
+                    args+=f' {i}'
+                subprocess.call(f'java -jar /stor/usr/games/{sys.argv[1:][1]}.jar {args}', shell=True)
+            else:
+                colors.show(sys.argv[1:][1], "perm", "")
+
+        ## Executable file: In path: Pashmak ###
+        elif files.isfile(f'/usr/app/{sys.argv[1:][1]}.pashm') and files.isfile("/usr/app/pashmak.pyc"):
+            if permissions.check(files.output(f'/usr/app/{sys.argv[1:][1]}.pashm'), "x", files.readall("/proc/info/su")):
+                args = ''
+                for i in sys.argv[1:][2:]:
+                    args+=f' {i}'
+                subprocess.call(f'"{sys.executable}" vmabr.pyc pashmak /usr/app/{sys.argv[1:][1]}.pashm {args}', shell=True)
+            else:
+                colors.show(sys.argv[1:][1], "perm", "")
+
+        ## Executable file: In path: Pashmak ###
+        elif files.isfile(f'/usr/games/{sys.argv[1:][1]}.pashm') and files.isfile("/usr/app/pashmak.pyc"):
+            if permissions.check(files.output(f'/usr/games/{sys.argv[1:][1]}.pashm'), "x", files.readall("/proc/info/su")):
+                args = ''
+                for i in sys.argv[1:][2:]:
+                    args+=f' {i}'
+                subprocess.call(f'"{sys.executable}" vmabr.pyc pashmak /usr/games/{sys.argv[1:][1]}.pashm {args}', shell=True)
+            else:
+                colors.show(sys.argv[1:][1], "perm", "")
+
+        ## Executable file: In path: Linux Binary ###
+        elif files.isfile(f'/usr/app/{sys.argv[1:][1]}'):
+            if permissions.check(files.output(f'/usr/app/{sys.argv[1:][1]}'), "x", files.readall("/proc/info/su")):
+                args = ''
+                for i in sys.argv[1:][2:]:
+                    args+=f' {i}'
+                subprocess.call(['/usr/bin/chmod', '+x', f'/stor/usr/app/{sys.argv[1:][1]}'])
+                subprocess.call(f'/stor/usr/app/{sys.argv[1:][1]} {args}', shell=True)
+            else:
+                colors.show(sys.argv[1:][1], "perm", "")
+
+        elif files.isfile(f'/usr/games/{sys.argv[1:][1]}'):
+            if permissions.check(files.output(f'/usr/games/{sys.argv[1:][1]}'), "x", files.readall("/proc/info/su")):
+                args = ''
+                for i in sys.argv[1:][2:]:
+                    args+=f' {i}'
+                subprocess.call(['/usr/bin/chmod', '+x', f'/stor/usr/games/{sys.argv[1:][1]}'])
+                subprocess.call(f'/stor/usr/games/{sys.argv[1:][1]} {args}', shell=True)
             else:
                 colors.show(sys.argv[1:][1], "perm", "")
         else:
@@ -356,13 +528,13 @@ def shell(user,code):
                 else:
                     scmd+=f' {i}'
 
-            strcmd = f"{sys.executable} -c \""
+            strcmd = f"\"{sys.executable}\" -c \""
             strcmd2 = scmd.replace('"','\\"')
             strcmd = f"{strcmd}{strcmd2}\""
             subprocess.call(strcmd,shell=True)
         else:
             ## Prompt ##
-            prompt = f'{sys.executable} vmabr.pyc exec'
+            prompt = f'\"{sys.executable}\" vmabr.pyc exec'
 
             ## Arguments ##
             for i in cmdln[0:]:
