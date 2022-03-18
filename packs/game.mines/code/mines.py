@@ -158,9 +158,9 @@ class MainApp(QMainWindow):
         super(MainApp, self).__init__(*args, **kwargs)
         self.resize( int(res.etc("mines",'width')), int(res.etc("mines",'height')))
 
-        self.setWindowTitle(res.get("@string/app_name"))
         self.setWindowIcon (QIcon(res.get(res.etc("mines",'logo'))))
-        app.launchedlogo(self.windowTitle(),res.etc("mines",'logo'))
+        self.setWindowTitle(res.getname('mines'))
+        app.launchedlogo(self.windowTitle(), res.etc('mines', 'logo'))
         #self.Widget.DisableFloat()
         self.b_size, self.n_mines = LEVELS[1]
 

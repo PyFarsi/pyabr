@@ -1,6 +1,9 @@
 name[en]: Mines
 name[fa]: مین ها
 name[ar]: المناجم
+name[de]: Minen
+name[cn]: 地雷
+name[ru]: шахты
 exec: /usr/games/mines
 logo: @icon/mines
 bug: @icon/bug
