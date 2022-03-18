@@ -2,6 +2,9 @@ name[en]: Power Options
 name[fa]: تنظیمات خاموش/روشن
 name[ar]: خيارات الطاقة
 name[tr]: Güç seçenekleris
+name[de]: Energieeinstellungen
+name[cn]: 电源选项
+name[ru]: Варианты питания
 logo: @icon/pysys
 exec: pysys
 application: Yes

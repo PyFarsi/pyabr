@@ -3,15 +3,16 @@ name[en]: PySys
 name[fa]: پای سیس
 name[ar]: بای سیس
 name[tr]: pysis
-copyright: (c) 2021 Mani Jamali
+copyright: (c) 2022 Mani Jamali
 license: GNU GPL v3.0
 unpack: /
-version: 2.0.5
+version: 2.0.6
 description: PySys is a power options of system
 compile: Yes
 screenshots: Yes
 entry: pysys
 logo: https://mirror.pyabr.ir/zayanderoad/ir.pyabr.pysys.svg
 logo.inside: @icon/pysys
-build: 1400-10-19
+
+build: 1400-12-26
 mirror: https://mirror.pyabr.ir/zayanderoad/
