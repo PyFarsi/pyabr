@@ -21,4 +21,5 @@ import subprocess, os
 from pyabr.core import *
 
 app.launchedlogo(res.get('@string/bash'),res.etc('bash','logo'))
-app.terminal (res.get('@string/bash'),'/stor/usr/share/icons/breeze-commento.svg','/usr/bin/sh')
+app.launchedlogo("Konsole",res.etc('bash','logo'))
+app.terminal (res.get('@string/bash'),'/stor/usr/share/icons/breeze-commento.svg','/usr/bin/bash')

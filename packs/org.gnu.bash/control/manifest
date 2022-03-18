@@ -3,7 +3,8 @@ name[en]: Bash
 name[fa]: بش
 name[ar]: بش
 name[tr]: bash
-copyright: (c) 2021 GNU
+name[de]: Bash
+copyright: (c) 2022 GNU
 license: GNU General Public v3.+
 unpack: /
 version: current
@@ -12,5 +13,6 @@ logo: https://mirror.pyabr.ir/zayanderoad/org.gnu.bash.svg
 logo.inside: @icon/commento
 compile: Yes
 screenshots: Yes
-build: 1400-10-19
+
+build: 1400-12-26
 mirror: https://mirror.pyabr.ir/zayanderoad/
