@@ -2,6 +2,8 @@ name[en]: Online support
 name[fa]: پشتیبانی آنلاین
 name[ar]: الدعم عبر الإنترنت
 name[tr]: Çevrimiçi destek
+name[cn]: 帮助
+name[ru]: помощь
 logo: @icon/help
 exec: onlinesupport
 application: Yes

@@ -1,0 +1,4 @@
+# clear
+
+### Usage
+Clear screen
