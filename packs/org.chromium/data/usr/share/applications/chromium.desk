@@ -2,6 +2,9 @@ name[en]: Chromium
 name[fa]: کرومیوم
 name[ar]: کرومیوم
 name[tr]: Krom
+name[de]: Chrom
+name[cn]: 铬
+name[ru]: Хром
 logo: @icon/chromium
 exec: chromium
 application: Yes

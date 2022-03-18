@@ -3,7 +3,8 @@ name[en]: Chromium
 name[fa]: کرومیوم
 name[ar]: کرومیوم
 name[tr]: Krom
-copyright: (c) 2021 Google
+name[de]: Chrom
+copyright: (c) 2022 Google
 license: BSD
 unpack: /
 version: current
@@ -12,5 +13,6 @@ compile: Yes
 screenshots: Yes
 logo: https://mirror.pyabr.ir/zayanderoad/org.chromium.png
 logo.inside: @icon/chromium
-build: 1400-10-19
+
+build: 1400-12-26
 mirror: https://mirror.pyabr.ir/zayanderoad/

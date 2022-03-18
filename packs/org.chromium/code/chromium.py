@@ -89,6 +89,8 @@ else:
 os.environ['HOME'] = user
 # Running Chromium
 
+app.launchedlogo('chromium', res.etc('chromium', 'logo'))
+
 if sys.argv[1:]==[] or sys.argv[1:]==['']:
     app.launchedlogo('Chromium', res.etc('chromium', 'logo'))
     subprocess.call(['chromium','--no-sandbox'])

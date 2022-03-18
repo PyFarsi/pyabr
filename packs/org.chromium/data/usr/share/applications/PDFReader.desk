@@ -1,0 +1,13 @@
+name[en]: PDF Reader
+name[fa]: PDF خوان
+name[ar]: قارئ PDF
+name[tr]: PDF Okuyucu
+name[de]: PDF Reader
+name[cn]: PDF阅读器
+name[ru]: Читатель PDF
+logo: @icon/pdf
+exec: PDFReader
+application: No
+hidden: Yes
+category: tools
+pin: No
