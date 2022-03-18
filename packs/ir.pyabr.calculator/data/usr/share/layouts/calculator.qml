@@ -11,13 +11,19 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: calculator
     visible: true
-    color: "white"
+    color: wt.background
     width: 400
     height: 400
+
+    WindowTheme {
+        id: wt
+    }
+
     TextField {
         anchors.top: parent.top
         width: parent.width
         height: parent.height/6
+        color: wt.color
         enabled: true
         id: field
         objectName: "o1"

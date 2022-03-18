@@ -90,7 +90,7 @@ except:
         super(MainApp, self).__init__()
 
         self.load (res.get('@layout/calculator'))
-        self.setProperty ('title',res.get('@string/calculator'))
+        self.setProperty('title',res.getname('calculator'))
         app.launchedlogo(self.property('title'), res.etc('calculator', 'logo'))
 
         self.o1 = self.findChild('o1')

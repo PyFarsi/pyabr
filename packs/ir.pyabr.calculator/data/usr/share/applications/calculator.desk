@@ -2,6 +2,9 @@ name[en]: Calculator
 name[fa]: ماشین حساب
 name[ar]: آلة حاسبة
 name[tr]: hesap makinesi
+name[de]: Taschenrechner
+name[cn]: 计算器
+name[ru]: калькулятор
 logo: @icon/calculator
 exec: calculator
 application: Yes
