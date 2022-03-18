@@ -34,7 +34,7 @@ ScrollView {
 
                             Text {
                                 text: model.label
-                                font.family: "IRANSans"
+                                font.family: wt.fontFamily
                                 font.pixelSize: 18
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.left: parent.left
@@ -45,7 +45,7 @@ ScrollView {
                             Rectangle {
                                 width: parent.width
                                 height: 1
-                                color: "silver"
+                                color: wt.colorLine
                                 anchors.top: parent.bottom
                             }
                         }

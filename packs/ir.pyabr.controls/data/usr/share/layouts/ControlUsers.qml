@@ -49,18 +49,19 @@ ScrollView {
 
                             Text {
                                 text: model.fullname
-                                font.family: "IRANSans"
+                                font.family: wt.fontFamily
                                 font.pixelSize: 18
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.left: imagexx.right
                                 anchors.leftMargin: 20
+                                color: wt.color
                                 anchors.rightMargin: 20
                             }
 
                             Rectangle {
                                 width: parent.width
                                 height: 1
-                                color: "silver"
+                                color: wt.colorLine
                                 anchors.top: parent.bottom
                             }
                         }

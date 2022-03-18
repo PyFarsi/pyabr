@@ -2,6 +2,9 @@ name[en]: Controls
 name[fa]: تنظیمات
 name[ar]: ضوابط
 name[tr]: kontroller
+name[de]: Kontrollen
+name[cn]: 控件
+name[ru]: Элементы управления
 logo: @icon/setting
 exec: controls
 application: Yes

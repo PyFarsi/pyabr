@@ -17,7 +17,6 @@
     * English Page:     https://en.pyabr.ir
 '''
 import os.path
-from os import SEEK_HOLE
 from pyabr.core import *
 from pyabr.quick import *
 import hashlib,subprocess,sys,shutil
@@ -46,6 +45,13 @@ class MainApp (MainApp):
     def btnIcon_click_(self, name):
         control.write_record('icon-theme',name,'/etc/gui')
 
+    def btnWindow_click(self):
+        self.w = WindowTheme (self.btnWindow_click_)
+
+    def btnWindow_click_(self, name):
+        if files.isfile(f'/usr/share/themes/{name}/WindowTheme.qml'):
+            files.copy(f'/usr/share/themes/{name}/WindowTheme.qml','/usr/share/layouts/WindowTheme.qml')
+
     def btnIcon_click(self):
         self.w = IconTheme(self.btnIcon_click_)
 
@@ -69,9 +75,48 @@ class MainApp (MainApp):
     def btnShell_click(self):
         self.w = ShellTheme(self.btnShell_click_)
 
+    def btnGlobal_click_(self, name):
+
+        icon_theme = control.read_record('icon-theme',f'/usr/share/themes/global/{name}')
+        gtk_theme = control.read_record('gtk-theme', f'/usr/share/themes/global/{name}')
+        cursor_theme = control.read_record('cursor-theme', f'/usr/share/themes/global/{name}')
+        shell_theme = control.read_record('shell-theme', f'/usr/share/themes/global/{name}')
+        qml_theme = control.read_record('qml-theme', f'/usr/share/themes/global/{name}')
+
+        commands.sel (['/etc/gui'])
+        commands.set (['desktop.background:',control.read_record('desktop.background',f'/usr/share/themes/global/{name}')])
+        commands.set (['login.background:',control.read_record('login.background',f'/usr/share/themes/global/{name}')])
+        commands.set (['lock.background:',control.read_record('lock.background',f'/usr/share/themes/global/{name}')])
+        commands.set (['unlock.background:',control.read_record('unlock.background',f'/usr/share/themes/global/{name}')])
+        commands.set (['enter.background:',control.read_record('enter.background',f'/usr/share/themes/global/{name}')])
+        commands.set (['dock:',control.read_record('dock',f'/usr/share/themes/global/{name}')])
+        commands.unsel([])
+
+        if not icon_theme==None:
+          self.btnIcon_click_(icon_theme)
+
+        if not gtk_theme==None:
+            self.btnGtk_click_(gtk_theme)
+
+        if not cursor_theme==None:
+            self.btnCursor_click_(cursor_theme)
+
+        if not shell_theme==None:
+            self.btnShell_click_(shell_theme)
+
+        if not qml_theme==None:
+            self.btnWindow_click_(qml_theme)
+
+    def btnGlobal_click(self):
+        self.w = GlobalTheme(self.btnGlobal_click_)
+
     def themes_(self):
+        self.txtGlobal = self.findChild('txtGlobal')
+        self.txtGlobal1 = self.findChild('txtGlobal1')
         self.txtGTK = self.findChild('txtGTK')
         self.txtGTK1 = self.findChild('txtGTK1')
+        self.txtWindow = self.findChild('txtWindow')
+        self.txtWindow1 = self.findChild('txtWindow1')
         self.txtIcon = self.findChild('txtIcon')
         self.txtIcon1 = self.findChild('txtIcon1')
         self.txtCursor = self.findChild('txtCursor')
@@ -79,23 +124,31 @@ class MainApp (MainApp):
         self.txtShell = self.findChild('txtShell')
         self.txtShell1 = self.findChild('txtShell1')
 
+        self.btnGlobal = self.findChild('btnGlobal')
         self.btnGTK = self.findChild('btnGTK')
+        self.btnWindow = self.findChild('btnWindow')
         self.btnIcon = self.findChild('btnIcon')
         self.btnCursor = self.findChild('btnCursor')
         self.btnShell = self.findChild('btnShell')
 
+        self.btnGlobal.clicked.connect(self.btnGlobal_click)
         self.btnGTK.clicked.connect (self.btnGtk_click)
+        self.btnWindow.clicked.connect(self.btnWindow_click)
         self.btnIcon.clicked.connect (self.btnIcon_click)
         self.btnCursor.clicked.connect (self.btnCursor_click)
         self.btnShell.clicked.connect (self.btnShell_click)
 
         if res.getdata('locale') == 'fa' or res.getdata('locale') == 'ar':
+            self.txtGlobal1.setProperty('text', res.get('@string/global'))
             self.txtGTK1.setProperty('text',res.get('@string/gtk'))
+            self.txtWindow1.setProperty('text', res.get('@string/window'))
             self.txtIcon1.setProperty('text',res.get('@string/icon'))
             self.txtCursor1.setProperty('text',res.get('@string/cursor'))
             self.txtShell1.setProperty('text',res.get('@string/shell'))
         else:
+            self.txtGlobal.setProperty('text', res.get('@string/global'))
             self.txtGTK.setProperty('text',res.get('@string/gtk'))
+            self.txtWindow.setProperty('text', res.get('@string/window'))
             self.txtIcon.setProperty('text',res.get('@string/icon'))
             self.txtCursor.setProperty('text',res.get('@string/cursor'))
             self.txtShell.setProperty('text',res.get('@string/shell'))
@@ -227,13 +280,17 @@ class MainApp (MainApp):
                 if self.usel.property('text')=='root':
                     self.cbSudoers_show.setProperty('visible',False)
                     self.removeuser.setProperty('visible',False)
+                    self.changepassword.setProperty('visible',True)
                     self.savechanges.setProperty('visible',True)
                 elif self.usel.property('text')=='guest':
                     self.cbSudoers_show.setProperty('visible',False)
                     self.removeuser.setProperty('visible',False)
+                    self.changepassword.setProperty('visible',False)
                     self.savechanges.setProperty('visible', False)
                 else:
                     self.savechanges.setProperty('visible', True)
+                    self.removeuser.setProperty('visible',True)
+                    self.changepassword.setProperty('visible',True)
                     if self.usel.property('text') in files.readall('/etc/sudoers'):
                         self.cbSudoers_show.setProperty('checked',True)
                     else:
@@ -491,12 +548,6 @@ class MainApp (MainApp):
             if not files.isdir (f'/etc/key/{self.leUsername.property("text")}'):
                 files.mkdir(f'/etc/key/{self.leUsername.property("text")}')
 
-            if not files.isdir (f'/etc/chat/{self.leUsername.property("text")}'):
-                files.mkdir(f'/etc/chat/{self.leUsername.property("text")}')
-
-            if not files.isdir (f'/etc/drive/{self.leUsername.property("text")}'):
-                files.mkdir(f'/etc/drive/{self.leUsername.property("text")}')
-
             control.write_record(f'/desk/{self.leUsername.property("text")}',f"drwxr-x---/{self.leUsername.property('text')}",'/etc/permtab')
             control.write_record ('code',hashlib.sha3_512(self.lePassword.property('text').encode()).hexdigest(),f"/etc/users/{self.leUsername.property('text')}")
             control.write_record ('fullname',self.leFullName.property('text'),f"/etc/users/{self.leUsername.property('text')}")
@@ -617,7 +668,7 @@ class MainApp (MainApp):
         self.addDisplayModel()
         self.addLanguageModel()
         self.load (res.get('@layout/controls'))
-        self.setProperty('title',res.get('@string/controls'))
+        self.setProperty('title',res.getname('controls'))
         app.launchedlogo(self.property('title'), res.etc('controls', 'logo'))
         self.fsel = self.findChild('fsel')
         self.lsel = self.findChild('lsel')

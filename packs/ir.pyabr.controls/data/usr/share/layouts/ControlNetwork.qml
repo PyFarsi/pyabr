@@ -45,7 +45,8 @@ ScrollView {
 
                             Text {
                                 text: model.ssid
-                                font.family: "IRANSans"
+                                font.family: wt.fontFamily
+                                color: wt.color
                                 font.pixelSize: 18
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.left: imagenet.right
@@ -56,7 +57,7 @@ ScrollView {
                             Rectangle {
                                 width: parent.width
                                 height: 1
-                                color: "silver"
+                                color: wt.colorLine
                                 anchors.top: parent.bottom
                             }
                         }
