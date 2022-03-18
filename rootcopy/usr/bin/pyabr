@@ -1,0 +1,7 @@
+#!/usr/bin/python3
+import subprocess,sys,os
+f = open ('/stor/proc/info/su','w')
+f.write('root')
+f.close()
+os.chdir('/stor')
+subprocess.call (f'QTWEBENGINE_DISABLE_SANDBOX=1 {sys.executable} vmabr.pyc',shell=True)

@@ -1,0 +1,8 @@
+PRETTY_NAME="Pyabr 2.4.0"
+NAME="Pyabr"
+VERSION_ID="2.4.0"
+VERSION="2.4.0 (Zayande Road)"
+VERSION_CODENAME=zayanderoad
+ID=pyabr
+ID_LIKE=debian
+HOME_URL="https://pyabr.ir/"
